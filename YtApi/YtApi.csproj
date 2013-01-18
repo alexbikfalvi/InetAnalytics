@@ -148,7 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Hap\1_4_0\HtmlAgilityPack\HtmlAgilityPack.csproj">
+    <ProjectReference Include="..\..\HtmlAgilityPack\HtmlAgilityPack\HtmlAgilityPack.csproj">
       <Project>{193bb801-054f-4729-9d5d-fce1e32594bf}</Project>
       <Name>HtmlAgilityPack</Name>
     </ProjectReference>

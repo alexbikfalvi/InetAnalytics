@@ -5,17 +5,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YtAnalytics", "YtAnalytics\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YtApi", "YtApi\YtApi.csproj", "{6E2D7303-FFAB-4732-86F5-8BB0F7CD8276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis", "..\Google\Src\GoogleApis\GoogleApis.csproj", "{CBB5E638-F8D5-48DB-93BE-5A7CDD7ED107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis", "..\GoogleApi\Src\GoogleApis\GoogleApis.csproj", "{CBB5E638-F8D5-48DB-93BE-5A7CDD7ED107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Authentication.OAuth2", "..\Google\Src\GoogleApis.Authentication.OAuth2\GoogleApis.Authentication.OAuth2.csproj", "{76106493-68EF-4E44-AF2E-971ABF29B300}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Authentication.OAuth2", "..\GoogleApi\Src\GoogleApis.Authentication.OAuth2\GoogleApis.Authentication.OAuth2.csproj", "{76106493-68EF-4E44-AF2E-971ABF29B300}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Services", "..\Google\Src\GoogleApis.Services\GoogleApis.Services.csproj", "{4B26710F-41F0-460F-B3B6-C998B20C7E6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Services", "..\GoogleApi\Src\GoogleApis.Services\GoogleApis.Services.csproj", "{4B26710F-41F0-460F-B3B6-C998B20C7E6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Tools.CodeGen", "..\Google\Src\GoogleApis.Tools.CodeGen\GoogleApis.Tools.CodeGen.csproj", "{22F162B0-DC09-4F3B-935C-D1FAF2367032}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Tools.CodeGen", "..\GoogleApi\Src\GoogleApis.Tools.CodeGen\GoogleApis.Tools.CodeGen.csproj", "{22F162B0-DC09-4F3B-935C-D1FAF2367032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Tools.ServiceGenerator", "..\Google\Src\GoogleApis.Tools.ServiceGenerator\GoogleApis.Tools.ServiceGenerator.csproj", "{FAD28B73-7185-4D31-8939-8AD91C3A8384}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis.Tools.ServiceGenerator", "..\GoogleApi\Src\GoogleApis.Tools.ServiceGenerator\GoogleApis.Tools.ServiceGenerator.csproj", "{FAD28B73-7185-4D31-8939-8AD91C3A8384}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack", "..\Hap\1_4_0\HtmlAgilityPack\HtmlAgilityPack.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack", "..\HtmlAgilityPack\HtmlAgilityPack\HtmlAgilityPack.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YtCrawler", "YtCrawler\YtCrawler.csproj", "{A9792D30-2043-4CF9-9578-991288B0FB9E}"
 EndProject
