@@ -1,0 +1,766 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6740E3FF-81AD-4CDF-8A61-F471D13EE38F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YtAnalytics</RootNamespace>
+    <AssemblyName>YtAnalytics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>GraphBarColor.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>BB7ABB1457C48D5CFDCB249919EAF406D62F2CBB</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\ControlCommentsVideos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlCommentsVideos.Designer.cs">
+      <DependentUpon>ControlCommentsVideos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlAddVideoComment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlAddVideoComment.Designer.cs">
+      <DependentUpon>ControlAddVideoComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlException.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlException.Designer.cs">
+      <DependentUpon>ControlException.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlLog.Designer.cs">
+      <DependentUpon>ControlLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlSettings.Designer.cs">
+      <DependentUpon>ControlSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlSide.Designer.cs">
+      <DependentUpon>ControlSide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSideLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlSideLog.Designer.cs">
+      <DependentUpon>ControlSideLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlLogEvent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlLogEvent.Designer.cs">
+      <DependentUpon>ControlLogEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlLogList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlLogList.Designer.cs">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlMessage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlMessage.Designer.cs">
+      <DependentUpon>ControlMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSideTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlSideTree.Designer.cs">
+      <DependentUpon>ControlSideTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlVideo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlVideo.Designer.cs">
+      <DependentUpon>ControlVideo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlVideoList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlVideoList.Designer.cs">
+      <DependentUpon>ControlVideoList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlWebStatistics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlWebStatistics.Designer.cs">
+      <DependentUpon>ControlWebStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2.Designer.cs">
+      <DependentUpon>ControlYtApi2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2Categories.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2Categories.Designer.cs">
+      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2StandardFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2StandardFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2VideoEntry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2VideoEntry.Designer.cs">
+      <DependentUpon>ControlYtApi2VideoEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2VideoFeeds.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2VideoFeeds.Designer.cs">
+      <DependentUpon>ControlYtApi2VideoFeeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi3.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi3.Designer.cs">
+      <DependentUpon>ControlYtApi3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2VideosFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2VideosFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2GeneralVideosFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2GeneralVideosFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2GeneralVideosFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlHistoryDiscoveryEvent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlHistoryDiscoveryEvent.Designer.cs">
+      <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlCommentVideo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlCommentVideo.Designer.cs">
+      <DependentUpon>ControlCommentVideo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlWeb.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlWeb.Designer.cs">
+      <DependentUpon>ControlWeb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlComments.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlComments.Designer.cs">
+      <DependentUpon>ControlComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCommentVideo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCommentVideo.Designer.cs">
+      <DependentUpon>FormCommentVideo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddVideoComment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddVideoComment.Designer.cs">
+      <DependentUpon>FormAddVideoComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCrash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCrash.Designer.cs">
+      <DependentUpon>FormCrash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormHistoryDiscoveryEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormHistoryDiscoveryEvent.Designer.cs">
+      <DependentUpon>FormHistoryDiscoveryEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormException.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormException.Designer.cs">
+      <DependentUpon>FormException.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormVideo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormVideo.Designer.cs">
+      <DependentUpon>FormVideo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormLogEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLogEvent.Designer.cs">
+      <DependentUpon>FormLogEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls\ControlCommentsVideos.resx">
+      <DependentUpon>ControlCommentsVideos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlAddVideoComment.resx">
+      <DependentUpon>ControlAddVideoComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlException.resx">
+      <DependentUpon>ControlException.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlLog.resx">
+      <DependentUpon>ControlLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlSettings.resx">
+      <DependentUpon>ControlSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlSideLog.resx">
+      <DependentUpon>ControlSideLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlLogEvent.resx">
+      <DependentUpon>ControlLogEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlLogList.resx">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlMessage.resx">
+      <DependentUpon>ControlMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlSideTree.resx">
+      <DependentUpon>ControlSideTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlVideo.resx">
+      <DependentUpon>ControlVideo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlVideoList.resx">
+      <DependentUpon>ControlVideoList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlWebStatistics.resx">
+      <DependentUpon>ControlWebStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2.resx">
+      <DependentUpon>ControlYtApi2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2Categories.resx">
+      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2VideoEntry.resx">
+      <DependentUpon>ControlYtApi2VideoEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2StandardFeed.resx">
+      <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2VideoFeeds.resx">
+      <DependentUpon>ControlYtApi2VideoFeeds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi3.resx">
+      <DependentUpon>ControlYtApi3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2VideosFeed.resx">
+      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2GeneralVideosFeed.resx">
+      <DependentUpon>ControlYtApi2GeneralVideosFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlHistoryDiscoveryEvent.resx">
+      <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlCommentVideo.resx">
+      <DependentUpon>ControlCommentVideo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlWeb.resx">
+      <DependentUpon>ControlWeb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlComments.resx">
+      <DependentUpon>ControlComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCommentVideo.resx">
+      <DependentUpon>FormCommentVideo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddVideoComment.resx">
+      <DependentUpon>FormAddVideoComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCrash.resx">
+      <DependentUpon>FormCrash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHistoryDiscoveryEvent.resx">
+      <DependentUpon>FormHistoryDiscoveryEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormException.resx">
+      <DependentUpon>FormException.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormVideo.resx">
+      <DependentUpon>FormVideo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormLogEvent.resx">
+      <DependentUpon>FormLogEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
+      <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
+      <Name>DotNetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YtApi\YtApi.csproj">
+      <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
+      <Name>YtApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YtCrawler\YtCrawler.csproj">
+      <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>
+      <Name>YtCrawler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GraphBarColor.ico" />
+    <None Include="Resources\SaveAll_48.png" />
+    <None Include="Resources\SaveAll_32.png" />
+    <None Include="Resources\SaveAll_24.png" />
+    <None Include="Resources\SaveAll_16.png" />
+    <None Include="Resources\Import_48.png" />
+    <None Include="Resources\Import_32.png" />
+    <None Include="Resources\Import_24.png" />
+    <None Include="Resources\Import_16.png" />
+    <None Include="Resources\Export_48.png" />
+    <None Include="Resources\Export_32.png" />
+    <None Include="Resources\Export_24.png" />
+    <None Include="Resources\Export_16.png" />
+    <None Include="Resources\CommentVideo_48.png" />
+    <None Include="Resources\CommentVideo_32.png" />
+    <None Include="Resources\CommentVideo_24.png" />
+    <None Include="Resources\CommentVideo_16.png" />
+    <None Include="Resources\Comments_48.png" />
+    <None Include="Resources\Comments_32.png" />
+    <None Include="Resources\Comments_24.png" />
+    <None Include="Resources\Comments_16.png" />
+    <None Include="Resources\CommentRemove_48.png" />
+    <None Include="Resources\CommentRemove_32.png" />
+    <None Include="Resources\CommentRemove_24.png" />
+    <None Include="Resources\CommentRemove_16.png" />
+    <None Include="Resources\CommentAdd_48.png" />
+    <None Include="Resources\CommentAdd_32.png" />
+    <None Include="Resources\CommentAdd_24.png" />
+    <None Include="Resources\CommentAdd_16.png" />
+    <None Include="Resources\Comment_48.png" />
+    <None Include="Resources\Comment_32.png" />
+    <None Include="Resources\Comment_24.png" />
+    <None Include="Resources\Comment_16.png" />
+    <None Include="Resources\HotSpot_48.png" />
+    <None Include="Resources\HotSpot_32.png" />
+    <None Include="Resources\HotSpot_24.png" />
+    <None Include="Resources\HotSpot_16.png" />
+    <None Include="Resources\Copy_48.png" />
+    <None Include="Resources\Copy_32.png" />
+    <None Include="Resources\Copy_24.png" />
+    <None Include="Resources\Copy_16.png" />
+    <None Include="Resources\Properties_48.png" />
+    <None Include="Resources\Properties_32.png" />
+    <None Include="Resources\Properties_24.png" />
+    <None Include="Resources\Properties_16.png" />
+    <None Include="Resources\View_48.png" />
+    <None Include="Resources\View_32.png" />
+    <None Include="Resources\View_24.png" />
+    <None Include="Resources\View_16.png" />
+    <None Include="Resources\XmlNamespace_48.png" />
+    <None Include="Resources\XmlNamespace_32.png" />
+    <None Include="Resources\XmlNamespace_24.png" />
+    <None Include="Resources\XmlNamespace_16.png" />
+    <None Include="Resources\EventErrorWarning_48.png" />
+    <None Include="Resources\EventErrorWarning_32.png" />
+    <None Include="Resources\EventErrorWarning_24.png" />
+    <None Include="Resources\EventErrorWarning_16.png" />
+    <None Include="Resources\EventSuccessWarning_48.png" />
+    <None Include="Resources\EventSuccessWarning_32.png" />
+    <None Include="Resources\EventSuccessWarning_24.png" />
+    <None Include="Resources\EventSuccessWarning_16.png" />
+    <None Include="Resources\SuccessWarning_48.png" />
+    <None Include="Resources\SuccessWarning_32.png" />
+    <None Include="Resources\SuccessWarning_24.png" />
+    <None Include="Resources\SuccessWarning_16.png" />
+    <None Include="Resources\ErrorWarning_48.png" />
+    <None Include="Resources\ErrorWarning_32.png" />
+    <None Include="Resources\ErrorWarning_24.png" />
+    <None Include="Resources\ErrorWarning_16.png" />
+    <None Include="Resources\Filter_48.png" />
+    <None Include="Resources\Filter_32.png" />
+    <None Include="Resources\Filter_24.png" />
+    <None Include="Resources\Filter_16.png" />
+    <None Include="Resources\Categories_48.png" />
+    <None Include="Resources\Categories_32.png" />
+    <None Include="Resources\Categories_24.png" />
+    <None Include="Resources\Categories_16.png" />
+    <None Include="Resources\ConfigurationSettings_48.png" />
+    <None Include="Resources\ConfigurationSettings_32.png" />
+    <None Include="Resources\ConfigurationSettings_24.png" />
+    <None Include="Resources\ConfigurationSettings_16.png" />
+    <None Include="Resources\Configuration_48.png" />
+    <None Include="Resources\Configuration_32.png" />
+    <None Include="Resources\Configuration_24.png" />
+    <None Include="Resources\Configuration_16.png" />
+    <None Include="Resources\Settings_48.png" />
+    <None Include="Resources\Settings_32.png" />
+    <None Include="Resources\Settings_24.png" />
+    <None Include="Resources\Settings_16.png" />
+    <None Include="Resources\PlayStop_48.png" />
+    <None Include="Resources\PlayStop_32.png" />
+    <None Include="Resources\PlayStop_24.png" />
+    <None Include="Resources\PlayStop_16.png" />
+    <None Include="Resources\PlayPause_48.png" />
+    <None Include="Resources\PlayPause_32.png" />
+    <None Include="Resources\PlayPause_24.png" />
+    <None Include="Resources\PlayPause_16.png" />
+    <None Include="Resources\PlayStart_48.png" />
+    <None Include="Resources\PlayStart_32.png" />
+    <None Include="Resources\PlayStart_24.png" />
+    <None Include="Resources\PlayStart_16.png" />
+    <None Include="Resources\FileGraphLine_48.png" />
+    <None Include="Resources\FileGraphLine_32.png" />
+    <None Include="Resources\FileGraphLine_24.png" />
+    <None Include="Resources\FileGraphLine_16.png" />
+    <None Include="Resources\GraphLine_48.png" />
+    <None Include="Resources\GraphLine_32.png" />
+    <None Include="Resources\GraphLine_24.png" />
+    <None Include="Resources\GraphLine_16.png" />
+    <None Include="Resources\FileUser_48.png" />
+    <None Include="Resources\FileUser_32.png" />
+    <None Include="Resources\FileUser_24.png" />
+    <None Include="Resources\FileUser_16.png" />
+    <None Include="Resources\User_48.png" />
+    <None Include="Resources\User_32.png" />
+    <None Include="Resources\User_24.png" />
+    <None Include="Resources\User_16.png" />
+    <None Include="Resources\FolderOpenXml_48.png" />
+    <None Include="Resources\FolderOpenXml_32.png" />
+    <None Include="Resources\FolderOpenXml_24.png" />
+    <None Include="Resources\FolderOpenXml_16.png" />
+    <None Include="Resources\FolderOpen_48.png" />
+    <None Include="Resources\FolderOpen_32.png" />
+    <None Include="Resources\FolderOpen_24.png" />
+    <None Include="Resources\FolderOpen_16.png" />
+    <None Include="Resources\FolderClosedXml_48.png" />
+    <None Include="Resources\FolderClosedXml_32.png" />
+    <None Include="Resources\FolderClosedXml_24.png" />
+    <None Include="Resources\FolderClosedXml_16.png" />
+    <None Include="Resources\FolderClosed_48.png" />
+    <None Include="Resources\FolderClosed_32.png" />
+    <None Include="Resources\FolderClosed_24.png" />
+    <None Include="Resources\FolderClosed_16.png" />
+    <None Include="Resources\FileVideo_48.png" />
+    <None Include="Resources\FileVideo_32.png" />
+    <None Include="Resources\FileVideo_24.png" />
+    <None Include="Resources\FileVideo_16.png" />
+    <None Include="Resources\FileXml_48.png" />
+    <None Include="Resources\FileXml_32.png" />
+    <None Include="Resources\FileXml_24.png" />
+    <None Include="Resources\FileXml_16.png" />
+    <None Include="Resources\LogWarning_48.png" />
+    <None Include="Resources\LogWarning_32.png" />
+    <None Include="Resources\LogWarning_24.png" />
+    <None Include="Resources\LogWarning_16.png" />
+    <None Include="Resources\LogSuccess_48.png" />
+    <None Include="Resources\LogSuccess_32.png" />
+    <None Include="Resources\LogSuccess_24.png" />
+    <None Include="Resources\LogSuccess_16.png" />
+    <None Include="Resources\LogError_48.png" />
+    <None Include="Resources\LogError_32.png" />
+    <None Include="Resources\LogError_24.png" />
+    <None Include="Resources\LogError_16.png" />
+    <None Include="Resources\LogClock_48.png" />
+    <None Include="Resources\LogClock_32.png" />
+    <None Include="Resources\LogClock_24.png" />
+    <None Include="Resources\LogClock_16.png" />
+    <None Include="Resources\GlobeClock_48.png" />
+    <None Include="Resources\GlobeClock_32.png" />
+    <None Include="Resources\GlobeClock_24.png" />
+    <None Include="Resources\GlobeClock_16.png" />
+    <None Include="Resources\GlobeWarning_48.png" />
+    <None Include="Resources\GlobeWarning_32.png" />
+    <None Include="Resources\GlobeWarning_24.png" />
+    <None Include="Resources\GlobeWarning_16.png" />
+    <None Include="Resources\GlobeError_48.png" />
+    <None Include="Resources\GlobeError_32.png" />
+    <None Include="Resources\GlobeError_24.png" />
+    <None Include="Resources\GlobeError_16.png" />
+    <None Include="Resources\GlobeSuccess_48.png" />
+    <None Include="Resources\GlobeSuccess_32.png" />
+    <None Include="Resources\GlobeSuccess_24.png" />
+    <None Include="Resources\GlobeSuccess_16.png" />
+    <None Include="Resources\File_48.png" />
+    <None Include="Resources\File_32.png" />
+    <None Include="Resources\File_24.png" />
+    <None Include="Resources\File_16.png" />
+    <None Include="Resources\Start_48.png" />
+    <None Include="Resources\Start_32.png" />
+    <None Include="Resources\Start_24.png" />
+    <None Include="Resources\Start_16.png" />
+    <None Include="Resources\GlobeBrowse_48.png" />
+    <None Include="Resources\GlobeBrowse_32.png" />
+    <None Include="Resources\GlobeBrowse_24.png" />
+    <None Include="Resources\GlobeBrowse_16.png" />
+    <None Include="Resources\Refresh_48.png" />
+    <None Include="Resources\Refresh_32.png" />
+    <None Include="Resources\Refresh_24.png" />
+    <None Include="Resources\Refresh_16.png" />
+    <None Include="Resources\ArrowPrevious_48.png" />
+    <None Include="Resources\ArrowPrevious_32.png" />
+    <None Include="Resources\ArrowPrevious_24.png" />
+    <None Include="Resources\ArrowPrevious_16.png" />
+    <None Include="Resources\ArrowNext_48.png" />
+    <None Include="Resources\ArrowNext_32.png" />
+    <None Include="Resources\ArrowNext_24.png" />
+    <None Include="Resources\ArrowNext_16.png" />
+    <None Include="Resources\Dislike_48.png" />
+    <None Include="Resources\Dislike_32.png" />
+    <None Include="Resources\Dislike_24.png" />
+    <None Include="Resources\Dislike_16.png" />
+    <None Include="Resources\Like_48.png" />
+    <None Include="Resources\Like_32.png" />
+    <None Include="Resources\Like_24.png" />
+    <None Include="Resources\Like_16.png" />
+    <None Include="Resources\Warning_48.png" />
+    <None Include="Resources\Warning_32.png" />
+    <None Include="Resources\Warning_24.png" />
+    <None Include="Resources\Warning_16.png" />
+    <None Include="Resources\Success_48.png" />
+    <None Include="Resources\Success_32.png" />
+    <None Include="Resources\Success_24.png" />
+    <None Include="Resources\Success_16.png" />
+    <None Include="Resources\Stop_48.png" />
+    <None Include="Resources\Stop_32.png" />
+    <None Include="Resources\Stop_24.png" />
+    <None Include="Resources\Stop_16.png" />
+    <None Include="Resources\ServerWeb_48.png" />
+    <None Include="Resources\ServerWeb_32.png" />
+    <None Include="Resources\ServerWeb_24.png" />
+    <None Include="Resources\ServerWeb_16.png" />
+    <None Include="Resources\ServersBrowse_48.png" />
+    <None Include="Resources\ServersBrowse_32.png" />
+    <None Include="Resources\ServersBrowse_24.png" />
+    <None Include="Resources\ServersBrowse_16.png" />
+    <None Include="Resources\Servers_48.png" />
+    <None Include="Resources\Servers_32.png" />
+    <None Include="Resources\Servers_24.png" />
+    <None Include="Resources\Servers_16.png" />
+    <None Include="Resources\ServerBrowse_48.png" />
+    <None Include="Resources\ServerBrowse_32.png" />
+    <None Include="Resources\ServerBrowse_24.png" />
+    <None Include="Resources\ServerBrowse_16.png" />
+    <None Include="Resources\Server_48.png" />
+    <None Include="Resources\Server_32.png" />
+    <None Include="Resources\Server_24.png" />
+    <None Include="Resources\Server_16.png" />
+    <None Include="Resources\Question_48.png" />
+    <None Include="Resources\Question_32.png" />
+    <None Include="Resources\Question_24.png" />
+    <None Include="Resources\Question_16.png" />
+    <None Include="Resources\Message_48.png" />
+    <None Include="Resources\Message_32.png" />
+    <None Include="Resources\Message_24.png" />
+    <None Include="Resources\Message_16.png" />
+    <None Include="Resources\Log_48.png" />
+    <None Include="Resources\Log_32.png" />
+    <None Include="Resources\Log_24.png" />
+    <None Include="Resources\Log_16.png" />
+    <None Include="Resources\Information_48.png" />
+    <None Include="Resources\Information_32.png" />
+    <None Include="Resources\Information_24.png" />
+    <None Include="Resources\Information_16.png" />
+    <None Include="Resources\GraphBarColor_256.png" />
+    <None Include="Resources\GraphBarColor_128.png" />
+    <None Include="Resources\GraphBarColor_96.png" />
+    <None Include="Resources\GraphBarColor_64.png" />
+    <None Include="Resources\GraphBarColor_48.png" />
+    <None Include="Resources\GraphBarColor_32.png" />
+    <None Include="Resources\GraphBarColor_24.png" />
+    <None Include="Resources\GraphBarColor_16.png" />
+    <None Include="Resources\GraphBar_48.png" />
+    <None Include="Resources\GraphBar_32.png" />
+    <None Include="Resources\GraphBar_24.png" />
+    <None Include="Resources\GraphBar_16.png" />
+    <None Include="Resources\Globe_48.png" />
+    <None Include="Resources\Globe_32.png" />
+    <None Include="Resources\Globe_24.png" />
+    <None Include="Resources\Globe_16.png" />
+    <None Include="Resources\Find_48.png" />
+    <None Include="Resources\Find_32.png" />
+    <None Include="Resources\Find_24.png" />
+    <None Include="Resources\Find_16.png" />
+    <None Include="Resources\FilmstripWide_48.png" />
+    <None Include="Resources\FilmstripWide_32.png" />
+    <None Include="Resources\FilmstripWide_24.png" />
+    <None Include="Resources\FilmstripWide_16.png" />
+    <None Include="Resources\FilmstripNarrow_48.png" />
+    <None Include="Resources\FilmstripNarrow_32.png" />
+    <None Include="Resources\FilmstripNarrow_24.png" />
+    <None Include="Resources\FilmstripNarrow_16.png" />
+    <None Include="Resources\Exception_48.png" />
+    <None Include="Resources\Exception_32.png" />
+    <None Include="Resources\Exception_24.png" />
+    <None Include="Resources\Exception_16.png" />
+    <None Include="Resources\EventWarning_48.png" />
+    <None Include="Resources\EventWarning_32.png" />
+    <None Include="Resources\EventWarning_24.png" />
+    <None Include="Resources\EventWarning_16.png" />
+    <None Include="Resources\EventSuccess_48.png" />
+    <None Include="Resources\EventSuccess_32.png" />
+    <None Include="Resources\EventSuccess_24.png" />
+    <None Include="Resources\EventSuccess_16.png" />
+    <None Include="Resources\EventStop_48.png" />
+    <None Include="Resources\EventStop_32.png" />
+    <None Include="Resources\EventStop_24.png" />
+    <None Include="Resources\EventStop_16.png" />
+    <None Include="Resources\EventMessage_48.png" />
+    <None Include="Resources\EventMessage_32.png" />
+    <None Include="Resources\EventMessage_24.png" />
+    <None Include="Resources\EventMessage_16.png" />
+    <None Include="Resources\EventMagenta_48.png" />
+    <None Include="Resources\EventMagenta_32.png" />
+    <None Include="Resources\EventMagenta_24.png" />
+    <None Include="Resources\EventMagenta_16.png" />
+    <None Include="Resources\EventInformation_48.png" />
+    <None Include="Resources\EventInformation_32.png" />
+    <None Include="Resources\EventInformation_24.png" />
+    <None Include="Resources\EventInformation_16.png" />
+    <None Include="Resources\EventError_48.png" />
+    <None Include="Resources\EventError_32.png" />
+    <None Include="Resources\EventError_24.png" />
+    <None Include="Resources\EventError_16.png" />
+    <None Include="Resources\EventCanceled_48.png" />
+    <None Include="Resources\EventCanceled_32.png" />
+    <None Include="Resources\EventCanceled_24.png" />
+    <None Include="Resources\EventCanceled_16.png" />
+    <None Include="Resources\EventBrown_48.png" />
+    <None Include="Resources\EventBrown_32.png" />
+    <None Include="Resources\EventBrown_24.png" />
+    <None Include="Resources\EventBrown_16.png" />
+    <None Include="Resources\Error_48.png" />
+    <None Include="Resources\Error_32.png" />
+    <None Include="Resources\Error_24.png" />
+    <None Include="Resources\Error_16.png" />
+    <None Include="Resources\Canceled_48.png" />
+    <None Include="Resources\Canceled_32.png" />
+    <None Include="Resources\Canceled_24.png" />
+    <None Include="Resources\Canceled_16.png" />
+    <None Include="Resources\Book_48.png" />
+    <None Include="Resources\Book_32.png" />
+    <None Include="Resources\Book_24.png" />
+    <None Include="Resources\Book_16.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
