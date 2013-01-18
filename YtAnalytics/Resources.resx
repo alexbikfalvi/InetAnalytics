@@ -1102,4 +1102,76 @@
   <data name="SaveAll_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\SaveAll_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FolderClosedComment_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedComment_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedComment_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedComment_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedComment_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedComment_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedComment_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedComment_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedUser_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedUser_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedUser_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedUser_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedUser_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedUser_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedUser_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedUser_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedVideo_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedVideo_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedVideo_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedVideo_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedVideo_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedVideo_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedVideo_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedVideo_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenComment_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenComment_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenComment_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenComment_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenComment_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenComment_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenComment_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenComment_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenUser_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenUser_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenUser_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenUser_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenUser_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenUser_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenUser_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenUser_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenVideo_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenVideo_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenVideo_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenVideo_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenVideo_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenVideo_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenVideo_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenVideo_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
