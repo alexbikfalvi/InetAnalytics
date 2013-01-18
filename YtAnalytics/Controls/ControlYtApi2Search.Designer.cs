@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls
 {
-	partial class ControlYtApi2VideosFeed
+	partial class ControlYtApi2Search
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2VideosFeed));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2Search));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.videoList = new YtAnalytics.Controls.ControlVideoList();
 			this.viewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);

@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls
 {
-	partial class ControlYtApi2VideoEntry
+	partial class ControlYtApi2Video
 	{
 		/// <summary> 
 		/// Required designer variable.

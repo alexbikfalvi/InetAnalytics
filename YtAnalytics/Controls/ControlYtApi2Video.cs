@@ -40,7 +40,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2VideoEntry : UserControl
+	public partial class ControlYtApi2Video : UserControl
 	{
 		private static string logSource = "APIv2 Video Entry";
 
@@ -51,7 +51,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// Creates a new instance of the control.
 		/// </summary>
-		public ControlYtApi2VideoEntry()
+		public ControlYtApi2Video()
 		{
 			// Initialize component.
 			InitializeComponent();
@@ -117,7 +117,7 @@ namespace YtAnalytics.Controls
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Stop,
-					ControlYtApi2VideoEntry.logSource,
+					ControlYtApi2Video.logSource,
 					"The video ID text box cannot be empty."));
 				return;
 			}
@@ -133,7 +133,7 @@ namespace YtAnalytics.Controls
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
-				ControlYtApi2VideoEntry.logSource,
+				ControlYtApi2Video.logSource,
 				"Started request for video ID \'{0}\'.",
 				new object[] { this.textBox.Text }));
 
@@ -147,7 +147,7 @@ namespace YtAnalytics.Controls
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
 					LogEventType.Error,
-					ControlYtApi2VideoEntry.logSource,
+					ControlYtApi2Video.logSource,
 					"The request for video ID \'{0}\' failed. {1}",
 					new object[] { this.textBox.Text, exception.Message},
 					exception));
@@ -187,7 +187,7 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Success,
-						ControlYtApi2VideoEntry.logSource,
+						ControlYtApi2Video.logSource,
 						"The request for video ID \'{0}\' completed successfully.",
 						new object[] { this.textBox.Text }));
 				}
@@ -197,14 +197,14 @@ namespace YtAnalytics.Controls
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
 							LogEventType.Canceled,
-							ControlYtApi2VideoEntry.logSource,
+							ControlYtApi2Video.logSource,
 							"The request for video ID \'{0}\' has been canceled.",
 							new object[] { this.textBox.Text }));
 					else
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
-							ControlYtApi2VideoEntry.logSource,
+							ControlYtApi2Video.logSource,
 							"The request for video ID \'{0}\' failed. {1}",
 							new object[] { this.textBox.Text, exception.Message },
 							exception));
@@ -214,7 +214,7 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
-						ControlYtApi2VideoEntry.logSource,
+						ControlYtApi2Video.logSource,
 						"The request for video ID \'{0}\' failed. {1}",
 						new object[] { this.textBox.Text, exception.Message },
 						exception));

@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls
 {
-	partial class ControlYtApi2VideoFeeds
+	partial class ControlYtApi2Videos
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2VideoFeeds));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2Videos));
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.labelDescription1 = new System.Windows.Forms.Label();

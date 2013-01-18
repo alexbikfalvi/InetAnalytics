@@ -39,7 +39,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlYtApi2VideosFeed : UserControl
+	public partial class ControlYtApi2Search : UserControl
 	{
 		private static string logSource = "APIv2 Videos Feed";
 
@@ -78,7 +78,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlYtApi2VideosFeed()
+		public ControlYtApi2Search()
 		{
 			// Add the message control.
 			this.Controls.Add(this.message);
@@ -225,7 +225,7 @@ namespace YtAnalytics.Controls
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
-				ControlYtApi2VideosFeed.logSource,
+				ControlYtApi2Search.logSource,
 				"Started request for videos feed with search query \'{0}\'.",
 				new object[] { this.textBoxSearch.Text, this.linkLabel.Text }));
 
@@ -242,7 +242,7 @@ namespace YtAnalytics.Controls
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
 					LogEventType.Error,
-					ControlYtApi2VideosFeed.logSource,
+					ControlYtApi2Search.logSource,
 					"The request for videos feed with search query \'{0}\' failed. {1}",
 					new object[] { this.textBoxSearch.Text, exception.Message, this.linkLabel.Text },
 					exception));
@@ -310,7 +310,7 @@ namespace YtAnalytics.Controls
 								LogEventLevel.Important,
 								LogEventType.Error,
 								DateTime.MinValue,
-								ControlYtApi2VideosFeed.logSource,
+								ControlYtApi2Search.logSource,
 								"Parsing of YouTube API version 2 atom XML failed.",
 								null,
 								exception));
@@ -321,7 +321,7 @@ namespace YtAnalytics.Controls
 								LogEventLevel.Important,
 								LogEventType.Error,
 								DateTime.MinValue,
-								ControlYtApi2VideosFeed.logSource,
+								ControlYtApi2Search.logSource,
 								"Converting atom to YouTube API version 2 video entry failed.",
 								null,
 								exception));
@@ -332,7 +332,7 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Verbose,
 						eventType,
-						ControlYtApi2VideosFeed.logSource,
+						ControlYtApi2Search.logSource,
 						eventMessage,
 						new object[] { this.textBoxSearch.Text, this.linkLabel.Text },
 						null,
@@ -344,14 +344,14 @@ namespace YtAnalytics.Controls
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
 							LogEventType.Canceled,
-							ControlYtApi2VideosFeed.logSource,
+							ControlYtApi2Search.logSource,
 							"The request for videos feed with search query \'{0}\' has been canceled.",
 							new object[] { this.textBoxSearch.Text, this.linkLabel.Text }));
 					else
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
-							ControlYtApi2VideosFeed.logSource,
+							ControlYtApi2Search.logSource,
 							"The request for videos feed with search query \'{0}\' failed. {1}",
 							new object[] { this.textBoxSearch.Text, exception.Message, this.linkLabel.Text },
 							exception));
@@ -361,7 +361,7 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
-						ControlYtApi2VideosFeed.logSource,
+						ControlYtApi2Search.logSource,
 						"The request for videos feed with search query \'{0}\' failed. {1}",
 						new object[] { this.textBoxSearch.Text, exception.Message, this.linkLabel.Text },
 						exception));

@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>GraphBarColor.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -157,17 +157,17 @@
     <Compile Include="Controls\ControlYtApi2StandardFeed.Designer.cs">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideoEntry.cs">
+    <Compile Include="Controls\ControlYtApi2Video.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideoEntry.Designer.cs">
-      <DependentUpon>ControlYtApi2VideoEntry.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi2Video.Designer.cs">
+      <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideoFeeds.cs">
+    <Compile Include="Controls\ControlYtApi2Videos.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideoFeeds.Designer.cs">
-      <DependentUpon>ControlYtApi2VideoFeeds.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi2Videos.Designer.cs">
+      <DependentUpon>ControlYtApi2Videos.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlYtApi3.cs">
       <SubType>UserControl</SubType>
@@ -175,11 +175,11 @@
     <Compile Include="Controls\ControlYtApi3.Designer.cs">
       <DependentUpon>ControlYtApi3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosFeed.cs">
+    <Compile Include="Controls\ControlYtApi2Search.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosFeed.Designer.cs">
-      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi2Search.Designer.cs">
+      <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlYtApi2GeneralVideosFeed.cs">
       <SubType>UserControl</SubType>
@@ -317,20 +317,20 @@
     <EmbeddedResource Include="Controls\ControlYtApi2Categories.resx">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2VideoEntry.resx">
-      <DependentUpon>ControlYtApi2VideoEntry.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi2Video.resx">
+      <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2StandardFeed.resx">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2VideoFeeds.resx">
-      <DependentUpon>ControlYtApi2VideoFeeds.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi2Videos.resx">
+      <DependentUpon>ControlYtApi2Videos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi3.resx">
       <DependentUpon>ControlYtApi3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2VideosFeed.resx">
-      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi2Search.resx">
+      <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2GeneralVideosFeed.resx">
       <DependentUpon>ControlYtApi2GeneralVideosFeed.cs</DependentUpon>
@@ -420,7 +420,35 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GraphBarColor.ico" />
+    <Content Include="Icon.ico" />
+    <None Include="Resources\FileComment_48.png" />
+    <None Include="Resources\FileComment_32.png" />
+    <None Include="Resources\FileComment_24.png" />
+    <None Include="Resources\FileComment_16.png" />
+    <None Include="Resources\FolderOpenComment_48.png" />
+    <None Include="Resources\FolderOpenComment_32.png" />
+    <None Include="Resources\FolderOpenComment_24.png" />
+    <None Include="Resources\FolderOpenComment_16.png" />
+    <None Include="Resources\FolderClosedComment_48.png" />
+    <None Include="Resources\FolderClosedComment_32.png" />
+    <None Include="Resources\FolderClosedComment_24.png" />
+    <None Include="Resources\FolderClosedComment_16.png" />
+    <None Include="Resources\FolderOpenVideo_48.png" />
+    <None Include="Resources\FolderOpenVideo_32.png" />
+    <None Include="Resources\FolderOpenVideo_24.png" />
+    <None Include="Resources\FolderOpenVideo_16.png" />
+    <None Include="Resources\FolderOpenUser_48.png" />
+    <None Include="Resources\FolderOpenUser_32.png" />
+    <None Include="Resources\FolderOpenUser_24.png" />
+    <None Include="Resources\FolderOpenUser_16.png" />
+    <None Include="Resources\FolderClosedVideo_48.png" />
+    <None Include="Resources\FolderClosedVideo_32.png" />
+    <None Include="Resources\FolderClosedVideo_24.png" />
+    <None Include="Resources\FolderClosedVideo_16.png" />
+    <None Include="Resources\FolderClosedUser_48.png" />
+    <None Include="Resources\FolderClosedUser_32.png" />
+    <None Include="Resources\FolderClosedUser_24.png" />
+    <None Include="Resources\FolderClosedUser_16.png" />
     <None Include="Resources\SaveAll_48.png" />
     <None Include="Resources\SaveAll_32.png" />
     <None Include="Resources\SaveAll_24.png" />

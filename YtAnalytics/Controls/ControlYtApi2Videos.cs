@@ -31,12 +31,12 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A class displaying the list of feeds for the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2VideoFeeds : UserControl
+	public partial class ControlYtApi2Videos : UserControl
 	{
 		/// <summary>
 		/// Creates a new instance of the control.
 		/// </summary>
-		public ControlYtApi2VideoFeeds()
+		public ControlYtApi2Videos()
 		{
 			// Initialize component.
 			InitializeComponent();

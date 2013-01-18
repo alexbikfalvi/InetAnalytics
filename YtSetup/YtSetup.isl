@@ -4067,7 +4067,7 @@
 		<col def="V0">Data</col>
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
-		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\GraphBarColor.ico</td><td>0</td></row>
+		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\Icon.ico</td><td>0</td></row>
 		<row><td>NewShortcut1_57C3D3A479D7411AA24A399CCEFB6D65.exe</td><td/><td>&lt;SystemFolder&gt;\imageres.dll</td><td>82</td></row>
 		<row><td>_Built1_CC28D6E254C647E7BE71848B61DE6493.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\GraphBarColor.ico</td><td>0</td></row>
 		<row><td>_Built_E12F097AD55649E0AB8A5E266CCAC9F0.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\GraphBarColor.ico</td><td>0</td></row>
