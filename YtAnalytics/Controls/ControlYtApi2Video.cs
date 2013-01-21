@@ -101,7 +101,6 @@ namespace YtAnalytics.Controls
 			this.controlVideo.Video = video;
 			this.buttonView.Enabled = true;
 			this.buttonComment.Enabled = true;
-			this.Start(null, null);
 		}
 
 		/// <summary>

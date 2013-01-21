@@ -20,13 +20,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
 	/// A class representing a user entry.
 	/// </summary>
-	public class AtomEntryUser
+	[Serializable]
+	public class AtomEntryUser : AtomEntry
 	{
+		private AtomEntryUser() { }
+
+		/// <summary>
+		/// Parses an XML string into a user entry atom.
+		/// </summary>
+		/// <param name="data">The XML string.</param>
+		/// <returns>The user entry atom.</returns>
+		public static AtomEntryUser Parse(string data)
+		{
+			return AtomEntryUser.Parse(XDocument.Parse(data).Root);
+		}
+
+		/// <summary>
+		/// Parses an XML entry element into a user entry atom.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <returns>The user entry atom.</returns>
+		public static AtomEntryUser Parse(XElement element, XmlNamespace top = null)
+		{
+			AtomEntryUser atom = new AtomEntryUser();
+			XmlNamespace ns = new XmlNamespace(element, top);
+			XElement el;
+
+			try
+			{
+				AtomEntry.Parse(element, atom, ns);
+			}
+			catch (Exception exception)
+			{
+				throw new AtomException("Cannot parse user entry.", element, ns, exception);
+			}
+
+			return atom;
+		}
 	}
 }

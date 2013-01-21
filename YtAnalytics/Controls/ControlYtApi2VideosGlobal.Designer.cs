@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls
 {
-	partial class ControlYtApi2Videos
+	partial class ControlYtApi2VideosGlobal
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,18 +28,17 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2Videos));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2VideosGlobal));
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.labelDescription1 = new System.Windows.Forms.Label();
-			this.linkLabelStandardFeed = new System.Windows.Forms.LinkLabel();
-			this.linkLabelVideosFeed = new System.Windows.Forms.LinkLabel();
-			this.linkLabelRelatedVideosFeed = new System.Windows.Forms.LinkLabel();
-			this.linkLabelVideoResponsesFeed = new System.Windows.Forms.LinkLabel();
-			this.linkLabelUserFavoritesFeed = new System.Windows.Forms.LinkLabel();
-			this.linkLabelPlaylistFeed = new System.Windows.Forms.LinkLabel();
-			this.labelDescription2 = new System.Windows.Forms.Label();
 			this.linkLabelVideoEntry = new System.Windows.Forms.LinkLabel();
+			this.linkLabelStandardFeed = new System.Windows.Forms.LinkLabel();
+			this.linkLabelVideoComments = new System.Windows.Forms.LinkLabel();
+			this.linkLabelRelatedVideosFeed = new System.Windows.Forms.LinkLabel();
+			this.labelDescription2 = new System.Windows.Forms.Label();
+			this.linkLabelResponseVideosFeed = new System.Windows.Forms.LinkLabel();
+			this.linkLabelSearchFeed = new System.Windows.Forms.LinkLabel();
 			this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
@@ -54,18 +53,16 @@
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel.Controls.Add(this.labelTitle, 0, 0);
 			this.tableLayoutPanel.Controls.Add(this.labelDescription1, 0, 1);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelStandardFeed, 0, 2);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelVideosFeed, 0, 3);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelRelatedVideosFeed, 0, 4);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelVideoResponsesFeed, 0, 5);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelUserFavoritesFeed, 0, 6);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelPlaylistFeed, 0, 7);
-			this.tableLayoutPanel.Controls.Add(this.labelDescription2, 0, 8);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelVideoEntry, 0, 9);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelVideoEntry, 0, 2);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelStandardFeed, 0, 6);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelVideoComments, 0, 3);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelRelatedVideosFeed, 0, 6);
+			this.tableLayoutPanel.Controls.Add(this.labelDescription2, 0, 4);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelResponseVideosFeed, 0, 7);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelSearchFeed, 0, 5);
 			this.tableLayoutPanel.Location = new System.Drawing.Point(74, 20);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
-			this.tableLayoutPanel.RowCount = 11;
-			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel.RowCount = 8;
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -75,8 +72,7 @@
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(885, 387);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(723, 577);
 			this.tableLayoutPanel.TabIndex = 7;
 			// 
 			// labelTitle
@@ -100,100 +96,86 @@
 			this.labelDescription1.TabIndex = 4;
 			this.labelDescription1.Text = resources.GetString("labelDescription1.Text");
 			// 
-			// linkLabelStandardFeed
-			// 
-			this.linkLabelStandardFeed.AutoSize = true;
-			this.linkLabelStandardFeed.Location = new System.Drawing.Point(3, 75);
-			this.linkLabelStandardFeed.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelStandardFeed.Name = "linkLabelStandardFeed";
-			this.linkLabelStandardFeed.Size = new System.Drawing.Size(74, 13);
-			this.linkLabelStandardFeed.TabIndex = 5;
-			this.linkLabelStandardFeed.TabStop = true;
-			this.linkLabelStandardFeed.Text = "Standard feed";
-			this.linkLabelStandardFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.StandardFeedClick);
-			// 
-			// linkLabelVideosFeed
-			// 
-			this.linkLabelVideosFeed.AutoSize = true;
-			this.linkLabelVideosFeed.Location = new System.Drawing.Point(3, 94);
-			this.linkLabelVideosFeed.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelVideosFeed.Name = "linkLabelVideosFeed";
-			this.linkLabelVideosFeed.Size = new System.Drawing.Size(63, 13);
-			this.linkLabelVideosFeed.TabIndex = 6;
-			this.linkLabelVideosFeed.TabStop = true;
-			this.linkLabelVideosFeed.Text = "Videos feed";
-			this.linkLabelVideosFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.VideosFeedClick);
-			// 
-			// linkLabelRelatedVideosFeed
-			// 
-			this.linkLabelRelatedVideosFeed.AutoSize = true;
-			this.linkLabelRelatedVideosFeed.Location = new System.Drawing.Point(3, 113);
-			this.linkLabelRelatedVideosFeed.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelRelatedVideosFeed.Name = "linkLabelRelatedVideosFeed";
-			this.linkLabelRelatedVideosFeed.Size = new System.Drawing.Size(102, 13);
-			this.linkLabelRelatedVideosFeed.TabIndex = 7;
-			this.linkLabelRelatedVideosFeed.TabStop = true;
-			this.linkLabelRelatedVideosFeed.Text = "Related videos feed";
-			this.linkLabelRelatedVideosFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RelatedVideosFeedClick);
-			// 
-			// linkLabelVideoResponsesFeed
-			// 
-			this.linkLabelVideoResponsesFeed.AutoSize = true;
-			this.linkLabelVideoResponsesFeed.Location = new System.Drawing.Point(3, 132);
-			this.linkLabelVideoResponsesFeed.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelVideoResponsesFeed.Name = "linkLabelVideoResponsesFeed";
-			this.linkLabelVideoResponsesFeed.Size = new System.Drawing.Size(109, 13);
-			this.linkLabelVideoResponsesFeed.TabIndex = 8;
-			this.linkLabelVideoResponsesFeed.TabStop = true;
-			this.linkLabelVideoResponsesFeed.Text = "Video responses feed";
-			this.linkLabelVideoResponsesFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.VideoResponsesFeedClick);
-			// 
-			// linkLabelUserFavoritesFeed
-			// 
-			this.linkLabelUserFavoritesFeed.AutoSize = true;
-			this.linkLabelUserFavoritesFeed.Location = new System.Drawing.Point(3, 151);
-			this.linkLabelUserFavoritesFeed.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelUserFavoritesFeed.Name = "linkLabelUserFavoritesFeed";
-			this.linkLabelUserFavoritesFeed.Size = new System.Drawing.Size(96, 13);
-			this.linkLabelUserFavoritesFeed.TabIndex = 9;
-			this.linkLabelUserFavoritesFeed.TabStop = true;
-			this.linkLabelUserFavoritesFeed.Text = "User favorites feed";
-			this.linkLabelUserFavoritesFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UserFavoritesFeedClick);
-			// 
-			// linkLabelPlaylistFeed
-			// 
-			this.linkLabelPlaylistFeed.AutoSize = true;
-			this.linkLabelPlaylistFeed.Location = new System.Drawing.Point(3, 170);
-			this.linkLabelPlaylistFeed.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelPlaylistFeed.Name = "linkLabelPlaylistFeed";
-			this.linkLabelPlaylistFeed.Size = new System.Drawing.Size(63, 13);
-			this.linkLabelPlaylistFeed.TabIndex = 10;
-			this.linkLabelPlaylistFeed.TabStop = true;
-			this.linkLabelPlaylistFeed.Text = "Playlist feed";
-			this.linkLabelPlaylistFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.PlaylistFeedClick);
-			// 
-			// labelDescription2
-			// 
-			this.labelDescription2.AutoSize = true;
-			this.labelDescription2.Location = new System.Drawing.Point(3, 186);
-			this.labelDescription2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-			this.labelDescription2.Name = "labelDescription2";
-			this.labelDescription2.Size = new System.Drawing.Size(437, 26);
-			this.labelDescription2.TabIndex = 11;
-			this.labelDescription2.Text = "\r\nIn addition, you can access the data of every video directly, using its video i" +
-    "dentifier and its:";
-			// 
 			// linkLabelVideoEntry
 			// 
 			this.linkLabelVideoEntry.AutoSize = true;
-			this.linkLabelVideoEntry.Location = new System.Drawing.Point(3, 218);
+			this.linkLabelVideoEntry.Location = new System.Drawing.Point(3, 75);
 			this.linkLabelVideoEntry.Margin = new System.Windows.Forms.Padding(3);
 			this.linkLabelVideoEntry.Name = "linkLabelVideoEntry";
 			this.linkLabelVideoEntry.Size = new System.Drawing.Size(60, 13);
 			this.linkLabelVideoEntry.TabIndex = 12;
 			this.linkLabelVideoEntry.TabStop = true;
 			this.linkLabelVideoEntry.Text = "Video entry";
-			this.linkLabelVideoEntry.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.VideoEntryClick);
+			this.linkLabelVideoEntry.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnVideoClick);
+			// 
+			// linkLabelStandardFeed
+			// 
+			this.linkLabelStandardFeed.AutoSize = true;
+			this.linkLabelStandardFeed.Location = new System.Drawing.Point(3, 161);
+			this.linkLabelStandardFeed.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelStandardFeed.Name = "linkLabelStandardFeed";
+			this.linkLabelStandardFeed.Size = new System.Drawing.Size(74, 13);
+			this.linkLabelStandardFeed.TabIndex = 5;
+			this.linkLabelStandardFeed.TabStop = true;
+			this.linkLabelStandardFeed.Text = "Standard feed";
+			this.linkLabelStandardFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnStandardFeedClick);
+			// 
+			// linkLabelVideoComments
+			// 
+			this.linkLabelVideoComments.AutoSize = true;
+			this.linkLabelVideoComments.Location = new System.Drawing.Point(3, 94);
+			this.linkLabelVideoComments.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelVideoComments.Name = "linkLabelVideoComments";
+			this.linkLabelVideoComments.Size = new System.Drawing.Size(85, 13);
+			this.linkLabelVideoComments.TabIndex = 9;
+			this.linkLabelVideoComments.TabStop = true;
+			this.linkLabelVideoComments.Text = "Video comments";
+			this.linkLabelVideoComments.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnVideoCommentsClick);
+			// 
+			// linkLabelRelatedVideosFeed
+			// 
+			this.linkLabelRelatedVideosFeed.AutoSize = true;
+			this.linkLabelRelatedVideosFeed.Location = new System.Drawing.Point(3, 180);
+			this.linkLabelRelatedVideosFeed.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelRelatedVideosFeed.Name = "linkLabelRelatedVideosFeed";
+			this.linkLabelRelatedVideosFeed.Size = new System.Drawing.Size(102, 13);
+			this.linkLabelRelatedVideosFeed.TabIndex = 7;
+			this.linkLabelRelatedVideosFeed.TabStop = true;
+			this.linkLabelRelatedVideosFeed.Text = "Related videos feed";
+			this.linkLabelRelatedVideosFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnRelatedVideosFeedClick);
+			// 
+			// labelDescription2
+			// 
+			this.labelDescription2.AutoSize = true;
+			this.labelDescription2.Location = new System.Drawing.Point(3, 110);
+			this.labelDescription2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+			this.labelDescription2.Name = "labelDescription2";
+			this.labelDescription2.Size = new System.Drawing.Size(382, 26);
+			this.labelDescription2.TabIndex = 11;
+			this.labelDescription2.Text = "\r\nYou can retrieve the following types of video feeds from the YouTube Data API:";
+			// 
+			// linkLabelResponseVideosFeed
+			// 
+			this.linkLabelResponseVideosFeed.AutoSize = true;
+			this.linkLabelResponseVideosFeed.Location = new System.Drawing.Point(3, 199);
+			this.linkLabelResponseVideosFeed.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelResponseVideosFeed.Name = "linkLabelResponseVideosFeed";
+			this.linkLabelResponseVideosFeed.Size = new System.Drawing.Size(113, 13);
+			this.linkLabelResponseVideosFeed.TabIndex = 8;
+			this.linkLabelResponseVideosFeed.TabStop = true;
+			this.linkLabelResponseVideosFeed.Text = "Response videos feed";
+			this.linkLabelResponseVideosFeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnResponseVideosFeedClick);
+			// 
+			// linkLabelSearchFeed
+			// 
+			this.linkLabelSearchFeed.AutoSize = true;
+			this.linkLabelSearchFeed.Location = new System.Drawing.Point(3, 142);
+			this.linkLabelSearchFeed.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelSearchFeed.Name = "linkLabelSearchFeed";
+			this.linkLabelSearchFeed.Size = new System.Drawing.Size(65, 13);
+			this.linkLabelSearchFeed.TabIndex = 6;
+			this.linkLabelSearchFeed.TabStop = true;
+			this.linkLabelSearchFeed.Text = "Search feed";
 			// 
 			// pictureBoxIcon
 			// 
@@ -204,14 +186,14 @@
 			this.pictureBoxIcon.TabIndex = 6;
 			this.pictureBoxIcon.TabStop = false;
 			// 
-			// ControlYtApi2VideoFeeds
+			// ControlYtApi2VideosGlobal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
-			this.Name = "ControlYtApi2VideoFeeds";
-			this.Size = new System.Drawing.Size(962, 410);
+			this.Name = "ControlYtApi2VideosGlobal";
+			this.Size = new System.Drawing.Size(800, 600);
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
@@ -224,14 +206,13 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
 		private System.Windows.Forms.Label labelTitle;
 		private System.Windows.Forms.Label labelDescription1;
-		private System.Windows.Forms.LinkLabel linkLabelStandardFeed;
-		private System.Windows.Forms.LinkLabel linkLabelVideosFeed;
 		private System.Windows.Forms.LinkLabel linkLabelRelatedVideosFeed;
-		private System.Windows.Forms.LinkLabel linkLabelVideoResponsesFeed;
-		private System.Windows.Forms.LinkLabel linkLabelUserFavoritesFeed;
-		private System.Windows.Forms.LinkLabel linkLabelPlaylistFeed;
+		private System.Windows.Forms.LinkLabel linkLabelVideoComments;
 		private System.Windows.Forms.PictureBox pictureBoxIcon;
 		private System.Windows.Forms.Label labelDescription2;
 		private System.Windows.Forms.LinkLabel linkLabelVideoEntry;
+		private System.Windows.Forms.LinkLabel linkLabelStandardFeed;
+		private System.Windows.Forms.LinkLabel linkLabelSearchFeed;
+		private System.Windows.Forms.LinkLabel linkLabelResponseVideosFeed;
 	}
 }

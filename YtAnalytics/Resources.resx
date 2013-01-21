@@ -1186,4 +1186,28 @@
   <data name="FolderOpenVideo_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FolderOpenVideo_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FolderClosedPlay_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlay_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlay_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlay_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlay_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlay_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlay_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlay_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlay_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlay_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlay_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlay_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlay_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlay_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlay_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlay_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

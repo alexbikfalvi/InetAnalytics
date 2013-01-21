@@ -163,11 +163,11 @@
     <Compile Include="Controls\ControlYtApi2Video.Designer.cs">
       <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Videos.cs">
+    <Compile Include="Controls\ControlYtApi2VideosGlobal.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Videos.Designer.cs">
-      <DependentUpon>ControlYtApi2Videos.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi2VideosGlobal.Designer.cs">
+      <DependentUpon>ControlYtApi2VideosGlobal.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlYtApi3.cs">
       <SubType>UserControl</SubType>
@@ -210,6 +210,12 @@
     </Compile>
     <Compile Include="Controls\ControlComments.Designer.cs">
       <DependentUpon>ControlComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2CommentsFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2CommentsFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
@@ -323,8 +329,8 @@
     <EmbeddedResource Include="Controls\ControlYtApi2StandardFeed.resx">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2Videos.resx">
-      <DependentUpon>ControlYtApi2Videos.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi2VideosGlobal.resx">
+      <DependentUpon>ControlYtApi2VideosGlobal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi3.resx">
       <DependentUpon>ControlYtApi3.cs</DependentUpon>
@@ -346,6 +352,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlComments.resx">
       <DependentUpon>ControlComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2CommentsFeed.resx">
+      <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
@@ -421,6 +430,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\FolderOpenPlay_48.png" />
+    <None Include="Resources\FolderOpenPlay_32.png" />
+    <None Include="Resources\FolderOpenPlay_24.png" />
+    <None Include="Resources\FolderOpenPlay_16.png" />
+    <None Include="Resources\FolderClosedPlay_48.png" />
+    <None Include="Resources\FolderClosedPlay_32.png" />
+    <None Include="Resources\FolderClosedPlay_24.png" />
+    <None Include="Resources\FolderClosedPlay_16.png" />
     <None Include="Resources\FileComment_48.png" />
     <None Include="Resources\FileComment_32.png" />
     <None Include="Resources\FileComment_24.png" />

@@ -93,9 +93,9 @@
 			this.listViewPermissions = new System.Windows.Forms.ListView();
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabPageThumbnails = new System.Windows.Forms.TabPage();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelVideo = new System.Windows.Forms.Label();
-			this.tabPageThumbnails = new System.Windows.Forms.TabPage();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageAuthor.SuspendLayout();
@@ -781,6 +781,16 @@
 			this.columnHeaderValue.Text = "Value";
 			this.columnHeaderValue.Width = 120;
 			// 
+			// tabPageThumbnails
+			// 
+			this.tabPageThumbnails.Location = new System.Drawing.Point(4, 22);
+			this.tabPageThumbnails.Name = "tabPageThumbnails";
+			this.tabPageThumbnails.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageThumbnails.Size = new System.Drawing.Size(588, 290);
+			this.tabPageThumbnails.TabIndex = 5;
+			this.tabPageThumbnails.Text = "Thumbnails";
+			this.tabPageThumbnails.UseVisualStyleBackColor = true;
+			// 
 			// pictureBox
 			// 
 			this.pictureBox.Image = global::YtAnalytics.Resources.FileVideo_32;
@@ -798,16 +808,6 @@
 			this.labelVideo.Size = new System.Drawing.Size(34, 13);
 			this.labelVideo.TabIndex = 1;
 			this.labelVideo.Text = "Video";
-			// 
-			// tabPageThumbnails
-			// 
-			this.tabPageThumbnails.Location = new System.Drawing.Point(4, 22);
-			this.tabPageThumbnails.Name = "tabPageThumbnails";
-			this.tabPageThumbnails.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageThumbnails.Size = new System.Drawing.Size(588, 290);
-			this.tabPageThumbnails.TabIndex = 5;
-			this.tabPageThumbnails.Text = "Thumbnails";
-			this.tabPageThumbnails.UseVisualStyleBackColor = true;
 			// 
 			// ControlVideo
 			// 

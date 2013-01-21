@@ -58,6 +58,7 @@
     <Compile Include="Api\V2\Atom\AtomAuthor.cs" />
     <Compile Include="Api\V2\Atom\AtomBatchOperation.cs" />
     <Compile Include="Api\V2\Atom\AtomCategory.cs" />
+    <Compile Include="Api\V2\Atom\AtomEntryComment.cs" />
     <Compile Include="Api\V2\Atom\AtomContent.cs" />
     <Compile Include="Api\V2\Atom\AtomEntry.cs" />
     <Compile Include="Api\V2\Atom\AtomEntryUser.cs" />

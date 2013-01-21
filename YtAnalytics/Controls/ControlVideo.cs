@@ -42,6 +42,8 @@ namespace YtAnalytics.Controls
 		private List<Image> thumbnails = new List<Image>();
 		private Mutex mutex = new Mutex();
 
+		private WaitCallback delegateThumbnailUpdateCompleted;
+
 		private static string notAvailable = "(not available)";
 
 		/// <summary>
@@ -54,6 +56,8 @@ namespace YtAnalytics.Controls
 			this.Video = null;
 			// Create event handler for the web client.
 			this.web.DownloadDataCompleted += DownloadThumbnailCompleted;
+			// Create a delegate for the completion of thumbnail updates.
+			this.delegateThumbnailUpdateCompleted = new WaitCallback(this.UpdateThumbnailsCompleted);
 		}
 
 		/// <summary>
@@ -171,11 +175,40 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		void DownloadThumbnailCompleted(object sender, DownloadDataCompletedEventArgs e)
 		{
-			// If the request has been canceled, and the current video is not null.
-			if (e.Cancelled && (this.video != null))
+			// If the request has been canceled.
+			if (e.Cancelled)
 			{
-				// Restart the download 
+				// If the current video is not null and different from the current video.
+				if ((null != this.video) && (this.video != e.UserState))
+				{
+					// Restart the download for the new video.
+					this.UpdateThumbnailsAsync(this.video);
+				}
+				else
+				{
+					// Clear the image list and complete the update.
+					this.mutex.WaitOne();
+					try
+					{
+						this.thumbnails.Clear();
+					}
+					finally
+					{
+						this.mutex.ReleaseMutex();
+					}
+					this.UpdateThumbnailsCompleted(e.UserState);
+				}
 			}
+		}
+
+		/// <summary>
+		/// A method called when the download of videos has completed.
+		/// </summary>
+		/// <param name="status"></param>
+		void UpdateThumbnailsCompleted(object status)
+		{
+			// Invoke the method on the UI thread.
+			//if(this.InvokeRequired) this.Invoke(
 		}
 	}
 }

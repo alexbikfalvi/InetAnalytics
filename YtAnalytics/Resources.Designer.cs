@@ -1703,6 +1703,46 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlay_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlay_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlay_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlay_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlay_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlay_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlay_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlay_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FolderClosedUser_16 {
             get {
                 object obj = ResourceManager.GetObject("FolderClosedUser_16", resourceCulture);
@@ -1896,6 +1936,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap FolderOpenComment_48 {
             get {
                 object obj = ResourceManager.GetObject("FolderOpenComment_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlay_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlay_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlay_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlay_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlay_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlay_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlay_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlay_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

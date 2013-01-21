@@ -66,7 +66,7 @@
             this.buttonComment});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(960, 25);
+			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// label
@@ -196,8 +196,8 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(962, 327);
-			this.splitContainer.SplitterDistance = 152;
+			this.splitContainer.Size = new System.Drawing.Size(800, 600);
+			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.TabIndex = 1;
 			// 
 			// controlVideo
@@ -205,7 +205,7 @@
 			this.controlVideo.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlVideo.Location = new System.Drawing.Point(0, 25);
 			this.controlVideo.Name = "controlVideo";
-			this.controlVideo.Size = new System.Drawing.Size(960, 125);
+			this.controlVideo.Size = new System.Drawing.Size(798, 398);
 			this.controlVideo.TabIndex = 0;
 			this.controlVideo.Video = null;
 			// 
@@ -214,16 +214,16 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(960, 169);
+			this.log.Size = new System.Drawing.Size(798, 169);
 			this.log.TabIndex = 0;
 			// 
-			// ControlYtApi2VideoEntry
+			// ControlYtApi2Video
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
-			this.Name = "ControlYtApi2VideoEntry";
-			this.Size = new System.Drawing.Size(962, 327);
+			this.Name = "ControlYtApi2Video";
+			this.Size = new System.Drawing.Size(800, 600);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);

@@ -86,6 +86,11 @@ namespace YtApi.Api.V2.Data
 		}
 
 		/// <summary>
+		/// Returns the atom corresponding to this video.
+		/// </summary>
+		public AtomEntryVideo Atom { get { return this.atom; } }
+
+		/// <summary>
 		/// Returns the Atom ID of the video object (usually an URL of type "http://gdata.youtube.com/feeds/api/videos/xxxxxxxxxxx").
 		/// Use the Id property to get the video ID as published in the media group. It cannot be null.
 		/// </summary>

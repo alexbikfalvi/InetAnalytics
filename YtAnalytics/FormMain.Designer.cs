@@ -168,21 +168,23 @@
 			this.imageList.Images.SetKeyName(3, "FolderClosedVideo");
 			this.imageList.Images.SetKeyName(4, "FolderClosedUser");
 			this.imageList.Images.SetKeyName(5, "FolderClosedComment");
-			this.imageList.Images.SetKeyName(6, "FolderOpen");
-			this.imageList.Images.SetKeyName(7, "FolderOpenXml");
-			this.imageList.Images.SetKeyName(8, "FolderOpenVideo");
-			this.imageList.Images.SetKeyName(9, "FolderOpenUser");
-			this.imageList.Images.SetKeyName(10, "FolderOpenComment");
-			this.imageList.Images.SetKeyName(11, "File");
-			this.imageList.Images.SetKeyName(12, "FileXml");
-			this.imageList.Images.SetKeyName(13, "FileVideo");
-			this.imageList.Images.SetKeyName(14, "FileUser");
-			this.imageList.Images.SetKeyName(15, "FileComment");
-			this.imageList.Images.SetKeyName(16, "FileGraphLine");
-			this.imageList.Images.SetKeyName(17, "GlobeBrowse");
-			this.imageList.Images.SetKeyName(18, "Categories");
-			this.imageList.Images.SetKeyName(19, "Comments");
-			this.imageList.Images.SetKeyName(20, "CommentVideo");
+			this.imageList.Images.SetKeyName(6, "FolderClosedPlay");
+			this.imageList.Images.SetKeyName(7, "FolderOpen");
+			this.imageList.Images.SetKeyName(8, "FolderOpenXml");
+			this.imageList.Images.SetKeyName(9, "FolderOpenVideo");
+			this.imageList.Images.SetKeyName(10, "FolderOpenUser");
+			this.imageList.Images.SetKeyName(11, "FolderOpenComment");
+			this.imageList.Images.SetKeyName(12, "FolderOpenPlay");
+			this.imageList.Images.SetKeyName(13, "File");
+			this.imageList.Images.SetKeyName(14, "FileXml");
+			this.imageList.Images.SetKeyName(15, "FileVideo");
+			this.imageList.Images.SetKeyName(16, "FileUser");
+			this.imageList.Images.SetKeyName(17, "FileComment");
+			this.imageList.Images.SetKeyName(18, "FileGraphLine");
+			this.imageList.Images.SetKeyName(19, "GlobeBrowse");
+			this.imageList.Images.SetKeyName(20, "Categories");
+			this.imageList.Images.SetKeyName(21, "Comments");
+			this.imageList.Images.SetKeyName(22, "CommentVideo");
 			// 
 			// controlPanelConfiguration
 			// 

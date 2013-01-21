@@ -46,42 +46,26 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
-		/// An event raised when the user selects the video feeds.
+		/// An event raised when the user selects the global videos.
 		/// </summary>
-		public event EventHandler ClickVideoFeeds;
+		public event EventHandler VideosGlobalClick;
 		/// <summary>
-		/// An event raised when the user selects the playlists feed.
+		/// An event raised when the user selects the per user videos.
 		/// </summary>
-		public event EventHandler ClickUserPlaylistsFeed;
-		/// <summary>
-		/// An event raised when the user selects the subscriptions feed.
-		/// </summary>
-		public event EventHandler ClickUserSubscriptionsFeed;
-		/// <summary>
-		/// An event raised when the user selects the video comments feed.
-		/// </summary>
-		public event EventHandler ClickVideoCommentsFeed;
-		/// <summary>
-		/// An event raised when the user selects the user profile entry.
-		/// </summary>
-		public event EventHandler ClickUserProfileEntry;
-		/// <summary>
-		/// An event raised when the user selects the contacts feed.
-		/// </summary>
-		public event EventHandler ClickUserContactsFeed;
+		public event EventHandler VideosUserClick;
 		/// <summary>
 		/// An event raised when the user selects the video categories.
 		/// </summary>
-		public event EventHandler ClickCategories;
+		public event EventHandler CategoriesClick;
 
 		/// <summary>
-		/// An event handler called when the user selects the video feeds link.
+		/// An event handler called when the user selects the global videos link.
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnVideoFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
+		private void OnVideosGlobalClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickVideoFeeds) this.ClickVideoFeeds(this, e);
+			if (null != this.VideosGlobalClick) this.VideosGlobalClick(this, e);
 		}
 
 		/// <summary>
@@ -89,49 +73,9 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnUserPlaylistsFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
+		private void OnVideosUserClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickUserPlaylistsFeed) this.ClickUserPlaylistsFeed(this, e);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the subscriptions feed link.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnUserSubscriptionsFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			if (null != this.ClickUserSubscriptionsFeed) this.ClickUserSubscriptionsFeed(this, e);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the comments feed link.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnVideoCommentsFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			if (null != this.ClickVideoCommentsFeed) this.ClickVideoCommentsFeed(this, e);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the user profile entry link.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnUserProfileEntryClick(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			if (null != this.ClickUserProfileEntry) this.ClickUserProfileEntry(this, e);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the user contacts feed link.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnUserContactsFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			if (null != this.ClickUserContactsFeed) this.ClickUserContactsFeed(this, e);
+			if (null != this.VideosUserClick) this.VideosUserClick(this, e);
 		}
 
 		/// <summary>
@@ -141,7 +85,7 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnCategoriesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickCategories) this.ClickCategories(this, e);
+			if (null != this.CategoriesClick) this.CategoriesClick(this, e);
 		}
 	}
 }
