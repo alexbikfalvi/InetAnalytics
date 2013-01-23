@@ -21,12 +21,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YtAnalytics.Forms;
 using YtApi.Api.V2.Data;
 
 namespace YtAnalytics.Controls
@@ -43,6 +45,8 @@ namespace YtAnalytics.Controls
 		private Mutex mutex = new Mutex();
 
 		private WaitCallback delegateThumbnailUpdateCompleted;
+
+		private FormImage formImage = new FormImage();
 
 		private static string notAvailable = "(not available)";
 
@@ -125,6 +129,8 @@ namespace YtAnalytics.Controls
 					}
 
 					// Thumbnails - the update of the thumbnails is done asynchronously, on the thread pool.
+					this.pictureBox.Image = Resources.FileVideo_48;
+					this.pictureBox.SizeMode = PictureBoxSizeMode.Normal;
 					ThreadPool.QueueUserWorkItem(this.UpdateThumbnailsAsync, this.video);
 				}
 			}
@@ -161,9 +167,16 @@ namespace YtAnalytics.Controls
 				// Else, if the video has thumbnails.
 				if (video.Thumbnails.Count > 0)
 				{
-					// Begin a new download for the first thumbnail. Catch all exceptions.
-					try { this.web.DownloadDataAsync(video.Thumbnails[0].Url, video); }
-					catch (Exception) { }
+					try
+					{
+						// Begin a new download for the first thumbnail.
+						this.web.DownloadDataAsync(video.Thumbnails[0].Url, video);
+					}
+					catch (Exception exception)
+					{
+						// If an exception occurs, complete the download.
+						this.DownloadThumbnailCompleted(video, false, exception, null);
+					}
 				}
 			}
 		}
@@ -175,28 +188,83 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		void DownloadThumbnailCompleted(object sender, DownloadDataCompletedEventArgs e)
 		{
-			// If the request has been canceled.
-			if (e.Cancelled)
+			this.DownloadThumbnailCompleted(e.UserState as Video, e.Cancelled, e.Error, e.Result);
+		}
+
+		/// <summary>
+		/// Completes an asynchronous request for a thumbnail.
+		/// </summary>
+		/// <param name="video">The request video.</param>
+		/// <param name="canceled">Indicates whether the request was canceled.</param>
+		/// <param name="exception">The request exception, if any.</param>
+		/// <param name="data">The reequest result.</param>
+		void DownloadThumbnailCompleted(Video video, bool canceled, Exception exception, byte[] data)
+		{
+			if (canceled)
 			{
+				// If the request has been canceled, clear the thumbnail list.
+				this.mutex.WaitOne();
+				try { this.thumbnails.Clear(); }
+				finally { this.mutex.ReleaseMutex(); }
+
 				// If the current video is not null and different from the current video.
-				if ((null != this.video) && (this.video != e.UserState))
+				if ((this.video != null) && (this.video != video))
 				{
 					// Restart the download for the new video.
 					this.UpdateThumbnailsAsync(this.video);
 				}
 				else
 				{
-					// Clear the image list and complete the update.
-					this.mutex.WaitOne();
+					// Otherwise complete the update.
+					this.UpdateThumbnailsCompleted(video);
+				}
+			}
+			else
+			{
+				// If the request completed.
+
+				// Create the thumbnail image.
+				Image image = null;
+
+				// If no error occurred, get the image.
+				if (null == exception)
+				{
+					// Create a memory stream from the specified data.
+					using (MemoryStream stream = new MemoryStream(data))
+					{
+						try
+						{
+							// Create the image from the specified stream.
+							image = Image.FromStream(stream);
+						}
+						catch (Exception) { }
+					}
+				}
+
+				// Add the image to the list.
+				this.mutex.WaitOne();
+				try { this.thumbnails.Add(image); }
+				finally { this.mutex.ReleaseMutex(); }
+
+				// If there are more images to download.
+				if (this.thumbnails.Count < video.Thumbnails.Count)
+				{
+					// Create a new request for the next thumbnail.
 					try
 					{
-						this.thumbnails.Clear();
+						// Begin a new download for the first thumbnail.
+						this.web.DownloadDataAsync(video.Thumbnails[this.thumbnails.Count].Url, video);
 					}
-					finally
+					catch (Exception ex)
 					{
-						this.mutex.ReleaseMutex();
+						// If an exception occurs, complete the download.
+						this.DownloadThumbnailCompleted(video, false, ex, null);
 					}
-					this.UpdateThumbnailsCompleted(e.UserState);
+				}
+				else
+				{
+					// Else, complete the update.
+					this.UpdateThumbnailsCompleted(video);
 				}
 			}
 		}
@@ -204,11 +272,45 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// A method called when the download of videos has completed.
 		/// </summary>
-		/// <param name="status"></param>
+		/// <param name="status">The user state.</param>
 		void UpdateThumbnailsCompleted(object status)
 		{
 			// Invoke the method on the UI thread.
-			//if(this.InvokeRequired) this.Invoke(
+			if (this.InvokeRequired) this.Invoke(this.delegateThumbnailUpdateCompleted, new object[] { status });
+			else
+			{
+				// Get the video.
+				Video video = status as Video;
+
+				// Clear the thumbnails list box.
+				this.imageListBoxThumbnails.Items.Clear();
+
+				if ((video == this.video) && (this.thumbnails.Count > 0))
+				{
+					this.pictureBox.Image = this.thumbnails[0];
+					this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+					for (int index = 0; (index < video.Thumbnails.Count) && (index < this.thumbnails.Count); index++)
+					{
+						this.imageListBoxThumbnails.AddItem(string.Format("{0} ({1})", video.Thumbnails[index].Name, video.Thumbnails[index].Url.ToString()), this.thumbnails[index]);
+					}
+				}
+				else
+				{
+					this.pictureBox.Image = Resources.FileVideo_48;
+					this.pictureBox.SizeMode = PictureBoxSizeMode.Normal;
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user activates a thumbnail.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="item">The item.</param>
+		private void OnThumbnailActivate(object sender, DotNetApi.Windows.Controls.ImageListBoxItem item)
+		{
+			this.formImage.Show(this, item.Text, item.Image);
 		}
 	}
 }

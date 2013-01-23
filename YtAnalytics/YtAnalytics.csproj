@@ -259,6 +259,12 @@
     <Compile Include="Forms\FormException.Designer.cs">
       <DependentUpon>FormException.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormImage.Designer.cs">
+      <DependentUpon>FormImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormVideo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -376,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormException.resx">
       <DependentUpon>FormException.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormImage.resx">
+      <DependentUpon>FormImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormVideo.resx">
       <DependentUpon>FormVideo.cs</DependentUpon>

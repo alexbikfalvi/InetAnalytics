@@ -96,6 +96,7 @@
 			this.tabPageThumbnails = new System.Windows.Forms.TabPage();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelVideo = new System.Windows.Forms.Label();
+			this.imageListBoxThumbnails = new DotNetApi.Windows.Controls.ImageListBox();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageAuthor.SuspendLayout();
@@ -106,6 +107,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDislike)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLike)).BeginInit();
 			this.tabPagePermissions.SuspendLayout();
+			this.tabPageThumbnails.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -343,7 +345,7 @@
 			this.textBoxDescription.Name = "textBoxDescription";
 			this.textBoxDescription.ReadOnly = true;
 			this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxDescription.Size = new System.Drawing.Size(403, 148);
+			this.textBoxDescription.Size = new System.Drawing.Size(403, 142);
 			this.textBoxDescription.TabIndex = 9;
 			this.textBoxDescription.Text = "(not available)";
 			// 
@@ -394,10 +396,10 @@
 			this.tabControl.Controls.Add(this.tabPageStatistics);
 			this.tabControl.Controls.Add(this.tabPagePermissions);
 			this.tabControl.Controls.Add(this.tabPageThumbnails);
-			this.tabControl.Location = new System.Drawing.Point(3, 58);
+			this.tabControl.Location = new System.Drawing.Point(3, 64);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(596, 316);
+			this.tabControl.Size = new System.Drawing.Size(596, 310);
 			this.tabControl.TabIndex = 0;
 			// 
 			// tabPageGeneral
@@ -423,7 +425,7 @@
 			this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabPageGeneral.Name = "tabPageGeneral";
 			this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGeneral.Size = new System.Drawing.Size(588, 290);
+			this.tabPageGeneral.Size = new System.Drawing.Size(588, 284);
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "Basic";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -433,7 +435,7 @@
 			this.checkBoxWidescreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.checkBoxWidescreen.AutoSize = true;
 			this.checkBoxWidescreen.Enabled = false;
-			this.checkBoxWidescreen.Location = new System.Drawing.Point(318, 267);
+			this.checkBoxWidescreen.Location = new System.Drawing.Point(318, 261);
 			this.checkBoxWidescreen.Name = "checkBoxWidescreen";
 			this.checkBoxWidescreen.Size = new System.Drawing.Size(83, 17);
 			this.checkBoxWidescreen.TabIndex = 17;
@@ -445,7 +447,7 @@
 			this.checkBoxPrivate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.checkBoxPrivate.AutoSize = true;
 			this.checkBoxPrivate.Enabled = false;
-			this.checkBoxPrivate.Location = new System.Drawing.Point(75, 267);
+			this.checkBoxPrivate.Location = new System.Drawing.Point(75, 261);
 			this.checkBoxPrivate.Name = "checkBoxPrivate";
 			this.checkBoxPrivate.Size = new System.Drawing.Size(59, 17);
 			this.checkBoxPrivate.TabIndex = 16;
@@ -462,7 +464,7 @@
 			this.tabPageAuthor.Location = new System.Drawing.Point(4, 22);
 			this.tabPageAuthor.Name = "tabPageAuthor";
 			this.tabPageAuthor.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageAuthor.Size = new System.Drawing.Size(588, 290);
+			this.tabPageAuthor.Size = new System.Drawing.Size(588, 284);
 			this.tabPageAuthor.TabIndex = 4;
 			this.tabPageAuthor.Text = "Author";
 			this.tabPageAuthor.UseVisualStyleBackColor = true;
@@ -533,7 +535,7 @@
 			this.tabPageUpload.Location = new System.Drawing.Point(4, 22);
 			this.tabPageUpload.Name = "tabPageUpload";
 			this.tabPageUpload.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageUpload.Size = new System.Drawing.Size(588, 290);
+			this.tabPageUpload.Size = new System.Drawing.Size(588, 284);
 			this.tabPageUpload.TabIndex = 1;
 			this.tabPageUpload.Text = "Upload";
 			this.tabPageUpload.UseVisualStyleBackColor = true;
@@ -598,7 +600,7 @@
 			this.tabPageStatistics.Location = new System.Drawing.Point(4, 22);
 			this.tabPageStatistics.Name = "tabPageStatistics";
 			this.tabPageStatistics.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageStatistics.Size = new System.Drawing.Size(588, 290);
+			this.tabPageStatistics.Size = new System.Drawing.Size(588, 284);
 			this.tabPageStatistics.TabIndex = 2;
 			this.tabPageStatistics.Text = "Statistics";
 			this.tabPageStatistics.UseVisualStyleBackColor = true;
@@ -747,7 +749,7 @@
 			this.tabPagePermissions.Location = new System.Drawing.Point(4, 22);
 			this.tabPagePermissions.Name = "tabPagePermissions";
 			this.tabPagePermissions.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPagePermissions.Size = new System.Drawing.Size(588, 290);
+			this.tabPagePermissions.Size = new System.Drawing.Size(588, 284);
 			this.tabPagePermissions.TabIndex = 3;
 			this.tabPagePermissions.Text = "Permissions";
 			this.tabPagePermissions.UseVisualStyleBackColor = true;
@@ -766,7 +768,7 @@
 			this.listViewPermissions.HideSelection = false;
 			this.listViewPermissions.Location = new System.Drawing.Point(6, 6);
 			this.listViewPermissions.Name = "listViewPermissions";
-			this.listViewPermissions.Size = new System.Drawing.Size(574, 280);
+			this.listViewPermissions.Size = new System.Drawing.Size(574, 274);
 			this.listViewPermissions.TabIndex = 0;
 			this.listViewPermissions.UseCompatibleStateImageBehavior = false;
 			this.listViewPermissions.View = System.Windows.Forms.View.Details;
@@ -783,31 +785,45 @@
 			// 
 			// tabPageThumbnails
 			// 
+			this.tabPageThumbnails.Controls.Add(this.imageListBoxThumbnails);
 			this.tabPageThumbnails.Location = new System.Drawing.Point(4, 22);
 			this.tabPageThumbnails.Name = "tabPageThumbnails";
 			this.tabPageThumbnails.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageThumbnails.Size = new System.Drawing.Size(588, 290);
+			this.tabPageThumbnails.Size = new System.Drawing.Size(588, 284);
 			this.tabPageThumbnails.TabIndex = 5;
 			this.tabPageThumbnails.Text = "Thumbnails";
 			this.tabPageThumbnails.UseVisualStyleBackColor = true;
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::YtAnalytics.Resources.FileVideo_32;
-			this.pictureBox.Location = new System.Drawing.Point(20, 20);
+			this.pictureBox.Image = global::YtAnalytics.Resources.FileVideo_48;
+			this.pictureBox.Location = new System.Drawing.Point(10, 10);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(32, 32);
+			this.pictureBox.Size = new System.Drawing.Size(64, 48);
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
 			// labelVideo
 			// 
 			this.labelVideo.AutoSize = true;
-			this.labelVideo.Location = new System.Drawing.Point(59, 29);
+			this.labelVideo.Location = new System.Drawing.Point(80, 27);
 			this.labelVideo.Name = "labelVideo";
 			this.labelVideo.Size = new System.Drawing.Size(34, 13);
 			this.labelVideo.TabIndex = 1;
 			this.labelVideo.Text = "Video";
+			// 
+			// imageListBoxThumbnails
+			// 
+			this.imageListBoxThumbnails.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.imageListBoxThumbnails.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.imageListBoxThumbnails.FormattingEnabled = true;
+			this.imageListBoxThumbnails.ImageWidth = 64;
+			this.imageListBoxThumbnails.ItemHeight = 48;
+			this.imageListBoxThumbnails.Location = new System.Drawing.Point(3, 3);
+			this.imageListBoxThumbnails.Name = "imageListBoxThumbnails";
+			this.imageListBoxThumbnails.Size = new System.Drawing.Size(582, 278);
+			this.imageListBoxThumbnails.TabIndex = 0;
+			this.imageListBoxThumbnails.ItemActivate += new DotNetApi.Windows.Controls.ImageListBoxItemActivateEventHandler(this.OnThumbnailActivate);
 			// 
 			// ControlVideo
 			// 
@@ -834,6 +850,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDislike)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLike)).EndInit();
 			this.tabPagePermissions.ResumeLayout(false);
+			this.tabPageThumbnails.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -910,5 +927,6 @@
 		private System.Windows.Forms.TextBox textBoxAuthorId;
 		private System.Windows.Forms.Button buttonViewAuthor;
 		private System.Windows.Forms.TabPage tabPageThumbnails;
+		private DotNetApi.Windows.Controls.ImageListBox imageListBoxThumbnails;
 	}
 }
