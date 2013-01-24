@@ -94,9 +94,9 @@
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabPageThumbnails = new System.Windows.Forms.TabPage();
+			this.imageListBoxThumbnails = new DotNetApi.Windows.Controls.ImageListBox();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelVideo = new System.Windows.Forms.Label();
-			this.imageListBoxThumbnails = new DotNetApi.Windows.Controls.ImageListBox();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageAuthor.SuspendLayout();
@@ -239,7 +239,7 @@
 			// 
 			// textBoxKeywords
 			// 
-			this.textBoxKeywords.Location = new System.Drawing.Point(318, 9);
+			this.textBoxKeywords.Location = new System.Drawing.Point(318, 10);
 			this.textBoxKeywords.Name = "textBoxKeywords";
 			this.textBoxKeywords.ReadOnly = true;
 			this.textBoxKeywords.Size = new System.Drawing.Size(160, 20);
@@ -248,7 +248,7 @@
 			// 
 			// textBoxCategory
 			// 
-			this.textBoxCategory.Location = new System.Drawing.Point(318, 35);
+			this.textBoxCategory.Location = new System.Drawing.Point(318, 36);
 			this.textBoxCategory.Name = "textBoxCategory";
 			this.textBoxCategory.ReadOnly = true;
 			this.textBoxCategory.Size = new System.Drawing.Size(160, 20);
@@ -794,6 +794,19 @@
 			this.tabPageThumbnails.Text = "Thumbnails";
 			this.tabPageThumbnails.UseVisualStyleBackColor = true;
 			// 
+			// imageListBoxThumbnails
+			// 
+			this.imageListBoxThumbnails.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.imageListBoxThumbnails.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.imageListBoxThumbnails.FormattingEnabled = true;
+			this.imageListBoxThumbnails.ImageWidth = 64;
+			this.imageListBoxThumbnails.ItemHeight = 48;
+			this.imageListBoxThumbnails.Location = new System.Drawing.Point(3, 3);
+			this.imageListBoxThumbnails.Name = "imageListBoxThumbnails";
+			this.imageListBoxThumbnails.Size = new System.Drawing.Size(582, 278);
+			this.imageListBoxThumbnails.TabIndex = 0;
+			this.imageListBoxThumbnails.ItemActivate += new DotNetApi.Windows.Controls.ImageListBoxItemActivateEventHandler(this.OnThumbnailActivate);
+			// 
 			// pictureBox
 			// 
 			this.pictureBox.Image = global::YtAnalytics.Resources.FileVideo_48;
@@ -811,19 +824,6 @@
 			this.labelVideo.Size = new System.Drawing.Size(34, 13);
 			this.labelVideo.TabIndex = 1;
 			this.labelVideo.Text = "Video";
-			// 
-			// imageListBoxThumbnails
-			// 
-			this.imageListBoxThumbnails.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.imageListBoxThumbnails.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.imageListBoxThumbnails.FormattingEnabled = true;
-			this.imageListBoxThumbnails.ImageWidth = 64;
-			this.imageListBoxThumbnails.ItemHeight = 48;
-			this.imageListBoxThumbnails.Location = new System.Drawing.Point(3, 3);
-			this.imageListBoxThumbnails.Name = "imageListBoxThumbnails";
-			this.imageListBoxThumbnails.Size = new System.Drawing.Size(582, 278);
-			this.imageListBoxThumbnails.TabIndex = 0;
-			this.imageListBoxThumbnails.ItemActivate += new DotNetApi.Windows.Controls.ImageListBoxItemActivateEventHandler(this.OnThumbnailActivate);
 			// 
 			// ControlVideo
 			// 

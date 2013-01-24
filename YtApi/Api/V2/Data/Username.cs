@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,34 +20,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using YtApi.Api.V2.Atom;
 
-namespace YtApi.Api.V2.Atom
+namespace YtApi.Api.V2.Data
 {
-	[Serializable]
-	public sealed class AtomGdFeedLink : Atom
+	/// <summary>
+	/// A class describing a username.
+	/// </summary>
+	public class Username
 	{
-		private AtomGdFeedLink() { }
+		private AtomYtUsername atom;
 
-		public static AtomGdFeedLink Parse(XElement element)
+		/// <summary>
+		/// Creates a username object based on an atom instance.
+		/// </summary>
+		/// <param name="atom">The atom instance.</param>
+		public Username(AtomYtUsername atom)
 		{
-			AtomGdFeedLink atom = new AtomGdFeedLink();
-
-			XAttribute attr;
-
-			// Mandatory attributes.
-			atom.Rel = element.Attribute(XName.Get("rel")).Value;
-			atom.Href = new Uri(element.Attribute(XName.Get("href")).Value);
-
-			// Optional attributes.
-			atom.CountHint = (attr = element.Attribute(XName.Get("countHint"))) != null ? int.Parse(attr.Value) as int? : null;
-
-			return atom;
+			this.atom = atom;
 		}
 
-		public string Rel { get; set; }
-		public Uri Href { get; set; }
-		public int? CountHint { get; set; }
+		/// <summary>
+		/// Returns the username ID.
+		/// </summary>
+		public string Id { get { return this.atom.Value; } }
+
+		/// <summary>
+		/// Returns the username display name.
+		/// </summary>
+		public string Display { get { return this.atom.Display; } }
 	}
 }

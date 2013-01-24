@@ -217,6 +217,18 @@
     <Compile Include="Controls\ControlYtApi2CommentsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlProfile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlProfile.Designer.cs">
+      <DependentUpon>ControlProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2Profile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2Profile.Designer.cs">
+      <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -361,6 +373,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2CommentsFeed.resx">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlProfile.resx">
+      <DependentUpon>ControlProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2Profile.resx">
+      <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>

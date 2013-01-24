@@ -38,10 +38,10 @@ namespace YtApi.Api.V2.Atom
 
 			// Mandatory attributes
 			atom.Url = new Uri(element.Attribute(XName.Get("url")).Value);
-			atom.Height = int.Parse(element.Attribute(XName.Get("height")).Value);
-			atom.Width = int.Parse(element.Attribute(XName.Get("width")).Value);
 
 			// Optional attributes
+			atom.Height = (attr = element.Attribute(XName.Get("height"))) != null ? int.Parse(attr.Value) as int? : null;
+			atom.Width = (attr = element.Attribute(XName.Get("width"))) != null ? int.Parse(attr.Value) as int? : null;
 			atom.Time = (attr = element.Attribute(XName.Get("time"))) != null ? TimeSpan.Parse(attr.Value) as TimeSpan? : null;
 			atom.YtName = (attr = element.Attribute(XName.Get("name", ns["yt"]))) != null ? attr.Value : null;
 
@@ -49,8 +49,8 @@ namespace YtApi.Api.V2.Atom
 		}
 
 		public Uri Url { get; set; }
-		public int Height { get; set; }
-		public int Width { get; set; }
+		public int? Height { get; set; }
+		public int? Width { get; set; }
 		public TimeSpan? Time { get; set; }
 		public string YtName { get; set; }
 	}

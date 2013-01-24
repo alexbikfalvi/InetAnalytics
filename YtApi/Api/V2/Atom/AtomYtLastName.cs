@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,34 +20,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a user's last name.
+	/// </summary>
 	[Serializable]
-	public sealed class AtomGdFeedLink : Atom
+	public class AtomYtLastName
 	{
-		private AtomGdFeedLink() { }
+		private AtomYtLastName() { }
 
-		public static AtomGdFeedLink Parse(XElement element)
+		public static AtomYtLastName Parse(XElement element)
 		{
-			AtomGdFeedLink atom = new AtomGdFeedLink();
+			AtomYtLastName atom = new AtomYtLastName();
 
-			XAttribute attr;
-
-			// Mandatory attributes.
-			atom.Rel = element.Attribute(XName.Get("rel")).Value;
-			atom.Href = new Uri(element.Attribute(XName.Get("href")).Value);
-
-			// Optional attributes.
-			atom.CountHint = (attr = element.Attribute(XName.Get("countHint"))) != null ? int.Parse(attr.Value) as int? : null;
+			atom.Value = element.Value;
 
 			return atom;
 		}
 
-		public string Rel { get; set; }
-		public Uri Href { get; set; }
-		public int? CountHint { get; set; }
+		public string Value { get; set; }
 	}
 }

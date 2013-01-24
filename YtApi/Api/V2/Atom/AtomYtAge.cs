@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2013 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,44 +25,29 @@ using System.Xml.Linq;
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// A class representing a user entry.
+	/// A class representing a user's age.
 	/// </summary>
 	[Serializable]
-	public class AtomEntryUser : AtomEntry
+	public class AtomYtAge
 	{
-		private AtomEntryUser() { }
+		private AtomYtAge() { }
 
-		/// <summary>
-		/// Parses an XML string into a user entry atom.
-		/// </summary>
-		/// <param name="data">The XML string.</param>
-		/// <returns>The user entry atom.</returns>
-		public static AtomEntryUser Parse(string data)
+		public static AtomYtAge Parse(XElement element)
 		{
-			return AtomEntryUser.Parse(XDocument.Parse(data).Root);
-		}
-
-		/// <summary>
-		/// Parses an XML entry element into a user entry atom.
-		/// </summary>
-		/// <param name="element">The XML element.</param>
-		/// <returns>The user entry atom.</returns>
-		public static AtomEntryUser Parse(XElement element, XmlNamespace top = null)
-		{
-			AtomEntryUser atom = new AtomEntryUser();
-			XmlNamespace ns = new XmlNamespace(element, top);
-			XElement el;
+			AtomYtAge atom = new AtomYtAge();
 
 			try
 			{
-				AtomEntry.Parse(element, atom, ns);
+				atom.Value = int.Parse(element.Value);
 			}
-			catch (Exception exception)
+			catch (FormatException)
 			{
-				throw new AtomException("Cannot parse user entry.", element, ns, exception);
+				atom.Value = -1;
 			}
 
 			return atom;
 		}
+
+		public int Value { get; set; }
 	}
 }

@@ -204,6 +204,11 @@ namespace YtApi.Api.V2
 		private static string uriVideoYouTubePattern = "http://www.youtube.com/watch?v={0}";
 
 		/// <summary>
+		/// 0 - user ID
+		/// </summary>
+		private static string uriProfileEntryPattern = "http://gdata.youtube.com/feeds/api/users/{0}?v=2";
+
+		/// <summary>
 		/// Returns the URI for YouTube categories.
 		/// </summary>
 		public static Uri UriCategories { get { return YouTubeUri.uriCategories; } }
@@ -405,6 +410,18 @@ namespace YtApi.Api.V2
 		public static string GetYouTubeLink(string id)
 		{
 			return string.Format(YouTubeUri.uriVideoYouTubePattern, id);
+		}
+
+		/// <summary>
+		/// Creates a profile entry URI.
+		/// </summary>
+		/// <param name="id">The profile ID.</param>
+		/// <returns>A URI for the selected profile.</returns>
+		public static Uri GetProfileEntry(
+			string id
+			)
+		{
+			return new Uri(string.Format(YouTubeUri.uriProfileEntryPattern, id));
 		}
 	}
 }

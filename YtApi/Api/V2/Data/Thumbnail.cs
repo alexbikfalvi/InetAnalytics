@@ -46,14 +46,14 @@ namespace YtApi.Api.V2.Data
 		public Uri Url { get { return this.atom.Url; } }
 
 		/// <summary>
-		/// The thumbnail width.
+		/// The thumbnail width. It can be null.
 		/// </summary>
-		public int Width { get { return this.atom.Width; } }
+		public int? Width { get { return this.atom.Width; } }
 
 		/// <summary>
-		/// The thumbnail height.
+		/// The thumbnail height. It can be null.
 		/// </summary>
-		public int Height { get { return this.atom.Height; } }
+		public int? Height { get { return this.atom.Height; } }
 
 		/// <summary>
 		/// The timestamp at which the thumbnail was taken. It can be null.

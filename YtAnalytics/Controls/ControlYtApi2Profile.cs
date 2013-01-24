@@ -35,23 +35,23 @@ using YtAnalytics.Controls;
 
 namespace YtAnalytics.Controls
 {
-	public delegate void ViewVideoEventHandler(Video video);
+	public delegate void ViewProfileEventHandler(Profile profile);
 
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2Video : UserControl
+	public partial class ControlYtApi2Profile : UserControl
 	{
-		private static string logSource = "APIv2 Video Entry";
+		private static string logSource = "APIv2 Profile Entry";
 
 		private Crawler crawler;
-		private YouTubeRequestVideo request;
+		private YouTubeRequestProfile request;
 		private IAsyncResult result;
 
 		/// <summary>
 		/// Creates a new instance of the control.
 		/// </summary>
-		public ControlYtApi2Video()
+		public ControlYtApi2Profile()
 		{
 			// Initialize component.
 			InitializeComponent();
@@ -62,22 +62,22 @@ namespace YtAnalytics.Controls
 		}
 
 
-		/// <summary>
-		/// View the related videos.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoRelatedInApiV2;
-		/// <summary>
-		/// View the response videos.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoResponsesInApiV2;
-		/// <summary>
-		/// View the video statistics using the web.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoInWeb;
-		/// <summary>
-		/// An event handler called when the user adds a new comment.
-		/// </summary>
-		public event AddVideoCommentEventHandler Comment;
+		///// <summary>
+		///// View the related videos.
+		///// </summary>
+		//public event ViewProfileEventHandler ViewVideoRelatedInApiV2;
+		///// <summary>
+		///// View the response videos.
+		///// </summary>
+		//public event ViewProfileEventHandler ViewVideoResponsesInApiV2;
+		///// <summary>
+		///// View the video statistics using the web.
+		///// </summary>
+		//public event ViewVideoEventHandler ViewVideoInWeb;
+		///// <summary>
+		///// An event handler called when the user adds a new comment.
+		///// </summary>
+		//public event AddVideoCommentEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control with a crawler instance.
@@ -86,19 +86,19 @@ namespace YtAnalytics.Controls
 		public void Initialize(Crawler crawler)
 		{
 			this.crawler = crawler;
-			this.request = new YouTubeRequestVideo(this.crawler.Settings);
+			this.request = new YouTubeRequestProfile(this.crawler.Settings);
 		}
 
 		/// <summary>
-		/// Displays the specified video object.
+		/// Displays the specified user profile.
 		/// </summary>
-		/// <param name="video"></param>
-		public void View(Video video)
+		/// <param name="profile">The user profile.</param>
+		public void View(Profile profile)
 		{
 			if (!this.textBox.Enabled) return;
-			this.controlVideo.Video = video;
-			if (null == video) return;
-			this.textBox.Text = video.Id;
+			this.controlProfile.Profile = profile;
+			if (null == profile) return;
+			this.textBox.Text = profile.Id;
 			this.buttonView.Enabled = true;
 			this.buttonComment.Enabled = true;
 		}
@@ -116,7 +116,7 @@ namespace YtAnalytics.Controls
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Stop,
-					ControlYtApi2Video.logSource,
+					ControlYtApi2Profile.logSource,
 					"The video ID text box cannot be empty."));
 				return;
 			}
@@ -132,8 +132,8 @@ namespace YtAnalytics.Controls
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
-				ControlYtApi2Video.logSource,
-				"Started request for video ID \'{0}\'.",
+				ControlYtApi2Profile.logSource,
+				"Started request for user profile ID \'{0}\'.",
 				new object[] { this.textBox.Text }));
 
 			try
@@ -146,8 +146,8 @@ namespace YtAnalytics.Controls
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
 					LogEventType.Error,
-					ControlYtApi2Video.logSource,
-					"The request for video ID \'{0}\' failed. {1}",
+					ControlYtApi2Profile.logSource,
+					"The request for user profile ID \'{0}\' failed. {1}",
 					new object[] { this.textBox.Text, exception.Message},
 					exception));
 			}
@@ -176,9 +176,9 @@ namespace YtAnalytics.Controls
 				try
 				{
 					// Complete the request
-					Video video = this.request.End(result);
+					Profile profile = this.request.End(result);
 
-					this.controlVideo.Video = video;
+					this.controlProfile.Profile = profile;
 					this.buttonView.Enabled = true;
 					this.buttonComment.Enabled = true;
 
@@ -186,8 +186,8 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Success,
-						ControlYtApi2Video.logSource,
-						"The request for video ID \'{0}\' completed successfully.",
+						ControlYtApi2Profile.logSource,
+						"The request for user profile ID \'{0}\' completed successfully.",
 						new object[] { this.textBox.Text }));
 				}
 				catch (WebException exception)
@@ -196,15 +196,15 @@ namespace YtAnalytics.Controls
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
 							LogEventType.Canceled,
-							ControlYtApi2Video.logSource,
-							"The request for video ID \'{0}\' has been canceled.",
+							ControlYtApi2Profile.logSource,
+							"The request for user profile ID \'{0}\' has been canceled.",
 							new object[] { this.textBox.Text }));
 					else
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
-							ControlYtApi2Video.logSource,
-							"The request for video ID \'{0}\' failed. {1}",
+							ControlYtApi2Profile.logSource,
+							"The request for user profile ID \'{0}\' failed. {1}",
 							new object[] { this.textBox.Text, exception.Message },
 							exception));
 				}
@@ -213,8 +213,8 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
-						ControlYtApi2Video.logSource,
-						"The request for video ID \'{0}\' failed. {1}",
+						ControlYtApi2Profile.logSource,
+						"The request for user profile ID \'{0}\' failed. {1}",
 						new object[] { this.textBox.Text, exception.Message },
 						exception));
 				}
@@ -237,60 +237,60 @@ namespace YtAnalytics.Controls
 			this.buttonStart.Enabled = this.textBox.Text != string.Empty;
 		}
 
-		/// <summary>
-		/// An event handler called when the user selects to open the related videos.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
+		///// <summary>
+		///// An event handler called when the user selects to open the related videos.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
 		private void OnRelatedVideosClick(object sender, EventArgs e)
 		{
-			if (null == this.controlVideo.Video) return;
-			if (null != this.ViewVideoRelatedInApiV2) this.ViewVideoRelatedInApiV2(this.controlVideo.Video);
+		//	if (null == this.controlVideo.Video) return;
+		//	if (null != this.ViewVideoRelatedInApiV2) this.ViewVideoRelatedInApiV2(this.controlVideo.Video);
 		}
 
-		/// <summary>
-		/// An event handler called when the user selects to open the response videos.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
+		///// <summary>
+		///// An event handler called when the user selects to open the response videos.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
 		private void OnResponseVideosClick(object sender, EventArgs e)
 		{
-			if (null == this.controlVideo.Video) return;
-			if (null != this.ViewVideoResponsesInApiV2) this.ViewVideoResponsesInApiV2(this.controlVideo.Video);
+		//	if (null == this.controlVideo.Video) return;
+		//	if (null != this.ViewVideoResponsesInApiV2) this.ViewVideoResponsesInApiV2(this.controlVideo.Video);
 		}
 
-		/// <summary>
-		/// An event handler called when the user selects to open the web statistics.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
+		///// <summary>
+		///// An event handler called when the user selects to open the web statistics.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
 		private void OnWebStatisticsClick(object sender, EventArgs e)
 		{
-			if (null == this.controlVideo.Video) return;
-			if (null != this.ViewVideoInWeb) this.ViewVideoInWeb(this.controlVideo.Video);
+		//	if (null == this.controlVideo.Video) return;
+		//	if (null != this.ViewVideoInWeb) this.ViewVideoInWeb(this.controlVideo.Video);
 		}
 
-		/// <summary>
-		/// An event handler called when the user selects to open the video in YouYube.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
+		///// <summary>
+		///// An event handler called when the user selects to open the video in YouYube.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
 		private void OnOpenYouTubeClick(object sender, EventArgs e)
 		{
-			if (null == this.controlVideo.Video) return;
-			// Open the video link in the browser.
-			Process.Start(YouTubeUri.GetYouTubeLink(this.controlVideo.Video.Id));
+		//	if (null == this.controlVideo.Video) return;
+		//	// Open the video link in the browser.
+		//	Process.Start(YouTubeUri.GetYouTubeLink(this.controlVideo.Video.Id));
 		}
 
-		/// <summary>
-		/// An event handler called when the user adds a comment for this video.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
+		///// <summary>
+		///// An event handler called when the user adds a comment for this video.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
 		private void OnCommentClick(object sender, EventArgs e)
 		{
-			if (null == this.controlVideo.Video) return;
-			if (null != this.Comment) this.Comment(this.controlVideo.Video.Id);
+		//	if (null == this.controlVideo.Video) return;
+		//	if (null != this.Comment) this.Comment(this.controlVideo.Video.Id);
 		}
 	}
 }

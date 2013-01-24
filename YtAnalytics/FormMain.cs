@@ -87,6 +87,7 @@ namespace YtAnalytics
 		private ControlYtApi2StandardFeed controlYtApi2FeedStandard = new ControlYtApi2StandardFeed();
 		private ControlYtApi2GeneralVideosFeed controlYtApi2FeedRelated = new ControlYtApi2GeneralVideosFeed();
 		private ControlYtApi2GeneralVideosFeed controlYtApi2FeedResponse = new ControlYtApi2GeneralVideosFeed();
+		private ControlYtApi2Profile controlYtApi2Profile = new ControlYtApi2Profile();
 		private ControlYtApi3 controlYtApi3 = new ControlYtApi3();
 		private ControlWeb controlWeb = new ControlWeb();
 		private ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
@@ -233,6 +234,7 @@ namespace YtAnalytics
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Search);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2FeedRelated);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2FeedResponse);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Profile);
 			this.splitContainer.Panel2.Controls.Add(this.controlWeb);
 			this.splitContainer.Panel2.Controls.Add(this.controlWebStatistics);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
@@ -249,7 +251,7 @@ namespace YtAnalytics
 			this.treeNodeBrowserApi2RelatedVideosFeed.Tag = this.controlYtApi2FeedRelated;
 			this.treeNodeBrowserApi2ResponseVideosFeed.Tag = this.controlYtApi2FeedResponse;
 			this.treeNodeBrowserApi2VideosUser.Tag = null;
-			this.treeNodeBrowserApi2User.Tag = null;
+			this.treeNodeBrowserApi2User.Tag = this.controlYtApi2Profile;
 			this.treeNodeBrowserApi2Contacts.Tag = null;
 			this.treeNodeBrowserApi2Playlists.Tag = null;
 			this.treeNodeBrowserApi2FavoritesFeed.Tag = null;
@@ -311,6 +313,7 @@ namespace YtAnalytics
 			this.controlYtApi2Search.Initialize(this.crawler);
 			this.controlYtApi2FeedRelated.Initialize(this.crawler, new GeneralVideosFeedEventHandler(YouTubeUri.GetRelatedVideosFeed), "APIv2 Related Videos Feed");
 			this.controlYtApi2FeedResponse.Initialize(this.crawler, new GeneralVideosFeedEventHandler(YouTubeUri.GetResponseVideosFeed), "APIv2 Response Videos Feed");
+			this.controlYtApi2Profile.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler);
