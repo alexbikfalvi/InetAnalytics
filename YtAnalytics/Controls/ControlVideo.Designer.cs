@@ -63,7 +63,7 @@
 			this.checkBoxWidescreen = new System.Windows.Forms.CheckBox();
 			this.checkBoxPrivate = new System.Windows.Forms.CheckBox();
 			this.tabPageAuthor = new System.Windows.Forms.TabPage();
-			this.buttonViewAuthor = new System.Windows.Forms.Button();
+			this.buttonViewProfile = new System.Windows.Forms.Button();
 			this.textBoxAuthorName = new System.Windows.Forms.TextBox();
 			this.labelAuthorName = new System.Windows.Forms.Label();
 			this.labelAuthorId = new System.Windows.Forms.Label();
@@ -456,7 +456,7 @@
 			// 
 			// tabPageAuthor
 			// 
-			this.tabPageAuthor.Controls.Add(this.buttonViewAuthor);
+			this.tabPageAuthor.Controls.Add(this.buttonViewProfile);
 			this.tabPageAuthor.Controls.Add(this.textBoxAuthorName);
 			this.tabPageAuthor.Controls.Add(this.labelAuthorName);
 			this.tabPageAuthor.Controls.Add(this.labelAuthorId);
@@ -469,17 +469,18 @@
 			this.tabPageAuthor.Text = "Author";
 			this.tabPageAuthor.UseVisualStyleBackColor = true;
 			// 
-			// buttonViewAuthor
+			// buttonViewProfile
 			// 
-			this.buttonViewAuthor.Enabled = false;
-			this.buttonViewAuthor.Image = global::YtAnalytics.Resources.User_16;
-			this.buttonViewAuthor.Location = new System.Drawing.Point(75, 63);
-			this.buttonViewAuthor.Name = "buttonViewAuthor";
-			this.buttonViewAuthor.Size = new System.Drawing.Size(95, 23);
-			this.buttonViewAuthor.TabIndex = 4;
-			this.buttonViewAuthor.Text = "&View entry";
-			this.buttonViewAuthor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonViewAuthor.UseVisualStyleBackColor = true;
+			this.buttonViewProfile.Enabled = false;
+			this.buttonViewProfile.Image = global::YtAnalytics.Resources.User_16;
+			this.buttonViewProfile.Location = new System.Drawing.Point(75, 63);
+			this.buttonViewProfile.Name = "buttonViewProfile";
+			this.buttonViewProfile.Size = new System.Drawing.Size(95, 23);
+			this.buttonViewProfile.TabIndex = 4;
+			this.buttonViewProfile.Text = "&View profile";
+			this.buttonViewProfile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.buttonViewProfile.UseVisualStyleBackColor = true;
+			this.buttonViewProfile.Click += new System.EventHandler(this.OnViewProfile);
 			// 
 			// textBoxAuthorName
 			// 
@@ -925,7 +926,7 @@
 		private System.Windows.Forms.Label labelAuthorName;
 		private System.Windows.Forms.Label labelAuthorId;
 		private System.Windows.Forms.TextBox textBoxAuthorId;
-		private System.Windows.Forms.Button buttonViewAuthor;
+		private System.Windows.Forms.Button buttonViewProfile;
 		private System.Windows.Forms.TabPage tabPageThumbnails;
 		private DotNetApi.Windows.Controls.ImageListBox imageListBoxThumbnails;
 	}

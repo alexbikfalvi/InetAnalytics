@@ -546,6 +546,9 @@ namespace YtAnalytics
 
 		private void ViewUserInApiV2(string user)
 		{
+			this.sideMenu.SelectedItem = this.sideMenuBrowse;
+			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2User;
+			this.controlYtApi2Profile.View(user);
 		}
 
 		//private void ViewUserInApiV2(User user)

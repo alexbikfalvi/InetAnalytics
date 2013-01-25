@@ -97,7 +97,7 @@ namespace YtAnalytics.Controls
 					// Author
 					this.textBoxAuthorName.Text = this.video.Author != null ? this.video.Author.Name : ControlVideo.notAvailable;
 					this.textBoxAuthorId.Text = this.video.Author != null ? this.video.Author.UserId : ControlVideo.notAvailable;
-					this.buttonViewAuthor.Enabled = this.video.Author != null;
+					this.buttonViewProfile.Enabled = this.video.Author != null;
 
 					// Upload
 					this.textBoxUploaded.Text = this.video.Uploaded != null ? this.video.Uploaded.ToString() : ControlVideo.notAvailable;
@@ -311,6 +311,16 @@ namespace YtAnalytics.Controls
 		private void OnThumbnailActivate(object sender, DotNetApi.Windows.Controls.ImageListBoxItem item)
 		{
 			this.formImage.Show(this, item.Text, item.Image);
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the view user profile button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The item.</param>
+		private void OnViewProfile(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

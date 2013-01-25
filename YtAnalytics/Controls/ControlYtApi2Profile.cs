@@ -104,6 +104,20 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
+		/// Begins a query for the specified profile ID.
+		/// </summary>
+		/// <param name="id">The user profile ID.</param>
+		public void View(string id)
+		{
+			if (!this.textBox.Enabled) return;
+			this.textBox.Text = id;
+			this.buttonView.Enabled = true;
+			this.buttonComment.Enabled = true;
+			// Begin the query.
+			this.Start(this, null);
+		}
+
+		/// <summary>
 		/// Starts an asynchronous request for a video entry.
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
