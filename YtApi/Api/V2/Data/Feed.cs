@@ -53,17 +53,17 @@ namespace YtApi.Api.V2.Data
 
 			this.entries = new List<T>(this.atom.Entry.Count);
 			this.exceptionsEntry = new List<YouTubeAtomException>();
-			foreach (AtomEntryVideo video in this.atom.Entry)
+			foreach (AtomEntry entry in this.atom.Entry)
 			{
 				// Try to add a new feed entry.
 				try
 				{
-					this.entries.Add((new T()).Create(video) as T);
+					this.entries.Add((new T()).Create(entry) as T);
 				}
 				catch (Exception exception)
 				{
 					// If parsing the atom fails, add the atom and the exception to the failure list.
-					this.exceptionsEntry.Add(new YouTubeAtomException("Cannot parse the video atom.", exception, video));
+					this.exceptionsEntry.Add(new YouTubeAtomException("Cannot parse the entry atom.", exception, entry));
 				}
 			}
 			this.exceptionsEntryAtom = this.atom.EntryFailure;

@@ -1,0 +1,435 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom' xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/' xmlns:yt='http://gdata.youtube.com/schemas/2007'>
+  <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments</id>
+  <updated>2013-01-24T22:32:49.812Z</updated>
+  <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+  <logo>http://www.youtube.com/img/pic_youtubelogo_123x63.gif</logo>
+  <link rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments'/>
+  <link rel='http://schemas.google.com/g/2005#batch' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/batch'/>
+  <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments?start-index=1&amp;max-results=25'/>
+  <link rel='next' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments?start-index=26&amp;max-results=25'/>
+  <author>
+    <name>YouTube</name>
+    <uri>http://www.youtube.com/</uri>
+  </author>
+  <generator version='2.1' uri='http://gdata.youtube.com'>YouTube data API</generator>
+  <openSearch:totalResults>264</openSearch:totalResults>
+  <openSearch:startIndex>1</openSearch:startIndex>
+  <openSearch:itemsPerPage>25</openSearch:itemsPerPage>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XN29qYL_sXRaO9lONCmcl7s3FbRSaiLR80</id>
+    <published>2006-09-10T23:08:19.000Z</published>
+    <updated>2006-09-10T23:08:19.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>lol i know﻿</title>
+    <content type='text'>lol i know﻿</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XN29qYL_sXRaO9lONCmcl7s3FbRSaiLR80'/>
+    <author>
+      <name>nubflakes</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/nubflakes</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XPsCcL8ZXMbAFvk06LD7WcoyM7WRgGiNcE</id>
+    <published>2006-09-10T22:21:47.000Z</published>
+    <updated>2006-09-10T22:21:47.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>the 2nd one was bad ...</title>
+    <content type='text'>the 2nd one was bad. No beat. I just wonder what﻿ ban made 2nd one(remebers he lips sings)</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XPsCcL8ZXMbAFvk06LD7WcoyM7WRgGiNcE'/>
+    <author>
+      <name>lavaburning</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/lavaburning</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMJP_U3cTAulbwb8cjX52f31eUmkgpNOP8</id>
+    <published>2006-09-10T22:18:44.000Z</published>
+    <updated>2006-09-10T22:18:44.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>i know...lol its ...</title>
+    <content type='text'>i know...lol its not trembling.its probably his desk being shaked by his belly n the webcam was movin up n down lmao﻿</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMJP_U3cTAulbwb8cjX52f31eUmkgpNOP8'/>
+    <author>
+      <name>SmoothBurna</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/SmoothBurna</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XM7ZxyyQXvlfxxYdp3n5lrge_Gt5XUgXt0</id>
+    <published>2006-09-10T22:02:27.000Z</published>
+    <updated>2006-09-10T22:02:27.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>It's really funny ...</title>
+    <content type='text'>It's really funny when the chorus starts it looks like the whole world is﻿ trembling under his weight.</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XM7ZxyyQXvlfxxYdp3n5lrge_Gt5XUgXt0'/>
+    <author>
+      <name>HSJ</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/HSJ</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNDVa1eGY5fujaG26USMrAn6ODuPXEnYQc</id>
+    <published>2006-09-10T22:02:13.000Z</published>
+    <updated>2006-09-10T22:02:13.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>this﻿ guy did'nt ...</title>
+    <content type='text'>this﻿ guy did'nt make up this song retards... the group called "o-zone" made it</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNDVa1eGY5fujaG26USMrAn6ODuPXEnYQc'/>
+    <author>
+      <name>jottyboy</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/jottyboy</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMKaLpz6u-mK3Jg8QVKHu45KTzGHdOJa4g</id>
+    <published>2006-09-10T21:57:16.000Z</published>
+    <updated>2006-09-10T21:57:16.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>hahahahaha. a ...</title>
+    <content type='text'>hahahahaha. a fatass hating on another fatass. don't be jealous that ur gay cs video is not as hilarious as numa numa. numa numa﻿ is a legend while sadly u'll just be another fatass taking up too much space in this world.</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='http://gdata.youtube.com/schemas/2007#in-reply-to' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOIIKpG0FY7Mu_wKwqb4dPXPtmkFX1XLm8'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMKaLpz6u-mK3Jg8QVKHu45KTzGHdOJa4g'/>
+    <author>
+      <name>silkyshyster</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/silkyshyster</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOtv3cPbn_BwUQAhURDz6WutdTgIguqVXU</id>
+    <published>2006-09-10T21:39:19.000Z</published>
+    <updated>2006-09-10T21:39:19.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>This was great ...</title>
+    <content type='text'>This was great until the trendwhores killed it.﻿</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOtv3cPbn_BwUQAhURDz6WutdTgIguqVXU'/>
+    <author>
+      <name>DrButler</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/DrButler</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMWF4DPcIMFIiyrnuta5lyyv4PmJIU3yz8</id>
+    <published>2006-09-10T21:35:18.000Z</published>
+    <updated>2006-09-10T21:35:18.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>I love﻿ how ...</title>
+    <content type='text'>I love﻿ how everyone who hates Gary is jealous.</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMWF4DPcIMFIiyrnuta5lyyv4PmJIU3yz8'/>
+    <author>
+      <name>SySt3m</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/SySt3m</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNFQxACYKfnKscG0mwbNXSjNSaSxE0Rf94</id>
+    <published>2006-09-10T21:33:25.000Z</published>
+    <updated>2006-09-10T21:33:25.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>No, he IS a lucker, ...</title>
+    <content type='text'>No, he IS a lucker, a﻿ fucking LUCKERRRRR.... LOTOOOOO!!!!</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='http://gdata.youtube.com/schemas/2007#in-reply-to' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMHI22-iiAe1W7iclqlWy6l6BfdP_P3ivU'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNFQxACYKfnKscG0mwbNXSjNSaSxE0Rf94'/>
+    <author>
+      <name>Agen0</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/Agen0</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOJkBJ9LssI--luiwkHuKuoGExnqF05H-4</id>
+    <published>2006-09-10T21:32:45.000Z</published>
+    <updated>2006-09-10T21:32:45.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>This vid is ...</title>
+    <content type='text'>This vid is CLASSIC﻿ and he is a legend for doing it. Until he did the second one. he is now a loser.</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOJkBJ9LssI--luiwkHuKuoGExnqF05H-4'/>
+    <author>
+      <name>morphymorph</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/morphymorph</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNL6dkJIf5NqFs0PlNhDkLlySNIhEkudB0</id>
+    <published>2006-09-10T21:31:17.000Z</published>
+    <updated>2006-09-10T21:31:17.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>Why? Everyone has ...</title>
+    <content type='text'>Why? Everyone has the right to give﻿ an option, moron!</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='http://gdata.youtube.com/schemas/2007#in-reply-to' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOGFwK2YTsYvBItG1v4DQZZd_8eGqBDVkA'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNL6dkJIf5NqFs0PlNhDkLlySNIhEkudB0'/>
+    <author>
+      <name>Agen0</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/Agen0</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOIIKpG0FY7Mu_wKwqb4dPXPtmkFX1XLm8</id>
+    <published>2006-09-10T21:29:40.000Z</published>
+    <updated>2006-09-10T21:29:40.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>The biggest clown ...</title>
+    <content type='text'>The biggest clown out there. Pleaste just DIE already, drown in your FAT﻿ or something!! -.-</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOIIKpG0FY7Mu_wKwqb4dPXPtmkFX1XLm8'/>
+    <author>
+      <name>Agen0</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/Agen0</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMRHkkShIeHiJ5hbNwdc-piNnpWvbE1T0M</id>
+    <published>2006-09-10T21:13:35.000Z</published>
+    <updated>2006-09-10T21:13:35.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>yeah all you ...</title>
+    <content type='text'>yeah all you negitive people are just jealous that he did something funny/stupid and now is known ACROSS﻿ THE WORLD for doing it</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMRHkkShIeHiJ5hbNwdc-piNnpWvbE1T0M'/>
+    <author>
+      <name>jamesbalboa24</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/jamesbalboa24</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XPDYc0x9O3SFfxF8YIcp10Btl3wWcIB3us</id>
+    <published>2006-09-10T20:53:47.000Z</published>
+    <updated>2006-09-10T20:53:47.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>Respect!!﻿ :P</title>
+    <content type='text'>Respect!!﻿ :P</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XPDYc0x9O3SFfxF8YIcp10Btl3wWcIB3us'/>
+    <author>
+      <name>Trunksforyou</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/Trunksforyou</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XN4QzSknFh69-tVgDhjbxSydN-Zt2DQ_U0</id>
+    <published>2006-09-10T20:42:56.000Z</published>
+    <updated>2006-09-10T20:42:56.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>second parts﻿ they ...</title>
+    <content type='text'>second parts﻿ they are not as good as the first one</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XN4QzSknFh69-tVgDhjbxSydN-Zt2DQ_U0'/>
+    <author>
+      <name>horaciolop</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/horaciolop</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNIKVlMNgOs0KLXOn_TMFUNw526gUY65XI</id>
+    <published>2006-09-10T20:12:04.000Z</published>
+    <updated>2006-09-10T20:12:04.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>I﻿ LOVE THIS!</title>
+    <content type='text'>I﻿ LOVE THIS!</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='http://gdata.youtube.com/schemas/2007#in-reply-to' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOGFwK2YTsYvBItG1v4DQZZd_8eGqBDVkA'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNIKVlMNgOs0KLXOn_TMFUNw526gUY65XI'/>
+    <author>
+      <name>BlackWinterRose Thorn</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/Sonorakun</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XO4FP7CnEOXF8arLfPrDJ5zwQs_yOW6dIs</id>
+    <published>2006-09-10T19:47:11.000Z</published>
+    <updated>2006-09-10T19:47:11.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>rofl﻿</title>
+    <content type='text'>rofl﻿</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XO4FP7CnEOXF8arLfPrDJ5zwQs_yOW6dIs'/>
+    <author>
+      <name>poopface1230</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/poopface1230</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNAuJcss3ZS7KQopNDXQh0gf-dokrCLAs8</id>
+    <published>2006-09-10T19:32:14.000Z</published>
+    <updated>2006-09-10T19:32:14.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>please go work﻿ out</title>
+    <content type='text'>please go work﻿ out</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNAuJcss3ZS7KQopNDXQh0gf-dokrCLAs8'/>
+    <author>
+      <name>terrythemovie</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/terrythemovie</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XP5vHzwnvFICfdwg3lWUFK80WxrDi15Srk</id>
+    <published>2006-09-10T19:21:57.000Z</published>
+    <updated>2006-09-10T19:21:57.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>Holy cow that is ...</title>
+    <content type='text'>
+      Holy cow that is funny... realityname, you just have no humor...no humor at all﻿ :(
+      I would HATE to be you!
+    </content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XP5vHzwnvFICfdwg3lWUFK80WxrDi15Srk'/>
+    <author>
+      <name>Jason Daniel</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/jasonstheory</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOPuy4gLpgGBV9Rn3OBJG3jksSemZvbUYY</id>
+    <published>2006-09-10T19:16:23.000Z</published>
+    <updated>2006-09-10T19:16:23.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>...﻿</title>
+    <content type='text'>...﻿</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XOPuy4gLpgGBV9Rn3OBJG3jksSemZvbUYY'/>
+    <author>
+      <name>happybunny2230</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/happybunny2230</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNzsLgpSOulIUIu-7j4alIjK33kIQee1Qk</id>
+    <published>2006-09-10T19:15:40.000Z</published>
+    <updated>2006-09-10T19:15:40.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>Agreed. I got the ...</title>
+    <content type='text'>Agreed. I got the actual song that﻿ he's lip synching. It's not that bad, except for the video. The video is... moderate.</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='http://gdata.youtube.com/schemas/2007#in-reply-to' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMDEVJxfhNrlhKTjGQetapitSdGVMbwDKI'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XNzsLgpSOulIUIu-7j4alIjK33kIQee1Qk'/>
+    <author>
+      <name>MortalDoom</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/MortalDoom</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMa-iVBFWQLdfS_YYtw2FbBDdhTB277tes</id>
+    <published>2006-09-10T19:02:00.000Z</published>
+    <updated>2006-09-10T19:02:00.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'> ...</title>
+    <content type='text'>
+      HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+      heavenhigh
+
+      THAT WAS﻿ FUCKING HILAROUS
+
+      bc this guy is like 43256543 pounds fat
+    </content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMa-iVBFWQLdfS_YYtw2FbBDdhTB277tes'/>
+    <author>
+      <name>dRacLac</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/dRacLac</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XPuLnlKaY_5sssgdDzzoWz7IApbl5V782U</id>
+    <published>2006-09-10T19:00:33.000Z</published>
+    <updated>2006-09-10T19:00:33.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>I still﻿ don't get ...</title>
+    <content type='text'>I still﻿ don't get it</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XPuLnlKaY_5sssgdDzzoWz7IApbl5V782U'/>
+    <author>
+      <name>tabber87</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/tabber87</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XND-duQdicqWOGchqUJQVx5e6UNYtGRGf4</id>
+    <published>2006-09-10T18:39:45.000Z</published>
+    <updated>2006-09-10T18:39:45.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>omg.. this so ...</title>
+    <content type='text'>omg.. this so retarded... for those of﻿ you that think this is funny, get a life.</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XND-duQdicqWOGchqUJQVx5e6UNYtGRGf4'/>
+    <author>
+      <name>realityname</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/realityname</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+  <entry>
+    <id>http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMDEVJxfhNrlhKTjGQetapitSdGVMbwDKI</id>
+    <published>2006-09-10T18:11:13.000Z</published>
+    <updated>2006-09-10T18:11:13.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#comment'/>
+    <title type='text'>LMAO FUCKING﻿ LMAO!</title>
+    <content type='text'>LMAO FUCKING﻿ LMAO!</content>
+    <link rel='related' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o'/>
+    <link rel='alternate' type='text/html' href='http://www.youtube.com/watch?v=60og9gwKh1o'/>
+    <link rel='self' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/60og9gwKh1o/comments/TDcR4C4F5XMDEVJxfhNrlhKTjGQetapitSdGVMbwDKI'/>
+    <author>
+      <name>skater4nater</name>
+      <uri>http://gdata.youtube.com/feeds/api/users/skater4nater</uri>
+    </author>
+    <yt:videoid>60og9gwKh1o</yt:videoid>
+  </entry>
+</feed>
