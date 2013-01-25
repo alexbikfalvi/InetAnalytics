@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's favorite movies.
 	/// </summary>
 	[Serializable]
-	public class AtomYtMovies
+	public sealed class AtomYtMovies
 	{
 		private AtomYtMovies() { }
 

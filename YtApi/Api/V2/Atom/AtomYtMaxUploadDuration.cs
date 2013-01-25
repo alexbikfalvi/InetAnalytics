@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's maximum upload duration.
 	/// </summary>
 	[Serializable]
-	public class AtomYtMaxUploadDuration
+	public sealed class AtomYtMaxUploadDuration
 	{
 		private AtomYtMaxUploadDuration() { }
 

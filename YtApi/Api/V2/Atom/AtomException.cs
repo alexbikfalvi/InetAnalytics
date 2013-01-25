@@ -30,7 +30,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing an atom exception.
 	/// </summary>
 	[Serializable]
-	public class AtomException : Exception, ISerializable
+	public sealed class AtomException : Exception, ISerializable
 	{
 		private string xml;
  		private XmlNamespace ns;

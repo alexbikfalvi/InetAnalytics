@@ -40,7 +40,7 @@ namespace YtApi.Api.V2.Atom
 			atom.Category = new List<AtomCategory>();
 			foreach (XElement child in element.Elements(XName.Get("category", ns["xmlns"])))
 				atom.Category.Add(AtomCategory.Parse(child));
-			atom.Title = AtomTitle.Parse(element.Element(XName.Get("title", ns["xmlns"])));
+			atom.Title = (el = element.Element(XName.Get("title", ns["xmlns"]))) != null ? AtomTitle.Parse(el) : null;
 			atom.Subtitle = (el = element.Element(XName.Get("subtitle", ns["xmlns"]))) != null ? AtomSubtitle.Parse(el) : null;
 			atom.Logo = (el = element.Element(XName.Get("logo", ns["xmlns"]))) != null ? AtomLogo.Parse(el) : null;
 			atom.Link = new List<AtomLink>();

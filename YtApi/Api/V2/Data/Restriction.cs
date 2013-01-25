@@ -25,18 +25,24 @@ using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
 {
+	[Serializable]
 	public enum RestrictionType
 	{
 		Country = 1
 	};
 
+	[Serializable]
 	public enum RestrictionRelationship
 	{
 		Allow = 1,
 		Deny = 2
 	}
 
-	public class Restriction
+	/// <summary>
+	/// A class that represents the media restriction for a YouTube video.
+	/// </summary>
+	[Serializable]
+	public sealed class Restriction
 	{
 		private AtomMediaRestriction atom;
 		private RestrictionType type;

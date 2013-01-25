@@ -65,6 +65,8 @@ namespace YtAnalytics.Controls
 			this.pageTotal = this.countTotal != null ? this.countTotal.ToString() : "?";
 
 			this.labelPage.Text = string.Format("{0} - {1} of {2}", this.pageBegin, this.pageEnd, this.pageTotal);
+
+			this.formVideo.ViewProfile += OnViewProfile;
 		}
 
 		/// <summary>
@@ -83,6 +85,10 @@ namespace YtAnalytics.Controls
 		/// An event raised when the number of videos per page has changed.
 		/// </summary>
 		public event EventHandler VideosPerPageChanged;
+		/// <summary>
+		/// An event raised to view the user profile.
+		/// </summary>
+		public event ViewProfileIdEventHandler ViewProfile;
 
 		/// <summary>
 		/// Gets or sets the start video count. 
@@ -286,6 +292,15 @@ namespace YtAnalytics.Controls
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// An event handler called to view the user profile.
+		/// </summary>
+		/// <param name="id">The profile ID.</param>
+		void OnViewProfile(string id)
+		{
+			if (this.ViewProfile != null) this.ViewProfile(id);
 		}
 	}
 }

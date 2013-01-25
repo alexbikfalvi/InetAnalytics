@@ -25,7 +25,8 @@ using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
 {
-	public class UserRatingStar
+	[Serializable]
+	public sealed class UserRatingStar
 	{
 		private AtomGdRating atom;
 

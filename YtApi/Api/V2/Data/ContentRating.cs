@@ -41,7 +41,11 @@ namespace YtApi.Api.V2.Data
 	 * http://gdata.youtube.com/schemas/2007#mediarating – The scheme identifies content that is restricted in some countries.
 	 */
 
-	public class ContentRating
+	/// <summary>
+	/// A class that represents the content rating.
+	/// </summary>
+	[Serializable]
+	public sealed class ContentRating
 	{
 		private AtomMediaRating atom;
 

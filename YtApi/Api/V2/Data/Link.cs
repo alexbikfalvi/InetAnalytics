@@ -28,7 +28,8 @@ namespace YtApi.Api.V2.Data
     /// <summary>
     /// A YouTube data link.
     /// </summary>
-	public class Link
+	[Serializable]
+	public sealed class Link
 	{
 		private AtomLink atom;
 

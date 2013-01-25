@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a comment entry.
 	/// </summary>
 	[Serializable]
-	public class AtomEntryComment : AtomEntry
+	public sealed class AtomEntryComment : AtomEntry
 	{
 		private AtomEntryComment() { }
 
@@ -66,6 +66,7 @@ namespace YtApi.Api.V2.Atom
 				atom.Content = (el = element.Element(XName.Get("content", ns["xmlns"]))) != null ? AtomContent.Parse(el) : null;
 				atom.Author = (el = element.Element(XName.Get("author", ns["xmlns"]))) != null ? AtomAuthor.Parse(el, ns) : null;
 				atom.YtSpam = (el = element.Element(XName.Get("spam", ns["yt"]))) != null ? true : false;
+				atom.YtVideoId = (el = element.Element(XName.Get("videoid", ns["yt"]))) != null ? AtomYtVideoId.Parse(el) : null;
 
 			}
 			catch (Exception exception)
@@ -83,5 +84,6 @@ namespace YtApi.Api.V2.Atom
 		public AtomContent Content { get; set; }
 		public AtomAuthor Author { get; set; }
 		public bool YtSpam { get; set; }
+		public AtomYtVideoId YtVideoId { get; set; }
 	}
 }

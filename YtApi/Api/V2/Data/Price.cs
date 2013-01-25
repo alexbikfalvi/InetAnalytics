@@ -29,6 +29,7 @@ namespace YtApi.Api.V2.Data
     /// <summary>
     /// A YouTube media price type.
     /// </summary>
+	[Serializable]
 	public enum PriceType
 	{
 		Rent = 1,
@@ -40,7 +41,8 @@ namespace YtApi.Api.V2.Data
     /// <summary>
     /// A YouTube media price. 
     /// </summary>
-	public class Price
+	[Serializable]
+	public sealed class Price
 	{
 		private AtomMediaPrice atom;
 		private PriceType type;

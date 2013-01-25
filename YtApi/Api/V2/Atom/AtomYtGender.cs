@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's gender.
 	/// </summary>
 	[Serializable]
-	public class AtomYtGender
+	public sealed class AtomYtGender
 	{
 		private AtomYtGender() { }
 

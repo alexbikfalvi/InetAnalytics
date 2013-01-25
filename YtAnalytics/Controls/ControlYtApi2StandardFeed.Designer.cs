@@ -41,6 +41,8 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemComment = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel = new System.Windows.Forms.Panel();
 			this.buttonRefreshCategories = new System.Windows.Forms.Button();
@@ -59,8 +61,6 @@
 			this.comboBoxFeed = new System.Windows.Forms.ComboBox();
 			this.log = new YtAnalytics.Controls.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.menuItemComment = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -103,10 +103,11 @@
 			this.videoList.Size = new System.Drawing.Size(598, 141);
 			this.videoList.TabIndex = 1;
 			this.videoList.VideoContextMenu = this.viewMenu;
-			this.videoList.PreviousClick += new System.EventHandler(this.NavigatePrevious);
-			this.videoList.NextClick += new System.EventHandler(this.NavigateNext);
-			this.videoList.VideoSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.VideoSelectedChanged);
-			this.videoList.VideosPerPageChanged += new System.EventHandler(this.SelectionChanged);
+			this.videoList.PreviousClick += new System.EventHandler(this.OnNavigatePrevious);
+			this.videoList.NextClick += new System.EventHandler(this.OnNavigateNext);
+			this.videoList.VideoSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.OnVideoSelectedChanged);
+			this.videoList.VideosPerPageChanged += new System.EventHandler(this.OnSelectionChanged);
+			this.videoList.ViewProfile += new YtAnalytics.Controls.ViewProfileIdEventHandler(this.OnViewProfile);
 			// 
 			// viewMenu
 			// 
@@ -123,8 +124,8 @@
             this.toolStripSeparator3,
             this.menuItemProperties});
 			this.viewMenu.Name = "viewMenu";
-			this.viewMenu.Size = new System.Drawing.Size(192, 220);
-			this.viewMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ViewMenuClosed);
+			this.viewMenu.Size = new System.Drawing.Size(192, 198);
+			this.viewMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnViewMenuClosed);
 			// 
 			// menuItemApi2
 			// 
@@ -132,7 +133,7 @@
 			this.menuItemApi2.Name = "menuItemApi2";
 			this.menuItemApi2.Size = new System.Drawing.Size(191, 22);
 			this.menuItemApi2.Text = "APIv2 information";
-			this.menuItemApi2.Click += new System.EventHandler(this.ViewApiV2Entry);
+			this.menuItemApi2.Click += new System.EventHandler(this.OnViewApiV2Entry);
 			// 
 			// menuItemApiV2Related
 			// 
@@ -140,7 +141,7 @@
 			this.menuItemApiV2Related.Name = "menuItemApiV2Related";
 			this.menuItemApiV2Related.Size = new System.Drawing.Size(191, 22);
 			this.menuItemApiV2Related.Text = "APIv2 related videos";
-			this.menuItemApiV2Related.Click += new System.EventHandler(this.ViewApiV2Related);
+			this.menuItemApiV2Related.Click += new System.EventHandler(this.OnViewApiV2Related);
 			// 
 			// menuItemApiV2Responses
 			// 
@@ -148,7 +149,7 @@
 			this.menuItemApiV2Responses.Name = "menuItemApiV2Responses";
 			this.menuItemApiV2Responses.Size = new System.Drawing.Size(191, 22);
 			this.menuItemApiV2Responses.Text = "APIv2 response videos";
-			this.menuItemApiV2Responses.Click += new System.EventHandler(this.ViewApiV2Responses);
+			this.menuItemApiV2Responses.Click += new System.EventHandler(this.OnViewApiV2Responses);
 			// 
 			// menuItemApi3
 			// 
@@ -156,7 +157,7 @@
 			this.menuItemApi3.Name = "menuItemApi3";
 			this.menuItemApi3.Size = new System.Drawing.Size(191, 22);
 			this.menuItemApi3.Text = "APIv3 information";
-			this.menuItemApi3.Click += new System.EventHandler(this.ViewApiV3Entry);
+			this.menuItemApi3.Click += new System.EventHandler(this.OnViewApiV3Entry);
 			// 
 			// menuItemWeb
 			// 
@@ -164,7 +165,7 @@
 			this.menuItemWeb.Name = "menuItemWeb";
 			this.menuItemWeb.Size = new System.Drawing.Size(191, 22);
 			this.menuItemWeb.Text = "Web statistics";
-			this.menuItemWeb.Click += new System.EventHandler(this.ViewWeb);
+			this.menuItemWeb.Click += new System.EventHandler(this.OnViewWeb);
 			// 
 			// toolStripSeparator1
 			// 
@@ -177,12 +178,25 @@
 			this.menuItemYouTube.Name = "menuItemYouTube";
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
-			this.menuItemYouTube.Click += new System.EventHandler(this.OpenYouTube);
+			this.menuItemYouTube.Click += new System.EventHandler(this.OnOpenYouTube);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
+			// 
+			// menuItemComment
+			// 
+			this.menuItemComment.Image = global::YtAnalytics.Resources.CommentAdd_16;
+			this.menuItemComment.Name = "menuItemComment";
+			this.menuItemComment.Size = new System.Drawing.Size(191, 22);
+			this.menuItemComment.Text = "Add comment";
+			this.menuItemComment.Click += new System.EventHandler(this.OnComment);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
 			// 
 			// menuItemProperties
 			// 
@@ -190,7 +204,7 @@
 			this.menuItemProperties.Name = "menuItemProperties";
 			this.menuItemProperties.Size = new System.Drawing.Size(191, 22);
 			this.menuItemProperties.Text = "Properties";
-			this.menuItemProperties.Click += new System.EventHandler(this.ViewProperties);
+			this.menuItemProperties.Click += new System.EventHandler(this.OnViewProperties);
 			// 
 			// panel
 			// 
@@ -222,7 +236,7 @@
 			this.buttonRefreshCategories.Size = new System.Drawing.Size(23, 23);
 			this.buttonRefreshCategories.TabIndex = 6;
 			this.buttonRefreshCategories.UseVisualStyleBackColor = true;
-			this.buttonRefreshCategories.Click += new System.EventHandler(this.BeginRefreshCategories);
+			this.buttonRefreshCategories.Click += new System.EventHandler(this.OnBeginRefreshCategories);
 			// 
 			// checkBoxView
 			// 
@@ -236,7 +250,7 @@
 			this.checkBoxView.Text = "&View";
 			this.checkBoxView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.checkBoxView.UseVisualStyleBackColor = true;
-			this.checkBoxView.CheckedChanged += new System.EventHandler(this.ViewVideo);
+			this.checkBoxView.CheckedChanged += new System.EventHandler(this.OnViewVideo);
 			// 
 			// buttonStart
 			// 
@@ -249,7 +263,7 @@
 			this.buttonStart.Text = "St&art";
 			this.buttonStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStart.UseVisualStyleBackColor = true;
-			this.buttonStart.Click += new System.EventHandler(this.Start);
+			this.buttonStart.Click += new System.EventHandler(this.OnStart);
 			// 
 			// buttonStop
 			// 
@@ -263,7 +277,7 @@
 			this.buttonStop.Text = "St&op";
 			this.buttonStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStop.UseVisualStyleBackColor = true;
-			this.buttonStop.Click += new System.EventHandler(this.Stop);
+			this.buttonStop.Click += new System.EventHandler(this.OnStop);
 			// 
 			// linkLabel
 			// 
@@ -272,7 +286,7 @@
 			this.linkLabel.Name = "linkLabel";
 			this.linkLabel.Size = new System.Drawing.Size(0, 13);
 			this.linkLabel.TabIndex = 10;
-			this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenLink);
+			this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnOpenLink);
 			// 
 			// labelUrl
 			// 
@@ -327,7 +341,7 @@
 			this.comboBoxRegion.Name = "comboBoxRegion";
 			this.comboBoxRegion.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxRegion.TabIndex = 8;
-			this.comboBoxRegion.SelectedIndexChanged += new System.EventHandler(this.SelectionChanged);
+			this.comboBoxRegion.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
 			// 
 			// comboBoxCategory
 			// 
@@ -337,8 +351,8 @@
 			this.comboBoxCategory.Name = "comboBoxCategory";
 			this.comboBoxCategory.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxCategory.TabIndex = 5;
-			this.comboBoxCategory.DropDown += new System.EventHandler(this.OpenCategories);
-			this.comboBoxCategory.SelectedIndexChanged += new System.EventHandler(this.SelectionChanged);
+			this.comboBoxCategory.DropDown += new System.EventHandler(this.OnOpenCategories);
+			this.comboBoxCategory.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
 			// 
 			// comboBoxTime
 			// 
@@ -348,7 +362,7 @@
 			this.comboBoxTime.Name = "comboBoxTime";
 			this.comboBoxTime.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxTime.TabIndex = 3;
-			this.comboBoxTime.SelectedIndexChanged += new System.EventHandler(this.SelectionChanged);
+			this.comboBoxTime.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
 			// 
 			// comboBoxFeed
 			// 
@@ -358,7 +372,7 @@
 			this.comboBoxFeed.Name = "comboBoxFeed";
 			this.comboBoxFeed.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxFeed.TabIndex = 1;
-			this.comboBoxFeed.SelectedIndexChanged += new System.EventHandler(this.FeedChanged);
+			this.comboBoxFeed.SelectedIndexChanged += new System.EventHandler(this.OnFeedChanged);
 			// 
 			// log
 			// 
@@ -373,19 +387,6 @@
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.imageList.Images.SetKeyName(0, "Video");
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
-			// 
-			// menuItemComment
-			// 
-			this.menuItemComment.Image = global::YtAnalytics.Resources.CommentAdd_16;
-			this.menuItemComment.Name = "menuItemComment";
-			this.menuItemComment.Size = new System.Drawing.Size(191, 22);
-			this.menuItemComment.Text = "Add comment";
-			this.menuItemComment.Click += new System.EventHandler(this.OnComment);
 			// 
 			// ControlYtApi2StandardFeed
 			// 

@@ -28,7 +28,8 @@ namespace YtApi.Api.V2.Data
 	/// <summary>
 	/// A feed entry.
 	/// </summary>
-	public abstract class Entry 
+	[Serializable]
+	public abstract class Entry : IDisposable
 	{
 		/// <summary>
 		/// Abstract method to create a feed entry based on an atom instance.
@@ -36,5 +37,17 @@ namespace YtApi.Api.V2.Data
 		/// <param name="atom">The atom instance.</param>
 		/// <returns>The feed entry.</returns>
 		public abstract Entry Create(YtApi.Api.V2.Atom.Atom atom);
+
+		/// <summary>
+		/// Creates a corresponding atom feed from the specified data string.
+		/// </summary>
+		/// <param name="data">The data string.</param>
+		/// <returns>The atom feed.</returns>
+		public abstract AtomFeed CreateFeed(string data);
+
+		/// <summary>
+		/// Disposes the entry.
+		/// </summary>
+		public void Dispose() { }
 	}
 }

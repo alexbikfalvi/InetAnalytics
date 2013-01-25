@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's company.
 	/// </summary>
 	[Serializable]
-	public class AtomYtCompany
+	public sealed class AtomYtCompany
 	{
 		private AtomYtCompany() { }
 

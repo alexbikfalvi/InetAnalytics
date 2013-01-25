@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's favorite music.
 	/// </summary>
 	[Serializable]
-	public class AtomYtMusic
+	public sealed class AtomYtMusic
 	{
 		private AtomYtMusic() { }
 

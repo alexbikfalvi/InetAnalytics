@@ -29,6 +29,7 @@ namespace YtApi.Api.V2.Data
     /// <summary>
     /// A YouTube category.
     /// </summary>
+	[Serializable]
 	public sealed class Category
 	{
 		private Uri scheme;

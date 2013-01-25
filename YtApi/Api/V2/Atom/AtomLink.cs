@@ -38,10 +38,10 @@ namespace YtApi.Api.V2.Atom
 
 			// Mandatory attributes
 			atom.Rel = element.Attribute(XName.Get("rel")).Value;
-			atom.Type = element.Attribute(XName.Get("type")).Value;
 			atom.Href = new Uri(element.Attribute(XName.Get("href")).Value);
 
 			// Optional attributes
+			atom.Type = (attr = element.Attribute(XName.Get("type"))) != null ? attr.Value : null;
 			atom.YtHasEntries = (attr = element.Attribute(XName.Get("hasEntries", ns["yt"]))) != null ? (bool?)bool.Parse(attr.Value) : null;
 
 			return atom;

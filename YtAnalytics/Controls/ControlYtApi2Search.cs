@@ -48,7 +48,7 @@ namespace YtAnalytics.Controls
 		private Crawler crawler;
 		private ControlMessage message = new ControlMessage();
 		private Uri uri = null;
-		private YouTubeRequestVideoFeed request;
+		private YouTubeRequestFeed<Video> request;
 		private IAsyncResult result;
 		private Feed<Video> feed = null;
 
@@ -103,7 +103,7 @@ namespace YtAnalytics.Controls
 		{
 			// Save the parameters.
 			this.crawler = crawler;
-			this.request = new YouTubeRequestVideoFeed(this.crawler.Settings);
+			this.request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
 
 			// Enable the control
 			this.Enabled = true;
@@ -123,6 +123,10 @@ namespace YtAnalytics.Controls
 		/// View the response videos using the version 2 API.
 		/// </summary>
 		public event ViewVideoEventHandler ViewVideoResponsesInApiV2;
+		/// <summary>
+		/// View the user profile using the version 2 API.
+		/// </summary>
+		public event ViewProfileIdEventHandler ViewProfileInApiV2;
 		/// <summary>
 		/// View the video information using the version 3 API.
 		/// </summary>
@@ -180,7 +184,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void SearchChanged(object sender, EventArgs e)
+		private void OnSearchChanged(object sender, EventArgs e)
 		{
 			if (this.textBoxSearch.Text != string.Empty)
 			{
@@ -204,7 +208,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OpenLink(object sender, LinkLabelLinkClickedEventArgs e)
+		private void OnOpenLink(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			System.Diagnostics.Process.Start(this.linkLabel.Text);
 		}
@@ -214,7 +218,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void Start(object sender, EventArgs e)
+		private void OnStart(object sender, EventArgs e)
 		{
 			// Change the controls state.
 			this.buttonStart.Enabled = false;
@@ -254,7 +258,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void Stop(object sender, EventArgs e)
+		private void OnStop(object sender, EventArgs e)
 		{
 			// Cancel the request.
 			this.request.Cancel(this.result);
@@ -380,7 +384,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void VideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		private void OnVideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
 		{
 			// Change the enabled state of the view video button.
 			this.checkBoxView.Enabled = this.videoList.SelectedItem != null;
@@ -391,7 +395,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewVideo(object sender, EventArgs e)
+		private void OnViewVideo(object sender, EventArgs e)
 		{
 			if(this.checkBoxView.Checked)
 				this.viewMenu.Show(this.checkBoxView, 0, this.checkBoxView.Height);
@@ -402,7 +406,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
+		private void OnViewMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
 			this.checkBoxView.Checked = false;
 		}
@@ -413,7 +417,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2(object sender, EventArgs e)
+		private void OnViewApiV2(object sender, EventArgs e)
 		{
 			if (this.ViewVideoInApiV2 != null) this.ViewVideoInApiV2(this.videoList.SelectedItem.Tag as Video);
 		}
@@ -424,7 +428,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Related(object sender, EventArgs e)
+		private void OnViewApiV2Related(object sender, EventArgs e)
 		{
 			if (this.ViewVideoRelatedInApiV2 != null) this.ViewVideoRelatedInApiV2(this.videoList.SelectedItem.Tag as Video);
 		}
@@ -435,7 +439,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Responses(object sender, EventArgs e)
+		private void OnViewApiV2Responses(object sender, EventArgs e)
 		{
 			if (this.ViewVideoResponsesInApiV2 != null) this.ViewVideoResponsesInApiV2(this.videoList.SelectedItem.Tag as Video);
 		}
@@ -446,7 +450,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV3(object sender, EventArgs e)
+		private void OnViewApiV3(object sender, EventArgs e)
 		{
 			if (this.ViewVideoInApiV3 != null) this.ViewVideoInApiV3(this.videoList.SelectedItem.Tag as Video);
 		}
@@ -457,7 +461,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewWeb(object sender, EventArgs e)
+		private void OnViewWeb(object sender, EventArgs e)
 		{
 			if (this.ViewVideoInWeb != null) this.ViewVideoInWeb(this.videoList.SelectedItem.Tag as Video);
 		}
@@ -468,7 +472,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OpenYouTube(object sender, EventArgs e)
+		private void OnOpenYouTube(object sender, EventArgs e)
 		{
 			// Get the video;
 			Video video = this.videoList.SelectedItem.Tag as Video;
@@ -491,7 +495,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void NavigatePrevious(object sender, EventArgs e)
+		private void OnNavigatePrevious(object sender, EventArgs e)
 		{
 			// If the current feed is null, disable the button and return.
 			if ((null == this.feed) || (null == this.feed.Links.Previous))
@@ -508,7 +512,7 @@ namespace YtAnalytics.Controls
 			// Clear the video list.
 			this.videoList.Clear();
 			// Start a new request.
-			this.Start(sender, e);
+			this.OnStart(sender, e);
 		}
 
 		/// <summary>
@@ -516,7 +520,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void NavigateNext(object sender, EventArgs e)
+		private void OnNavigateNext(object sender, EventArgs e)
 		{
 			// If the current feed is null, disable the button and return.
 			if ((null == this.feed) || (null == this.feed.Links.Next))
@@ -533,7 +537,7 @@ namespace YtAnalytics.Controls
 			// Clear the video list.
 			this.videoList.Clear();
 			// Start a new request.
-			this.Start(sender, e);
+			this.OnStart(sender, e);
 		}
 
 		/// <summary>
@@ -541,9 +545,18 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewProperties(object sender, EventArgs e)
+		private void OnViewProperties(object sender, EventArgs e)
 		{
 			this.videoList.ShowProperties();
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the view profile.
+		/// </summary>
+		/// <param name="id">The profile ID.</param>
+		private void OnViewProfile(string id)
+		{
+			if (this.ViewProfileInApiV2 != null) this.ViewProfileInApiV2(id);
 		}
 	}
 }

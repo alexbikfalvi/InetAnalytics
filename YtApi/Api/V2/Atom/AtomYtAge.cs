@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's age.
 	/// </summary>
 	[Serializable]
-	public class AtomYtAge
+	public sealed class AtomYtAge
 	{
 		private AtomYtAge() { }
 

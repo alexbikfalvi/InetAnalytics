@@ -27,7 +27,8 @@ namespace YtApi.Api.V2.Data
 	/// <summary>
 	/// A class describing a username.
 	/// </summary>
-	public class Username
+	[Serializable]
+	public sealed class Username
 	{
 		private AtomYtUsername atom;
 

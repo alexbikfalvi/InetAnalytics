@@ -27,7 +27,8 @@ namespace YtApi.Api.V2.Data
 	/// <summary>
 	/// A class describing a YouTube user profile.
 	/// </summary>
-	public class Profile : Entry
+	[Serializable]
+	public sealed class Profile : Entry
 	{
 		private AtomEntryProfile atom;
 
@@ -58,6 +59,16 @@ namespace YtApi.Api.V2.Data
 			this.username = this.atom.YtUserName != null ? new Username(this.atom.YtUserName) : null;
 			this.statistics = this.atom.YtStatistics != null ? new Statistics(this.atom.YtStatistics) : null;
 			this.thumbnail = this.atom.MediaThumbnail != null ? new Thumbnail(this.atom.MediaThumbnail) : null;
+		}
+
+		/// <summary>
+		/// Creates a corresponding atom feed from the specified data string.
+		/// </summary>
+		/// <param name="data">The data string.</param>
+		/// <returns>The atom feed.</returns>
+		public override AtomFeed CreateFeed(string data)
+		{
+			return AtomFeedProfile.Parse(data);
 		}
 
 		/// <summary>
@@ -94,11 +105,6 @@ namespace YtApi.Api.V2.Data
 		/// The profile author. It can be null.
 		/// </summary>
 		public Author Author { get { return this.author; } }
-
-		/// <summary>
-		/// The profile summary. It can be null.
-		/// </summary>
-		public string Summary { get { return this.atom.Summary.Value; } }
 
 		/// <summary>
 		/// The user's about description. It can be null.
@@ -176,18 +182,23 @@ namespace YtApi.Api.V2.Data
 		public string School { get { return this.atom.YtSchool != null ? this.atom.YtSchool.Value : null; } }
 
 		/// <summary>
-		/// The profile username. It can be null.
-		/// </summary>
-		public Username Username { get { return this.username; } }
-
-		/// <summary>
 		/// The user profile statistics. It can be null.
 		/// </summary>
 		public Statistics Statistics { get { return this.statistics; } }
 
 		/// <summary>
+		/// The profile summary. It can be null.
+		/// </summary>
+		public string Summary { get { return this.atom.Summary != null ? this.atom.Summary.Value : null; } }
+
+		/// <summary>
 		/// The profile thumbnail. It can be null.
 		/// </summary>
 		public Thumbnail Thumbnail { get { return this.thumbnail; } }
+
+		/// <summary>
+		/// The profile username. It can be null.
+		/// </summary>
+		public Username Username { get { return this.username; } }
 	}
 }

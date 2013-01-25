@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YtAnalytics.Controls;
 using YtApi.Api.V2.Data;
 using DotNetApi.Windows;
 
@@ -50,6 +51,11 @@ namespace YtAnalytics.Forms
 		}
 
 		/// <summary>
+		/// An event raised to view the user profile.
+		/// </summary>
+		public event ViewProfileIdEventHandler ViewProfile;
+
+		/// <summary>
 		/// Shows the form as a dialog and the specified video.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
@@ -65,6 +71,21 @@ namespace YtAnalytics.Forms
 			this.Text = video.Title;
 			// Open the dialog.
 			base.ShowDialog(owner);
+		}
+
+		/// <summary>
+		/// An event handler called to view the user profile.
+		/// </summary>
+		/// <param name="id">The profile ID.</param>
+		private void OnViewProfile(string id)
+		{
+			if (this.ViewProfile != null)
+			{
+				// Close the dialog.
+				this.Close();
+				// Raise the event.
+				this.ViewProfile(id);
+			}
 		}
 	}
 }

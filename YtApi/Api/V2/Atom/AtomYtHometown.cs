@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's hometown.
 	/// </summary>
 	[Serializable]
-	public class AtomYtHometown
+	public sealed class AtomYtHometown
 	{
 		private AtomYtHometown() { }
 

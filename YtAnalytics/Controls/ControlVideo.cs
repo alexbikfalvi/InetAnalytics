@@ -65,6 +65,11 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
+		/// An event raised when the user selects the view profile.
+		/// </summary>
+		public event ViewProfileIdEventHandler ViewProfile;
+
+		/// <summary>
 		/// Gets or sets the current video object.
 		/// </summary>
 		public Video Video
@@ -320,7 +325,7 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The item.</param>
 		private void OnViewProfile(object sender, EventArgs e)
 		{
-
+			if (this.ViewProfile != null) this.ViewProfile(this.video.Author.UserId);
 		}
 	}
 }

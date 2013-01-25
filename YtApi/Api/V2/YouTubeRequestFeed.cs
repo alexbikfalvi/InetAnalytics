@@ -27,55 +27,58 @@ using YtApi.Api.V2.Data;
 namespace YtApi.Api.V2
 {
 	/// <summary>
-	/// Class representing a request for a YouTube standard feed.
+	/// Class representing a request for a YouTube feed.
 	/// </summary>
-	public class YouTubeRequestVideoFeed : YouTubeRequest
+	public class YouTubeRequestFeed<T> : YouTubeRequest where T : Entry, new() 
 	{
 		/// <summary>
-		/// Conversion class for an asynchronous operation returning a video feed.
+		/// Conversion class for an asynchronous operation returning a comments feed.
 		/// </summary>
-		public class VideoFeedRequestFunction : IAsyncFunction<Feed<Video>>
+		public class CommentFeedRequestFunction : IAsyncFunction<Feed<T>>
 		{
 			/// <summary>
-			/// Returns a videos feed for the received asynchronous data.
+			/// Returns a comments feed for the received asynchronous data.
 			/// </summary>
 			/// <param name="data">The data string.</param>
-			/// <returns>A video feed.</returns>
-			public Feed<Video> GetResult(string data)
+			/// <returns>A comment feed.</returns>
+			public Feed<T> GetResult(string data)
 			{
-				// Parse the string data.
-				return new Feed<Video>(AtomFeedVideo.Parse(data));
+				using (T obj = new T())
+				{
+					// Use the object to parse the string data to the corresponding feed.
+					return new Feed<T>(obj.CreateFeed(data));
+				}
 			}
 		}
 
-		private VideoFeedRequestFunction funcConvert = new VideoFeedRequestFunction();
+		private CommentFeedRequestFunction funcConvert = new CommentFeedRequestFunction();
 
 		/// <summary>
-		/// A request to the YouTube API for a video feed.
+		/// A request to the YouTube API for a comment feed.
 		/// </summary>
 		/// <param name="settings">The request settings.</param>
-		public YouTubeRequestVideoFeed(YouTubeSettings settings)
+		public YouTubeRequestFeed(YouTubeSettings settings)
 			: base(settings)
 		{
 		}
 
 		/// <summary>
-		/// Ends an asynchronous request for a video.
+		/// Ends an asynchronous request for a comment feed.
 		/// </summary>
 		/// <param name="result">The asynchronous result.</param>
 		/// <param name="state">The user state.</param>
-		/// <returns>The video object.</returns>
-		public new Feed<Video> End(IAsyncResult result, out object state)
+		/// <returns>The comments feed object.</returns>
+		public new Feed<T> End(IAsyncResult result, out object state)
 		{
 			return this.funcConvert.GetResult(base.End(result, out state));
 		}
 
 		/// <summary>
-		/// Ends an asynchronous request for a video.
+		/// Ends an asynchronous request for a comment feed.
 		/// </summary>
 		/// <param name="result">The asynchronous result.</param>
-		/// <returns>The video object.</returns>
-		public Feed<Video> End(IAsyncResult result)
+		/// <returns>The comment feed object.</returns>
+		public Feed<T> End(IAsyncResult result)
 		{
 			object state;
 			return this.funcConvert.GetResult(base.End(result, out state));

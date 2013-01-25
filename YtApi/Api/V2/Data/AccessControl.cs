@@ -25,6 +25,7 @@ using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
 {
+	[Serializable]
 	public enum AccessControlAction
 	{
 		Rate = 1,
@@ -37,6 +38,7 @@ namespace YtApi.Api.V2.Data
 		AutoPlay = 8
 	}
 
+	[Serializable]
 	public enum AccessControlPermission
 	{
 		Allowed = 1,
@@ -44,7 +46,11 @@ namespace YtApi.Api.V2.Data
 		Moderated = 3
 	}
 
-	public class AccessControlEntry
+	/// <summary>
+	/// A class that represents an access control entry.
+	/// </summary>
+	[Serializable]
+	public sealed class AccessControlEntry
 	{
 		private AccessControlAction action;
 		private AccessControlPermission permission;
@@ -80,7 +86,11 @@ namespace YtApi.Api.V2.Data
         public AccessControlPermission Permission { get { return this.permission; } } 
 	}
 
-    public class AccessControlList : List<AccessControlEntry>
+	/// <summary>
+	/// A class that represents an access control list.
+	/// </summary>
+	[Serializable]
+    public sealed class AccessControlList : List<AccessControlEntry>
     {
         /// <summary>
         /// Creates a new access control list, based on a collection of atom objects.

@@ -28,7 +28,8 @@ namespace YtApi.Api.V2.Data
 	/// <summary>
 	/// A class describing a YouTube video.
 	/// </summary>
-	public class Video : Entry
+	[Serializable]
+	public sealed class Video : Entry
 	{
 		private AtomEntryVideo atom;
 
@@ -46,6 +47,11 @@ namespace YtApi.Api.V2.Data
 		private PublishingState state;
 		private ThumbnailList thumbnails;
 
+		/// <summary>
+		/// Creates a new video entry from an atom instance.
+		/// </summary>
+		/// <param name="atom">The atom instance.</param>
+		/// <returns>The video entry.</returns>
 		public override Entry Create(YtApi.Api.V2.Atom.Atom atom)
 		{
 			return new Video(atom as AtomEntryVideo);
@@ -86,12 +92,22 @@ namespace YtApi.Api.V2.Data
 		}
 
 		/// <summary>
+		/// Creates a corresponding atom feed from the specified data string.
+		/// </summary>
+		/// <param name="data">The data string.</param>
+		/// <returns>The atom feed.</returns>
+		public override AtomFeed CreateFeed(string data)
+		{
+			return AtomFeedVideo.Parse(data);
+		}
+
+		/// <summary>
 		/// Returns the atom corresponding to this video.
 		/// </summary>
 		public AtomEntryVideo Atom { get { return this.atom; } }
 
 		/// <summary>
-		/// Returns the Atom ID of the video object (usually an URL of type "http://gdata.youtube.com/feeds/api/videos/xxxxxxxxxxx").
+		/// Returns the Atom ID of the video object (usually an URL of type "http://gdata.youtube.com/feeds/api/videos/<videoID>").
 		/// Use the Id property to get the video ID as published in the media group. It cannot be null.
 		/// </summary>
 		public string AtomId { get { return this.atom.Id.Value; } }

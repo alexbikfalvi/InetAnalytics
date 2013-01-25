@@ -209,6 +209,31 @@ namespace YtApi.Api.V2
 		private static string uriProfileEntryPattern = "http://gdata.youtube.com/feeds/api/users/{0}?v=2";
 
 		/// <summary>
+		/// 0 - video ID
+		/// </summary>
+		private static string uriCommentsFeedPattern = "https://gdata.youtube.com/feeds/api/videos/{0}/comments?v=2";
+
+		/// <summary>
+		/// 0 - user ID
+		/// </summary>
+		private static string uriUserUploadsFeed = "https://gdata.youtube.com/feeds/api/users/{0}/uploads?v=2";
+
+		/// <summary>
+		/// 0 - user ID
+		/// </summary>
+		private static string uriUserPlaylistsFeed = "https://gdata.youtube.com/feeds/api/users/{0}/playlists?v=2";
+
+		/// <summary>
+		/// 0 - user ID
+		/// </summary>
+		private static string uriUserFavoritesFeed = "https://gdata.youtube.com/feeds/api/users/{0}/favorites?v=2";
+
+		/// <summary>
+		/// 0 - playlist ID
+		/// </summary>
+		private static string uriPlaylistFeed = "https://gdata.youtube.com/feeds/api/playlists/{0}?v=2";
+
+		/// <summary>
 		/// Returns the URI for YouTube categories.
 		/// </summary>
 		public static Uri UriCategories { get { return YouTubeUri.uriCategories; } }
@@ -359,6 +384,141 @@ namespace YtApi.Api.V2
 			)
 		{
 			StringBuilder builder = new StringBuilder(string.Format(uriResponseVideosFeedPattern, video));
+
+			if (startIndex != null)
+			{
+				builder.Append("&start-index=" + startIndex);
+			}
+			if (maxResults != null)
+			{
+				builder.Append("&max-results=" + maxResults);
+			}
+
+			return new Uri(builder.ToString());
+		}
+
+		/// <summary>
+		/// Creates the URI for the video comments feed.
+		/// </summary>
+		/// <param name="video">The video ID.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="maxResults">The maximum results.</param>
+		/// <returns>A URI for the comments feed.</returns>
+		public static Uri GetCommentsFeed(
+			string video,
+			int? startIndex,
+			int? maxResults
+			)
+		{
+			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriCommentsFeedPattern, video));
+
+			if (startIndex != null)
+			{
+				builder.Append("&start-index=" + startIndex);
+			}
+			if (maxResults != null)
+			{
+				builder.Append("&max-results=" + maxResults);
+			}
+
+			return new Uri(builder.ToString());
+		}
+
+		/// <summary>
+		/// Creates the URI for the user uploads feed.
+		/// </summary>
+		/// <param name="user">The user ID.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="maxResults">The maximum results.</param>
+		/// <returns>A URI for the uploads feed.</returns>
+		public static Uri GetUploadsFeed(
+			string user,
+			int? startIndex,
+			int? maxResults
+			)
+		{
+			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriUserUploadsFeed, user));
+
+			if (startIndex != null)
+			{
+				builder.Append("&start-index=" + startIndex);
+			}
+			if (maxResults != null)
+			{
+				builder.Append("&max-results=" + maxResults);
+			}
+
+			return new Uri(builder.ToString());
+		}
+
+		/// <summary>
+		/// Creates the URI for the user playlists feed.
+		/// </summary>
+		/// <param name="user">The user ID.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="maxResults">The maximum results.</param>
+		/// <returns>A URI for the playlists feed.</returns>
+		public static Uri GetPlaylistsFeed(
+			string user,
+			int? startIndex,
+			int? maxResults
+			)
+		{
+			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriUserPlaylistsFeed, user));
+
+			if (startIndex != null)
+			{
+				builder.Append("&start-index=" + startIndex);
+			}
+			if (maxResults != null)
+			{
+				builder.Append("&max-results=" + maxResults);
+			}
+
+			return new Uri(builder.ToString());
+		}
+
+		/// <summary>
+		/// Creates the URI for the user favorite videos feed.
+		/// </summary>
+		/// <param name="playlist">The user ID.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="maxResults">The maximum results.</param>
+		/// <returns>A URI for the favorites feed.</returns>
+		public static Uri GetFavoritesFeed(
+			string user,
+			int? startIndex,
+			int? maxResults
+			)
+		{
+			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriUserFavoritesFeed, user));
+
+			if (startIndex != null)
+			{
+				builder.Append("&start-index=" + startIndex);
+			}
+			if (maxResults != null)
+			{
+				builder.Append("&max-results=" + maxResults);
+			}
+
+			return new Uri(builder.ToString());
+		}
+
+		/// <summary>
+		/// Creates the URI for the playlist videos feed.
+		/// </summary>
+		/// <param name="playlist">The playlist ID.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="maxResults">The maximum results.</param>
+		/// <returns>A URI for the playlist feed.</returns>
+		public static Uri GetPlaylistFeed(
+			string playlist,
+			int? startIndex,
+			int? maxResults
+			)
+		{
+			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriPlaylistFeed, playlist));
 
 			if (startIndex != null)
 			{

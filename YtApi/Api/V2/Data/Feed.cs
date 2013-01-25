@@ -58,7 +58,10 @@ namespace YtApi.Api.V2.Data
 				// Try to add a new feed entry.
 				try
 				{
-					this.entries.Add((new T()).Create(entry) as T);
+					using (T obj = new T())
+					{
+						this.entries.Add(obj.Create(entry) as T);
+					}
 				}
 				catch (Exception exception)
 				{

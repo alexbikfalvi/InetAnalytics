@@ -28,7 +28,8 @@ namespace YtApi.Api.V2.Data
 	/// <summary>
 	/// Identifies a geographic location.
 	/// </summary>
-	public class GeoLocation
+	[Serializable]
+	public sealed class GeoLocation
 	{
 		private double latitude;
 		private double longitude;

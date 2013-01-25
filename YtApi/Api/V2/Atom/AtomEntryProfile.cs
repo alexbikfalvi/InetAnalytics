@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user entry.
 	/// </summary>
 	[Serializable]
-	public class AtomEntryProfile : AtomEntry
+	public sealed class AtomEntryProfile : AtomEntry
 	{
 		private AtomEntryProfile() { }
 

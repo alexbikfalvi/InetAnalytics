@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's hobbies.
 	/// </summary>
 	[Serializable]
-	public class AtomYtHobbies
+	public sealed class AtomYtHobbies
 	{
 		private AtomYtHobbies() { }
 

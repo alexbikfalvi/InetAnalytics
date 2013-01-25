@@ -37,54 +37,31 @@ using YtCrawler.Log;
 
 namespace YtAnalytics.Controls
 {
-	public delegate Uri GeneralVideosFeedEventHandler(string video, int? startIndex, int? maxResults);
-
-
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlYtApi2GeneralVideosFeed : UserControl
+	public partial class ControlYtApi2PlaylistsFeed : UserControl
 	{
-		private string logSource;
+		private static string logSource = "APIv2 Playlists Feed";
 
 		// Private variables.
 
 		private Crawler crawler;
 		private ControlMessage message = new ControlMessage();
 		private Uri uri = null;
-		private YouTubeRequestVideoFeed request;
+		private YouTubeRequestFeed<Playlist> request;
 		private IAsyncResult result;
-		private Feed<Video> feed = null;
+		private Feed<Playlist> feed = null;
 
 		private ShowMessageEventHandler delegateShowMessage;
 		private HideMessageEventHandler delegateHideMessage;
-
-		private static YouTubeStandardFeed[] feeds = new YouTubeStandardFeed[] {
-			YouTubeStandardFeed.TopRated,
-			YouTubeStandardFeed.TopFavories,
-			YouTubeStandardFeed.MostShared,
-			YouTubeStandardFeed.MostPopular,
-			YouTubeStandardFeed.MostRecent,
-			YouTubeStandardFeed.MostDiscussed,
-			YouTubeStandardFeed.MostResponsed,
-			YouTubeStandardFeed.RecentlyFeatured,
-			YouTubeStandardFeed.TrendingVideos
-		};
-		private static YouTubeTimeId[] times = new YouTubeTimeId[] {
-			YouTubeTimeId.AllTime,
-			YouTubeTimeId.Today,
-			YouTubeTimeId.ThisWeek,
-			YouTubeTimeId.ThisMonth
-		};
-
-		private GeneralVideosFeedEventHandler delegateFeed = null;
 
 		// Public declarations
 
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlYtApi2GeneralVideosFeed()
+		public ControlYtApi2PlaylistsFeed()
 		{
 			// Add the message control.
 			this.Controls.Add(this.message);
@@ -105,44 +82,15 @@ namespace YtAnalytics.Controls
 		/// Initializes the control with a crawler object.
 		/// </summary>
 		/// <param name="crawler">The crawler object.</param>
-		public void Initialize(Crawler crawler, GeneralVideosFeedEventHandler delegateFeed, string logSource)
+		public void Initialize(Crawler crawler)
 		{
 			// Save the parameters.
 			this.crawler = crawler;
-			this.delegateFeed = delegateFeed;
-			this.logSource = logSource;
-			this.request = new YouTubeRequestVideoFeed(this.crawler.Settings);
+			this.request = new YouTubeRequestFeed<Playlist>(this.crawler.Settings);
 		
 			// Enable the control
 			this.Enabled = true;
 		}
-
-		// Public events.
-
-		/// <summary>
-		/// View the video information using the version 2 API.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoInApiV2;
-		/// <summary>
-		/// View the related videos using the version 2 API.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoRelatedInApiV2;
-		/// <summary>
-		/// View the response videos using the version 2 API.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoResponsesInApiV2;
-		/// <summary>
-		/// View the video information using the version 3 API.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoInApiV3;
-		/// <summary>
-		/// View the video statistics using the web.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoInWeb;
-		/// <summary>
-		/// An event handler called when the user adds a new comment.
-		/// </summary>
-		public event AddVideoCommentEventHandler Comment;
 
 		// Public methods.
 
@@ -153,9 +101,9 @@ namespace YtAnalytics.Controls
 		public void View(Video video)
 		{
 			if (null == video) return;
-			if (!this.textBoxVideo.Enabled) return;
-			this.textBoxVideo.Text = video.Id;
-			this.Start(null, null);
+			if (!this.textBoxUser.Enabled) return;
+			this.textBoxUser.Text = video.Id;
+			this.OnStart(null, null);
 		}
 
 		// Private methods.
@@ -202,15 +150,15 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void SearchChanged(object sender, EventArgs e)
+		private void OnSearchChanged(object sender, EventArgs e)
 		{
-			if (this.textBoxVideo.Text != string.Empty)
+			if (this.textBoxUser.Text != string.Empty)
 			{
 				this.buttonStart.Enabled = true;
-				this.uri = this.delegateFeed(
-					this.textBoxVideo.Text,
+				this.uri = YouTubeUri.GetPlaylistsFeed(
+					this.textBoxUser.Text,
 					1,
-					this.videoList.VideosPerPage);
+					this.playlistsList.PlaylistsPerPage);
 				this.linkLabel.Text = this.uri.AbsoluteUri;
 			}
 			else
@@ -226,7 +174,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OpenLink(object sender, LinkLabelLinkClickedEventArgs e)
+		private void OnOpenLink(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			System.Diagnostics.Process.Start(this.linkLabel.Text);
 		}
@@ -236,23 +184,23 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void Start(object sender, EventArgs e)
+		private void OnStart(object sender, EventArgs e)
 		{
 			// Change the controls state.
 			this.buttonStart.Enabled = false;
 			this.buttonStop.Enabled = true;
-			this.textBoxVideo.Enabled = false;
+			this.textBoxUser.Enabled = false;
 
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
-				this.logSource,
+				ControlYtApi2PlaylistsFeed.logSource,
 				"Started request for the related videos feed of the video \'{0}\'.",
-				new object[] { this.textBoxVideo.Text, this.linkLabel.Text }));
+				new object[] { this.textBoxUser.Text, this.linkLabel.Text }));
 
 			// Clear the list view.
-			this.videoList.Clear();
+			this.playlistsList.Clear();
 
 			try
 			{
@@ -264,9 +212,9 @@ namespace YtAnalytics.Controls
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
 					LogEventType.Error,
-					this.logSource,
+					ControlYtApi2PlaylistsFeed.logSource,
 					"The request for the related videos feed of the video \'{0}\' failed. {1}",
-					new object[] { this.textBoxVideo.Text, exception.Message, this.linkLabel.Text },
+					new object[] { this.textBoxUser.Text, exception.Message, this.linkLabel.Text },
 					exception));
 			}
 		}
@@ -276,7 +224,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void Stop(object sender, EventArgs e)
+		private void OnStop(object sender, EventArgs e)
 		{
 			// Cancel the request.
 			this.request.Cancel(this.result);
@@ -300,19 +248,19 @@ namespace YtAnalytics.Controls
 					this.feed = this.request.End(result);
 
 					// Add the new items to the list view.
-					foreach (Video video in feed.Entries)
+					foreach (Playlist playlist in feed.Entries)
 					{
-						this.videoList.Add(video);
+						this.playlistsList.Add(playlist);
 					}
 
 					// Update the page information.
-					this.videoList.CountStart = feed.Entries.Count > 0 ? feed.SearchStartIndex : 0;
-					this.videoList.CountPerPage = feed.Entries.Count;
-					this.videoList.CountTotal = feed.SearchTotalResults;
+					this.playlistsList.CountStart = feed.Entries.Count > 0 ? feed.SearchStartIndex : 0;
+					this.playlistsList.CountPerPage = feed.Entries.Count;
+					this.playlistsList.CountTotal = feed.SearchTotalResults;
 
 					// Set the navigation buttons state.
-					this.videoList.Previous = feed.Links.Previous != null;
-					this.videoList.Next = feed.Links.Next != null;
+					this.playlistsList.Previous = feed.Links.Previous != null;
+					this.playlistsList.Next = feed.Links.Next != null;
 
 					// Compute the event type.
 					LogEventType eventType = (this.feed.FailuresAtom.Count == 0) && (this.feed.FailuresEntry.Count == 0) ?
@@ -332,7 +280,7 @@ namespace YtAnalytics.Controls
 								LogEventLevel.Important,
 								LogEventType.Error,
 								DateTime.MinValue,
-								this.logSource,
+								ControlYtApi2PlaylistsFeed.logSource,
 								"Parsing of YouTube API version 2 atom XML failed.",
 								null,
 								exception));
@@ -343,7 +291,7 @@ namespace YtAnalytics.Controls
 								LogEventLevel.Important,
 								LogEventType.Error,
 								DateTime.MinValue,
-								this.logSource,
+								ControlYtApi2PlaylistsFeed.logSource,
 								"Converting atom to YouTube API version 2 video entry failed.",
 								null,
 								exception));
@@ -354,9 +302,9 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Verbose,
 						eventType,
-						this.logSource,
+						ControlYtApi2PlaylistsFeed.logSource,
 						eventMessage,
-						new object[] { this.textBoxVideo.Text, this.linkLabel.Text },
+						new object[] { this.textBoxUser.Text, this.linkLabel.Text },
 						null,
 						subevents));
 				}
@@ -366,16 +314,16 @@ namespace YtAnalytics.Controls
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
 							LogEventType.Canceled,
-							this.logSource,
+							ControlYtApi2PlaylistsFeed.logSource,
 							"The request for the related videos feed of the video \'{0}\' has been canceled.",
-							new object[] { this.textBoxVideo.Text, this.linkLabel.Text }));
+							new object[] { this.textBoxUser.Text, this.linkLabel.Text }));
 					else
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
-							this.logSource,
+							ControlYtApi2PlaylistsFeed.logSource,
 							"The request for the related videos feed of the video \'{0}\' failed. {1}",
-							new object[] { this.textBoxVideo.Text, exception.Message, this.linkLabel.Text },
+							new object[] { this.textBoxUser.Text, exception.Message, this.linkLabel.Text },
 							exception));
 				}
 				catch (Exception exception)
@@ -383,16 +331,16 @@ namespace YtAnalytics.Controls
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
-						this.logSource,
+						ControlYtApi2PlaylistsFeed.logSource,
 						"The request for the related videos feed of the video \'{0}\' failed. {1}",
-						new object[] { this.textBoxVideo.Text, exception.Message, this.linkLabel.Text },
+						new object[] { this.textBoxUser.Text, exception.Message, this.linkLabel.Text },
 						exception));
 				}
 				finally
 				{
 					this.buttonStart.Enabled = true;
 					this.buttonStop.Enabled = false;
-					this.textBoxVideo.Enabled = true;
+					this.textBoxUser.Enabled = true;
 				}
 			}
 		}
@@ -402,110 +350,10 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void VideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		private void OnVideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
 		{
 			// Change the enabled state of the view video button.
-			this.checkBoxView.Enabled = this.videoList.SelectedItem != null;
-		}
-
-		/// <summary>
-		/// An event handler for the visualization of a video entry menu.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewVideo(object sender, EventArgs e)
-		{
-			if(this.checkBoxView.Checked)
-				this.viewMenu.Show(this.checkBoxView, 0, this.checkBoxView.Height);
-		}
-
-		/// <summary>
-		/// An event handler called when the video entry menu was closed.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
-		{
-			this.checkBoxView.Checked = false;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the option to view the video entry
-		/// in the YouTube API version 2.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2(object sender, EventArgs e)
-		{
-			if (this.ViewVideoInApiV2 != null) this.ViewVideoInApiV2(this.videoList.SelectedItem.Tag as Video);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the option to view the related videos
-		/// in the YouTube API version 2.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Related(object sender, EventArgs e)
-		{
-			if (this.ViewVideoRelatedInApiV2 != null) this.ViewVideoRelatedInApiV2(this.videoList.SelectedItem.Tag as Video);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the option to view the response videos
-		/// in the YouTube API version 2.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Responses(object sender, EventArgs e)
-		{
-			if (this.ViewVideoResponsesInApiV2 != null) this.ViewVideoResponsesInApiV2(this.videoList.SelectedItem.Tag as Video);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the option to view the video entry
-		/// in the YouTube API version 3.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV3(object sender, EventArgs e)
-		{
-			if (this.ViewVideoInApiV3 != null) this.ViewVideoInApiV3(this.videoList.SelectedItem.Tag as Video);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the option to view the video statistics
-		/// in the YouTube web.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewWeb(object sender, EventArgs e)
-		{
-			if (this.ViewVideoInWeb != null) this.ViewVideoInWeb(this.videoList.SelectedItem.Tag as Video);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the option to open the video in YouTube in
-		/// a browser.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OpenYouTube(object sender, EventArgs e)
-		{
-			// Get the video;
-			Video video = this.videoList.SelectedItem.Tag as Video;
-			// Open the video link in the browser.
-			Process.Start(YouTubeUri.GetYouTubeLink(video.Id));
-		}
-
-		/// <summary>
-		/// An event handler called when the user adds a comment to a video.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnComment(object sender, EventArgs e)
-		{
-			if (this.Comment != null) this.Comment((this.videoList.SelectedItem.Tag as Video).Id);
+			this.checkBoxView.Enabled = this.playlistsList.SelectedItem != null;
 		}
 
 		/// <summary>
@@ -513,12 +361,12 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void NavigatePrevious(object sender, EventArgs e)
+		private void OnNavigatePrevious(object sender, EventArgs e)
 		{
 			// If the current feed is null, disable the button and return.
 			if ((null == this.feed) || (null == this.feed.Links.Previous))
 			{
-				this.videoList.Previous = false;
+				this.playlistsList.Previous = false;
 				return;
 			}
 			// Copy the URL.
@@ -528,9 +376,9 @@ namespace YtAnalytics.Controls
 			// Clear the feed.
 			this.feed = null;
 			// Clear the video list.
-			this.videoList.Clear();
+			this.playlistsList.Clear();
 			// Start a new request.
-			this.Start(sender, e);
+			this.OnStart(sender, e);
 		}
 
 		/// <summary>
@@ -538,12 +386,12 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void NavigateNext(object sender, EventArgs e)
+		private void OnNavigateNext(object sender, EventArgs e)
 		{
 			// If the current feed is null, disable the button and return.
 			if ((null == this.feed) || (null == this.feed.Links.Next))
 			{
-				this.videoList.Next = false;
+				this.playlistsList.Next = false;
 				return;
 			}
 			// Copy the URL.
@@ -553,19 +401,9 @@ namespace YtAnalytics.Controls
 			// Clear the feed.
 			this.feed = null;
 			// Clear the video list.
-			this.videoList.Clear();
+			this.playlistsList.Clear();
 			// Start a new request.
-			this.Start(sender, e);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view the video properties.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewProperties(object sender, EventArgs e)
-		{
-			this.videoList.ShowProperties();
+			this.OnStart(sender, e);
 		}
 	}
 }

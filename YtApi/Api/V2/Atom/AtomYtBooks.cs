@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's favorite books.
 	/// </summary>
 	[Serializable]
-	public class AtomYtBooks
+	public sealed class AtomYtBooks
 	{
 		private AtomYtBooks() { }
 

@@ -26,7 +26,7 @@ using System.Xml.Linq;
 namespace YtApi.Api.V2.Atom
 {
 	[Serializable]
-	public class AtomGdRating
+	public sealed class AtomGdRating
 	{
 		private AtomGdRating() { }
 

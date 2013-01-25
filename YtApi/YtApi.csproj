@@ -61,10 +61,13 @@
     <Compile Include="Api\V2\Atom\AtomEntryComment.cs" />
     <Compile Include="Api\V2\Atom\AtomContent.cs" />
     <Compile Include="Api\V2\Atom\AtomEntry.cs" />
+    <Compile Include="Api\V2\Atom\AtomEntryPlaylist.cs" />
     <Compile Include="Api\V2\Atom\AtomEntryProfile.cs" />
     <Compile Include="Api\V2\Atom\AtomEntryVideo.cs" />
     <Compile Include="Api\V2\Atom\AtomException.cs" />
     <Compile Include="Api\V2\Atom\AtomFeed.cs" />
+    <Compile Include="Api\V2\Atom\AtomFeedPlaylist.cs" />
+    <Compile Include="Api\V2\Atom\AtomFeedProfile.cs" />
     <Compile Include="Api\V2\Atom\AtomFeedVideo.cs" />
     <Compile Include="Api\V2\Atom\AtomGdComments.cs" />
     <Compile Include="Api\V2\Atom\AtomGdFeedLink.cs" />
@@ -88,6 +91,8 @@
     <Compile Include="Api\V2\Atom\AtomMediaThumbnail.cs" />
     <Compile Include="Api\V2\Atom\AtomMediaTitle.cs" />
     <Compile Include="Api\V2\Atom\AtomName.cs" />
+    <Compile Include="Api\V2\Atom\AtomYtCountHint.cs" />
+    <Compile Include="Api\V2\Atom\AtomYtPlaylistId.cs" />
     <Compile Include="Api\V2\Atom\AtomYtAboutMe.cs" />
     <Compile Include="Api\V2\Atom\AtomYtAge.cs" />
     <Compile Include="Api\V2\Atom\AtomYtBooks.cs" />
@@ -103,6 +108,7 @@
     <Compile Include="Api\V2\Atom\AtomYtOccupation.cs" />
     <Compile Include="Api\V2\Atom\AtomYtSchool.cs" />
     <Compile Include="Api\V2\Atom\AtomYtUsername.cs" />
+    <Compile Include="Api\V2\Atom\AtomFeedComment.cs" />
     <Compile Include="Api\V2\Atom\XmlNamespace.cs" />
     <Compile Include="Api\V2\Atom\AtomOpenSearchItemsPerPage.cs" />
     <Compile Include="Api\V2\Atom\AtomOpenSearchStartIndex.cs" />
@@ -134,6 +140,9 @@
     <Compile Include="Api\V2\Atom\AtomYtUploaderId.cs" />
     <Compile Include="Api\V2\Atom\AtomYtUserId.cs" />
     <Compile Include="Api\V2\Atom\AtomYtVideoId.cs" />
+    <Compile Include="Api\V2\YouTubeRequestFeed.cs" />
+    <Compile Include="Api\V2\Data\Playlist.cs" />
+    <Compile Include="Api\V2\Data\Comment.cs" />
     <Compile Include="Api\V2\YouTubeRequestProfile.cs" />
     <Compile Include="Api\V2\Data\Thumbnail.cs" />
     <Compile Include="Api\V2\Data\Profile.cs" />
@@ -141,7 +150,6 @@
     <Compile Include="Api\V2\YouTubeAtomException.cs" />
     <Compile Include="Api\V2\YouTubeCategories.cs" />
     <Compile Include="Api\V2\YouTubeCategory.cs" />
-    <Compile Include="Api\V2\YouTubeRequestVideoFeed.cs" />
     <Compile Include="Api\V2\YouTubeRequestVideo.cs" />
     <Compile Include="Api\V2\YouTubeUri.cs" />
     <Compile Include="Api\V2\Data\AccessControl.cs" />

@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's school.
 	/// </summary>
 	[Serializable]
-	public class AtomYtSchool
+	public sealed class AtomYtSchool
 	{
 		private AtomYtSchool() { }
 

@@ -25,7 +25,8 @@ using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
 {
-	public class UserRatingLike
+	[Serializable]
+	public sealed class UserRatingLike
 	{
 		private AtomYtRating atom;
 

@@ -25,6 +25,7 @@ using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
 {
+	[Serializable]
 	public enum PublishingStateName
 	{
 		Processing = 1,
@@ -34,6 +35,7 @@ namespace YtApi.Api.V2.Data
 		Failed = 5
 	}
 
+	[Serializable]
 	public enum PublishingStateReason
 	{
 		Unspecified = 0,
@@ -60,7 +62,8 @@ namespace YtApi.Api.V2.Data
 	/// <summary>
 	/// Indicates the publishing state of a video.
 	/// </summary>
-	public class PublishingState
+	[Serializable]
+	public sealed class PublishingState
 	{
 		bool draft;
 

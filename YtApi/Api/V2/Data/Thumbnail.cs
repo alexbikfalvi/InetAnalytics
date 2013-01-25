@@ -27,7 +27,8 @@ namespace YtApi.Api.V2.Data
 	/// <summary>
 	/// A class that represents a thumbnail.
 	/// </summary>
-	public class Thumbnail
+	[Serializable]
+	public sealed class Thumbnail
 	{
 		AtomMediaThumbnail atom;
 

@@ -71,6 +71,10 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public event ViewVideoEventHandler ViewVideoResponsesInApiV2;
 		/// <summary>
+		/// View the user profile.
+		/// </summary>
+		public event ViewProfileIdEventHandler ViewProfileInApiV2;
+		/// <summary>
 		/// View the video statistics using the web.
 		/// </summary>
 		public event ViewVideoEventHandler ViewVideoInWeb;
@@ -291,6 +295,15 @@ namespace YtAnalytics.Controls
 		{
 			if (null == this.controlVideo.Video) return;
 			if (null != this.Comment) this.Comment(this.controlVideo.Video.Id);
+		}
+
+		/// <summary>
+		/// An event handler called to view the user profile.
+		/// </summary>
+		/// <param name="id">The user profile ID.</param>
+		private void OnViewProfile(string id)
+		{
+			if (this.ViewProfileInApiV2 != null) this.ViewProfileInApiV2(id);
 		}
 	}
 }

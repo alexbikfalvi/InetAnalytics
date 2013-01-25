@@ -56,10 +56,10 @@ namespace YtAnalytics
 		private TreeNode treeNodeBrowserApi2ResponseVideosFeed;
 		private TreeNode treeNodeBrowserApi2VideosUser;
 		private TreeNode treeNodeBrowserApi2User;
-		private TreeNode treeNodeBrowserApi2Contacts;
+		private TreeNode treeNodeBrowserApi2Uploads;
 		private TreeNode treeNodeBrowserApi2Playlists;
-		private TreeNode treeNodeBrowserApi2FavoritesFeed;
 		private TreeNode treeNodeBrowserApi2PlaylistFeed;
+		private TreeNode treeNodeBrowserApi2FavoritesFeed;
 		private TreeNode treeNodeBrowserApi2VideoCategories;
 
 		private TreeNode treeNodeBrowserApi3;
@@ -83,11 +83,16 @@ namespace YtAnalytics
 		private ControlYtApi2 controlYtApi2 = new ControlYtApi2();
 		private ControlYtApi2VideosGlobal controlYtApi2Videos = new ControlYtApi2VideosGlobal();
 		private ControlYtApi2Video controlYtApi2Video = new ControlYtApi2Video();
+		private ControlYtApi2CommentsFeed controlYtApi2CommentsFeed = new ControlYtApi2CommentsFeed();
 		private ControlYtApi2Search controlYtApi2Search = new ControlYtApi2Search();
-		private ControlYtApi2StandardFeed controlYtApi2FeedStandard = new ControlYtApi2StandardFeed();
-		private ControlYtApi2GeneralVideosFeed controlYtApi2FeedRelated = new ControlYtApi2GeneralVideosFeed();
-		private ControlYtApi2GeneralVideosFeed controlYtApi2FeedResponse = new ControlYtApi2GeneralVideosFeed();
+		private ControlYtApi2StandardFeed controlYtApi2StandardFeed = new ControlYtApi2StandardFeed();
+		private ControlYtApi2VideosFeed controlYtApi2RelatedFeed = new ControlYtApi2VideosFeed();
+		private ControlYtApi2VideosFeed controlYtApi2ResponseFeed = new ControlYtApi2VideosFeed();
 		private ControlYtApi2Profile controlYtApi2Profile = new ControlYtApi2Profile();
+		private ControlYtApi2VideosFeed controlYtApi2UploadsFeed = new ControlYtApi2VideosFeed();
+		private ControlYtApi2PlaylistsFeed controlYtApi2PlaylistsFeed = new ControlYtApi2PlaylistsFeed();
+		private ControlYtApi2VideosFeed controlYtApi2PlaylistFeed = new ControlYtApi2VideosFeed();
+		private ControlYtApi2VideosFeed controlYtApi2FavoritesFeed = new ControlYtApi2VideosFeed();
 		private ControlYtApi3 controlYtApi3 = new ControlYtApi3();
 		private ControlWeb controlWeb = new ControlWeb();
 		private ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
@@ -105,6 +110,7 @@ namespace YtAnalytics
 		private ViewVideoEventHandler delegateViewVideoApiV2Responses;
 		private ViewVideoEventHandler delegateViewVideoApiV3;
 		private ViewVideoEventHandler delegateViewVideoWeb;
+		private ViewProfileIdEventHandler delegateViewProfileIdApiV2;
 		private AddVideoCommentEventHandler delegateAddVideoComment;
 
 		/// <summary>
@@ -150,32 +156,34 @@ namespace YtAnalytics
 					this.treeNodeBrowserApi2ResponseVideosFeed
 				});
 
-			this.treeNodeBrowserApi2Contacts = new TreeNode("Contacts",
-				this.imageList.Images.IndexOfKey("FolderClosedUser"),
-				this.imageList.Images.IndexOfKey("FolderOpenUser"));
-			this.treeNodeBrowserApi2Playlists = new TreeNode("Playlists",
-				this.imageList.Images.IndexOfKey("FolderClosedPlay"),
-				this.imageList.Images.IndexOfKey("FolderOpenPlay"));
-			this.treeNodeBrowserApi2User = new TreeNode("User",
-				this.imageList.Images.IndexOfKey("FileUser"),
-				this.imageList.Images.IndexOfKey("FileUser"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi2Contacts,
-					this.treeNodeBrowserApi2Playlists
-				});
-			this.treeNodeBrowserApi2FavoritesFeed = new TreeNode("Favorites feed",
+			this.treeNodeBrowserApi2Uploads = new TreeNode("Uploads feed",
 				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
 				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
 			this.treeNodeBrowserApi2PlaylistFeed = new TreeNode("Playlist feed",
 				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
 				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeBrowserApi2Playlists = new TreeNode("Playlists",
+				this.imageList.Images.IndexOfKey("FolderClosedPlay"),
+				this.imageList.Images.IndexOfKey("FolderOpenPlay"),
+				new TreeNode[] {
+					this.treeNodeBrowserApi2PlaylistFeed
+				});
+			this.treeNodeBrowserApi2FavoritesFeed = new TreeNode("Favorites feed",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeBrowserApi2User = new TreeNode("User",
+				this.imageList.Images.IndexOfKey("FileUser"),
+				this.imageList.Images.IndexOfKey("FileUser"),
+				new TreeNode[] {
+					this.treeNodeBrowserApi2Uploads,
+					this.treeNodeBrowserApi2Playlists,
+					this.treeNodeBrowserApi2FavoritesFeed
+				});
 			this.treeNodeBrowserApi2VideosUser = new TreeNode("User videos",
 				this.imageList.Images.IndexOfKey("FolderClosedUser"),
 				this.imageList.Images.IndexOfKey("FolderOpenUser"),
 				new TreeNode[] {
-					this.treeNodeBrowserApi2User,
-					this.treeNodeBrowserApi2FavoritesFeed,
-					this.treeNodeBrowserApi2PlaylistFeed
+					this.treeNodeBrowserApi2User
 				});
 
 			this.treeNodeBrowserApi2VideoCategories = new TreeNode("Video categories",
@@ -223,18 +231,21 @@ namespace YtAnalytics
 					this.treeNodeCommentsVideos
 				});
 
-
-
 			// Add the panel controls to the split container.
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Videos);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi3);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Video);
-			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2FeedStandard);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2CommentsFeed);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2StandardFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Search);
-			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2FeedRelated);
-			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2FeedResponse);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2RelatedFeed);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2ResponseFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Profile);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2UploadsFeed);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2PlaylistsFeed);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2FavoritesFeed);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2PlaylistFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlWeb);
 			this.splitContainer.Panel2.Controls.Add(this.controlWebStatistics);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
@@ -246,16 +257,17 @@ namespace YtAnalytics
 			this.treeNodeBrowserApi2.Tag = this.controlYtApi2;
 			this.treeNodeBrowserApi2VideosGlobal.Tag = this.controlYtApi2Videos;
 			this.treeNodeBrowserApi2Video.Tag = this.controlYtApi2Video;
+			this.treeNodeBrowserApi2VideoComments.Tag = this.controlYtApi2CommentsFeed;
 			this.treeNodeBrowserApi2SearchFeed.Tag = this.controlYtApi2Search;
-			this.treeNodeBrowserApi2StandardFeed.Tag = this.controlYtApi2FeedStandard;
-			this.treeNodeBrowserApi2RelatedVideosFeed.Tag = this.controlYtApi2FeedRelated;
-			this.treeNodeBrowserApi2ResponseVideosFeed.Tag = this.controlYtApi2FeedResponse;
+			this.treeNodeBrowserApi2StandardFeed.Tag = this.controlYtApi2StandardFeed;
+			this.treeNodeBrowserApi2RelatedVideosFeed.Tag = this.controlYtApi2RelatedFeed;
+			this.treeNodeBrowserApi2ResponseVideosFeed.Tag = this.controlYtApi2ResponseFeed;
 			this.treeNodeBrowserApi2VideosUser.Tag = null;
 			this.treeNodeBrowserApi2User.Tag = this.controlYtApi2Profile;
-			this.treeNodeBrowserApi2Contacts.Tag = null;
-			this.treeNodeBrowserApi2Playlists.Tag = null;
-			this.treeNodeBrowserApi2FavoritesFeed.Tag = null;
-			this.treeNodeBrowserApi2PlaylistFeed.Tag = null;
+			this.treeNodeBrowserApi2Uploads.Tag = this.controlYtApi2UploadsFeed;
+			this.treeNodeBrowserApi2Playlists.Tag = this.controlYtApi2PlaylistsFeed;
+			this.treeNodeBrowserApi2FavoritesFeed.Tag = this.controlYtApi2FavoritesFeed;
+			this.treeNodeBrowserApi2PlaylistFeed.Tag = this.controlYtApi2PlaylistFeed;
 			
 			this.treeNodeBrowserApi2VideoCategories.Tag = null;
 
@@ -309,11 +321,16 @@ namespace YtAnalytics
 
 			// Initialize the controls.
 			this.controlYtApi2Video.Initialize(this.crawler);
-			this.controlYtApi2FeedStandard.Initialize(this.crawler);
+			this.controlYtApi2CommentsFeed.Initialize(this.crawler);
+			this.controlYtApi2StandardFeed.Initialize(this.crawler);
 			this.controlYtApi2Search.Initialize(this.crawler);
-			this.controlYtApi2FeedRelated.Initialize(this.crawler, new GeneralVideosFeedEventHandler(YouTubeUri.GetRelatedVideosFeed), "APIv2 Related Videos Feed");
-			this.controlYtApi2FeedResponse.Initialize(this.crawler, new GeneralVideosFeedEventHandler(YouTubeUri.GetResponseVideosFeed), "APIv2 Response Videos Feed");
+			this.controlYtApi2RelatedFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetRelatedVideosFeed), "&Video:", "APIv2 Related Videos Feed");
+			this.controlYtApi2ResponseFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetResponseVideosFeed), "&Video:", "APIv2 Response Videos Feed");
 			this.controlYtApi2Profile.Initialize(this.crawler);
+			this.controlYtApi2PlaylistsFeed.Initialize(this.crawler);
+			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "APIv2 Uploads Videos Feed");
+			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "APIv2 Favorites Videos Feed");
+			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "APIv2 Playlist Videos Feed");
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler);
@@ -325,6 +342,7 @@ namespace YtAnalytics
 			this.delegateViewVideoApiV2Responses = new ViewVideoEventHandler(this.ViewResponseVideosInApiV2);
 			this.delegateViewVideoApiV3 = new ViewVideoEventHandler(this.ViewVideoInApiV3);
 			this.delegateViewVideoWeb = new ViewVideoEventHandler(this.ViewVideoInWeb);
+			this.delegateViewProfileIdApiV2 = new ViewProfileIdEventHandler(this.ViewProfileIdInApiV2);
 			this.delegateAddVideoComment = new AddVideoCommentEventHandler(this.CommentVideo);
 
 			// Set the control events.
@@ -348,33 +366,37 @@ namespace YtAnalytics
 			this.controlYtApi2Video.ViewVideoInWeb += this.delegateViewVideoWeb;
 			this.controlYtApi2Video.Comment += this.delegateAddVideoComment;
 
-			this.controlYtApi2FeedStandard.ViewVideoInApiV2 += this.delegateViewVideoApiV2;
-			this.controlYtApi2FeedStandard.ViewVideoRelatedInApiV2 += this.delegateViewVideoApiV2Related;
-			this.controlYtApi2FeedStandard.ViewVideoResponsesInApiV2 += this.delegateViewVideoApiV2Responses;
-			this.controlYtApi2FeedStandard.ViewVideoInApiV3 += this.delegateViewVideoApiV3;
-			this.controlYtApi2FeedStandard.ViewVideoInWeb += this.delegateViewVideoWeb;
-			this.controlYtApi2FeedStandard.Comment += this.delegateAddVideoComment;
+			this.controlYtApi2StandardFeed.ViewVideoInApiV2 += this.delegateViewVideoApiV2;
+			this.controlYtApi2StandardFeed.ViewVideoRelatedInApiV2 += this.delegateViewVideoApiV2Related;
+			this.controlYtApi2StandardFeed.ViewVideoResponsesInApiV2 += this.delegateViewVideoApiV2Responses;
+			this.controlYtApi2StandardFeed.ViewProfileInApiV2 += this.delegateViewProfileIdApiV2;
+			this.controlYtApi2StandardFeed.ViewVideoInApiV3 += this.delegateViewVideoApiV3;
+			this.controlYtApi2StandardFeed.ViewVideoInWeb += this.delegateViewVideoWeb;
+			this.controlYtApi2StandardFeed.Comment += this.delegateAddVideoComment;
 
 			this.controlYtApi2Search.ViewVideoInApiV2 += this.delegateViewVideoApiV2;
 			this.controlYtApi2Search.ViewVideoRelatedInApiV2 += this.delegateViewVideoApiV2Related;
 			this.controlYtApi2Search.ViewVideoResponsesInApiV2 += this.delegateViewVideoApiV2Responses;
+			this.controlYtApi2Search.ViewProfileInApiV2 += this.delegateViewProfileIdApiV2;
 			this.controlYtApi2Search.ViewVideoInApiV3 += this.delegateViewVideoApiV3;
 			this.controlYtApi2Search.ViewVideoInWeb += this.delegateViewVideoWeb;
 			this.controlYtApi2Search.Comment += this.delegateAddVideoComment;
 
-			this.controlYtApi2FeedRelated.ViewVideoInApiV2 += this.delegateViewVideoApiV2;
-			this.controlYtApi2FeedRelated.ViewVideoRelatedInApiV2 += this.delegateViewVideoApiV2Related;
-			this.controlYtApi2FeedRelated.ViewVideoResponsesInApiV2 += this.delegateViewVideoApiV2Responses;
-			this.controlYtApi2FeedRelated.ViewVideoInApiV3 += this.delegateViewVideoApiV3;
-			this.controlYtApi2FeedRelated.ViewVideoInWeb += this.delegateViewVideoWeb;
-			this.controlYtApi2FeedRelated.Comment += this.delegateAddVideoComment;
+			this.controlYtApi2RelatedFeed.ViewVideoInApiV2 += this.delegateViewVideoApiV2;
+			this.controlYtApi2RelatedFeed.ViewVideoRelatedInApiV2 += this.delegateViewVideoApiV2Related;
+			this.controlYtApi2RelatedFeed.ViewVideoResponsesInApiV2 += this.delegateViewVideoApiV2Responses;
+			this.controlYtApi2RelatedFeed.ViewProfileInApiV2 += this.delegateViewProfileIdApiV2;
+			this.controlYtApi2RelatedFeed.ViewVideoInApiV3 += this.delegateViewVideoApiV3;
+			this.controlYtApi2RelatedFeed.ViewVideoInWeb += this.delegateViewVideoWeb;
+			this.controlYtApi2RelatedFeed.Comment += this.delegateAddVideoComment;
 
-			this.controlYtApi2FeedResponse.ViewVideoInApiV2 += this.delegateViewVideoApiV2;
-			this.controlYtApi2FeedResponse.ViewVideoRelatedInApiV2 += this.delegateViewVideoApiV2Related;
-			this.controlYtApi2FeedResponse.ViewVideoResponsesInApiV2 += this.delegateViewVideoApiV2Responses;
-			this.controlYtApi2FeedResponse.ViewVideoInApiV3 += this.delegateViewVideoApiV3;
-			this.controlYtApi2FeedResponse.ViewVideoInWeb += this.delegateViewVideoWeb;
-			this.controlYtApi2FeedResponse.Comment += this.delegateAddVideoComment;
+			this.controlYtApi2ResponseFeed.ViewVideoInApiV2 += this.delegateViewVideoApiV2;
+			this.controlYtApi2ResponseFeed.ViewVideoRelatedInApiV2 += this.delegateViewVideoApiV2Related;
+			this.controlYtApi2ResponseFeed.ViewVideoResponsesInApiV2 += this.delegateViewVideoApiV2Responses;
+			this.controlYtApi2ResponseFeed.ViewProfileInApiV2 += this.delegateViewProfileIdApiV2;
+			this.controlYtApi2ResponseFeed.ViewVideoInApiV3 += this.delegateViewVideoApiV3;
+			this.controlYtApi2ResponseFeed.ViewVideoInWeb += this.delegateViewVideoWeb;
+			this.controlYtApi2ResponseFeed.Comment += this.delegateAddVideoComment;
 
 			this.controlWebStatistics.Comment += this.delegateAddVideoComment;
 
@@ -534,17 +556,17 @@ namespace YtAnalytics
 		{
 			this.sideMenu.SelectedItem = this.sideMenuBrowse;
 			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
-			this.controlYtApi2FeedRelated.View(video);
+			this.controlYtApi2RelatedFeed.View(video);
 		}
 
 		private void ViewResponseVideosInApiV2(Video video)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuBrowse;
 			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
-			this.controlYtApi2FeedResponse.View(video);
+			this.controlYtApi2ResponseFeed.View(video);
 		}
 
-		private void ViewUserInApiV2(string user)
+		private void ViewProfileIdInApiV2(string user)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuBrowse;
 			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2User;

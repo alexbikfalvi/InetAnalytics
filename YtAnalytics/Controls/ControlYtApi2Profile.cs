@@ -37,6 +37,8 @@ namespace YtAnalytics.Controls
 {
 	public delegate void ViewProfileEventHandler(Profile profile);
 
+	public delegate void ViewProfileIdEventHandler(string id);
+
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>

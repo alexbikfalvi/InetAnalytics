@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's occupation.
 	/// </summary>
 	[Serializable]
-	public class AtomYtOccupation
+	public sealed class AtomYtOccupation
 	{
 		private AtomYtOccupation() { }
 

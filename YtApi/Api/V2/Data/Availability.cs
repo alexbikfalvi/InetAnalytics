@@ -25,7 +25,11 @@ using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
 {
-    public class Availability
+	/// <summary>
+	/// A class that represents YouTube availability.
+	/// </summary>
+    [Serializable]
+	public sealed class Availability
     {
 		private AtomYtAvailability atom;
 

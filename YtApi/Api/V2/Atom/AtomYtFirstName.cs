@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's first name.
 	/// </summary>
 	[Serializable]
-	public class AtomYtFirstName
+	public sealed class AtomYtFirstName
 	{
 		private AtomYtFirstName() { }
 

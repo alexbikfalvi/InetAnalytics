@@ -55,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlComment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlComment.Designer.cs">
+      <DependentUpon>ControlComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlCommentsVideos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -181,11 +187,11 @@
     <Compile Include="Controls\ControlYtApi2Search.Designer.cs">
       <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2GeneralVideosFeed.cs">
+    <Compile Include="Controls\ControlYtApi2VideosFeed.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2GeneralVideosFeed.Designer.cs">
-      <DependentUpon>ControlYtApi2GeneralVideosFeed.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi2VideosFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlHistoryDiscoveryEvent.cs">
       <SubType>UserControl</SubType>
@@ -228,6 +234,30 @@
     </Compile>
     <Compile Include="Controls\ControlYtApi2Profile.Designer.cs">
       <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlCommentList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlCommentList.Designer.cs">
+      <DependentUpon>ControlCommentList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlPlaylist.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlPlaylist.Designer.cs">
+      <DependentUpon>ControlPlaylist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlPlaylistList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlPlaylistList.Designer.cs">
+      <DependentUpon>ControlPlaylistList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2PlaylistsFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2PlaylistsFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
@@ -296,6 +326,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\ControlComment.resx">
+      <DependentUpon>ControlComment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlCommentsVideos.resx">
       <DependentUpon>ControlCommentsVideos.cs</DependentUpon>
     </EmbeddedResource>
@@ -356,8 +389,8 @@
     <EmbeddedResource Include="Controls\ControlYtApi2Search.resx">
       <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2GeneralVideosFeed.resx">
-      <DependentUpon>ControlYtApi2GeneralVideosFeed.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi2VideosFeed.resx">
+      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlHistoryDiscoveryEvent.resx">
       <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
@@ -379,6 +412,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2Profile.resx">
       <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlCommentList.resx">
+      <DependentUpon>ControlCommentList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlPlaylist.resx">
+      <DependentUpon>ControlPlaylist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlPlaylistList.resx">
+      <DependentUpon>ControlPlaylistList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2PlaylistsFeed.resx">
+      <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
@@ -457,6 +502,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\FilePlay_48.png" />
+    <None Include="Resources\FilePlay_32.png" />
+    <None Include="Resources\FilePlay_24.png" />
+    <None Include="Resources\FilePlay_16.png" />
     <None Include="Resources\FolderOpenPlay_48.png" />
     <None Include="Resources\FolderOpenPlay_32.png" />
     <None Include="Resources\FolderOpenPlay_24.png" />

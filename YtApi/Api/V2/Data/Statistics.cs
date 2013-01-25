@@ -25,7 +25,8 @@ using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
 {
-	public class Statistics
+	[Serializable]
+	public sealed class Statistics
 	{
 		private AtomYtStatistics atom;
 

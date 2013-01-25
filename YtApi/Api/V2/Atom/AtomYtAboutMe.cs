@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Atom
 	/// A class representing a user's about information.
 	/// </summary>
 	[Serializable]
-	public class AtomYtAboutMe
+	public sealed class AtomYtAboutMe
 	{
 		private AtomYtAboutMe() { }
 
