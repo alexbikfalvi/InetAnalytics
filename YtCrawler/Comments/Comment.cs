@@ -30,10 +30,18 @@ namespace YtCrawler.Comments
 	/// </summary>
 	public abstract class Comment
 	{
+		public enum CommentType
+		{
+			Object = 0,
+			Video = 1,
+			User = 2
+		};
+
 		private Guid guid;
 		private DateTime time;
 		private string user;
 		private string text;
+		private CommentType type;
 
 		private XElement xml = null;
 
@@ -46,6 +54,7 @@ namespace YtCrawler.Comments
 			this.time = DateTime.Now;
 			this.user = string.Empty;
 			this.text = string.Empty;
+			this.type = CommentType.Object;
 		}
 
 		/// <summary>
@@ -54,7 +63,8 @@ namespace YtCrawler.Comments
 		/// <param name="time">The time.</param>
 		/// <param name="user">The user.</param>
 		/// <param name="text">The text.</param>
-		public Comment(DateTime time, string user, string text)
+		/// <param name="obj"></param>
+		public Comment(DateTime time, string user, string text, string obj)
 		{
 			this.guid = Guid.NewGuid();
 			this.time = time;
@@ -85,6 +95,8 @@ namespace YtCrawler.Comments
 		/// Returns the GUID.
 		/// </summary>
 		public Guid Guid { get { return this.guid; } }
+
+		public string Object { 
 
 		/// <summary>
 		/// Returns the comment time.

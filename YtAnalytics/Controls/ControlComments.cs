@@ -13,7 +13,7 @@ using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls
 {
-	public delegate void AddCommentEventHandler(string obj);
+	public delegate void AddCommentEventHandler(Comment comment);
 
 	/// <summary>
 	/// A control displaying a list of video comments.
@@ -113,15 +113,11 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when after new comment has been added.
 		/// </summary>
-		/// <param name="video">The video.</param>
-		/// <param name="user">The user.</param>
-		/// <param name="text">The comment text.</param>
-		private void OnCommentAdded(string video, string user, string text)
+		/// <param name="comment">The comment object.</param>
+		private void OnCommentAdded(Comment comment)
 		{
 			try
 			{
-				// Try add the comment.
-				CommentVideo comment = new CommentVideo(DateTime.Now, user, text, video);
 				// Add the comment to the comments list.
 				this.crawler.Comments.Videos.AddComment(comment);
 

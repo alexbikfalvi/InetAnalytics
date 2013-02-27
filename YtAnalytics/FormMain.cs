@@ -554,14 +554,14 @@ namespace YtAnalytics
 		{
 			this.sideMenu.SelectedItem = this.sideMenuBrowse;
 			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
-			this.controlYtApi2RelatedFeed.View(video);
+			this.controlYtApi2RelatedFeed.View(video.Id);
 		}
 
 		private void ViewResponseVideosInApiV2(Video video)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuBrowse;
 			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
-			this.controlYtApi2ResponseFeed.View(video);
+			this.controlYtApi2ResponseFeed.View(video.Id);
 		}
 
 		private void ViewApiV2User(string user)

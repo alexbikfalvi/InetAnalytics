@@ -25,13 +25,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YtAnalytics.Controls;
 using YtApi.Api.V2.Data;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms
 {
-	public delegate void AddCommentEventHandler(string obj, string user, string comment);
-
 	/// <summary>
 	/// A form dialog displaying an exception.
 	/// </summary>
