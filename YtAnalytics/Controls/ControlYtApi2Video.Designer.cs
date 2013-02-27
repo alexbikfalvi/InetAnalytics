@@ -35,8 +35,9 @@
 			this.buttonStop = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonView = new System.Windows.Forms.ToolStripDropDownButton();
+			this.menuItemAuthor = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemRelated = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItemResponses = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemResponse = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -78,8 +79,8 @@
 			// textBox
 			// 
 			this.textBox.Name = "textBox";
-			this.textBox.Size = new System.Drawing.Size(100, 25);
-			this.textBox.TextChanged += new System.EventHandler(this.InputChanged);
+			this.textBox.Size = new System.Drawing.Size(160, 25);
+			this.textBox.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// buttonStart
 			// 
@@ -89,7 +90,7 @@
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(51, 22);
 			this.buttonStart.Text = "St&art";
-			this.buttonStart.Click += new System.EventHandler(this.Start);
+			this.buttonStart.Click += new System.EventHandler(this.OnStart);
 			// 
 			// buttonStop
 			// 
@@ -99,7 +100,7 @@
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(51, 22);
 			this.buttonStop.Text = "St&op";
-			this.buttonStop.Click += new System.EventHandler(this.Stop);
+			this.buttonStop.Click += new System.EventHandler(this.OnStop);
 			// 
 			// toolStripSeparator
 			// 
@@ -109,8 +110,9 @@
 			// buttonView
 			// 
 			this.buttonView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAuthor,
             this.menuItemRelated,
-            this.menuItemResponses,
+            this.menuItemResponse,
             this.toolStripSeparator1,
             this.menuItemWeb,
             this.toolStripSeparator2,
@@ -122,21 +124,29 @@
 			this.buttonView.Size = new System.Drawing.Size(61, 22);
 			this.buttonView.Text = "&View";
 			// 
+			// menuItemAuthor
+			// 
+			this.menuItemAuthor.Image = global::YtAnalytics.Resources.FileUser_16;
+			this.menuItemAuthor.Name = "menuItemAuthor";
+			this.menuItemAuthor.Size = new System.Drawing.Size(167, 22);
+			this.menuItemAuthor.Text = "Author";
+			this.menuItemAuthor.Click += new System.EventHandler(this.OnViewAuthorClick);
+			// 
 			// menuItemRelated
 			// 
-			this.menuItemRelated.Image = global::YtAnalytics.Resources.ServerBrowse_16;
+			this.menuItemRelated.Image = global::YtAnalytics.Resources.FolderClosedVideo_16;
 			this.menuItemRelated.Name = "menuItemRelated";
 			this.menuItemRelated.Size = new System.Drawing.Size(167, 22);
 			this.menuItemRelated.Text = "Related videos";
-			this.menuItemRelated.Click += new System.EventHandler(this.OnRelatedVideosClick);
+			this.menuItemRelated.Click += new System.EventHandler(this.OnViewRelatedVideosClick);
 			// 
-			// menuItemResponses
+			// menuItemResponse
 			// 
-			this.menuItemResponses.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemResponses.Name = "menuItemResponses";
-			this.menuItemResponses.Size = new System.Drawing.Size(167, 22);
-			this.menuItemResponses.Text = "Response videos";
-			this.menuItemResponses.Click += new System.EventHandler(this.OnResponseVideosClick);
+			this.menuItemResponse.Image = global::YtAnalytics.Resources.FolderClosedVideo_16;
+			this.menuItemResponse.Name = "menuItemResponse";
+			this.menuItemResponse.Size = new System.Drawing.Size(167, 22);
+			this.menuItemResponse.Text = "Response videos";
+			this.menuItemResponse.Click += new System.EventHandler(this.OnViewResponseVideosClick);
 			// 
 			// toolStripSeparator1
 			// 
@@ -249,12 +259,13 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripDropDownButton buttonView;
 		private System.Windows.Forms.ToolStripMenuItem menuItemRelated;
-		private System.Windows.Forms.ToolStripMenuItem menuItemResponses;
+		private System.Windows.Forms.ToolStripMenuItem menuItemResponse;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem menuItemWeb;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem menuItemYouTube;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton buttonComment;
+		private System.Windows.Forms.ToolStripMenuItem menuItemAuthor;
 	}
 }

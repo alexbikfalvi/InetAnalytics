@@ -271,6 +271,7 @@
 			// 
 			// tabPageGeneral
 			// 
+			this.tabPageGeneral.AutoScroll = true;
 			this.tabPageGeneral.Controls.Add(this.textBoxDisplayId);
 			this.tabPageGeneral.Controls.Add(this.labelDisplayId);
 			this.tabPageGeneral.Controls.Add(this.labelUpdated);
@@ -311,6 +312,7 @@
 			// 
 			// tabPagePersonal
 			// 
+			this.tabPagePersonal.AutoScroll = true;
 			this.tabPagePersonal.Controls.Add(this.labelHometown);
 			this.tabPagePersonal.Controls.Add(this.textBoxHometown);
 			this.tabPagePersonal.Controls.Add(this.labelSchool);
@@ -517,6 +519,7 @@
 			// 
 			// tabPageDetails
 			// 
+			this.tabPageDetails.AutoScroll = true;
 			this.tabPageDetails.Controls.Add(this.labelMusic);
 			this.tabPageDetails.Controls.Add(this.textBoxMusic);
 			this.tabPageDetails.Controls.Add(this.labelMovies);
@@ -637,6 +640,7 @@
 			// 
 			// tabPageAuthor
 			// 
+			this.tabPageAuthor.AutoScroll = true;
 			this.tabPageAuthor.Controls.Add(this.buttonViewAuthor);
 			this.tabPageAuthor.Controls.Add(this.textBoxAuthorName);
 			this.tabPageAuthor.Controls.Add(this.labelAuthorName);
@@ -658,7 +662,7 @@
 			this.buttonViewAuthor.Name = "buttonViewAuthor";
 			this.buttonViewAuthor.Size = new System.Drawing.Size(95, 23);
 			this.buttonViewAuthor.TabIndex = 4;
-			this.buttonViewAuthor.Text = "&View entry";
+			this.buttonViewAuthor.Text = "&View profile";
 			this.buttonViewAuthor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonViewAuthor.UseVisualStyleBackColor = true;
 			// 
@@ -700,6 +704,7 @@
 			// 
 			// tabPageStatistics
 			// 
+			this.tabPageStatistics.AutoScroll = true;
 			this.tabPageStatistics.Controls.Add(this.labelLastWeb);
 			this.tabPageStatistics.Controls.Add(this.textBoxLastWebAccess);
 			this.tabPageStatistics.Controls.Add(this.labelUploadViews);
@@ -756,6 +761,7 @@
 			// 
 			// tabPageThumbnails
 			// 
+			this.tabPageThumbnails.AutoScroll = true;
 			this.tabPageThumbnails.Controls.Add(this.imageListBoxThumbnails);
 			this.tabPageThumbnails.Location = new System.Drawing.Point(4, 22);
 			this.tabPageThumbnails.Name = "tabPageThumbnails";

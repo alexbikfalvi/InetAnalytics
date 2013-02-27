@@ -193,7 +193,7 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		void DownloadThumbnailCompleted(object sender, DownloadDataCompletedEventArgs e)
 		{
-			this.DownloadThumbnailCompleted(e.UserState as Video, e.Cancelled, e.Error, e.Result);
+			this.DownloadThumbnailCompleted(e.UserState as Video, e.Cancelled, e.Error, e.Cancelled ? null : e.Result);
 		}
 
 		/// <summary>

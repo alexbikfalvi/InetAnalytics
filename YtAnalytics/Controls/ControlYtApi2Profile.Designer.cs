@@ -35,17 +35,16 @@
 			this.buttonStop = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonView = new System.Windows.Forms.ToolStripDropDownButton();
-			this.menuItemRelated = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItemResponses = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemUploads = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemFavorites = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemPlaylists = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonComment = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.log = new YtAnalytics.Controls.ControlLogList();
 			this.controlProfile = new YtAnalytics.Controls.ControlProfile();
+			this.log = new YtAnalytics.Controls.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -78,8 +77,8 @@
 			// textBox
 			// 
 			this.textBox.Name = "textBox";
-			this.textBox.Size = new System.Drawing.Size(100, 25);
-			this.textBox.TextChanged += new System.EventHandler(this.InputChanged);
+			this.textBox.Size = new System.Drawing.Size(160, 25);
+			this.textBox.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// buttonStart
 			// 
@@ -109,11 +108,10 @@
 			// buttonView
 			// 
 			this.buttonView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemRelated,
-            this.menuItemResponses,
+            this.menuItemUploads,
+            this.menuItemFavorites,
+            this.menuItemPlaylists,
             this.toolStripSeparator1,
-            this.menuItemWeb,
-            this.toolStripSeparator2,
             this.menuItemYouTube});
 			this.buttonView.Enabled = false;
 			this.buttonView.Image = global::YtAnalytics.Resources.View_16;
@@ -122,39 +120,34 @@
 			this.buttonView.Size = new System.Drawing.Size(61, 22);
 			this.buttonView.Text = "&View";
 			// 
-			// menuItemRelated
+			// menuItemUploads
 			// 
-			this.menuItemRelated.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemRelated.Name = "menuItemRelated";
-			this.menuItemRelated.Size = new System.Drawing.Size(167, 22);
-			this.menuItemRelated.Text = "Related videos";
-			this.menuItemRelated.Click += new System.EventHandler(this.OnRelatedVideosClick);
+			this.menuItemUploads.Image = global::YtAnalytics.Resources.FolderClosedVideo_16;
+			this.menuItemUploads.Name = "menuItemUploads";
+			this.menuItemUploads.Size = new System.Drawing.Size(167, 22);
+			this.menuItemUploads.Text = "Uploaded videos";
+			this.menuItemUploads.Click += new System.EventHandler(this.OnViewApiV2Uploads);
 			// 
-			// menuItemResponses
+			// menuItemFavorites
 			// 
-			this.menuItemResponses.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemResponses.Name = "menuItemResponses";
-			this.menuItemResponses.Size = new System.Drawing.Size(167, 22);
-			this.menuItemResponses.Text = "Response videos";
-			this.menuItemResponses.Click += new System.EventHandler(this.OnResponseVideosClick);
+			this.menuItemFavorites.Image = global::YtAnalytics.Resources.FolderClosedVideo_16;
+			this.menuItemFavorites.Name = "menuItemFavorites";
+			this.menuItemFavorites.Size = new System.Drawing.Size(167, 22);
+			this.menuItemFavorites.Text = "Favorited videos";
+			this.menuItemFavorites.Click += new System.EventHandler(this.OnViewApiV2Favorites);
+			// 
+			// menuItemPlaylists
+			// 
+			this.menuItemPlaylists.Image = global::YtAnalytics.Resources.FolderClosedPlay_16;
+			this.menuItemPlaylists.Name = "menuItemPlaylists";
+			this.menuItemPlaylists.Size = new System.Drawing.Size(167, 22);
+			this.menuItemPlaylists.Text = "Playlists";
+			this.menuItemPlaylists.Click += new System.EventHandler(this.OnViewApiV2Playlists);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(164, 6);
-			// 
-			// menuItemWeb
-			// 
-			this.menuItemWeb.Image = global::YtAnalytics.Resources.ServerWeb_16;
-			this.menuItemWeb.Name = "menuItemWeb";
-			this.menuItemWeb.Size = new System.Drawing.Size(167, 22);
-			this.menuItemWeb.Text = "Web statistics";
-			this.menuItemWeb.Click += new System.EventHandler(this.OnWebStatisticsClick);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(164, 6);
 			// 
 			// menuItemYouTube
 			// 
@@ -200,14 +193,6 @@
 			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.TabIndex = 1;
 			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(798, 169);
-			this.log.TabIndex = 0;
-			// 
 			// controlProfile
 			// 
 			this.controlProfile.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -216,6 +201,14 @@
 			this.controlProfile.Profile = null;
 			this.controlProfile.Size = new System.Drawing.Size(798, 398);
 			this.controlProfile.TabIndex = 1;
+			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(798, 169);
+			this.log.TabIndex = 0;
 			// 
 			// ControlYtApi2Profile
 			// 
@@ -246,14 +239,13 @@
 		private ControlLogList log;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripDropDownButton buttonView;
-		private System.Windows.Forms.ToolStripMenuItem menuItemRelated;
-		private System.Windows.Forms.ToolStripMenuItem menuItemResponses;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem menuItemWeb;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem menuItemYouTube;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton buttonComment;
 		private ControlProfile controlProfile;
+		private System.Windows.Forms.ToolStripMenuItem menuItemUploads;
+		private System.Windows.Forms.ToolStripMenuItem menuItemFavorites;
+		private System.Windows.Forms.ToolStripMenuItem menuItemPlaylists;
 	}
 }

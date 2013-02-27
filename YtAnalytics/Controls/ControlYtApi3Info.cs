@@ -28,9 +28,9 @@ using System.Windows.Forms;
 
 namespace YtAnalytics.Controls
 {
-	public partial class ControlYtApi3 : UserControl
+	public partial class ControlYtApi3Info : UserControl
 	{
-		public ControlYtApi3()
+		public ControlYtApi3Info()
 		{
 			// Initialize component.
 			InitializeComponent();

@@ -61,7 +61,10 @@ namespace YtAnalytics.Controls
 			this.Dock = DockStyle.Fill;
 		}
 
-
+		/// <summary>
+		/// View the author profile using the version 2 API.
+		/// </summary>
+		public event ViewProfileIdEventHandler ViewAuthorInApiV2;
 		/// <summary>
 		/// View the related videos.
 		/// </summary>
@@ -81,7 +84,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddVideoCommentEventHandler Comment;
+		public event AddCommentEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control with a crawler instance.
@@ -105,6 +108,7 @@ namespace YtAnalytics.Controls
 			this.textBox.Text = video.Id;
 			this.buttonView.Enabled = true;
 			this.buttonComment.Enabled = true;
+			this.menuItemAuthor.Enabled = video.Author != null;
 		}
 
 		/// <summary>
@@ -112,7 +116,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void Start(object sender, EventArgs e)
+		private void OnStart(object sender, EventArgs e)
 		{
 			// Validate the input.
 			if (string.Empty == this.textBox.Text)
@@ -162,7 +166,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void Stop(object sender, EventArgs e)
+		private void OnStop(object sender, EventArgs e)
 		{
 			this.request.Cancel(this.result);
 		}
@@ -185,6 +189,7 @@ namespace YtAnalytics.Controls
 					this.controlVideo.Video = video;
 					this.buttonView.Enabled = true;
 					this.buttonComment.Enabled = true;
+					this.menuItemAuthor.Enabled = this.controlVideo.Video.Author != null;
 
 					// Log
 					this.log.Add(this.crawler.Log.Add(
@@ -236,9 +241,21 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void InputChanged(object sender, EventArgs e)
+		private void OnInputChanged(object sender, EventArgs e)
 		{
 			this.buttonStart.Enabled = this.textBox.Text != string.Empty;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to open the author.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnViewAuthorClick(object sender, EventArgs e)
+		{
+			if (null == this.controlVideo.Video) return;
+			if (null == this.controlVideo.Video.Author) return;
+			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(this.controlVideo.Video.Author.UserId);
 		}
 
 		/// <summary>
@@ -246,7 +263,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnRelatedVideosClick(object sender, EventArgs e)
+		private void OnViewRelatedVideosClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
 			if (null != this.ViewVideoRelatedInApiV2) this.ViewVideoRelatedInApiV2(this.controlVideo.Video);
@@ -257,7 +274,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnResponseVideosClick(object sender, EventArgs e)
+		private void OnViewResponseVideosClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
 			if (null != this.ViewVideoResponsesInApiV2) this.ViewVideoResponsesInApiV2(this.controlVideo.Video);
@@ -283,7 +300,7 @@ namespace YtAnalytics.Controls
 		{
 			if (null == this.controlVideo.Video) return;
 			// Open the video link in the browser.
-			Process.Start(YouTubeUri.GetYouTubeLink(this.controlVideo.Video.Id));
+			Process.Start(YouTubeUri.GetYouTubeVideoLink(this.controlVideo.Video.Id));
 		}
 
 		/// <summary>

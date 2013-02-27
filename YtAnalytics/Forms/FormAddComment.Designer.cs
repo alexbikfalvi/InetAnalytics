@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Forms
 {
-	partial class FormAddVideoComment
+	partial class FormAddComment
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonAdd = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlAddVideoComment();
+			this.control = new YtAnalytics.Controls.ControlAddComment();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
@@ -64,13 +64,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.control.Location = new System.Drawing.Point(0, 0);
 			this.control.Name = "control";
+			this.control.Object = "";
 			this.control.Size = new System.Drawing.Size(385, 221);
 			this.control.TabIndex = 0;
 			this.control.User = "";
-			this.control.Video = "";
 			this.control.InputChanged += new System.EventHandler(this.OnInputChanged);
 			// 
-			// FormAddVideoComment
+			// FormAddComment
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -82,10 +82,10 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "FormAddVideoComment";
+			this.Name = "FormAddComment";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.Text = "Add Video Comment";
+			this.Text = "Add Comment";
 			this.ResumeLayout(false);
 
 		}
@@ -93,7 +93,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonCancel;
-		private Controls.ControlAddVideoComment control;
+		private Controls.ControlAddComment control;
 		private System.Windows.Forms.Button buttonAdd;
 
 	}

@@ -46,7 +46,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddVideoCommentEventHandler Comment;
+		public event AddCommentEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control.

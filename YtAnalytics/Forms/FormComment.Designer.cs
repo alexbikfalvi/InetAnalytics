@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Forms
 {
-	partial class FormCommentVideo
+	partial class FormComment
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlCommentVideo();
+			this.control = new YtAnalytics.Controls.ControlComment();
 			this.SuspendLayout();
 			// 
 			// buttonClose
@@ -73,7 +73,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private Controls.ControlCommentVideo control;
+		private Controls.ControlComment control;
 
 	}
 }

@@ -33,7 +33,7 @@ namespace YtAnalytics.Forms
 	/// <summary>
 	/// A form dialog displaying a log event.
 	/// </summary>
-	public partial class FormCommentVideo : Form
+	public partial class FormComment : Form
 	{
 		// UI formatter.
 		private Formatting formatting = new Formatting();
@@ -41,7 +41,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormCommentVideo()
+		public FormComment()
 		{
 			InitializeComponent();
 
@@ -54,7 +54,7 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="comment">The comment.</param>
-		public void ShowDialog(IWin32Window owner, CommentVideo comment)
+		public void ShowDialog(IWin32Window owner, Comment comment)
 		{
 			// If the event is null, do nothing.
 			if (null == comment) return;
@@ -62,7 +62,10 @@ namespace YtAnalytics.Forms
 			// Set the event.
 			this.control.Comment = comment;
 			// Set the title.
-			this.Text = string.Format("Comment for video {0}", comment.Video);
+			if (comment.GetType() == typeof(CommentVideo))
+				this.Text = string.Format("Comment for Video {0} Properties", (comment as CommentVideo).Video);
+			else
+				this.Text = "Comment Properties";
 			// Open the dialog.
 			base.ShowDialog(owner);
 		}

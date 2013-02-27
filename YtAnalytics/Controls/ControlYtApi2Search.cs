@@ -116,21 +116,17 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public event ViewVideoEventHandler ViewVideoInApiV2;
 		/// <summary>
+		/// View the user profile using the version 2 API.
+		/// </summary>
+		public event ViewProfileIdEventHandler ViewAuthorInApiV2;
+		/// <summary>
 		/// View the related videos using the version 2 API.
 		/// </summary>
-		public event ViewVideoEventHandler ViewVideoRelatedInApiV2;
+		public event ViewVideoEventHandler ViewRelatedVideosInApiV2;
 		/// <summary>
 		/// View the response videos using the version 2 API.
 		/// </summary>
-		public event ViewVideoEventHandler ViewVideoResponsesInApiV2;
-		/// <summary>
-		/// View the user profile using the version 2 API.
-		/// </summary>
-		public event ViewProfileIdEventHandler ViewProfileInApiV2;
-		/// <summary>
-		/// View the video information using the version 3 API.
-		/// </summary>
-		public event ViewVideoEventHandler ViewVideoInApiV3;
+		public event ViewVideoEventHandler ViewResponseVideosInApiV2;
 		/// <summary>
 		/// View the video statistics using the web.
 		/// </summary>
@@ -138,7 +134,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddVideoCommentEventHandler Comment;
+		public event AddCommentEventHandler Comment;
 
 		// Private methods.
 
@@ -388,6 +384,10 @@ namespace YtAnalytics.Controls
 		{
 			// Change the enabled state of the view video button.
 			this.checkBoxView.Enabled = this.videoList.SelectedItem != null;
+			if (this.videoList.SelectedItem != null)
+				this.menuItemApiV2Author.Enabled = (this.videoList.SelectedItem.Tag as Video).Author != null;
+			else
+				this.menuItemApiV2Author.Enabled = false;
 		}
 
 		/// <summary>
@@ -417,9 +417,21 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnViewApiV2(object sender, EventArgs e)
+		private void OnViewApiV2Video(object sender, EventArgs e)
 		{
 			if (this.ViewVideoInApiV2 != null) this.ViewVideoInApiV2(this.videoList.SelectedItem.Tag as Video);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the option to view the video author
+		/// in the YouTube API version 2.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewApiV2Author(object sender, EventArgs e)
+		{
+			Video video = this.videoList.SelectedItem.Tag as Video;
+			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(video.Author.UserId);
 		}
 
 		/// <summary>
@@ -430,7 +442,7 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Related(object sender, EventArgs e)
 		{
-			if (this.ViewVideoRelatedInApiV2 != null) this.ViewVideoRelatedInApiV2(this.videoList.SelectedItem.Tag as Video);
+			if (this.ViewRelatedVideosInApiV2 != null) this.ViewRelatedVideosInApiV2(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -441,18 +453,7 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Responses(object sender, EventArgs e)
 		{
-			if (this.ViewVideoResponsesInApiV2 != null) this.ViewVideoResponsesInApiV2(this.videoList.SelectedItem.Tag as Video);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the option to view the video entry
-		/// in the YouTube API version 3.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnViewApiV3(object sender, EventArgs e)
-		{
-			if (this.ViewVideoInApiV3 != null) this.ViewVideoInApiV3(this.videoList.SelectedItem.Tag as Video);
+			if (this.ViewResponseVideosInApiV2 != null) this.ViewResponseVideosInApiV2(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -477,7 +478,7 @@ namespace YtAnalytics.Controls
 			// Get the video;
 			Video video = this.videoList.SelectedItem.Tag as Video;
 			// Open the video link in the browser.
-			System.Diagnostics.Process.Start(YouTubeUri.GetYouTubeLink(video.Id));
+			System.Diagnostics.Process.Start(YouTubeUri.GetYouTubeVideoLink(video.Id));
 		}
 
 		/// <summary>
@@ -556,7 +557,7 @@ namespace YtAnalytics.Controls
 		/// <param name="id">The profile ID.</param>
 		private void OnViewProfile(string id)
 		{
-			if (this.ViewProfileInApiV2 != null) this.ViewProfileInApiV2(id);
+			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(id);
 		}
 	}
 }

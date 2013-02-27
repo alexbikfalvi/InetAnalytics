@@ -30,12 +30,12 @@ using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms
 {
-	public delegate void CommentVideoAddEventHandler(string video, string user, string comment);
+	public delegate void AddCommentEventHandler(string obj, string user, string comment);
 
 	/// <summary>
 	/// A form dialog displaying an exception.
 	/// </summary>
-	public partial class FormAddVideoComment : Form
+	public partial class FormAddComment : Form
 	{
 		// UI formatter.
 		private Formatting formatting = new Formatting();
@@ -43,7 +43,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddVideoComment()
+		public FormAddComment()
 		{
 			InitializeComponent();
 
@@ -51,16 +51,20 @@ namespace YtAnalytics.Forms
 			this.formatting.SetFont(this);
 		}
 
-		public event CommentVideoAddEventHandler CommentAdded;
+		/// <summary>
+		/// An event raised when a new comment was added.
+		/// </summary>
+		public event AddCommentEventHandler CommentAdded;
 
 		/// <summary>
-		/// Shows the form as a dialog and the specified exception.
+		/// Shows the add comment dialog, for the specified object ID and user.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="exception">The exception.</param>
-		public void ShowDialog(IWin32Window owner, string video, string user)
+		/// <param name="obj">The object ID.</param>
+		/// <param name="user">The user.</param>
+		public void ShowDialog(IWin32Window owner, string obj, string user)
 		{
-			this.control.Video = video;
+			this.control.Object = obj;
 			this.control.User = user;
 			this.control.Text = string.Empty;
 			base.ShowDialog(owner);
@@ -74,7 +78,7 @@ namespace YtAnalytics.Forms
 		private void OnAddClick(object sender, EventArgs e)
 		{
 			// Raise the add event.
-			if (this.CommentAdded != null) this.CommentAdded(this.control.Video, this.control.User, this.control.Text);
+			if (this.CommentAdded != null) this.CommentAdded(this.control.Object, this.control.User, this.control.Text);
 			// Close the dialog.
 			this.Close();
 		}
@@ -87,7 +91,7 @@ namespace YtAnalytics.Forms
 		private void OnInputChanged(object sender, EventArgs e)
 		{
 			this.buttonAdd.Enabled =
-				(this.control.Video != string.Empty) &&
+				(this.control.Object != string.Empty) &&
 				(this.control.User != string.Empty) &&
 				(this.control.Text != string.Empty);
 		}

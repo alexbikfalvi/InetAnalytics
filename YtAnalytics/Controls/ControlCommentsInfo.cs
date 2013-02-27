@@ -25,51 +25,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtAnalytics.Forms;
-using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
-	/// Displays the information of a log event.
+	/// A control that displays the feed types available in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlCommentVideo : UserControl
+	public partial class ControlCommentsInfo : UserControl
 	{
-		private CommentVideo comment = null;
-
 		/// <summary>
-		/// Creates a new log event control instance.
+		/// Creates a new control instance.
 		/// </summary>
-		public ControlCommentVideo()
+		public ControlCommentsInfo()
 		{
+			// Initialize component.
 			InitializeComponent();
+			// Set the default control properties.
+			this.Visible = false;
+			this.Dock = DockStyle.Fill;
 		}
 
 		/// <summary>
-		/// Gets or sets the current history discovery event.
+		/// An event raised when the user selects the video statistics.
 		/// </summary>
-		public CommentVideo Comment
+		public event EventHandler ClickVideos;
+
+		/// <summary>
+		/// An event handler called when the user selects the videos link.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnVideosClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			get { return this.comment; }
-			set
-			{
-				if (null == value)
-				{
-					this.labelTitle.Text = "No comment.";
-					this.tabControl.Visible = false;
-				}
-				else
-				{
-					this.labelTitle.Text = string.Format("Comment for video {0}", value.Video);
-					this.textBoxTime.Text = value.Time.ToString();
-					this.textBoxVideo.Text = value.Video;
-					this.textBoxUser.Text = value.User;
-					this.textBoxGuid.Text = value.Guid.ToString();
-					this.textBoxText.Text = value.Text;
-					this.tabControl.Visible = true;
-				}
-				this.comment = value;
-			}
+			if (null != this.ClickVideos) this.ClickVideos(this, e);
 		}
 	}
 }

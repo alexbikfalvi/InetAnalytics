@@ -32,10 +32,10 @@
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.videoList = new YtAnalytics.Controls.ControlVideoList();
 			this.viewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.menuItemApi2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemApiV2Video = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemApiV2Author = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemApiV2Related = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItemApiV2Responses = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItemApi3 = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemApiV2Response = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,10 +103,10 @@
 			// viewMenu
 			// 
 			this.viewMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemApi2,
+            this.menuItemApiV2Video,
+            this.menuItemApiV2Author,
             this.menuItemApiV2Related,
-            this.menuItemApiV2Responses,
-            this.menuItemApi3,
+            this.menuItemApiV2Response,
             this.menuItemWeb,
             this.toolStripSeparator1,
             this.menuItemYouTube,
@@ -115,85 +115,85 @@
             this.toolStripSeparator3,
             this.menuItemProperties});
 			this.viewMenu.Name = "viewMenu";
-			this.viewMenu.Size = new System.Drawing.Size(192, 198);
+			this.viewMenu.Size = new System.Drawing.Size(168, 198);
 			this.viewMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnViewMenuClosed);
 			// 
-			// menuItemApi2
+			// menuItemApiV2Video
 			// 
-			this.menuItemApi2.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApi2.Name = "menuItemApi2";
-			this.menuItemApi2.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApi2.Text = "APIv2 information";
-			this.menuItemApi2.Click += new System.EventHandler(this.OnViewApiV2);
+			this.menuItemApiV2Video.Image = global::YtAnalytics.Resources.FileVideo_16;
+			this.menuItemApiV2Video.Name = "menuItemApiV2Video";
+			this.menuItemApiV2Video.Size = new System.Drawing.Size(167, 22);
+			this.menuItemApiV2Video.Text = "Video";
+			this.menuItemApiV2Video.Click += new System.EventHandler(this.OnViewApiV2Video);
+			// 
+			// menuItemApiV2Author
+			// 
+			this.menuItemApiV2Author.Image = global::YtAnalytics.Resources.FileUser_16;
+			this.menuItemApiV2Author.Name = "menuItemApiV2Author";
+			this.menuItemApiV2Author.Size = new System.Drawing.Size(167, 22);
+			this.menuItemApiV2Author.Text = "Author";
+			this.menuItemApiV2Author.Click += new System.EventHandler(this.OnViewApiV2Author);
 			// 
 			// menuItemApiV2Related
 			// 
-			this.menuItemApiV2Related.Image = global::YtAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApiV2Related.Image = global::YtAnalytics.Resources.FolderClosedVideo_16;
 			this.menuItemApiV2Related.Name = "menuItemApiV2Related";
-			this.menuItemApiV2Related.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApiV2Related.Text = "APIv2 related videos";
+			this.menuItemApiV2Related.Size = new System.Drawing.Size(167, 22);
+			this.menuItemApiV2Related.Text = "Related videos";
 			this.menuItemApiV2Related.Click += new System.EventHandler(this.OnViewApiV2Related);
 			// 
-			// menuItemApiV2Responses
+			// menuItemApiV2Response
 			// 
-			this.menuItemApiV2Responses.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApiV2Responses.Name = "menuItemApiV2Responses";
-			this.menuItemApiV2Responses.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApiV2Responses.Text = "APIv2 response videos";
-			this.menuItemApiV2Responses.Click += new System.EventHandler(this.OnViewApiV2Responses);
-			// 
-			// menuItemApi3
-			// 
-			this.menuItemApi3.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApi3.Name = "menuItemApi3";
-			this.menuItemApi3.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApi3.Text = "APIv3 information";
-			this.menuItemApi3.Click += new System.EventHandler(this.OnViewApiV3);
+			this.menuItemApiV2Response.Image = global::YtAnalytics.Resources.FolderClosedVideo_16;
+			this.menuItemApiV2Response.Name = "menuItemApiV2Response";
+			this.menuItemApiV2Response.Size = new System.Drawing.Size(167, 22);
+			this.menuItemApiV2Response.Text = "Response videos";
+			this.menuItemApiV2Response.Click += new System.EventHandler(this.OnViewApiV2Responses);
 			// 
 			// menuItemWeb
 			// 
 			this.menuItemWeb.Image = global::YtAnalytics.Resources.GlobeBrowse_16;
 			this.menuItemWeb.Name = "menuItemWeb";
-			this.menuItemWeb.Size = new System.Drawing.Size(191, 22);
+			this.menuItemWeb.Size = new System.Drawing.Size(167, 22);
 			this.menuItemWeb.Text = "Web statistics";
 			this.menuItemWeb.Click += new System.EventHandler(this.OnViewWeb);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(164, 6);
 			// 
 			// menuItemYouTube
 			// 
 			this.menuItemYouTube.Image = global::YtAnalytics.Resources.Globe_16;
 			this.menuItemYouTube.Name = "menuItemYouTube";
-			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
+			this.menuItemYouTube.Size = new System.Drawing.Size(167, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			this.menuItemYouTube.Click += new System.EventHandler(this.OnOpenYouTube);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(164, 6);
 			// 
 			// menuItemComment
 			// 
 			this.menuItemComment.Image = global::YtAnalytics.Resources.CommentAdd_16;
 			this.menuItemComment.Name = "menuItemComment";
-			this.menuItemComment.Size = new System.Drawing.Size(191, 22);
+			this.menuItemComment.Size = new System.Drawing.Size(167, 22);
 			this.menuItemComment.Text = "Add comment";
 			this.menuItemComment.Click += new System.EventHandler(this.OnComment);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(164, 6);
 			// 
 			// menuItemProperties
 			// 
 			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
 			this.menuItemProperties.Name = "menuItemProperties";
-			this.menuItemProperties.Size = new System.Drawing.Size(191, 22);
+			this.menuItemProperties.Size = new System.Drawing.Size(167, 22);
 			this.menuItemProperties.Text = "Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnViewProperties);
 			// 
@@ -329,20 +329,20 @@
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.ContextMenuStrip viewMenu;
-		private System.Windows.Forms.ToolStripMenuItem menuItemApi2;
-		private System.Windows.Forms.ToolStripMenuItem menuItemApi3;
+		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Video;
 		private System.Windows.Forms.ToolStripMenuItem menuItemWeb;
 		private System.Windows.Forms.CheckBox checkBoxView;
 		private ControlVideoList videoList;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem menuItemYouTube;
 		private System.Windows.Forms.TextBox textBoxId;
-		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Responses;
+		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Response;
 		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Related;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
 		private System.Windows.Forms.ToolStripMenuItem menuItemComment;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Author;
 
 	}
 }

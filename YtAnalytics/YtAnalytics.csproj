@@ -55,23 +55,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ControlComment.cs">
+    <Compile Include="Controls\ControlVideoComment.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlComment.Designer.cs">
-      <DependentUpon>ControlComment.cs</DependentUpon>
+    <Compile Include="Controls\ControlVideoComment.Designer.cs">
+      <DependentUpon>ControlVideoComment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlCommentsVideos.cs">
+    <Compile Include="Controls\ControlComments.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlCommentsVideos.Designer.cs">
-      <DependentUpon>ControlCommentsVideos.cs</DependentUpon>
+    <Compile Include="Controls\ControlComments.Designer.cs">
+      <DependentUpon>ControlComments.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlAddVideoComment.cs">
+    <Compile Include="Controls\ControlAddComment.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlAddVideoComment.Designer.cs">
-      <DependentUpon>ControlAddVideoComment.cs</DependentUpon>
+    <Compile Include="Controls\ControlAddComment.Designer.cs">
+      <DependentUpon>ControlAddComment.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlException.cs">
       <SubType>UserControl</SubType>
@@ -145,11 +145,11 @@
     <Compile Include="Controls\ControlWebStatistics.Designer.cs">
       <DependentUpon>ControlWebStatistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2.cs">
+    <Compile Include="Controls\ControlYtApi2Info.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2.Designer.cs">
-      <DependentUpon>ControlYtApi2.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi2Info.Designer.cs">
+      <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlYtApi2Categories.cs">
       <SubType>UserControl</SubType>
@@ -169,17 +169,17 @@
     <Compile Include="Controls\ControlYtApi2Video.Designer.cs">
       <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosGlobal.cs">
+    <Compile Include="Controls\ControlYtApi2VideosFeedsInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosGlobal.Designer.cs">
-      <DependentUpon>ControlYtApi2VideosGlobal.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi2VideosFeedsInfo.Designer.cs">
+      <DependentUpon>ControlYtApi2VideosFeedsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi3.cs">
+    <Compile Include="Controls\ControlYtApi3Info.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi3.Designer.cs">
-      <DependentUpon>ControlYtApi3.cs</DependentUpon>
+    <Compile Include="Controls\ControlYtApi3Info.Designer.cs">
+      <DependentUpon>ControlYtApi3Info.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlYtApi2Search.cs">
       <SubType>UserControl</SubType>
@@ -199,11 +199,11 @@
     <Compile Include="Controls\ControlHistoryDiscoveryEvent.Designer.cs">
       <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlCommentVideo.cs">
+    <Compile Include="Controls\ControlComment.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlCommentVideo.Designer.cs">
-      <DependentUpon>ControlCommentVideo.cs</DependentUpon>
+    <Compile Include="Controls\ControlComment.Designer.cs">
+      <DependentUpon>ControlComment.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlWeb.cs">
       <SubType>UserControl</SubType>
@@ -211,11 +211,11 @@
     <Compile Include="Controls\ControlWeb.Designer.cs">
       <DependentUpon>ControlWeb.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlComments.cs">
+    <Compile Include="Controls\ControlCommentsInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlComments.Designer.cs">
-      <DependentUpon>ControlComments.cs</DependentUpon>
+    <Compile Include="Controls\ControlCommentsInfo.Designer.cs">
+      <DependentUpon>ControlCommentsInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlYtApi2CommentsFeed.cs">
       <SubType>UserControl</SubType>
@@ -271,17 +271,17 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormCommentVideo.cs">
+    <Compile Include="Forms\FormComment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormCommentVideo.Designer.cs">
-      <DependentUpon>FormCommentVideo.cs</DependentUpon>
+    <Compile Include="Forms\FormComment.Designer.cs">
+      <DependentUpon>FormComment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormAddVideoComment.cs">
+    <Compile Include="Forms\FormAddComment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormAddVideoComment.Designer.cs">
-      <DependentUpon>FormAddVideoComment.cs</DependentUpon>
+    <Compile Include="Forms\FormAddComment.Designer.cs">
+      <DependentUpon>FormAddComment.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormCrash.cs">
       <SubType>Form</SubType>
@@ -326,14 +326,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Controls\ControlComment.resx">
-      <DependentUpon>ControlComment.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlVideoComment.resx">
+      <DependentUpon>ControlVideoComment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlCommentsVideos.resx">
-      <DependentUpon>ControlCommentsVideos.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlComments.resx">
+      <DependentUpon>ControlComments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlAddVideoComment.resx">
-      <DependentUpon>ControlAddVideoComment.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlAddComment.resx">
+      <DependentUpon>ControlAddComment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlException.resx">
       <DependentUpon>ControlException.cs</DependentUpon>
@@ -368,8 +368,8 @@
     <EmbeddedResource Include="Controls\ControlWebStatistics.resx">
       <DependentUpon>ControlWebStatistics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2.resx">
-      <DependentUpon>ControlYtApi2.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi2Info.resx">
+      <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2Categories.resx">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
@@ -380,11 +380,11 @@
     <EmbeddedResource Include="Controls\ControlYtApi2StandardFeed.resx">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2VideosGlobal.resx">
-      <DependentUpon>ControlYtApi2VideosGlobal.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi2VideosFeedsInfo.resx">
+      <DependentUpon>ControlYtApi2VideosFeedsInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi3.resx">
-      <DependentUpon>ControlYtApi3.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlYtApi3Info.resx">
+      <DependentUpon>ControlYtApi3Info.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2Search.resx">
       <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
@@ -395,14 +395,14 @@
     <EmbeddedResource Include="Controls\ControlHistoryDiscoveryEvent.resx">
       <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlCommentVideo.resx">
-      <DependentUpon>ControlCommentVideo.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlComment.resx">
+      <DependentUpon>ControlComment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlWeb.resx">
       <DependentUpon>ControlWeb.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlComments.resx">
-      <DependentUpon>ControlComments.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlCommentsInfo.resx">
+      <DependentUpon>ControlCommentsInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2CommentsFeed.resx">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
@@ -431,11 +431,11 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormCommentVideo.resx">
-      <DependentUpon>FormCommentVideo.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormComment.resx">
+      <DependentUpon>FormComment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormAddVideoComment.resx">
-      <DependentUpon>FormAddVideoComment.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormAddComment.resx">
+      <DependentUpon>FormAddComment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCrash.resx">
       <DependentUpon>FormCrash.cs</DependentUpon>

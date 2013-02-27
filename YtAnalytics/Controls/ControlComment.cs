@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2012 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,52 +23,67 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtApi.Api.V2.Data;
+using YtAnalytics.Forms;
+using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
-	/// A control that displays a video comment.
+	/// Displays the information of a log event.
 	/// </summary>
 	public partial class ControlComment : UserControl
 	{
-		private Comment comment;
+		private Comment comment = null;
 
-		// Creates a new control instance.
+		/// <summary>
+		/// Creates a new log event control instance.
+		/// </summary>
 		public ControlComment()
 		{
 			InitializeComponent();
 		}
 
 		/// <summary>
-		/// Gets or sets the current comment.
+		/// Gets or sets the current history discovery event.
 		/// </summary>
 		public Comment Comment
 		{
 			get { return this.comment; }
 			set
 			{
-				this.comment = value;
-
-				if (value != null)
+				if (null == value)
 				{
-					this.labelTitle.Text = value.Title;
-					this.textBoxPublished.Text = value.Published != null ? value.Published.ToString() : string.Empty;
-					this.textBoxUpdated.Text = value.Updated.ToString();
-					this.textBoxAuthor.Text = value.Author != null ? value.Author.UserId : string.Empty;
-					this.textBoxComment.Text = value.Content != null ? value.Content : string.Empty;
-					this.checkBoxSpam.Checked = value.Spam;
+					this.labelTitle.Text = "No comment.";
+					this.pictureBox.Image = Resources.Comment_32;
+					this.tabControl.Visible = false;
 				}
 				else
 				{
-					this.labelTitle.Text = "No comment selected";
-					this.textBoxPublished.Text = string.Empty;
-					this.textBoxUpdated.Text = string.Empty;
-					this.textBoxAuthor.Text = string.Empty;
-					this.textBoxComment.Text = string.Empty;
-					this.checkBoxSpam.Checked = false;
+					this.textBoxTime.Text = value.Time.ToString();
+					this.textBoxUser.Text = value.User;
+					this.textBoxGuid.Text = value.Guid.ToString();
+					this.textBoxText.Text = value.Text;
+					this.tabControl.Visible = true;
+
+					if (value.GetType() == typeof(CommentVideo))
+					{
+						CommentVideo comment = value as CommentVideo;
+						this.labelTitle.Text = string.Format("Comment for video {0}", comment.Video);
+						this.labelObject.Text = "&Video:";
+						this.textBoxObject.Text = comment.Video;
+						this.pictureBox.Image = Resources.CommentVideo_32;
+					}
+					else
+					{
+						this.labelTitle.Text = string.Format("Comment");
+						this.labelObject.Text = "&Object:";
+						this.textBoxObject.Text = string.Empty;
+						this.pictureBox.Image = Resources.Comment_32;
+					}
 				}
+				this.comment = value;
 			}
 		}
 	}

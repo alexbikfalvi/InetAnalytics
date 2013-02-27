@@ -63,23 +63,22 @@ namespace YtAnalytics.Controls
 			this.Dock = DockStyle.Fill;
 		}
 
-
-		///// <summary>
-		///// View the related videos.
-		///// </summary>
-		//public event ViewProfileEventHandler ViewVideoRelatedInApiV2;
-		///// <summary>
-		///// View the response videos.
-		///// </summary>
-		//public event ViewProfileEventHandler ViewVideoResponsesInApiV2;
-		///// <summary>
-		///// View the video statistics using the web.
-		///// </summary>
-		//public event ViewVideoEventHandler ViewVideoInWeb;
-		///// <summary>
-		///// An event handler called when the user adds a new comment.
-		///// </summary>
-		//public event AddVideoCommentEventHandler Comment;
+		/// <summary>
+		/// View the user uploaded videos.
+		/// </summary>
+		public event ViewProfileEventHandler ViewUserUploadsInApiV2;
+		/// <summary>
+		/// View the user favorited videos.
+		/// </summary>
+		public event ViewProfileEventHandler ViewUserFavoritesInApiV2;
+		/// <summary>
+		/// View the user playlists.
+		/// </summary>
+		public event ViewProfileEventHandler ViewUserPlaylistsInApiV2;
+		/// <summary>
+		/// An event handler called when the user adds a new comment.
+		/// </summary>
+		public event AddCommentEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control with a crawler instance.
@@ -248,65 +247,67 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void InputChanged(object sender, EventArgs e)
+		private void OnInputChanged(object sender, EventArgs e)
 		{
 			this.buttonStart.Enabled = this.textBox.Text != string.Empty;
 		}
 
-		///// <summary>
-		///// An event handler called when the user selects to open the related videos.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		private void OnRelatedVideosClick(object sender, EventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects to open user uploads.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewApiV2Uploads(object sender, EventArgs e)
 		{
-		//	if (null == this.controlVideo.Video) return;
-		//	if (null != this.ViewVideoRelatedInApiV2) this.ViewVideoRelatedInApiV2(this.controlVideo.Video);
+			if (null == this.controlProfile.Profile) return;
+			if (this.ViewUserUploadsInApiV2 != null) this.ViewUserUploadsInApiV2(this.controlProfile.Profile);
 		}
 
-		///// <summary>
-		///// An event handler called when the user selects to open the response videos.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		private void OnResponseVideosClick(object sender, EventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects to open user favorites.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewApiV2Favorites(object sender, EventArgs e)
 		{
-		//	if (null == this.controlVideo.Video) return;
-		//	if (null != this.ViewVideoResponsesInApiV2) this.ViewVideoResponsesInApiV2(this.controlVideo.Video);
+			if (null == this.controlProfile.Profile) return;
+			if (this.ViewUserFavoritesInApiV2 != null) this.ViewUserFavoritesInApiV2(this.controlProfile.Profile);
+
 		}
 
-		///// <summary>
-		///// An event handler called when the user selects to open the web statistics.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		private void OnWebStatisticsClick(object sender, EventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects to open user playlists.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewApiV2Playlists(object sender, EventArgs e)
 		{
-		//	if (null == this.controlVideo.Video) return;
-		//	if (null != this.ViewVideoInWeb) this.ViewVideoInWeb(this.controlVideo.Video);
+			if (null == this.controlProfile.Profile) return;
+			if (this.ViewUserPlaylistsInApiV2 != null) this.ViewUserPlaylistsInApiV2(this.controlProfile.Profile);
 		}
 
-		///// <summary>
-		///// An event handler called when the user selects to open the video in YouYube.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
+		/// <summary>
+		/// An event handler called when the user selects to open the user in YouYube.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnOpenYouTubeClick(object sender, EventArgs e)
 		{
-		//	if (null == this.controlVideo.Video) return;
-		//	// Open the video link in the browser.
-		//	Process.Start(YouTubeUri.GetYouTubeLink(this.controlVideo.Video.Id));
+			if (null == this.controlProfile.Profile) return;
+			if (null == this.controlProfile.Profile.Username) return;
+			// Open the user link in the browser.
+			Process.Start(YouTubeUri.GetYouTubeVideoLink(this.controlProfile.Profile.Username.Id));
 		}
 
-		///// <summary>
-		///// An event handler called when the user adds a comment for this video.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
+		/// <summary>
+		/// An event handler called when the user adds a comment for this user.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnCommentClick(object sender, EventArgs e)
 		{
-		//	if (null == this.controlVideo.Video) return;
-		//	if (null != this.Comment) this.Comment(this.controlVideo.Video.Id);
+			if (null == this.controlProfile.Profile) return;
+			if (null != this.Comment) this.Comment(this.controlProfile.Profile.Id);
 		}
 	}
 }

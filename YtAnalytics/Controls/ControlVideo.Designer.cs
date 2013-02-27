@@ -404,6 +404,7 @@
 			// 
 			// tabPageGeneral
 			// 
+			this.tabPageGeneral.AutoScroll = true;
 			this.tabPageGeneral.Controls.Add(this.checkBoxWidescreen);
 			this.tabPageGeneral.Controls.Add(this.checkBoxPrivate);
 			this.tabPageGeneral.Controls.Add(this.labelUpdated);
@@ -456,6 +457,7 @@
 			// 
 			// tabPageAuthor
 			// 
+			this.tabPageAuthor.AutoScroll = true;
 			this.tabPageAuthor.Controls.Add(this.buttonViewProfile);
 			this.tabPageAuthor.Controls.Add(this.textBoxAuthorName);
 			this.tabPageAuthor.Controls.Add(this.labelAuthorName);
@@ -520,6 +522,7 @@
 			// 
 			// tabPageUpload
 			// 
+			this.tabPageUpload.AutoScroll = true;
 			this.tabPageUpload.Controls.Add(this.checkBoxDraft);
 			this.tabPageUpload.Controls.Add(this.labelReason);
 			this.tabPageUpload.Controls.Add(this.textBoxReason);
@@ -590,6 +593,7 @@
 			// 
 			// tabPageStatistics
 			// 
+			this.tabPageStatistics.AutoScroll = true;
 			this.tabPageStatistics.Controls.Add(this.groupBoxOld);
 			this.tabPageStatistics.Controls.Add(this.groupBoxNew);
 			this.tabPageStatistics.Controls.Add(this.labelViews);
@@ -746,6 +750,7 @@
 			// 
 			// tabPagePermissions
 			// 
+			this.tabPagePermissions.AutoScroll = true;
 			this.tabPagePermissions.Controls.Add(this.listViewPermissions);
 			this.tabPagePermissions.Location = new System.Drawing.Point(4, 22);
 			this.tabPagePermissions.Name = "tabPagePermissions";
@@ -786,6 +791,7 @@
 			// 
 			// tabPageThumbnails
 			// 
+			this.tabPageThumbnails.AutoScroll = true;
 			this.tabPageThumbnails.Controls.Add(this.imageListBoxThumbnails);
 			this.tabPageThumbnails.Location = new System.Drawing.Point(4, 22);
 			this.tabPageThumbnails.Name = "tabPageThumbnails";

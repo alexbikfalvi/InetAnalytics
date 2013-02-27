@@ -31,12 +31,12 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control that receives user input data to add a video comment.
 	/// </summary>
-	public partial class ControlAddVideoComment : UserControl
+	public partial class ControlAddComment : UserControl
 	{
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlAddVideoComment()
+		public ControlAddComment()
 		{
 			InitializeComponent();
 		}
@@ -47,12 +47,12 @@ namespace YtAnalytics.Controls
 		public event EventHandler InputChanged;
 
 		/// <summary>
-		/// Gets or sets the video.
+		/// Gets or sets the object ID.
 		/// </summary>
-		public string Video
+		public string Object
 		{
-			get { return this.textBoxVideo.Text; }
-			set { this.textBoxVideo.Text = value; }
+			get { return this.textBoxObject.Text; }
+			set { this.textBoxObject.Text = value; }
 		}
 
 		/// <summary>

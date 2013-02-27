@@ -44,7 +44,7 @@
 			this.comboBoxCommentsPerPage = new System.Windows.Forms.ToolStripComboBox();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.panel = new System.Windows.Forms.Panel();
-			this.controlComment = new YtAnalytics.Controls.ControlComment();
+			this.controlComment = new YtAnalytics.Controls.ControlVideoComment();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -227,7 +227,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
 		private System.Windows.Forms.SplitContainer splitContainer;
 		private System.Windows.Forms.ColumnHeader columnHeaderTitle;
-		private ControlComment controlComment;
+		private ControlVideoComment controlComment;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.Panel panel;
 	}

@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls
 {
-	partial class ControlYtApi2
+	partial class ControlYtApi2Info
 	{
 		/// <summary> 
 		/// Required designer variable.
