@@ -61,7 +61,7 @@ namespace YtApi.Api.V2
 		}
 
 		/// <summary>
-		/// Begins an asynchronous request for a generic resource.
+		/// Begins an asynchronous request for a YouTube resource.
 		/// </summary>
 		/// <param name="uri">The feed URI.</param>
 		/// <param name="callback">The callback delegate.</param>
@@ -81,6 +81,12 @@ namespace YtApi.Api.V2
 			return this.Begin(asyncState);
 		}
 
+		/// <summary>
+		/// Ends the asynchronus request.
+		/// </summary>
+		/// <param name="result">The asynchronous result.</param>
+		/// <param name="state">The request state.</param>
+		/// <returns>The request result.</returns>
 		public string End(IAsyncResult result, out object state)
 		{
 			// Get the asynchronous result.
@@ -95,37 +101,5 @@ namespace YtApi.Api.V2
 			// Determine the encoding of the received response
 			return this.End<string>(result, this.funcConvert);
 		}
-
-
-		///// Completes an asynchronous request for a video feed.
-		///// </summary>
-		///// <param name="result">The asynchronous result.</param>
-		///// <param name="state">The asynchronous user state.</param>
-		///// <returns>A video feed.</returns>
-		//public Feed<Video> EndFeedVideo(IAsyncResult result, out object state)
-		//{
-		//	// Get the asynchronous result.
-		//	AsyncRequestResult asyncResult = (AsyncRequestResult)result;
-
-		//	// Get the asynchronous state.
-		//	AsyncRequestState asyncState = (AsyncRequestState)asyncResult.AsyncState;
-
-		//	// Set the user state
-		//	state = asyncState.State;
-
-		//	// Determine the encoding of the received response
-		//	return this.End<Feed<Video>>(result, this.funcFeedVideo, Encoding.GetEncoding(asyncState.Response.CharacterSet));
-		//}
-
-		///// <summary>
-		///// Completes an asynchronous request for a video feed.
-		///// </summary>
-		///// <param name="result">The asynchronous result.</param>
-		///// <returns>A video feed.</returns>
-		//public Feed<Video> EndFeedVideo(IAsyncResult result)
-		//{
-		//	object dummy;
-		//	return this.EndFeedVideo(result, out dummy);
-		//}
 	}
 }
