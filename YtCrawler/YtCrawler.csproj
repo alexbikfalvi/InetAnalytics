@@ -45,6 +45,8 @@
     <Compile Include="Comments\Comment.cs" />
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\CommentsList.cs" />
+    <Compile Include="Database\DbServer.cs" />
+    <Compile Include="Database\DbServers.cs" />
     <Compile Include="Log\LogEvent.cs" />
     <Compile Include="Log\LogException.cs" />
     <Compile Include="Log\Logger.cs" />

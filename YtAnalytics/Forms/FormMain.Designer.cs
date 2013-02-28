@@ -34,11 +34,7 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
-			this.controlPanelLog = new YtAnalytics.Controls.ControlSideLog();
-			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelBrowser = new YtAnalytics.Controls.ControlSideTree();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +49,11 @@
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
+			this.controlPanelLog = new YtAnalytics.Controls.ControlSideLog();
+			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelDatabase = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelBrowser = new YtAnalytics.Controls.ControlSideTree();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -120,6 +121,7 @@
 			this.sideMenu.Controls.Add(this.controlPanelLog);
 			this.sideMenu.Controls.Add(this.controlPanelComments);
 			this.sideMenu.Controls.Add(this.controlPanelConfiguration);
+			this.sideMenu.Controls.Add(this.controlPanelDatabase);
 			this.sideMenu.Controls.Add(this.controlPanelBrowser);
 			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.sideMenu.HiddenItems = 0;
@@ -135,82 +137,38 @@
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.VisibleItems = 0;
 			// 
-			// controlPanelLog
-			// 
-			this.controlPanelLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelLog.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelLog.Name = "controlPanelLog";
-			this.controlPanelLog.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelLog.TabIndex = 2;
-			this.controlPanelLog.Visible = false;
-			this.controlPanelLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlPanelLog.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelComments
-			// 
-			this.controlPanelComments.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelComments.ImageList = this.imageList;
-			this.controlPanelComments.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelComments.Name = "controlPanelComments";
-			this.controlPanelComments.SelectedNode = null;
-			this.controlPanelComments.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelComments.TabIndex = 3;
-			this.controlPanelComments.Visible = false;
-			this.controlPanelComments.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.imageList.Images.SetKeyName(0, "ServerBrowse");
-			this.imageList.Images.SetKeyName(1, "FolderClosed");
-			this.imageList.Images.SetKeyName(2, "FolderClosedXml");
-			this.imageList.Images.SetKeyName(3, "FolderClosedVideo");
-			this.imageList.Images.SetKeyName(4, "FolderClosedUser");
-			this.imageList.Images.SetKeyName(5, "FolderClosedComment");
-			this.imageList.Images.SetKeyName(6, "FolderClosedPlay");
-			this.imageList.Images.SetKeyName(7, "FolderOpen");
-			this.imageList.Images.SetKeyName(8, "FolderOpenXml");
-			this.imageList.Images.SetKeyName(9, "FolderOpenVideo");
-			this.imageList.Images.SetKeyName(10, "FolderOpenUser");
-			this.imageList.Images.SetKeyName(11, "FolderOpenComment");
-			this.imageList.Images.SetKeyName(12, "FolderOpenPlay");
-			this.imageList.Images.SetKeyName(13, "File");
-			this.imageList.Images.SetKeyName(14, "FileXml");
-			this.imageList.Images.SetKeyName(15, "FileVideo");
-			this.imageList.Images.SetKeyName(16, "FileUser");
-			this.imageList.Images.SetKeyName(17, "FileComment");
-			this.imageList.Images.SetKeyName(18, "FileGraphLine");
-			this.imageList.Images.SetKeyName(19, "GlobeBrowse");
-			this.imageList.Images.SetKeyName(20, "Categories");
-			this.imageList.Images.SetKeyName(21, "Comments");
-			this.imageList.Images.SetKeyName(22, "CommentVideo");
-			this.imageList.Images.SetKeyName(23, "CommentUser");
-			this.imageList.Images.SetKeyName(24, "CommentPlay");
-			// 
-			// controlPanelConfiguration
-			// 
-			this.controlPanelConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelConfiguration.ImageList = this.imageList;
-			this.controlPanelConfiguration.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelConfiguration.Name = "controlPanelConfiguration";
-			this.controlPanelConfiguration.SelectedNode = null;
-			this.controlPanelConfiguration.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelConfiguration.TabIndex = 1;
-			this.controlPanelConfiguration.Visible = false;
-			this.controlPanelConfiguration.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelBrowser
-			// 
-			this.controlPanelBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelBrowser.ImageList = this.imageList;
-			this.controlPanelBrowser.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelBrowser.Name = "controlPanelBrowser";
-			this.controlPanelBrowser.SelectedNode = null;
-			this.controlPanelBrowser.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelBrowser.TabIndex = 0;
-			this.controlPanelBrowser.Visible = false;
-			this.controlPanelBrowser.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			this.imageList.Images.SetKeyName(1, "ServerDatabase");
+			this.imageList.Images.SetKeyName(2, "ServersDatabase");
+			this.imageList.Images.SetKeyName(3, "FolderClosed");
+			this.imageList.Images.SetKeyName(4, "FolderClosedXml");
+			this.imageList.Images.SetKeyName(5, "FolderClosedVideo");
+			this.imageList.Images.SetKeyName(6, "FolderClosedUser");
+			this.imageList.Images.SetKeyName(7, "FolderClosedComment");
+			this.imageList.Images.SetKeyName(8, "FolderClosedPlay");
+			this.imageList.Images.SetKeyName(9, "FolderOpen");
+			this.imageList.Images.SetKeyName(10, "FolderOpenXml");
+			this.imageList.Images.SetKeyName(11, "FolderOpenVideo");
+			this.imageList.Images.SetKeyName(12, "FolderOpenUser");
+			this.imageList.Images.SetKeyName(13, "FolderOpenComment");
+			this.imageList.Images.SetKeyName(14, "FolderOpenPlay");
+			this.imageList.Images.SetKeyName(15, "File");
+			this.imageList.Images.SetKeyName(16, "FileXml");
+			this.imageList.Images.SetKeyName(17, "FileVideo");
+			this.imageList.Images.SetKeyName(18, "FileUser");
+			this.imageList.Images.SetKeyName(19, "FileComment");
+			this.imageList.Images.SetKeyName(20, "FileGraphLine");
+			this.imageList.Images.SetKeyName(21, "GlobeBrowse");
+			this.imageList.Images.SetKeyName(22, "Categories");
+			this.imageList.Images.SetKeyName(23, "Comments");
+			this.imageList.Images.SetKeyName(24, "CommentVideo");
+			this.imageList.Images.SetKeyName(25, "CommentUser");
+			this.imageList.Images.SetKeyName(26, "CommentPlay");
+			this.imageList.Images.SetKeyName(27, "Settings");
 			// 
 			// labelNotAvailable
 			// 
@@ -324,6 +282,64 @@
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
+			// controlPanelLog
+			// 
+			this.controlPanelLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelLog.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelLog.Name = "controlPanelLog";
+			this.controlPanelLog.Size = new System.Drawing.Size(244, 450);
+			this.controlPanelLog.TabIndex = 2;
+			this.controlPanelLog.Visible = false;
+			this.controlPanelLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlPanelLog.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelComments
+			// 
+			this.controlPanelComments.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelComments.ImageList = this.imageList;
+			this.controlPanelComments.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelComments.Name = "controlPanelComments";
+			this.controlPanelComments.SelectedNode = null;
+			this.controlPanelComments.Size = new System.Drawing.Size(244, 450);
+			this.controlPanelComments.TabIndex = 3;
+			this.controlPanelComments.Visible = false;
+			this.controlPanelComments.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelConfiguration
+			// 
+			this.controlPanelConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelConfiguration.ImageList = this.imageList;
+			this.controlPanelConfiguration.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelConfiguration.Name = "controlPanelConfiguration";
+			this.controlPanelConfiguration.SelectedNode = null;
+			this.controlPanelConfiguration.Size = new System.Drawing.Size(244, 450);
+			this.controlPanelConfiguration.TabIndex = 1;
+			this.controlPanelConfiguration.Visible = false;
+			this.controlPanelConfiguration.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelDatabase
+			// 
+			this.controlPanelDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelDatabase.ImageList = this.imageList;
+			this.controlPanelDatabase.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelDatabase.Name = "controlPanelDatabase";
+			this.controlPanelDatabase.SelectedNode = null;
+			this.controlPanelDatabase.Size = new System.Drawing.Size(244, 450);
+			this.controlPanelDatabase.TabIndex = 4;
+			this.controlPanelDatabase.Visible = false;
+			// 
+			// controlPanelBrowser
+			// 
+			this.controlPanelBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelBrowser.ImageList = this.imageList;
+			this.controlPanelBrowser.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelBrowser.Name = "controlPanelBrowser";
+			this.controlPanelBrowser.SelectedNode = null;
+			this.controlPanelBrowser.Size = new System.Drawing.Size(244, 450);
+			this.controlPanelBrowser.TabIndex = 0;
+			this.controlPanelBrowser.Visible = false;
+			this.controlPanelBrowser.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -380,6 +396,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem menuItemYouTube;
 		private Controls.ControlSideTree controlPanelComments;
+		private Controls.ControlSideTree controlPanelDatabase;
 	}
 }
 

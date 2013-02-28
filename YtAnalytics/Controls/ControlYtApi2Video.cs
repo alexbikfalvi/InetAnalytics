@@ -66,6 +66,10 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public event ViewIdEventHandler ViewAuthorInApiV2;
 		/// <summary>
+		/// View the video comments using the version 2 API.
+		/// </summary>
+		public event ViewIdEventHandler ViewVideoCommentsInApiV2;
+		/// <summary>
 		/// View the related videos.
 		/// </summary>
 		public event ViewVideoEventHandler ViewVideoRelatedInApiV2;
@@ -73,10 +77,6 @@ namespace YtAnalytics.Controls
 		/// View the response videos.
 		/// </summary>
 		public event ViewVideoEventHandler ViewVideoResponsesInApiV2;
-		/// <summary>
-		/// View the user profile.
-		/// </summary>
-		public event ViewIdEventHandler ViewProfileInApiV2;
 		/// <summary>
 		/// View the video statistics using the web.
 		/// </summary>
@@ -249,13 +249,24 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user selects to open the author.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnViewAuthorClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
 			if (null == this.controlVideo.Video.Author) return;
 			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(this.controlVideo.Video.Author.UserId);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to open the video comments.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewCommentsClick(object sender, EventArgs e)
+		{
+			if (null == this.controlVideo.Video) return;
+			if (this.ViewVideoCommentsInApiV2 != null) this.ViewVideoCommentsInApiV2(this.controlVideo.Video.Id);
 		}
 
 		/// <summary>
@@ -320,7 +331,7 @@ namespace YtAnalytics.Controls
 		/// <param name="id">The user profile ID.</param>
 		private void OnViewProfile(string id)
 		{
-			if (this.ViewProfileInApiV2 != null) this.ViewProfileInApiV2(id);
+			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(id);
 		}
 	}
 }

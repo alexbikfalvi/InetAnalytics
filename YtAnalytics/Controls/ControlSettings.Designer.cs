@@ -33,26 +33,30 @@
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
-			this.tabPageYouTube = new System.Windows.Forms.TabPage();
-			this.tabPageLog = new System.Windows.Forms.TabPage();
-			this.tabPageComments = new System.Windows.Forms.TabPage();
-			this.labelMessageCloseDelay = new System.Windows.Forms.Label();
 			this.numericMessageCloseDelay = new System.Windows.Forms.NumericUpDown();
-			this.labelYtUserName = new System.Windows.Forms.Label();
-			this.textBoxYtUserName = new System.Windows.Forms.TextBox();
-			this.textBoxYtPassword = new System.Windows.Forms.TextBox();
+			this.labelMessageCloseDelay = new System.Windows.Forms.Label();
+			this.tabPageYouTube = new System.Windows.Forms.TabPage();
 			this.labelYtPassword = new System.Windows.Forms.Label();
-			this.labelLogFile = new System.Windows.Forms.Label();
+			this.textBoxYtPassword = new System.Windows.Forms.TextBox();
+			this.textBoxYtUserName = new System.Windows.Forms.TextBox();
+			this.labelYtUserName = new System.Windows.Forms.Label();
+			this.tabPageLog = new System.Windows.Forms.TabPage();
 			this.textBoxLogFile = new System.Windows.Forms.TextBox();
-			this.labelVideoCommentsFile = new System.Windows.Forms.Label();
+			this.labelLogFile = new System.Windows.Forms.Label();
+			this.tabPageComments = new System.Windows.Forms.TabPage();
 			this.textBoxVideoCommentsFile = new System.Windows.Forms.TextBox();
+			this.labelVideoCommentsFile = new System.Windows.Forms.Label();
+			this.labelUserCommentsFile = new System.Windows.Forms.Label();
+			this.textBoxUserCommentsFile = new System.Windows.Forms.TextBox();
+			this.textBoxPlaylistCommentsFile = new System.Windows.Forms.TextBox();
+			this.labelPlaylistCommentsFile = new System.Windows.Forms.Label();
 			this.toolStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericMessageCloseDelay)).BeginInit();
 			this.tabPageYouTube.SuspendLayout();
 			this.tabPageLog.SuspendLayout();
 			this.tabPageComments.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericMessageCloseDelay)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -113,53 +117,6 @@
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
 			// 
-			// tabPageYouTube
-			// 
-			this.tabPageYouTube.Controls.Add(this.labelYtPassword);
-			this.tabPageYouTube.Controls.Add(this.textBoxYtPassword);
-			this.tabPageYouTube.Controls.Add(this.textBoxYtUserName);
-			this.tabPageYouTube.Controls.Add(this.labelYtUserName);
-			this.tabPageYouTube.Location = new System.Drawing.Point(4, 22);
-			this.tabPageYouTube.Name = "tabPageYouTube";
-			this.tabPageYouTube.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageYouTube.Size = new System.Drawing.Size(586, 343);
-			this.tabPageYouTube.TabIndex = 1;
-			this.tabPageYouTube.Text = "YouTube";
-			this.tabPageYouTube.UseVisualStyleBackColor = true;
-			// 
-			// tabPageLog
-			// 
-			this.tabPageLog.Controls.Add(this.textBoxLogFile);
-			this.tabPageLog.Controls.Add(this.labelLogFile);
-			this.tabPageLog.Location = new System.Drawing.Point(4, 22);
-			this.tabPageLog.Name = "tabPageLog";
-			this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageLog.Size = new System.Drawing.Size(586, 343);
-			this.tabPageLog.TabIndex = 2;
-			this.tabPageLog.Text = "Log";
-			this.tabPageLog.UseVisualStyleBackColor = true;
-			// 
-			// tabPageComments
-			// 
-			this.tabPageComments.Controls.Add(this.textBoxVideoCommentsFile);
-			this.tabPageComments.Controls.Add(this.labelVideoCommentsFile);
-			this.tabPageComments.Location = new System.Drawing.Point(4, 22);
-			this.tabPageComments.Name = "tabPageComments";
-			this.tabPageComments.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageComments.Size = new System.Drawing.Size(586, 343);
-			this.tabPageComments.TabIndex = 3;
-			this.tabPageComments.Text = "Comments";
-			this.tabPageComments.UseVisualStyleBackColor = true;
-			// 
-			// labelMessageCloseDelay
-			// 
-			this.labelMessageCloseDelay.AutoSize = true;
-			this.labelMessageCloseDelay.Location = new System.Drawing.Point(16, 16);
-			this.labelMessageCloseDelay.Name = "labelMessageCloseDelay";
-			this.labelMessageCloseDelay.Size = new System.Drawing.Size(109, 13);
-			this.labelMessageCloseDelay.TabIndex = 0;
-			this.labelMessageCloseDelay.Text = "Message close delay:";
-			// 
 			// numericMessageCloseDelay
 			// 
 			this.numericMessageCloseDelay.Location = new System.Drawing.Point(150, 14);
@@ -178,31 +135,28 @@
             0});
 			this.numericMessageCloseDelay.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
-			// labelYtUserName
+			// labelMessageCloseDelay
 			// 
-			this.labelYtUserName.AutoSize = true;
-			this.labelYtUserName.Location = new System.Drawing.Point(16, 16);
-			this.labelYtUserName.Name = "labelYtUserName";
-			this.labelYtUserName.Size = new System.Drawing.Size(61, 13);
-			this.labelYtUserName.TabIndex = 2;
-			this.labelYtUserName.Text = "User &name:";
+			this.labelMessageCloseDelay.AutoSize = true;
+			this.labelMessageCloseDelay.Location = new System.Drawing.Point(16, 16);
+			this.labelMessageCloseDelay.Name = "labelMessageCloseDelay";
+			this.labelMessageCloseDelay.Size = new System.Drawing.Size(109, 13);
+			this.labelMessageCloseDelay.TabIndex = 0;
+			this.labelMessageCloseDelay.Text = "Message close delay:";
 			// 
-			// textBoxYtUserName
+			// tabPageYouTube
 			// 
-			this.textBoxYtUserName.Location = new System.Drawing.Point(150, 13);
-			this.textBoxYtUserName.Name = "textBoxYtUserName";
-			this.textBoxYtUserName.Size = new System.Drawing.Size(150, 20);
-			this.textBoxYtUserName.TabIndex = 3;
-			this.textBoxYtUserName.TextChanged += new System.EventHandler(this.OnSettingsChanged);
-			// 
-			// textBoxYtPassword
-			// 
-			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 39);
-			this.textBoxYtPassword.Name = "textBoxYtPassword";
-			this.textBoxYtPassword.Size = new System.Drawing.Size(150, 20);
-			this.textBoxYtPassword.TabIndex = 4;
-			this.textBoxYtPassword.UseSystemPasswordChar = true;
-			this.textBoxYtPassword.TextChanged += new System.EventHandler(this.OnSettingsChanged);
+			this.tabPageYouTube.Controls.Add(this.labelYtPassword);
+			this.tabPageYouTube.Controls.Add(this.textBoxYtPassword);
+			this.tabPageYouTube.Controls.Add(this.textBoxYtUserName);
+			this.tabPageYouTube.Controls.Add(this.labelYtUserName);
+			this.tabPageYouTube.Location = new System.Drawing.Point(4, 22);
+			this.tabPageYouTube.Name = "tabPageYouTube";
+			this.tabPageYouTube.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageYouTube.Size = new System.Drawing.Size(586, 343);
+			this.tabPageYouTube.TabIndex = 1;
+			this.tabPageYouTube.Text = "YouTube";
+			this.tabPageYouTube.UseVisualStyleBackColor = true;
 			// 
 			// labelYtPassword
 			// 
@@ -213,14 +167,43 @@
 			this.labelYtPassword.TabIndex = 5;
 			this.labelYtPassword.Text = "&Password:";
 			// 
-			// labelLogFile
+			// textBoxYtPassword
 			// 
-			this.labelLogFile.AutoSize = true;
-			this.labelLogFile.Location = new System.Drawing.Point(16, 16);
-			this.labelLogFile.Name = "labelLogFile";
-			this.labelLogFile.Size = new System.Drawing.Size(44, 13);
-			this.labelLogFile.TabIndex = 3;
-			this.labelLogFile.Text = "&Log file:";
+			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 39);
+			this.textBoxYtPassword.Name = "textBoxYtPassword";
+			this.textBoxYtPassword.Size = new System.Drawing.Size(150, 20);
+			this.textBoxYtPassword.TabIndex = 4;
+			this.textBoxYtPassword.UseSystemPasswordChar = true;
+			this.textBoxYtPassword.TextChanged += new System.EventHandler(this.OnSettingsChanged);
+			// 
+			// textBoxYtUserName
+			// 
+			this.textBoxYtUserName.Location = new System.Drawing.Point(150, 13);
+			this.textBoxYtUserName.Name = "textBoxYtUserName";
+			this.textBoxYtUserName.Size = new System.Drawing.Size(150, 20);
+			this.textBoxYtUserName.TabIndex = 3;
+			this.textBoxYtUserName.TextChanged += new System.EventHandler(this.OnSettingsChanged);
+			// 
+			// labelYtUserName
+			// 
+			this.labelYtUserName.AutoSize = true;
+			this.labelYtUserName.Location = new System.Drawing.Point(16, 16);
+			this.labelYtUserName.Name = "labelYtUserName";
+			this.labelYtUserName.Size = new System.Drawing.Size(61, 13);
+			this.labelYtUserName.TabIndex = 2;
+			this.labelYtUserName.Text = "User &name:";
+			// 
+			// tabPageLog
+			// 
+			this.tabPageLog.Controls.Add(this.textBoxLogFile);
+			this.tabPageLog.Controls.Add(this.labelLogFile);
+			this.tabPageLog.Location = new System.Drawing.Point(4, 22);
+			this.tabPageLog.Name = "tabPageLog";
+			this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageLog.Size = new System.Drawing.Size(586, 343);
+			this.tabPageLog.TabIndex = 2;
+			this.tabPageLog.Text = "Log";
+			this.tabPageLog.UseVisualStyleBackColor = true;
 			// 
 			// textBoxLogFile
 			// 
@@ -233,14 +216,30 @@
 			this.textBoxLogFile.TabIndex = 4;
 			this.textBoxLogFile.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
-			// labelVideoCommentsFile
+			// labelLogFile
 			// 
-			this.labelVideoCommentsFile.AutoSize = true;
-			this.labelVideoCommentsFile.Location = new System.Drawing.Point(16, 16);
-			this.labelVideoCommentsFile.Name = "labelVideoCommentsFile";
-			this.labelVideoCommentsFile.Size = new System.Drawing.Size(104, 13);
-			this.labelVideoCommentsFile.TabIndex = 4;
-			this.labelVideoCommentsFile.Text = "&Video comments file:";
+			this.labelLogFile.AutoSize = true;
+			this.labelLogFile.Location = new System.Drawing.Point(16, 16);
+			this.labelLogFile.Name = "labelLogFile";
+			this.labelLogFile.Size = new System.Drawing.Size(44, 13);
+			this.labelLogFile.TabIndex = 3;
+			this.labelLogFile.Text = "&Log file:";
+			// 
+			// tabPageComments
+			// 
+			this.tabPageComments.Controls.Add(this.labelPlaylistCommentsFile);
+			this.tabPageComments.Controls.Add(this.textBoxPlaylistCommentsFile);
+			this.tabPageComments.Controls.Add(this.textBoxUserCommentsFile);
+			this.tabPageComments.Controls.Add(this.labelUserCommentsFile);
+			this.tabPageComments.Controls.Add(this.textBoxVideoCommentsFile);
+			this.tabPageComments.Controls.Add(this.labelVideoCommentsFile);
+			this.tabPageComments.Location = new System.Drawing.Point(4, 22);
+			this.tabPageComments.Name = "tabPageComments";
+			this.tabPageComments.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageComments.Size = new System.Drawing.Size(586, 343);
+			this.tabPageComments.TabIndex = 3;
+			this.tabPageComments.Text = "Comments";
+			this.tabPageComments.UseVisualStyleBackColor = true;
 			// 
 			// textBoxVideoCommentsFile
 			// 
@@ -252,6 +251,53 @@
 			this.textBoxVideoCommentsFile.Size = new System.Drawing.Size(400, 20);
 			this.textBoxVideoCommentsFile.TabIndex = 5;
 			this.textBoxVideoCommentsFile.TextChanged += new System.EventHandler(this.OnSettingsChanged);
+			// 
+			// labelVideoCommentsFile
+			// 
+			this.labelVideoCommentsFile.AutoSize = true;
+			this.labelVideoCommentsFile.Location = new System.Drawing.Point(16, 16);
+			this.labelVideoCommentsFile.Name = "labelVideoCommentsFile";
+			this.labelVideoCommentsFile.Size = new System.Drawing.Size(104, 13);
+			this.labelVideoCommentsFile.TabIndex = 4;
+			this.labelVideoCommentsFile.Text = "&Video comments file:";
+			// 
+			// labelUserCommentsFile
+			// 
+			this.labelUserCommentsFile.AutoSize = true;
+			this.labelUserCommentsFile.Location = new System.Drawing.Point(16, 42);
+			this.labelUserCommentsFile.Name = "labelUserCommentsFile";
+			this.labelUserCommentsFile.Size = new System.Drawing.Size(99, 13);
+			this.labelUserCommentsFile.TabIndex = 6;
+			this.labelUserCommentsFile.Text = "&User comments file:";
+			// 
+			// textBoxUserCommentsFile
+			// 
+			this.textBoxUserCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxUserCommentsFile.Location = new System.Drawing.Point(150, 39);
+			this.textBoxUserCommentsFile.Name = "textBoxUserCommentsFile";
+			this.textBoxUserCommentsFile.ReadOnly = true;
+			this.textBoxUserCommentsFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxUserCommentsFile.TabIndex = 7;
+			// 
+			// textBoxPlaylistCommentsFile
+			// 
+			this.textBoxPlaylistCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPlaylistCommentsFile.Location = new System.Drawing.Point(150, 65);
+			this.textBoxPlaylistCommentsFile.Name = "textBoxPlaylistCommentsFile";
+			this.textBoxPlaylistCommentsFile.ReadOnly = true;
+			this.textBoxPlaylistCommentsFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxPlaylistCommentsFile.TabIndex = 8;
+			// 
+			// labelPlaylistCommentsFile
+			// 
+			this.labelPlaylistCommentsFile.AutoSize = true;
+			this.labelPlaylistCommentsFile.Location = new System.Drawing.Point(16, 68);
+			this.labelPlaylistCommentsFile.Name = "labelPlaylistCommentsFile";
+			this.labelPlaylistCommentsFile.Size = new System.Drawing.Size(109, 13);
+			this.labelPlaylistCommentsFile.TabIndex = 9;
+			this.labelPlaylistCommentsFile.Text = "&Playlist comments file:";
 			// 
 			// ControlSettings
 			// 
@@ -267,13 +313,13 @@
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericMessageCloseDelay)).EndInit();
 			this.tabPageYouTube.ResumeLayout(false);
 			this.tabPageYouTube.PerformLayout();
 			this.tabPageLog.ResumeLayout(false);
 			this.tabPageLog.PerformLayout();
 			this.tabPageComments.ResumeLayout(false);
 			this.tabPageComments.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericMessageCloseDelay)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -299,5 +345,9 @@
 		private System.Windows.Forms.TextBox textBoxLogFile;
 		private System.Windows.Forms.Label labelVideoCommentsFile;
 		private System.Windows.Forms.TextBox textBoxVideoCommentsFile;
+		private System.Windows.Forms.Label labelPlaylistCommentsFile;
+		private System.Windows.Forms.TextBox textBoxPlaylistCommentsFile;
+		private System.Windows.Forms.TextBox textBoxUserCommentsFile;
+		private System.Windows.Forms.Label labelUserCommentsFile;
 	}
 }

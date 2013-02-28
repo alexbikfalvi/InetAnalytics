@@ -112,7 +112,6 @@ namespace YtAnalytics.Controls
 					// Author
 					this.textBoxAuthorName.Text = this.profile.Author != null ? this.profile.Author.Name : ControlProfile.notAvailable;
 					this.textBoxAuthorId.Text = this.profile.Author != null ? this.profile.Author.UserId : ControlProfile.notAvailable;
-					this.buttonViewAuthor.Enabled = this.profile.Author != null;
 
 					// Statistics
 					this.textBoxProfileViews.Text = this.profile.Statistics != null ? this.profile.Statistics.ViewCount.ToString() : ControlProfile.notAvailable;

@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="labelDescription1.Text" xml:space="preserve">
-    <value>The global video feeds return a collection of video entries, not specific to a particular YouTube user. In turn, each video entry contains information about a specific video in the video feed's result set.
+    <value>The user video feeds return a collection of video entries that are specific to a particular YouTube user. In turn, each video entry contains information about a specific video in the video feed's result set.
 
-You can access the data and the list of comments of every video directly, using its video identifier:</value>
+You may begin browsing videos by accessing the profile of a YouTube user, using its user identifier:</value>
   </data>
 </root>

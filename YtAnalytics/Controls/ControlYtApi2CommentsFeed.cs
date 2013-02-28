@@ -98,11 +98,10 @@ namespace YtAnalytics.Controls
 		/// Opens the specified video.
 		/// </summary>
 		/// <param name="video">The video.</param>
-		public void View(Video video)
+		public void View(string video)
 		{
-			if (null == video) return;
 			if (!this.textBoxVideo.Enabled) return;
-			this.textBoxVideo.Text = video.Id;
+			this.textBoxVideo.Text = video;
 			this.OnStart(null, null);
 		}
 

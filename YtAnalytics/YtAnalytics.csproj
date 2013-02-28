@@ -259,6 +259,12 @@
     <Compile Include="Controls\ControlYtApi2PlaylistsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlYtApi2UserFeedsInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2UserFeedsInfo.Designer.cs">
+      <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormPlaylist.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -431,6 +437,9 @@
     <EmbeddedResource Include="Controls\ControlYtApi2PlaylistsFeed.resx">
       <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2UserFeedsInfo.resx">
+      <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPlaylist.resx">
       <DependentUpon>FormPlaylist.cs</DependentUpon>
     </EmbeddedResource>
@@ -511,6 +520,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ServersDatabase_48.png" />
+    <None Include="Resources\ServersDatabase_32.png" />
+    <None Include="Resources\ServersDatabase_24.png" />
+    <None Include="Resources\ServersDatabase_16.png" />
+    <None Include="Resources\ServerDatabase_48.png" />
+    <None Include="Resources\ServerDatabase_32.png" />
+    <None Include="Resources\ServerDatabase_24.png" />
+    <None Include="Resources\ServerDatabase_16.png" />
     <None Include="Resources\CommentPlay_48.png" />
     <None Include="Resources\CommentPlay_32.png" />
     <None Include="Resources\CommentPlay_24.png" />

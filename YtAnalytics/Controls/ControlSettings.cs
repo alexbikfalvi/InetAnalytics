@@ -70,6 +70,8 @@ namespace YtAnalytics.Controls
 			this.textBoxYtPassword.Text = this.crawler.Config.YouTubePassword;
 			this.textBoxLogFile.Text = this.crawler.Config.LogFileName;
 			this.textBoxVideoCommentsFile.Text = this.crawler.Config.CommentsVideosFileName;
+			this.textBoxUserCommentsFile.Text = this.crawler.Config.CommentsUsersFileName;
+			this.textBoxPlaylistCommentsFile.Text = this.crawler.Config.CommentsPlaylistsFileName;
 		}
 
 		/// <summary>
@@ -82,6 +84,8 @@ namespace YtAnalytics.Controls
 			this.crawler.Config.YouTubePassword = this.textBoxYtPassword.Text;
 			this.crawler.Config.LogFileName = this.textBoxLogFile.Text;
 			this.crawler.Config.CommentsVideosFileName = this.textBoxVideoCommentsFile.Text;
+			this.crawler.Config.CommentsUsersFileName = this.textBoxUserCommentsFile.Text;
+			this.crawler.Config.CommentsPlaylistsFileName = this.textBoxPlaylistCommentsFile.Text;
 		}
 
 		/// <summary>

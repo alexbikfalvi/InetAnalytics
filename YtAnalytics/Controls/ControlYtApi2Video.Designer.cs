@@ -47,6 +47,7 @@
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.controlVideo = new YtAnalytics.Controls.ControlVideo();
 			this.log = new YtAnalytics.Controls.ControlLogList();
+			this.menuItemComments = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -111,6 +112,7 @@
 			// 
 			this.buttonView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemAuthor,
+            this.menuItemComments,
             this.menuItemRelated,
             this.menuItemResponse,
             this.toolStripSeparator1,
@@ -228,6 +230,14 @@
 			this.log.Size = new System.Drawing.Size(798, 169);
 			this.log.TabIndex = 0;
 			// 
+			// menuItemComments
+			// 
+			this.menuItemComments.Image = global::YtAnalytics.Resources.FolderClosedComment_16;
+			this.menuItemComments.Name = "menuItemComments";
+			this.menuItemComments.Size = new System.Drawing.Size(167, 22);
+			this.menuItemComments.Text = "Comments";
+			this.menuItemComments.Click += new System.EventHandler(this.OnViewCommentsClick);
+			// 
 			// ControlYtApi2Video
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,5 +277,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton buttonComment;
 		private System.Windows.Forms.ToolStripMenuItem menuItemAuthor;
+		private System.Windows.Forms.ToolStripMenuItem menuItemComments;
 	}
 }

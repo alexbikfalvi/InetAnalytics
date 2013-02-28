@@ -80,7 +80,6 @@
 			this.labelAboutMe = new System.Windows.Forms.Label();
 			this.textBoxAboutMe = new System.Windows.Forms.TextBox();
 			this.tabPageAuthor = new System.Windows.Forms.TabPage();
-			this.buttonViewAuthor = new System.Windows.Forms.Button();
 			this.textBoxAuthorName = new System.Windows.Forms.TextBox();
 			this.labelAuthorName = new System.Windows.Forms.Label();
 			this.labelAuthorId = new System.Windows.Forms.Label();
@@ -641,7 +640,6 @@
 			// tabPageAuthor
 			// 
 			this.tabPageAuthor.AutoScroll = true;
-			this.tabPageAuthor.Controls.Add(this.buttonViewAuthor);
 			this.tabPageAuthor.Controls.Add(this.textBoxAuthorName);
 			this.tabPageAuthor.Controls.Add(this.labelAuthorName);
 			this.tabPageAuthor.Controls.Add(this.labelAuthorId);
@@ -653,18 +651,6 @@
 			this.tabPageAuthor.TabIndex = 4;
 			this.tabPageAuthor.Text = "Author";
 			this.tabPageAuthor.UseVisualStyleBackColor = true;
-			// 
-			// buttonViewAuthor
-			// 
-			this.buttonViewAuthor.Enabled = false;
-			this.buttonViewAuthor.Image = global::YtAnalytics.Resources.User_16;
-			this.buttonViewAuthor.Location = new System.Drawing.Point(75, 63);
-			this.buttonViewAuthor.Name = "buttonViewAuthor";
-			this.buttonViewAuthor.Size = new System.Drawing.Size(95, 23);
-			this.buttonViewAuthor.TabIndex = 4;
-			this.buttonViewAuthor.Text = "&View profile";
-			this.buttonViewAuthor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonViewAuthor.UseVisualStyleBackColor = true;
 			// 
 			// textBoxAuthorName
 			// 
@@ -857,7 +843,6 @@
 		private System.Windows.Forms.Label labelAuthorName;
 		private System.Windows.Forms.Label labelAuthorId;
 		private System.Windows.Forms.TextBox textBoxAuthorId;
-		private System.Windows.Forms.Button buttonViewAuthor;
 		private System.Windows.Forms.TabPage tabPageThumbnails;
 		private DotNetApi.Windows.Controls.ImageListBox imageListBoxThumbnails;
 		private System.Windows.Forms.TabPage tabPagePersonal;
