@@ -28,75 +28,79 @@ namespace YtCrawler.Comments
 	/// <summary>
 	/// Represents a user comment.
 	/// </summary>
-	public abstract class Comment
+	public sealed class Comment
 	{
 		public enum CommentType
 		{
-			Object = 0,
 			Video = 1,
-			User = 2
-		};
+			User = 2,
+			Playlist = 3
+		}
 
+		private CommentType type;
 		private Guid guid;
 		private DateTime time;
 		private string user;
+		private string item;
 		private string text;
-		private CommentType type;
 
 		private XElement xml = null;
 
 		/// <summary>
-		/// Creates an empty comment with the current time.
+		/// Private contructor.
 		/// </summary>
-		public Comment()
-		{
-			this.guid = Guid.Empty;
-			this.time = DateTime.Now;
-			this.user = string.Empty;
-			this.text = string.Empty;
-			this.type = CommentType.Object;
-		}
+		private Comment() { }
 
 		/// <summary>
 		/// Creates a comment instance.
 		/// </summary>
+		/// <param name="type">The type.</param>
 		/// <param name="time">The time.</param>
 		/// <param name="user">The user.</param>
+		/// <param name="item">The item.</param>
 		/// <param name="text">The text.</param>
-		/// <param name="obj"></param>
-		public Comment(DateTime time, string user, string text, string obj)
+		public Comment(CommentType type, DateTime time, string user, string item, string text)
 		{
+			this.type = type;
 			this.guid = Guid.NewGuid();
 			this.time = time;
 			this.user = user;
+			this.item = item;
 			this.text = text;
 
 			this.xml = new XElement("comment",
+				new XAttribute("type", (int)this.type),
 				new XAttribute("guid", this.guid),
 				new XAttribute("time", this.time),
+				new XAttribute("item", this.item),
 				new XAttribute("user", this.user),
 				text);
 		}
 
 		/// <summary>
-		/// Parses the comment from an XML element.
+		/// Creates a new comment instance from an XML element.
 		/// </summary>
 		/// <param name="xml">The XML element.</param>
-		public virtual void Parse(XElement xml)
+		public Comment(XElement xml)
 		{
+			this.type = (CommentType)int.Parse(xml.Attribute("type").Value);
 			this.guid = Guid.Parse(xml.Attribute("guid").Value);
 			this.time = DateTime.Parse(xml.Attribute("time").Value);
 			this.user = xml.Attribute("user").Value;
+			this.item = xml.Attribute("item").Value;
 			this.text = xml.Value;
 			this.xml = xml;
 		}
 
 		/// <summary>
+		/// Returns the comment type.
+		/// </summary>
+		public CommentType Type { get { return this.type; } }
+
+		/// <summary>
 		/// Returns the GUID.
 		/// </summary>
 		public Guid Guid { get { return this.guid; } }
-
-		public string Object { 
 
 		/// <summary>
 		/// Returns the comment time.
@@ -107,6 +111,11 @@ namespace YtCrawler.Comments
 		/// Returns the comment user.
 		/// </summary>
 		public string User { get { return this.user; } }
+
+		/// <summary>
+		/// Returns the comment item.
+		/// </summary>
+		public string Item { get { return this.item; } }
 
 		/// <summary>
 		/// Returns the comment text.

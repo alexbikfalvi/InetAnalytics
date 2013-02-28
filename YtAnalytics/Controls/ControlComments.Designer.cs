@@ -33,23 +33,23 @@
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderVideo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderUser = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderCommenter = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
-			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonAdd = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemove = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonView = new System.Windows.Forms.ToolStripDropDownButton();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonImport = new System.Windows.Forms.ToolStripButton();
 			this.buttonExport = new System.Windows.Forms.ToolStripButton();
+			this.controlComment = new YtAnalytics.Controls.ControlComment();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.controlComment = new YtAnalytics.Controls.ControlComment();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -83,8 +83,8 @@
 			this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderTime,
-            this.columnHeaderVideo,
-            this.columnHeaderUser,
+            this.columnHeaderItem,
+            this.columnHeaderCommenter,
             this.columnHeaderText});
 			this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView.FullRowSelect = true;
@@ -108,15 +108,15 @@
 			this.columnHeaderTime.Text = "Time";
 			this.columnHeaderTime.Width = 120;
 			// 
-			// columnHeaderVideo
+			// columnHeaderItem
 			// 
-			this.columnHeaderVideo.Text = "Video";
-			this.columnHeaderVideo.Width = 120;
+			this.columnHeaderItem.Text = "Item";
+			this.columnHeaderItem.Width = 120;
 			// 
-			// columnHeaderUser
+			// columnHeaderCommenter
 			// 
-			this.columnHeaderUser.Text = "User";
-			this.columnHeaderUser.Width = 120;
+			this.columnHeaderCommenter.Text = "Commenter";
+			this.columnHeaderCommenter.Width = 120;
 			// 
 			// columnHeaderText
 			// 
@@ -145,24 +145,6 @@
 			this.toolStrip.TabIndex = 2;
 			this.toolStrip.Text = "toolStrip1";
 			// 
-			// contextMenu
-			// 
-			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemProperties});
-			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.OwnerItem = this.buttonView;
-			this.contextMenu.Size = new System.Drawing.Size(128, 26);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
 			// buttonAdd
 			// 
 			this.buttonAdd.Image = global::YtAnalytics.Resources.CommentAdd_16;
@@ -182,6 +164,11 @@
 			this.buttonRemove.Text = "&Remove comment";
 			this.buttonRemove.Click += new System.EventHandler(this.OnRemove);
 			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
 			// buttonView
 			// 
 			this.buttonView.DropDown = this.contextMenu;
@@ -192,6 +179,14 @@
 			this.buttonView.Size = new System.Drawing.Size(61, 22);
 			this.buttonView.Text = "&View";
 			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemProperties});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.OwnerItem = this.buttonView;
+			this.contextMenu.Size = new System.Drawing.Size(128, 26);
+			// 
 			// menuItemProperties
 			// 
 			this.menuItemProperties.Image = global::YtAnalytics.Resources.Comment_16;
@@ -199,6 +194,11 @@
 			this.menuItemProperties.Size = new System.Drawing.Size(127, 22);
 			this.menuItemProperties.Text = "Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnViewComment);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// buttonImport
 			// 
@@ -219,6 +219,15 @@
 			this.buttonExport.Text = "E&xport";
 			this.buttonExport.Click += new System.EventHandler(this.OnExport);
 			// 
+			// controlComment
+			// 
+			this.controlComment.Comment = null;
+			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlComment.Location = new System.Drawing.Point(0, 0);
+			this.controlComment.Name = "controlComment";
+			this.controlComment.Size = new System.Drawing.Size(598, 194);
+			this.controlComment.TabIndex = 0;
+			// 
 			// openFileDialog
 			// 
 			this.openFileDialog.Filter = "Comment XML file|*.xml";
@@ -230,22 +239,13 @@
 			this.saveFileDialog.Filter = "Comment XML file|*.xml";
 			this.saveFileDialog.Title = "Export Comment File";
 			// 
-			// controlComment
-			// 
-			this.controlComment.Comment = null;
-			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlComment.Location = new System.Drawing.Point(0, 0);
-			this.controlComment.Name = "controlComment";
-			this.controlComment.Size = new System.Drawing.Size(598, 194);
-			this.controlComment.TabIndex = 0;
-			// 
-			// ControlCommentsVideos
+			// ControlComments
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
-			this.Name = "ControlCommentsVideos";
+			this.Name = "ControlComments";
 			this.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel1.PerformLayout();
@@ -268,8 +268,8 @@
 		private System.Windows.Forms.ToolStripButton buttonAdd;
 		private System.Windows.Forms.ToolStripButton buttonRemove;
 		private System.Windows.Forms.ColumnHeader columnHeaderTime;
-		private System.Windows.Forms.ColumnHeader columnHeaderVideo;
-		private System.Windows.Forms.ColumnHeader columnHeaderUser;
+		private System.Windows.Forms.ColumnHeader columnHeaderItem;
+		private System.Windows.Forms.ColumnHeader columnHeaderCommenter;
 		private System.Windows.Forms.ColumnHeader columnHeaderText;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ContextMenuStrip contextMenu;

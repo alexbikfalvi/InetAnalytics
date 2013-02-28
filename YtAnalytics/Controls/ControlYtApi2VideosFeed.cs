@@ -39,6 +39,7 @@ namespace YtAnalytics.Controls
 {
 	public delegate Uri VideosFeedEventHandler(string video, int? startIndex, int? maxResults);
 
+	public delegate void ViewIdEventHandler(string id);
 
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
@@ -108,7 +109,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// View the author profile using the version 2 API.
 		/// </summary>
-		public event ViewProfileIdEventHandler ViewAuthorInApiV2;
+		public event ViewIdEventHandler ViewAuthorInApiV2;
 		/// <summary>
 		/// View the related videos using the version 2 API.
 		/// </summary>
@@ -124,7 +125,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentEventHandler Comment;
+		public event AddCommentItemEventHandler Comment;
 
 		// Public methods.
 
@@ -383,7 +384,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnVideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		private void OnVideoSelectedChanged(object sender, EventArgs e)
 		{
 			// Change the enabled state of the view video button.
 			this.checkBoxView.Enabled = this.videoList.SelectedItem != null;

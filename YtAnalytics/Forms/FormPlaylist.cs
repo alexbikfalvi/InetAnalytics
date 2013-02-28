@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtCrawler.Comments;
+using YtApi.Api.V2.Data;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms
@@ -33,7 +33,7 @@ namespace YtAnalytics.Forms
 	/// <summary>
 	/// A form dialog displaying a log event.
 	/// </summary>
-	public partial class FormComment : Form
+	public partial class FormPlaylist : Form
 	{
 		// UI formatter.
 		private Formatting formatting = new Formatting();
@@ -41,7 +41,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormComment()
+		public FormPlaylist()
 		{
 			InitializeComponent();
 
@@ -50,33 +50,19 @@ namespace YtAnalytics.Forms
 		}
 
 		/// <summary>
-		/// Shows the form as a dialog and the specified comment.
+		/// Shows the form as a dialog and the specified playlist.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="comment">The comment.</param>
-		public void ShowDialog(IWin32Window owner, Comment comment)
+		public void ShowDialog(IWin32Window owner, Playlist playlist)
 		{
-			// If the comment is null, do nothing.
-			if (null == comment) return;
+			// If the playlist is null, do nothing.
+			if (null == playlist) return;
 
-			// Set the comment.
-			this.control.Comment = comment;
+			// Set the playlist.
+			this.controlPlaylist.Playlist = playlist;
 			// Set the title.
-			switch (comment.Type)
-			{
-				case Comment.CommentType.Video:
-					this.Text = string.Format("Comment for Video {0} Properties", comment.Item);
-					break;
-				case Comment.CommentType.User:
-					this.Text = string.Format("Comment for User {0} Properties", comment.Item);
-					break;
-				case Comment.CommentType.Playlist:
-					this.Text = string.Format("Comment for Playlist {0} Properties", comment.Item);
-					break;
-				default:
-					this.Text = string.Format("Comment for Item {0} Properties", comment.Item);
-					break;
-			}
+			this.Text = string.Format("Playlist {0} Properties", playlist.Id);
 			// Open the dialog.
 			base.ShowDialog(owner);
 		}

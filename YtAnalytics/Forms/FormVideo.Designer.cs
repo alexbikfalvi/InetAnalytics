@@ -50,7 +50,7 @@
 			this.video.Size = new System.Drawing.Size(504, 369);
 			this.video.TabIndex = 2;
 			this.video.Video = null;
-			this.video.ViewProfile += new YtAnalytics.Controls.ViewProfileIdEventHandler(this.OnViewProfile);
+			this.video.ViewProfile += new YtAnalytics.Controls.ViewIdEventHandler(this.OnViewProfile);
 			// 
 			// FormVideo
 			// 

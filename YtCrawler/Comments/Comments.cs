@@ -32,7 +32,9 @@ namespace YtCrawler.Comments
 	{
 		private CrawlerConfig config;
 
-		private CommentsList<CommentVideo> videos;
+		private CommentsList commentsVideos;
+		private CommentsList commentsUsers;
+		private CommentsList commentsPlaylists;
 
 		/// <summary>
 		/// Creates a new comments instance.
@@ -43,8 +45,14 @@ namespace YtCrawler.Comments
 			// Set the configuration.
 			this.config = config;
 
-			// Create the video comments.
-			this.videos = new CommentsList<CommentVideo>(this.config.CommentsVideosFileName);
+			// Create the videos comments.
+			this.commentsVideos = new CommentsList(this.config.CommentsVideosFileName);
+
+			// Create the users comments.
+			this.commentsUsers = new CommentsList(this.config.CommentsUsersFileName);
+
+			// Create the playlists comments.
+			this.commentsPlaylists = new CommentsList(this.config.CommentsPlaylistsFileName);
 		}
 
 		/// <summary>
@@ -52,12 +60,22 @@ namespace YtCrawler.Comments
 		/// </summary>
 		public void Save()
 		{
-			this.videos.Save(this.config.CommentsVideosFileName);
+			this.commentsVideos.Save(this.config.CommentsVideosFileName);
 		}
 
 		/// <summary>
 		/// Returns the videos comments.
 		/// </summary>
-		public CommentsList<CommentVideo> Videos { get { return this.videos; } }
+		public CommentsList Videos { get { return this.commentsVideos; } }
+
+		/// <summary>
+		/// Returns the users comments.
+		/// </summary>
+		public CommentsList Users { get { return this.commentsUsers; } }
+
+		/// <summary>
+		/// Returns the playlist comments.
+		/// </summary>
+		public CommentsList Playlists { get { return this.commentsPlaylists; } }
 	}
 }

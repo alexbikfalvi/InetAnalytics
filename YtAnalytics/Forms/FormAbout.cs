@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows;
 
-namespace YtAnalytics
+namespace YtAnalytics.Forms
 {
 	/// <summary>
 	/// A form that displays an about help window.

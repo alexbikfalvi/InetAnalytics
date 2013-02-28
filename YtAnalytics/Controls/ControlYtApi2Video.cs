@@ -64,7 +64,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// View the author profile using the version 2 API.
 		/// </summary>
-		public event ViewProfileIdEventHandler ViewAuthorInApiV2;
+		public event ViewIdEventHandler ViewAuthorInApiV2;
 		/// <summary>
 		/// View the related videos.
 		/// </summary>
@@ -76,7 +76,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// View the user profile.
 		/// </summary>
-		public event ViewProfileIdEventHandler ViewProfileInApiV2;
+		public event ViewIdEventHandler ViewProfileInApiV2;
 		/// <summary>
 		/// View the video statistics using the web.
 		/// </summary>
@@ -84,7 +84,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentEventHandler Comment;
+		public event AddCommentItemEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control with a crawler instance.

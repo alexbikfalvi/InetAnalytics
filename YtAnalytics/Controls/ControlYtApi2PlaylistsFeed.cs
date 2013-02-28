@@ -28,11 +28,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtCrawler;
+using YtAnalytics.Forms;
 using YtApi;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
+using YtCrawler;
 using YtCrawler.Log;
 
 namespace YtAnalytics.Controls
@@ -56,6 +57,8 @@ namespace YtAnalytics.Controls
 		private ShowMessageEventHandler delegateShowMessage;
 		private HideMessageEventHandler delegateHideMessage;
 
+		private FormPlaylist formPlaylist = new FormPlaylist();
+
 		// Public declarations
 
 		/// <summary>
@@ -78,6 +81,23 @@ namespace YtAnalytics.Controls
 			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 		}
 
+		// Public events.
+
+		/// <summary>
+		/// View the playlist author.
+		/// </summary>
+		public event ViewIdEventHandler ViewPlaylistAuthorInApiV2;
+		/// <summary>
+		/// View the playlist videos.
+		/// </summary>
+		public event ViewIdEventHandler ViewPlaylistVideosInApiV2;
+		/// <summary>
+		/// An event handler called when the user adds a new comment for the current playlist.
+		/// </summary>
+		public event AddCommentItemEventHandler Comment;
+
+		// Public methods.
+
 		/// <summary>
 		/// Initializes the control with a crawler object.
 		/// </summary>
@@ -92,17 +112,15 @@ namespace YtAnalytics.Controls
 			this.Enabled = true;
 		}
 
-		// Public methods.
-
 		/// <summary>
-		/// Opens the specified video.
+		/// Opens the playlists feed for the specified user.
 		/// </summary>
-		/// <param name="video">The video.</param>
-		public void View(Video video)
+		/// <param name="id">The user ID.</param>
+		public void View(string id)
 		{
-			if (null == video) return;
+			if (null == id) return;
 			if (!this.textBoxUser.Enabled) return;
-			this.textBoxUser.Text = video.Id;
+			this.textBoxUser.Text = id;
 			this.OnStart(null, null);
 		}
 
@@ -346,17 +364,6 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
-		/// An event handler called when the selected video has changed.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnVideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-		{
-			// Change the enabled state of the view video button.
-			this.checkBoxView.Enabled = this.playlistsList.SelectedItem != null;
-		}
-
-		/// <summary>
 		/// An event handler called when the user navigates to the previous page in the feed list.
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
@@ -404,6 +411,97 @@ namespace YtAnalytics.Controls
 			this.playlistsList.Clear();
 			// Start a new request.
 			this.OnStart(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler for the visualization of a playlist entry menu.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewPlaylist(object sender, EventArgs e)
+		{
+			if (this.checkBoxView.Checked)
+				this.viewMenu.Show(this.checkBoxView, 0, this.checkBoxView.Height);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view the playlist author.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewAuthor(object sender, EventArgs e)
+		{
+			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
+			if (this.ViewPlaylistAuthorInApiV2 != null) this.ViewPlaylistAuthorInApiV2(playlist.Author.UserId);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view the playlist videos.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewVideos(object sender, EventArgs e)
+		{
+			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
+			if (this.ViewPlaylistVideosInApiV2 != null) this.ViewPlaylistVideosInApiV2(playlist.Id);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view the playlist in YouTube.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnOpenYouTube(object sender, EventArgs e)
+		{
+			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
+			// Open the user link in the browser.
+			Process.Start(YouTubeUri.GetYouTubePlaylistLink(playlist.Id));
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a new comment for a playlist.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddComment(object sender, EventArgs e)
+		{
+			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
+			if (this.Comment != null) this.Comment(playlist.Id);
+		}
+
+		/// <summary>
+		/// An event handler called when the user opens the playlist properties.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewProperties(object sender, EventArgs e)
+		{
+			this.formPlaylist.ShowDialog(this, this.playlistsList.SelectedItem.Tag as Playlist);
+		}
+
+		/// <summary>
+		/// An event handler called when the playlist selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectionChanged(object sender, EventArgs e)
+		{
+			// Change the enabled state of the view video button.
+			this.checkBoxView.Enabled = this.playlistsList.SelectedItem != null;
+			if (this.playlistsList.SelectedItem != null)
+				this.menuItemApiV2Author.Enabled = (this.playlistsList.SelectedItem.Tag as Playlist).Author != null;
+			else
+				this.menuItemApiV2Author.Enabled = false;
+		}
+
+		/// <summary>
+		/// An event handler called when the video entry menu was closed.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
+		{
+			this.checkBoxView.Checked = false;
 		}
 	}
 }

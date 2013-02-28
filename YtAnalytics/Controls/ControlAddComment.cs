@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls
 {
@@ -33,6 +34,8 @@ namespace YtAnalytics.Controls
 	/// </summary>
 	public partial class ControlAddComment : UserControl
 	{
+		private Comment.CommentType type;
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -46,13 +49,37 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public event EventHandler InputChanged;
 
+		public Comment.CommentType Type
+		{
+			get { return this.type; }
+			set
+			{
+				switch (value)
+				{
+					case Comment.CommentType.Video:
+						this.labelTitle.Text = "Add video comment";
+						this.labelItem.Text = "&Video:";
+						break;
+					case Comment.CommentType.User:
+						this.labelTitle.Text = "Add user comment";
+						this.labelItem.Text = "&User:";
+						break;
+					case Comment.CommentType.Playlist:
+						this.labelTitle.Text = "Add playlist comment";
+						this.labelItem.Text = "&Playlist:";
+						break;
+				}
+				this.type = value;
+			}
+		}
+
 		/// <summary>
 		/// Gets or sets the object ID.
 		/// </summary>
-		public string Object
+		public string Item
 		{
-			get { return this.textBoxObject.Text; }
-			set { this.textBoxObject.Text = value; }
+			get { return this.textBoxItem.Text; }
+			set { this.textBoxItem.Text = value; }
 		}
 
 		/// <summary>
@@ -60,8 +87,8 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public string User
 		{
-			get { return this.textBoxUser.Text; }
-			set { this.textBoxUser.Text = value; }
+			get { return this.textBoxCommenter.Text; }
+			set { this.textBoxCommenter.Text = value; }
 		}
 
 		/// <summary>

@@ -259,16 +259,22 @@
     <Compile Include="Controls\ControlYtApi2PlaylistsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormAbout.cs">
+    <Compile Include="Forms\FormPlaylist.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormAbout.Designer.cs">
+    <Compile Include="Forms\FormPlaylist.Designer.cs">
+      <DependentUpon>FormPlaylist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="Forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormComment.cs">
@@ -425,10 +431,13 @@
     <EmbeddedResource Include="Controls\ControlYtApi2PlaylistsFeed.resx">
       <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormAbout.resx">
+    <EmbeddedResource Include="Forms\FormPlaylist.resx">
+      <DependentUpon>FormPlaylist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormComment.resx">
@@ -502,6 +511,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\CommentPlay_48.png" />
+    <None Include="Resources\CommentPlay_32.png" />
+    <None Include="Resources\CommentPlay_24.png" />
+    <None Include="Resources\CommentPlay_16.png" />
+    <None Include="Resources\CommentUser_48.png" />
+    <None Include="Resources\CommentUser_32.png" />
+    <None Include="Resources\CommentUser_24.png" />
+    <None Include="Resources\CommentUser_16.png" />
     <None Include="Resources\FilePlay_48.png" />
     <None Include="Resources\FilePlay_32.png" />
     <None Include="Resources\FilePlay_24.png" />

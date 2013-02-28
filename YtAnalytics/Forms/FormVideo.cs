@@ -53,7 +53,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event raised to view the user profile.
 		/// </summary>
-		public event ViewProfileIdEventHandler ViewProfile;
+		public event ViewIdEventHandler ViewProfile;
 
 		/// <summary>
 		/// Shows the form as a dialog and the specified video.

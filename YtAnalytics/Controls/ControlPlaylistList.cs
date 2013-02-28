@@ -46,6 +46,8 @@ namespace YtAnalytics.Controls
 
 		private ContextMenuStrip contextMenu = null;
 
+		private FormPlaylist formPlaylist = new FormPlaylist();
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -73,6 +75,10 @@ namespace YtAnalytics.Controls
 		/// An event raised when the user clicks on the next page button.
 		/// </summary>
 		public event EventHandler NextClick;
+		/// <summary>
+		/// An event raised when the playlist selection has changed.
+		/// </summary>
+		public event EventHandler PlaylistSelectionChanged;
 		/// <summary>
 		/// An event raised when the number of comments per page has changed.
 		/// </summary>
@@ -161,6 +167,15 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
+		/// Gets or sets the video context menu.
+		/// </summary>
+		public ContextMenuStrip PlaylistContextMenu
+		{
+			get { return this.contextMenu; }
+			set { this.contextMenu = value; }
+		}
+		
+		/// <summary>
 		/// Adds a new playlist to the list.
 		/// </summary>
 		/// <param name="playlist">The playlist.</param>
@@ -186,6 +201,7 @@ namespace YtAnalytics.Controls
 			this.listView.Items.Clear();
 			this.buttonNext.Enabled = false;
 			this.buttonPrevious.Enabled = false;
+			if (this.PlaylistSelectionChanged != null) this.PlaylistSelectionChanged(this, null);
 		}
 
 		/// <summary>
@@ -227,6 +243,7 @@ namespace YtAnalytics.Controls
 		private void OnItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
 		{
 			this.controlPlaylist.Playlist = (this.listView.SelectedItems.Count != 0) ? this.listView.SelectedItems[0].Tag as Playlist : null;
+			if (this.PlaylistSelectionChanged != null) this.PlaylistSelectionChanged(sender, e);
 		}
 
 		/// <summary>
@@ -237,6 +254,36 @@ namespace YtAnalytics.Controls
 		private void OnCommentsPerPageChanged(object sender, EventArgs e)
 		{
 			if (this.PlaylistsPerPageChanged != null) this.PlaylistsPerPageChanged(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user mouse clicks the control.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				if (this.listView.FocusedItem != null)
+				{
+					if (this.listView.FocusedItem.Bounds.Contains(e.Location))
+					{
+						this.contextMenu.Show(this.listView, e.Location);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user activates a  playlist item.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnItemActivate(object sender, EventArgs e)
+		{
+			if (this.listView.SelectedItems.Count != 0)
+				this.formPlaylist.ShowDialog(this, this.listView.SelectedItems[0].Tag as Playlist);
 		}
 	}
 }

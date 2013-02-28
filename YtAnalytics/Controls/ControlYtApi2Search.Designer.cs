@@ -98,9 +98,9 @@
 			this.videoList.VideoContextMenu = this.viewMenu;
 			this.videoList.PreviousClick += new System.EventHandler(this.OnNavigatePrevious);
 			this.videoList.NextClick += new System.EventHandler(this.OnNavigateNext);
-			this.videoList.VideoSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.OnVideoSelectedChanged);
+			this.videoList.VideoSelectionChanged += new System.EventHandler(this.OnVideoSelectedChanged);
 			this.videoList.VideosPerPageChanged += new System.EventHandler(this.OnSearchChanged);
-			this.videoList.ViewProfile += new YtAnalytics.Controls.ViewProfileIdEventHandler(this.OnViewProfile);
+			this.videoList.ViewProfile += new YtAnalytics.Controls.ViewIdEventHandler(this.OnViewProfile);
 			// 
 			// viewMenu
 			// 

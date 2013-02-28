@@ -80,7 +80,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event raised when the video selection has changed.
 		/// </summary>
-		public event ListViewItemSelectionChangedEventHandler VideoSelectionChanged;
+		public event EventHandler VideoSelectionChanged;
 		/// <summary>
 		/// An event raised when the number of videos per page has changed.
 		/// </summary>
@@ -88,7 +88,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event raised to view the user profile.
 		/// </summary>
-		public event ViewProfileIdEventHandler ViewProfile;
+		public event ViewIdEventHandler ViewProfile;
 
 		/// <summary>
 		/// Gets or sets the start video count. 
@@ -202,6 +202,7 @@ namespace YtAnalytics.Controls
 			this.listView.Items.Clear();
 			this.buttonNext.Enabled = false;
 			this.buttonPrevious.Enabled = false;
+			if (this.VideoSelectionChanged != null) this.VideoSelectionChanged(this, null);
 		}
 
 		/// <summary>

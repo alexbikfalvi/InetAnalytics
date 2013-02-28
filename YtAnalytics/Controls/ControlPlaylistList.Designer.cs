@@ -40,7 +40,7 @@
 			this.labelPage = new System.Windows.Forms.ToolStripLabel();
 			this.buttonNext = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-			this.labelVideosPerPage = new System.Windows.Forms.ToolStripLabel();
+			this.labelPlaylistsPerPage = new System.Windows.Forms.ToolStripLabel();
 			this.comboBoxPerPage = new System.Windows.Forms.ToolStripComboBox();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.controlPlaylist = new YtAnalytics.Controls.ControlPlaylist();
@@ -73,7 +73,9 @@
 			this.listView.TabIndex = 4;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
+			this.listView.ItemActivate += new System.EventHandler(this.OnItemActivate);
 			this.listView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.OnItemSelectionChanged);
+			this.listView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick);
 			// 
 			// columnHeaderId
 			// 
@@ -104,7 +106,7 @@
             this.labelPage,
             this.buttonNext,
             this.toolStripSeparator,
-            this.labelVideosPerPage,
+            this.labelPlaylistsPerPage,
             this.comboBoxPerPage});
 			this.toolStrip.Location = new System.Drawing.Point(0, 275);
 			this.toolStrip.Name = "toolStrip";
@@ -143,11 +145,11 @@
 			this.toolStripSeparator.Name = "toolStripSeparator";
 			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
 			// 
-			// labelVideosPerPage
+			// labelPlaylistsPerPage
 			// 
-			this.labelVideosPerPage.Name = "labelVideosPerPage";
-			this.labelVideosPerPage.Size = new System.Drawing.Size(94, 22);
-			this.labelVideosPerPage.Text = "Videos per page:";
+			this.labelPlaylistsPerPage.Name = "labelPlaylistsPerPage";
+			this.labelPlaylistsPerPage.Size = new System.Drawing.Size(101, 22);
+			this.labelPlaylistsPerPage.Text = "Playlists per page:";
 			// 
 			// comboBoxPerPage
 			// 
@@ -176,6 +178,7 @@
 			// 
 			// controlPlaylist
 			// 
+			this.controlPlaylist.AutoScroll = true;
 			this.controlPlaylist.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlPlaylist.Location = new System.Drawing.Point(0, 0);
 			this.controlPlaylist.Name = "controlPlaylist";
@@ -221,7 +224,7 @@
 		private System.Windows.Forms.ToolStripLabel labelPage;
 		private System.Windows.Forms.ToolStripButton buttonNext;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-		private System.Windows.Forms.ToolStripLabel labelVideosPerPage;
+		private System.Windows.Forms.ToolStripLabel labelPlaylistsPerPage;
 		private System.Windows.Forms.ToolStripComboBox comboBoxPerPage;
 		private System.Windows.Forms.ColumnHeader columnHeaderId;
 		private System.Windows.Forms.ColumnHeader columnHeaderAuthor;

@@ -64,7 +64,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.control.Location = new System.Drawing.Point(0, 0);
 			this.control.Name = "control";
-			this.control.Object = "";
+			this.control.Item = "";
 			this.control.Size = new System.Drawing.Size(385, 221);
 			this.control.TabIndex = 0;
 			this.control.User = "";

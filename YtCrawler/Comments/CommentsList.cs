@@ -30,13 +30,13 @@ namespace YtCrawler.Comments
 	/// Represents a generic comments list.
 	/// </summary>
 	/// <typeparam name="T">The comment class.</typeparam>
-	public class CommentsList<T> : List<T> where T : Comment, new()
+	public class CommentsList : List<Comment>
 	{
 		private XDocument document;
 		private HashSet<Guid> set = new HashSet<Guid>();
 
 		/// <summary>
-		/// Creates a new comments list instance.
+		/// Creates a new comments list from the specified file.
 		/// </summary>
 		/// <param name="fileName">The file name.</param>
 		public CommentsList(string fileName)
@@ -45,16 +45,14 @@ namespace YtCrawler.Comments
 			{
 				// If the specified file exists.
 				if (File.Exists(fileName))
-				{
+				{					
 					// Read the XML document from file.
 					this.document = XDocument.Load(fileName);
 					// Read the comments from the file.
 					foreach (XElement element in this.document.Root.Elements("comment"))
 					{
-						// Create a new comment.
-						T comment = new T();
-						// Parse the XML element.
-						comment.Parse(element);
+						// Create a new comment from the XML element.
+						Comment comment = new Comment(element);
 						// If the GUID does not exist in the set.
 						if (!this.set.Contains(comment.Guid))
 						{
@@ -64,6 +62,7 @@ namespace YtCrawler.Comments
 							this.set.Add(comment.Guid);
 						}
 					}
+					// Return the comments list instance.
 					return;
 				}
 			}
@@ -87,7 +86,7 @@ namespace YtCrawler.Comments
 		/// </summary>
 		/// <param name="comment">The comment.</param>
 		/// <returns>Returns <b>true</b> if the comment was added successfully, or <b>false</b> otherwise.</returns>
-		public bool AddComment(T comment)
+		public bool AddComment(Comment comment)
 		{
 			// If the set already contains the GUID, do nothing.
 			if (this.set.Contains(comment.Guid)) return false;
@@ -104,7 +103,7 @@ namespace YtCrawler.Comments
 		/// Removes a comment from the list.
 		/// </summary>
 		/// <param name="comment">The comment.</param>
-		public void RemoveComment(T comment)
+		public void RemoveComment(Comment comment)
 		{
 			// Remove the XML element from the XML document.
 			comment.Xml.Remove();
@@ -121,10 +120,10 @@ namespace YtCrawler.Comments
 		/// <param name="countAdded">The number of added comments.</param>
 		/// <param name="countIgnored">The number of ignored comments.</param>
 		/// <returns>The collection of added items.</returns>
-		public ICollection<T> Import(string fileName, out int countAdded, out int countIgnored)
+		public ICollection<Comment> Import(string fileName, out int countAdded, out int countIgnored)
 		{
 			// The list of added items.
-			List<T> comments = null;
+			List<Comment> comments = null;
 
 			countAdded = 0;
 			countIgnored = 0;
@@ -132,29 +131,31 @@ namespace YtCrawler.Comments
 			// If the specified file exists.
 			if (File.Exists(fileName))
 			{
-				comments = new List<T>();
+				comments = new List<Comment>();
 				// Read the XML document from file.
 				this.document = XDocument.Load(fileName);
 				// Read the comments from the file.
 				foreach (XElement element in this.document.Root.Elements("comment"))
 				{
-					// Create a new comment.
-					T comment = new T();
-					// Parse the XML element.
-					comment.Parse(element);
-					// If the GUID does not exist in the set.
-					if (!this.set.Contains(comment.Guid))
+					try
 					{
-						// Add the comment to the list.
-						this.Add(comment);
-						// Add the GUID to the set.
-						this.set.Add(comment.Guid);
-						// Add the comment to the output list.
-						comments.Add(comment);
-						// Increment the counter.
-						countAdded++;
+						// Create a new comment.
+						Comment comment = new Comment(element);
+						// If the GUID does not exist in the set.
+						if (!this.set.Contains(comment.Guid))
+						{
+							// Add the comment to the list.
+							this.Add(comment);
+							// Add the GUID to the set.
+							this.set.Add(comment.Guid);
+							// Add the comment to the output list.
+							comments.Add(comment);
+							// Increment the counter.
+							countAdded++;
+						}
+						else countIgnored++;
 					}
-					else countIgnored++;
+					catch (Exception) { }
 				}
 			}
 			return comments;

@@ -1,4 +1,4 @@
-﻿namespace YtAnalytics
+﻿namespace YtAnalytics.Forms
 {
 	partial class FormAbout
 	{

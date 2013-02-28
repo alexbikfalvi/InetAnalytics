@@ -209,6 +209,11 @@ namespace YtApi.Api.V2
 		private static string uriUserYouTubePattern = "http://www.youtube.com/user/{0}";
 
 		/// <summary>
+		/// 0 - playlist ID
+		/// </summary>
+		private static string uriPlaylistYouTubePattern = "http://www.youtube.com/playlist?list={0}";
+
+		/// <summary>
 		/// 0 - user ID
 		/// </summary>
 		private static string uriProfileEntryPattern = "http://gdata.youtube.com/feeds/api/users/{0}?v=2";
@@ -585,6 +590,16 @@ namespace YtApi.Api.V2
 		public static string GetYouTubeUserLink(string user)
 		{
 			return string.Format(YouTubeUri.uriUserYouTubePattern, user);
+		}
+
+		/// <summary>
+		/// Returns the YouTube link for a playlist.
+		/// </summary>
+		/// <param name="playlist">The playlist ID.</param>
+		/// <returns>The YouTube link.</returns>
+		public static string GetYouTubePlaylistLink(string playlist)
+		{
+			return string.Format(YouTubeUri.uriPlaylistYouTubePattern, playlist);
 		}
 
 		/// <summary>

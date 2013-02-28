@@ -131,7 +131,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// View the user profile using the version 2 API.
 		/// </summary>
-		public event ViewProfileIdEventHandler ViewAuthorInApiV2;
+		public event ViewIdEventHandler ViewAuthorInApiV2;
 		/// <summary>
 		/// View the related videos using the version 2 API.
 		/// </summary>
@@ -147,7 +147,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentEventHandler Comment;
+		public event AddCommentItemEventHandler Comment;
 
 		// Private methods.
 
@@ -553,7 +553,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnVideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		private void OnVideoSelectedChanged(object sender, EventArgs e)
 		{
 			// Change the enabled state of the view video button.
 			this.checkBoxView.Enabled = this.videoList.SelectedItem != null;

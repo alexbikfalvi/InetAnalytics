@@ -218,7 +218,7 @@
 			this.controlVideo.Size = new System.Drawing.Size(798, 398);
 			this.controlVideo.TabIndex = 0;
 			this.controlVideo.Video = null;
-			this.controlVideo.ViewProfile += new YtAnalytics.Controls.ViewProfileIdEventHandler(this.OnViewProfile);
+			this.controlVideo.ViewProfile += new YtAnalytics.Controls.ViewIdEventHandler(this.OnViewProfile);
 			// 
 			// log
 			// 

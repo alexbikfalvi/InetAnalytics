@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.playlistsList = new YtAnalytics.Controls.ControlPlaylistList();
 			this.panel = new System.Windows.Forms.Panel();
 			this.textBoxUser = new System.Windows.Forms.TextBox();
 			this.checkBoxView = new System.Windows.Forms.CheckBox();
@@ -38,12 +38,23 @@
 			this.linkLabel = new System.Windows.Forms.LinkLabel();
 			this.labelUrl = new System.Windows.Forms.Label();
 			this.labelUser = new System.Windows.Forms.Label();
+			this.menuItemApiV2Author = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemApiV2Playlist = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemComment = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.playlistsList = new YtAnalytics.Controls.ControlPlaylistList();
 			this.log = new YtAnalytics.Controls.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.panel.SuspendLayout();
+			this.viewMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -66,19 +77,6 @@
 			this.splitContainer.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.TabIndex = 2;
-			// 
-			// playlistsList
-			// 
-			this.playlistsList.CountPerPage = null;
-			this.playlistsList.CountStart = null;
-			this.playlistsList.CountTotal = null;
-			this.playlistsList.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.playlistsList.Location = new System.Drawing.Point(0, 82);
-			this.playlistsList.Name = "playlistsList";
-			this.playlistsList.Next = false;
-			this.playlistsList.Previous = false;
-			this.playlistsList.Size = new System.Drawing.Size(598, 141);
-			this.playlistsList.TabIndex = 1;
 			// 
 			// panel
 			// 
@@ -117,6 +115,7 @@
 			this.checkBoxView.Text = "&View";
 			this.checkBoxView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.checkBoxView.UseVisualStyleBackColor = true;
+			this.checkBoxView.CheckedChanged += new System.EventHandler(this.OnViewPlaylist);
 			// 
 			// buttonStart
 			// 
@@ -173,6 +172,93 @@
 			this.labelUser.TabIndex = 0;
 			this.labelUser.Text = "&User:";
 			// 
+			// menuItemApiV2Author
+			// 
+			this.menuItemApiV2Author.Image = global::YtAnalytics.Resources.FileUser_16;
+			this.menuItemApiV2Author.Name = "menuItemApiV2Author";
+			this.menuItemApiV2Author.Size = new System.Drawing.Size(167, 22);
+			this.menuItemApiV2Author.Text = "Author";
+			this.menuItemApiV2Author.Click += new System.EventHandler(this.OnViewAuthor);
+			// 
+			// menuItemApiV2Playlist
+			// 
+			this.menuItemApiV2Playlist.Image = global::YtAnalytics.Resources.FolderClosedVideo_16;
+			this.menuItemApiV2Playlist.Name = "menuItemApiV2Playlist";
+			this.menuItemApiV2Playlist.Size = new System.Drawing.Size(167, 22);
+			this.menuItemApiV2Playlist.Text = "Playlist videos";
+			this.menuItemApiV2Playlist.Click += new System.EventHandler(this.OnViewVideos);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(164, 6);
+			// 
+			// menuItemYouTube
+			// 
+			this.menuItemYouTube.Image = global::YtAnalytics.Resources.Globe_16;
+			this.menuItemYouTube.Name = "menuItemYouTube";
+			this.menuItemYouTube.Size = new System.Drawing.Size(167, 22);
+			this.menuItemYouTube.Text = "Open in YouTube";
+			this.menuItemYouTube.Click += new System.EventHandler(this.OnOpenYouTube);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(164, 6);
+			// 
+			// menuItemComment
+			// 
+			this.menuItemComment.Image = global::YtAnalytics.Resources.CommentAdd_16;
+			this.menuItemComment.Name = "menuItemComment";
+			this.menuItemComment.Size = new System.Drawing.Size(167, 22);
+			this.menuItemComment.Text = "Add comment";
+			this.menuItemComment.Click += new System.EventHandler(this.OnAddComment);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(164, 6);
+			// 
+			// menuItemProperties
+			// 
+			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemProperties.Name = "menuItemProperties";
+			this.menuItemProperties.Size = new System.Drawing.Size(167, 22);
+			this.menuItemProperties.Text = "Properties";
+			this.menuItemProperties.Click += new System.EventHandler(this.OnViewProperties);
+			// 
+			// viewMenu
+			// 
+			this.viewMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemApiV2Author,
+            this.menuItemApiV2Playlist,
+            this.toolStripSeparator1,
+            this.menuItemYouTube,
+            this.toolStripSeparator2,
+            this.menuItemComment,
+            this.toolStripSeparator3,
+            this.menuItemProperties});
+			this.viewMenu.Name = "viewMenu";
+			this.viewMenu.Size = new System.Drawing.Size(168, 132);
+			this.viewMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnViewMenuClosed);
+			// 
+			// playlistsList
+			// 
+			this.playlistsList.CountPerPage = null;
+			this.playlistsList.CountStart = null;
+			this.playlistsList.CountTotal = null;
+			this.playlistsList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.playlistsList.Location = new System.Drawing.Point(0, 82);
+			this.playlistsList.Name = "playlistsList";
+			this.playlistsList.Next = false;
+			this.playlistsList.PlaylistContextMenu = this.viewMenu;
+			this.playlistsList.Previous = false;
+			this.playlistsList.Size = new System.Drawing.Size(598, 141);
+			this.playlistsList.TabIndex = 1;
+			this.playlistsList.PreviousClick += new System.EventHandler(this.OnNavigatePrevious);
+			this.playlistsList.NextClick += new System.EventHandler(this.OnNavigateNext);
+			this.playlistsList.PlaylistSelectionChanged += new System.EventHandler(this.OnSelectionChanged);
+			// 
 			// log
 			// 
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -195,6 +281,7 @@
 			this.splitContainer.ResumeLayout(false);
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();
+			this.viewMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -212,6 +299,15 @@
 		private System.Windows.Forms.CheckBox checkBoxView;
 		private System.Windows.Forms.TextBox textBoxUser;
 		private ControlPlaylistList playlistsList;
+		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Author;
+		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Playlist;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem menuItemYouTube;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem menuItemComment;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
+		private System.Windows.Forms.ContextMenuStrip viewMenu;
 
 	}
 }

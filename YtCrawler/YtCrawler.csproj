@@ -45,7 +45,6 @@
     <Compile Include="Comments\Comment.cs" />
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\CommentsList.cs" />
-    <Compile Include="Comments\CommentVideo.cs" />
     <Compile Include="Log\LogEvent.cs" />
     <Compile Include="Log\LogException.cs" />
     <Compile Include="Log\Logger.cs" />

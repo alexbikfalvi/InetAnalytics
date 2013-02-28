@@ -13,6 +13,7 @@ using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls
 {
+	public delegate void AddCommentItemEventHandler(string item);
 	public delegate void AddCommentEventHandler(Comment comment);
 
 	/// <summary>
@@ -20,7 +21,7 @@ namespace YtAnalytics.Controls
 	/// </summary>
 	public partial class ControlComments : UserControl
 	{
-		private Crawler crawler;
+		private CommentsList comments;
 
 		private FormAddComment formAdd = new FormAddComment();
 		private FormComment formComment = new FormComment();
@@ -40,17 +41,25 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// Initializes the control.
 		/// </summary>
-		/// <param name="crawler">A crawler object.</param>
-		public void Initialize(Crawler crawler)
+		/// <param name="comments">A crawler object.</param>
+		public void Initialize(CommentsList comments, Comment.CommentType commentType)
 		{
-			this.crawler = crawler;
+			this.comments = comments;
+			this.formAdd.CommentType = commentType;
 			this.Enabled = true;
 
+			switch (commentType)
+			{
+				case Comment.CommentType.Video: this.columnHeaderItem.Text = "Video"; break;
+				case Comment.CommentType.User: this.columnHeaderItem.Text = "User"; break;
+				case Comment.CommentType.Playlist: this.columnHeaderItem.Text = "Playlist"; break;
+			}
+
 			// Populate the comments list.
-			foreach (CommentVideo comment in this.crawler.Comments.Videos)
+			foreach (Comment comment in this.comments)
 			{
 				// Add a new list view item.
-				ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Video, comment.User, comment.Text }, 0);
+				ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Item, comment.User, comment.Text }, 0);
 				item.Tag = comment;
 				this.listView.Items.Add(item);
 			}
@@ -90,12 +99,12 @@ namespace YtAnalytics.Controls
 			// Get the selected item.
 			ListViewItem item = this.listView.SelectedItems[0];
 			// Get the item comment.
-			CommentVideo comment = item.Tag as CommentVideo;
+			Comment comment = item.Tag as Comment;
 
 			try
 			{
 				// Remove the comment.
-				this.crawler.Comments.Videos.RemoveComment(comment);
+				this.comments.RemoveComment(comment);
 				// Remove the item.
 				this.listView.Items.Remove(item);
 			}
@@ -119,10 +128,10 @@ namespace YtAnalytics.Controls
 			try
 			{
 				// Add the comment to the comments list.
-				this.crawler.Comments.Videos.AddComment(comment);
+				this.comments.AddComment(comment);
 
 				// Add a new list view item.
-				ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Video, comment.User, comment.Text }, 0);
+				ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Item, comment.User, comment.Text }, 0);
 				item.Tag = comment;
 				this.listView.Items.Add(item);
 
@@ -149,7 +158,7 @@ namespace YtAnalytics.Controls
 			{
 				this.buttonRemove.Enabled = true;
 				this.buttonView.Enabled = true;
-				this.controlComment.Comment = this.listView.SelectedItems[0].Tag as CommentVideo;
+				this.controlComment.Comment = this.listView.SelectedItems[0].Tag as Comment;
 			}
 			else
 			{
@@ -189,7 +198,7 @@ namespace YtAnalytics.Controls
 			if (this.listView.SelectedItems.Count == 0) return;
 
 			// Open a dialog with the selected comment.
-			this.formComment.ShowDialog(this, this.listView.SelectedItems[0].Tag as CommentVideo);
+			this.formComment.ShowDialog(this, this.listView.SelectedItems[0].Tag as Comment);
 		}
 
 		/// <summary>
@@ -207,15 +216,15 @@ namespace YtAnalytics.Controls
 					int countAdded;
 					int countIgnored;
 					// Try import the comments.
-					ICollection<CommentVideo> comments = this.crawler.Comments.Videos.Import(this.openFileDialog.FileName, out countAdded, out countIgnored);
+					ICollection<Comment> comments = this.comments.Import(this.openFileDialog.FileName, out countAdded, out countIgnored);
 					// Add the comments to the list.
 					if (null != comments)
 					{
 						// Populate the comments list.
-						foreach (CommentVideo comment in comments)
+						foreach (Comment comment in comments)
 						{
 							// Add a new list view item.
-							ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Video, comment.User, comment.Text }, 0);
+							ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Item, comment.User, comment.Text }, 0);
 							item.Tag = comment;
 							this.listView.Items.Add(item);
 						}
@@ -251,7 +260,7 @@ namespace YtAnalytics.Controls
 			if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
 			{
 				// Save the comments.
-				this.crawler.Comments.Videos.Save(this.saveFileDialog.FileName);
+				this.comments.Save(this.saveFileDialog.FileName);
 			}
 		}
 	}

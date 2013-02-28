@@ -12,6 +12,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using YtAnalytics.Forms;
 using YtApi.Ajax;
 using YtCrawler;
+using YtCrawler.Comments;
 using YtCrawler.Log;
 
 namespace YtAnalytics.Controls
@@ -46,7 +47,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentEventHandler Comment;
+		public event AddCommentItemEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control.

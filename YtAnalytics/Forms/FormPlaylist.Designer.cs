@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Forms
 {
-	partial class FormComment
+	partial class FormPlaylist
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlComment();
+			this.controlPlaylist = new YtAnalytics.Controls.ControlPlaylist();
 			this.SuspendLayout();
 			// 
 			// buttonClose
@@ -43,30 +43,33 @@
 			this.buttonClose.Text = "Close";
 			this.buttonClose.UseVisualStyleBackColor = true;
 			// 
-			// control
+			// controlPlaylist
 			// 
-			this.control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.controlPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.control.Comment = null;
-			this.control.Location = new System.Drawing.Point(12, 0);
-			this.control.Name = "control";
-			this.control.Size = new System.Drawing.Size(360, 371);
-			this.control.TabIndex = 2;
+			this.controlPlaylist.AutoScroll = true;
+			this.controlPlaylist.Location = new System.Drawing.Point(12, 12);
+			this.controlPlaylist.Name = "controlPlaylist";
+			this.controlPlaylist.Playlist = null;
+			this.controlPlaylist.Size = new System.Drawing.Size(360, 359);
+			this.controlPlaylist.TabIndex = 2;
 			// 
-			// FormComment
+			// FormPlaylist
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.buttonClose;
 			this.ClientSize = new System.Drawing.Size(384, 412);
-			this.Controls.Add(this.control);
+			this.Controls.Add(this.controlPlaylist);
 			this.Controls.Add(this.buttonClose);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "FormComment";
+			this.Name = "FormPlaylist";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.Text = "Comment";
+			this.Text = "Playlist";
 			this.ResumeLayout(false);
 
 		}
@@ -74,7 +77,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private Controls.ControlComment control;
+		private Controls.ControlPlaylist controlPlaylist;
 
 	}
 }

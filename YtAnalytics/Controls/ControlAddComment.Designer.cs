@@ -31,11 +31,11 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.textBoxText = new System.Windows.Forms.TextBox();
-			this.textBoxUser = new System.Windows.Forms.TextBox();
-			this.textBoxObject = new System.Windows.Forms.TextBox();
+			this.textBoxCommenter = new System.Windows.Forms.TextBox();
+			this.textBoxItem = new System.Windows.Forms.TextBox();
 			this.labelText = new System.Windows.Forms.Label();
-			this.labelUser = new System.Windows.Forms.Label();
-			this.labelObject = new System.Windows.Forms.Label();
+			this.labelCommenter = new System.Windows.Forms.Label();
+			this.labelItem = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -72,25 +72,25 @@
 			this.textBoxText.TabIndex = 6;
 			this.textBoxText.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
-			// textBoxUser
+			// textBoxCommenter
 			// 
-			this.textBoxUser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.textBoxCommenter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxUser.Location = new System.Drawing.Point(99, 100);
-			this.textBoxUser.Name = "textBoxUser";
-			this.textBoxUser.Size = new System.Drawing.Size(270, 20);
-			this.textBoxUser.TabIndex = 4;
-			this.textBoxUser.TextChanged += new System.EventHandler(this.OnInputChanged);
+			this.textBoxCommenter.Location = new System.Drawing.Point(99, 100);
+			this.textBoxCommenter.Name = "textBoxCommenter";
+			this.textBoxCommenter.Size = new System.Drawing.Size(270, 20);
+			this.textBoxCommenter.TabIndex = 4;
+			this.textBoxCommenter.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
-			// textBoxObject
+			// textBoxItem
 			// 
-			this.textBoxObject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.textBoxItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxObject.Location = new System.Drawing.Point(99, 74);
-			this.textBoxObject.Name = "textBoxObject";
-			this.textBoxObject.Size = new System.Drawing.Size(270, 20);
-			this.textBoxObject.TabIndex = 2;
-			this.textBoxObject.TextChanged += new System.EventHandler(this.OnInputChanged);
+			this.textBoxItem.Location = new System.Drawing.Point(99, 74);
+			this.textBoxItem.Name = "textBoxItem";
+			this.textBoxItem.Size = new System.Drawing.Size(270, 20);
+			this.textBoxItem.TabIndex = 2;
+			this.textBoxItem.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// labelText
 			// 
@@ -101,34 +101,34 @@
 			this.labelText.TabIndex = 5;
 			this.labelText.Text = "&Text:";
 			// 
-			// labelUser
+			// labelCommenter
 			// 
-			this.labelUser.AutoSize = true;
-			this.labelUser.Location = new System.Drawing.Point(17, 103);
-			this.labelUser.Name = "labelUser";
-			this.labelUser.Size = new System.Drawing.Size(32, 13);
-			this.labelUser.TabIndex = 3;
-			this.labelUser.Text = "&User:";
+			this.labelCommenter.AutoSize = true;
+			this.labelCommenter.Location = new System.Drawing.Point(17, 103);
+			this.labelCommenter.Name = "labelCommenter";
+			this.labelCommenter.Size = new System.Drawing.Size(63, 13);
+			this.labelCommenter.TabIndex = 3;
+			this.labelCommenter.Text = "&Commenter:";
 			// 
-			// labelObject
+			// labelItem
 			// 
-			this.labelObject.AutoSize = true;
-			this.labelObject.Location = new System.Drawing.Point(17, 77);
-			this.labelObject.Name = "labelObject";
-			this.labelObject.Size = new System.Drawing.Size(41, 13);
-			this.labelObject.TabIndex = 1;
-			this.labelObject.Text = "&Object:";
+			this.labelItem.AutoSize = true;
+			this.labelItem.Location = new System.Drawing.Point(17, 77);
+			this.labelItem.Name = "labelItem";
+			this.labelItem.Size = new System.Drawing.Size(30, 13);
+			this.labelItem.TabIndex = 1;
+			this.labelItem.Text = "&Item:";
 			// 
 			// ControlAddComment
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.textBoxText);
-			this.Controls.Add(this.textBoxUser);
-			this.Controls.Add(this.textBoxObject);
+			this.Controls.Add(this.textBoxCommenter);
+			this.Controls.Add(this.textBoxItem);
 			this.Controls.Add(this.labelText);
-			this.Controls.Add(this.labelUser);
-			this.Controls.Add(this.labelObject);
+			this.Controls.Add(this.labelCommenter);
+			this.Controls.Add(this.labelItem);
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox1);
 			this.Name = "ControlAddComment";
@@ -144,10 +144,10 @@
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label labelTitle;
 		private System.Windows.Forms.TextBox textBoxText;
-		private System.Windows.Forms.TextBox textBoxUser;
-		private System.Windows.Forms.TextBox textBoxObject;
+		private System.Windows.Forms.TextBox textBoxCommenter;
+		private System.Windows.Forms.TextBox textBoxItem;
 		private System.Windows.Forms.Label labelText;
-		private System.Windows.Forms.Label labelUser;
-		private System.Windows.Forms.Label labelObject;
+		private System.Windows.Forms.Label labelCommenter;
+		private System.Windows.Forms.Label labelItem;
 	}
 }

@@ -65,22 +65,31 @@ namespace YtAnalytics.Controls
 					this.textBoxUser.Text = value.User;
 					this.textBoxGuid.Text = value.Guid.ToString();
 					this.textBoxText.Text = value.Text;
+					this.textBoxObject.Text = value.Item;
 					this.tabControl.Visible = true;
 
-					if (value.GetType() == typeof(CommentVideo))
+					switch (value.Type)
 					{
-						CommentVideo comment = value as CommentVideo;
-						this.labelTitle.Text = string.Format("Comment for video {0}", comment.Video);
-						this.labelObject.Text = "&Video:";
-						this.textBoxObject.Text = comment.Video;
-						this.pictureBox.Image = Resources.CommentVideo_32;
-					}
-					else
-					{
-						this.labelTitle.Text = string.Format("Comment");
-						this.labelObject.Text = "&Object:";
-						this.textBoxObject.Text = string.Empty;
-						this.pictureBox.Image = Resources.Comment_32;
+						case Comment.CommentType.Video:
+							this.labelTitle.Text = string.Format("Comment for video {0}", value.Item);
+							this.labelObject.Text = "&Video:";
+							this.pictureBox.Image = Resources.CommentVideo_32;
+							break;
+						case Comment.CommentType.User:
+							this.labelTitle.Text = string.Format("Comment for user {0}", value.Item);
+							this.labelObject.Text = "&User:";
+							this.pictureBox.Image = Resources.CommentUser_32;
+							break;
+						case Comment.CommentType.Playlist:
+							this.labelTitle.Text = string.Format("Comment for playlist {0}", value.Item);
+							this.labelObject.Text = "&Playlist:";
+							this.pictureBox.Image = Resources.CommentPlay_32;
+							break;
+						default:
+							this.labelTitle.Text = string.Format("Comment for item {0}", value.Item);
+							this.labelObject.Text = "&Item:";
+							this.pictureBox.Image = Resources.Comment_32;
+							break;
 					}
 				}
 				this.comment = value;

@@ -343,6 +343,46 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CommentPlay_16 {
+            get {
+                object obj = ResourceManager.GetObject("CommentPlay_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommentPlay_24 {
+            get {
+                object obj = ResourceManager.GetObject("CommentPlay_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommentPlay_32 {
+            get {
+                object obj = ResourceManager.GetObject("CommentPlay_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommentPlay_48 {
+            get {
+                object obj = ResourceManager.GetObject("CommentPlay_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CommentRemove_16 {
             get {
                 object obj = ResourceManager.GetObject("CommentRemove_16", resourceCulture);
@@ -416,6 +456,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap Comments_48 {
             get {
                 object obj = ResourceManager.GetObject("Comments_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommentUser_16 {
+            get {
+                object obj = ResourceManager.GetObject("CommentUser_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommentUser_24 {
+            get {
+                object obj = ResourceManager.GetObject("CommentUser_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommentUser_32 {
+            get {
+                object obj = ResourceManager.GetObject("CommentUser_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommentUser_48 {
+            get {
+                object obj = ResourceManager.GetObject("CommentUser_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

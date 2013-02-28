@@ -67,7 +67,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event raised when the user selects the view profile.
 		/// </summary>
-		public event ViewProfileIdEventHandler ViewProfile;
+		public event ViewIdEventHandler ViewProfile;
 
 		/// <summary>
 		/// Gets or sets the current video object.

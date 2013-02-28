@@ -37,8 +37,6 @@ namespace YtAnalytics.Controls
 {
 	public delegate void ViewProfileEventHandler(Profile profile);
 
-	public delegate void ViewProfileIdEventHandler(string id);
-
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
@@ -78,7 +76,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentEventHandler Comment;
+		public event AddCommentItemEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control with a crawler instance.
@@ -296,7 +294,7 @@ namespace YtAnalytics.Controls
 			if (null == this.controlProfile.Profile) return;
 			if (null == this.controlProfile.Profile.Username) return;
 			// Open the user link in the browser.
-			Process.Start(YouTubeUri.GetYouTubeVideoLink(this.controlProfile.Profile.Username.Id));
+			Process.Start(YouTubeUri.GetYouTubeUserLink(this.controlProfile.Profile.Username.Id));
 		}
 
 		/// <summary>

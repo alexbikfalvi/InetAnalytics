@@ -26,7 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtAnalytics.Controls;
-using YtApi.Api.V2.Data;
+using YtCrawler.Comments;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms
@@ -39,6 +39,8 @@ namespace YtAnalytics.Forms
 		// UI formatter.
 		private Formatting formatting = new Formatting();
 
+		private Comment.CommentType type;
+
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
@@ -48,6 +50,25 @@ namespace YtAnalytics.Forms
 
 			// Set the font.
 			this.formatting.SetFont(this);
+		}
+
+		/// <summary>
+		/// Gets or sets the comment type.
+		/// </summary>
+		public Comment.CommentType CommentType
+		{
+			get { return this.type; }
+			set
+			{
+				switch (value)
+				{
+					case Comment.CommentType.Video: this.Text = "Add Video Comment"; break;
+					case Comment.CommentType.User: this.Text = "Add User Comment"; break;
+					case Comment.CommentType.Playlist: this.Text = "Add Playlist Comment"; break;
+				}
+				this.control.Type = value;
+				this.type = value;
+			}
 		}
 
 		/// <summary>
@@ -63,7 +84,7 @@ namespace YtAnalytics.Forms
 		/// <param name="user">The user.</param>
 		public void ShowDialog(IWin32Window owner, string obj, string user)
 		{
-			this.control.Object = obj;
+			this.control.Item = obj;
 			this.control.User = user;
 			this.control.Text = string.Empty;
 			base.ShowDialog(owner);
@@ -77,7 +98,9 @@ namespace YtAnalytics.Forms
 		private void OnAddClick(object sender, EventArgs e)
 		{
 			// Raise the add event.
-			if (this.CommentAdded != null) this.CommentAdded(this.control.Object, this.control.User, this.control.Text);
+			if (this.CommentAdded != null) this.CommentAdded(
+				new Comment(this.CommentType, DateTime.Now, this.control.Item, this.control.User, this.control.Text)
+				);
 			// Close the dialog.
 			this.Close();
 		}
@@ -90,7 +113,7 @@ namespace YtAnalytics.Forms
 		private void OnInputChanged(object sender, EventArgs e)
 		{
 			this.buttonAdd.Enabled =
-				(this.control.Object != string.Empty) &&
+				(this.control.Item != string.Empty) &&
 				(this.control.User != string.Empty) &&
 				(this.control.Text != string.Empty);
 		}

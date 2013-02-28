@@ -50,17 +50,18 @@
 			this.labelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelTitle.AutoEllipsis = true;
-			this.labelTitle.Location = new System.Drawing.Point(48, 10);
+			this.labelTitle.Location = new System.Drawing.Point(64, 10);
 			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(249, 32);
+			this.labelTitle.Size = new System.Drawing.Size(233, 48);
 			this.labelTitle.TabIndex = 0;
 			this.labelTitle.Text = "No playlist selected";
+			this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// textBoxPublished
 			// 
 			this.textBoxPublished.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPublished.Location = new System.Drawing.Point(84, 72);
+			this.textBoxPublished.Location = new System.Drawing.Point(84, 87);
 			this.textBoxPublished.Name = "textBoxPublished";
 			this.textBoxPublished.ReadOnly = true;
 			this.textBoxPublished.Size = new System.Drawing.Size(213, 20);
@@ -69,7 +70,7 @@
 			// labelPublished
 			// 
 			this.labelPublished.AutoSize = true;
-			this.labelPublished.Location = new System.Drawing.Point(10, 75);
+			this.labelPublished.Location = new System.Drawing.Point(10, 90);
 			this.labelPublished.Name = "labelPublished";
 			this.labelPublished.Size = new System.Drawing.Size(56, 13);
 			this.labelPublished.TabIndex = 3;
@@ -79,7 +80,7 @@
 			// 
 			this.textBoxUpdated.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxUpdated.Location = new System.Drawing.Point(84, 98);
+			this.textBoxUpdated.Location = new System.Drawing.Point(84, 113);
 			this.textBoxUpdated.Name = "textBoxUpdated";
 			this.textBoxUpdated.ReadOnly = true;
 			this.textBoxUpdated.Size = new System.Drawing.Size(213, 20);
@@ -88,7 +89,7 @@
 			// labelUpdated
 			// 
 			this.labelUpdated.AutoSize = true;
-			this.labelUpdated.Location = new System.Drawing.Point(10, 101);
+			this.labelUpdated.Location = new System.Drawing.Point(10, 116);
 			this.labelUpdated.Name = "labelUpdated";
 			this.labelUpdated.Size = new System.Drawing.Size(51, 13);
 			this.labelUpdated.TabIndex = 5;
@@ -98,7 +99,7 @@
 			// 
 			this.textBoxAuthor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxAuthor.Location = new System.Drawing.Point(84, 124);
+			this.textBoxAuthor.Location = new System.Drawing.Point(84, 139);
 			this.textBoxAuthor.Name = "textBoxAuthor";
 			this.textBoxAuthor.ReadOnly = true;
 			this.textBoxAuthor.Size = new System.Drawing.Size(213, 20);
@@ -107,7 +108,7 @@
 			// labelAuthor
 			// 
 			this.labelAuthor.AutoSize = true;
-			this.labelAuthor.Location = new System.Drawing.Point(10, 127);
+			this.labelAuthor.Location = new System.Drawing.Point(10, 142);
 			this.labelAuthor.Name = "labelAuthor";
 			this.labelAuthor.Size = new System.Drawing.Size(41, 13);
 			this.labelAuthor.TabIndex = 7;
@@ -115,10 +116,10 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::YtAnalytics.Resources.FilePlay_32;
+			this.pictureBox.Image = global::YtAnalytics.Resources.FilePlay_48;
 			this.pictureBox.Location = new System.Drawing.Point(10, 10);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(32, 32);
+			this.pictureBox.Size = new System.Drawing.Size(48, 48);
 			this.pictureBox.TabIndex = 2;
 			this.pictureBox.TabStop = false;
 			// 
@@ -126,7 +127,7 @@
 			// 
 			this.textBoxId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxId.Location = new System.Drawing.Point(84, 46);
+			this.textBoxId.Location = new System.Drawing.Point(84, 61);
 			this.textBoxId.Name = "textBoxId";
 			this.textBoxId.ReadOnly = true;
 			this.textBoxId.Size = new System.Drawing.Size(213, 20);
@@ -135,7 +136,7 @@
 			// labelId
 			// 
 			this.labelId.AutoSize = true;
-			this.labelId.Location = new System.Drawing.Point(10, 49);
+			this.labelId.Location = new System.Drawing.Point(10, 64);
 			this.labelId.Name = "labelId";
 			this.labelId.Size = new System.Drawing.Size(21, 13);
 			this.labelId.TabIndex = 1;
@@ -145,7 +146,7 @@
 			// 
 			this.textBoxSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxSummary.Location = new System.Drawing.Point(84, 150);
+			this.textBoxSummary.Location = new System.Drawing.Point(84, 165);
 			this.textBoxSummary.Name = "textBoxSummary";
 			this.textBoxSummary.ReadOnly = true;
 			this.textBoxSummary.Size = new System.Drawing.Size(213, 20);
@@ -154,7 +155,7 @@
 			// labelSummary
 			// 
 			this.labelSummary.AutoSize = true;
-			this.labelSummary.Location = new System.Drawing.Point(10, 153);
+			this.labelSummary.Location = new System.Drawing.Point(10, 168);
 			this.labelSummary.Name = "labelSummary";
 			this.labelSummary.Size = new System.Drawing.Size(53, 13);
 			this.labelSummary.TabIndex = 9;
@@ -164,7 +165,7 @@
 			// 
 			this.textBoxCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxCount.Location = new System.Drawing.Point(84, 176);
+			this.textBoxCount.Location = new System.Drawing.Point(84, 191);
 			this.textBoxCount.Name = "textBoxCount";
 			this.textBoxCount.ReadOnly = true;
 			this.textBoxCount.Size = new System.Drawing.Size(213, 20);
@@ -173,7 +174,7 @@
 			// labelCount
 			// 
 			this.labelCount.AutoSize = true;
-			this.labelCount.Location = new System.Drawing.Point(10, 179);
+			this.labelCount.Location = new System.Drawing.Point(10, 194);
 			this.labelCount.Name = "labelCount";
 			this.labelCount.Size = new System.Drawing.Size(58, 13);
 			this.labelCount.TabIndex = 11;

@@ -131,6 +131,44 @@ namespace YtCrawler
 		}
 
 		/// <summary>
+		/// Gets or sets the users comments file name.
+		/// </summary>
+		public string CommentsUsersFileName
+		{
+			get
+			{
+				try
+				{
+					string value;
+					return null != (value = Registry.GetValue(this.root + "\\Comments", "UsersFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Users.xml") as string)
+						? value
+						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Users.xml";
+				}
+				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Users.xml"; }
+			}
+			set { Registry.SetValue(this.root + "\\Comments", "UsersFileName", value, RegistryValueKind.String); }
+		}
+
+		/// <summary>
+		/// Gets or sets the playlists comments file name.
+		/// </summary>
+		public string CommentsPlaylistsFileName
+		{
+			get
+			{
+				try
+				{
+					string value;
+					return null != (value = Registry.GetValue(this.root + "\\Comments", "PlaylistsFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Playlists.xml") as string)
+						? value
+						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Playlists.xml";
+				}
+				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Playlists.xml"; }
+			}
+			set { Registry.SetValue(this.root + "\\Comments", "PlaylistsFileName", value, RegistryValueKind.String); }
+		}
+
+		/// <summary>
 		/// Gets or sets the delay to display a user message, after the operation generating the message has completed.
 		/// </summary>
 		public TimeSpan MessageCloseDelay
