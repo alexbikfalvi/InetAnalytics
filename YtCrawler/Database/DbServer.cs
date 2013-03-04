@@ -17,13 +17,148 @@
  */
 
 using System;
+using System.Data;
+using Microsoft.Win32;
 
 namespace YtCrawler.Database
 {
 	/// <summary>
 	/// A class representing a database server.
 	/// </summary>
-	public sealed class DbServer
+	public abstract class DbServer
 	{
+		private string key;
+
+		private string id;
+		private string name;
+		private string dataSource;
+		private string username;
+		private string password;
+		private bool primary = false;
+
+		/// <summary>
+		/// Creates a database server with the specified name and configuration.
+		/// </summary>
+		/// <param name="key">The registry configuration key.</param>
+		/// <param name="id">The server ID.</param>
+		public DbServer(string key, string id)
+		{
+			// Set the server ID.
+			this.id = id;
+
+			// Set the root registry key for this server.
+			this.key = key;
+
+			// Load the current configuration.
+			this.LoadConfiguration();
+		}
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets the ID of the current database server.
+		/// </summary>
+		public string Id { get { return this.id; } }
+
+		/// <summary>
+		/// Gets or sets the server name.
+		/// </summary>
+		public string Name
+		{
+			get { return this.name; }
+			set { this.name = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the server data source.
+		/// </summary>
+		public string DataSource
+		{
+			get { return this.dataSource; }
+			set { this.dataSource = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the server username.
+		/// </summary>
+		public string Username
+		{
+			get { return this.username; }
+			set { this.username = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the server password.
+		/// </summary>
+		public string Password
+		{
+			get { return this.password; }
+			set { this.password = value; }
+		}
+
+		/// <summary>
+		/// Gets whether the server is primary.
+		/// </summary>
+		public bool IsPrimary { get { return this.primary; } }
+
+		/// <summary>
+		/// Gets the server connection.
+		/// </summary>
+		public abstract ConnectionState ConnectionState { get; }
+
+		// Public events.
+
+		/// <summary>
+		/// An event raised when the server connection state has changed.
+		/// </summary>
+		public event StateChangeEventHandler ConnectionStateChanged;
+
+		/// <summary>
+		/// Saves the current server configuration to the registry.
+		/// </summary>
+		public void SaveConfiguration()
+		{
+			Registry.SetValue(this.key, "Name", this.name, RegistryValueKind.String);
+			Registry.SetValue(this.key, "DataSource", this.dataSource, RegistryValueKind.String);
+			Registry.SetValue(this.key, "Username", this.username, RegistryValueKind.String);
+			Registry.SetValue(this.key, "Password", CrawlerCrypto.Encrypt(this.password), RegistryValueKind.Binary);
+		}
+
+		/// <summary>
+		/// Discards the current server configuration and loads the previous one from the registry.
+		/// </summary>
+		public void DiscardConfiguration()
+		{
+			this.LoadConfiguration();
+		}
+		
+		/// <summary>
+		/// Opens the connection to the database server.
+		/// </summary>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="state">The user state.</param>
+		/// <returns>The asynchronous state.</returns>
+		public abstract DbServerAsyncState Open(DbServerCallback callback, object state = null);
+
+		/// <summary>
+		/// Reopens the connection to the database server.
+		/// </summary>
+		public abstract void Reopen();
+
+		/// <summary>
+		/// Closes the connection to the database server.
+		/// </summary>
+		public abstract void Close();
+
+		/// <summary>
+		/// Loads the current server configuration from the registry.
+		/// </summary>
+		private void LoadConfiguration()
+		{
+			this.name = Registry.GetValue(this.key, "Name", null) as string;
+			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
+			this.username = Registry.GetValue(this.key, "Username", null) as string;
+			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
+		}
 	}
 }

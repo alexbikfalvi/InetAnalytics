@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.Win32;
 
 namespace YtCrawler.Database
 {
@@ -26,9 +27,15 @@ namespace YtCrawler.Database
 	/// </summary>
 	public sealed class DbServers
 	{
+		public enum DbServerType
+		{
+			Unknown = 0,
+			MsSql = 1
+		};
+
 		private CrawlerConfig config;
 
-		private List<DbServer> server = new List<DbServer>();
+		private Dictionary<string, DbServer> servers = new Dictionary<string, DbServer>();
 		private DbServer primary = null;
 
 		/// <summary>
@@ -37,7 +44,46 @@ namespace YtCrawler.Database
 		/// <param name="config">The crawler configuration.</param>
 		public DbServers(CrawlerConfig config)
 		{
+			// Save the configuration.
 			this.config = config;
+
+			// Get the ID of the primary database server.
+			string primaryId = Registry.GetValue(this.config.DatabaseConfig.Key, "Primary", null) as string;
+
+			// Create the servers list.
+			foreach (string id in this.config.DatabaseConfig.Servers)
+			{
+				// Try to create the database server.
+				try
+				{
+					// Compute the server configuration registry key.
+					string key = string.Format("{0}\\{1}", config.DatabaseConfig.Key, id);
+					// Get the database server type.
+					DbServerType type = (DbServerType)(Registry.GetValue(key, "Type", 0));
+					// Create a server instance for the specified configuration.
+					DbServer server;
+
+					switch (type)
+					{
+						case DbServerType.MsSql:
+							server = new DbServerMsSql(key, id);
+							break;
+						default: continue;
+					}
+					// Add the database server to the dictionary.
+					this.servers.Add(id, server);
+					// If this is the primary server, set the primary.
+					if (primaryId == id)
+					{
+						this.primary = server;
+					}
+				}
+				catch (Exception)
+				{
+					// If any exception occurs, remove the server configuration.
+					config.DatabaseConfig.Remove(id);
+				}
+			}
 		}
 	}
 }

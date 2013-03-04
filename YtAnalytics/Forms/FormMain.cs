@@ -28,6 +28,7 @@ using YtApi.Api.V2.Data;
 using YtCrawler;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
+using Microsoft.Win32;
 
 namespace YtAnalytics.Forms
 {
@@ -120,7 +121,7 @@ namespace YtAnalytics.Forms
 			InitializeComponent();
 
 			// Initialize the crawler
-			this.crawler = new Crawler("HKEY_CURRENT_USER\\Software\\Alex Bikfalvi\\YtAnalytics");
+			this.crawler = new Crawler(Registry.CurrentUser, "Software\\Alex Bikfalvi\\YtAnalytics");
 
 			// Create the tree view items.
 			this.treeNodeBrowserApi2VideoComments = new TreeNode("Comments",

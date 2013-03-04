@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YtApi.Api.V2;
 using YtCrawler.Log;
+using Microsoft.Win32;
 
 namespace YtCrawler
 {
@@ -37,11 +38,12 @@ namespace YtCrawler
 		/// <summary>
 		/// Creates a new crawer global object, based on a configuration from the specified root registry key.
 		/// </summary>
-		/// <param name="root"></param>
-		public Crawler(string root)
+		/// <param name="rootKey">The root registry key.</param>
+		/// <param name="rootPath">The root registry path.</param>
+		public Crawler(RegistryKey rootKey, string rootPath)
 		{
 			// Read the crawler configuration
-			this.config = new CrawlerConfig(root);
+			this.config = new CrawlerConfig(rootKey, rootPath);
 
 			// Create the YouTube settings
 			this.settings = new YouTubeSettings(this.Config.YouTubeV2ApiKey);

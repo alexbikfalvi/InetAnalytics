@@ -17,11 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Win32;
+using YtCrawler.Database;
 
 namespace YtCrawler
 {
@@ -30,15 +27,23 @@ namespace YtCrawler
 	/// </summary>
 	public class CrawlerConfig
 	{
-		private string root = null;
+		private RegistryKey rootKey;
+		private string rootPath;
+		private string root;
+		private DbConfig dbConfig;
 
 		/// <summary>
 		/// Creates a new crawler configuration based on the specified root registry key.
 		/// </summary>
-		/// <param name="root">The root key. </param>
-		public CrawlerConfig(string root)
+		/// <param name="rootKey">The root registry key.</param>
+		/// <param name="rootPath">The root registry path.</param>
+		public CrawlerConfig(RegistryKey rootKey, string rootPath)
 		{
-			this.root = root;
+			this.rootKey = rootKey;
+			this.rootPath = rootPath;
+			this.root = string.Format("{0}\\{1}", this.rootKey.Name, this.rootPath);
+
+			this.dbConfig = new DbConfig(this.rootKey.OpenSubKey(this.rootPath + "\\Database", RegistryKeyPermissionCheck.ReadWriteSubTree));
 		}
 
 		/// <summary>
@@ -184,5 +189,10 @@ namespace YtCrawler
 			}
 			set { Registry.SetValue(this.root + "\\Console", "MessageCloseDelay", value, RegistryValueKind.DWord); }
 		}
+
+		/// <summary>
+		/// Gets the database configuration.
+		/// </summary>
+		public DbConfig DatabaseConfig { get { return this.dbConfig; } }
 	}
 }

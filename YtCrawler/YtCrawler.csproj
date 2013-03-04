@@ -45,7 +45,11 @@
     <Compile Include="Comments\Comment.cs" />
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\CommentsList.cs" />
+    <Compile Include="CrawlerException.cs" />
+    <Compile Include="Database\DbConfig.cs" />
     <Compile Include="Database\DbServer.cs" />
+    <Compile Include="Database\DbServerAsyncState.cs" />
+    <Compile Include="Database\DbServerMsSql.cs" />
     <Compile Include="Database\DbServers.cs" />
     <Compile Include="Log\LogEvent.cs" />
     <Compile Include="Log\LogException.cs" />
