@@ -21,7 +21,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using YtAnalytics.Forms;
+using YtCrawler;
 
 namespace YtAnalytics
 {
@@ -37,7 +39,10 @@ namespace YtAnalytics
 			Application.SetCompatibleTextRenderingDefault(false);
 			try
 			{
-				Application.Run(new FormMain());
+				using (Crawler crawler = new Crawler(Registry.CurrentUser, "Software\\Alex Bikfalvi\\YtAnalytics"))
+				{
+					Application.Run(new FormMain(crawler));
+				}
 			}
 			catch (Exception exception)
 			{

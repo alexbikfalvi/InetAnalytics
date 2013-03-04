@@ -351,7 +351,6 @@
 			this.Name = "FormMain";
 			this.Text = "YouTube Analytics";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
 			this.toolStripContainer.BottomToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer.BottomToolStripPanel.PerformLayout();
 			this.toolStripContainer.ContentPanel.ResumeLayout(false);

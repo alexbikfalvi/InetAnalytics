@@ -116,12 +116,12 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// Constructor for main form window.
 		/// </summary>
-		public FormMain()
+		public FormMain(Crawler crawler)
 		{
 			InitializeComponent();
 
 			// Initialize the crawler
-			this.crawler = new Crawler(Registry.CurrentUser, "Software\\Alex Bikfalvi\\YtAnalytics");
+			this.crawler = crawler;
 
 			// Create the tree view items.
 			this.treeNodeBrowserApi2VideoComments = new TreeNode("Comments",
@@ -739,17 +739,6 @@ namespace YtAnalytics.Forms
 		private void OpenAboutForm(object sender, EventArgs e)
 		{
 			this.formAbout.ShowDialog(this);
-		}
-
-		/// <summary>
-		/// An event handler called when the main form has been closed.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnFormClosed(object sender, FormClosedEventArgs e)
-		{
-			// Close the crawler.
-			this.crawler.Close();
 		}
 
 		/// <summary>

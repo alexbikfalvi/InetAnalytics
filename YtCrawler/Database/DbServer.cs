@@ -25,7 +25,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing a database server.
 	/// </summary>
-	public abstract class DbServer
+	public abstract class DbServer : IDisposable
 	{
 		private string key;
 
@@ -136,19 +136,25 @@ namespace YtCrawler.Database
 		/// Opens the connection to the database server.
 		/// </summary>
 		/// <param name="callback">The callback method.</param>
-		/// <param name="state">The user state.</param>
-		/// <returns>The asynchronous state.</returns>
-		public abstract DbServerAsyncState Open(DbServerCallback callback, object state = null);
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public abstract IAsyncResult Open(DbServerCallback callback, object userState = null);
 
 		/// <summary>
 		/// Reopens the connection to the database server.
 		/// </summary>
-		public abstract void Reopen();
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public abstract IAsyncResult Reopen(DbServerCallback callback, object userState = null);
 
 		/// <summary>
 		/// Closes the connection to the database server.
 		/// </summary>
-		public abstract void Close();
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public abstract IAsyncResult Close(DbServerCallback callback, object userState = null);
 
 		/// <summary>
 		/// Loads the current server configuration from the registry.
@@ -159,6 +165,17 @@ namespace YtCrawler.Database
 			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
 			this.username = Registry.GetValue(this.key, "Username", null) as string;
 			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
+		}
+
+		/// <summary>
+		/// An event handler called when the state of the connection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		protected void OnConnectionStateChanged(object sender, StateChangeEventArgs e)
+		{
+			// Call the event.
+			if (this.ConnectionStateChanged != null) this.ConnectionStateChanged(sender, e);
 		}
 	}
 }

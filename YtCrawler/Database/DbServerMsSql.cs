@@ -41,6 +41,9 @@ namespace YtCrawler.Database
 		{
 			// Initialize the server with the current configuration.
 			this.Initialize();
+
+			// Set the connection event handlers.
+			this.connection.StateChange += this.OnConnectionStateChanged;
 		}
 
 		// Public properties.
@@ -60,7 +63,6 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
-		/// <returns>The asynchronous state.</returns>
 		public override void Open(DbServerCallback callback, object userState = null)
 		{
 			// Create a new asynchrounous state for this operation.
@@ -88,18 +90,61 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Reopens the connection to the database server.
 		/// </summary>
-
-		public override void Reopen()
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		public override void Reopen(DbServerCallback callback, object userState = null)
 		{
-			throw new NotImplementedException();
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
+			// Begin open the connection asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				// Execute asynchronously on the thread pool.
+				try
+				{
+					// Close the database connection.
+					this.connection.Close();
+					// Open the database connection.
+					this.connection.Open();
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, set the callback exception.
+					asyncState.Exception = exception;
+				}
+				// Call the callback method with the given state, catch all exceptions.
+				try { callback(asyncState); }
+				catch (Exception) { }
+			});
 		}
 
 		/// <summary>
 		/// Closes the connection to the database server.
 		/// </summary>
-		public override void Close()
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		public override void Close(DbServerCallback callback, object userState = null)
 		{
-			throw new NotImplementedException();
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
+			// Begin open the connection asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				// Execute asynchronously on the thread pool.
+				try
+				{
+					// Close the database connection.
+					this.connection.Close();
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, set the callback exception.
+					asyncState.Exception = exception;
+				}
+				// Call the callback method with the given state, catch all exceptions.
+				try { callback(asyncState); }
+				catch (Exception) { }
+			});
 		}
 
 		/// <summary>
@@ -115,6 +160,17 @@ namespace YtCrawler.Database
 
 			// Set the connection for the connection string.
 			this.connection.ConnectionString = this.connection.ConnectionString;
+		}
+
+		/// <summary>
+		/// An event handler called when the state of the connection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private new void OnConnectionStateChanged(object sender, StateChangeEventArgs e)
+		{
+			// Call the base class event handler.
+			base.OnConnectionStateChanged(sender, e);
 		}
 	}
 }

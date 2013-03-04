@@ -25,7 +25,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing the list of database servers.
 	/// </summary>
-	public sealed class DbServers
+	public sealed class DbServers : IDisposable
 	{
 		public enum DbServerType
 		{
@@ -83,6 +83,17 @@ namespace YtCrawler.Database
 					// If any exception occurs, remove the server configuration.
 					config.DatabaseConfig.Remove(id);
 				}
+			}
+		}
+
+		/// <summary>
+		/// Closes the database servers.
+		/// </summary>
+		public void Dispose()
+		{
+			foreach (KeyValuePair<string, DbServer> pair in this.servers)
+			{
+				pair.Value.D
 			}
 		}
 	}

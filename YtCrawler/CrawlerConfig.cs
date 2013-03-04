@@ -43,7 +43,13 @@ namespace YtCrawler
 			this.rootPath = rootPath;
 			this.root = string.Format("{0}\\{1}", this.rootKey.Name, this.rootPath);
 
-			this.dbConfig = new DbConfig(this.rootKey.OpenSubKey(this.rootPath + "\\Database", RegistryKeyPermissionCheck.ReadWriteSubTree));
+			RegistryKey dbKey;
+			if(null == (dbKey = this.rootKey.OpenSubKey(this.rootPath + "\\Database", RegistryKeyPermissionCheck.ReadWriteSubTree)))
+			{
+				dbKey = this.rootKey.CreateSubKey(this.rootPath + "\\Database", RegistryKeyPermissionCheck.ReadWriteSubTree);
+			}
+
+			this.dbConfig = new DbConfig(dbKey);
 		}
 
 		/// <summary>

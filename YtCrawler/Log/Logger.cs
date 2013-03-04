@@ -27,7 +27,7 @@ using System.Xml.Linq;
 
 namespace YtCrawler.Log
 {
-	public class Logger
+	public class Logger : IDisposable
 	{
 		private string filePattern;
 
@@ -48,7 +48,7 @@ namespace YtCrawler.Log
 		/// <summary>
 		/// Closes the logger and saves all open logs to file.
 		/// </summary>
-		public void Close()
+		public void Dispose()
 		{
 			// Wait for exclusive access to the log.
 			this.mutex.WaitOne();

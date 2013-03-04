@@ -17,23 +17,21 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YtApi.Api.V2;
+using YtCrawler.Database;
 using YtCrawler.Log;
 using Microsoft.Win32;
 
 namespace YtCrawler
 {
-	public class Crawler
+	public class Crawler : IDisposable
 	{
 		private CrawlerConfig config;
 		private YouTubeSettings settings;
 		private YouTubeCategories categories;
 		private Logger logger;
 		private Comments.Comments comments;
+		private DbServers servers;
 
 		/// <summary>
 		/// Creates a new crawer global object, based on a configuration from the specified root registry key.
@@ -56,17 +54,22 @@ namespace YtCrawler
 
 			// Create the comments.
 			this.comments = new Comments.Comments(this.Config);
+
+			// Create the database servers.
+			this.servers = new DbServers(this.config);
 		}
 
 		/// <summary>
-		/// Closes the crawler.
+		/// A method called when the object is disposed.
 		/// </summary>
-		public void Close()
+		public void Dispose()
 		{
+			// Close the database servers.
+			this.servers.Dispose();
 			// Close the log.
-			this.Log.Close();
+			this.Log.Dispose();
 			// Save the comments.
-			this.Comments.Save();
+			this.Comments.Dispose();
 		}
 
 		/// <summary>

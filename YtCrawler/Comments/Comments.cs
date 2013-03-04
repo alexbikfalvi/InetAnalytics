@@ -28,7 +28,7 @@ namespace YtCrawler.Comments
 	/// <summary>
 	/// A class that stores all user comments.
 	/// </summary>
-	public class Comments
+	public class Comments : IDisposable
 	{
 		private CrawlerConfig config;
 
@@ -58,9 +58,11 @@ namespace YtCrawler.Comments
 		/// <summary>
 		/// Saves the current comments to file.
 		/// </summary>
-		public void Save()
+		public void Dispose()
 		{
 			this.commentsVideos.Save(this.config.CommentsVideosFileName);
+			this.commentsUsers.Save(this.config.CommentsUsersFileName);
+			this.commentsPlaylists.Save(this.config.CommentsPlaylistsFileName);
 		}
 
 		/// <summary>
