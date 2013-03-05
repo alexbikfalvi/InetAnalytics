@@ -44,8 +44,6 @@ namespace YtAnalytics.Controls
 		private static int[] commentsPerPageInt = new int[] { 10, 25, 50 };
 		private static object[] commentsPerPageObject = new object[] { 10, 25, 50 };
 
-		private ContextMenuStrip contextMenu = null;
-
 		/// <summary>
 		/// Constructor.
 		/// </summary>

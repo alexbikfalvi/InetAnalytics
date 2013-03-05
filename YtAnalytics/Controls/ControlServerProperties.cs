@@ -1,0 +1,129 @@
+﻿/* 
+ * Copyright (C) 2012 Alex Bikfalvi
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using YtCrawler.Database;
+
+namespace YtAnalytics.Controls
+{
+	/// <summary>
+	/// Displays the information of a log event.
+	/// </summary>
+	public partial class ControlServerProperties : UserControl
+	{
+		private DbServer server;
+		private Font fontNormal;
+		private Font fontItalic;
+
+		/// <summary>
+		/// Creates a new log event control instance.
+		/// </summary>
+		public ControlServerProperties()
+		{
+			InitializeComponent();
+
+			this.fontNormal = this.textBoxPassword.Font;
+			this.fontItalic = new Font(this.fontNormal, FontStyle.Italic);
+		}
+
+		/// <summary>
+		/// Gets or sets the current log event.
+		/// </summary>
+		public DbServer Server
+		{
+			get { return this.server; }
+			set
+			{
+				this.server = value;
+				if (value == null)
+				{
+					this.labelTitle.Text = string.Empty;
+					this.tabControl.Visible = false;
+				}
+				else
+				{
+					this.labelTitle.Text = value.Name;
+					this.textBoxName.Text = value.Name;
+					this.textBoxId.Text = value.Id;
+					this.textBoxType.Text = DbServers.ServerTypeNames[(int)value.Type];
+					this.textBoxDataSource.Text = value.DataSource;
+					this.textBoxUsername.Text = value.Username;
+					this.textBoxPassword.Text = "(type here to change the password)";
+					this.textBoxPassword.UseSystemPasswordChar = false;
+					this.textBoxPassword.Font = this.fontItalic;
+					this.tabControl.Visible = true;
+				}
+				this.textBoxName.Select();
+			}
+		}
+		/// <summary>
+		/// Gets the new server name.
+		/// </summary>
+		public string ServerName { get { return this.textBoxName.Text; } }
+		/// <summary>
+		/// Gets the new server data source.
+		/// </summary>
+		public string DataSource { get { return this.textBoxDataSource.Text; } }
+		/// <summary>
+		/// Gets the new server username.
+		/// </summary>
+		public string Username { get { return this.textBoxUsername.Text; } }
+		/// <summary>
+		/// Gets the new server password.
+		/// </summary>
+		public string Password { get { return this.textBoxPassword.Font.Italic ? this.server.Password : this.textBoxPassword.Text; } }
+
+		/// <summary>
+		/// An event raised when the server configuration has changed.
+		/// </summary>
+		public event EventHandler ConfigurationChanged;
+
+		/// <summary>
+		/// An event handler called when the configuration changes.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnChanged(object sender, EventArgs e)
+		{
+			// Update the title.
+			this.labelTitle.Text = this.textBoxName.Text;
+			// Raise the configuration changed event.
+			if (this.ConfigurationChanged != null) this.ConfigurationChanged(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the password field.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPasswordChange(object sender, EventArgs e)
+		{
+			this.textBoxPassword.Text = string.Empty;
+			this.textBoxPassword.Font = this.fontNormal;
+			this.textBoxPassword.UseSystemPasswordChar = true;
+		}
+	}
+}

@@ -345,17 +345,6 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
-		/// An event handler called when the selected video has changed.
-		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnVideoSelectedChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-		{
-			// Change the enabled state of the view video button.
-			this.checkBoxView.Enabled = this.commentsList.SelectedItem != null;
-		}
-
-		/// <summary>
 		/// An event handler called when the user navigates to the previous page in the feed list.
 		/// </summary>
 		/// <param name="sender">The sender control.</param>

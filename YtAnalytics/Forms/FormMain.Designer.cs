@@ -192,6 +192,10 @@
 			this.imageList.Images.SetKeyName(25, "CommentUser");
 			this.imageList.Images.SetKeyName(26, "CommentPlay");
 			this.imageList.Images.SetKeyName(27, "Settings");
+			this.imageList.Images.SetKeyName(28, "ServerDown");
+			this.imageList.Images.SetKeyName(29, "ServerUp");
+			this.imageList.Images.SetKeyName(30, "ServerWarning");
+			this.imageList.Images.SetKeyName(31, "ServerBusy");
 			// 
 			// controlPanelConfiguration
 			// 

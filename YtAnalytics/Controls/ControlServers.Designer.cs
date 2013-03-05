@@ -44,14 +44,22 @@
 			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeadeVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemPrimary = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemDisconnect = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.log = new YtAnalytics.Controls.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -171,7 +179,9 @@
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
+			this.listView.ItemActivate += new System.EventHandler(this.OnProperties);
 			this.listView.SelectedIndexChanged += new System.EventHandler(this.OnServerSelectionChanged);
+			this.listView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick);
 			// 
 			// columnHeaderName
 			// 
@@ -193,6 +203,11 @@
 			this.columnHeadeVersion.Text = "Version";
 			this.columnHeadeVersion.Width = 120;
 			// 
+			// columnHeaderId
+			// 
+			this.columnHeaderId.Text = "ID";
+			this.columnHeaderId.Width = 180;
+			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
@@ -202,10 +217,59 @@
 			this.imageList.Images.SetKeyName(2, "ServerWarning");
 			this.imageList.Images.SetKeyName(3, "ServerBusy");
 			// 
-			// columnHeaderId
+			// contextMenu
 			// 
-			this.columnHeaderId.Text = "ID";
-			this.columnHeaderId.Width = 180;
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemPrimary,
+            this.toolStripSeparator3,
+            this.menuItemConnect,
+            this.menuItemDisconnect,
+            this.toolStripSeparator4,
+            this.menuItemProperties});
+			this.contextMenu.Name = "contextMenuStrip";
+			this.contextMenu.Size = new System.Drawing.Size(148, 104);
+			// 
+			// menuItemPrimary
+			// 
+			this.menuItemPrimary.Image = global::YtAnalytics.Resources.ServerStar_16;
+			this.menuItemPrimary.Name = "menuItemPrimary";
+			this.menuItemPrimary.Size = new System.Drawing.Size(147, 22);
+			this.menuItemPrimary.Text = "Make primary";
+			this.menuItemPrimary.Click += new System.EventHandler(this.OnMakePrimary);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(144, 6);
+			// 
+			// menuItemConnect
+			// 
+			this.menuItemConnect.Image = global::YtAnalytics.Resources.Connect_16;
+			this.menuItemConnect.Name = "menuItemConnect";
+			this.menuItemConnect.Size = new System.Drawing.Size(147, 22);
+			this.menuItemConnect.Text = "Connect";
+			this.menuItemConnect.Click += new System.EventHandler(this.OnConnect);
+			// 
+			// menuItemDisconnect
+			// 
+			this.menuItemDisconnect.Image = global::YtAnalytics.Resources.Disconnect_16;
+			this.menuItemDisconnect.Name = "menuItemDisconnect";
+			this.menuItemDisconnect.Size = new System.Drawing.Size(147, 22);
+			this.menuItemDisconnect.Text = "Disconnect";
+			this.menuItemDisconnect.Click += new System.EventHandler(this.OnDisconnect);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(144, 6);
+			// 
+			// menuItemProperties
+			// 
+			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemProperties.Name = "menuItemProperties";
+			this.menuItemProperties.Size = new System.Drawing.Size(147, 22);
+			this.menuItemProperties.Text = "Properties";
+			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
 			// log
 			// 
@@ -229,6 +293,7 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -252,5 +317,12 @@
 		private System.Windows.Forms.ToolStripButton buttonConnect;
 		private System.Windows.Forms.ToolStripButton buttonDisconnect;
 		private System.Windows.Forms.ColumnHeader columnHeaderId;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem menuItemPrimary;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem menuItemConnect;
+		private System.Windows.Forms.ToolStripMenuItem menuItemDisconnect;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
 	}
 }

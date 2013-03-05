@@ -76,6 +76,11 @@ namespace YtCrawler.Database
 		// Public properties.
 
 		/// <summary>
+		/// Gets the type of the database server.
+		/// </summary>
+		public override DbServers.DbServerType Type { get { return Database.DbServers.DbServerType.MsSql; } }
+
+		/// <summary>
 		/// Gets the current connection state.
 		/// </summary>
 		public override ConnectionState ConnectionState { get { return this.connection.State; } }

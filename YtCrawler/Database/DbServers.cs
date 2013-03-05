@@ -155,6 +155,22 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
+		/// Changes the primary server to the specified server.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		public void SetPrimary(DbServer server)
+		{
+			// Save the old primary server.
+			DbServer oldPrimary = this.primary;
+			// Change the primary server.
+			this.primary = server;
+			// Update the registry key.
+			Registry.SetValue(this.config.DatabaseConfig.Key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
+			// Raise the primary server changed event.
+			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(oldPrimary, this.primary);
+		}
+
+		/// <summary>
 		/// Returns the enumerator for the current list of database servers.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
@@ -226,20 +242,14 @@ namespace YtCrawler.Database
 				throw;
 			}
 
-			// Raise the server add event.
-			if (null != this.ServerAdded) this.ServerAdded(server);
-
-			// If the server is primary.
+			// If the server is primary, change the primary.
 			if (primary)
 			{
-				DbServer oldPrimary = this.primary;
-				// Set the server as primary
-				this.primary = server;
-				// Raise the primary server changed event.
-				if (null != this.ServerPrimaryChanged) this.ServerPrimaryChanged(oldPrimary, this.primary);
-				// Update the registry key.
-				Registry.SetValue(this.config.DatabaseConfig.Key.Name, "Primary", id, RegistryValueKind.String);
+				this.SetPrimary(server);
 			}
+
+			// Raise the server add event.
+			if (null != this.ServerAdded) this.ServerAdded(server);
 		}
 
 		/// <summary>
@@ -258,9 +268,7 @@ namespace YtCrawler.Database
 			if (server == this.primary)
 			{
 				// Set the primary server to null.
-				this.primary = null;
-				// Raise the primary server changed event.
-				if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(server, null);
+				this.SetPrimary(null);
 			}
 			// Dispose the server object synchronously.
 			server.Dispose();
@@ -289,9 +297,7 @@ namespace YtCrawler.Database
 			if (server == this.primary)
 			{
 				// Set the primary server to null.
-				this.primary = null;
-				// Raise the primary server changed event.
-				if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(server, null);
+				this.SetPrimary(null);
 			}
 			
 			// Create the asynchronous state.
@@ -371,6 +377,8 @@ namespace YtCrawler.Database
 			{
 				// Lock the mutex.
 				this.mutex.WaitOne();
+				// Remove the server configuration.
+				this.config.DatabaseConfig.Key.DeleteSubKeyTree(id);
 				// Remove the server.
 				this.servers.Remove(id);
 			}

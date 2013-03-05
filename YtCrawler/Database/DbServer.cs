@@ -105,6 +105,11 @@ namespace YtCrawler.Database
 		public string Id { get { return this.id; } }
 
 		/// <summary>
+		/// Gets the type of the current database server.
+		/// </summary>
+		public abstract DbServers.DbServerType Type { get; }
+
+		/// <summary>
 		/// Gets or sets the server name.
 		/// </summary>
 		public string Name

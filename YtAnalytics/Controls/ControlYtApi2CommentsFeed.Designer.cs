@@ -31,7 +31,6 @@
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.panel = new System.Windows.Forms.Panel();
 			this.textBoxVideo = new System.Windows.Forms.TextBox();
-			this.checkBoxView = new System.Windows.Forms.CheckBox();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.linkLabel = new System.Windows.Forms.LinkLabel();
@@ -70,7 +69,6 @@
 			// panel
 			// 
 			this.panel.Controls.Add(this.textBoxVideo);
-			this.panel.Controls.Add(this.checkBoxView);
 			this.panel.Controls.Add(this.buttonStart);
 			this.panel.Controls.Add(this.buttonStop);
 			this.panel.Controls.Add(this.linkLabel);
@@ -91,19 +89,6 @@
 			this.textBoxVideo.Size = new System.Drawing.Size(350, 20);
 			this.textBoxVideo.TabIndex = 1;
 			this.textBoxVideo.TextChanged += new System.EventHandler(this.OnSearchChanged);
-			// 
-			// checkBoxView
-			// 
-			this.checkBoxView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.checkBoxView.Appearance = System.Windows.Forms.Appearance.Button;
-			this.checkBoxView.Enabled = false;
-			this.checkBoxView.Location = new System.Drawing.Point(520, 28);
-			this.checkBoxView.Name = "checkBoxView";
-			this.checkBoxView.Size = new System.Drawing.Size(75, 23);
-			this.checkBoxView.TabIndex = 4;
-			this.checkBoxView.Text = "&View";
-			this.checkBoxView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.checkBoxView.UseVisualStyleBackColor = true;
 			// 
 			// buttonStart
 			// 
@@ -212,7 +197,6 @@
 		private System.Windows.Forms.Label labelUrl;
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.Button buttonStart;
-		private System.Windows.Forms.CheckBox checkBoxView;
 		private System.Windows.Forms.TextBox textBoxVideo;
 		private ControlCommentList commentsList;
 

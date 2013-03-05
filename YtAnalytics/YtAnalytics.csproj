@@ -277,6 +277,18 @@
     <Compile Include="Controls\ControlAddServer.Designer.cs">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlServerProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlServerProperties.Designer.cs">
+      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormServerProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormServerProperties.Designer.cs">
+      <DependentUpon>FormServerProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormAddServer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -463,6 +475,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlAddServer.resx">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlServerProperties.resx">
+      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormServerProperties.resx">
+      <DependentUpon>FormServerProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAddServer.resx">
       <DependentUpon>FormAddServer.cs</DependentUpon>
