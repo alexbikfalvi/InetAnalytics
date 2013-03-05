@@ -61,7 +61,7 @@
 			this.textBoxDataSource.Location = new System.Drawing.Point(99, 126);
 			this.textBoxDataSource.Name = "textBoxDataSource";
 			this.textBoxDataSource.Size = new System.Drawing.Size(270, 20);
-			this.textBoxDataSource.TabIndex = 4;
+			this.textBoxDataSource.TabIndex = 6;
 			this.textBoxDataSource.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// textBoxName
@@ -71,7 +71,7 @@
 			this.textBoxName.Location = new System.Drawing.Point(99, 100);
 			this.textBoxName.Name = "textBoxName";
 			this.textBoxName.Size = new System.Drawing.Size(270, 20);
-			this.textBoxName.TabIndex = 2;
+			this.textBoxName.TabIndex = 4;
 			this.textBoxName.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// labelUsername
@@ -80,7 +80,7 @@
 			this.labelUsername.Location = new System.Drawing.Point(17, 155);
 			this.labelUsername.Name = "labelUsername";
 			this.labelUsername.Size = new System.Drawing.Size(58, 13);
-			this.labelUsername.TabIndex = 5;
+			this.labelUsername.TabIndex = 7;
 			this.labelUsername.Text = "&Username:";
 			// 
 			// labelDataSource
@@ -89,7 +89,7 @@
 			this.labelDataSource.Location = new System.Drawing.Point(17, 129);
 			this.labelDataSource.Name = "labelDataSource";
 			this.labelDataSource.Size = new System.Drawing.Size(68, 13);
-			this.labelDataSource.TabIndex = 3;
+			this.labelDataSource.TabIndex = 5;
 			this.labelDataSource.Text = "&Data source:";
 			// 
 			// labelName
@@ -98,7 +98,7 @@
 			this.labelName.Location = new System.Drawing.Point(17, 103);
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(38, 13);
-			this.labelName.TabIndex = 1;
+			this.labelName.TabIndex = 3;
 			this.labelName.Text = "&Name:";
 			// 
 			// textBoxUsername
@@ -108,7 +108,7 @@
 			this.textBoxUsername.Location = new System.Drawing.Point(99, 152);
 			this.textBoxUsername.Name = "textBoxUsername";
 			this.textBoxUsername.Size = new System.Drawing.Size(270, 20);
-			this.textBoxUsername.TabIndex = 6;
+			this.textBoxUsername.TabIndex = 8;
 			this.textBoxUsername.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// textBoxPassword
@@ -118,7 +118,7 @@
 			this.textBoxPassword.Location = new System.Drawing.Point(99, 178);
 			this.textBoxPassword.Name = "textBoxPassword";
 			this.textBoxPassword.Size = new System.Drawing.Size(270, 20);
-			this.textBoxPassword.TabIndex = 7;
+			this.textBoxPassword.TabIndex = 10;
 			this.textBoxPassword.UseSystemPasswordChar = true;
 			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -128,7 +128,7 @@
 			this.labelPassword.Location = new System.Drawing.Point(17, 181);
 			this.labelPassword.Name = "labelPassword";
 			this.labelPassword.Size = new System.Drawing.Size(56, 13);
-			this.labelPassword.TabIndex = 8;
+			this.labelPassword.TabIndex = 9;
 			this.labelPassword.Text = "&Password:";
 			// 
 			// pictureBox
@@ -149,7 +149,7 @@
 			this.comboBoxType.Location = new System.Drawing.Point(99, 73);
 			this.comboBoxType.Name = "comboBoxType";
 			this.comboBoxType.Size = new System.Drawing.Size(270, 21);
-			this.comboBoxType.TabIndex = 9;
+			this.comboBoxType.TabIndex = 2;
 			this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// labelType
@@ -158,7 +158,7 @@
 			this.labelType.Location = new System.Drawing.Point(17, 76);
 			this.labelType.Name = "labelType";
 			this.labelType.Size = new System.Drawing.Size(34, 13);
-			this.labelType.TabIndex = 10;
+			this.labelType.TabIndex = 1;
 			this.labelType.Text = "&Type:";
 			// 
 			// checkBoxPrimary

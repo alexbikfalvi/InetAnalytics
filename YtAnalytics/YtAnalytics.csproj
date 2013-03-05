@@ -547,6 +547,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ServerBusy_48.png" />
+    <None Include="Resources\ServerBusy_32.png" />
+    <None Include="Resources\ServerBusy_24.png" />
+    <None Include="Resources\ServerBusy_16.png" />
+    <None Include="Resources\ServerDown_48.png" />
+    <None Include="Resources\ServerDown_32.png" />
+    <None Include="Resources\ServerDown_24.png" />
+    <None Include="Resources\ServerDown_16.png" />
+    <None Include="Resources\ServerUp_48.png" />
+    <None Include="Resources\ServerUp_32.png" />
+    <None Include="Resources\ServerUp_24.png" />
+    <None Include="Resources\ServerUp_16.png" />
     <None Include="Resources\Disconnect_48.png" />
     <None Include="Resources\Disconnect_32.png" />
     <None Include="Resources\Disconnect_24.png" />

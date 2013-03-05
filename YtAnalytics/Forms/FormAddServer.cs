@@ -26,7 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtAnalytics.Controls;
-using YtCrawler.Comments;
+using YtCrawler.Database;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms
@@ -39,8 +39,6 @@ namespace YtAnalytics.Forms
 		// UI formatter.
 		private Formatting formatting = new Formatting();
 
-		private Comment.CommentType type;
-
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
@@ -52,24 +50,65 @@ namespace YtAnalytics.Forms
 			this.formatting.SetFont(this);
 		}
 
+		// Public events.
+
 		/// <summary>
 		/// An event raised when a new comment was added.
 		/// </summary>
-		public event AddCommentEventHandler CommentAdded;
+		public event EventHandler ServerAdded;
+
+		// Public properties.
 
 		/// <summary>
-		/// Shows the add comment dialog, for the specified object ID and user.
+		/// Gets the database server type.
+		/// </summary>
+		public DbServers.DbServerType Type { get { return this.control.Type; } }
+
+		/// <summary>
+		/// Gets the database server name.
+		/// </summary>
+		public string ServerName { get { return this.control.ServerName; } }
+
+		/// <summary>
+		/// Gets the database data source.
+		/// </summary>
+		public string DataSource { get { return this.control.DataSource; } }
+
+		/// <summary>
+		/// Gets the user name.
+		/// </summary>
+		public string Username { get { return this.control.Username; } }
+
+		/// <summary>
+		/// Gets the password.
+		/// </summary>
+		public string Password { get { return this.control.Password; } }
+
+		/// <summary>
+		/// Indicates whether this server should be primary.
+		/// </summary>
+		public bool IsPrimary { get { return this.control.MakePrimary; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Shows the add server dialog.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="obj">The object ID.</param>
-		/// <param name="user">The user.</param>
-		public void ShowDialog(IWin32Window owner, string obj, string user)
+		/// <param name="primary">The state of the primary check box.</param>
+		/// <param name="primaryEnabled">The enabled state of the primary check box.</param>
+		public void ShowDialog(IWin32Window owner, bool primary, bool primaryEnabled)
 		{
-//			this.control.Item = obj;
-//			this.control.User = user;
-//			this.control.Text = string.Empty;
+			// Clear the control settings.
+			this.control.Clear();
+			// Set the primary check box.
+			this.control.MakePrimary = primary;
+			this.control.MakePrimaryEnabled = primaryEnabled;
+			// Show the dialog.
 			base.ShowDialog(owner);
 		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the user clicks on the add button.
@@ -79,9 +118,7 @@ namespace YtAnalytics.Forms
 		private void OnAddClick(object sender, EventArgs e)
 		{
 			// Raise the add event.
-			//if (this.CommentAdded != null) this.CommentAdded(
-			//	new Comment(this.CommentType, DateTime.Now, this.control.Item, this.control.User, this.control.Text)
-			//	);
+			if (this.ServerAdded != null) this.ServerAdded(sender, e);
 			// Close the dialog.
 			this.Close();
 		}

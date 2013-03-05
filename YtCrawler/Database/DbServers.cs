@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
@@ -32,7 +33,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing the list of database servers.
 	/// </summary>
-	public sealed class DbServers : IDisposable
+	public sealed class DbServers : IDisposable, IEnumerable<KeyValuePair<string,DbServer>>
 	{
 		public enum DbServerType
 		{
@@ -123,11 +124,53 @@ namespace YtCrawler.Database
 		// Public properties.
 
 		/// <summary>
+		/// Returns the database server for the specified ID.
+		/// </summary>
+		/// <param name="id">The server ID.</param>
+		/// <returns>The database server.</returns>
+		public DbServer this[string id] { get { return this.servers[id]; } }
+		/// <summary>
+		/// Gets the number of database servers.
+		/// </summary>
+		public int Count { get { return this.servers.Count; } }
+		/// <summary>
+		/// Indicates whether there exists a primary server.
+		/// </summary>
+		public bool HasPrimary { get { return this.primary != null; } }
+		/// <summary>
 		/// Returns the list of supported server type names.
 		/// </summary>
 		public static string[] ServerTypeNames { get { return DbServers.dbServerTypeNames; } }
 
 		// Public methods.
+
+		/// <summary>
+		/// Indicates if the specified server is the primary server.
+		/// </summary>
+		/// <param name="server">The server.</param>
+		/// <returns>Returns <b>true</b> if the server is primary, or <b>false</b> otherwise.</returns>
+		public bool IsPrimary(DbServer server)
+		{
+			return this.primary == server;
+		}
+
+		/// <summary>
+		/// Returns the enumerator for the current list of database servers.
+		/// </summary>
+		/// <returns>The enumerator.</returns>
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return this.GetEnumerator();
+		}
+
+		/// <summary>
+		/// Returns the generic enumerator for the current list of database servers.
+		/// </summary>
+		/// <returns>The enumerator.</returns>
+		public IEnumerator<KeyValuePair<string, DbServer>> GetEnumerator()
+		{
+			return this.servers.GetEnumerator();
+		}
 
 		/// <summary>
 		/// Adds a new database server. The method is thread-safe but may block if another server operation is under way.

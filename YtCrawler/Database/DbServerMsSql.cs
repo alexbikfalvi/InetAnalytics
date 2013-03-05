@@ -78,10 +78,12 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the current connection state.
 		/// </summary>
-		public override ConnectionState ConnectionState
-		{
-			get { return this.connection.State; }
-		}
+		public override ConnectionState ConnectionState { get { return this.connection.State; } }
+
+		/// <summary>
+		/// Gets the server version.
+		/// </summary>
+		public override string Version { get { try { return this.connection.ServerVersion; } catch (InvalidOperationException) { return string.Empty; } } }
 
 		// Public methods.
 

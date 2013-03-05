@@ -3503,6 +3503,46 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ServerBusy_16 {
+            get {
+                object obj = ResourceManager.GetObject("ServerBusy_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerBusy_24 {
+            get {
+                object obj = ResourceManager.GetObject("ServerBusy_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerBusy_32 {
+            get {
+                object obj = ResourceManager.GetObject("ServerBusy_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerBusy_48 {
+            get {
+                object obj = ResourceManager.GetObject("ServerBusy_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ServerDatabase_16 {
             get {
                 object obj = ResourceManager.GetObject("ServerDatabase_16", resourceCulture);
@@ -3536,6 +3576,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap ServerDatabase_48 {
             get {
                 object obj = ResourceManager.GetObject("ServerDatabase_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerDown_16 {
+            get {
+                object obj = ResourceManager.GetObject("ServerDown_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerDown_24 {
+            get {
+                object obj = ResourceManager.GetObject("ServerDown_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerDown_32 {
+            get {
+                object obj = ResourceManager.GetObject("ServerDown_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerDown_48 {
+            get {
+                object obj = ResourceManager.GetObject("ServerDown_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3856,6 +3936,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap ServerSuccess_48 {
             get {
                 object obj = ResourceManager.GetObject("ServerSuccess_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerUp_16 {
+            get {
+                object obj = ResourceManager.GetObject("ServerUp_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerUp_24 {
+            get {
+                object obj = ResourceManager.GetObject("ServerUp_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerUp_32 {
+            get {
+                object obj = ResourceManager.GetObject("ServerUp_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerUp_48 {
+            get {
+                object obj = ResourceManager.GetObject("ServerUp_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

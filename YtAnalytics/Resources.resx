@@ -1390,4 +1390,40 @@
   <data name="Star_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Star_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ServerBusy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerBusy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerBusy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerBusy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerBusy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerBusy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerBusy_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerBusy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerDown_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerDown_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerDown_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerDown_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerDown_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerDown_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerDown_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerDown_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerUp_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerUp_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerUp_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerUp_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerUp_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerUp_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerUp_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerUp_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

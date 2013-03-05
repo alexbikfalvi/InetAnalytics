@@ -46,7 +46,6 @@ namespace YtCrawler.Database
 		private string dataSource;
 		private string username;
 		private string password;
-		private bool primary = false;
 
 		private ServerState state = ServerState.Disconnected;
 
@@ -142,11 +141,6 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// Gets whether the server is primary.
-		/// </summary>
-		public bool IsPrimary { get { return this.primary; } }
-
-		/// <summary>
 		/// Gets the server connection state.
 		/// </summary>
 		public abstract ConnectionState ConnectionState { get; }
@@ -155,6 +149,11 @@ namespace YtCrawler.Database
 		/// Gets the server state.
 		/// </summary>
 		public ServerState State { get { return this.state; } }
+
+		/// <summary>
+		/// Gets the server version.
+		/// </summary>
+		public abstract string Version { get; }
 
 		// Public events.
 
