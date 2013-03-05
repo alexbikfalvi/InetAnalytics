@@ -103,6 +103,7 @@ namespace YtAnalytics.Forms
 		private ControlYtApi3Info controlYtApi3 = new ControlYtApi3Info();
 		private ControlWeb controlWeb = new ControlWeb();
 		private ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
+		private ControlServers controlDatabaseServers = new ControlServers();
 		private ControlSettings controlSettings = new ControlSettings();
 		private ControlLog controlLog = new ControlLog();
 		private ControlCommentsInfo controlCommentsInfo = new ControlCommentsInfo();
@@ -263,6 +264,7 @@ namespace YtAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2PlaylistFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlWeb);
 			this.splitContainer.Panel2.Controls.Add(this.controlWebStatistics);
+			this.splitContainer.Panel2.Controls.Add(this.controlDatabaseServers);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
 			this.splitContainer.Panel2.Controls.Add(this.controlCommentsInfo);
@@ -291,6 +293,8 @@ namespace YtAnalytics.Forms
 			this.treeNodeBrowserApi3.Tag = this.controlYtApi3;
 			this.treeNodeBrowserWeb.Tag = this.controlWeb;
 			this.treeNodeBrowserWebVideos.Tag = this.controlWebStatistics;
+
+			this.treeNodeDatabaseServers.Tag = this.controlDatabaseServers;
 
 			this.treeNodeSettings.Tag = this.controlSettings;
 			this.controlPanelLog.Tag = this.controlLog;
@@ -359,6 +363,7 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "APIv2 Uploads Videos Feed");
 			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "APIv2 Favorites Videos Feed");
 			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "APIv2 Playlist Videos Feed");
+			this.controlDatabaseServers.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler);

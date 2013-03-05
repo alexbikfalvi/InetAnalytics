@@ -26,9 +26,11 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing the asynchronous state for a database operation.
 	/// </summary>
-	public sealed class DbServerAsyncState
+	public sealed class DbServerAsyncState : IAsyncResult
 	{
 		private object state;
+		private AutoResetEvent wait = new AutoResetEvent(false);
+		private bool completed = false;
 
 		/// <summary>
 		/// Creates a new instance of the asynchronous state.
@@ -36,12 +38,47 @@ namespace YtCrawler.Database
 		/// <param name="state">The user state.</param>
 		public DbServerAsyncState(object state)
 		{
+			// Save the user state.
 			this.state = state;
 		}
+
+		// Public properties.
 
 		/// <summary>
 		/// Gets or sets the asynchronous exception.
 		/// </summary>
 		public Exception Exception { get; set; }
+
+		/// <summary>
+		/// Returns the asynchronous user state.
+		/// </summary>
+		public object AsyncState { get { return this.state; } }
+
+		/// <summary>
+		/// Returns the wait handle.
+		/// </summary>
+		public WaitHandle AsyncWaitHandle { get { return this.wait; } }
+
+		/// <summary>
+		/// Indicates whether the operation completed synchronously.
+		/// </summary>
+		public bool CompletedSynchronously { get { return false; } }
+
+		/// <summary>
+		/// Indicates whether the operation completed.
+		/// </summary>
+		public bool IsCompleted { get { return this.completed; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Completes the asynchronous operation by setting the completed property and the wait handle
+		/// to <b>true</b>.
+		/// </summary>
+		public void Complete()
+		{
+			this.completed = true;
+			this.wait.Set();
+		}
 	}
 }

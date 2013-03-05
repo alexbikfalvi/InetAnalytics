@@ -30,6 +30,7 @@ namespace YtCrawler.Database
 	{
 		private SqlConnectionStringBuilder connectionString;
 		private SqlConnection connection = new SqlConnection();
+		private Mutex mutex = new Mutex();
 
 		/// <summary>
 		/// Creates a new server instance.
@@ -43,7 +44,33 @@ namespace YtCrawler.Database
 			this.Initialize();
 
 			// Set the connection event handlers.
-			this.connection.StateChange += this.OnConnectionStateChanged;
+			this.connection.StateChange += this.OnStateChanged;
+		}
+
+		/// <summary>
+		/// Creates a database server with the specified parameters.
+		/// </summary>
+		/// <param name="key">The registry configuration key.</param>
+		/// <param name="id">The server ID.</param>
+		/// <param name="name">The server name.</param>
+		/// <param name="dataSource">The data source.</param>
+		/// <param name="username">The username.</param>
+		/// <param name="password">The password.</param>
+		public DbServerMsSql(
+			string key,
+			string id,
+			string name,
+			string dataSource,
+			string username,
+			string password
+			)
+			: base(key, id, name, dataSource, username, password)
+		{
+			// Initialize the server with the current configuration.
+			this.Initialize();
+
+			// Set the connection event handlers.
+			this.connection.StateChange += this.OnStateChanged;
 		}
 
 		// Public properties.
@@ -61,10 +88,32 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Opens the connection to the database server.
 		/// </summary>
+		public override void Open()
+		{
+			try
+			{
+				// Lock the mutex (only one state changing operation allowed at one time).
+				this.mutex.WaitOne();
+				// Open the database connection.
+				this.connection.Open();
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}			
+		}
+
+		/// <summary>
+		/// Opens the connection to the database server asynchronously.
+		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
-		public override void Open(DbServerCallback callback, object userState = null)
+		/// <returns>The asynchronous result.</returns>
+		public override IAsyncResult OpenAsync(DbServerCallback callback, object userState = null)
 		{
+			// Call the event handler.
+			base.OnOpening();
 			// Create a new asynchrounous state for this operation.
 			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
 			// Begin open the connection asynchronously on the thread pool.
@@ -73,79 +122,148 @@ namespace YtCrawler.Database
 					// Execute asynchronously on the thread pool.
 					try
 					{
-						// Open the database connection.
-						this.connection.Open();
+						// Open the connection.
+						this.Open();
 					}
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the callback exception.
 						asyncState.Exception = exception;
 					}
-					// Call the callback method with the given state, catch all exceptions.
-					try { callback(asyncState); }
-					catch (Exception) { }
+					// Complete the asynchronous operation.
+					asyncState.Complete();
+					// Call the callback method with the given state.
+					if (callback != null) callback(asyncState);
 				});
+			return asyncState;
 		}
 
 		/// <summary>
 		/// Reopens the connection to the database server.
 		/// </summary>
+		public override void Reopen()
+		{
+			try
+			{
+				// Lock the mutex (only one state changing operation allowed at one time).
+				this.mutex.WaitOne();
+				// Close the database connection.
+				this.connection.Close();
+				// Open the database connection.
+				this.connection.Open();
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}
+		}
+
+		/// <summary>
+		/// Reopens the connection to the database server asynchronously.
+		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
-		public override void Reopen(DbServerCallback callback, object userState = null)
+		/// <returns>The asynchronous result.</returns>
+		public override IAsyncResult ReopenAsync(DbServerCallback callback, object userState = null)
 		{
+			// Call the event handler.
+			base.OnReopening();
 			// Create a new asynchrounous state for this operation.
 			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
 			// Begin open the connection asynchronously on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
-			{
-				// Execute asynchronously on the thread pool.
-				try
 				{
-					// Close the database connection.
-					this.connection.Close();
-					// Open the database connection.
-					this.connection.Open();
-				}
-				catch (Exception exception)
-				{
-					// If an exception occurs, set the callback exception.
-					asyncState.Exception = exception;
-				}
-				// Call the callback method with the given state, catch all exceptions.
-				try { callback(asyncState); }
-				catch (Exception) { }
-			});
+					// Execute asynchronously on the thread pool.
+					try
+					{
+						// Reopen the connection.
+						this.Reopen();
+					}
+					catch (Exception exception)
+					{
+						// If an exception occurs, set the callback exception.
+						asyncState.Exception = exception;
+					}
+					// Complete the asynchronous operation.
+					asyncState.Complete();
+					// Call the callback method with the given state.
+					if (callback != null) callback(asyncState);
+				});
+			return asyncState;
 		}
 
 		/// <summary>
 		/// Closes the connection to the database server.
 		/// </summary>
+		public override void Close()
+		{
+			try
+			{
+				// Lock the mutex (only one state changing operation allowed at one time).
+				this.mutex.WaitOne();
+				// Close the database connection.
+				this.connection.Close();
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}
+		}
+
+		/// <summary>
+		/// Closes the connection to the database server asynchronously.
+		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
-		public override void Close(DbServerCallback callback, object userState = null)
+		/// <returns>The asynchronous result.</returns>
+		public override IAsyncResult CloseAsync(DbServerCallback callback, object userState = null)
 		{
+			// Call the event handler.
+			base.OnClosing();
 			// Create a new asynchrounous state for this operation.
 			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
 			// Begin open the connection asynchronously on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
-			{
-				// Execute asynchronously on the thread pool.
-				try
 				{
-					// Close the database connection.
-					this.connection.Close();
-				}
-				catch (Exception exception)
-				{
-					// If an exception occurs, set the callback exception.
-					asyncState.Exception = exception;
-				}
-				// Call the callback method with the given state, catch all exceptions.
-				try { callback(asyncState); }
-				catch (Exception) { }
-			});
+					// Execute asynchronously on the thread pool.
+					try
+					{
+						// Close the connection.
+						this.Close();
+					}
+					catch (Exception exception)
+					{
+						// If an exception occurs, set the callback exception.
+						asyncState.Exception = exception;
+					}
+					// Complete the asynchronous operation.
+					asyncState.Complete();
+					// Call the callback method with the given state.
+					if (callback != null) callback(asyncState);
+				});
+			return asyncState;
 		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// A  method called when the server object is being disposed.
+		/// </summary>
+		protected sealed override void OnDispose()
+		{
+			// If the server connection is not closed.
+			if (this.connection.State != ConnectionState.Closed)
+			{
+				// Close the server connection synchronously.
+				this.Close();
+			}
+			// Call the base class method.
+			base.OnDispose();
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// Initializes the server configuration.
@@ -167,10 +285,10 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private new void OnConnectionStateChanged(object sender, StateChangeEventArgs e)
+		private new void OnStateChanged(object sender, StateChangeEventArgs e)
 		{
 			// Call the base class event handler.
-			base.OnConnectionStateChanged(sender, e);
+			base.OnStateChanged(sender, e);
 		}
 	}
 }

@@ -96,5 +96,10 @@ namespace YtCrawler
 		/// Returns the crawler comments.
 		/// </summary>
 		public Comments.Comments Comments { get { return this.comments; } }
+
+		/// <summary>
+		/// Returns the database servers.
+		/// </summary>
+		public DbServers Servers { get { return this.servers; } }
 	}
 }

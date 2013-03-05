@@ -18,6 +18,7 @@
 
 using System;
 using System.Data;
+using System.Threading;
 using Microsoft.Win32;
 
 namespace YtCrawler.Database
@@ -27,6 +28,17 @@ namespace YtCrawler.Database
 	/// </summary>
 	public abstract class DbServer : IDisposable
 	{
+		/// <summary>
+		/// An enumeration that specifies the current server state.
+		/// </summary>
+		public enum ServerState
+		{
+			Disconnected = 0,
+			Connected = 1,
+			Failed = 2,
+			Busy = 3
+		};
+
 		private string key;
 
 		private string id;
@@ -35,6 +47,8 @@ namespace YtCrawler.Database
 		private string username;
 		private string password;
 		private bool primary = false;
+
+		private ServerState state = ServerState.Disconnected;
 
 		/// <summary>
 		/// Creates a database server with the specified name and configuration.
@@ -53,6 +67,37 @@ namespace YtCrawler.Database
 			this.LoadConfiguration();
 		}
 
+		/// <summary>
+		/// Creates a database server with the specified parameters.
+		/// </summary>
+		/// <param name="key">The registry configuration key.</param>
+		/// <param name="id">The server ID.</param>
+		/// <param name="name">The server name.</param>
+		/// <param name="dataSource">The data source.</param>
+		/// <param name="username">The username.</param>
+		/// <param name="password">The password.</param>
+		public DbServer(
+			string key,
+			string id,
+			string name,
+			string dataSource,
+			string username,
+			string password
+			)
+		{
+			// Save the parameters.
+			this.key = key;
+			this.id = id;
+			this.name = name;
+			this.dataSource = dataSource;
+			this.username = username;
+			this.password = password;
+
+			// Save the configuration.
+			this.SaveConfiguration();
+		}
+
+
 		// Public properties.
 
 		/// <summary>
@@ -66,7 +111,7 @@ namespace YtCrawler.Database
 		public string Name
 		{
 			get { return this.name; }
-			set { this.name = value; }
+			set { this.name = value; this.OnServerChanged(); }
 		}
 
 		/// <summary>
@@ -75,7 +120,7 @@ namespace YtCrawler.Database
 		public string DataSource
 		{
 			get { return this.dataSource; }
-			set { this.dataSource = value; }
+			set { this.dataSource = value; this.OnServerChanged(); }
 		}
 
 		/// <summary>
@@ -84,7 +129,7 @@ namespace YtCrawler.Database
 		public string Username
 		{
 			get { return this.username; }
-			set { this.username = value; }
+			set { this.username = value; this.OnServerChanged(); }
 		}
 
 		/// <summary>
@@ -93,7 +138,7 @@ namespace YtCrawler.Database
 		public string Password
 		{
 			get { return this.password; }
-			set { this.password = value; }
+			set { this.password = value; this.OnServerChanged(); }
 		}
 
 		/// <summary>
@@ -102,16 +147,37 @@ namespace YtCrawler.Database
 		public bool IsPrimary { get { return this.primary; } }
 
 		/// <summary>
-		/// Gets the server connection.
+		/// Gets the server connection state.
 		/// </summary>
 		public abstract ConnectionState ConnectionState { get; }
+
+		/// <summary>
+		/// Gets the server state.
+		/// </summary>
+		public ServerState State { get { return this.state; } }
 
 		// Public events.
 
 		/// <summary>
+		/// An event raised when the configuration of the server has changed.
+		/// </summary>
+		public event ServerEventHandler ServerChanged;
+		/// <summary>
 		/// An event raised when the server connection state has changed.
 		/// </summary>
-		public event StateChangeEventHandler ConnectionStateChanged;
+		public event ServerStateChangedEventHandler StateChanged;
+		/// <summary>
+		/// An event raised when the server begins opening the connection.
+		/// </summary>
+		public event ServerEventHandler Opening;
+		/// <summary>
+		/// An event raised when the server begins reopening the connection.
+		/// </summary>
+		public event ServerEventHandler Reopening;
+		/// <summary>
+		/// An event raised when the server begins closing the connection.
+		/// </summary>
+		public event ServerEventHandler Closing;
 
 		/// <summary>
 		/// Saves the current server configuration to the registry.
@@ -131,30 +197,133 @@ namespace YtCrawler.Database
 		{
 			this.LoadConfiguration();
 		}
-		
+
+		/// <summary>
+		/// Disposes the server object by closing the connection.
+		/// </summary>
+		public void Dispose()
+		{
+			// Dispose the server.
+			this.OnDispose();
+			// Suppress the finalizer for this object.
+			GC.SuppressFinalize(this);
+		}
+
 		/// <summary>
 		/// Opens the connection to the database server.
+		/// </summary>
+		public abstract void Open();
+
+		/// <summary>
+		/// Opens the connection to the database server asynchronously.
 		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult Open(DbServerCallback callback, object userState = null);
+		public abstract IAsyncResult OpenAsync(DbServerCallback callback, object userState = null);
 
 		/// <summary>
 		/// Reopens the connection to the database server.
 		/// </summary>
-		/// <param name="callback">The callback method.</param>
-		/// <param name="userState">The user state.</param>
-		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult Reopen(DbServerCallback callback, object userState = null);
+		public abstract void Reopen();
 
 		/// <summary>
-		/// Closes the connection to the database server.
+		/// Reopens the connection to the database server asynchronously.
 		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult Close(DbServerCallback callback, object userState = null);
+		public abstract IAsyncResult ReopenAsync(DbServerCallback callback, object userState = null);
+
+		/// <summary>
+		/// Closes the connection to the database server.
+		/// </summary>
+		public abstract void Close();
+
+		/// <summary>
+		/// Closes the connection to the database server asynchronously.
+		/// </summary>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public abstract IAsyncResult CloseAsync(DbServerCallback callback, object userState = null);
+
+		// Protected methods.
+
+		/// <summary>
+		/// A  method called when the server object is being disposed.
+		/// </summary>
+		protected virtual void OnDispose()
+		{
+			// Do nothing.
+		}
+
+		/// <summary>
+		/// An event handler called when the server configuration has changed.
+		/// </summary>
+		protected void OnServerChanged()
+		{
+			// Call the event.
+			if (this.ServerChanged != null) this.ServerChanged(this);
+		}
+
+		/// <summary>
+		/// An event handler called when the state of the connection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		protected void OnStateChanged(object sender, StateChangeEventArgs e)
+		{
+			// Update the server state.
+			switch (e.CurrentState)
+			{
+				case System.Data.ConnectionState.Open:
+				case System.Data.ConnectionState.Executing:
+				case System.Data.ConnectionState.Fetching:
+					this.state = ServerState.Connected;
+					break;
+				case System.Data.ConnectionState.Connecting:
+					this.state = ServerState.Busy;
+					break;
+				case System.Data.ConnectionState.Closed:
+					this.state = ServerState.Disconnected;
+					break;
+				case System.Data.ConnectionState.Broken:
+					this.state = ServerState.Failed;
+					break;
+			}
+			// Call the event.
+			if (this.StateChanged != null) this.StateChanged(this, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the server begins opening the connection.
+		/// </summary>
+		protected void OnOpening()
+		{
+			// Call the event.
+			if (this.Opening != null) this.Opening(this);
+		}
+
+		/// <summary>
+		/// An event handler called when the server begins reopening the connection.
+		/// </summary>
+		protected void OnReopening()
+		{
+			// Call the event.
+			if (this.Reopening != null) this.Reopening(this);
+		}
+
+		/// <summary>
+		/// An event handler called when the server begins closing the connection.
+		/// </summary>
+		protected void OnClosing()
+		{
+			// Call the event.
+			if (this.Closing != null) this.Closing(this);
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// Loads the current server configuration from the registry.
@@ -165,17 +334,6 @@ namespace YtCrawler.Database
 			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
 			this.username = Registry.GetValue(this.key, "Username", null) as string;
 			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
-		}
-
-		/// <summary>
-		/// An event handler called when the state of the connection has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		protected void OnConnectionStateChanged(object sender, StateChangeEventArgs e)
-		{
-			// Call the event.
-			if (this.ConnectionStateChanged != null) this.ConnectionStateChanged(sender, e);
 		}
 	}
 }

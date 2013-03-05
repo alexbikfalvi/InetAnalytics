@@ -265,6 +265,24 @@
     <Compile Include="Controls\ControlYtApi2UserFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlServers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlServers.Designer.cs">
+      <DependentUpon>ControlServers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlAddServer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlAddServer.Designer.cs">
+      <DependentUpon>ControlAddServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddServer.Designer.cs">
+      <DependentUpon>FormAddServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormPlaylist.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -440,6 +458,15 @@
     <EmbeddedResource Include="Controls\ControlYtApi2UserFeedsInfo.resx">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlServers.resx">
+      <DependentUpon>ControlServers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlAddServer.resx">
+      <DependentUpon>ControlAddServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddServer.resx">
+      <DependentUpon>FormAddServer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPlaylist.resx">
       <DependentUpon>FormPlaylist.cs</DependentUpon>
     </EmbeddedResource>
@@ -520,6 +547,50 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Disconnect_48.png" />
+    <None Include="Resources\Disconnect_32.png" />
+    <None Include="Resources\Disconnect_24.png" />
+    <None Include="Resources\Disconnect_16.png" />
+    <None Include="Resources\Connect_48.png" />
+    <None Include="Resources\Connect_32.png" />
+    <None Include="Resources\Connect_24.png" />
+    <None Include="Resources\Connect_16.png" />
+    <None Include="Resources\Star_48.png" />
+    <None Include="Resources\Star_32.png" />
+    <None Include="Resources\Star_24.png" />
+    <None Include="Resources\Star_16.png" />
+    <None Include="Resources\ServerStar_48.png" />
+    <None Include="Resources\ServerStar_32.png" />
+    <None Include="Resources\ServerStar_24.png" />
+    <None Include="Resources\ServerStar_16.png" />
+    <None Include="Resources\ServerWarning_48.png" />
+    <None Include="Resources\ServerWarning_32.png" />
+    <None Include="Resources\ServerWarning_24.png" />
+    <None Include="Resources\ServerWarning_16.png" />
+    <None Include="Resources\ServerSuccess_48.png" />
+    <None Include="Resources\ServerSuccess_32.png" />
+    <None Include="Resources\ServerSuccess_24.png" />
+    <None Include="Resources\ServerSuccess_16.png" />
+    <None Include="Resources\ServerError_48.png" />
+    <None Include="Resources\ServerError_32.png" />
+    <None Include="Resources\ServerError_24.png" />
+    <None Include="Resources\ServerError_16.png" />
+    <None Include="Resources\ServerInformation_48.png" />
+    <None Include="Resources\ServerInformation_32.png" />
+    <None Include="Resources\ServerInformation_24.png" />
+    <None Include="Resources\ServerInformation_16.png" />
+    <None Include="Resources\ServerRemove_48.png" />
+    <None Include="Resources\ServerRemove_32.png" />
+    <None Include="Resources\ServerRemove_24.png" />
+    <None Include="Resources\ServerRemove_16.png" />
+    <None Include="Resources\ServerAdd_48.png" />
+    <None Include="Resources\ServerAdd_32.png" />
+    <None Include="Resources\ServerAdd_24.png" />
+    <None Include="Resources\ServerAdd_16.png" />
+    <None Include="Resources\CommentRemove_48.png" />
+    <None Include="Resources\CommentRemove_32.png" />
+    <None Include="Resources\CommentRemove_24.png" />
+    <None Include="Resources\CommentRemove_16.png" />
     <None Include="Resources\ServersDatabase_48.png" />
     <None Include="Resources\ServersDatabase_32.png" />
     <None Include="Resources\ServersDatabase_24.png" />
@@ -596,10 +667,6 @@
     <None Include="Resources\Comments_32.png" />
     <None Include="Resources\Comments_24.png" />
     <None Include="Resources\Comments_16.png" />
-    <None Include="Resources\CommentRemove_48.png" />
-    <None Include="Resources\CommentRemove_32.png" />
-    <None Include="Resources\CommentRemove_24.png" />
-    <None Include="Resources\CommentRemove_16.png" />
     <None Include="Resources\CommentAdd_48.png" />
     <None Include="Resources\CommentAdd_32.png" />
     <None Include="Resources\CommentAdd_24.png" />

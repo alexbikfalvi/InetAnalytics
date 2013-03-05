@@ -34,7 +34,12 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
+			this.controlPanelLog = new YtAnalytics.Controls.ControlSideLog();
+			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelDatabase = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelBrowser = new YtAnalytics.Controls.ControlSideTree();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,11 +54,6 @@
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlPanelLog = new YtAnalytics.Controls.ControlSideLog();
-			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelDatabase = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelBrowser = new YtAnalytics.Controls.ControlSideTree();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -77,11 +77,11 @@
 			// toolStripContainer.ContentPanel
 			// 
 			this.toolStripContainer.ContentPanel.Controls.Add(this.splitContainer);
-			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1008, 536);
+			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1008, 528);
 			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer.Name = "toolStripContainer";
-			this.toolStripContainer.Size = new System.Drawing.Size(1008, 582);
+			this.toolStripContainer.Size = new System.Drawing.Size(1008, 574);
 			this.toolStripContainer.TabIndex = 0;
 			// 
 			// toolStripContainer.TopToolStripPanel
@@ -112,7 +112,7 @@
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.labelNotAvailable);
 			this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(4);
-			this.splitContainer.Size = new System.Drawing.Size(1008, 536);
+			this.splitContainer.Size = new System.Drawing.Size(1008, 528);
 			this.splitContainer.SplitterDistance = 246;
 			this.splitContainer.TabIndex = 0;
 			// 
@@ -133,9 +133,32 @@
 			this.sideMenu.Name = "sideMenu";
 			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 28, 0, 56);
 			this.sideMenu.SelectedItem = null;
-			this.sideMenu.Size = new System.Drawing.Size(244, 534);
+			this.sideMenu.Size = new System.Drawing.Size(244, 526);
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.VisibleItems = 0;
+			// 
+			// controlPanelLog
+			// 
+			this.controlPanelLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelLog.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelLog.Name = "controlPanelLog";
+			this.controlPanelLog.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelLog.TabIndex = 2;
+			this.controlPanelLog.Visible = false;
+			this.controlPanelLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlPanelLog.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelComments
+			// 
+			this.controlPanelComments.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelComments.ImageList = this.imageList;
+			this.controlPanelComments.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelComments.Name = "controlPanelComments";
+			this.controlPanelComments.SelectedNode = null;
+			this.controlPanelComments.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelComments.TabIndex = 3;
+			this.controlPanelComments.Visible = false;
+			this.controlPanelComments.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
 			// 
 			// imageList
 			// 
@@ -170,12 +193,48 @@
 			this.imageList.Images.SetKeyName(26, "CommentPlay");
 			this.imageList.Images.SetKeyName(27, "Settings");
 			// 
+			// controlPanelConfiguration
+			// 
+			this.controlPanelConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelConfiguration.ImageList = this.imageList;
+			this.controlPanelConfiguration.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelConfiguration.Name = "controlPanelConfiguration";
+			this.controlPanelConfiguration.SelectedNode = null;
+			this.controlPanelConfiguration.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelConfiguration.TabIndex = 1;
+			this.controlPanelConfiguration.Visible = false;
+			this.controlPanelConfiguration.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelDatabase
+			// 
+			this.controlPanelDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelDatabase.ImageList = this.imageList;
+			this.controlPanelDatabase.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelDatabase.Name = "controlPanelDatabase";
+			this.controlPanelDatabase.SelectedNode = null;
+			this.controlPanelDatabase.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelDatabase.TabIndex = 4;
+			this.controlPanelDatabase.Visible = false;
+			this.controlPanelDatabase.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelBrowser
+			// 
+			this.controlPanelBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelBrowser.ImageList = this.imageList;
+			this.controlPanelBrowser.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelBrowser.Name = "controlPanelBrowser";
+			this.controlPanelBrowser.SelectedNode = null;
+			this.controlPanelBrowser.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelBrowser.TabIndex = 0;
+			this.controlPanelBrowser.Visible = false;
+			this.controlPanelBrowser.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
 			// labelNotAvailable
 			// 
 			this.labelNotAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labelNotAvailable.Location = new System.Drawing.Point(4, 4);
 			this.labelNotAvailable.Name = "labelNotAvailable";
-			this.labelNotAvailable.Size = new System.Drawing.Size(748, 526);
+			this.labelNotAvailable.Size = new System.Drawing.Size(748, 518);
 			this.labelNotAvailable.TabIndex = 0;
 			this.labelNotAvailable.Text = "Feature not available";
 			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -282,69 +341,11 @@
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
-			// controlPanelLog
-			// 
-			this.controlPanelLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelLog.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelLog.Name = "controlPanelLog";
-			this.controlPanelLog.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelLog.TabIndex = 2;
-			this.controlPanelLog.Visible = false;
-			this.controlPanelLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlPanelLog.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelComments
-			// 
-			this.controlPanelComments.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelComments.ImageList = this.imageList;
-			this.controlPanelComments.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelComments.Name = "controlPanelComments";
-			this.controlPanelComments.SelectedNode = null;
-			this.controlPanelComments.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelComments.TabIndex = 3;
-			this.controlPanelComments.Visible = false;
-			this.controlPanelComments.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelConfiguration
-			// 
-			this.controlPanelConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelConfiguration.ImageList = this.imageList;
-			this.controlPanelConfiguration.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelConfiguration.Name = "controlPanelConfiguration";
-			this.controlPanelConfiguration.SelectedNode = null;
-			this.controlPanelConfiguration.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelConfiguration.TabIndex = 1;
-			this.controlPanelConfiguration.Visible = false;
-			this.controlPanelConfiguration.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelDatabase
-			// 
-			this.controlPanelDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelDatabase.ImageList = this.imageList;
-			this.controlPanelDatabase.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelDatabase.Name = "controlPanelDatabase";
-			this.controlPanelDatabase.SelectedNode = null;
-			this.controlPanelDatabase.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelDatabase.TabIndex = 4;
-			this.controlPanelDatabase.Visible = false;
-			// 
-			// controlPanelBrowser
-			// 
-			this.controlPanelBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelBrowser.ImageList = this.imageList;
-			this.controlPanelBrowser.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelBrowser.Name = "controlPanelBrowser";
-			this.controlPanelBrowser.SelectedNode = null;
-			this.controlPanelBrowser.Size = new System.Drawing.Size(244, 450);
-			this.controlPanelBrowser.TabIndex = 0;
-			this.controlPanelBrowser.Visible = false;
-			this.controlPanelBrowser.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1008, 582);
+			this.ClientSize = new System.Drawing.Size(1008, 574);
 			this.Controls.Add(this.toolStripContainer);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip;

@@ -47,9 +47,9 @@ namespace YtCrawler.Database
 		public string[] Servers { get { return this.key.GetSubKeyNames(); } }
 
 		/// <summary>
-		/// Returns the name of the root registry key.
+		/// Returns the database registry key.
 		/// </summary>
-		public string Key { get { return this.key.Name; } }
+		public RegistryKey Key { get { return this.key; } }
 
 		/// <summary>
 		/// Removes the configuration for server with the specified identifier.

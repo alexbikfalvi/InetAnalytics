@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.textBoxText = new System.Windows.Forms.TextBox();
 			this.textBoxCommenter = new System.Windows.Forms.TextBox();
@@ -36,17 +36,17 @@
 			this.labelText = new System.Windows.Forms.Label();
 			this.labelCommenter = new System.Windows.Forms.Label();
 			this.labelItem = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// pictureBox1
+			// pictureBox
 			// 
-			this.pictureBox1.Image = global::YtAnalytics.Resources.CommentAdd_48;
-			this.pictureBox1.Location = new System.Drawing.Point(20, 20);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-			this.pictureBox1.TabIndex = 0;
-			this.pictureBox1.TabStop = false;
+			this.pictureBox.Image = global::YtAnalytics.Resources.CommentAdd_48;
+			this.pictureBox.Location = new System.Drawing.Point(20, 20);
+			this.pictureBox.Name = "pictureBox";
+			this.pictureBox.Size = new System.Drawing.Size(48, 48);
+			this.pictureBox.TabIndex = 0;
+			this.pictureBox.TabStop = false;
 			// 
 			// labelTitle
 			// 
@@ -130,10 +130,10 @@
 			this.Controls.Add(this.labelCommenter);
 			this.Controls.Add(this.labelItem);
 			this.Controls.Add(this.labelTitle);
-			this.Controls.Add(this.pictureBox1);
+			this.Controls.Add(this.pictureBox);
 			this.Name = "ControlAddComment";
 			this.Size = new System.Drawing.Size(400, 290);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -141,7 +141,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.Label labelTitle;
 		private System.Windows.Forms.TextBox textBoxText;
 		private System.Windows.Forms.TextBox textBoxCommenter;
