@@ -73,7 +73,7 @@ namespace YtAnalytics.Controls
 			public TreeNode Node { get { return this.node; } }
 		};
 
-		private static string logSource = "Database Servers";
+		private static string logSource = "Database";
 
 		private Crawler crawler;
 
@@ -535,7 +535,20 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnConnect(object sender, EventArgs e)
 		{
+			// If there are no selected items, do nothing.
+			if (this.listView.SelectedItems.Count == 0) return;
 
+			// Get the selected server.
+			DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
+
+			// Connect asynchronously to the database server.
+			server.OpenAsync(this.OnConnected);
+
+			// 
+		}
+
+		private void OnConnected(DbServerAsyncState asyncState)
+		{
 		}
 
 		/// <summary>

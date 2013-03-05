@@ -28,7 +28,7 @@ namespace YtCrawler.Database
 	/// </summary>
 	public sealed class DbServerMsSql : DbServer
 	{
-		private SqlConnectionStringBuilder connectionString;
+		private SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 		private SqlConnection connection = new SqlConnection();
 		private Mutex mutex = new Mutex();
 
@@ -278,13 +278,12 @@ namespace YtCrawler.Database
 		private void Initialize()
 		{
 			// Create the connection string for this server.
-			this.connectionString = new SqlConnectionStringBuilder();
 			this.connectionString.DataSource = this.DataSource;
 			this.connectionString.UserID = this.Username;
 			this.connectionString.Password = this.Password;
 
 			// Set the connection for the connection string.
-			this.connection.ConnectionString = this.connection.ConnectionString;
+			this.connection.ConnectionString = this.connectionString.ConnectionString;
 		}
 
 		/// <summary>
