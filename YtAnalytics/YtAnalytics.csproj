@@ -55,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlServerProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlServerProperties.Designer.cs">
+      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlVideoComment.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -277,11 +283,17 @@
     <Compile Include="Controls\ControlAddServer.Designer.cs">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlServer.cs">
+    <Compile Include="Controls\ControlChangePassword.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlServer.Designer.cs">
-      <DependentUpon>ControlServer.cs</DependentUpon>
+    <Compile Include="Controls\ControlChangePassword.Designer.cs">
+      <DependentUpon>ControlChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormChangePassword.Designer.cs">
+      <DependentUpon>FormChangePassword.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormServerProperties.cs">
       <SubType>Form</SubType>
@@ -368,6 +380,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\ControlServerProperties.resx">
+      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlVideoComment.resx">
       <DependentUpon>ControlVideoComment.cs</DependentUpon>
     </EmbeddedResource>
@@ -476,8 +491,11 @@
     <EmbeddedResource Include="Controls\ControlAddServer.resx">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlServer.resx">
-      <DependentUpon>ControlServer.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlChangePassword.resx">
+      <DependentUpon>ControlChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormChangePassword.resx">
+      <DependentUpon>FormChangePassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormServerProperties.resx">
       <DependentUpon>FormServerProperties.cs</DependentUpon>

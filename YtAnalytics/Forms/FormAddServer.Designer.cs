@@ -47,7 +47,7 @@
 			// buttonAdd
 			// 
 			this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonAdd.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.buttonAdd.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonAdd.Enabled = false;
 			this.buttonAdd.Location = new System.Drawing.Point(216, 237);
 			this.buttonAdd.Name = "buttonAdd";

@@ -115,7 +115,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when the server state has changed.
 		/// </summary>
-		public event ServerStateChangedEventHandler StateChanged;
+		public event ServerStateChangedEventHandler ServerStateChanged;
 		/// <summary>
 		/// An event raised when the primary server has changed.
 		/// </summary>
@@ -301,7 +301,7 @@ namespace YtCrawler.Database
 			}
 			
 			// Create the asynchronous state.
-			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
+			DbServerAsyncState asyncState = new DbServerAsyncState(server, userState);
 			
 			// Dispose the server object asynchronously on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
@@ -318,7 +318,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// Set the exception in the asynchronous state.
-						asyncState.Exception = exception;
+						asyncState.Exception = new DbException(string.Format("Removing the database server \'{0}\' failed.", server.Name), exception); ;
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();
@@ -396,7 +396,7 @@ namespace YtCrawler.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnStateChanged(DbServer server, StateChangeEventArgs e)
 		{
-			if (this.StateChanged != null) this.StateChanged(server, e);
+			if (this.ServerStateChanged != null) this.ServerStateChanged(server, e);
 		}
 
 		/// <summary>

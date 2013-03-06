@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -79,6 +80,7 @@ namespace YtAnalytics.Controls
 
 		private FormAddServer formAdd = new FormAddServer();
 		private FormServerProperties formProperties = new FormServerProperties();
+		private FormChangePassword formChangePassword = new FormChangePassword();
 		private ControlMessage message = new ControlMessage();
 
 		private ShowMessageEventHandler delegateShowMessage;
@@ -152,11 +154,14 @@ namespace YtAnalytics.Controls
 			// Add the event handlers for the servers.
 			this.crawler.Servers.ServerAdded += this.OnServerAdded;
 			this.crawler.Servers.ServerChanged += this.OnServerChanged;
+			this.crawler.Servers.ServerStateChanged += OnServerStateChanged;
 			this.crawler.Servers.ServerPrimaryChanged += this.OnPrimaryServerChanged;
 			this.crawler.Servers.ServerRemoved += this.OnServerRemoved;
 
 			// Add the event handler for the server add form.
 			this.formAdd.ServerAdded += OnAdded;
+			// Add the event handler to the change password form.
+			this.formChangePassword.PasswordChanged += OnPasswordChanged;
 		}
 
 		// Private methods.
@@ -304,6 +309,36 @@ namespace YtAnalytics.Controls
 				controls.Item.SubItems[2].Text = server.State.ToString();
 				controls.Item.SubItems[3].Text = server.Version;
 				controls.Node.Text = this.GetServerTreeName(server);
+
+				// Call the selected item change event to update the buttons.
+				this.OnServerSelectionChanged(this, null);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the state of a server connection has changed.
+		/// </summary>
+		/// <param name="server">The server.</param>
+		/// <param name="e">The state change arguments.</param>
+		void OnServerStateChanged(DbServer server, StateChangeEventArgs e)
+		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new ServerStateChangedEventHandler(this.OnServerStateChanged), new object[] { server, e });
+			else
+			{
+				// If there are no controls for this server, ignore the event.
+				if (!this.items.ContainsKey(server.Id)) return;
+
+				// Get the controls corresponding to this server.
+				ServerControls controls = this.items[server.Id];
+
+				// Update the list view item.
+				controls.Item.SubItems[2].Text = server.State.ToString();
+				controls.Item.SubItems[3].Text = server.Version;
+				controls.Item.ImageIndex = (int)server.State;
+
+				// Update the tree node.
+				controls.Node.ImageIndex = this.treeImageIndex[(int)server.State];
 
 				// Call the selected item change event to update the buttons.
 				this.OnServerSelectionChanged(this, null);
@@ -541,14 +576,103 @@ namespace YtAnalytics.Controls
 			// Get the selected server.
 			DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
 
-			// Connect asynchronously to the database server.
-			server.OpenAsync(this.OnConnected);
-
-			// 
+			// Show a connecting message.
+			this.ShowMessage(Resources.Connect_48, string.Format("Connecting to the database server \'{0}\'...", server.Name)); 
+			try
+			{
+				// Connect asynchronously to the database server.
+				server.OpenAsync(this.OnConnected);
+			}
+			catch (Exception exception)
+			{
+				// If an exception occurs, hide the connecting message.
+				this.HideMessage();
+				// Display an error message box to the user.
+				MessageBox.Show(
+					this,
+					string.Format("Connecting to the database server \'{0}\' failed. {1}", server.Name, exception.Message),
+					"Connecting to Database Failed",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+					);
+			}
 		}
 
+		/// <summary>
+		/// A callback method called when a connection to a server has completed.
+		/// </summary>
+		/// <param name="asyncState">The asynchronous state.</param>
 		private void OnConnected(DbServerAsyncState asyncState)
 		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnConnected), new object[] { asyncState });
+			else
+			{
+				// Hide the connecting message.
+				this.HideMessage();
+				// Check if an exception occurred.
+				if (asyncState.Exception != null)
+				{
+					// If this a database exception.
+					if (asyncState.Exception.IsDb)
+					{
+						// Check the error type.
+						switch (asyncState.Exception.DbType)
+						{
+							case DbException.Type.LoginPasswordExpired:
+								if (DialogResult.Yes == MessageBox.Show(
+									this,
+									string.Format("The login password for the database server \'{0}\' has expired. Do you wish to change the password now?", asyncState.Server.Name),
+									"Login Password Expired",
+									MessageBoxButtons.YesNo,
+									MessageBoxIcon.Question,
+									MessageBoxDefaultButton.Button2
+									))
+								{
+									// Change password.
+									this.OnChangePassword(asyncState.Server);
+								}
+								break;
+							case DbException.Type.LoginPasswordMustChange:
+								if (DialogResult.Yes == MessageBox.Show(
+									this,
+									string.Format("To connect to the database server \'{0}\' you must change the password before the first login. Do you wish to change the password now?", asyncState.Server.Name),
+									"Must Change Password",
+									MessageBoxButtons.YesNo,
+									MessageBoxIcon.Question,
+									MessageBoxDefaultButton.Button2
+									))
+								{
+									// Change password.
+									this.OnChangePassword(asyncState.Server);
+								}
+								break;
+							default:
+								// Display an error message.
+								MessageBox.Show(
+									this,
+									string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
+									"Connecting to Database Failed",
+									MessageBoxButtons.OK,
+									MessageBoxIcon.Error
+									);
+								break;
+						}
+					}
+					else
+					{
+						// Display an error message.
+						MessageBox.Show(
+							this,
+							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
+							"Connecting to Database Failed",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error
+							);
+					}
+				}
+				// Else, do nothing.
+			}
 		}
 
 		/// <summary>
@@ -558,7 +682,178 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnDisconnect(object sender, EventArgs e)
 		{
+			// If there are no selected items, do nothing.
+			if (this.listView.SelectedItems.Count == 0) return;
 
+			// Get the selected server.
+			DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
+
+			// Show a connecting message.
+			this.ShowMessage(Resources.Connect_48, string.Format("Disconnecting from the database server \'{0}\'...", server.Name));
+			try
+			{
+				// Connect asynchronously to the database server.
+				server.CloseAsync(this.OnDisconnected);
+			}
+			catch (Exception exception)
+			{
+				// If an exception occurs, hide the connecting message.
+				this.HideMessage();
+				// Display an error message box to the user.
+				MessageBox.Show(
+					this,
+					string.Format("Disconnecting from the database server \'{0}\' failed. {1}", server.Name, exception.Message),
+					"Disconnecting from Database Failed",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+					);
+			}
+		}
+
+		/// <summary>
+		/// A callback method called when a disconnection to a server has completed.
+		/// </summary>
+		/// <param name="asyncState">The asynchronous state.</param>
+		private void OnDisconnected(DbServerAsyncState asyncState)
+		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnDisconnected), new object[] { asyncState });
+			else
+			{
+				// Hide the connecting message.
+				this.HideMessage();
+				// Check if an exception occurred.
+				if (asyncState.Exception != null)
+				{
+					// If this a database exception.
+					if (asyncState.Exception.IsDb)
+					{
+						// Display a database error message.
+						MessageBox.Show(
+							this,
+							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
+							"Connecting to Database Failed",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error
+							);
+					}
+					else
+					{
+						// Display a generic error message.
+						MessageBox.Show(
+							this,
+							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
+							"Connecting to Database Failed",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error
+							);
+					}
+				}
+				// Else, do nothing.
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user changes the password.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnChangePassword(object sender, EventArgs e)
+		{
+			// If there are no selected items, do nothing.
+			if (this.listView.SelectedItems.Count == 0) return;
+
+			// Get the selected server.
+			DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
+
+			// Change the password for the selected server.
+			this.OnChangePassword(server);
+		}
+
+
+		/// <summary>
+		/// Changes the password for the specified database server.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		private void OnChangePassword(DbServer server)
+		{
+			// Open a change password dialog for the specified database server.
+			this.formChangePassword.ShowDialog(this, server.Password, server);
+		}
+
+		/// <summary>
+		/// An event handler called when the user changes the password for a database server.
+		/// </summary>
+		/// <param name="oldPassword">The old password.</param>
+		/// <param name="newPassword">The new password.</param>
+		/// <param name="state">The user state.</param>
+		private void OnPasswordChanged(string oldPassword, string newPassword, object state)
+		{
+			// Get the server.
+			DbServer server = state as DbServer;
+			// Show a password changing message.
+			this.ShowMessage(Resources.Connect_48, string.Format("Changing the password for the database server \'{0}\'...", server.Name));
+			try
+			{
+				// Change the password asynchronously of the database server.
+				server.ChangePassword(newPassword, this.OnPasswordChangeCompleted);
+			}
+			catch (Exception exception)
+			{
+				// If an exception occurs, hide the connecting message.
+				this.HideMessage();
+				// Display an error message box to the user.
+				MessageBox.Show(
+					this,
+					string.Format("Connecting to the database server \'{0}\' failed. {1}", server.Name, exception.Message),
+					"Connecting to Database Failed",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+					);
+			}			
+		}
+
+		/// <summary>
+		/// A callback method called when changing the password of a server completed.
+		/// </summary>
+		/// <param name="asyncState"></param>
+		private void OnPasswordChangeCompleted(DbServerAsyncState asyncState)
+		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnPasswordChangeCompleted), new object[] { asyncState });
+			else
+			{
+				// Hide the connecting message.
+				this.HideMessage();
+				// Check if an exception occurred.
+				if (asyncState.Exception != null)
+				{
+					// If this a database exception.
+					if (asyncState.Exception.IsDb)
+					{
+						// Display a database error message.
+						MessageBox.Show(
+							this,
+							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
+							"Connecting to Database Failed",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error
+							);
+					}
+					else
+					{
+						// Display a generic error message.
+						MessageBox.Show(
+							this,
+							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
+							"Connecting to Database Failed",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error
+							);
+					}
+				}
+				// Else, do nothing.
+			}
 		}
 
 		/// <summary>
@@ -577,6 +872,7 @@ namespace YtAnalytics.Controls
 				this.buttonPrimary.Enabled = !this.crawler.Servers.IsPrimary(server);
 				this.buttonConnect.Enabled = server.State == DbServer.ServerState.Disconnected;
 				this.buttonDisconnect.Enabled = server.State == DbServer.ServerState.Connected;
+				this.buttonChangePassword.Enabled = server.State == DbServer.ServerState.Connected || server.State == DbServer.ServerState.Disconnected;
 			}
 			else
 			{
@@ -584,10 +880,12 @@ namespace YtAnalytics.Controls
 				this.buttonPrimary.Enabled = false;
 				this.buttonConnect.Enabled = false;
 				this.buttonDisconnect.Enabled = false;
+				this.buttonChangePassword.Enabled = false;
 			}
 			this.menuItemPrimary.Enabled = this.buttonPrimary.Enabled;
 			this.menuItemConnect.Enabled = this.buttonConnect.Enabled;
 			this.menuItemDisconnect.Enabled = this.buttonDisconnect.Enabled;
+			this.menuItemChangePassword.Enabled = this.buttonChangePassword.Enabled;
 		}
 
 		/// <summary>
@@ -623,16 +921,6 @@ namespace YtAnalytics.Controls
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when the user changes the password.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnChangePassword(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

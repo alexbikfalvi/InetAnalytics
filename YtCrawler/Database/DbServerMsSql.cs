@@ -41,7 +41,7 @@ namespace YtCrawler.Database
 			: base(key, id)
 		{
 			// Initialize the server with the current configuration.
-			this.Initialize();
+			this.OnInitialized();
 
 			// Set the connection event handlers.
 			this.connection.StateChange += this.OnStateChanged;
@@ -67,7 +67,7 @@ namespace YtCrawler.Database
 			: base(key, id, name, dataSource, username, password)
 		{
 			// Initialize the server with the current configuration.
-			this.Initialize();
+			this.OnInitialized();
 
 			// Set the connection event handlers.
 			this.connection.StateChange += this.OnStateChanged;
@@ -140,7 +140,7 @@ namespace YtCrawler.Database
 			// Call the event handler.
 			base.OnOpening();
 			// Create a new asynchrounous state for this operation.
-			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
 			// Begin open the connection asynchronously on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
 				{
@@ -153,7 +153,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the callback exception.
-						asyncState.Exception = exception;
+						asyncState.Exception = new DbException(string.Format("Opening the connection to the database server \'{0}\' failed.", this.Name), exception);
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();
@@ -195,7 +195,7 @@ namespace YtCrawler.Database
 			// Call the event handler.
 			base.OnReopening();
 			// Create a new asynchrounous state for this operation.
-			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
 			// Begin open the connection asynchronously on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
 				{
@@ -208,7 +208,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the callback exception.
-						asyncState.Exception = exception;
+						asyncState.Exception = new DbException(string.Format("Reopening the connection to the database server \'{0}\' failed.", this.Name), exception);
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();
@@ -248,7 +248,7 @@ namespace YtCrawler.Database
 			// Call the event handler.
 			base.OnClosing();
 			// Create a new asynchrounous state for this operation.
-			DbServerAsyncState asyncState = new DbServerAsyncState(userState);
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
 			// Begin open the connection asynchronously on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
 				{
@@ -261,13 +261,70 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the callback exception.
-						asyncState.Exception = exception;
+						asyncState.Exception = new DbException(string.Format("Closing the connection to the database server \'{0}\' failed.", this.Name), exception); ;
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();
 					// Call the callback method with the given state.
 					if (callback != null) callback(asyncState);
 				});
+			return asyncState;
+		}
+
+		/// <summary>
+		/// Changes the current password of the database server.
+		/// </summary>
+		/// <param name="newPassword">The new password.</param>
+		public override void ChangePassword(string newPassword)
+		{
+			try
+			{
+				// Lock the mutex (only one state changing operation allowed at one time).
+				this.mutex.WaitOne();
+				// Change the server password.
+				SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword);
+				// If the password change was successfull, update the configuration.
+				this.Password = newPassword;
+				// Save the configuration.
+				this.SaveConfiguration();
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}
+		}
+
+		/// <summary>
+		/// Changes the current password of the database server asynchronously.
+		/// </summary>
+		/// <param name="newPassword">The new password.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public override IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null)
+		{
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
+			// Begin changing the password asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				// Execute asynchronously on the thread pool.
+				try
+				{
+					// Change the database server password.
+					this.ChangePassword(newPassword);
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, set the callback exception.
+					asyncState.Exception = new DbException(string.Format("Changing the password for the database server \'{0}\' failed.", this.Name), exception); ;
+				}
+				// Complete the asynchronous operation.
+				asyncState.Complete();
+				// Call the callback method with the given state.
+				if (callback != null) callback(asyncState);
+			});
 			return asyncState;
 		}
 
@@ -293,7 +350,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Initializes the server configuration.
 		/// </summary>
-		private void Initialize()
+		protected sealed override void OnInitialized()
 		{
 			// Create the connection string for this server.
 			this.connectionString.DataSource = this.DataSource;

@@ -28,6 +28,7 @@ namespace YtCrawler.Database
 	/// </summary>
 	public sealed class DbServerAsyncState : IAsyncResult
 	{
+		private DbServer server;
 		private object state;
 		private AutoResetEvent wait = new AutoResetEvent(false);
 		private bool completed = false;
@@ -36,8 +37,10 @@ namespace YtCrawler.Database
 		/// Creates a new instance of the asynchronous state.
 		/// </summary>
 		/// <param name="state">The user state.</param>
-		public DbServerAsyncState(object state)
+		public DbServerAsyncState(DbServer server, object state)
 		{
+			// Save the database server.
+			this.server = server;
 			// Save the user state.
 			this.state = state;
 		}
@@ -45,9 +48,14 @@ namespace YtCrawler.Database
 		// Public properties.
 
 		/// <summary>
+		/// Returns the database server that generated the exception.
+		/// </summary>
+		public DbServer Server { get { return this.server; } }
+
+		/// <summary>
 		/// Gets or sets the asynchronous exception.
 		/// </summary>
-		public Exception Exception { get; set; }
+		public DbException Exception { get; set; }
 
 		/// <summary>
 		/// Returns the asynchronous user state.

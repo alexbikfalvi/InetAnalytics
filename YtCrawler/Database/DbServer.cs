@@ -192,6 +192,9 @@ namespace YtCrawler.Database
 			Registry.SetValue(this.key, "DataSource", this.dataSource, RegistryValueKind.String);
 			Registry.SetValue(this.key, "Username", this.username, RegistryValueKind.String);
 			Registry.SetValue(this.key, "Password", CrawlerCrypto.Encrypt(this.password), RegistryValueKind.Binary);
+
+			// Re-initialize the server object.
+			this.OnInitialized();
 		}
 
 		/// <summary>
@@ -252,15 +255,27 @@ namespace YtCrawler.Database
 		/// <returns>The asynchronous result.</returns>
 		public abstract IAsyncResult CloseAsync(DbServerCallback callback, object userState = null);
 
-		public abstract void ChangePassword(string newPassword)
-		{
-		}
+		/// <summary>
+		/// Changes the current password of the database server.
+		/// </summary>
+		/// <param name="newPassword">The new password.</param>
+		public abstract void ChangePassword(string newPassword);
 
-		public abstract IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null)
-		{
-		}
+		/// <summary>
+		/// Changes the current password of the database server asynchronously.
+		/// </summary>
+		/// <param name="newPassword">The new password.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public abstract IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null);
 
 		// Protected methods.
+
+		/// <summary>
+		/// A method called when the server object is being initialized.
+		/// </summary>
+		protected abstract void OnInitialized();
 
 		/// <summary>
 		/// A  method called when the server object is being disposed.
