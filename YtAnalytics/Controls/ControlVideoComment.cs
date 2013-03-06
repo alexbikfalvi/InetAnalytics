@@ -69,6 +69,9 @@ namespace YtAnalytics.Controls
 					this.textBoxComment.Text = string.Empty;
 					this.checkBoxSpam.Checked = false;
 				}
+				this.textBoxPublished.Select();
+				this.textBoxPublished.SelectionStart = 0;
+				this.textBoxPublished.SelectionLength = 0;
 			}
 		}
 	}

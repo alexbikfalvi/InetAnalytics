@@ -109,6 +109,17 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
+		/// Selects the current control.
+		/// </summary>
+		public new void Select()
+		{
+			base.Select();
+			this.textBoxName.Select();
+			this.textBoxName.SelectionStart = 0;
+			this.textBoxName.SelectionLength = 0;
+		}
+
+		/// <summary>
 		/// An event handler called when the input has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>

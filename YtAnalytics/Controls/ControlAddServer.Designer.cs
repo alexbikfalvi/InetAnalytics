@@ -88,9 +88,9 @@
 			this.labelDataSource.AutoSize = true;
 			this.labelDataSource.Location = new System.Drawing.Point(17, 129);
 			this.labelDataSource.Name = "labelDataSource";
-			this.labelDataSource.Size = new System.Drawing.Size(68, 13);
+			this.labelDataSource.Size = new System.Drawing.Size(41, 13);
 			this.labelDataSource.TabIndex = 5;
-			this.labelDataSource.Text = "&Data source:";
+			this.labelDataSource.Text = "&Server:";
 			// 
 			// labelName
 			// 

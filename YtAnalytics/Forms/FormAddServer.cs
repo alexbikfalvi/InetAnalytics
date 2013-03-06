@@ -104,6 +104,8 @@ namespace YtAnalytics.Forms
 			// Set the primary check box.
 			this.control.MakePrimary = primary;
 			this.control.MakePrimaryEnabled = primaryEnabled;
+			// Select the control.
+			this.control.Select();
 			// Show the dialog.
 			base.ShowDialog(owner);
 		}

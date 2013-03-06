@@ -54,6 +54,7 @@ namespace YtAnalytics.Controls
 			get { return this.type; }
 			set
 			{
+				this.type = value;
 				switch (value)
 				{
 					case Comment.CommentType.Video:
@@ -69,7 +70,6 @@ namespace YtAnalytics.Controls
 						this.labelItem.Text = "&Playlist:";
 						break;
 				}
-				this.type = value;
 			}
 		}
 
@@ -98,6 +98,17 @@ namespace YtAnalytics.Controls
 		{
 			get { return this.textBoxText.Text; }
 			set { this.textBoxText.Text = value; }
+		}
+
+		/// <summary>
+		/// Selects the current control.
+		/// </summary>
+		public new void Select()
+		{
+			base.Select();
+			this.textBoxText.Select();
+			this.textBoxText.SelectionStart = 0;
+			this.textBoxText.SelectionLength = 0;
 		}
 
 		/// <summary>

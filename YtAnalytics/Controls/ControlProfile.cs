@@ -124,9 +124,12 @@ namespace YtAnalytics.Controls
 					this.pictureBox.Image = Resources.FileVideo_48;
 					this.pictureBox.SizeMode = PictureBoxSizeMode.Normal;
 					ThreadPool.QueueUserWorkItem(this.UpdateThumbnailsAsync, this.profile);
-				}
-				else
-				{
+
+					// Select the first tab page.
+					this.tabControl.SelectedTab = this.tabPageGeneral;
+					this.textBoxId.Select();
+					this.textBoxId.SelectionStart = 0;
+					this.textBoxId.SelectionLength = 0;
 				}
 			}
 		}

@@ -46,6 +46,7 @@
 			this.columnHeadeVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.log = new YtAnalytics.Controls.ControlLogList();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemPrimary = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,7 +54,10 @@
 			this.menuItemDisconnect = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.log = new YtAnalytics.Controls.ControlLogList();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonChangePassword = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -71,7 +75,9 @@
             this.buttonPrimary,
             this.toolStripSeparator2,
             this.buttonConnect,
-            this.buttonDisconnect});
+            this.buttonDisconnect,
+            this.toolStripSeparator5,
+            this.buttonChangePassword});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
@@ -217,6 +223,14 @@
 			this.imageList.Images.SetKeyName(2, "ServerWarning");
 			this.imageList.Images.SetKeyName(3, "ServerBusy");
 			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(798, 169);
+			this.log.TabIndex = 0;
+			// 
 			// contextMenu
 			// 
 			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -225,28 +239,30 @@
             this.menuItemConnect,
             this.menuItemDisconnect,
             this.toolStripSeparator4,
+            this.menuItemChangePassword,
+            this.toolStripSeparator6,
             this.menuItemProperties});
 			this.contextMenu.Name = "contextMenuStrip";
-			this.contextMenu.Size = new System.Drawing.Size(148, 104);
+			this.contextMenu.Size = new System.Drawing.Size(169, 132);
 			// 
 			// menuItemPrimary
 			// 
 			this.menuItemPrimary.Image = global::YtAnalytics.Resources.ServerStar_16;
 			this.menuItemPrimary.Name = "menuItemPrimary";
-			this.menuItemPrimary.Size = new System.Drawing.Size(147, 22);
+			this.menuItemPrimary.Size = new System.Drawing.Size(168, 22);
 			this.menuItemPrimary.Text = "Make primary";
 			this.menuItemPrimary.Click += new System.EventHandler(this.OnMakePrimary);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(144, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
 			// 
 			// menuItemConnect
 			// 
 			this.menuItemConnect.Image = global::YtAnalytics.Resources.Connect_16;
 			this.menuItemConnect.Name = "menuItemConnect";
-			this.menuItemConnect.Size = new System.Drawing.Size(147, 22);
+			this.menuItemConnect.Size = new System.Drawing.Size(168, 22);
 			this.menuItemConnect.Text = "Connect";
 			this.menuItemConnect.Click += new System.EventHandler(this.OnConnect);
 			// 
@@ -254,30 +270,48 @@
 			// 
 			this.menuItemDisconnect.Image = global::YtAnalytics.Resources.Disconnect_16;
 			this.menuItemDisconnect.Name = "menuItemDisconnect";
-			this.menuItemDisconnect.Size = new System.Drawing.Size(147, 22);
+			this.menuItemDisconnect.Size = new System.Drawing.Size(168, 22);
 			this.menuItemDisconnect.Text = "Disconnect";
 			this.menuItemDisconnect.Click += new System.EventHandler(this.OnDisconnect);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(144, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(165, 6);
 			// 
 			// menuItemProperties
 			// 
 			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
 			this.menuItemProperties.Name = "menuItemProperties";
-			this.menuItemProperties.Size = new System.Drawing.Size(147, 22);
+			this.menuItemProperties.Size = new System.Drawing.Size(168, 22);
 			this.menuItemProperties.Text = "Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
-			// log
+			// toolStripSeparator5
 			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(798, 169);
-			this.log.TabIndex = 0;
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonChangePassword
+			// 
+			this.buttonChangePassword.Image = global::YtAnalytics.Resources.PasswordChange_16;
+			this.buttonChangePassword.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonChangePassword.Name = "buttonChangePassword";
+			this.buttonChangePassword.Size = new System.Drawing.Size(121, 22);
+			this.buttonChangePassword.Text = "Cha&nge password";
+			this.buttonChangePassword.Click += new System.EventHandler(this.OnChangePassword);
+			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(165, 6);
+			// 
+			// menuItemChangePassword
+			// 
+			this.menuItemChangePassword.Image = global::YtAnalytics.Resources.PasswordChange_16;
+			this.menuItemChangePassword.Name = "menuItemChangePassword";
+			this.menuItemChangePassword.Size = new System.Drawing.Size(168, 22);
+			this.menuItemChangePassword.Text = "Change password";
 			// 
 			// ControlServers
 			// 
@@ -324,5 +358,9 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemDisconnect;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripButton buttonChangePassword;
+		private System.Windows.Forms.ToolStripMenuItem menuItemChangePassword;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
 	}
 }

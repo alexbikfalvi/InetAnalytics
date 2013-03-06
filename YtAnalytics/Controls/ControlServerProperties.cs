@@ -35,8 +35,12 @@ namespace YtAnalytics.Controls
 	public partial class ControlServerProperties : UserControl
 	{
 		private DbServer server;
-		private Font fontNormal;
-		private Font fontItalic;
+		private static Image[] images = {
+											Resources.ServerDown_32,
+											Resources.ServerUp_32,
+											Resources.ServerError_32,
+											Resources.ServerBusy_32
+										};
 
 		/// <summary>
 		/// Creates a new log event control instance.
@@ -44,9 +48,6 @@ namespace YtAnalytics.Controls
 		public ControlServerProperties()
 		{
 			InitializeComponent();
-
-			this.fontNormal = this.textBoxPassword.Font;
-			this.fontItalic = new Font(this.fontNormal, FontStyle.Italic);
 		}
 
 		/// <summary>
@@ -71,13 +72,23 @@ namespace YtAnalytics.Controls
 					this.textBoxType.Text = DbServers.ServerTypeNames[(int)value.Type];
 					this.textBoxDataSource.Text = value.DataSource;
 					this.textBoxUsername.Text = value.Username;
-					this.textBoxPassword.Text = "(type here to change the password)";
-					this.textBoxPassword.UseSystemPasswordChar = false;
-					this.textBoxPassword.Font = this.fontItalic;
+					this.textBoxPassword.Text = value.Password;
 					this.tabControl.Visible = true;
+					this.pictureBox.Image = ControlServerProperties.images[(int)value.State];
 				}
+				this.tabControl.SelectedTab = this.tabPageGeneral;
 				this.textBoxName.Select();
+				this.textBoxName.SelectionStart = 0;
+				this.textBoxName.SelectionLength = 0;
 			}
+		}
+		/// <summary>
+		/// Gets or sets whether this is the primary database server.
+		/// </summary>
+		public bool IsPrimary
+		{
+			get { return this.checkBoxPrimary.Checked; }
+			set { this.checkBoxPrimary.Checked = value; }
 		}
 		/// <summary>
 		/// Gets the new server name.
@@ -94,7 +105,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// Gets the new server password.
 		/// </summary>
-		public string Password { get { return this.textBoxPassword.Font.Italic ? this.server.Password : this.textBoxPassword.Text; } }
+		public string Password { get { return this.textBoxPassword.Text; } }
 
 		/// <summary>
 		/// An event raised when the server configuration has changed.
@@ -112,18 +123,6 @@ namespace YtAnalytics.Controls
 			this.labelTitle.Text = this.textBoxName.Text;
 			// Raise the configuration changed event.
 			if (this.ConfigurationChanged != null) this.ConfigurationChanged(sender, e);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the password field.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnPasswordChange(object sender, EventArgs e)
-		{
-			this.textBoxPassword.Text = string.Empty;
-			this.textBoxPassword.Font = this.fontNormal;
-			this.textBoxPassword.UseSystemPasswordChar = true;
 		}
 	}
 }

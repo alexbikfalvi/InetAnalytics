@@ -56,6 +56,7 @@ namespace YtAnalytics.Controls
 			get { return this.exception; }
 			set
 			{
+				this.exception = value;
 				if (null == value)
 				{
 					this.labelException.Text = "No exception";
@@ -88,7 +89,11 @@ namespace YtAnalytics.Controls
 				}
 				this.linkLabelInner.Width = this.linkLabelInner.PreferredWidth + 20;
 				this.linkLabelInner.Height = this.linkLabelInner.PreferredHeight > 16 ? this.linkLabelInner.PreferredHeight : 16;
-				this.exception = value;
+
+				this.tabControl.SelectedTab = this.tabPageGeneral;
+				this.textBoxType.Select();
+				this.textBoxType.SelectionStart = 0;
+				this.textBoxType.SelectionLength = 0;
 			}
 		}
 

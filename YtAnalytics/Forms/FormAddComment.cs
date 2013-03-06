@@ -87,6 +87,7 @@ namespace YtAnalytics.Forms
 			this.control.Item = obj;
 			this.control.User = user;
 			this.control.Text = string.Empty;
+			this.control.Select();
 			base.ShowDialog(owner);
 		}
 

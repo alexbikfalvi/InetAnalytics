@@ -599,7 +599,11 @@ namespace YtAnalytics.Controls
 		{
 			if (this.listView.SelectedItems.Count == 0) return;
 
-			this.formProperties.ShowDialog(this, this.crawler.Servers[this.listView.SelectedItems[0].Tag as string]);
+			// Get the server.
+			DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
+
+			// Show the properties dialog.
+			this.formProperties.ShowDialog(this, server, this.crawler.Servers.IsPrimary(server));
 		}
 
 		/// <summary>
@@ -619,6 +623,16 @@ namespace YtAnalytics.Controls
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user changes the password.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnChangePassword(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

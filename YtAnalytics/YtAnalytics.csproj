@@ -277,11 +277,11 @@
     <Compile Include="Controls\ControlAddServer.Designer.cs">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlServerProperties.cs">
+    <Compile Include="Controls\ControlServer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlServerProperties.Designer.cs">
-      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    <Compile Include="Controls\ControlServer.Designer.cs">
+      <DependentUpon>ControlServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormServerProperties.cs">
       <SubType>Form</SubType>
@@ -476,8 +476,8 @@
     <EmbeddedResource Include="Controls\ControlAddServer.resx">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlServerProperties.resx">
-      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlServer.resx">
+      <DependentUpon>ControlServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormServerProperties.resx">
       <DependentUpon>FormServerProperties.cs</DependentUpon>
@@ -565,6 +565,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\PasswordChange_48.png" />
+    <None Include="Resources\PasswordChange_32.png" />
+    <None Include="Resources\PasswordChange_24.png" />
+    <None Include="Resources\PasswordChange_16.png" />
+    <None Include="Resources\Password_48.png" />
+    <None Include="Resources\Password_32.png" />
+    <None Include="Resources\Password_24.png" />
+    <None Include="Resources\Password_16.png" />
     <None Include="Resources\ServerBusy_48.png" />
     <None Include="Resources\ServerBusy_32.png" />
     <None Include="Resources\ServerBusy_24.png" />

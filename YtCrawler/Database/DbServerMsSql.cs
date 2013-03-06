@@ -88,7 +88,25 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the server version.
 		/// </summary>
-		public override string Version { get { try { return this.connection.ServerVersion; } catch (InvalidOperationException) { return string.Empty; } } }
+		public override string Version
+		{
+			get
+			{
+				try
+				{
+					switch (this.ConnectionState)
+					{
+						case ConnectionState.Open:
+						case ConnectionState.Executing:
+						case ConnectionState.Fetching:
+							return this.connection.ServerVersion;
+						default:
+							return string.Empty;
+					}
+				}
+				catch (InvalidOperationException) { return string.Empty; }
+			}
+		}
 
 		// Public methods.
 

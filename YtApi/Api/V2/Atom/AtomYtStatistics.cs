@@ -43,7 +43,7 @@ namespace YtApi.Api.V2.Atom
 			atom.SubscriberCount = (attr = element.Attribute(XName.Get("subscriberCount"))) != null ? (int?)int.Parse(attr.Value) : null;
 			atom.LastWebAccess = (attr = element.Attribute(XName.Get("lastWebAccess"))) != null ? (DateTime?)DateTime.Parse(attr.Value) : null;
 			atom.FavoriteCount = (attr = element.Attribute(XName.Get("favoriteCount"))) != null ? (int?)int.Parse(attr.Value) : null;
-			atom.TotalUploadViews = (attr = element.Attribute(XName.Get("totalUploadViews"))) != null ? (int?)int.Parse(attr.Value) : null;
+			atom.TotalUploadViews = (attr = element.Attribute(XName.Get("totalUploadViews"))) != null ? (Int64?)Int64.Parse(attr.Value) : null;
 
 			return atom;
 		}
@@ -53,6 +53,6 @@ namespace YtApi.Api.V2.Atom
 		public int? SubscriberCount { get; set; }
 		public DateTime? LastWebAccess { get; set; }
 		public int? FavoriteCount { get; set; }
-		public int? TotalUploadViews { get; set; }
+		public Int64? TotalUploadViews { get; set; }
 	}
 }

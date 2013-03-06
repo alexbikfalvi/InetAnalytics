@@ -73,6 +73,6 @@ namespace YtApi.Api.V2.Data
 		/// For a video, null.
 		/// For a user, the total number of views for all videos.
 		/// </summary>
-		public int? TotalUploadViews { get { return this.atom.TotalUploadViews; } }
+		public Int64? TotalUploadViews { get { return this.atom.TotalUploadViews; } }
 	}
 }

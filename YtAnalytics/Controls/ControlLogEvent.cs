@@ -71,6 +71,7 @@ namespace YtAnalytics.Controls
 			get { return this.evt; }
 			set
 			{
+				this.evt = value;
 				if (null == value)
 				{
 					this.pictureBox.Image = Resources.EventMagenta_32;
@@ -177,7 +178,10 @@ namespace YtAnalytics.Controls
 				}
 				else if (this.tabControl.TabPages.Contains(this.tabPageCode)) this.tabControl.TabPages.Remove(this.tabPageCode);
 
-				this.evt = value;
+				this.tabControl.SelectedTab = this.tabPageGeneral;
+				this.textBoxLevel.Select();
+				this.textBoxLevel.SelectionStart = 0;
+				this.textBoxLevel.SelectionLength = 0;
 			}
 		}
 

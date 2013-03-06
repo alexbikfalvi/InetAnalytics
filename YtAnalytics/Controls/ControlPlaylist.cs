@@ -71,6 +71,9 @@ namespace YtAnalytics.Controls
 					this.textBoxSummary.Text = string.Empty;
 					this.textBoxCount.Text = string.Empty;
 				}
+				this.textBoxId.Select();
+				this.textBoxId.SelectionStart = 0;
+				this.textBoxId.SelectionLength = 0;
 			}
 		}
 	}

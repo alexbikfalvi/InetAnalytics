@@ -31,6 +31,7 @@
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
+			this.checkBoxPrimary = new System.Windows.Forms.CheckBox();
 			this.labelPassword = new System.Windows.Forms.Label();
 			this.labelUsername = new System.Windows.Forms.Label();
 			this.labelDataSource = new System.Windows.Forms.Label();
@@ -73,6 +74,7 @@
 			// 
 			// tabPageGeneral
 			// 
+			this.tabPageGeneral.Controls.Add(this.checkBoxPrimary);
 			this.tabPageGeneral.Controls.Add(this.labelPassword);
 			this.tabPageGeneral.Controls.Add(this.labelUsername);
 			this.tabPageGeneral.Controls.Add(this.labelDataSource);
@@ -92,6 +94,17 @@
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxPrimary
+			// 
+			this.checkBoxPrimary.AutoSize = true;
+			this.checkBoxPrimary.Enabled = false;
+			this.checkBoxPrimary.Location = new System.Drawing.Point(88, 169);
+			this.checkBoxPrimary.Name = "checkBoxPrimary";
+			this.checkBoxPrimary.Size = new System.Drawing.Size(92, 17);
+			this.checkBoxPrimary.TabIndex = 12;
+			this.checkBoxPrimary.Text = "P&rimary server";
+			this.checkBoxPrimary.UseVisualStyleBackColor = true;
 			// 
 			// labelPassword
 			// 
@@ -116,9 +129,9 @@
 			this.labelDataSource.AutoSize = true;
 			this.labelDataSource.Location = new System.Drawing.Point(10, 93);
 			this.labelDataSource.Name = "labelDataSource";
-			this.labelDataSource.Size = new System.Drawing.Size(68, 13);
+			this.labelDataSource.Size = new System.Drawing.Size(41, 13);
 			this.labelDataSource.TabIndex = 6;
-			this.labelDataSource.Text = "Data &source:";
+			this.labelDataSource.Text = "&Server:";
 			// 
 			// textBoxPassword
 			// 
@@ -128,8 +141,8 @@
 			this.textBoxPassword.Name = "textBoxPassword";
 			this.textBoxPassword.Size = new System.Drawing.Size(270, 20);
 			this.textBoxPassword.TabIndex = 11;
+			this.textBoxPassword.UseSystemPasswordChar = true;
 			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
-			this.textBoxPassword.Enter += new System.EventHandler(this.OnPasswordChange);
 			// 
 			// textBoxUsername
 			// 
@@ -253,5 +266,6 @@
 		private System.Windows.Forms.Label labelPassword;
 		private System.Windows.Forms.Label labelUsername;
 		private System.Windows.Forms.Label labelDataSource;
+		private System.Windows.Forms.CheckBox checkBoxPrimary;
 	}
 }

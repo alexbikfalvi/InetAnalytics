@@ -53,6 +53,7 @@ namespace YtAnalytics.Controls
 			get { return this.comment; }
 			set
 			{
+				this.comment = value;
 				if (null == value)
 				{
 					this.labelTitle.Text = "No comment.";
@@ -92,7 +93,10 @@ namespace YtAnalytics.Controls
 							break;
 					}
 				}
-				this.comment = value;
+				this.tabControl.SelectedTab = this.tabPageGeneral;
+				this.textBoxTime.Select();
+				this.textBoxTime.SelectionStart = 0;
+				this.textBoxTime.SelectionLength = 0;
 			}
 		}
 	}

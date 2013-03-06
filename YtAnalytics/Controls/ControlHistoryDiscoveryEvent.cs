@@ -53,6 +53,7 @@ namespace YtAnalytics.Controls
 			get { return this.evt; }
 			set
 			{
+				this.evt = value;
 				if (null == value)
 				{
 					this.labelTitle.Text = "No history discovery event selected.";
@@ -68,7 +69,10 @@ namespace YtAnalytics.Controls
 					this.textBoxData.Text = value.Extra;
 					this.tabControl.Visible = true;
 				}
-				this.evt = value;
+				this.tabControl.SelectedTab = this.tabPageGeneral;
+				this.textBoxName.Select();
+				this.textBoxName.SelectionStart = 0;
+				this.textBoxName.SelectionLength = 0;
 			}
 		}
 	}

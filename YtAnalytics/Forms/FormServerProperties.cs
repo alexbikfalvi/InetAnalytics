@@ -54,13 +54,15 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="server">The database server.</param>
-		public void ShowDialog(IWin32Window owner, DbServer server)
+		/// <param name="isPrimary">Indicates if the database server is primary.</param>
+		public void ShowDialog(IWin32Window owner, DbServer server, bool isPrimary)
 		{
 			// If the server is null, do nothing.
 			if (null == server) return;
 
-			// Set the event.
+			// Set the server.
 			this.control.Server = server;
+			this.control.IsPrimary = isPrimary;
 			// Set the title.
 			this.Text = string.Format("{0} Server Properties", server.Name);
 			// Disable the apply button.

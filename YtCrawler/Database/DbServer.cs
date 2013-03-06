@@ -252,6 +252,14 @@ namespace YtCrawler.Database
 		/// <returns>The asynchronous result.</returns>
 		public abstract IAsyncResult CloseAsync(DbServerCallback callback, object userState = null);
 
+		public abstract void ChangePassword(string newPassword)
+		{
+		}
+
+		public abstract IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null)
+		{
+		}
+
 		// Protected methods.
 
 		/// <summary>
