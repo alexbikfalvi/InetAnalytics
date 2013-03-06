@@ -52,6 +52,7 @@ namespace YtAnalytics.Controls
 		{
 			private ListViewItem item;
 			private TreeNode node;
+			private ControlServer control = new ControlServer();
 
 			/// <summary>
 			/// Initializes the server controls object.
@@ -72,6 +73,10 @@ namespace YtAnalytics.Controls
 			/// Gets the tree node.
 			/// </summary>
 			public TreeNode Node { get { return this.node; } }
+			/// <summary>
+			/// Gets the server control.
+			/// </summary>
+			public ControlServer Control { get { return this.control; } }
 		};
 
 		private static string logSource = "Database";
@@ -90,6 +95,7 @@ namespace YtAnalytics.Controls
 
 		private TreeNode treeNode = null;
 		private int[] treeImageIndex = null;
+		private Control.ControlCollection panel = null;
 
 		/// <summary>
 		/// Creates a new instance of the control.
@@ -116,7 +122,9 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="crawler">The crawler instance.</param>
 		/// <param name="treeNode">The root tree node for the database servers.</param>
-		public void Initialize(Crawler crawler, TreeNode treeNode, int[] imageIndex)
+		/// <param name="panel">The panel where to add the server control.</param>
+		/// <param name="imageIndex">The tree nodes image index.</param>
+		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection panel, int[] imageIndex)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
@@ -124,6 +132,8 @@ namespace YtAnalytics.Controls
 			this.treeNode = treeNode;
 			// Set the tree image index.
 			this.treeImageIndex = imageIndex;
+			// Set the controls panel.
+			this.panel = panel;
 
 			// Add all the servers in the configuration.
 			foreach (KeyValuePair<string, DbServer> server in this.crawler.Servers)
@@ -147,8 +157,17 @@ namespace YtAnalytics.Controls
 				this.treeNode.Nodes.Add(node);
 				this.treeNode.ExpandAll();
 				
+				// Create a new controls item.
+				ServerControls controls = new ServerControls(item, node);
+
+				// Initialize the server control.
+				controls.Control.Initialize(this.crawler, server.Value, node);
+
+				// Add the control to the panel.
+				this.panel.Add(controls.Control);
+
 				// Add the servers controls to the dictionary.
-				this.items.Add(server.Value.Id, new ServerControls(item, node));
+				this.items.Add(server.Value.Id, controls);
 			}
 
 			// Add the event handlers for the servers.
@@ -244,9 +263,18 @@ namespace YtAnalytics.Controls
 				this.treeNode.Nodes.Add(node);
 				this.treeNode.ExpandAll();
 
+				// Create a new controls item.
+				ServerControls controls = new ServerControls(item, node);
+
+				// Initialize the server control.
+				controls.Control.Initialize(this.crawler, server, node);
+
+				// Add the control to the panel.
+				this.panel.Add(controls.Control);
+
 				// Add the servers controls to the dictionary.
-				this.items.Add(server.Id, new ServerControls(item, node));
-				
+				this.items.Add(server.Id, controls);
+		
 				// Log the change.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Verbose,
@@ -273,6 +301,12 @@ namespace YtAnalytics.Controls
 				// Remove the menu item for the specified database server.
 				this.listView.Items.Remove(this.items[id].Item);
 				this.treeNode.Nodes.Remove(this.items[id].Node);
+
+				// Remove the control from the panel.
+				this.panel.Remove(this.items[id].Control);
+
+				// Dispose the control.
+				this.items[id].Control.Dispose();
 
 				// Remove the controls entry from the dictionary.
 				this.items.Remove(id);
@@ -339,6 +373,7 @@ namespace YtAnalytics.Controls
 
 				// Update the tree node.
 				controls.Node.ImageIndex = this.treeImageIndex[(int)server.State];
+				controls.Node.SelectedImageIndex = this.treeImageIndex[(int)server.State];
 
 				// Call the selected item change event to update the buttons.
 				this.OnServerSelectionChanged(this, null);
@@ -852,7 +887,16 @@ namespace YtAnalytics.Controls
 							);
 					}
 				}
-				// Else, do nothing.
+				// Else, show a notification message.
+				else
+				{
+					MessageBox.Show(
+						this,
+						"The database server password has been changed successfully.",
+						"Server Password Changed",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Information);
+				}
 			}
 		}
 
@@ -863,29 +907,31 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnServerSelectionChanged(object sender, EventArgs e)
 		{
+			bool remove = false;
+			bool primary = false;
+			bool connect = false;
+			bool disconnect = false;
+			bool changePassword = false;
 			if (this.listView.SelectedItems.Count != 0)
 			{
 				// Get the server corresponding to this item.
 				DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
 
-				this.buttonRemove.Enabled = true;
-				this.buttonPrimary.Enabled = !this.crawler.Servers.IsPrimary(server);
-				this.buttonConnect.Enabled = server.State == DbServer.ServerState.Disconnected;
-				this.buttonDisconnect.Enabled = server.State == DbServer.ServerState.Connected;
-				this.buttonChangePassword.Enabled = server.State == DbServer.ServerState.Connected || server.State == DbServer.ServerState.Disconnected;
+				remove = true;
+				primary = !this.crawler.Servers.IsPrimary(server);
+				connect = server.State == DbServer.ServerState.Disconnected;
+				disconnect = server.State == DbServer.ServerState.Connected;
+				changePassword = server.State == DbServer.ServerState.Disconnected;
 			}
-			else
-			{
-				this.buttonRemove.Enabled = false;
-				this.buttonPrimary.Enabled = false;
-				this.buttonConnect.Enabled = false;
-				this.buttonDisconnect.Enabled = false;
-				this.buttonChangePassword.Enabled = false;
-			}
-			this.menuItemPrimary.Enabled = this.buttonPrimary.Enabled;
-			this.menuItemConnect.Enabled = this.buttonConnect.Enabled;
-			this.menuItemDisconnect.Enabled = this.buttonDisconnect.Enabled;
-			this.menuItemChangePassword.Enabled = this.buttonChangePassword.Enabled;
+			this.buttonRemove.Enabled = remove;
+			this.buttonPrimary.Enabled = primary;
+			this.buttonConnect.Enabled = connect;
+			this.buttonDisconnect.Enabled = disconnect;
+			this.buttonChangePassword.Enabled = changePassword;
+			this.menuItemPrimary.Enabled = primary;
+			this.menuItemConnect.Enabled = connect;
+			this.menuItemDisconnect.Enabled = disconnect;
+			this.menuItemChangePassword.Enabled = changePassword;
 		}
 
 		/// <summary>
