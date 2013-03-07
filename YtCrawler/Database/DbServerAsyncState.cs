@@ -26,7 +26,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing the asynchronous state for a database operation.
 	/// </summary>
-	public sealed class DbServerAsyncState : IAsyncResult
+	public class DbServerAsyncState : IAsyncResult
 	{
 		private DbServer server;
 		private object state;
@@ -36,6 +36,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Creates a new instance of the asynchronous state.
 		/// </summary>
+		/// <param name="server">The database server.</param>
 		/// <param name="state">The user state.</param>
 		public DbServerAsyncState(DbServer server, object state)
 		{

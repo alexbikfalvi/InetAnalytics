@@ -21,6 +21,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 using YtCrawler.Log;
+using Microsoft.Win32;
 
 namespace YtCrawler.Database
 {
@@ -32,6 +33,8 @@ namespace YtCrawler.Database
 		private SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 		private SqlConnection connection = new SqlConnection();
 		private Mutex mutex = new Mutex();
+
+		private DbDatabaseMsSql database = null;
 
 		/// <summary>
 		/// Creates a new server instance.
@@ -80,8 +83,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the type of the database server.
 		/// </summary>
-		public override DbServers.DbServerType Type { get { return Database.DbServers.DbServerType.MsSql; } }
-
+		public override DbServers.DbServerType Type { get { return DbServers.DbServerType.MsSql; } }
 		/// <summary>
 		/// Gets the server version.
 		/// </summary>
@@ -104,8 +106,35 @@ namespace YtCrawler.Database
 				catch (InvalidOperationException) { return string.Empty; }
 			}
 		}
+		/// <summary>
+		/// Gets the default database for this database server.
+		/// </summary>
+		public override DbDatabase Database { get { return this.database; } }
+
 
 		// Public methods.
+
+		/// <summary>
+		/// Saves the current server configuration to the registry.
+		/// </summary>
+		public override void SaveConfiguration()
+		{
+			// Load the default database.
+			try { this.database = DbDatabaseMsSql.Load(this.key); }
+			catch (Exception) { this.database = null; }
+
+			// Call the base class method.
+			base.SaveConfiguration();
+		}
+
+		/// <summary>
+		/// Loads the current server configuration from the registry.
+		/// </summary>
+		public override void LoadConfiguration()
+		{
+			// Call the base class method.
+			base.LoadConfiguration();
+		}
 
 		/// <summary>
 		/// Opens the connection to the database server.

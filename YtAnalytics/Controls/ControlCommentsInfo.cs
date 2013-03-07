@@ -49,6 +49,14 @@ namespace YtAnalytics.Controls
 		/// An event raised when the user selects the video statistics.
 		/// </summary>
 		public event EventHandler ClickVideos;
+		/// <summary>
+		/// An event raised when the user selects the users statistics.
+		/// </summary>
+		public event EventHandler ClickUsers;
+		/// <summary>
+		/// An event raised when the user selects the playlists statistics.
+		/// </summary>
+		public event EventHandler ClickPlaylists;
 
 		/// <summary>
 		/// An event handler called when the user selects the videos link.
@@ -58,6 +66,26 @@ namespace YtAnalytics.Controls
 		private void OnVideosClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			if (null != this.ClickVideos) this.ClickVideos(this, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the users link.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnUsersClick(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if (null != this.ClickUsers) this.ClickUsers(this, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the playlists link.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPlaylistsClick(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if (null != this.ClickPlaylists) this.ClickPlaylists(this, e);
 		}
 	}
 }

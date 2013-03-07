@@ -465,6 +465,8 @@ namespace YtAnalytics.Forms
 			this.controlWebStatistics.Comment += this.CommentVideo;
 
 			this.controlCommentsInfo.ClickVideos += new EventHandler(this.BrowserCommentsVideosClick);
+			this.controlCommentsInfo.ClickUsers += new EventHandler(this.BrowserCommentsUsersClick);
+			this.controlCommentsInfo.ClickPlaylists += new EventHandler(this.BrowserCommentsPlaylistsClick);
 
 			// Selected control
 			this.controlPanelSelected = this.labelNotAvailable;
@@ -639,6 +641,18 @@ namespace YtAnalytics.Forms
 		{
 			this.sideMenu.SelectedItem = this.sideMenuComments;
 			this.controlPanelComments.SelectedNode = this.treeNodeCommentsVideos;
+		}
+
+		private void BrowserCommentsUsersClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuComments;
+			this.controlPanelComments.SelectedNode = this.treeNodeCommentsUsers;
+		}
+
+		private void BrowserCommentsPlaylistsClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuComments;
+			this.controlPanelComments.SelectedNode = this.treeNodeCommentsPlaylists;
 		}
 
 		private void ViewVideoInApiV2(Video video)

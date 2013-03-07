@@ -159,7 +159,7 @@ namespace YtCrawler.Database
 		{
 			foreach (KeyValuePair<string, DbServer> server in this.servers)
 			{
-				server.Value.DiscardConfiguration();
+				server.Value.LoadConfiguration();
 			}
 		}
 

@@ -123,6 +123,12 @@ namespace YtAnalytics.Controls
 
 			// Add the event handler for the database server log.
 			this.server.EventLogged += OnEventLogged;
+
+			// Initialize the server database.
+			this.textBoxDatabase.Text = this.server.Database != null ?
+				string.Format("{0} (ID {1} created on {2})", this.server.Database.Name, this.server.Database.Id, this.server.Database.DateCreate) :
+				"(no database selected)";
+			this.buttonDatabaseProperties.Enabled = this.server.Database != null;
 		}
 
 		// Private methods.
@@ -345,7 +351,22 @@ namespace YtAnalytics.Controls
 							);
 					}
 				}
-				// Else, do nothing.
+				// Else, process the user state.
+				else
+				{
+					// If there exists a user asynchronous state.
+					if (asyncState.AsyncState != null)
+					{
+						// If the user state is an event handler, call that event handler.
+						if (asyncState.AsyncState.GetType() == typeof(EventHandler))
+						{
+							// Get the event handler.
+							EventHandler handler = asyncState.AsyncState as EventHandler;
+							// Call the event handler.
+							handler(this, null);
+						}
+					}
+				}
 			}
 		}
 
@@ -540,6 +561,60 @@ namespace YtAnalytics.Controls
 				// Log the event.
 				this.log.Add(evt);
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user displays the database properties.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnDatabaseProperties(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when the user refreshes the list of databases.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRefreshDatabases(object sender, EventArgs e)
+		{
+			// Call this handler on the UI thread.
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new EventHandler(this.OnRefreshDatabases), new object[] { sender, e });
+				return;
+			}
+
+			// If the database server is not connected, first connect to the database.
+			if (this.server.State != DbServer.ServerState.Connected)
+			{
+				// Show a connecting message.
+				this.ShowMessage(Resources.Connect_48, string.Format("Connecting to the database server \'{0}\'...", this.server.Name));
+				try
+				{
+					// Connect asynchronously to the database server, and add this method as a handler.
+					this.server.Open(this.OnConnected, new EventHandler(this.OnRefreshDatabases));
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, hide the connecting message.
+					this.HideMessage();
+					// Display an error message box to the user.
+					MessageBox.Show(
+						this,
+						string.Format("Connecting to the database server \'{0}\' failed. {1}", this.server.Name, exception.Message),
+						"Connecting to Database Failed",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error
+						);
+				} 
+				return;
+			}
+
+			// Refresh the list of databases.
+
 		}
 	}
 }

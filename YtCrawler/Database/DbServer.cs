@@ -41,16 +41,20 @@ namespace YtCrawler.Database
 			Disconnecting = 4
 		};
 
-		private string key;
+		// Config.
+		protected string key;
 
+		// Settings.
 		private string id;
 		private string name;
 		private string dataSource;
 		private string username;
 		private string password;
 
+		// State.
 		private ServerState state = ServerState.Disconnected;
 
+		// Log.
 		protected Logger log;
 		protected string logSource;
 
@@ -165,6 +169,10 @@ namespace YtCrawler.Database
 		/// Gets the server version.
 		/// </summary>
 		public abstract string Version { get; }
+		/// <summary>
+		/// Gets the default database for this server.
+		/// </summary>
+		public abstract DbDatabase Database { get; }
 
 		// Public events.
 
@@ -198,7 +206,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Saves the current server configuration to the registry.
 		/// </summary>
-		public void SaveConfiguration()
+		public virtual void SaveConfiguration()
 		{
 			Registry.SetValue(this.key, "Name", this.name, RegistryValueKind.String);
 			Registry.SetValue(this.key, "DataSource", this.dataSource, RegistryValueKind.String);
@@ -219,11 +227,23 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// Discards the current server configuration and loads the previous one from the registry.
+		/// Loads the current server configuration from the registry.
 		/// </summary>
-		public void DiscardConfiguration()
+		public virtual void LoadConfiguration()
 		{
-			this.LoadConfiguration();
+			this.name = Registry.GetValue(this.key, "Name", null) as string;
+			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
+			this.username = Registry.GetValue(this.key, "Username", null) as string;
+			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
+
+			// Log the event.
+			this.log.Add(
+				LogEventLevel.Normal,
+				LogEventType.Success,
+				this.logSource,
+				"Configuration for database server with ID \'{0}\' was loaded from registry. The server name is \'{1}\'.",
+				new object[] { this.Id, this.Name }
+				);
 		}
 
 		/// <summary>
@@ -279,6 +299,7 @@ namespace YtCrawler.Database
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
 		public abstract IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null);
+
 
 		// Protected methods.
 
@@ -354,28 +375,6 @@ namespace YtCrawler.Database
 		{
 			// Call the event.
 			if (this.EventLogged != null) this.EventLogged(evt);
-		}
-
-		// Private methods.
-
-		/// <summary>
-		/// Loads the current server configuration from the registry.
-		/// </summary>
-		private void LoadConfiguration()
-		{
-			this.name = Registry.GetValue(this.key, "Name", null) as string;
-			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
-			this.username = Registry.GetValue(this.key, "Username", null) as string;
-			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
-
-			// Log the event.
-			this.log.Add(
-				LogEventLevel.Normal,
-				LogEventType.Success,
-				this.logSource,
-				"Configuration for database server with ID \'{0}\' was loaded from registry. The server name is \'{1}\'.",
-				new object[] { this.Id, this.Name }
-				);
 		}
 	}
 }
