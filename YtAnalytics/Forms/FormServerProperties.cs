@@ -67,6 +67,8 @@ namespace YtAnalytics.Forms
 			this.Text = string.Format("{0} Server Properties", server.Name);
 			// Disable the apply button.
 			this.buttonApply.Enabled = false;
+			// Set an event handler for the server state.
+			server.StateChanged += this.OnServerStateChanged;
 			// Open the dialog.
 			base.ShowDialog(owner);
 		}
@@ -130,6 +132,28 @@ namespace YtAnalytics.Forms
 			this.control.Server.Username = this.control.Username;
 			this.control.Server.Password = this.control.Password;
 			this.control.Server.SaveConfiguration();
+		}
+
+		/// <summary>
+		/// An event handler called when the user is closing the dialog.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFormClosing(object sender, FormClosingEventArgs e)
+		{
+			// Remove the event handler of the state change method.
+			this.control.Server.StateChanged -= this.OnServerStateChanged;
+		}
+
+		/// <summary>
+		/// An event handler called when the server state has changed.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		/// <param name="e">The server state event arguments.</param>
+		private void OnServerStateChanged(DbServer server, DbServerStateEventArgs e)
+		{
+			// Update the control state.
+			this.control.StateChanged(server);
 		}
 	}
 }

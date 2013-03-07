@@ -363,10 +363,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "APIv2 Uploads Videos Feed");
 			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "APIv2 Favorites Videos Feed");
 			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "APIv2 Playlist Videos Feed");
-			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, new int[] {
+			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList, new int[] {
 				this.imageList.Images.IndexOfKey("ServerDown"),
 				this.imageList.Images.IndexOfKey("ServerUp"),
 				this.imageList.Images.IndexOfKey("ServerWarning"),
+				this.imageList.Images.IndexOfKey("ServerBusy"),
 				this.imageList.Images.IndexOfKey("ServerBusy")
 			});
 			this.controlSettings.Initialize(this.crawler);

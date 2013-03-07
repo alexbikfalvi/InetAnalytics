@@ -41,6 +41,9 @@
 			this.listTypes = new DotNetApi.Windows.Controls.ToolStripDropDownCheckedList();
 			this.buttonLevel = new System.Windows.Forms.ToolStripDropDownButton();
 			this.listLevels = new DotNetApi.Windows.Controls.ToolStripDropDownCheckedList();
+			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
+			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
 			this.controlLogEvent = new YtAnalytics.Controls.ControlLogEvent();
 			this.message = new YtAnalytics.Controls.ControlMessage();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -125,7 +128,9 @@
 			// 
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonFilterType,
-            this.buttonLevel});
+            this.buttonLevel,
+            this.toolStripSeparator,
+            this.buttonCalendar});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
@@ -171,6 +176,27 @@
 			this.listLevels.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
 			this.listLevels.Size = new System.Drawing.Size(208, 205);
 			this.listLevels.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.EventLevelCheck);
+			// 
+			// toolStripSeparator
+			// 
+			this.toolStripSeparator.Name = "toolStripSeparator";
+			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonCalendar
+			// 
+			this.buttonCalendar.DropDown = this.calendar;
+			this.buttonCalendar.Image = global::YtAnalytics.Resources.Calendar_16;
+			this.buttonCalendar.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonCalendar.Name = "buttonCalendar";
+			this.buttonCalendar.Size = new System.Drawing.Size(89, 22);
+			this.buttonCalendar.Text = "Log range";
+			// 
+			// calendar
+			// 
+			this.calendar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+			this.calendar.Name = "calendar";
+			this.calendar.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
+			this.calendar.Size = new System.Drawing.Size(235, 167);
 			// 
 			// controlLogEvent
 			// 
@@ -225,5 +251,8 @@
 		private System.Windows.Forms.ToolStripDropDownButton buttonLevel;
 		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList listTypes;
 		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList listLevels;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+		private System.Windows.Forms.ToolStripDropDownButton buttonCalendar;
+		private DotNetApi.Windows.Controls.ToolStripDropDownCalendar calendar;
 	}
 }

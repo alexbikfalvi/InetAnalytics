@@ -123,6 +123,25 @@ namespace YtCrawler
 		}
 
 		/// <summary>
+		/// Gets or sets the database server log file name.
+		/// </summary>
+		public string DatabaseLogFileName
+		{
+			get
+			{
+				try
+				{
+					string value;
+					return null != (value = Registry.GetValue(this.root + "\\Log", "DatabaseFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-Db-{0}-{1}-{2}-{3}.xml") as string)
+						? value
+						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-Db-{0}-{1}-{2}-{3}.xml";
+				}
+				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-Db-{0}-{1}-{2}-{3}.xml"; }
+			}
+			set { Registry.SetValue(this.root + "\\Log", "DatabaseFileName", value, RegistryValueKind.String); }
+		}
+
+		/// <summary>
 		/// Gets or sets the videos comments file name.
 		/// </summary>
 		public string CommentsVideosFileName

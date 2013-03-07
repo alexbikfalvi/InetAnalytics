@@ -51,6 +51,7 @@
 			this.control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.control.IsPrimary = false;
 			this.control.Location = new System.Drawing.Point(12, 0);
 			this.control.Name = "control";
 			this.control.Server = null;
@@ -99,6 +100,7 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "Server Properties";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.ResumeLayout(false);
 
 		}

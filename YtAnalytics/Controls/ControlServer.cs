@@ -35,6 +35,7 @@ using YtCrawler.Database;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
 using YtAnalytics.Forms;
+using DotNetApi.Windows;
 
 namespace YtAnalytics.Controls
 {
@@ -44,6 +45,9 @@ namespace YtAnalytics.Controls
 	public partial class ControlServer : UserControl
 	{
 		private static string logSource = "Database/";
+
+		// UI formatter.
+		private Formatting formatting = new Formatting();
 
 		private Crawler crawler;
 		private DbServer server;
@@ -61,7 +65,8 @@ namespace YtAnalytics.Controls
 		private static Image[] images = {
 											Resources.ServerDown_48,
 											Resources.ServerUp_48,
-											Resources.ServerError_48,
+											Resources.ServerWarning_48,
+											Resources.ServerBusy_48,
 											Resources.ServerBusy_48
 										};
 
@@ -83,6 +88,9 @@ namespace YtAnalytics.Controls
 			// Delegates.
 			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
 			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
+
+			// Set the font.
+			this.formatting.SetFont(this);
 		}
 
 		/// <summary>
@@ -112,6 +120,9 @@ namespace YtAnalytics.Controls
 			// Initialize the contols.
 			this.OnServerChanged(this.server);
 			this.OnServerStateChanged(this.server, null);
+
+			// Add the event handler for the database server log.
+			this.server.EventLogged += OnEventLogged;
 		}
 
 		// Private methods.
@@ -168,15 +179,19 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="server">The server.</param>
 		/// <param name="e">The state change arguments.</param>
-		private void OnServerStateChanged(DbServer server, StateChangeEventArgs e)
+		private void OnServerStateChanged(DbServer server, DbServerStateEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ServerStateChangedEventHandler(this.OnServerStateChanged), new object[] { server, e });
+			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { server, e });
 			else
 			{
-				this.buttonConnect.Enabled = this.server.State == DbServer.ServerState.Disconnected;
+				this.buttonConnect.Enabled =
+					(this.server.State == DbServer.ServerState.Disconnected) ||
+					(this.server.State == DbServer.ServerState.Failed);
 				this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
-				this.buttonChangePassword.Enabled = this.server.State == DbServer.ServerState.Disconnected;
+				this.buttonChangePassword.Enabled =
+					(this.server.State == DbServer.ServerState.Disconnected) ||
+					(this.server.State == DbServer.ServerState.Failed);
 				this.pictureBox.Image = ControlServer.images[(int)this.server.State];
 			}
 		}
@@ -189,7 +204,7 @@ namespace YtAnalytics.Controls
 		private void OnPrimaryServerChanged(DbServer oldPrimary, DbServer newPrimary)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ServerPrimaryChangedEventHandler(this.OnPrimaryServerChanged), new object[] { oldPrimary, newPrimary });
+			if (this.InvokeRequired) this.Invoke(new DbServerPrimaryChangedEventHandler(this.OnPrimaryServerChanged), new object[] { oldPrimary, newPrimary });
 			else
 			{
 				this.buttonPrimary.Enabled = !this.crawler.Servers.IsPrimary(this.server);
@@ -240,7 +255,7 @@ namespace YtAnalytics.Controls
 			try
 			{
 				// Connect asynchronously to the database server.
-				this.server.OpenAsync(this.OnConnected);
+				this.server.Open(this.OnConnected);
 			}
 			catch (Exception exception)
 			{
@@ -346,7 +361,7 @@ namespace YtAnalytics.Controls
 			try
 			{
 				// Connect asynchronously to the database server.
-				this.server.CloseAsync(this.OnDisconnected);
+				this.server.Close(this.OnDisconnected);
 			}
 			catch (Exception exception)
 			{
@@ -510,6 +525,21 @@ namespace YtAnalytics.Controls
 		{
 			// Show the properties dialog.
 			this.formProperties.ShowDialog(this, this.server, this.crawler.Servers.IsPrimary(server));
+		}
+
+		/// <summary>
+		/// An event handler called when the database server logs an event.
+		/// </summary>
+		/// <param name="evt">The event.</param>
+		private void OnEventLogged(LogEvent evt)
+		{
+			// Call this method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { evt });
+			else
+			{
+				// Log the event.
+				this.log.Add(evt);
+			}
 		}
 	}
 }

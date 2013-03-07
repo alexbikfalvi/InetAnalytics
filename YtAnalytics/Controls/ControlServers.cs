@@ -93,9 +93,11 @@ namespace YtAnalytics.Controls
 
 		private Dictionary<string, ServerControls> items = new Dictionary<string, ServerControls>();
 
+		//private ImageList imageList = null;
 		private TreeNode treeNode = null;
-		private int[] treeImageIndex = null;
+		private int[] imageIndex = null;
 		private Control.ControlCollection panel = null;
+
 
 		/// <summary>
 		/// Creates a new instance of the control.
@@ -124,16 +126,21 @@ namespace YtAnalytics.Controls
 		/// <param name="treeNode">The root tree node for the database servers.</param>
 		/// <param name="panel">The panel where to add the server control.</param>
 		/// <param name="imageIndex">The tree nodes image index.</param>
-		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection panel, int[] imageIndex)
+		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection panel, ImageList imageList, int[] imageIndex)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
 			// Set the root tree node.
 			this.treeNode = treeNode;
-			// Set the tree image index.
-			this.treeImageIndex = imageIndex;
+			// Set the image list.
+			this.listView.SmallImageList = imageList;
+			// Set the image index.
+			this.imageIndex = imageIndex;
 			// Set the controls panel.
 			this.panel = panel;
+
+			// Set the log event handler for the database servers.
+			this.crawler.Servers.EventLogged += this.OnEventLogged;
 
 			// Add all the servers in the configuration.
 			foreach (KeyValuePair<string, DbServer> server in this.crawler.Servers)
@@ -146,14 +153,14 @@ namespace YtAnalytics.Controls
 					server.Value.Version,
 					server.Value.Id
 				});
-				item.ImageIndex = (int)server.Value.State;
+				item.ImageIndex = this.imageIndex[(int)server.Value.State];
 				item.Tag = server.Key;
 				this.listView.Items.Add(item);
 				// Create a new tree node.
 				TreeNode node = new TreeNode(
 					this.GetServerTreeName(server.Value),
-					this.treeImageIndex[(int)server.Value.State],
-					this.treeImageIndex[(int)server.Value.State]);
+					this.imageIndex[(int)server.Value.State],
+					this.imageIndex[(int)server.Value.State]);
 				this.treeNode.Nodes.Add(node);
 				this.treeNode.ExpandAll();
 				
@@ -173,7 +180,7 @@ namespace YtAnalytics.Controls
 			// Add the event handlers for the servers.
 			this.crawler.Servers.ServerAdded += this.OnServerAdded;
 			this.crawler.Servers.ServerChanged += this.OnServerChanged;
-			this.crawler.Servers.ServerStateChanged += OnServerStateChanged;
+			this.crawler.Servers.ServerStateChanged += this.OnServerStateChanged;
 			this.crawler.Servers.ServerPrimaryChanged += this.OnPrimaryServerChanged;
 			this.crawler.Servers.ServerRemoved += this.OnServerRemoved;
 
@@ -181,6 +188,9 @@ namespace YtAnalytics.Controls
 			this.formAdd.ServerAdded += OnAdded;
 			// Add the event handler to the change password form.
 			this.formChangePassword.PasswordChanged += OnPasswordChanged;
+
+			// Reload the server configurations.
+			this.crawler.Servers.Reload();
 		}
 
 		// Private methods.
@@ -241,7 +251,7 @@ namespace YtAnalytics.Controls
 		private void OnServerAdded(DbServer server)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ServerEventHandler(this.OnServerAdded), new object[] { server });
+			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerAdded), new object[] { server });
 			else
 			{
 				// Create a new menu item for the new server.
@@ -252,14 +262,14 @@ namespace YtAnalytics.Controls
 						server.Version,
 						server.Id
 					});
-				item.ImageIndex = (int)server.State;
+				item.ImageIndex = this.imageIndex[(int)server.State];
 				item.Tag = server.Id;
 				this.listView.Items.Add(item);
 				// Create a new tree node.
 				TreeNode node = new TreeNode(
 					this.GetServerTreeName(server),
-					this.treeImageIndex[(int)server.State],
-					this.treeImageIndex[(int)server.State]);
+					this.imageIndex[(int)server.State],
+					this.imageIndex[(int)server.State]);
 				this.treeNode.Nodes.Add(node);
 				this.treeNode.ExpandAll();
 
@@ -295,7 +305,7 @@ namespace YtAnalytics.Controls
 		private void OnServerRemoved(string id)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ServerIdEventHandler(this.OnServerRemoved), new object[] { id });
+			if (this.InvokeRequired) this.Invoke(new DbServerIdEventHandler(this.OnServerRemoved), new object[] { id });
 			else
 			{
 				// Remove the menu item for the specified database server.
@@ -331,7 +341,7 @@ namespace YtAnalytics.Controls
 		private void OnServerChanged(DbServer server)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ServerEventHandler(this.OnServerChanged), new object[] { server });
+			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerChanged), new object[] { server });
 			else
 			{
 				// Update the server information.
@@ -354,10 +364,10 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="server">The server.</param>
 		/// <param name="e">The state change arguments.</param>
-		void OnServerStateChanged(DbServer server, StateChangeEventArgs e)
+		void OnServerStateChanged(DbServer server, DbServerStateEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ServerStateChangedEventHandler(this.OnServerStateChanged), new object[] { server, e });
+			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { server, e });
 			else
 			{
 				// If there are no controls for this server, ignore the event.
@@ -369,11 +379,11 @@ namespace YtAnalytics.Controls
 				// Update the list view item.
 				controls.Item.SubItems[2].Text = server.State.ToString();
 				controls.Item.SubItems[3].Text = server.Version;
-				controls.Item.ImageIndex = (int)server.State;
+				controls.Item.ImageIndex = this.imageIndex[(int)server.State];
 
 				// Update the tree node.
-				controls.Node.ImageIndex = this.treeImageIndex[(int)server.State];
-				controls.Node.SelectedImageIndex = this.treeImageIndex[(int)server.State];
+				controls.Node.ImageIndex = this.imageIndex[(int)server.State];
+				controls.Node.SelectedImageIndex = this.imageIndex[(int)server.State];
 
 				// Call the selected item change event to update the buttons.
 				this.OnServerSelectionChanged(this, null);
@@ -388,7 +398,7 @@ namespace YtAnalytics.Controls
 		private void OnPrimaryServerChanged(DbServer oldPrimary, DbServer newPrimary)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ServerPrimaryChangedEventHandler(this.OnPrimaryServerChanged), new object[] { oldPrimary, newPrimary });
+			if (this.InvokeRequired) this.Invoke(new DbServerPrimaryChangedEventHandler(this.OnPrimaryServerChanged), new object[] { oldPrimary, newPrimary });
 			else
 			{
 				// Update the old primary server, if not null.
@@ -616,7 +626,7 @@ namespace YtAnalytics.Controls
 			try
 			{
 				// Connect asynchronously to the database server.
-				server.OpenAsync(this.OnConnected);
+				server.Open(this.OnConnected);
 			}
 			catch (Exception exception)
 			{
@@ -728,7 +738,7 @@ namespace YtAnalytics.Controls
 			try
 			{
 				// Connect asynchronously to the database server.
-				server.CloseAsync(this.OnDisconnected);
+				server.Close(this.OnDisconnected);
 			}
 			catch (Exception exception)
 			{
@@ -917,11 +927,17 @@ namespace YtAnalytics.Controls
 				// Get the server corresponding to this item.
 				DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
 
-				remove = true;
+				remove =
+					(server.State == DbServer.ServerState.Disconnected) ||
+					(server.State == DbServer.ServerState.Failed); 
 				primary = !this.crawler.Servers.IsPrimary(server);
-				connect = server.State == DbServer.ServerState.Disconnected;
+				connect =
+					(server.State == DbServer.ServerState.Disconnected) ||
+					(server.State == DbServer.ServerState.Failed);
 				disconnect = server.State == DbServer.ServerState.Connected;
-				changePassword = server.State == DbServer.ServerState.Disconnected;
+				changePassword =
+					(server.State == DbServer.ServerState.Disconnected) ||
+					(server.State == DbServer.ServerState.Failed);
 			}
 			this.buttonRemove.Enabled = remove;
 			this.buttonPrimary.Enabled = primary;
@@ -966,6 +982,20 @@ namespace YtAnalytics.Controls
 						this.contextMenu.Show(this.listView, e.Location);
 					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a server raises a log event.
+		/// </summary>
+		/// <param name="evt">The log event.</param>
+		void OnEventLogged(LogEvent evt)
+		{
+			// Call this method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { evt });
+			else
+			{
+				this.log.Add(evt);
 			}
 		}
 	}

@@ -31,7 +31,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlServers));
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonAdd = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemove = new System.Windows.Forms.ToolStripButton();
@@ -49,7 +48,6 @@
 			this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeadeVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.log = new YtAnalytics.Controls.ControlLogList();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemPrimary = new System.Windows.Forms.ToolStripMenuItem();
@@ -197,7 +195,6 @@
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
 			this.listView.Size = new System.Drawing.Size(798, 398);
-			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
@@ -230,15 +227,6 @@
 			this.columnHeaderId.Text = "ID";
 			this.columnHeaderId.Width = 180;
 			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "ServerDown");
-			this.imageList.Images.SetKeyName(1, "ServerUp");
-			this.imageList.Images.SetKeyName(2, "ServerWarning");
-			this.imageList.Images.SetKeyName(3, "ServerBusy");
-			// 
 			// log
 			// 
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -259,7 +247,7 @@
             this.toolStripSeparator6,
             this.menuItemProperties});
 			this.contextMenu.Name = "contextMenuStrip";
-			this.contextMenu.Size = new System.Drawing.Size(169, 154);
+			this.contextMenu.Size = new System.Drawing.Size(169, 132);
 			// 
 			// menuItemPrimary
 			// 
@@ -345,7 +333,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderType;
 		private System.Windows.Forms.ColumnHeader columnHeaderStatus;
 		private System.Windows.Forms.ColumnHeader columnHeadeVersion;
-		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripButton buttonAdd;
 		private System.Windows.Forms.ToolStripButton buttonRemove;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

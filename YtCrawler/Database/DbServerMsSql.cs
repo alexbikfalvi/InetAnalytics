@@ -20,6 +20,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
+using YtCrawler.Log;
 
 namespace YtCrawler.Database
 {
@@ -37,14 +38,14 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
-		public DbServerMsSql(string key, string id)
-			: base(key, id)
+		/// <param name="logFile">The log file for this database server.</param>
+		public DbServerMsSql(string key, string id, string logFile)
+			: base(key, id, logFile)
 		{
 			// Initialize the server with the current configuration.
 			this.OnInitialized();
-
-			// Set the connection event handlers.
-			this.connection.StateChange += this.OnStateChanged;
+			// Set the event handler for the connection state.
+			this.connection.StateChange += this.OnConnectionStateChanged;
 		}
 
 		/// <summary>
@@ -56,21 +57,22 @@ namespace YtCrawler.Database
 		/// <param name="dataSource">The data source.</param>
 		/// <param name="username">The username.</param>
 		/// <param name="password">The password.</param>
+		/// <param name="logFile">The log file for this database server.</param>
 		public DbServerMsSql(
 			string key,
 			string id,
 			string name,
 			string dataSource,
 			string username,
-			string password
+			string password,
+			string logFile
 			)
-			: base(key, id, name, dataSource, username, password)
+			: base(key, id, name, dataSource, username, password, logFile)
 		{
 			// Initialize the server with the current configuration.
 			this.OnInitialized();
-
-			// Set the connection event handlers.
-			this.connection.StateChange += this.OnStateChanged;
+			// Set the event handler for the connection state.
+			this.connection.StateChange += this.OnConnectionStateChanged;
 		}
 
 		// Public properties.
@@ -81,11 +83,6 @@ namespace YtCrawler.Database
 		public override DbServers.DbServerType Type { get { return Database.DbServers.DbServerType.MsSql; } }
 
 		/// <summary>
-		/// Gets the current connection state.
-		/// </summary>
-		public override ConnectionState ConnectionState { get { return this.connection.State; } }
-
-		/// <summary>
 		/// Gets the server version.
 		/// </summary>
 		public override string Version
@@ -94,7 +91,7 @@ namespace YtCrawler.Database
 			{
 				try
 				{
-					switch (this.ConnectionState)
+					switch (this.connection.State)
 					{
 						case ConnectionState.Open:
 						case ConnectionState.Executing:
@@ -115,12 +112,48 @@ namespace YtCrawler.Database
 		/// </summary>
 		public override void Open()
 		{
+			// Call the event handler.
+			base.OnOpening();
 			try
 			{
 				// Lock the mutex (only one state changing operation allowed at one time).
 				this.mutex.WaitOne();
+				// Change the state of the server to connecting.
+				base.OnStateChange(ServerState.Connecting);
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					this.logSource,
+					"Connecting to the database server with ID \'{0}\'.",
+					new object[] { this.Id }
+					);
 				// Open the database connection.
 				this.connection.Open();
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Normal,
+					LogEventType.Success,
+					this.logSource,
+					"Connected to the database server with ID \'{0}\'.",
+					new object[] { this.Id }
+					);
+			}
+			catch (SqlException exception)
+			{
+				// Change the state of the server to connecting.
+				base.OnStateChange(ServerState.Failed);
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					this.logSource,
+					"Opening the connection to the database server with ID \'{0}\' failed. {1}",
+					new object[] { this.Id, exception.Message },
+					exception
+					);
+				// Rethrow the exception;
+				throw exception;
 			}
 			finally
 			{
@@ -135,10 +168,8 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public override IAsyncResult OpenAsync(DbServerCallback callback, object userState = null)
+		public override IAsyncResult Open(DbServerCallback callback, object userState = null)
 		{
-			// Call the event handler.
-			base.OnOpening();
 			// Create a new asynchrounous state for this operation.
 			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
 			// Begin open the connection asynchronously on the thread pool.
@@ -164,18 +195,56 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// Reopens the connection to the database server.
+		/// Reopens the connection to the database asynchronously.
 		/// </summary>
 		public override void Reopen()
 		{
+			// Call the event handler.
+			base.OnReopening();
 			try
 			{
 				// Lock the mutex (only one state changing operation allowed at one time).
 				this.mutex.WaitOne();
-				// Close the database connection.
+				// Change the state of the server to disconnecting.
+				base.OnStateChange(ServerState.Disconnecting);
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					this.logSource,
+					"Reconnecting to the database server with ID \'{0}\'.",
+					new object[] { this.Id }
+					);
+				// Open the database connection.
 				this.connection.Close();
+				// Change the state of the server to connecting.
+				base.OnStateChange(ServerState.Connecting);
 				// Open the database connection.
 				this.connection.Open();
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Normal,
+					LogEventType.Success,
+					this.logSource,
+					"Reconnected to the database server with ID \'{0}\'.",
+					new object[] { this.Id }
+					);
+			}
+			catch (SqlException exception)
+			{
+				// Change the state of the server to connecting.
+				base.OnStateChange(ServerState.Failed);
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					this.logSource,
+					"Reopening the connection to the database server with ID \'{0}\' failed. {1}",
+					new object[] { this.Id, exception.Message },
+					exception
+					);
+				// Rethrow the exception;
+				throw exception;
 			}
 			finally
 			{
@@ -190,10 +259,8 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public override IAsyncResult ReopenAsync(DbServerCallback callback, object userState = null)
+		public override IAsyncResult Reopen(DbServerCallback callback, object userState = null)
 		{
-			// Call the event handler.
-			base.OnReopening();
 			// Create a new asynchrounous state for this operation.
 			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
 			// Begin open the connection asynchronously on the thread pool.
@@ -219,16 +286,52 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// Closes the connection to the database server.
+		/// Closes the connection to the database server synchronously.
 		/// </summary>
-		public override void Close()
+		private void Close()
 		{
+			// Call the event handler.
+			base.OnClosing();
 			try
 			{
 				// Lock the mutex (only one state changing operation allowed at one time).
 				this.mutex.WaitOne();
+				// Change the state of the server to disconnecting.
+				base.OnStateChange(ServerState.Disconnecting);
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					this.logSource,
+					"Disconnecting from the database server with ID \'{0}\'.",
+					new object[] { this.Id }
+					);
 				// Close the database connection.
 				this.connection.Close();
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Normal,
+					LogEventType.Success,
+					this.logSource,
+					"Disconnected from the database server with ID \'{0}\'.",
+					new object[] { this.Id }
+					);
+			}
+			catch (SqlException exception)
+			{
+				// Change the state of the server to connecting.
+				base.OnStateChange(ServerState.Failed);
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					this.logSource,
+					"Disconnecting from the database server with ID \'{0}\' failed. {1}",
+					new object[] { this.Id, exception.Message },
+					exception
+					);
+				// Rethrow the exception;
+				throw exception;
 			}
 			finally
 			{
@@ -243,10 +346,8 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public override IAsyncResult CloseAsync(DbServerCallback callback, object userState = null)
+		public override IAsyncResult Close(DbServerCallback callback, object userState = null)
 		{
-			// Call the event handler.
-			base.OnClosing();
 			// Create a new asynchrounous state for this operation.
 			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
 			// Begin open the connection asynchronously on the thread pool.
@@ -275,7 +376,7 @@ namespace YtCrawler.Database
 		/// Changes the current password of the database server.
 		/// </summary>
 		/// <param name="newPassword">The new password.</param>
-		public override void ChangePassword(string newPassword)
+		private void ChangePassword(string newPassword)
 		{
 			try
 			{
@@ -285,8 +386,30 @@ namespace YtCrawler.Database
 				SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword);
 				// If the password change was successfull, update the configuration.
 				this.Password = newPassword;
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					this.logSource,
+					"Changing the password for the database server with ID \'{0}\' completed successfully.",
+					new object[] { this.Id }
+					);
 				// Save the configuration.
 				this.SaveConfiguration();
+			}
+			catch (Exception exception)
+			{
+				// Log the event.
+				this.log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					this.logSource,
+					"Changing the password for the database server with ID \'{0}\' failed. {1}",
+					new object[] { this.Id, exception.Message },
+					exception
+					);
+				// Rethrow the exception.
+				throw exception;
 			}
 			finally
 			{
@@ -362,14 +485,29 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// An event handler called when the state of the connection has changed.
+		/// An event handler called when the state of the database connection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private new void OnStateChanged(object sender, StateChangeEventArgs e)
+		private void OnConnectionStateChanged(object sender, StateChangeEventArgs e)
 		{
-			// Call the base class event handler.
-			base.OnStateChanged(sender, e);
+			switch (e.CurrentState)
+			{
+				case ConnectionState.Connecting:
+					this.OnStateChange(ServerState.Connecting);
+					break;
+				case ConnectionState.Open:
+				case ConnectionState.Executing:
+				case ConnectionState.Fetching:
+					this.OnStateChange(ServerState.Connected);
+					break;
+				case ConnectionState.Closed:
+					this.OnStateChange(ServerState.Disconnected);
+					break;
+				case ConnectionState.Broken:
+					this.OnStateChange(ServerState.Failed);
+					break;
+			}
 		}
 	}
 }

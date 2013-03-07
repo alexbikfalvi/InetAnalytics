@@ -22,13 +22,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using Microsoft.Win32;
+using YtCrawler.Log;
 
 namespace YtCrawler.Database
 {
-	public delegate void ServerEventHandler(DbServer server);
-	public delegate void ServerIdEventHandler(string id);
-	public delegate void ServerStateChangedEventHandler(DbServer server, StateChangeEventArgs e);
-	public delegate void ServerPrimaryChangedEventHandler(DbServer oldPrimary, DbServer newPrimary);
+	public delegate void DbServerEventHandler(DbServer server);
+	public delegate void DbServerIdEventHandler(string id);
+	public delegate void DbServerStateEventHandler(DbServer server, DbServerStateEventArgs e);
+	public delegate void DbServerPrimaryChangedEventHandler(DbServer oldPrimary, DbServer newPrimary);
 
 	/// <summary>
 	/// A class representing the list of database servers.
@@ -65,6 +66,8 @@ namespace YtCrawler.Database
 			// Create the servers list.
 			foreach (string id in this.config.DatabaseConfig.Servers)
 			{
+				// Compute the database server log file.
+				string logFile = string.Format(this.config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
 				// Try to create the database server.
 				try
 				{
@@ -74,11 +77,10 @@ namespace YtCrawler.Database
 					DbServerType type = (DbServerType)(Registry.GetValue(key, "Type", 0));
 					// Create a server instance for the specified configuration.
 					DbServer server;
-
 					switch (type)
 					{
 						case DbServerType.MsSql:
-							server = new DbServerMsSql(key, id);
+							server = new DbServerMsSql(key, id, logFile);
 							break;
 						default: continue;
 					}
@@ -89,6 +91,8 @@ namespace YtCrawler.Database
 					{
 						this.primary = server;
 					}
+					// Add a log event handler for this server.
+					server.EventLogged += this.OnEventLogged;
 				}
 				catch (Exception)
 				{
@@ -103,23 +107,27 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when a new was added.
 		/// </summary>
-		public event ServerEventHandler ServerAdded;
+		public event DbServerEventHandler ServerAdded;
 		/// <summary>
 		/// An event raised when a server was removed.
 		/// </summary>
-		public event ServerIdEventHandler ServerRemoved;
+		public event DbServerIdEventHandler ServerRemoved;
 		/// <summary>
 		/// An event raised when the properties of a server have changed.
 		/// </summary>
-		public event ServerEventHandler ServerChanged;
+		public event DbServerEventHandler ServerChanged;
 		/// <summary>
 		/// An event raised when the server state has changed.
 		/// </summary>
-		public event ServerStateChangedEventHandler ServerStateChanged;
+		public event DbServerStateEventHandler ServerStateChanged;
 		/// <summary>
 		/// An event raised when the primary server has changed.
 		/// </summary>
-		public event ServerPrimaryChangedEventHandler ServerPrimaryChanged;
+		public event DbServerPrimaryChangedEventHandler ServerPrimaryChanged;
+		/// <summary>
+		/// An event raised when a database server logs an event.
+		/// </summary>
+		public event LogEventHandler EventLogged;
 
 		// Public properties.
 
@@ -143,6 +151,17 @@ namespace YtCrawler.Database
 		public static string[] ServerTypeNames { get { return DbServers.dbServerTypeNames; } }
 
 		// Public methods.
+
+		/// <summary>
+		/// Reloads the configuration of all database servers.
+		/// </summary>
+		public void Reload()
+		{
+			foreach (KeyValuePair<string, DbServer> server in this.servers)
+			{
+				server.Value.DiscardConfiguration();
+			}
+		}
 
 		/// <summary>
 		/// Indicates if the specified server is the primary server.
@@ -212,7 +231,8 @@ namespace YtCrawler.Database
 			if (this.servers.ContainsKey(id)) throw new CrawlerException(string.Format("Cannot add a new database server. The server ID \'{0}\' already exists.", id));
 			// Create the registry key for this server.
 			RegistryKey key = this.config.DatabaseConfig.Key.CreateSubKey(id);
-
+			// Compute the database server log file.
+			string logFile = string.Format(this.config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
 			DbServer server;
 			try
 			{
@@ -220,7 +240,7 @@ namespace YtCrawler.Database
 				switch (type)
 				{
 					case DbServerType.MsSql:
-						server = new DbServerMsSql(key.Name, id, name, dataSource, username, password);
+						server = new DbServerMsSql(key.Name, id, name, dataSource, username, password, logFile);
 						break;
 					default: throw new CrawlerException(string.Format("Cannot add a new database server. Unknown database server type \'{0}\'.", type));
 				}
@@ -247,6 +267,9 @@ namespace YtCrawler.Database
 			{
 				this.SetPrimary(server);
 			}
+
+			// Add a log event handler for this server.
+			server.EventLogged += this.OnEventLogged;
 
 			// Raise the server add event.
 			if (null != this.ServerAdded) this.ServerAdded(server);
@@ -394,7 +417,7 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="server">The server.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnStateChanged(DbServer server, StateChangeEventArgs e)
+		private void OnStateChanged(DbServer server, DbServerStateEventArgs e)
 		{
 			if (this.ServerStateChanged != null) this.ServerStateChanged(server, e);
 		}
@@ -406,6 +429,15 @@ namespace YtCrawler.Database
 		private void OnServerChanged(DbServer server)
 		{
 			if (this.ServerChanged != null) this.ServerChanged(server);
+		}
+
+		/// <summary>
+		/// An event handler called when a database server logs an event.
+		/// </summary>
+		/// <param name="evt">The event.</param>
+		private void OnEventLogged(LogEvent evt)
+		{
+			if (this.EventLogged != null) this.EventLogged(evt);
 		}
 	}
 }

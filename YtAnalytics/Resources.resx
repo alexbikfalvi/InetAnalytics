@@ -1450,4 +1450,28 @@
   <data name="Password_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Password_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Calendar_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Calendar_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Calendar_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Calendar_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Calendar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Calendar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Calendar_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Calendar_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Database_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Database_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Database_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Database_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Database_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Database_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Database_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Database_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

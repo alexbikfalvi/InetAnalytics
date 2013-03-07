@@ -27,6 +27,11 @@ using System.Xml.Linq;
 
 namespace YtCrawler.Log
 {
+	public delegate void LogEventHandler(LogEvent evt);
+
+	/// <summary>
+	/// A class representing an event log.
+	/// </summary>
 	public class Logger : IDisposable
 	{
 		private string filePattern;
@@ -44,6 +49,12 @@ namespace YtCrawler.Log
 			// Save the file name.
 			this.filePattern = fileName;
 		}
+		
+		// Public events.
+
+		public event LogEventHandler EventLogged;
+
+		// Public methods.
 
 		/// <summary>
 		/// Closes the logger and saves all open logs to file.
@@ -146,6 +157,9 @@ namespace YtCrawler.Log
 				// Release the exclusive access to the log.
 				this.mutex.ReleaseMutex();
 			}
+
+			// Raise the event for this log event.
+			if (this.EventLogged != null) this.EventLogged(evt);
 
 			return evt;
 		}

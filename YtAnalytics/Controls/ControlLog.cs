@@ -61,6 +61,10 @@ namespace YtAnalytics.Controls
 			// Initialize the delegates.
 			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
 			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
+			
+			// Initialize the calendar
+			this.calendar.Calendar.MaxSelectionCount = 3600;
+			this.calendar.Calendar.DateChanged += OnCalendarDateChanged;
 
 			// Add the event types to the list check box.
 			foreach (LogEventType type in Enum.GetValues(typeof(LogEventType)))
@@ -84,7 +88,7 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
-		/// An event handler called when the calendar date has changed.
+		/// Changes the calendar to the specified range.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The date range event arguments.</param>
@@ -93,6 +97,18 @@ namespace YtAnalytics.Controls
 			// If the function is called before the initialization of the crawler, do nothing.
 			if (null == this.crawler) return;
 
+			// Update the calendar.
+			this.calendar.Calendar.SelectionStart = e.Start;
+			this.calendar.Calendar.SelectionEnd = e.End;
+		}
+
+		/// <summary>
+		/// An event handler called when the calendar range has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCalendarDateChanged(object sender, DateRangeEventArgs e)
+		{
 			// Show a waiting message.
 			this.ShowMessage(Resources.LogClock_48, "Reading log files...", true);
 			this.listView.Enabled = false;
@@ -112,7 +128,7 @@ namespace YtAnalytics.Controls
 
 			// Update the global state.
 			this.state = state;
-			
+
 			// Update the log information asynchronously on a system thread pool.
 			ThreadPool.QueueUserWorkItem(new WaitCallback(this.BeginUpdateLog), state);
 		}

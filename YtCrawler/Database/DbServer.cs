@@ -20,6 +20,7 @@ using System;
 using System.Data;
 using System.Threading;
 using Microsoft.Win32;
+using YtCrawler.Log;
 
 namespace YtCrawler.Database
 {
@@ -36,7 +37,8 @@ namespace YtCrawler.Database
 			Disconnected = 0,
 			Connected = 1,
 			Failed = 2,
-			Busy = 3
+			Connecting = 3,
+			Disconnecting = 4
 		};
 
 		private string key;
@@ -49,18 +51,27 @@ namespace YtCrawler.Database
 
 		private ServerState state = ServerState.Disconnected;
 
+		protected Logger log;
+		protected string logSource;
+
 		/// <summary>
 		/// Creates a database server with the specified name and configuration.
 		/// </summary>
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
-		public DbServer(string key, string id)
+		/// <param name="logFile">The log file for this database server.</param>
+		public DbServer(string key, string id, string logFile)
 		{
 			// Set the server ID.
 			this.id = id;
 
 			// Set the root registry key for this server.
 			this.key = key;
+
+			// Create the logger for this server.
+			this.log = new Logger(logFile);
+			this.log.EventLogged += this.OnLog;
+			this.logSource = string.Format("Database\\{0}", this.id);
 
 			// Load the current configuration.
 			this.LoadConfiguration();
@@ -75,13 +86,15 @@ namespace YtCrawler.Database
 		/// <param name="dataSource">The data source.</param>
 		/// <param name="username">The username.</param>
 		/// <param name="password">The password.</param>
+		/// <param name="logFile">The log file for this database server.</param>
 		public DbServer(
 			string key,
 			string id,
 			string name,
 			string dataSource,
 			string username,
-			string password
+			string password,
+			string logFile
 			)
 		{
 			// Save the parameters.
@@ -91,6 +104,11 @@ namespace YtCrawler.Database
 			this.dataSource = dataSource;
 			this.username = username;
 			this.password = password;
+
+			// Create the logger for this server.
+			this.log = new Logger(logFile);
+			this.log.EventLogged += this.OnLog;
+			this.logSource = string.Format("Database\\{0}", this.id);
 
 			// Save the configuration.
 			this.SaveConfiguration();
@@ -103,12 +121,10 @@ namespace YtCrawler.Database
 		/// Gets the ID of the current database server.
 		/// </summary>
 		public string Id { get { return this.id; } }
-
 		/// <summary>
 		/// Gets the type of the current database server.
 		/// </summary>
 		public abstract DbServers.DbServerType Type { get; }
-
 		/// <summary>
 		/// Gets or sets the server name.
 		/// </summary>
@@ -117,7 +133,6 @@ namespace YtCrawler.Database
 			get { return this.name; }
 			set { this.name = value; this.OnServerChanged(); }
 		}
-
 		/// <summary>
 		/// Gets or sets the server data source.
 		/// </summary>
@@ -126,7 +141,6 @@ namespace YtCrawler.Database
 			get { return this.dataSource; }
 			set { this.dataSource = value; this.OnServerChanged(); }
 		}
-
 		/// <summary>
 		/// Gets or sets the server username.
 		/// </summary>
@@ -135,7 +149,6 @@ namespace YtCrawler.Database
 			get { return this.username; }
 			set { this.username = value; this.OnServerChanged(); }
 		}
-
 		/// <summary>
 		/// Gets or sets the server password.
 		/// </summary>
@@ -144,17 +157,10 @@ namespace YtCrawler.Database
 			get { return this.password; }
 			set { this.password = value; this.OnServerChanged(); }
 		}
-
-		/// <summary>
-		/// Gets the server connection state.
-		/// </summary>
-		public abstract ConnectionState ConnectionState { get; }
-
 		/// <summary>
 		/// Gets the server state.
 		/// </summary>
 		public ServerState State { get { return this.state; } }
-
 		/// <summary>
 		/// Gets the server version.
 		/// </summary>
@@ -165,23 +171,29 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when the configuration of the server has changed.
 		/// </summary>
-		public event ServerEventHandler ServerChanged;
+		public event DbServerEventHandler ServerChanged;
 		/// <summary>
 		/// An event raised when the server connection state has changed.
 		/// </summary>
-		public event ServerStateChangedEventHandler StateChanged;
+		public event DbServerStateEventHandler StateChanged;
 		/// <summary>
 		/// An event raised when the server begins opening the connection.
 		/// </summary>
-		public event ServerEventHandler Opening;
+		public event DbServerEventHandler Opening;
 		/// <summary>
 		/// An event raised when the server begins reopening the connection.
 		/// </summary>
-		public event ServerEventHandler Reopening;
+		public event DbServerEventHandler Reopening;
 		/// <summary>
 		/// An event raised when the server begins closing the connection.
 		/// </summary>
-		public event ServerEventHandler Closing;
+		public event DbServerEventHandler Closing;
+		/// <summary>
+		/// An event raised when a new server event has been logged.
+		/// </summary>
+		public event LogEventHandler EventLogged;
+
+		// Public methods.
 
 		/// <summary>
 		/// Saves the current server configuration to the registry.
@@ -192,6 +204,15 @@ namespace YtCrawler.Database
 			Registry.SetValue(this.key, "DataSource", this.dataSource, RegistryValueKind.String);
 			Registry.SetValue(this.key, "Username", this.username, RegistryValueKind.String);
 			Registry.SetValue(this.key, "Password", CrawlerCrypto.Encrypt(this.password), RegistryValueKind.Binary);
+
+			// Log the event.
+			this.log.Add(
+				LogEventLevel.Normal,
+				LogEventType.Success,
+				this.logSource,
+				"Configuration for database server with ID \'{0}\' was saved to registry.",
+				new object[] { this.Id }
+				);
 
 			// Re-initialize the server object.
 			this.OnInitialized();
@@ -217,7 +238,7 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// Opens the connection to the database server.
+		/// Opens the connection to the database server synchronously.
 		/// </summary>
 		public abstract void Open();
 
@@ -227,10 +248,10 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult OpenAsync(DbServerCallback callback, object userState = null);
+		public abstract IAsyncResult Open(DbServerCallback callback, object userState = null);
 
 		/// <summary>
-		/// Reopens the connection to the database server.
+		/// Reopens the connection to the database asynchronously.
 		/// </summary>
 		public abstract void Reopen();
 
@@ -240,12 +261,7 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult ReopenAsync(DbServerCallback callback, object userState = null);
-
-		/// <summary>
-		/// Closes the connection to the database server.
-		/// </summary>
-		public abstract void Close();
+		public abstract IAsyncResult Reopen(DbServerCallback callback, object userState = null);
 
 		/// <summary>
 		/// Closes the connection to the database server asynchronously.
@@ -253,13 +269,7 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult CloseAsync(DbServerCallback callback, object userState = null);
-
-		/// <summary>
-		/// Changes the current password of the database server.
-		/// </summary>
-		/// <param name="newPassword">The new password.</param>
-		public abstract void ChangePassword(string newPassword);
+		public abstract IAsyncResult Close(DbServerCallback callback, object userState = null);
 
 		/// <summary>
 		/// Changes the current password of the database server asynchronously.
@@ -282,7 +292,8 @@ namespace YtCrawler.Database
 		/// </summary>
 		protected virtual void OnDispose()
 		{
-			// Do nothing.
+			// Dispose the log.
+			this.log.Dispose();
 		}
 
 		/// <summary>
@@ -297,30 +308,16 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event handler called when the state of the connection has changed.
 		/// </summary>
-		/// <param name="sender">The sender object.</param>
+		/// <param name="state">The new server state.</param>
 		/// <param name="e">The event arguments.</param>
-		protected void OnStateChanged(object sender, StateChangeEventArgs e)
+		protected void OnStateChange(DbServer.ServerState state)
 		{
-			// Update the server state.
-			switch (e.CurrentState)
-			{
-				case System.Data.ConnectionState.Open:
-				case System.Data.ConnectionState.Executing:
-				case System.Data.ConnectionState.Fetching:
-					this.state = ServerState.Connected;
-					break;
-				case System.Data.ConnectionState.Connecting:
-					this.state = ServerState.Busy;
-					break;
-				case System.Data.ConnectionState.Closed:
-					this.state = ServerState.Disconnected;
-					break;
-				case System.Data.ConnectionState.Broken:
-					this.state = ServerState.Failed;
-					break;
-			}
-			// Call the event.
-			if (this.StateChanged != null) this.StateChanged(this, e);
+			// Save the old state.
+			DbServer.ServerState oldState = this.state;
+			// Set the new state.
+			this.state = state;
+			// Call the event handler.
+			if(this.StateChanged != null) this.StateChanged(this, new DbServerStateEventArgs(oldState, this.state));
 		}
 
 		/// <summary>
@@ -350,6 +347,15 @@ namespace YtCrawler.Database
 			if (this.Closing != null) this.Closing(this);
 		}
 
+		/// <summary>
+		/// An event handler called when the server logs a new event.
+		/// </summary>
+		protected void OnLog(LogEvent evt)
+		{
+			// Call the event.
+			if (this.EventLogged != null) this.EventLogged(evt);
+		}
+
 		// Private methods.
 
 		/// <summary>
@@ -361,6 +367,15 @@ namespace YtCrawler.Database
 			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
 			this.username = Registry.GetValue(this.key, "Username", null) as string;
 			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
+
+			// Log the event.
+			this.log.Add(
+				LogEventLevel.Normal,
+				LogEventType.Success,
+				this.logSource,
+				"Configuration for database server with ID \'{0}\' was loaded from registry. The server name is \'{1}\'.",
+				new object[] { this.Id, this.Name }
+				);
 		}
 	}
 }

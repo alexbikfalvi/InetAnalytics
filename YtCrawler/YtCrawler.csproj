@@ -52,6 +52,7 @@
     <Compile Include="Database\DbServerAsyncState.cs" />
     <Compile Include="Database\DbServerMsSql.cs" />
     <Compile Include="Database\DbServers.cs" />
+    <Compile Include="Database\DbServerStateEventArgs.cs" />
     <Compile Include="Log\LogEvent.cs" />
     <Compile Include="Log\LogException.cs" />
     <Compile Include="Log\Logger.cs" />

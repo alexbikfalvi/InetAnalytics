@@ -38,7 +38,8 @@ namespace YtAnalytics.Controls
 		private static Image[] images = {
 											Resources.ServerDown_32,
 											Resources.ServerUp_32,
-											Resources.ServerError_32,
+											Resources.ServerWarning_32,
+											Resources.ServerBusy_32,
 											Resources.ServerBusy_32
 										};
 
@@ -49,6 +50,8 @@ namespace YtAnalytics.Controls
 		{
 			InitializeComponent();
 		}
+
+		// Public properties.
 
 		/// <summary>
 		/// Gets or sets the current log event.
@@ -107,10 +110,26 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public string Password { get { return this.textBoxPassword.Text; } }
 
+		// Public events.
+
 		/// <summary>
 		/// An event raised when the server configuration has changed.
 		/// </summary>
 		public event EventHandler ConfigurationChanged;
+
+		// Public methods.
+
+		/// <summary>
+		/// Call this method to update the state of the database server.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		public void StateChanged(DbServer server)
+		{
+			// If the server is different from the current one, do nothing.
+			if (server != this.server) return;
+			// Else, update the state.
+			this.pictureBox.Image = ControlServerProperties.images[(int)server.State];
+		}
 
 		/// <summary>
 		/// An event handler called when the configuration changes.
