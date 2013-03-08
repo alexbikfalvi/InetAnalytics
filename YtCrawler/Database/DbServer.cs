@@ -50,6 +50,8 @@ namespace YtCrawler.Database
 		private string dataSource;
 		private string username;
 		private string password;
+		private DateTime dateCreated;
+		private DateTime dateModified;
 
 		// State.
 		private ServerState state = ServerState.Disconnected;
@@ -91,6 +93,8 @@ namespace YtCrawler.Database
 		/// <param name="username">The username.</param>
 		/// <param name="password">The password.</param>
 		/// <param name="logFile">The log file for this database server.</param>
+		/// <param name="dateCreated">The date when the server was created.</param>
+		/// <param name="dateModified">The date when the server was last modified.</param>
 		public DbServer(
 			string key,
 			string id,
@@ -98,7 +102,9 @@ namespace YtCrawler.Database
 			string dataSource,
 			string username,
 			string password,
-			string logFile
+			string logFile,
+			DateTime dateCreated,
+			DateTime dateModified
 			)
 		{
 			// Save the parameters.
@@ -108,6 +114,8 @@ namespace YtCrawler.Database
 			this.dataSource = dataSource;
 			this.username = username;
 			this.password = password;
+			this.dateCreated = dateCreated;
+			this.dateModified = dateModified;
 
 			// Create the logger for this server.
 			this.log = new Logger(logFile);
@@ -162,6 +170,14 @@ namespace YtCrawler.Database
 			set { this.password = value; this.OnServerChanged(); }
 		}
 		/// <summary>
+		/// Gets the date when the server was created.
+		/// </summary>
+		public DateTime DateCreated { get { return this.dateCreated; } }
+		/// <summary>
+		/// Gets the date when the server was last modified.
+		/// </summary>
+		public DateTime DateModified { get { return this.dateModified; } }
+		/// <summary>
 		/// Gets the server state.
 		/// </summary>
 		public ServerState State { get { return this.state; } }
@@ -169,6 +185,10 @@ namespace YtCrawler.Database
 		/// Gets the server version.
 		/// </summary>
 		public abstract string Version { get; }
+		/// <summary>
+		/// Gets the log for this database server.
+		/// </summary>
+		public Logger Log { get { return this.log; } }
 		/// <summary>
 		/// Gets the default database for this server.
 		/// </summary>
@@ -208,10 +228,15 @@ namespace YtCrawler.Database
 		/// </summary>
 		public virtual void SaveConfiguration()
 		{
+			// Update the modification date.
+			this.dateModified = DateTime.Now;
+
 			Registry.SetValue(this.key, "Name", this.name, RegistryValueKind.String);
 			Registry.SetValue(this.key, "DataSource", this.dataSource, RegistryValueKind.String);
 			Registry.SetValue(this.key, "Username", this.username, RegistryValueKind.String);
 			Registry.SetValue(this.key, "Password", CrawlerCrypto.Encrypt(this.password), RegistryValueKind.Binary);
+			Registry.SetValue(this.key, "DateCreated", this.dateCreated.Ticks, RegistryValueKind.QWord);
+			Registry.SetValue(this.key, "DateModified", this.dateModified.Ticks, RegistryValueKind.QWord);
 
 			// Log the event.
 			this.log.Add(
@@ -235,6 +260,8 @@ namespace YtCrawler.Database
 			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
 			this.username = Registry.GetValue(this.key, "Username", null) as string;
 			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
+			this.dateCreated = new DateTime((long)Registry.GetValue(this.key, "DateCreated", DateTime.Now.Ticks));
+			this.dateModified = new DateTime((long)Registry.GetValue(this.key, "DateModified", DateTime.Now.Ticks));
 
 			// Log the event.
 			this.log.Add(
@@ -300,6 +327,13 @@ namespace YtCrawler.Database
 		/// <returns>The asynchronous result.</returns>
 		public abstract IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null);
 
+		/// <summary>
+		/// Creates a new database command with the specified query.
+		/// </summary>
+		/// <param name="query">The database query.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The database command.</returns>
+		public abstract DbCommand CreateCommand(string query, object userState = null);
 
 		// Protected methods.
 

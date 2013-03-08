@@ -149,6 +149,7 @@
 			// 
 			// buttonChangePassword
 			// 
+			this.buttonChangePassword.Enabled = false;
 			this.buttonChangePassword.Image = global::YtAnalytics.Resources.PasswordChange_16;
 			this.buttonChangePassword.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonChangePassword.Name = "buttonChangePassword";

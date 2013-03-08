@@ -76,6 +76,8 @@ namespace YtAnalytics.Controls
 					this.textBoxDataSource.Text = value.DataSource;
 					this.textBoxUsername.Text = value.Username;
 					this.textBoxPassword.Text = value.Password;
+					this.textBoxDateCreated.Text = value.DateCreated.ToString();
+					this.textBoxDateModified.Text = value.DateModified.ToString();
 					this.tabControl.Visible = true;
 					this.pictureBox.Image = ControlServerProperties.images[(int)value.State];
 				}

@@ -368,11 +368,12 @@ namespace YtAnalytics.Forms
 				this.imageList.Images.IndexOfKey("ServerUp"),
 				this.imageList.Images.IndexOfKey("ServerWarning"),
 				this.imageList.Images.IndexOfKey("ServerBusy"),
-				this.imageList.Images.IndexOfKey("ServerBusy")
+				this.imageList.Images.IndexOfKey("ServerBusy"),
+				this.imageList.Images.IndexOfKey("Log")
 			});
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);
-			this.controlLog.Initialize(this.crawler);
+			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
 			this.controlCommentsVideos.Initialize(this.crawler.Comments.Videos, YtCrawler.Comments.Comment.CommentType.Video);
 			this.controlCommentsUsers.Initialize(this.crawler.Comments.Users, YtCrawler.Comments.Comment.CommentType.User);
 			this.controlCommentsPlaylists.Initialize(this.crawler.Comments.Playlists, YtCrawler.Comments.Comment.CommentType.Playlist);

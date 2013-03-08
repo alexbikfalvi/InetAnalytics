@@ -24,7 +24,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class that represents a database for a Microsoft SQL Server.
 	/// </summary>
-	public class DbDatabaseMsSql : DbDatabase
+	public class DbDatabaseSql : DbDatabase
 	{
 		/// <summary>
 		/// Creates a new database instance.
@@ -32,7 +32,7 @@ namespace YtCrawler.Database
 		/// <param name="id">The database ID.</param>
 		/// <param name="name">The database name.</param>
 		/// <param name="dateCreate">The database creation date.</param>
-		private DbDatabaseMsSql(int id, string name, DateTime dateCreate)
+		private DbDatabaseSql(int id, string name, DateTime dateCreate)
 			: base(id, name, dateCreate)
 		{
 		}
@@ -41,14 +41,14 @@ namespace YtCrawler.Database
 		/// Creates a database instance from the specified registry key.
 		/// </summary>
 		/// <param name="key">The registr</param>
-		public static DbDatabaseMsSql Load(string key)
+		public static DbDatabaseSql Load(string key)
 		{
 			// Read the data from registry
 			string[] data = Registry.GetValue(key, "Database", null) as string[];
 			// If the data returned is null, return null.
 			if(null == data) return null;
 			// Otherwise, initialize the values from the multi string.
-			return new DbDatabaseMsSql(
+			return new DbDatabaseSql(
 				int.Parse(data[0]),
 				data[1],
 				DateTime.Parse(data[2]));

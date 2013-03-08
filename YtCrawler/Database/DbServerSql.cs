@@ -28,13 +28,13 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing a Microsoft SQL Server.
 	/// </summary>
-	public sealed class DbServerMsSql : DbServer
+	public sealed class DbServerSql : DbServer
 	{
 		private SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 		private SqlConnection connection = new SqlConnection();
 		private Mutex mutex = new Mutex();
 
-		private DbDatabaseMsSql database = null;
+		private DbDatabaseSql database = null;
 
 		/// <summary>
 		/// Creates a new server instance.
@@ -42,7 +42,7 @@ namespace YtCrawler.Database
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServerMsSql(string key, string id, string logFile)
+		public DbServerSql(string key, string id, string logFile)
 			: base(key, id, logFile)
 		{
 			// Initialize the server with the current configuration.
@@ -61,16 +61,20 @@ namespace YtCrawler.Database
 		/// <param name="username">The username.</param>
 		/// <param name="password">The password.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServerMsSql(
+		/// <param name="dateCreated">The date when the server was created.</param>
+		/// <param name="dateModified">The date when the server was last modified.</param>
+		public DbServerSql(
 			string key,
 			string id,
 			string name,
 			string dataSource,
 			string username,
 			string password,
-			string logFile
+			string logFile,
+			DateTime dateCreated,
+			DateTime dateModified
 			)
-			: base(key, id, name, dataSource, username, password, logFile)
+			: base(key, id, name, dataSource, username, password, logFile, dateCreated, dateModified)
 		{
 			// Initialize the server with the current configuration.
 			this.OnInitialized();
@@ -120,7 +124,7 @@ namespace YtCrawler.Database
 		public override void SaveConfiguration()
 		{
 			// Load the default database.
-			try { this.database = DbDatabaseMsSql.Load(this.key); }
+			try { this.database = DbDatabaseSql.Load(this.key); }
 			catch (Exception) { this.database = null; }
 
 			// Call the base class method.
@@ -478,6 +482,17 @@ namespace YtCrawler.Database
 				if (callback != null) callback(asyncState);
 			});
 			return asyncState;
+		}
+
+		/// <summary>
+		/// Creates a new database command with the specified query.
+		/// </summary>
+		/// <param name="query">The database query.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The database command.</returns>
+		public override DbCommand CreateCommand(string query, object userState = null)
+		{
+			return new DbCommandSql(this.connection, query, userState);
 		}
 
 		// Protected methods.

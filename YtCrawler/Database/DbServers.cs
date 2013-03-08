@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading;
 using Microsoft.Win32;
 using YtCrawler.Log;
@@ -34,7 +35,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing the list of database servers.
 	/// </summary>
-	public sealed class DbServers : IDisposable, IEnumerable<KeyValuePair<string,DbServer>>
+	public sealed class DbServers : IDisposable, IEnumerable<KeyValuePair<string, DbServer>>
 	{
 		public enum DbServerType
 		{
@@ -44,6 +45,7 @@ namespace YtCrawler.Database
 		private CrawlerConfig config;
 
 		private Dictionary<string, DbServer> servers = new Dictionary<string, DbServer>();
+		private IOrderedEnumerable<KeyValuePair<string, DbServer>> orderedServers = null;
 		private DbServer primary = null;
 		private Mutex mutex = new Mutex();
 
@@ -80,7 +82,7 @@ namespace YtCrawler.Database
 					switch (type)
 					{
 						case DbServerType.MsSql:
-							server = new DbServerMsSql(key, id, logFile);
+							server = new DbServerSql(key, id, logFile);
 							break;
 						default: continue;
 					}
@@ -189,7 +191,6 @@ namespace YtCrawler.Database
 			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(oldPrimary, this.primary);
 		}
 
-		/// <summary>
 		/// Returns the enumerator for the current list of database servers.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
@@ -204,7 +205,9 @@ namespace YtCrawler.Database
 		/// <returns>The enumerator.</returns>
 		public IEnumerator<KeyValuePair<string, DbServer>> GetEnumerator()
 		{
-			return this.servers.GetEnumerator();
+			// Order the server list.
+			this.orderedServers = Enumerable.OrderBy<KeyValuePair<string, DbServer>, DateTime>(this.servers, pair => pair.Value.DateCreated);
+			return this.orderedServers.GetEnumerator();
 		}
 
 		/// <summary>
@@ -240,7 +243,7 @@ namespace YtCrawler.Database
 				switch (type)
 				{
 					case DbServerType.MsSql:
-						server = new DbServerMsSql(key.Name, id, name, dataSource, username, password, logFile);
+						server = new DbServerSql(key.Name, id, name, dataSource, username, password, logFile, DateTime.Now, DateTime.Now);
 						break;
 					default: throw new CrawlerException(string.Format("Cannot add a new database server. Unknown database server type \'{0}\'.", type));
 				}

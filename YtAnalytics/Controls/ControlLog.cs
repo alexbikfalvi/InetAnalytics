@@ -37,7 +37,8 @@ namespace YtAnalytics.Controls
 	/// </summary>
 	public partial class ControlLog : UserControl
 	{
-		private Crawler crawler;
+		private CrawlerConfig config;
+		private Logger log;
 		private ControlLogUpdateState state = null;
 		private List<LogEvent> events = null;
 
@@ -77,14 +78,16 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// Initializes the control with a crawler object.
 		/// </summary>
-		/// <param name="crawler">The crawler object.</param>
-		/// <param name="calendar">The log calendar.</param>
-		public void Initialize(Crawler crawler)
+		/// <param name="config">The configuration.</param>
+		/// <param name="log">The log object.</param>
+		public void Initialize(CrawlerConfig config, Logger log)
 		{
-			// Set the crawler.
-			this.crawler = crawler;
+			// Set the configuration.
+			this.config = config;
+			// Set the log.
+			this.log = log;
 			// Refresh the log.
-			this.Refresh();
+			this.OnCalendarDateChanged(null, new DateRangeEventArgs(this.calendar.Calendar.SelectionStart, this.calendar.Calendar.SelectionEnd));
 		}
 
 		/// <summary>
@@ -95,7 +98,7 @@ namespace YtAnalytics.Controls
 		public void DateChanged(object sender, DateRangeEventArgs e)
 		{
 			// If the function is called before the initialization of the crawler, do nothing.
-			if (null == this.crawler) return;
+			if (null == this.log) return;
 
 			// Update the calendar.
 			this.calendar.Calendar.SelectionStart = e.Start;
@@ -148,13 +151,13 @@ namespace YtAnalytics.Controls
 				if (!state.IsCanceled)
 				{
 					// Read the log for all the dates in the specified range.
-					this.crawler.Log.Read(state.Range.Start, state.Range.End);
+					this.log.Read(state.Range.Start, state.Range.End);
 				}
 				// If the state is not canceled.
 				if (!state.IsCanceled)
 				{
 					// Get the list of events.
-					state.Events = this.crawler.Log.Get(state.Range.Start, state.Range.End);
+					state.Events = this.log.Get(state.Range.Start, state.Range.End);
 				}
 				// If the state is not canceled.
 				if (!state.IsCanceled)
@@ -180,7 +183,7 @@ namespace YtAnalytics.Controls
 			}
 			finally
 			{
-				Thread.Sleep(this.crawler.Config.MessageCloseDelay);
+				Thread.Sleep(this.config.MessageCloseDelay);
 			}
 
 			// If the state is not canceled.

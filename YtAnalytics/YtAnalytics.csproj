@@ -592,6 +592,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\PasswordChange_48.png" />
+    <None Include="Resources\PasswordChange_32.png" />
+    <None Include="Resources\PasswordChange_24.png" />
+    <None Include="Resources\PasswordChange_16.png" />
     <None Include="Resources\Database_48.png" />
     <None Include="Resources\Database_32.png" />
     <None Include="Resources\Database_24.png" />
@@ -600,10 +604,6 @@
     <None Include="Resources\Calendar_32.png" />
     <None Include="Resources\Calendar_24.png" />
     <None Include="Resources\Calendar_16.png" />
-    <None Include="Resources\PasswordChange_48.png" />
-    <None Include="Resources\PasswordChange_32.png" />
-    <None Include="Resources\PasswordChange_24.png" />
-    <None Include="Resources\PasswordChange_16.png" />
     <None Include="Resources\Password_48.png" />
     <None Include="Resources\Password_32.png" />
     <None Include="Resources\Password_24.png" />

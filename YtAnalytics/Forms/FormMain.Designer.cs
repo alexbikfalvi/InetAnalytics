@@ -196,6 +196,7 @@
 			this.imageList.Images.SetKeyName(29, "ServerUp");
 			this.imageList.Images.SetKeyName(30, "ServerWarning");
 			this.imageList.Images.SetKeyName(31, "ServerBusy");
+			this.imageList.Images.SetKeyName(32, "Log");
 			// 
 			// controlPanelConfiguration
 			// 

@@ -55,6 +55,15 @@ namespace YtCrawler.Database
 		/// Creates a new exception instance.
 		/// </summary>
 		/// <param name="message">The exception message.</param>
+		public DbException(string message)
+			: base(message)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new exception instance.
+		/// </summary>
+		/// <param name="message">The exception message.</param>
 		/// <param name="innerException">The inner exception.</param>
 		public DbException(string message, Exception innerException)
 			: base(message, innerException)

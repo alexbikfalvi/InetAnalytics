@@ -107,7 +107,6 @@ namespace YtAnalytics.Controls
 			this.server = server;
 			// Set the tree node and the tree node tag.
 			this.treeNode = treeNode;
-			this.treeNode.Tag = this;
 
 			// Add the event handlers for the database server.
 			this.server.ServerChanged += OnServerChanged;
@@ -199,6 +198,9 @@ namespace YtAnalytics.Controls
 					(this.server.State == DbServer.ServerState.Disconnected) ||
 					(this.server.State == DbServer.ServerState.Failed);
 				this.pictureBox.Image = ControlServer.images[(int)this.server.State];
+				this.tabControl.Enabled =
+					(this.server.State != DbServer.ServerState.Connecting) &&
+					(this.server.State != DbServer.ServerState.Disconnecting);
 			}
 		}
 
@@ -378,7 +380,7 @@ namespace YtAnalytics.Controls
 		private void OnDisconnect(object sender, EventArgs e)
 		{
 			// Show a connecting message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Disconnecting from the database server \'{0}\'...", this.server.Name));
+			this.ShowMessage(Resources.Disconnect_48, string.Format("Disconnecting from the database server \'{0}\'...", this.server.Name));
 			try
 			{
 				// Connect asynchronously to the database server.

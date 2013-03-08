@@ -52,7 +52,8 @@ namespace YtAnalytics.Controls
 		{
 			private ListViewItem item;
 			private TreeNode node;
-			private ControlServer control = new ControlServer();
+			private ControlServer controlServer = new ControlServer();
+			private ControlLog controlLog = new ControlLog();
 
 			/// <summary>
 			/// Initializes the server controls object.
@@ -76,7 +77,11 @@ namespace YtAnalytics.Controls
 			/// <summary>
 			/// Gets the server control.
 			/// </summary>
-			public ControlServer Control { get { return this.control; } }
+			public ControlServer ControlServer { get { return this.controlServer; } }
+			/// <summary>
+			/// Gets the log control.
+			/// </summary>
+			public ControlLog ControlLog { get { return this.controlLog; } }
 		};
 
 		private static string logSource = "Database";
@@ -156,22 +161,30 @@ namespace YtAnalytics.Controls
 				item.ImageIndex = this.imageIndex[(int)server.Value.State];
 				item.Tag = server.Key;
 				this.listView.Items.Add(item);
-				// Create a new tree node.
-				TreeNode node = new TreeNode(
+				// Create a new tree node for the server.
+				TreeNode nodeServer = new TreeNode(
 					this.GetServerTreeName(server.Value),
 					this.imageIndex[(int)server.Value.State],
 					this.imageIndex[(int)server.Value.State]);
-				this.treeNode.Nodes.Add(node);
+				this.treeNode.Nodes.Add(nodeServer);
+				TreeNode nodeLog = new TreeNode("Server log", this.imageIndex[5], this.imageIndex[5]);
+				nodeServer.Nodes.Add(nodeLog);
 				this.treeNode.ExpandAll();
 				
 				// Create a new controls item.
-				ServerControls controls = new ServerControls(item, node);
+				ServerControls controls = new ServerControls(item, nodeServer);
 
-				// Initialize the server control.
-				controls.Control.Initialize(this.crawler, server.Value, node);
+				// Initialize the server controls.
+				controls.ControlServer.Initialize(this.crawler, server.Value, nodeServer);
+				controls.ControlLog.Initialize(this.crawler.Config, server.Value.Log);
 
-				// Add the control to the panel.
-				this.panel.Add(controls.Control);
+				// Add the controls to the panel.
+				this.panel.Add(controls.ControlServer);
+				this.panel.Add(controls.ControlLog);
+
+				// Set the tree nodes tag.
+				nodeServer.Tag = controls.ControlServer;
+				nodeLog.Tag = controls.ControlLog;
 
 				// Add the servers controls to the dictionary.
 				this.items.Add(server.Value.Id, controls);
@@ -277,10 +290,10 @@ namespace YtAnalytics.Controls
 				ServerControls controls = new ServerControls(item, node);
 
 				// Initialize the server control.
-				controls.Control.Initialize(this.crawler, server, node);
+				controls.ControlServer.Initialize(this.crawler, server, node);
 
 				// Add the control to the panel.
-				this.panel.Add(controls.Control);
+				this.panel.Add(controls.ControlServer);
 
 				// Add the servers controls to the dictionary.
 				this.items.Add(server.Id, controls);
@@ -313,10 +326,10 @@ namespace YtAnalytics.Controls
 				this.treeNode.Nodes.Remove(this.items[id].Node);
 
 				// Remove the control from the panel.
-				this.panel.Remove(this.items[id].Control);
+				this.panel.Remove(this.items[id].ControlServer);
 
 				// Dispose the control.
-				this.items[id].Control.Dispose();
+				this.items[id].ControlServer.Dispose();
 
 				// Remove the controls entry from the dictionary.
 				this.items.Remove(id);
@@ -734,7 +747,7 @@ namespace YtAnalytics.Controls
 			DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
 
 			// Show a connecting message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Disconnecting from the database server \'{0}\'...", server.Name));
+			this.ShowMessage(Resources.Disconnect_48, string.Format("Disconnecting from the database server \'{0}\'...", server.Name));
 			try
 			{
 				// Connect asynchronously to the database server.
