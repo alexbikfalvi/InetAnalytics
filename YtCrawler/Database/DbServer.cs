@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using Microsoft.Win32;
@@ -194,6 +195,11 @@ namespace YtCrawler.Database
 		/// </summary>
 		public abstract DbDatabase Database { get; }
 
+		/// <summary>
+		/// Gets the query for the server databases.
+		/// </summary>
+		public abstract string QueryDatabases { get; } 
+
 		// Public events.
 
 		/// <summary>
@@ -285,6 +291,28 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
+		/// Adds a new event to the event log for the current date/time.
+		/// </summary>
+		/// <param name="level">The log event level.</param>
+		/// <param name="type">The log event type.</param>
+		/// <param name="message">The event message.</param>
+		/// <param name="parameters">The event parameters.</param>
+		/// <param name="exception">The event exception.</param>
+		/// <param name="subevents">The list of subevents.</param>
+		/// <returns>The log event.</returns>
+		public void LogEvent(
+			LogEventLevel level,
+			LogEventType type,
+			string message,
+			object[] parameters = null,
+			Exception exception = null,
+			List<LogEvent> subevents = null
+			)
+		{
+			this.log.Add(level, type, this.logSource, message, parameters, exception, subevents);
+		}
+
+		/// <summary>
 		/// Opens the connection to the database server synchronously.
 		/// </summary>
 		public abstract void Open();
@@ -334,6 +362,14 @@ namespace YtCrawler.Database
 		/// <param name="userState">The user state.</param>
 		/// <returns>The database command.</returns>
 		public abstract DbCommand CreateCommand(string query, object userState = null);
+
+		/// <summary>
+		/// Creates a database entry from the table data found at the specified index.
+		/// </summary>
+		/// <param name="data">The table data.</param>
+		/// <param name="index">The row index.</param>
+		/// <returns>The database instance.</returns>
+		public abstract DbDatabase CreateDatabase(DbTable data, int index);
 
 		// Protected methods.
 

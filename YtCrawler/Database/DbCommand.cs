@@ -53,7 +53,7 @@ namespace YtCrawler.Database
 		// Public methods.
 
 		/// <summary>
-		/// Executes a database query asynchronously.
+		/// Executes the database query asynchronously.
 		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>

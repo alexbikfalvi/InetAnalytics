@@ -94,7 +94,7 @@ namespace YtCrawler.Log
 		/// </summary>
 		/// <param name="level">The log event level.</param>
 		/// <param name="type">The log event type.</param>
-		/// <param name="source">The even source.</param>
+		/// <param name="source">The event source.</param>
 		/// <param name="message">The event message.</param>
 		/// <param name="parameters">The event parameters.</param>
 		/// <param name="exception">The event exception.</param>

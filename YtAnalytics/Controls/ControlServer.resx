@@ -120,31 +120,41 @@
   <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="ColumnSelected.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>115, 17</value>
   </metadata>
-  <metadata name="ColumnName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColumnId.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColumnDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColumnSelected.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColumnName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColumnId.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColumnDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="imageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABm
+        BQAAAk1TRnQBSQFMAwEBAAEYAQABGAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARAaAAMBAQIDKgFBA04BiQN+AcgBqwGpAaoB5QHbAdkB2gH5AdkB1wHYAfgDpAHj
+        AXsBegF7AcYDSwGFAygBPNAAAxkBIwOGAdABvgG8Ab0B8wOgAfUBkAKPAf8BbQFsAW0B/wNNAf8DTwH/
+        AW8BbgFvAf8BkgKRAf8DogH0AcEBwAHBAfQDeQHGAxQBHMgAA4QBzwGlAaMBpAH+A0IB/wM/Af8DPwH/
+        Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/A0QB/wGuAawBrQH+A3IBv8gAAfEB7wHwAf8DPwH/Az8B/wM/
+        Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8B8QHvAfAB/8gAAfEB7wHwAf8DPwH/
+        Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8B8QHvAfAB/8gAAfEB7wHw
+        Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8B8QHvAfAB/8gA
+        AfEB7wHwAf8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8B8QHv
+        AfAB/8gAAfEB7wHwAf8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/
+        Af8B8QHvAfAB/8gAAfEB7wHwAf8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/
+        Az8B/wM/Af8B8QHvAfAB/8gAAfEB7wHwAf8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/
+        Af8DPwH/Az8B/wM/Af8B8QHvAfAB/8gAAfEB7wHwAf8DPwH/Az8B/wM/Af8DPwH/Az8B/wM/Af8DPwH/
+        Az8B/wM/Af8DPwH/Az8B/wM/Af8B8QHvAfAB/8gAAfEB7wHwAf8DPwH/Az8B/wFJAUgBSQH/A2AB/wF2
+        AXUBdgH/AY8CjgH/AY8CjgH/AXYBdQF2Af8DYAH/AUkBSAFJAf8DPwH/Az8B/wHxAe8B8AH/yAAB8QHv
+        AfAB/wM/Af8BowKiAf8B7QHrAewB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHw
+        Af8B8QHvAfAB/wHtAesB7AH/AaMCogH/Az8B/wHxAe8B8AH/yAADhAHPAVwCWwH/AaMCogH/Ae0B6wHs
+        Af8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B7QHrAewB/wGj
+        AqIB/wFcAlsB/wOEAc/IAAMYASIBhAGCAYMBzwGRAZABkQH4AWcBZgFnAfwDaAH/AXYBdQF2Af8BjwKO
+        Af8BjwKOAf8BdgF1AXYB/wNoAf8BZwFmAWcB/AGRAZABkQH4AYQBggGDAc8DGAEizwABAQMpAT8BTAJL
+        AYcDewHHA6YB5QHBAcABwQH6AcEBwAHBAfoDpgHlA3sBxwFMAksBhwMpAT8DAAEByAABQgFNAT4HAAE+
+        AwABKAMAAUADAAEQAwABAQEAAQEFAAGAFwAD/wEAAcABBwYAAYABAQYAAYABAQYAAYABAQYAAYABAQYA
+        AYABAQYAAYABAQYAAYABAQYAAYABAQYAAYABAQYAAYABAQYAAYABAQYAAYABAQYAAYABAQYAAYABAQYA
+        AcABAwYACw==
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>36</value>
+    <value>69</value>
   </metadata>
 </root>

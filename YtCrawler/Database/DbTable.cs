@@ -31,8 +31,8 @@ namespace YtCrawler.Database
 		private int columnCount = 0;
 		private int rowCount = 0;
 
-		private List<object>[] columns;
-		private Dictionary<string, List<object>> names = new Dictionary<string,List<object>>();
+		private List<object[]> rows = new List<object[]>();
+		private Dictionary<string, int> names = new Dictionary<string, int>();
 
 		private AddRowHandler handler;
 
@@ -59,14 +59,14 @@ namespace YtCrawler.Database
 		/// <param name="column">The column index.</param>
 		/// <param name="row">The row index.</param>
 		/// <returns>The table element.</returns>
-		public object this[int column, int row] { get { return this.columns[column][row]; } }
+		public object this[int column, int row] { get { return this.rows[row][column]; } }
 		/// <summary>
 		/// Gets the element at the specified column name and row.
 		/// </summary>
 		/// <param name="column">The column name.</param>
 		/// <param name="row">The row.</param>
 		/// <returns></returns>
-		public object this[string column, int row] { get { return this.names[column][row]; } }
+		public object this[string column, int row] { get { return this.rows[row][this.names[column]]; } }
 
 		/// <summary>
 		/// Adds a row of data to the table from the specified reader.
@@ -78,6 +78,16 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
+		/// Gets the row of objects at the specified index.
+		/// </summary>
+		/// <param name="index">The row index.</param>
+		/// <returns>The row of table objects.</returns>
+		public object[] GetRow(int index)
+		{
+			return this.rows[index];
+		}
+
+		/// <summary>
 		/// Adds the first row to the database table.
 		/// </summary>
 		/// <param name="reader">The database reader.</param>
@@ -85,12 +95,10 @@ namespace YtCrawler.Database
 		{
 			// Initialize the number of columns based on the data from the reader.
 			this.columnCount = reader.ColumnCount;
-			// Initialize the table data, organized by columns.
-			this.columns = new List<object>[this.columnCount];
-			// Initialize the table names.
+			// Initialize the column names.
 			for (int index = 0; index < this.columnCount; index++)
 			{
-				this.names.Add(reader.GetName(index), this.columns[index]);
+				this.names.Add(reader.GetName(index), index);
 			}
 			// Change the handler.
 			this.handler = new AddRowHandler(this.AddNextRow);
@@ -104,13 +112,13 @@ namespace YtCrawler.Database
 		/// <param name="reader">The database reader.</param>
 		private void AddNextRow(DbReader reader)
 		{
-			// If the number of columns in the reader does not match the table, throw an exception.
-			if (reader.ColumnCount != this.columnCount) throw new DbException(string.Format("Cannot add a new row to the table. The data column count {0} does not match the table column count {1}.", reader.ColumnCount, this.columnCount));
 			// Add a new row to the data.
+			object[] row = new object[reader.ColumnCount];
 			for (int index = 0; index < this.columnCount; index++)
 			{
-				this.columns[index].Add(reader[index]);
+				row[index] = reader[index];
 			}
+			this.rows.Add(row);
 			// Increment the row count.
 			this.rowCount++;
 		}

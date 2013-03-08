@@ -592,6 +592,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\DatabaseWarning_48.png" />
+    <None Include="Resources\DatabaseWarning_32.png" />
+    <None Include="Resources\DatabaseWarning_24.png" />
+    <None Include="Resources\DatabaseWarning_16.png" />
+    <None Include="Resources\DatabaseSuccess_48.png" />
+    <None Include="Resources\DatabaseSuccess_32.png" />
+    <None Include="Resources\DatabaseSuccess_24.png" />
+    <None Include="Resources\DatabaseSuccess_16.png" />
+    <None Include="Resources\DatabaseError_48.png" />
+    <None Include="Resources\DatabaseError_32.png" />
+    <None Include="Resources\DatabaseError_24.png" />
+    <None Include="Resources\DatabaseError_16.png" />
+    <None Include="Resources\DatabaseBusy_48.png" />
+    <None Include="Resources\DatabaseBusy_32.png" />
+    <None Include="Resources\DatabaseBusy_24.png" />
+    <None Include="Resources\DatabaseBusy_16.png" />
     <None Include="Resources\PasswordChange_48.png" />
     <None Include="Resources\PasswordChange_32.png" />
     <None Include="Resources\PasswordChange_24.png" />

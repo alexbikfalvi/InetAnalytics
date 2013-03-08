@@ -26,6 +26,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtApi.Api.V2;
@@ -44,6 +45,9 @@ namespace YtAnalytics.Controls
 	/// </summary>
 	public partial class ControlServer : UserControl
 	{
+		private delegate void TableEventHandler(DbTable table);
+		private delegate void ExceptionEventHandler(Exception exception);
+
 		private static string logSource = "Database/";
 
 		// UI formatter.
@@ -572,7 +576,6 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnDatabaseProperties(object sender, EventArgs e)
 		{
-
 		}
 
 		/// <summary>
@@ -617,6 +620,162 @@ namespace YtAnalytics.Controls
 
 			// Refresh the list of databases.
 
+			// Create a new database command for the list of server databases.
+			try
+			{
+				// Clear the databases list.
+				this.listViewDatabases.Items.Clear();
+				// Disable the refresh button.
+				this.buttonDatabaseRefresh.Enabled = false;
+				// Show a connecting message.
+				this.ShowMessage(Resources.DatabaseBusy_48, string.Format("Refreshing the list of databases for the database server \'{0}\'...", this.server.Name));
+				using (DbCommand command = this.server.CreateCommand(this.server.QueryDatabases))
+				{
+					// Execute the command.
+					command.ExecuteReader((DbCommand dbCommand, DbReader reader) =>
+					{
+						try
+						{
+							// Read the results table.
+							reader.Read(null, (DbReader dbReader) =>
+							{
+								try
+								{
+									DbTable table = dbReader.Result;
+									dbReader.Close();
+									// Show a success message.
+									this.ShowMessage(Resources.DatabaseSuccess_48, string.Format("Refreshing the list of databases for the database server \'{0}\' completed successfully.", this.server.Name), false);
+									// Wait.
+									Thread.Sleep(this.crawler.Config.MessageCloseDelay);
+									// Hide the message.
+									this.HideMessage();
+									// Call the completion method.
+									this.OnRefreshDatabasesSuccess(table);
+								}
+								catch (Exception exception)
+								{
+									// Show an error message.
+									this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name));
+									// Log the event.
+									this.server.LogEvent(
+										LogEventLevel.Important,
+										LogEventType.Error,
+										"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
+										new object[] { this.server.Name, exception.Message },
+										exception);
+									// Call the completion method.
+									this.OnRefreshDatabasesFail(exception);
+								}
+							});
+						}
+						catch (Exception exception)
+						{
+							// Show an error message.
+							this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name));
+							// Log the event.
+							this.server.LogEvent(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
+								new object[] { this.server.Name, exception.Message },
+								exception);
+							// Call the completion method.
+							this.OnRefreshDatabasesFail(exception);
+						}
+					});
+				}
+			}
+			catch (Exception exception)
+			{
+				// Show an error message.
+				this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name));
+				// Log the event.
+				this.server.LogEvent(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
+					new object[] { this.server.Name, exception.Message },
+					exception);
+				// Call the completion method.
+				this.OnRefreshDatabasesFail(exception);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the refresh of server databases completed successfully.
+		/// </summary>
+		/// <param name="table">The databases table.</param>
+		private void OnRefreshDatabasesSuccess(DbTable table)
+		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new TableEventHandler(this.OnRefreshDatabasesSuccess), new object[] { table });
+			else
+			{
+				// Add the databases to the list.
+				for (int row = 0; row < table.RowCount; row++)
+				{
+					// Create the database for this server.
+					DbDatabase db = this.server.CreateDatabase(table, row);
+
+					// Add a new list view item.
+					ListViewItem item = new ListViewItem(new string[] {
+						db.Name,
+						db.Id.ToString(),
+						db.DateCreate.ToString()
+					});
+					item.ImageIndex = 0;
+					item.Tag = db;
+					item.Checked = this.server.Database != null ? db.Name == this.server.Database.Name : false;
+					this.listViewDatabases.Items.Add(item);
+				}
+				this.buttonDatabaseRefresh.Enabled = true;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the refresh of server databases failed.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		private void OnRefreshDatabasesFail(Exception exception)
+		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(new ExceptionEventHandler(this.OnRefreshDatabasesFail), new object[] { exception });
+			else
+			{
+				this.buttonDatabaseRefresh.Enabled = true;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the checked state of a database item has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnDatabaseChecked(object sender, ItemCheckedEventArgs e)
+		{
+			// Get the database.
+			DbDatabase database = e.Item.Tag as DbDatabase;
+			if (e.Item.Checked)
+			{
+				// Uncheck the rest of the items.
+				foreach (ListViewItem item in this.listViewDatabases.Items)
+				{
+					
+				}
+			}
+			else
+			{
+				// If the item is unchecked and this is the current server database.
+				if (this.server.Database != null)
+				{
+					if (database.Name == this.server.Database.Name)
+					{
+						// Recheck the item.
+						e.Item.Checked = true;
+					}
+				}
+				// Otherwise, leave its state unchecked.
+			}
 		}
 	}
 }

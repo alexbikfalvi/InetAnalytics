@@ -40,7 +40,8 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Creates a database instance from the specified registry key.
 		/// </summary>
-		/// <param name="key">The registr</param>
+		/// <param name="key">The registry key.</param>
+		/// <returns>The database instance.</returns>
 		public static DbDatabaseSql Load(string key)
 		{
 			// Read the data from registry
@@ -52,6 +53,21 @@ namespace YtCrawler.Database
 				int.Parse(data[0]),
 				data[1],
 				DateTime.Parse(data[2]));
+		}
+
+		/// <summary>
+		/// Createa a database instance from the specified table row.
+		/// </summary>
+		/// <param name="table">The table.</param>
+		/// <param name="row">The row index.</param>
+		/// <returns>The database instance.</returns>
+		public static DbDatabaseSql Read(DbTable table, int row)
+		{
+			string name = table["name", row] as string;
+			int id = (int)table["database_id", row];
+			DateTime dateCreate = (DateTime)table["create_date", row];
+			// Create the object.
+			return new DbDatabaseSql(id, name, dateCreate);
 		}
 	}
 }

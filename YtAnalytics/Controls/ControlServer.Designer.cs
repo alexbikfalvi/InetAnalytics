@@ -29,6 +29,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlServer));
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
 			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
@@ -42,13 +44,8 @@
 			this.panel = new System.Windows.Forms.Panel();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageDatabase = new System.Windows.Forms.TabPage();
-			this.buttonRefresh = new System.Windows.Forms.Button();
+			this.buttonDatabaseRefresh = new System.Windows.Forms.Button();
 			this.labelDatabaseSelect = new System.Windows.Forms.Label();
-			this.gridDatabase = new System.Windows.Forms.DataGridView();
-			this.ColumnSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColumnDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.buttonDatabaseProperties = new System.Windows.Forms.Button();
 			this.textBoxDatabase = new System.Windows.Forms.TextBox();
 			this.labelDatabaseCurrent = new System.Windows.Forms.Label();
@@ -58,8 +55,12 @@
 			this.labelPrimary = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.listViewDatabases = new System.Windows.Forms.ListView();
+			this.columnHeaderDatabaseName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderDatabaseId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderDatabaseDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.log = new YtAnalytics.Controls.ControlLogList();
-			this.buttonDatabaseCancel = new System.Windows.Forms.Button();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -68,7 +69,6 @@
 			this.panel.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageDatabase.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridDatabase)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDatabase)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -201,10 +201,9 @@
 			// 
 			// tabPageDatabase
 			// 
-			this.tabPageDatabase.Controls.Add(this.buttonDatabaseCancel);
-			this.tabPageDatabase.Controls.Add(this.buttonRefresh);
+			this.tabPageDatabase.Controls.Add(this.listViewDatabases);
+			this.tabPageDatabase.Controls.Add(this.buttonDatabaseRefresh);
 			this.tabPageDatabase.Controls.Add(this.labelDatabaseSelect);
-			this.tabPageDatabase.Controls.Add(this.gridDatabase);
 			this.tabPageDatabase.Controls.Add(this.buttonDatabaseProperties);
 			this.tabPageDatabase.Controls.Add(this.textBoxDatabase);
 			this.tabPageDatabase.Controls.Add(this.labelDatabaseCurrent);
@@ -218,18 +217,18 @@
 			this.tabPageDatabase.Text = "Database";
 			this.tabPageDatabase.UseVisualStyleBackColor = true;
 			// 
-			// buttonRefresh
+			// buttonDatabaseRefresh
 			// 
-			this.buttonRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonRefresh.Image = global::YtAnalytics.Resources.Refresh_16;
-			this.buttonRefresh.Location = new System.Drawing.Point(651, 82);
-			this.buttonRefresh.Name = "buttonRefresh";
-			this.buttonRefresh.Size = new System.Drawing.Size(95, 23);
-			this.buttonRefresh.TabIndex = 6;
-			this.buttonRefresh.Text = "Refresh";
-			this.buttonRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonRefresh.UseVisualStyleBackColor = true;
-			this.buttonRefresh.Click += new System.EventHandler(this.OnRefreshDatabases);
+			this.buttonDatabaseRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonDatabaseRefresh.Image = global::YtAnalytics.Resources.Refresh_16;
+			this.buttonDatabaseRefresh.Location = new System.Drawing.Point(651, 82);
+			this.buttonDatabaseRefresh.Name = "buttonDatabaseRefresh";
+			this.buttonDatabaseRefresh.Size = new System.Drawing.Size(95, 23);
+			this.buttonDatabaseRefresh.TabIndex = 6;
+			this.buttonDatabaseRefresh.Text = "Refresh";
+			this.buttonDatabaseRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.buttonDatabaseRefresh.UseVisualStyleBackColor = true;
+			this.buttonDatabaseRefresh.Click += new System.EventHandler(this.OnRefreshDatabases);
 			// 
 			// labelDatabaseSelect
 			// 
@@ -239,54 +238,6 @@
 			this.labelDatabaseSelect.Size = new System.Drawing.Size(96, 13);
 			this.labelDatabaseSelect.TabIndex = 4;
 			this.labelDatabaseSelect.Text = "Select a database:";
-			// 
-			// gridDatabase
-			// 
-			this.gridDatabase.AllowUserToAddRows = false;
-			this.gridDatabase.AllowUserToDeleteRows = false;
-			this.gridDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridDatabase.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this.gridDatabase.BackgroundColor = System.Drawing.SystemColors.Window;
-			this.gridDatabase.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.gridDatabase.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridDatabase.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnSelected,
-            this.ColumnName,
-            this.ColumnId,
-            this.ColumnDate});
-			this.gridDatabase.Location = new System.Drawing.Point(155, 82);
-			this.gridDatabase.Name = "gridDatabase";
-			this.gridDatabase.ReadOnly = true;
-			this.gridDatabase.Size = new System.Drawing.Size(490, 211);
-			this.gridDatabase.TabIndex = 5;
-			// 
-			// ColumnSelected
-			// 
-			this.ColumnSelected.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.ColumnSelected.HeaderText = "Selected";
-			this.ColumnSelected.Name = "ColumnSelected";
-			this.ColumnSelected.ReadOnly = true;
-			this.ColumnSelected.Width = 60;
-			// 
-			// ColumnName
-			// 
-			this.ColumnName.HeaderText = "Name";
-			this.ColumnName.Name = "ColumnName";
-			this.ColumnName.ReadOnly = true;
-			// 
-			// ColumnId
-			// 
-			this.ColumnId.HeaderText = "ID";
-			this.ColumnId.Name = "ColumnId";
-			this.ColumnId.ReadOnly = true;
-			// 
-			// ColumnDate
-			// 
-			this.ColumnDate.HeaderText = "Creation date";
-			this.ColumnDate.Name = "ColumnDate";
-			this.ColumnDate.ReadOnly = true;
 			// 
 			// buttonDatabaseProperties
 			// 
@@ -379,6 +330,48 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
+			// listViewDatabases
+			// 
+			this.listViewDatabases.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.listViewDatabases.CheckBoxes = true;
+			this.listViewDatabases.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderDatabaseName,
+            this.columnHeaderDatabaseId,
+            this.columnHeaderDatabaseDate});
+			this.listViewDatabases.GridLines = true;
+			this.listViewDatabases.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewDatabases.HideSelection = false;
+			this.listViewDatabases.Location = new System.Drawing.Point(155, 81);
+			this.listViewDatabases.MultiSelect = false;
+			this.listViewDatabases.Name = "listViewDatabases";
+			this.listViewDatabases.Size = new System.Drawing.Size(490, 212);
+			this.listViewDatabases.TabIndex = 7;
+			this.listViewDatabases.UseCompatibleStateImageBehavior = false;
+			this.listViewDatabases.View = System.Windows.Forms.View.Details;
+			this.listViewDatabases.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.OnDatabaseChecked);
+			// 
+			// columnHeaderDatabaseName
+			// 
+			this.columnHeaderDatabaseName.Text = "Name";
+			this.columnHeaderDatabaseName.Width = 180;
+			// 
+			// columnHeaderDatabaseId
+			// 
+			this.columnHeaderDatabaseId.Text = "ID";
+			// 
+			// columnHeaderDatabaseDate
+			// 
+			this.columnHeaderDatabaseDate.Text = "Creation date";
+			this.columnHeaderDatabaseDate.Width = 180;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "Database_16.png");
+			// 
 			// log
 			// 
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -386,18 +379,6 @@
 			this.log.Name = "log";
 			this.log.Size = new System.Drawing.Size(798, 169);
 			this.log.TabIndex = 0;
-			// 
-			// buttonDatabaseCancel
-			// 
-			this.buttonDatabaseCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonDatabaseCancel.Enabled = false;
-			this.buttonDatabaseCancel.Location = new System.Drawing.Point(651, 111);
-			this.buttonDatabaseCancel.Name = "buttonDatabaseCancel";
-			this.buttonDatabaseCancel.Size = new System.Drawing.Size(95, 23);
-			this.buttonDatabaseCancel.TabIndex = 7;
-			this.buttonDatabaseCancel.Text = "Cancel";
-			this.buttonDatabaseCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonDatabaseCancel.UseVisualStyleBackColor = true;
 			// 
 			// ControlServer
 			// 
@@ -418,7 +399,6 @@
 			this.tabControl.ResumeLayout(false);
 			this.tabPageDatabase.ResumeLayout(false);
 			this.tabPageDatabase.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridDatabase)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDatabase)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
@@ -450,13 +430,12 @@
 		private System.Windows.Forms.Label labelDatabaseCurrent;
 		private System.Windows.Forms.Button buttonDatabaseProperties;
 		private System.Windows.Forms.TextBox textBoxDatabase;
-		private System.Windows.Forms.DataGridView gridDatabase;
 		private System.Windows.Forms.Label labelDatabaseSelect;
-		private System.Windows.Forms.Button buttonRefresh;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnSelected;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDate;
-		private System.Windows.Forms.Button buttonDatabaseCancel;
+		private System.Windows.Forms.Button buttonDatabaseRefresh;
+		private System.Windows.Forms.ListView listViewDatabases;
+		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseName;
+		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseId;
+		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseDate;
+		private System.Windows.Forms.ImageList imageList;
 	}
 }

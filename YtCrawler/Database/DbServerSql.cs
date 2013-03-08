@@ -34,7 +34,7 @@ namespace YtCrawler.Database
 		private SqlConnection connection = new SqlConnection();
 		private Mutex mutex = new Mutex();
 
-		private DbDatabaseSql database = null;
+		private DbDatabase database = null;
 
 		/// <summary>
 		/// Creates a new server instance.
@@ -114,6 +114,10 @@ namespace YtCrawler.Database
 		/// Gets the default database for this database server.
 		/// </summary>
 		public override DbDatabase Database { get { return this.database; } }
+		/// <summary>
+		/// Gets the query for the server databases.
+		/// </summary>
+		public override string QueryDatabases { get { return "SELECT [name],[database_id],[create_date] FROM [master].[sys].[databases]"; } }
 
 
 		// Public methods.
@@ -493,6 +497,17 @@ namespace YtCrawler.Database
 		public override DbCommand CreateCommand(string query, object userState = null)
 		{
 			return new DbCommandSql(this.connection, query, userState);
+		}
+
+		/// <summary>
+		/// Creates a database entry from the table data found at the specified index.
+		/// </summary>
+		/// <param name="data">The table data.</param>
+		/// <param name="index">The row index.</param>
+		/// <returns>The database instance.</returns>
+		public override DbDatabase CreateDatabase(DbTable data, int index)
+		{
+			return DbDatabaseSql.Read(data, index);
 		}
 
 		// Protected methods.
