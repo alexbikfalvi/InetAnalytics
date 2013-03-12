@@ -23,13 +23,14 @@ using System.Text;
 using System.Threading.Tasks;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
+using DotNetApi.Web;
 
 namespace YtApi.Api.V2
 {
 	/// <summary>
 	/// Class representing a request for a YouTube video data.
 	/// </summary>
-	public class YouTubeRequest : AsyncRequest
+	public class YouTubeRequest : AsyncWebRequest
 	{
 		private YouTubeSettings settings;
 
@@ -67,15 +68,13 @@ namespace YtApi.Api.V2
 		/// <param name="callback">The callback delegate.</param>
 		/// <param name="state">The user state.</param>
 		/// <returns>An asynchronous result object.</returns>
-		public IAsyncResult Begin(Uri uri, AsyncRequestCallback callback, object state = null)
+		public IAsyncResult Begin(Uri uri, AsyncWebRequestCallback callback, object state = null)
 		{
 			// Create the asynchronous state.
-			AsyncRequestState asyncState = AsyncRequest.Create(uri, callback);
+			AsyncWebResult asyncState = AsyncWebRequest.Create(uri, callback, state);
 
 			// Set the request headers.
 			if(null != this.settings) asyncState.Request.Headers.Add("X-GData-Key", "key=" + this.settings.Key);
-			// Set the request user state.
-			asyncState.State = state;
 
 			// Begin the request.
 			return this.Begin(asyncState);
@@ -90,13 +89,10 @@ namespace YtApi.Api.V2
 		public string End(IAsyncResult result, out object state)
 		{
 			// Get the asynchronous result.
-			AsyncRequestResult asyncResult = (AsyncRequestResult)result;
-
-			// Get the asynchronous state.
-			AsyncRequestState asyncState = (AsyncRequestState)asyncResult.AsyncState;
+			AsyncWebResult asyncResult = result as AsyncWebResult;
 
 			// Set the user state
-			state = asyncState.State;
+			state = asyncResult.AsyncState;
 
 			// Determine the encoding of the received response
 			return this.End<string>(result, this.funcConvert);

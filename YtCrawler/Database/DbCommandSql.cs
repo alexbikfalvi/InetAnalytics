@@ -34,9 +34,8 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="connection">The database server connection.</param>
 		/// <param name="query">The command query.</param>
-		/// <param name="state">The user state.</param>
-		public DbCommandSql(SqlConnection connection, string query, object state)
-			: base(query, state)
+		public DbCommandSql(SqlConnection connection, string query)
+			: base(query)
 		{
 			// Create the SQL command.
 			this.command = new SqlCommand(query, connection);
@@ -50,6 +49,8 @@ namespace YtCrawler.Database
 		/// <returns>The asynchronous result.</returns>
 		public override IAsyncResult ExecuteReader(DbCommandReaderCallback callback, object userState = null)
 		{
+			// Create the asynchronous result.
+			DbAsyncResult asyncResult = new DbAsyncResult(userState);
 			// Begin execute the command asynchronously.
 			this.command.BeginExecuteReader((IAsyncResult result) =>
 				{
@@ -57,28 +58,33 @@ namespace YtCrawler.Database
 					DbReaderSql reader = null;
 
 					// Set the synchronous completion of the command.
-					this.CompletedSynchronously = result.CompletedSynchronously;
+					asyncResult.CompletedSynchronously = result.CompletedSynchronously;
 
 					try
 					{
 						// Try and execute the command.
 						SqlDataReader sqlReader = this.command.EndExecuteReader(result);
 						// Create a new reader instance.
-						reader = new DbReaderSql(sqlReader, userState);
+						reader = new DbReaderSql(sqlReader);
+					}
+					catch (SqlException exception)
+					{
+						// If an exception occurs, set the exception.
+						asyncResult.Exception = new DbException(string.Format("The execution of the SQL query \'{0}\' failed. {1}", this.Query, exception.Message), exception);
 					}
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the exception.
-						this.Exception = new DbException(string.Format("The execution of the SQL query \'{0}\' failed.", this.Query), exception); 
+						asyncResult.Exception = new DbException(string.Format("The execution of the SQL query \'{0}\' failed.", this.Query), exception); 
 					}
 					// Complete the asynchronous operation.
-					this.Complete();
+					asyncResult.Complete();
 					// Call the callback method.
-					if (callback != null) callback(this, reader);
+					if (callback != null) callback(asyncResult, reader);
 				},
-				this.AsyncState);
+				asyncResult.AsyncState);
 
-			return this;
+			return asyncResult;
 		}
 
 
@@ -90,11 +96,13 @@ namespace YtCrawler.Database
 		/// <returns>The asynchronous result.</returns>
 		public override IAsyncResult ExecuteNonQuery(DbCommandNonQueryCallback callback, object userState = null)
 		{
+			// Create the asynchronous result.
+			DbAsyncResult asyncResult = new DbAsyncResult(userState);
 			// Begin execute the command asynchronously.
 			this.command.BeginExecuteNonQuery((IAsyncResult result) =>
 				{
 					// Set the synchronous completion of the command.
-					this.CompletedSynchronously = result.CompletedSynchronously;
+					asyncResult.CompletedSynchronously = result.CompletedSynchronously;
 
 					int count = 0;
 					try
@@ -104,15 +112,15 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the exception.
-						this.Exception = new DbException(string.Format("The execution of the SQL statement \'{0}\' failed.", this.Query), exception);
+						asyncResult.Exception = new DbException(string.Format("The execution of the SQL statement \'{0}\' failed.", this.Query), exception);
 					}
 					// Complete the asynchronous operation.
-					this.Complete();
+					asyncResult.Complete();
 					// Call the callback method.
-					if (callback != null) callback(this, count);
+					if (callback != null) callback(asyncResult, count);
 				},
-				this.AsyncState);
-			return this;
+				asyncResult.AsyncState);
+			return asyncResult;
 		}
 
 		/// <summary>

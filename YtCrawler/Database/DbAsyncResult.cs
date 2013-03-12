@@ -18,27 +18,22 @@
 
 using System;
 using System.Threading;
+using DotNetApi.Async;
 
 namespace YtCrawler.Database
 {
 	/// <summary>
 	/// A class representing the state for a database asynchronous operation.
 	/// </summary>
-	public class DbAsyncState : IAsyncResult
+	public class DbAsyncResult : AsyncResult
 	{
-		private object state;
-		private AutoResetEvent wait = new AutoResetEvent(false);
-		private bool completedSynchronously = false;
-		private bool completed = false;
-
 		/// <summary>
 		/// Creates a new instance of the asynchronous state.
 		/// </summary>
 		/// <param name="state">The user state.</param>
-		public DbAsyncState(object state)
+		public DbAsyncResult(object state)
+			: base(state)
 		{
-			// Save the user state.
-			this.state = state;
 		}
 
 		// Public properties.
@@ -47,41 +42,5 @@ namespace YtCrawler.Database
 		/// Gets or sets the asynchronous exception.
 		/// </summary>
 		public DbException Exception { get; set; }
-
-		/// <summary>
-		/// Returns the asynchronous user state.
-		/// </summary>
-		public object AsyncState { get { return this.state; } }
-
-		/// <summary>
-		/// Returns the wait handle.
-		/// </summary>
-		public WaitHandle AsyncWaitHandle { get { return this.wait; } }
-
-		/// <summary>
-		/// Indicates whether the operation completed synchronously.
-		/// </summary>
-		public bool CompletedSynchronously
-		{
-			get { return this.completedSynchronously; }
-			set { this.completedSynchronously = value; }
-		}
-
-		/// <summary>
-		/// Indicates whether the operation completed.
-		/// </summary>
-		public bool IsCompleted { get { return this.completed; } }
-
-		// Public methods.
-
-		/// <summary>
-		/// Completes the asynchronous operation by setting the completed property and the wait handle
-		/// to <b>true</b>.
-		/// </summary>
-		public void Complete()
-		{
-			this.completed = true;
-			this.wait.Set();
-		}
 	}
 }

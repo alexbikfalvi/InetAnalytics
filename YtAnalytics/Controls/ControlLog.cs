@@ -29,13 +29,14 @@ using System.Windows.Forms;
 using YtAnalytics.Forms;
 using YtCrawler;
 using YtCrawler.Log;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
 	/// A control that displays an event log.
 	/// </summary>
-	public partial class ControlLog : UserControl
+	public partial class ControlLog : ThreadSafeControl
 	{
 		private CrawlerConfig config;
 		private Logger log;
@@ -143,6 +144,9 @@ namespace YtAnalytics.Controls
 		/// <param name="argument">The update state.</param>
 		private void BeginUpdateLog(object argument)
 		{
+			// Wait for the handle of the current object to be created.
+			this.WaitForHandle();
+
 			// Get the state.
 			ControlLogUpdateState state = argument as ControlLogUpdateState;
 			try
@@ -183,7 +187,7 @@ namespace YtAnalytics.Controls
 			}
 			finally
 			{
-				Thread.Sleep(this.config.MessageCloseDelay);
+				Thread.Sleep(this.config.ConsoleMessageCloseDelay);
 			}
 
 			// If the state is not canceled.

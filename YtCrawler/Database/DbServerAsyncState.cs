@@ -26,7 +26,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing the asynchronous state for a database operation.
 	/// </summary>
-	public sealed class DbServerAsyncState : DbAsyncState
+	public sealed class DbServerAsyncState : DbAsyncResult
 	{
 		private DbServer server;
 

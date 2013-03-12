@@ -22,13 +22,13 @@ using System.Threading;
 
 namespace YtCrawler.Database
 {
-	public delegate void DbCommandReaderCallback(DbCommand command, DbReader reader);
-	public delegate void DbCommandNonQueryCallback(DbCommand command, int count);
+	public delegate void DbCommandReaderCallback(DbAsyncResult result, DbReader reader);
+	public delegate void DbCommandNonQueryCallback(DbAsyncResult result, int count);
 
 	/// <summary>
 	/// A class representing a database command.
 	/// </summary>
-	public abstract class DbCommand : DbAsyncState, IDisposable
+	public abstract class DbCommand : IDisposable
 	{
 		private string query;
 
@@ -36,9 +36,7 @@ namespace YtCrawler.Database
 		/// Creates a new database command with the specified query.
 		/// </summary>
 		/// <param name="query">The command query.</param>
-		/// <param name="state">The user state.</param>
-		public DbCommand(string query, object state)
-			: base(state)
+		public DbCommand(string query)
 		{
 			this.query = query;
 		}

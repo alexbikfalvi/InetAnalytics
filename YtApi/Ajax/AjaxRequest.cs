@@ -22,10 +22,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Web;
 
 namespace YtApi.Ajax
 {
-	public class AjaxRequest : AsyncRequest
+	public class AjaxRequest : AsyncWebRequest
 	{
 		/// <summary>
 		/// Conversion class for an asynchronous operation returning an XML document.
@@ -53,10 +54,10 @@ namespace YtApi.Ajax
 		public XDocument End(IAsyncResult result)
 		{
 			// Get the asynchronous result.
-			AsyncRequestResult asyncResult = (AsyncRequestResult)result;
+			AsyncWebResult asyncResult = (AsyncWebResult)result;
 
 			// Get the asynchronous state.
-			AsyncRequestState asyncState = (AsyncRequestState)asyncResult.AsyncState;
+			AsyncWebResult asyncState = (AsyncWebResult)asyncResult.AsyncState;
 
 			// Determine the encoding of the received response.
 			return this.End<XDocument>(result, this.func);

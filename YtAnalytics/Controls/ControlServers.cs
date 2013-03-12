@@ -35,6 +35,7 @@ using YtCrawler.Database;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
 using YtAnalytics.Forms;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
@@ -43,7 +44,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlServers : UserControl
+	public partial class ControlServers : ThreadSafeControl
 	{
 		/// <summary>
 		/// A class storing the UI controls associated with a database server.
@@ -54,6 +55,7 @@ namespace YtAnalytics.Controls
 			private TreeNode node;
 			private ControlServer controlServer = new ControlServer();
 			private ControlLog controlLog = new ControlLog();
+			private ControlServerQuery controlQuery = new ControlServerQuery();
 
 			/// <summary>
 			/// Initializes the server controls object.
@@ -82,6 +84,10 @@ namespace YtAnalytics.Controls
 			/// Gets the log control.
 			/// </summary>
 			public ControlLog ControlLog { get { return this.controlLog; } }
+			/// <summary>
+			/// Gets the query control.
+			/// </summary>
+			public ControlServerQuery ControlQuery { get { return this.controlQuery; } }
 		};
 
 		private static string logSource = "Database";
@@ -98,7 +104,7 @@ namespace YtAnalytics.Controls
 
 		private Dictionary<string, ServerControls> items = new Dictionary<string, ServerControls>();
 
-		//private ImageList imageList = null;
+		private ImageList imageList = null;
 		private TreeNode treeNode = null;
 		private int[] imageIndex = null;
 		private Control.ControlCollection panel = null;
@@ -130,19 +136,26 @@ namespace YtAnalytics.Controls
 		/// <param name="crawler">The crawler instance.</param>
 		/// <param name="treeNode">The root tree node for the database servers.</param>
 		/// <param name="panel">The panel where to add the server control.</param>
-		/// <param name="imageIndex">The tree nodes image index.</param>
-		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection panel, ImageList imageList, int[] imageIndex)
+		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection panel, ImageList imageList)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
 			// Set the root tree node.
 			this.treeNode = treeNode;
 			// Set the image list.
+			this.imageList = imageList;
 			this.listView.SmallImageList = imageList;
-			// Set the image index.
-			this.imageIndex = imageIndex;
 			// Set the controls panel.
 			this.panel = panel;
+
+			// Set the image index.
+			this.imageIndex = new int[] {
+				this.imageList.Images.IndexOfKey("ServerDown"),
+				this.imageList.Images.IndexOfKey("ServerUp"),
+				this.imageList.Images.IndexOfKey("ServerWarning"),
+				this.imageList.Images.IndexOfKey("ServerBusy"),
+				this.imageList.Images.IndexOfKey("ServerBusy")
+			};
 
 			// Set the log event handler for the database servers.
 			this.crawler.Servers.EventLogged += this.OnEventLogged;
@@ -150,44 +163,7 @@ namespace YtAnalytics.Controls
 			// Add all the servers in the configuration.
 			foreach (KeyValuePair<string, DbServer> server in this.crawler.Servers)
 			{
-				// Create a new server item.
-				ListViewItem item = new ListViewItem(new string[] {
-					server.Value.Name,
-					this.crawler.Servers.IsPrimary(server.Value) ? "Primary" : "Backup",
-					server.Value.State.ToString(),
-					server.Value.Version,
-					server.Value.Id
-				});
-				item.ImageIndex = this.imageIndex[(int)server.Value.State];
-				item.Tag = server.Key;
-				this.listView.Items.Add(item);
-				// Create a new tree node for the server.
-				TreeNode nodeServer = new TreeNode(
-					this.GetServerTreeName(server.Value),
-					this.imageIndex[(int)server.Value.State],
-					this.imageIndex[(int)server.Value.State]);
-				this.treeNode.Nodes.Add(nodeServer);
-				TreeNode nodeLog = new TreeNode("Server log", this.imageIndex[5], this.imageIndex[5]);
-				nodeServer.Nodes.Add(nodeLog);
-				this.treeNode.ExpandAll();
-				
-				// Create a new controls item.
-				ServerControls controls = new ServerControls(item, nodeServer);
-
-				// Initialize the server controls.
-				controls.ControlServer.Initialize(this.crawler, server.Value, nodeServer);
-				controls.ControlLog.Initialize(this.crawler.Config, server.Value.Log);
-
-				// Add the controls to the panel.
-				this.panel.Add(controls.ControlServer);
-				this.panel.Add(controls.ControlLog);
-
-				// Set the tree nodes tag.
-				nodeServer.Tag = controls.ControlServer;
-				nodeLog.Tag = controls.ControlLog;
-
-				// Add the servers controls to the dictionary.
-				this.items.Add(server.Value.Id, controls);
+				this.AddServer(server.Value);
 			}
 
 			// Add the event handlers for the servers.
@@ -207,6 +183,93 @@ namespace YtAnalytics.Controls
 		}
 
 		// Private methods.
+		
+		/// <summary>
+		/// Adds a new server to the servers control.
+		/// </summary>
+		/// <param name="server">The server.</param>
+		private void AddServer(DbServer server)
+		{
+			// Create a new server item.
+			ListViewItem item = new ListViewItem(new string[] {
+					server.Name,
+					this.crawler.Servers.IsPrimary(server) ? "Primary" : "Backup",
+					server.State.ToString(),
+					server.Version,
+					server.Id
+				});
+			item.ImageIndex = this.imageIndex[(int)server.State];
+			item.Tag = server.Id;
+			this.listView.Items.Add(item);
+			// Create a new tree node for the server.
+			TreeNode nodeServer = new TreeNode(
+				this.GetServerTreeName(server),
+				this.imageIndex[(int)server.State],
+				this.imageIndex[(int)server.State]);
+			this.treeNode.Nodes.Add(nodeServer);
+			// Create a new tree node for the server query.
+			TreeNode nodeQuery = new TreeNode("Query",
+				this.imageList.Images.IndexOfKey("QueryDatabase"),
+				this.imageList.Images.IndexOfKey("QueryDatabase"));
+			// Create a new tree node for the server log.
+			TreeNode nodeLog = new TreeNode("Server log",
+				this.imageList.Images.IndexOfKey("Log"),
+				this.imageList.Images.IndexOfKey("Log"));
+			// Add the children nodes to the server node.
+			nodeServer.Nodes.AddRange(new TreeNode[] {
+					nodeQuery,
+					nodeLog
+				});
+			this.treeNode.ExpandAll();
+
+			// Create a new controls item.
+			ServerControls controls = new ServerControls(item, nodeServer);
+
+			// Initialize the server controls.
+			controls.ControlServer.Initialize(this.crawler, server, nodeServer);
+			controls.ControlLog.Initialize(this.crawler.Config, server.Log);
+			controls.ControlQuery.Initialize(this.crawler, server);
+
+			// Add the controls to the panel.
+			this.panel.Add(controls.ControlServer);
+			this.panel.Add(controls.ControlQuery);
+			this.panel.Add(controls.ControlLog);
+
+			// Set the tree nodes tag.
+			nodeServer.Tag = controls.ControlServer;
+			nodeQuery.Tag = controls.ControlQuery;
+			nodeLog.Tag = controls.ControlLog;
+
+			// Add the servers controls to the dictionary.
+			this.items.Add(server.Id, controls);
+		}
+
+		/// <summary>
+		/// Removes the server with the specified ID.
+		/// </summary>
+		/// <param name="id">The server ID.</param>
+		private void RemoveServer(string id)
+		{
+			// Remove the menu item for the specified database server.
+			this.listView.Items.Remove(this.items[id].Item);
+			this.treeNode.Nodes.Remove(this.items[id].Node);
+
+			// Remove the controls from the panel.
+			this.panel.Remove(this.items[id].ControlServer);
+			this.panel.Remove(this.items[id].ControlQuery);
+			this.panel.Remove(this.items[id].ControlLog);
+
+			// Dispose the controls.
+			this.items[id].ControlServer.Dispose();
+			this.items[id].ControlQuery.Dispose();
+			this.items[id].ControlLog.Dispose();
+
+			// Remove the controls entry from the dictionary.
+			this.items.Remove(id);
+
+			// Call the selected item change event to update the buttons.
+			this.OnServerSelectionChanged(this, null);
+		}
 
 		/// <summary>
 		/// Shows an alerting message on top of the control.
@@ -267,37 +330,9 @@ namespace YtAnalytics.Controls
 			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerAdded), new object[] { server });
 			else
 			{
-				// Create a new menu item for the new server.
-				ListViewItem item = new ListViewItem(new string[] {
-						server.Name,
-						this.crawler.Servers.IsPrimary(server) ? "Primary" : "Backup",
-						server.State.ToString(),
-						server.Version,
-						server.Id
-					});
-				item.ImageIndex = this.imageIndex[(int)server.State];
-				item.Tag = server.Id;
-				this.listView.Items.Add(item);
-				// Create a new tree node.
-				TreeNode node = new TreeNode(
-					this.GetServerTreeName(server),
-					this.imageIndex[(int)server.State],
-					this.imageIndex[(int)server.State]);
-				this.treeNode.Nodes.Add(node);
-				this.treeNode.ExpandAll();
+				// Add the server.
+				this.AddServer(server);
 
-				// Create a new controls item.
-				ServerControls controls = new ServerControls(item, node);
-
-				// Initialize the server control.
-				controls.ControlServer.Initialize(this.crawler, server, node);
-
-				// Add the control to the panel.
-				this.panel.Add(controls.ControlServer);
-
-				// Add the servers controls to the dictionary.
-				this.items.Add(server.Id, controls);
-		
 				// Log the change.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Verbose,
@@ -321,21 +356,8 @@ namespace YtAnalytics.Controls
 			if (this.InvokeRequired) this.Invoke(new DbServerIdEventHandler(this.OnServerRemoved), new object[] { id });
 			else
 			{
-				// Remove the menu item for the specified database server.
-				this.listView.Items.Remove(this.items[id].Item);
-				this.treeNode.Nodes.Remove(this.items[id].Node);
-
-				// Remove the control from the panel.
-				this.panel.Remove(this.items[id].ControlServer);
-
-				// Dispose the control.
-				this.items[id].ControlServer.Dispose();
-
-				// Remove the controls entry from the dictionary.
-				this.items.Remove(id);
-
-				// Call the selected item change event to update the buttons.
-				this.OnServerSelectionChanged(this, null);
+				// Remove the server.
+				this.RemoveServer(id);
 
 				// Log the change.
 				this.log.Add(this.crawler.Log.Add(

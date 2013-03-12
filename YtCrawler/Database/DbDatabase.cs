@@ -54,5 +54,27 @@ namespace YtCrawler.Database
 		/// Gets the database creation date.
 		/// </summary>
 		public DateTime DateCreate { get { return this.dateCreate; } }
+		/// <summary>
+		/// Gets the database schema name.
+		/// </summary>
+		public abstract string SchemaName { get; }
+
+
+		/// <summary>
+		/// Saves the database at the specified registry key.
+		/// </summary>
+		/// <param name="key">The registry key.</param>
+		public abstract void Save(string key);
+
+		/// <summary>
+		/// Compares to database instances.
+		/// </summary>
+		/// <param name="database">The database to compare with.</param>
+		/// <returns><b>True</b>, if the two databases are equal, <b>false</b> otherwise.</returns>
+		public bool Equals(DbDatabase database)
+		{
+			if (database == null) return false;
+			else return (this.Name == database.Name) && (this.Id == database.Id) && (this.DateCreate == database.DateCreate);
+		}
 	}
 }

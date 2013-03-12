@@ -31,6 +31,7 @@ namespace YtCrawler.Database
 	public delegate void DbServerIdEventHandler(string id);
 	public delegate void DbServerStateEventHandler(DbServer server, DbServerStateEventArgs e);
 	public delegate void DbServerPrimaryChangedEventHandler(DbServer oldPrimary, DbServer newPrimary);
+	public delegate void DbServerDatabaseChangedEventHandler(DbServer server, DbDatabase oldDatabase, DbDatabase newDatabase);
 
 	/// <summary>
 	/// A class representing the list of database servers.
@@ -151,6 +152,10 @@ namespace YtCrawler.Database
 		/// Returns the list of supported server type names.
 		/// </summary>
 		public static string[] ServerTypeNames { get { return DbServers.dbServerTypeNames; } }
+		/// <summary>
+		/// Returns the primary database server.
+		/// </summary>
+		public DbServer Primary { get { return this.primary; } }
 
 		// Public methods.
 

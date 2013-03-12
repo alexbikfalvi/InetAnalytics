@@ -17,110 +17,13 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace YtCrawler.Database
 {
 	/// <summary>
-	/// A class representing a database table.
+	/// A class that represents a database table.
 	/// </summary>
 	public class DbTable
 	{
-		private delegate void AddRowHandler(DbReader reader);
-
-		private int columnCount = 0;
-		private int rowCount = 0;
-
-		private List<object[]> rows = new List<object[]>();
-		private Dictionary<string, int> names = new Dictionary<string, int>();
-
-		private AddRowHandler handler;
-
-		/// <summary>
-		/// Initializes a database table using data from the specified reader.
-		/// </summary>
-		public DbTable()
-		{
-			// Initialize the handler.
-			this.handler = new AddRowHandler(this.AddFirstRow);
-		}
-
-		/// <summary>
-		/// Gets the row count for this table.
-		/// </summary>
-		public int RowCount { get { return this.rowCount; } }
-		/// <summary>
-		/// Gets the column count for this table.
-		/// </summary>
-		public int ColumnCount { get { return this.columnCount; } }
-		/// <summary>
-		/// Gets the element at the specified column and row.
-		/// </summary>
-		/// <param name="column">The column index.</param>
-		/// <param name="row">The row index.</param>
-		/// <returns>The table element.</returns>
-		public object this[int column, int row] { get { return this.rows[row][column]; } }
-		/// <summary>
-		/// Gets the element at the specified column name and row.
-		/// </summary>
-		/// <param name="column">The column name.</param>
-		/// <param name="row">The row.</param>
-		/// <returns></returns>
-		public object this[string column, int row] { get { return this.rows[row][this.names[column]]; } }
-
-		/// <summary>
-		/// Adds a row of data to the table from the specified reader.
-		/// </summary>
-		/// <param name="reader">The database reader.</param>
-		public void AddRow(DbReader reader)
-		{
-			this.handler(reader);
-		}
-
-		/// <summary>
-		/// Gets the row of objects at the specified index.
-		/// </summary>
-		/// <param name="index">The row index.</param>
-		/// <returns>The row of table objects.</returns>
-		public object[] GetRow(int index)
-		{
-			return this.rows[index];
-		}
-
-		/// <summary>
-		/// Adds the first row to the database table.
-		/// </summary>
-		/// <param name="reader">The database reader.</param>
-		private void AddFirstRow(DbReader reader)
-		{
-			// Initialize the number of columns based on the data from the reader.
-			this.columnCount = reader.ColumnCount;
-			// Initialize the column names.
-			for (int index = 0; index < this.columnCount; index++)
-			{
-				this.names.Add(reader.GetName(index), index);
-			}
-			// Change the handler.
-			this.handler = new AddRowHandler(this.AddNextRow);
-			// Add the first row to the table.
-			this.AddNextRow(reader);
-		}
-
-		/// <summary>
-		/// Adds the next rows to the database tables.
-		/// </summary>
-		/// <param name="reader">The database reader.</param>
-		private void AddNextRow(DbReader reader)
-		{
-			// Add a new row to the data.
-			object[] row = new object[reader.ColumnCount];
-			for (int index = 0; index < this.columnCount; index++)
-			{
-				row[index] = reader[index];
-			}
-			this.rows.Add(row);
-			// Increment the row count.
-			this.rowCount++;
-		}
 	}
 }

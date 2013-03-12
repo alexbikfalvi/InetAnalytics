@@ -43,6 +43,7 @@ namespace YtAnalytics.Forms
 		// Side menu items.
 		private SideMenuItem sideMenuBrowse;
 		private SideMenuItem sideMenuDatabase;
+		private SideMenuItem sideMenuSpiders;
 		private SideMenuItem sideMenuConfiguration;
 		private SideMenuItem sideMenuLog;
 		private SideMenuItem sideMenuComments;
@@ -71,6 +72,9 @@ namespace YtAnalytics.Forms
 		private TreeNode treeNodeBrowserWebVideos;
 
 		private TreeNode treeNodeDatabaseServers;
+
+		private TreeNode treeNodeSpidersLocal;
+		private TreeNode treeNodeSpiderStandardFeeds;
 
 		private TreeNode treeNodeSettings;
 
@@ -220,13 +224,23 @@ namespace YtAnalytics.Forms
 					this.treeNodeBrowserWebVideos
 				});
 
-			this.treeNodeSettings = new TreeNode("Settings",
-				this.imageList.Images.IndexOfKey("Settings"),
-				this.imageList.Images.IndexOfKey("Settings"));
-
 			this.treeNodeDatabaseServers = new TreeNode("Servers",
 				this.imageList.Images.IndexOfKey("ServersDatabase"),
 				this.imageList.Images.IndexOfKey("ServersDatabase"));
+
+			this.treeNodeSpiderStandardFeeds = new TreeNode("Standard feeds",
+				this.imageList.Images.IndexOfKey("Cube"),
+				this.imageList.Images.IndexOfKey("Cube"));
+			this.treeNodeSpidersLocal = new TreeNode("Local spiders",
+				this.imageList.Images.IndexOfKey("ServerCube"),
+				this.imageList.Images.IndexOfKey("ServerCube"),
+				new TreeNode[] {
+					this.treeNodeSpiderStandardFeeds
+				});
+
+			this.treeNodeSettings = new TreeNode("Settings",
+				this.imageList.Images.IndexOfKey("Settings"),
+				this.imageList.Images.IndexOfKey("Settings"));
 
 			this.treeNodeCommentsVideos = new TreeNode("Videos",
 				this.imageList.Images.IndexOfKey("CommentVideo"),
@@ -311,6 +325,7 @@ namespace YtAnalytics.Forms
 					this.treeNodeBrowserWeb
 				});
 			this.controlPanelDatabase.Add(this.treeNodeDatabaseServers);
+			this.controlPanelSpiders.Add(this.treeNodeSpidersLocal);
 			this.controlPanelConfiguration.Add(this.treeNodeSettings);
 			this.controlPanelComments.Add(this.treeNodeComments);
 
@@ -328,6 +343,13 @@ namespace YtAnalytics.Forms
 				Resources.ServersDatabase_32,
 				this.SideMenuSelect,
 				this.controlPanelDatabase
+				);
+			this.sideMenuSpiders = this.sideMenu.AddItem(
+				"Spiders",
+				Resources.ServersCube_16,
+				Resources.ServersCube_32,
+				this.SideMenuSelect,
+				this.controlPanelSpiders
 				);
 			this.sideMenuConfiguration = this.sideMenu.AddItem(
 				"Configuration",
@@ -351,6 +373,11 @@ namespace YtAnalytics.Forms
 				this.controlPanelComments
 				);
 
+			this.sideMenu.VisibleItems = this.crawler.Config.ConsoleSideMenuVisibleItems;
+			this.sideMenu.MinimizedItems = this.crawler.Config.ConsoleSideMenuMinimizedItems;
+
+			this.sideMenu.ItemVisibilityChanged += OnSideMenuItemVisibilityChanged;
+
 			// Initialize the controls.
 			this.controlYtApi2Video.Initialize(this.crawler);
 			this.controlYtApi2CommentsFeed.Initialize(this.crawler);
@@ -363,14 +390,7 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "APIv2 Uploads Videos Feed");
 			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "APIv2 Favorites Videos Feed");
 			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "APIv2 Playlist Videos Feed");
-			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList, new int[] {
-				this.imageList.Images.IndexOfKey("ServerDown"),
-				this.imageList.Images.IndexOfKey("ServerUp"),
-				this.imageList.Images.IndexOfKey("ServerWarning"),
-				this.imageList.Images.IndexOfKey("ServerBusy"),
-				this.imageList.Images.IndexOfKey("ServerBusy"),
-				this.imageList.Images.IndexOfKey("Log")
-			});
+			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
@@ -513,6 +533,18 @@ namespace YtAnalytics.Forms
 			this.SideMenuSelect(item);
 			// Refresh the log.
 			this.controlLog.DateChanged(this, new DateRangeEventArgs(this.controlPanelLog.Calendar.SelectionStart, this.controlPanelLog.Calendar.SelectionEnd));
+		}
+
+		/// <summary>
+		/// An event handler called when the visibility of a side menu item has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSideMenuItemVisibilityChanged(object sender, EventArgs e)
+		{
+			// Update the confguration.
+			this.crawler.Config.ConsoleSideMenuVisibleItems = this.sideMenu.VisibleItems;
+			this.crawler.Config.ConsoleSideMenuMinimizedItems = this.sideMenu.MinimizedItems;
 		}
 
 		/// <summary>

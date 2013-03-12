@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YtAnalytics", "YtAnalytics\YtAnalytics.csproj", "{6740E3FF-81AD-4CDF-8A61-F471D13EE38F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YtApi", "YtApi\YtApi.csproj", "{6E2D7303-FFAB-4732-86F5-8BB0F7CD8276}"
+	ProjectSection(ProjectDependencies) = postProject
+		{475F767E-2288-4E56-9B90-179A10DCAB49} = {475F767E-2288-4E56-9B90-179A10DCAB49}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis", "..\GoogleApi\Src\GoogleApis\GoogleApis.csproj", "{CBB5E638-F8D5-48DB-93BE-5A7CDD7ED107}"
 EndProject

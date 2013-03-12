@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Web;
 
 namespace YtApi.Api.V2
 {
@@ -34,7 +35,7 @@ namespace YtApi.Api.V2
 		private YouTubeRequest request = new YouTubeRequest(null);
 
 		private object state = null;
-		private AsyncRequestCallback callback = null;
+		private AsyncWebRequestCallback callback = null;
 
 		private XDocument xml = null;
 
@@ -55,7 +56,7 @@ namespace YtApi.Api.V2
 		/// <param name="callback">The callback function.</param>
 		/// <param name="state">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public IAsyncResult BeginRefresh(AsyncRequestCallback callback, object state)
+		public IAsyncResult BeginRefresh(AsyncWebRequestCallback callback, object state)
 		{
 			if(null == this.callback)
 			{
@@ -80,13 +81,10 @@ namespace YtApi.Api.V2
 			object state;
 
 			// Get the asynchronous result.
-			AsyncRequestResult asyncResult = (AsyncRequestResult)result;
-
-			// Get the asynchronous state.
-			AsyncRequestState asyncState = (AsyncRequestState)asyncResult.AsyncState;
+			AsyncWebResult asyncResult = result as AsyncWebResult;
 
 			// If no exception was thrown, complete the request
-			if (null == asyncState.Exception)
+			if (null == asyncResult.Exception)
 			{
 				try
 				{
@@ -95,14 +93,14 @@ namespace YtApi.Api.V2
 				}
 				catch (Exception exception)
 				{
-					asyncState.Exception = exception;
+					asyncResult.Exception = exception;
 				}
 			}
 
 			// Call the callback function
 			if (this.callback != null)
 			{
-				this.callback((AsyncRequestResult)result);
+				this.callback(asyncResult);
 			}
 
 			// Reset the callback and state
@@ -118,20 +116,17 @@ namespace YtApi.Api.V2
 		public object EndRefresh(IAsyncResult result)
 		{
 			// Get the asynchronous result.
-			AsyncRequestResult asyncResult = (AsyncRequestResult)result;
-
-			// Get the asynchronous state.
-			AsyncRequestState asyncState = (AsyncRequestState)asyncResult.AsyncState;
+			AsyncWebResult asyncResult = result as AsyncWebResult;
 
 			// If an exception was thrown during the asynchronous operation.
-			if (null != asyncState.Exception)
+			if (null != asyncResult.Exception)
 			{
 				// Rethrow the exception.
-				throw asyncState.Exception;
+				throw asyncResult.Exception;
 			}
 
 			// Return the user state
-			return asyncState.State;
+			return asyncResult.AsyncState;
 		}
 
 		/// <summary>

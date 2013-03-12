@@ -295,6 +295,24 @@
     <Compile Include="Controls\ControlServer.Designer.cs">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlDatabaseProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlDatabaseProperties.Designer.cs">
+      <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlServerQuery.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlServerQuery.Designer.cs">
+      <DependentUpon>ControlServerQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDatabaseProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDatabaseProperties.Designer.cs">
+      <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormChangePassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -503,6 +521,15 @@
     <EmbeddedResource Include="Controls\ControlServer.resx">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlDatabaseProperties.resx">
+      <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlServerQuery.resx">
+      <DependentUpon>ControlServerQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDatabaseProperties.resx">
+      <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormChangePassword.resx">
       <DependentUpon>FormChangePassword.cs</DependentUpon>
     </EmbeddedResource>
@@ -592,6 +619,38 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Cubes_48.png" />
+    <None Include="Resources\Cubes_32.png" />
+    <None Include="Resources\Cubes_24.png" />
+    <None Include="Resources\Cubes_16.png" />
+    <None Include="Resources\Cube_48.png" />
+    <None Include="Resources\Cube_32.png" />
+    <None Include="Resources\Cube_24.png" />
+    <None Include="Resources\Cube_16.png" />
+    <None Include="Resources\ServerCube_48.png" />
+    <None Include="Resources\ServerCube_32.png" />
+    <None Include="Resources\ServerCube_24.png" />
+    <None Include="Resources\ServerCube_16.png" />
+    <None Include="Resources\ServersCube_48.png" />
+    <None Include="Resources\ServersCube_32.png" />
+    <None Include="Resources\ServersCube_24.png" />
+    <None Include="Resources\ServersCube_16.png" />
+    <None Include="Resources\QueryStop_48.png" />
+    <None Include="Resources\QueryStop_32.png" />
+    <None Include="Resources\QueryStop_24.png" />
+    <None Include="Resources\QueryStop_16.png" />
+    <None Include="Resources\QueryStart_48.png" />
+    <None Include="Resources\QueryStart_32.png" />
+    <None Include="Resources\QueryStart_24.png" />
+    <None Include="Resources\QueryStart_16.png" />
+    <None Include="Resources\QueryDatabase_48.png" />
+    <None Include="Resources\QueryDatabase_32.png" />
+    <None Include="Resources\QueryDatabase_24.png" />
+    <None Include="Resources\QueryDatabase_16.png" />
+    <None Include="Resources\DatabaseStar_48.png" />
+    <None Include="Resources\DatabaseStar_32.png" />
+    <None Include="Resources\DatabaseStar_24.png" />
+    <None Include="Resources\DatabaseStar_16.png" />
     <None Include="Resources\DatabaseWarning_48.png" />
     <None Include="Resources\DatabaseWarning_32.png" />
     <None Include="Resources\DatabaseWarning_24.png" />

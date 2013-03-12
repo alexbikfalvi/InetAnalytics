@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DotNetApi.Web;
 
 namespace YtApi.Ajax
 {
@@ -57,8 +58,9 @@ namespace YtApi.Ajax
 		/// </summary>
 		/// <param name="id">The video ID.</param>
 		/// <param name="callback">The callback function handling the asynchronous response.</param>
+		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		public IAsyncResult Begin(string id, AsyncRequestCallback callback)
+		public IAsyncResult Begin(string id, AsyncWebRequestCallback callback, object userState = null)
 		{
 			// Create the URI of the new request.
 			UriBuilder uriBuilder = new UriBuilder(
@@ -70,7 +72,7 @@ namespace YtApi.Ajax
 				);
 
 			// Create the state of the asynchronous request
-			AsyncRequestState asyncState = AsyncRequest.Create(uriBuilder.Uri, callback);
+			AsyncWebResult asyncState = AsyncWebRequest.Create(uriBuilder.Uri, callback, userState);
 
 			// Set the headers
 			asyncState.Request.Accept = "text/html, application/xhtml+xml";
@@ -88,10 +90,7 @@ namespace YtApi.Ajax
 		public new AjaxVideoStatistics End(IAsyncResult result)
 		{
 			// Get the asynchronous result.
-			AsyncRequestResult asyncResult = (AsyncRequestResult)result;
-
-			// Get the asynchronous state.
-			AsyncRequestState asyncState = (AsyncRequestState)asyncResult.AsyncState;
+			AsyncWebResult asyncResult = (AsyncWebResult)result;
 
 			// Determine the encoding of the received response
 			return this.End<AjaxVideoStatistics>(result, this.func);

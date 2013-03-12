@@ -65,7 +65,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		private void LoadSettings()
 		{
-			this.numericMessageCloseDelay.Value = (decimal)this.crawler.Config.MessageCloseDelay.TotalMilliseconds;
+			this.numericMessageCloseDelay.Value = (decimal)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds;
 			this.textBoxYtUserName.Text = this.crawler.Config.YouTubeUserName;
 			this.textBoxYtPassword.Text = this.crawler.Config.YouTubePassword;
 			this.textBoxLogFile.Text = this.crawler.Config.LogFileName;
@@ -79,7 +79,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		private void SaveSettings()
 		{
-			this.crawler.Config.MessageCloseDelay = TimeSpan.FromMilliseconds((double)this.numericMessageCloseDelay.Value);
+			this.crawler.Config.ConsoleMessageCloseDelay = TimeSpan.FromMilliseconds((double)this.numericMessageCloseDelay.Value);
 			this.crawler.Config.YouTubeUserName = this.textBoxYtUserName.Text;
 			this.crawler.Config.YouTubePassword = this.textBoxYtPassword.Text;
 			this.crawler.Config.LogFileName = this.textBoxLogFile.Text;

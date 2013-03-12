@@ -19,6 +19,7 @@
 using System;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
+using DotNetApi.Web;
 
 namespace YtApi.Api.V2
 {
@@ -57,7 +58,7 @@ namespace YtApi.Api.V2
 		/// <param name="callback">The callback function.</param>
 		/// <param name="state">The user state.</param>
 		/// <returns>The result of the asynchronous operation</returns>
-		public IAsyncResult Begin(string id, AsyncRequestCallback callback, object state = null)
+		public IAsyncResult Begin(string id, AsyncWebRequestCallback callback, object state = null)
 		{
 			return base.Begin(
 				YouTubeUri.GetVideoEntry(id),

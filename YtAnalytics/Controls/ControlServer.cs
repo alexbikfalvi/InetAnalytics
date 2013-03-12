@@ -45,10 +45,10 @@ namespace YtAnalytics.Controls
 	/// </summary>
 	public partial class ControlServer : UserControl
 	{
-		private delegate void TableEventHandler(DbTable table);
+		private delegate void TableEventHandler(DbData table);
 		private delegate void ExceptionEventHandler(Exception exception);
 
-		private static string logSource = "Database/";
+		private static string logSource = "Database";
 
 		// UI formatter.
 		private Formatting formatting = new Formatting();
@@ -63,6 +63,7 @@ namespace YtAnalytics.Controls
 
 		private FormServerProperties formProperties = new FormServerProperties();
 		private FormChangePassword formChangePassword = new FormChangePassword();
+		private FormDatabaseProperties formDatabaseProperties = new FormDatabaseProperties();
 
 		private TreeNode treeNode = null;
 
@@ -115,6 +116,7 @@ namespace YtAnalytics.Controls
 			// Add the event handlers for the database server.
 			this.server.ServerChanged += OnServerChanged;
 			this.server.StateChanged += OnServerStateChanged;
+			this.server.DatabaseChanged += OnDatabaseChanged;
 			this.crawler.Servers.ServerPrimaryChanged += this.OnPrimaryServerChanged;
 
 			// Add the event handler to the change password form.
@@ -128,10 +130,7 @@ namespace YtAnalytics.Controls
 			this.server.EventLogged += OnEventLogged;
 
 			// Initialize the server database.
-			this.textBoxDatabase.Text = this.server.Database != null ?
-				string.Format("{0} (ID {1} created on {2})", this.server.Database.Name, this.server.Database.Id, this.server.Database.DateCreate) :
-				"(no database selected)";
-			this.buttonDatabaseProperties.Enabled = this.server.Database != null;
+			this.OnDatabaseChanged(this.server, null, this.server.Database);
 		}
 
 		// Private methods.
@@ -205,6 +204,42 @@ namespace YtAnalytics.Controls
 				this.tabControl.Enabled =
 					(this.server.State != DbServer.ServerState.Connecting) &&
 					(this.server.State != DbServer.ServerState.Disconnecting);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the server database has changed.
+		/// </summary>
+		/// <param name="server">The server.</param>
+		/// <param name="oldDatabase">The old database.</param>
+		/// <param name="newDatabase">The new database.</param>
+		void OnDatabaseChanged(DbServer server, DbDatabase oldDatabase, DbDatabase newDatabase)
+		{
+			// Update the current database.
+			if (newDatabase != null)
+			{
+				this.textBoxDatabase.Text = string.Format("{0} (ID {1} created on {2})", this.server.Database.Name, this.server.Database.Id, this.server.Database.DateCreate);
+				this.buttonDatabaseProperties.Enabled = this.server.Database != null;
+			}
+			else
+			{
+				this.textBoxDatabase.Text = "(no database selected)";
+				this.buttonDatabaseProperties.Enabled = false;
+			}
+
+			// Update the databases list.
+			foreach (ListViewItem item in this.listViewDatabases.Items)
+			{
+				// Get the item database.
+				DbDatabase db = item.Tag as DbDatabase;
+				item.ImageIndex = db.Equals(this.server.Database) ? 1 : 0;
+			}
+			// Update the select button.
+			if (this.listViewDatabases.SelectedItems.Count != 0)
+			{
+				// Get the item databse.
+				DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+				this.buttonDatabaseSelect.Enabled = !db.Equals(this.server.Database);
 			}
 		}
 
@@ -574,8 +609,10 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnDatabaseProperties(object sender, EventArgs e)
+		private void OnCurrentDatabaseProperties(object sender, EventArgs e)
 		{
+			// Show the properties dialog.
+			this.formDatabaseProperties.ShowDialog(this, this.server.Database, true);
 		}
 
 		/// <summary>
@@ -632,30 +669,37 @@ namespace YtAnalytics.Controls
 				using (DbCommand command = this.server.CreateCommand(this.server.QueryDatabases))
 				{
 					// Execute the command.
-					command.ExecuteReader((DbCommand dbCommand, DbReader reader) =>
+					command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
 					{
 						try
 						{
+							// Throw the command exception, if any.
+							if (commandResult.Exception != null) throw commandResult.Exception;
 							// Read the results table.
-							reader.Read(null, (DbReader dbReader) =>
+							reader.Read(null, (DbAsyncResult readerResult, DbData result) =>
 							{
 								try
 								{
-									DbTable table = dbReader.Result;
-									dbReader.Close();
+									// Throw the reader exception, if any.
+									if (readerResult.Exception != null)
+									{
+										reader.Close();
+										throw readerResult.Exception;
+									}
+									reader.Close();
 									// Show a success message.
 									this.ShowMessage(Resources.DatabaseSuccess_48, string.Format("Refreshing the list of databases for the database server \'{0}\' completed successfully.", this.server.Name), false);
 									// Wait.
-									Thread.Sleep(this.crawler.Config.MessageCloseDelay);
+									Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
 									// Hide the message.
 									this.HideMessage();
 									// Call the completion method.
-									this.OnRefreshDatabasesSuccess(table);
+									this.OnRefreshDatabasesSuccess(result);
 								}
 								catch (Exception exception)
 								{
 									// Show an error message.
-									this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name));
+									this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name), false);
 									// Log the event.
 									this.server.LogEvent(
 										LogEventLevel.Important,
@@ -663,6 +707,10 @@ namespace YtAnalytics.Controls
 										"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
 										new object[] { this.server.Name, exception.Message },
 										exception);
+									// Wait.
+									Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+									// Hide the message.
+									this.HideMessage();
 									// Call the completion method.
 									this.OnRefreshDatabasesFail(exception);
 								}
@@ -671,7 +719,7 @@ namespace YtAnalytics.Controls
 						catch (Exception exception)
 						{
 							// Show an error message.
-							this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name));
+							this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name), false);
 							// Log the event.
 							this.server.LogEvent(
 								LogEventLevel.Important,
@@ -679,6 +727,10 @@ namespace YtAnalytics.Controls
 								"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
 								new object[] { this.server.Name, exception.Message },
 								exception);
+							// Wait.
+							Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+							// Hide the message.
+							this.HideMessage();
 							// Call the completion method.
 							this.OnRefreshDatabasesFail(exception);
 						}
@@ -688,7 +740,7 @@ namespace YtAnalytics.Controls
 			catch (Exception exception)
 			{
 				// Show an error message.
-				this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name));
+				this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name), false);
 				// Log the event.
 				this.server.LogEvent(
 					LogEventLevel.Important,
@@ -696,6 +748,10 @@ namespace YtAnalytics.Controls
 					"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
 					new object[] { this.server.Name, exception.Message },
 					exception);
+				// Wait.
+				Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+				// Hide the message.
+				this.HideMessage();
 				// Call the completion method.
 				this.OnRefreshDatabasesFail(exception);
 			}
@@ -705,7 +761,7 @@ namespace YtAnalytics.Controls
 		/// An event handler called when the refresh of server databases completed successfully.
 		/// </summary>
 		/// <param name="table">The databases table.</param>
-		private void OnRefreshDatabasesSuccess(DbTable table)
+		private void OnRefreshDatabasesSuccess(DbData table)
 		{
 			// Call the method on the UI thread.
 			if (this.InvokeRequired) this.Invoke(new TableEventHandler(this.OnRefreshDatabasesSuccess), new object[] { table });
@@ -723,9 +779,8 @@ namespace YtAnalytics.Controls
 						db.Id.ToString(),
 						db.DateCreate.ToString()
 					});
-					item.ImageIndex = 0;
 					item.Tag = db;
-					item.Checked = this.server.Database != null ? db.Name == this.server.Database.Name : false;
+					item.ImageIndex = db.Equals(this.server.Database) ? 1 : 0;
 					this.listViewDatabases.Items.Add(item);
 				}
 				this.buttonDatabaseRefresh.Enabled = true;
@@ -747,35 +802,55 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
-		/// An event handler called when the checked state of a database item has changed.
+		/// An event handler called when the database selection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnDatabaseChecked(object sender, ItemCheckedEventArgs e)
+		private void OnDatabaseSelectionChanged(object sender, EventArgs e)
 		{
-			// Get the database.
-			DbDatabase database = e.Item.Tag as DbDatabase;
-			if (e.Item.Checked)
+			if (this.listViewDatabases.SelectedItems.Count == 0)
 			{
-				// Uncheck the rest of the items.
-				foreach (ListViewItem item in this.listViewDatabases.Items)
-				{
-					
-				}
+				this.buttonDatabaseSelect.Enabled = false;
 			}
 			else
 			{
-				// If the item is unchecked and this is the current server database.
-				if (this.server.Database != null)
-				{
-					if (database.Name == this.server.Database.Name)
-					{
-						// Recheck the item.
-						e.Item.Checked = true;
-					}
-				}
-				// Otherwise, leave its state unchecked.
+				// Get the item database.
+				DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+				// Set the enabled state of the selection button.
+				this.buttonDatabaseSelect.Enabled = !db.Equals(this.server.Database);
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user changes the current database.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnDatabaseSelect(object sender, EventArgs e)
+		{
+			// If no database items are selected, do nothing.
+			if (this.listViewDatabases.SelectedItems.Count == 0) return;
+
+			// Get the item database.
+			DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+
+			// Set the database as the current database.
+			this.server.Database = db;
+		}
+
+		/// <summary>
+		/// An event handle called when a database item is activated.
+		/// </summary>
+		/// <param name="sender">The database item.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnDatabaseItemActivated(object sender, EventArgs e)
+		{
+			// If there are no database items selected, do nothing.
+			if (this.listViewDatabases.SelectedItems.Count == 0) return;
+			// Else, get the database item.
+			DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+			// Show the database properties.
+			this.formDatabaseProperties.ShowDialog(this, db, db.Equals(this.server.Database));
 		}
 	}
 }

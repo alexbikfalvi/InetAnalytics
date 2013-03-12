@@ -54,7 +54,7 @@ namespace YtApi.Api.V2.Atom
 		/// </summary>
 		/// <param name="info">The serialization info.</param>
 		/// <param name="ctx">The streaming context.</param>
-		protected AtomException(SerializationInfo info, StreamingContext ctx)
+		private AtomException(SerializationInfo info, StreamingContext ctx)
 			: base(info, ctx)
 		{
 			this.xml = info.GetValue("xml", typeof(string)) as string;

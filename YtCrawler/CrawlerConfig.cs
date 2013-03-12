@@ -201,7 +201,7 @@ namespace YtCrawler
 		/// <summary>
 		/// Gets or sets the delay to display a user message, after the operation generating the message has completed.
 		/// </summary>
-		public TimeSpan MessageCloseDelay
+		public TimeSpan ConsoleMessageCloseDelay
 		{
 			get
 			{
@@ -213,6 +213,30 @@ namespace YtCrawler
 				catch (Exception) { return TimeSpan.FromMilliseconds(1000); }
 			}
 			set { Registry.SetValue(this.root + "\\Console", "MessageCloseDelay", value, RegistryValueKind.DWord); }
+		}
+
+		/// <summary>
+		/// Gets or sets the number of side menu visible items.
+		/// </summary>
+		public int ConsoleSideMenuVisibleItems
+		{
+			get
+			{
+				return (int)Registry.GetValue(this.root + "\\Console", "SideMenuVisibleItems", 4);
+			}
+			set { Registry.SetValue(this.root + "\\Console", "SideMenuVisibleItems", value, RegistryValueKind.DWord); }
+		}
+
+		/// <summary>
+		/// Gets or sets the number of side menu minimized items.
+		/// </summary>
+		public int ConsoleSideMenuMinimizedItems
+		{
+			get
+			{
+				return (int)Registry.GetValue(this.root + "\\Console", "SideMenuMinimizedtems", 2);
+			}
+			set { Registry.SetValue(this.root + "\\Console", "SideMenuMinimizedtems", value, RegistryValueKind.DWord); }
 		}
 
 		/// <summary>

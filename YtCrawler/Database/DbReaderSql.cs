@@ -33,9 +33,7 @@ namespace YtCrawler.Database
 		/// Create a new database reader instance.
 		/// </summary>
 		/// <param name="reader">The SQL data reader.</param>
-		/// <param name="state">The user state.</param>
-		public DbReaderSql(SqlDataReader reader, object state)
-			: base(state)
+		public DbReaderSql(SqlDataReader reader)
 		{
 			this.reader = reader;
 		}
@@ -94,12 +92,17 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
 		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		public override IAsyncResult Read(int? count, DbReaderCallback callback)
+		public override IAsyncResult Read(int? count, DbReaderCallback callback, object userState = null)
 		{
+			// Create the asynchronous result.
+			DbAsyncResult asyncResult = new DbAsyncResult(userState);
 			// Execute the read asynchronously on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
 				{
+					// Create the result.
+					DbData result = new DbData();
 					try
 					{
 						// Read records from the database while there are more records and the records count
@@ -107,20 +110,25 @@ namespace YtCrawler.Database
 						for (int index = 0; ((index < (count ?? 0)) || (count == null)) && reader.Read(); index++)
 						{
 							// Add the last row to the results table.
-							this.Result.AddRow(this);
+							result.AddRow(this);
 						}
+					}
+					catch (SqlException exception)
+					{
+						// If an exception occurs, set the exception.
+						asyncResult.Exception = new DbException(string.Format("An SQL error occurred while reading the query results from the database. {0}", exception.Message), exception);
 					}
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the exception.
-						this.Exception = new DbException("An error occurred while reading the query results from the database.", exception);
+						asyncResult.Exception = new DbException("An error occurred while reading the query results from the database.", exception);
 					}
 					// Complete the asynchronous operation.
-					this.Complete();
+					asyncResult.Complete();
 					// Call the callback method.
-					if (callback != null) callback(this);
+					if (callback != null) callback(asyncResult, result);
 				});
-			return this;
+			return asyncResult;
 		}
 
 		/// <summary>

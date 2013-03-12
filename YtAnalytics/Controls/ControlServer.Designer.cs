@@ -44,6 +44,12 @@
 			this.panel = new System.Windows.Forms.Panel();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageDatabase = new System.Windows.Forms.TabPage();
+			this.buttonDatabaseSelect = new System.Windows.Forms.Button();
+			this.listViewDatabases = new System.Windows.Forms.ListView();
+			this.columnHeaderDatabaseName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderDatabaseId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderDatabaseDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.buttonDatabaseRefresh = new System.Windows.Forms.Button();
 			this.labelDatabaseSelect = new System.Windows.Forms.Label();
 			this.buttonDatabaseProperties = new System.Windows.Forms.Button();
@@ -51,15 +57,9 @@
 			this.labelDatabaseCurrent = new System.Windows.Forms.Label();
 			this.labelDatabaseTitle = new System.Windows.Forms.Label();
 			this.pictureBoxDatabase = new System.Windows.Forms.PictureBox();
-			this.tabPageTable = new System.Windows.Forms.TabPage();
 			this.labelPrimary = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.listViewDatabases = new System.Windows.Forms.ListView();
-			this.columnHeaderDatabaseName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderDatabaseId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderDatabaseDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.log = new YtAnalytics.Controls.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -192,7 +192,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabPageDatabase);
-			this.tabControl.Controls.Add(this.tabPageTable);
 			this.tabControl.Location = new System.Drawing.Point(10, 64);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -201,6 +200,7 @@
 			// 
 			// tabPageDatabase
 			// 
+			this.tabPageDatabase.Controls.Add(this.buttonDatabaseSelect);
 			this.tabPageDatabase.Controls.Add(this.listViewDatabases);
 			this.tabPageDatabase.Controls.Add(this.buttonDatabaseRefresh);
 			this.tabPageDatabase.Controls.Add(this.labelDatabaseSelect);
@@ -216,6 +216,63 @@
 			this.tabPageDatabase.TabIndex = 0;
 			this.tabPageDatabase.Text = "Database";
 			this.tabPageDatabase.UseVisualStyleBackColor = true;
+			// 
+			// buttonDatabaseSelect
+			// 
+			this.buttonDatabaseSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonDatabaseSelect.Enabled = false;
+			this.buttonDatabaseSelect.Location = new System.Drawing.Point(651, 111);
+			this.buttonDatabaseSelect.Name = "buttonDatabaseSelect";
+			this.buttonDatabaseSelect.Size = new System.Drawing.Size(95, 23);
+			this.buttonDatabaseSelect.TabIndex = 7;
+			this.buttonDatabaseSelect.Text = "Make current";
+			this.buttonDatabaseSelect.UseVisualStyleBackColor = true;
+			this.buttonDatabaseSelect.Click += new System.EventHandler(this.OnDatabaseSelect);
+			// 
+			// listViewDatabases
+			// 
+			this.listViewDatabases.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.listViewDatabases.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderDatabaseName,
+            this.columnHeaderDatabaseId,
+            this.columnHeaderDatabaseDate});
+			this.listViewDatabases.FullRowSelect = true;
+			this.listViewDatabases.GridLines = true;
+			this.listViewDatabases.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewDatabases.HideSelection = false;
+			this.listViewDatabases.Location = new System.Drawing.Point(155, 81);
+			this.listViewDatabases.MultiSelect = false;
+			this.listViewDatabases.Name = "listViewDatabases";
+			this.listViewDatabases.Size = new System.Drawing.Size(490, 212);
+			this.listViewDatabases.SmallImageList = this.imageList;
+			this.listViewDatabases.TabIndex = 5;
+			this.listViewDatabases.UseCompatibleStateImageBehavior = false;
+			this.listViewDatabases.View = System.Windows.Forms.View.Details;
+			this.listViewDatabases.ItemActivate += new System.EventHandler(this.OnDatabaseItemActivated);
+			this.listViewDatabases.SelectedIndexChanged += new System.EventHandler(this.OnDatabaseSelectionChanged);
+			// 
+			// columnHeaderDatabaseName
+			// 
+			this.columnHeaderDatabaseName.Text = "Name";
+			this.columnHeaderDatabaseName.Width = 180;
+			// 
+			// columnHeaderDatabaseId
+			// 
+			this.columnHeaderDatabaseId.Text = "ID";
+			// 
+			// columnHeaderDatabaseDate
+			// 
+			this.columnHeaderDatabaseDate.Text = "Creation date";
+			this.columnHeaderDatabaseDate.Width = 180;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "Database");
+			this.imageList.Images.SetKeyName(1, "DatabaseStar");
 			// 
 			// buttonDatabaseRefresh
 			// 
@@ -250,7 +307,7 @@
 			this.buttonDatabaseProperties.Text = "Properties";
 			this.buttonDatabaseProperties.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonDatabaseProperties.UseVisualStyleBackColor = true;
-			this.buttonDatabaseProperties.Click += new System.EventHandler(this.OnDatabaseProperties);
+			this.buttonDatabaseProperties.Click += new System.EventHandler(this.OnCurrentDatabaseProperties);
 			// 
 			// textBoxDatabase
 			// 
@@ -291,16 +348,6 @@
 			this.pictureBoxDatabase.TabIndex = 1;
 			this.pictureBoxDatabase.TabStop = false;
 			// 
-			// tabPageTable
-			// 
-			this.tabPageTable.Location = new System.Drawing.Point(4, 22);
-			this.tabPageTable.Name = "tabPageTable";
-			this.tabPageTable.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTable.Size = new System.Drawing.Size(772, 299);
-			this.tabPageTable.TabIndex = 1;
-			this.tabPageTable.Text = "Table";
-			this.tabPageTable.UseVisualStyleBackColor = true;
-			// 
 			// labelPrimary
 			// 
 			this.labelPrimary.AutoSize = true;
@@ -329,48 +376,6 @@
 			this.pictureBox.Size = new System.Drawing.Size(48, 48);
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
-			// 
-			// listViewDatabases
-			// 
-			this.listViewDatabases.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.listViewDatabases.CheckBoxes = true;
-			this.listViewDatabases.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderDatabaseName,
-            this.columnHeaderDatabaseId,
-            this.columnHeaderDatabaseDate});
-			this.listViewDatabases.GridLines = true;
-			this.listViewDatabases.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.listViewDatabases.HideSelection = false;
-			this.listViewDatabases.Location = new System.Drawing.Point(155, 81);
-			this.listViewDatabases.MultiSelect = false;
-			this.listViewDatabases.Name = "listViewDatabases";
-			this.listViewDatabases.Size = new System.Drawing.Size(490, 212);
-			this.listViewDatabases.TabIndex = 7;
-			this.listViewDatabases.UseCompatibleStateImageBehavior = false;
-			this.listViewDatabases.View = System.Windows.Forms.View.Details;
-			this.listViewDatabases.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.OnDatabaseChecked);
-			// 
-			// columnHeaderDatabaseName
-			// 
-			this.columnHeaderDatabaseName.Text = "Name";
-			this.columnHeaderDatabaseName.Width = 180;
-			// 
-			// columnHeaderDatabaseId
-			// 
-			this.columnHeaderDatabaseId.Text = "ID";
-			// 
-			// columnHeaderDatabaseDate
-			// 
-			this.columnHeaderDatabaseDate.Text = "Creation date";
-			this.columnHeaderDatabaseDate.Width = 180;
-			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Database_16.png");
 			// 
 			// log
 			// 
@@ -424,7 +429,6 @@
 		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.TabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageDatabase;
-		private System.Windows.Forms.TabPage tabPageTable;
 		private System.Windows.Forms.PictureBox pictureBoxDatabase;
 		private System.Windows.Forms.Label labelDatabaseTitle;
 		private System.Windows.Forms.Label labelDatabaseCurrent;
@@ -437,5 +441,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseId;
 		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseDate;
 		private System.Windows.Forms.ImageList imageList;
+		private System.Windows.Forms.Button buttonDatabaseSelect;
 	}
 }

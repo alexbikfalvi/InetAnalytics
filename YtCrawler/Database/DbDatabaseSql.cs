@@ -38,6 +38,11 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
+		/// Gets the schema name for the current database.
+		/// </summary>
+		public override string SchemaName { get { return string.Format("{0}.dbo", this.Name); } }
+
+		/// <summary>
 		/// Creates a database instance from the specified registry key.
 		/// </summary>
 		/// <param name="key">The registry key.</param>
@@ -52,7 +57,30 @@ namespace YtCrawler.Database
 			return new DbDatabaseSql(
 				int.Parse(data[0]),
 				data[1],
-				DateTime.Parse(data[2]));
+				new DateTime(Int64.Parse(data[2])));
+		}
+
+		/// <summary>
+		/// Deletes the database at the specified registry key.
+		/// </summary>
+		/// <param name="key">The registry key.</param>
+		public static void Delete(string key)
+		{
+			Registry.SetValue(key, "Database", null, RegistryValueKind.MultiString);
+		}
+
+		/// <summary>
+		/// Save the database at the specified registry key.
+		/// </summary>
+		/// <param name="key">The registry key.</param>
+		public override void Save(string key)
+		{
+			string[] data = new string[] {
+				this.id.ToString(),
+				this.name,
+				this.dateCreate.Ticks.ToString()
+			};
+			Registry.SetValue(key, "Database", data, RegistryValueKind.MultiString);
 		}
 
 		/// <summary>
@@ -61,7 +89,7 @@ namespace YtCrawler.Database
 		/// <param name="table">The table.</param>
 		/// <param name="row">The row index.</param>
 		/// <returns>The database instance.</returns>
-		public static DbDatabaseSql Read(DbTable table, int row)
+		public static DbDatabaseSql Read(DbData table, int row)
 		{
 			string name = table["name", row] as string;
 			int id = (int)table["database_id", row];

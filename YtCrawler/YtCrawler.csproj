@@ -46,13 +46,15 @@
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\CommentsList.cs" />
     <Compile Include="CrawlerException.cs" />
-    <Compile Include="Database\DbAsyncState.cs" />
+    <Compile Include="Database\DbAsyncResult.cs" />
+    <Compile Include="Database\DbColumn.cs" />
     <Compile Include="Database\DbCommand.cs" />
     <Compile Include="Database\DbCommandSql.cs" />
     <Compile Include="Database\DbConfig.cs" />
     <Compile Include="Database\DbDatabase.cs" />
     <Compile Include="Database\DbDatabaseSql.cs" />
     <Compile Include="Database\DbException.cs" />
+    <Compile Include="Database\DbMappingException.cs" />
     <Compile Include="Database\DbReader.cs" />
     <Compile Include="Database\DbReaderSql.cs" />
     <Compile Include="Database\DbServer.cs" />
@@ -60,7 +62,10 @@
     <Compile Include="Database\DbServerSql.cs" />
     <Compile Include="Database\DbServers.cs" />
     <Compile Include="Database\DbServerStateEventArgs.cs" />
+    <Compile Include="Database\DbData.cs" />
     <Compile Include="Database\DbTable.cs" />
+    <Compile Include="Database\DbType.cs" />
+    <Compile Include="Database\DbMapping.cs" />
     <Compile Include="Log\LogEvent.cs" />
     <Compile Include="Log\LogException.cs" />
     <Compile Include="Log\Logger.cs" />
@@ -68,9 +73,18 @@
     <Compile Include="CrawlerConfig.cs" />
     <Compile Include="CrawlerCrypto.cs" />
     <Compile Include="Crawler.cs" />
+    <Compile Include="Spider\Data\TypeStandardFeed.cs" />
+    <Compile Include="Spider\Spider.cs" />
+    <Compile Include="Spider\SpiderException.cs" />
+    <Compile Include="Spider\Spiders.cs" />
+    <Compile Include="Spider\SpiderStandardFeeds.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
+      <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
+      <Name>DotNetApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YtApi\YtApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>YtApi</Name>

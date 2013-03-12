@@ -21,21 +21,17 @@ using System.Data.SqlClient;
 
 namespace YtCrawler.Database
 {
-	public delegate void DbReaderCallback(DbReader reader);
+	public delegate void DbReaderCallback(DbAsyncResult asyncResult, DbData table);
 
 	/// <summary>
 	/// A class representing a database reader.
 	/// </summary>
-	public abstract class DbReader : DbAsyncState, IDisposable
+	public abstract class DbReader : IDisposable
 	{
-		private DbTable table = new DbTable();
-
 		/// <summary>
 		/// Create a new database reader instance.
 		/// </summary>
-		/// <param name="state">The user state.</param>
-		public DbReader(object state)
-			: base(state)
+		public DbReader()
 		{
 		}
 
@@ -69,10 +65,6 @@ namespace YtCrawler.Database
 		/// Gets the number of records changed by the execution of the database command.
 		/// </summary>
 		public abstract int RecordsAffected { get; }
-		/// <summary>
-		/// Returns the result table for this reader.
-		/// </summary>
-		public DbTable Result { get { return this.table; } }
 
 		// Public methods.
 
@@ -93,8 +85,9 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
 		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		public abstract IAsyncResult Read(int? count, DbReaderCallback callback);
+		public abstract IAsyncResult Read(int? count, DbReaderCallback callback, object userState = null);
 		/// <summary>
 		/// Closes the reader.
 		/// </summary>

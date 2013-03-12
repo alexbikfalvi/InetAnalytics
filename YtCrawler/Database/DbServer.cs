@@ -193,7 +193,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the default database for this server.
 		/// </summary>
-		public abstract DbDatabase Database { get; }
+		public abstract DbDatabase Database { get; set; }
 
 		/// <summary>
 		/// Gets the query for the server databases.
@@ -210,6 +210,7 @@ namespace YtCrawler.Database
 		/// An event raised when the server connection state has changed.
 		/// </summary>
 		public event DbServerStateEventHandler StateChanged;
+		public event DbServerDatabaseChangedEventHandler DatabaseChanged;
 		/// <summary>
 		/// An event raised when the server begins opening the connection.
 		/// </summary>
@@ -249,12 +250,9 @@ namespace YtCrawler.Database
 				LogEventLevel.Normal,
 				LogEventType.Success,
 				this.logSource,
-				"Configuration for database server with ID \'{0}\' was saved to registry.",
+				"Configuration for database server with ID \'{0}\' was saved to registry. Some changes will take effect the next time you connect.",
 				new object[] { this.Id }
 				);
-
-			// Re-initialize the server object.
-			this.OnInitialized();
 		}
 
 		/// <summary>
@@ -359,9 +357,8 @@ namespace YtCrawler.Database
 		/// Creates a new database command with the specified query.
 		/// </summary>
 		/// <param name="query">The database query.</param>
-		/// <param name="userState">The user state.</param>
 		/// <returns>The database command.</returns>
-		public abstract DbCommand CreateCommand(string query, object userState = null);
+		public abstract DbCommand CreateCommand(string query);
 
 		/// <summary>
 		/// Creates a database entry from the table data found at the specified index.
@@ -369,7 +366,7 @@ namespace YtCrawler.Database
 		/// <param name="data">The table data.</param>
 		/// <param name="index">The row index.</param>
 		/// <returns>The database instance.</returns>
-		public abstract DbDatabase CreateDatabase(DbTable data, int index);
+		public abstract DbDatabase CreateDatabase(DbData data, int index);
 
 		// Protected methods.
 
@@ -407,8 +404,19 @@ namespace YtCrawler.Database
 			DbServer.ServerState oldState = this.state;
 			// Set the new state.
 			this.state = state;
-			// Call the event handler.
+			// Call the event.
 			if(this.StateChanged != null) this.StateChanged(this, new DbServerStateEventArgs(oldState, this.state));
+		}
+
+		/// <summary>
+		/// An event handler called when the current database has changed.
+		/// </summary>
+		/// <param name="oldDatabase">The old database.</param>
+		/// <param name="newDatabase">The new database.</param>
+		protected void OnDatabaseChanged(DbDatabase oldDatabase, DbDatabase newDatabase)
+		{
+			// Call the event.
+			if (this.DatabaseChanged != null) this.DatabaseChanged(this, oldDatabase, newDatabase);
 		}
 
 		/// <summary>

@@ -20,6 +20,7 @@ using System;
 using YtApi.Api.V2;
 using YtCrawler.Database;
 using YtCrawler.Log;
+using YtCrawler.Spider;
 using Microsoft.Win32;
 
 namespace YtCrawler
@@ -32,6 +33,7 @@ namespace YtCrawler
 		private Logger logger;
 		private Comments.Comments comments;
 		private DbServers servers;
+		private Spiders spiders;
 
 		/// <summary>
 		/// Creates a new crawer global object, based on a configuration from the specified root registry key.
@@ -57,6 +59,9 @@ namespace YtCrawler
 
 			// Create the database servers.
 			this.servers = new DbServers(this.config);
+
+			// Created the crawler spiders.
+			this.spiders = new Spiders(this);
 		}
 
 		/// <summary>
@@ -101,5 +106,10 @@ namespace YtCrawler
 		/// Returns the database servers.
 		/// </summary>
 		public DbServers Servers { get { return this.servers; } }
+
+		/// <summary>
+		/// Returns the crawler spiders.
+		/// </summary>
+		public Spiders Spiders { get { return this.spiders; } }
 	}
 }

@@ -33,6 +33,7 @@ using YtApi.Api.V2;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
 using YtCrawler.Log;
+using DotNetApi.Web;
 
 namespace YtAnalytics.Controls
 {
@@ -260,14 +261,14 @@ namespace YtAnalytics.Controls
 			this.ShowMessage(Resources.GlobeClock_48, "Refreshing the list of YouTube categories...");
 
 			// Refresh the list of categories.
-			this.crawler.Categories.BeginRefresh(new AsyncRequestCallback(this.OnEndRefreshCategories), null);
+			this.crawler.Categories.BeginRefresh(new AsyncWebRequestCallback(this.OnEndRefreshCategories), null);
 		}
 
 		/// <summary>
 		/// Completes an asynchronous request for updating the video categories.
 		/// </summary>
 		/// <param name="result">The asynchornous result.</param>
-		private void OnEndRefreshCategories(AsyncRequestResult result)
+		private void OnEndRefreshCategories(AsyncWebResult result)
 		{
 			try
 			{
@@ -294,7 +295,7 @@ namespace YtAnalytics.Controls
 			finally
 			{
 				// Delay the closing of the message.
-				Thread.Sleep((int)this.crawler.Config.MessageCloseDelay.TotalMilliseconds);
+				Thread.Sleep((int)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds);
 				// Hide the message.
 				this.HideMessage();
 			}

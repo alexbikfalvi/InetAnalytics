@@ -113,7 +113,21 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the default database for this database server.
 		/// </summary>
-		public override DbDatabase Database { get { return this.database; } }
+		public override DbDatabase Database
+		{
+			get { return this.database; }
+			set
+			{
+				// Save the old database.
+				DbDatabase oldDb = this.database;
+				// Change the current database.
+				this.database = value;
+				// Raise a database change event.
+				this.OnDatabaseChanged(oldDb, value);
+				// Save the configuration.
+				this.SaveConfiguration();
+			}
+		}
 		/// <summary>
 		/// Gets the query for the server databases.
 		/// </summary>
@@ -127,9 +141,9 @@ namespace YtCrawler.Database
 		/// </summary>
 		public override void SaveConfiguration()
 		{
-			// Load the default database.
-			try { this.database = DbDatabaseSql.Load(this.key); }
-			catch (Exception) { this.database = null; }
+			// Save the default databas
+			if (this.database != null) this.database.Save(this.key);
+			else DbDatabaseSql.Delete(this.key);
 
 			// Call the base class method.
 			base.SaveConfiguration();
@@ -140,6 +154,10 @@ namespace YtCrawler.Database
 		/// </summary>
 		public override void LoadConfiguration()
 		{
+			// Load the default database.
+			try { this.database = DbDatabaseSql.Load(this.key); }
+			catch (Exception) { this.database = null; }
+
 			// Call the base class method.
 			base.LoadConfiguration();
 		}
@@ -155,6 +173,8 @@ namespace YtCrawler.Database
 			{
 				// Lock the mutex (only one state changing operation allowed at one time).
 				this.mutex.WaitOne();
+				// Initialize the server.
+				this.OnInitialized();
 				// Change the state of the server to connecting.
 				base.OnStateChange(ServerState.Connecting);
 				// Log the event.
@@ -254,6 +274,8 @@ namespace YtCrawler.Database
 					);
 				// Open the database connection.
 				this.connection.Close();
+				// Initialize the server.
+				this.OnInitialized();
 				// Change the state of the server to connecting.
 				base.OnStateChange(ServerState.Connecting);
 				// Open the database connection.
@@ -419,6 +441,8 @@ namespace YtCrawler.Database
 			{
 				// Lock the mutex (only one state changing operation allowed at one time).
 				this.mutex.WaitOne();
+				// Initialize the server.
+				this.OnInitialized();
 				// Change the server password.
 				SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword);
 				// If the password change was successfull, update the configuration.
@@ -492,11 +516,10 @@ namespace YtCrawler.Database
 		/// Creates a new database command with the specified query.
 		/// </summary>
 		/// <param name="query">The database query.</param>
-		/// <param name="userState">The user state.</param>
 		/// <returns>The database command.</returns>
-		public override DbCommand CreateCommand(string query, object userState = null)
+		public override DbCommand CreateCommand(string query)
 		{
-			return new DbCommandSql(this.connection, query, userState);
+			return new DbCommandSql(this.connection, query);
 		}
 
 		/// <summary>
@@ -505,7 +528,7 @@ namespace YtCrawler.Database
 		/// <param name="data">The table data.</param>
 		/// <param name="index">The row index.</param>
 		/// <returns>The database instance.</returns>
-		public override DbDatabase CreateDatabase(DbTable data, int index)
+		public override DbDatabase CreateDatabase(DbData data, int index)
 		{
 			return DbDatabaseSql.Read(data, index);
 		}
