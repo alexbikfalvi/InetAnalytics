@@ -54,17 +54,18 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="evt">The event.</param>
-		public void ShowDialog(IWin32Window owner, AjaxViewsHistoryDiscoveryEvent evt)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, AjaxViewsHistoryDiscoveryEvent evt)
 		{
 			// If the event is null, do nothing.
-			if (null == evt) return;
+			if (null == evt) return DialogResult.Abort;
 
 			// Set the event.
 			this.controlHistoryDiscoveryEvent.Event = evt;
 			// Set the title.
 			this.Text = string.Format("Event {0} at {1}", evt.Name, evt.Marker.Value.Time.ToString());
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 	}
 }

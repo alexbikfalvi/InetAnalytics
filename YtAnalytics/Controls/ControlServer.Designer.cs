@@ -49,7 +49,7 @@
 			this.columnHeaderDatabaseName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderDatabaseId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderDatabaseDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.imageListSmall = new System.Windows.Forms.ImageList(this.components);
 			this.buttonDatabaseRefresh = new System.Windows.Forms.Button();
 			this.labelDatabaseSelect = new System.Windows.Forms.Label();
 			this.buttonDatabaseProperties = new System.Windows.Forms.Button();
@@ -57,6 +57,25 @@
 			this.labelDatabaseCurrent = new System.Windows.Forms.Label();
 			this.labelDatabaseTitle = new System.Windows.Forms.Label();
 			this.pictureBoxDatabase = new System.Windows.Forms.PictureBox();
+			this.tabPageTables = new System.Windows.Forms.TabPage();
+			this.buttonTableProperties = new System.Windows.Forms.Button();
+			this.listViewTables = new System.Windows.Forms.ListView();
+			this.columnHeaderTableName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderTableFields = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageListLarge = new System.Windows.Forms.ImageList(this.components);
+			this.labelTablesSelect = new System.Windows.Forms.Label();
+			this.labelTablesTitle = new System.Windows.Forms.Label();
+			this.pictureBoxTables = new System.Windows.Forms.PictureBox();
+			this.tabPageRelationships = new System.Windows.Forms.TabPage();
+			this.buttonRelationshipProperties = new System.Windows.Forms.Button();
+			this.labelRelationshipSelect = new System.Windows.Forms.Label();
+			this.listViewRelationships = new System.Windows.Forms.ListView();
+			this.columnHeaderLeftTable = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderLeftField = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderRightTable = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderRightField = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.labelRelationships = new System.Windows.Forms.Label();
+			this.pictureBoxRelationships = new System.Windows.Forms.PictureBox();
 			this.labelPrimary = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
@@ -70,6 +89,10 @@
 			this.tabControl.SuspendLayout();
 			this.tabPageDatabase.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDatabase)).BeginInit();
+			this.tabPageTables.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTables)).BeginInit();
+			this.tabPageRelationships.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRelationships)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -192,6 +215,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabPageDatabase);
+			this.tabControl.Controls.Add(this.tabPageTables);
+			this.tabControl.Controls.Add(this.tabPageRelationships);
 			this.tabControl.Location = new System.Drawing.Point(10, 64);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -246,7 +271,7 @@
 			this.listViewDatabases.MultiSelect = false;
 			this.listViewDatabases.Name = "listViewDatabases";
 			this.listViewDatabases.Size = new System.Drawing.Size(490, 212);
-			this.listViewDatabases.SmallImageList = this.imageList;
+			this.listViewDatabases.SmallImageList = this.imageListSmall;
 			this.listViewDatabases.TabIndex = 5;
 			this.listViewDatabases.UseCompatibleStateImageBehavior = false;
 			this.listViewDatabases.View = System.Windows.Forms.View.Details;
@@ -267,12 +292,15 @@
 			this.columnHeaderDatabaseDate.Text = "Creation date";
 			this.columnHeaderDatabaseDate.Width = 180;
 			// 
-			// imageList
+			// imageListSmall
 			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Database");
-			this.imageList.Images.SetKeyName(1, "DatabaseStar");
+			this.imageListSmall.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListSmall.ImageStream")));
+			this.imageListSmall.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageListSmall.Images.SetKeyName(0, "Database");
+			this.imageListSmall.Images.SetKeyName(1, "DatabaseStar");
+			this.imageListSmall.Images.SetKeyName(2, "TableSuccess");
+			this.imageListSmall.Images.SetKeyName(3, "TableWarning");
+			this.imageListSmall.Images.SetKeyName(4, "Relationship");
 			// 
 			// buttonDatabaseRefresh
 			// 
@@ -348,6 +376,202 @@
 			this.pictureBoxDatabase.TabIndex = 1;
 			this.pictureBoxDatabase.TabStop = false;
 			// 
+			// tabPageTables
+			// 
+			this.tabPageTables.Controls.Add(this.buttonTableProperties);
+			this.tabPageTables.Controls.Add(this.listViewTables);
+			this.tabPageTables.Controls.Add(this.labelTablesSelect);
+			this.tabPageTables.Controls.Add(this.labelTablesTitle);
+			this.tabPageTables.Controls.Add(this.pictureBoxTables);
+			this.tabPageTables.Location = new System.Drawing.Point(4, 22);
+			this.tabPageTables.Name = "tabPageTables";
+			this.tabPageTables.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTables.Size = new System.Drawing.Size(772, 299);
+			this.tabPageTables.TabIndex = 1;
+			this.tabPageTables.Text = "Tables";
+			this.tabPageTables.UseVisualStyleBackColor = true;
+			// 
+			// buttonTableProperties
+			// 
+			this.buttonTableProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonTableProperties.Enabled = false;
+			this.buttonTableProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.buttonTableProperties.Location = new System.Drawing.Point(651, 55);
+			this.buttonTableProperties.Name = "buttonTableProperties";
+			this.buttonTableProperties.Size = new System.Drawing.Size(95, 23);
+			this.buttonTableProperties.TabIndex = 8;
+			this.buttonTableProperties.Text = "Configure";
+			this.buttonTableProperties.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.buttonTableProperties.UseVisualStyleBackColor = true;
+			this.buttonTableProperties.Click += new System.EventHandler(this.OnTableProperties);
+			// 
+			// listViewTables
+			// 
+			this.listViewTables.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.listViewTables.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderTableName,
+            this.columnHeaderTableFields});
+			this.listViewTables.FullRowSelect = true;
+			this.listViewTables.GridLines = true;
+			this.listViewTables.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewTables.HideSelection = false;
+			this.listViewTables.LargeImageList = this.imageListLarge;
+			this.listViewTables.Location = new System.Drawing.Point(155, 55);
+			this.listViewTables.MultiSelect = false;
+			this.listViewTables.Name = "listViewTables";
+			this.listViewTables.Size = new System.Drawing.Size(490, 238);
+			this.listViewTables.SmallImageList = this.imageListSmall;
+			this.listViewTables.TabIndex = 7;
+			this.listViewTables.UseCompatibleStateImageBehavior = false;
+			this.listViewTables.View = System.Windows.Forms.View.Tile;
+			this.listViewTables.ItemActivate += new System.EventHandler(this.OnTableProperties);
+			this.listViewTables.SelectedIndexChanged += new System.EventHandler(this.OnTableSelectionChanged);
+			// 
+			// imageListLarge
+			// 
+			this.imageListLarge.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListLarge.ImageStream")));
+			this.imageListLarge.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageListLarge.Images.SetKeyName(0, "Database");
+			this.imageListLarge.Images.SetKeyName(1, "DatabaseStar");
+			this.imageListLarge.Images.SetKeyName(2, "TableSuccess");
+			this.imageListLarge.Images.SetKeyName(3, "TableWarning");
+			// 
+			// labelTablesSelect
+			// 
+			this.labelTablesSelect.AutoSize = true;
+			this.labelTablesSelect.Location = new System.Drawing.Point(17, 60);
+			this.labelTablesSelect.Name = "labelTablesSelect";
+			this.labelTablesSelect.Size = new System.Drawing.Size(75, 13);
+			this.labelTablesSelect.TabIndex = 6;
+			this.labelTablesSelect.Text = "Select a table:";
+			// 
+			// labelTablesTitle
+			// 
+			this.labelTablesTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelTablesTitle.Location = new System.Drawing.Point(58, 20);
+			this.labelTablesTitle.Name = "labelTablesTitle";
+			this.labelTablesTitle.Size = new System.Drawing.Size(707, 32);
+			this.labelTablesTitle.TabIndex = 2;
+			this.labelTablesTitle.Text = "Use this tab to configure the SQL tables storing the YouTube data. Select one of " +
+    "the available tables, and map it to a database tables.";
+			this.labelTablesTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pictureBoxTables
+			// 
+			this.pictureBoxTables.Image = global::YtAnalytics.Resources.Table_32;
+			this.pictureBoxTables.Location = new System.Drawing.Point(20, 20);
+			this.pictureBoxTables.Name = "pictureBoxTables";
+			this.pictureBoxTables.Size = new System.Drawing.Size(32, 32);
+			this.pictureBoxTables.TabIndex = 3;
+			this.pictureBoxTables.TabStop = false;
+			// 
+			// tabPageRelationships
+			// 
+			this.tabPageRelationships.Controls.Add(this.buttonRelationshipProperties);
+			this.tabPageRelationships.Controls.Add(this.labelRelationshipSelect);
+			this.tabPageRelationships.Controls.Add(this.listViewRelationships);
+			this.tabPageRelationships.Controls.Add(this.labelRelationships);
+			this.tabPageRelationships.Controls.Add(this.pictureBoxRelationships);
+			this.tabPageRelationships.Location = new System.Drawing.Point(4, 22);
+			this.tabPageRelationships.Name = "tabPageRelationships";
+			this.tabPageRelationships.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageRelationships.Size = new System.Drawing.Size(772, 299);
+			this.tabPageRelationships.TabIndex = 2;
+			this.tabPageRelationships.Text = "Relationships";
+			this.tabPageRelationships.UseVisualStyleBackColor = true;
+			// 
+			// buttonRelationshipProperties
+			// 
+			this.buttonRelationshipProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonRelationshipProperties.Enabled = false;
+			this.buttonRelationshipProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.buttonRelationshipProperties.Location = new System.Drawing.Point(651, 55);
+			this.buttonRelationshipProperties.Name = "buttonRelationshipProperties";
+			this.buttonRelationshipProperties.Size = new System.Drawing.Size(95, 23);
+			this.buttonRelationshipProperties.TabIndex = 10;
+			this.buttonRelationshipProperties.Text = "Configure";
+			this.buttonRelationshipProperties.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.buttonRelationshipProperties.UseVisualStyleBackColor = true;
+			this.buttonRelationshipProperties.Click += new System.EventHandler(this.OnRelationshipProperties);
+			// 
+			// labelRelationshipSelect
+			// 
+			this.labelRelationshipSelect.AutoSize = true;
+			this.labelRelationshipSelect.Location = new System.Drawing.Point(17, 60);
+			this.labelRelationshipSelect.Name = "labelRelationshipSelect";
+			this.labelRelationshipSelect.Size = new System.Drawing.Size(105, 13);
+			this.labelRelationshipSelect.TabIndex = 9;
+			this.labelRelationshipSelect.Text = "Select a relationship:";
+			// 
+			// listViewRelationships
+			// 
+			this.listViewRelationships.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.listViewRelationships.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderLeftTable,
+            this.columnHeaderLeftField,
+            this.columnHeaderRightTable,
+            this.columnHeaderRightField});
+			this.listViewRelationships.FullRowSelect = true;
+			this.listViewRelationships.GridLines = true;
+			this.listViewRelationships.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewRelationships.HideSelection = false;
+			this.listViewRelationships.LargeImageList = this.imageListLarge;
+			this.listViewRelationships.Location = new System.Drawing.Point(155, 55);
+			this.listViewRelationships.MultiSelect = false;
+			this.listViewRelationships.Name = "listViewRelationships";
+			this.listViewRelationships.Size = new System.Drawing.Size(490, 238);
+			this.listViewRelationships.SmallImageList = this.imageListSmall;
+			this.listViewRelationships.TabIndex = 8;
+			this.listViewRelationships.UseCompatibleStateImageBehavior = false;
+			this.listViewRelationships.View = System.Windows.Forms.View.Details;
+			this.listViewRelationships.ItemActivate += new System.EventHandler(this.OnRelationshipProperties);
+			this.listViewRelationships.SelectedIndexChanged += new System.EventHandler(this.OnRelationshipSelectionChanged);
+			// 
+			// columnHeaderLeftTable
+			// 
+			this.columnHeaderLeftTable.Text = "Left table";
+			this.columnHeaderLeftTable.Width = 120;
+			// 
+			// columnHeaderLeftField
+			// 
+			this.columnHeaderLeftField.Text = "Left field";
+			this.columnHeaderLeftField.Width = 80;
+			// 
+			// columnHeaderRightTable
+			// 
+			this.columnHeaderRightTable.Text = "Right table";
+			this.columnHeaderRightTable.Width = 120;
+			// 
+			// columnHeaderRightField
+			// 
+			this.columnHeaderRightField.Text = "Right field";
+			this.columnHeaderRightField.Width = 80;
+			// 
+			// labelRelationships
+			// 
+			this.labelRelationships.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelRelationships.Location = new System.Drawing.Point(58, 20);
+			this.labelRelationships.Name = "labelRelationships";
+			this.labelRelationships.Size = new System.Drawing.Size(707, 32);
+			this.labelRelationships.TabIndex = 4;
+			this.labelRelationships.Text = "Use this tab to configure the relationships between the database tables.";
+			this.labelRelationships.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pictureBoxRelationships
+			// 
+			this.pictureBoxRelationships.Image = global::YtAnalytics.Resources.Relationship_32;
+			this.pictureBoxRelationships.Location = new System.Drawing.Point(20, 20);
+			this.pictureBoxRelationships.Name = "pictureBoxRelationships";
+			this.pictureBoxRelationships.Size = new System.Drawing.Size(32, 32);
+			this.pictureBoxRelationships.TabIndex = 5;
+			this.pictureBoxRelationships.TabStop = false;
+			// 
 			// labelPrimary
 			// 
 			this.labelPrimary.AutoSize = true;
@@ -357,6 +581,7 @@
 			this.labelPrimary.Size = new System.Drawing.Size(73, 13);
 			this.labelPrimary.TabIndex = 1;
 			this.labelPrimary.Text = "Primary server";
+			this.labelPrimary.UseMnemonic = false;
 			// 
 			// labelName
 			// 
@@ -367,6 +592,7 @@
 			this.labelName.Size = new System.Drawing.Size(99, 20);
 			this.labelName.TabIndex = 0;
 			this.labelName.Text = "Server name";
+			this.labelName.UseMnemonic = false;
 			// 
 			// pictureBox
 			// 
@@ -392,6 +618,7 @@
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlServer";
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
@@ -405,6 +632,12 @@
 			this.tabPageDatabase.ResumeLayout(false);
 			this.tabPageDatabase.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDatabase)).EndInit();
+			this.tabPageTables.ResumeLayout(false);
+			this.tabPageTables.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTables)).EndInit();
+			this.tabPageRelationships.ResumeLayout(false);
+			this.tabPageRelationships.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRelationships)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 
@@ -440,7 +673,26 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseName;
 		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseId;
 		private System.Windows.Forms.ColumnHeader columnHeaderDatabaseDate;
-		private System.Windows.Forms.ImageList imageList;
+		private System.Windows.Forms.ImageList imageListSmall;
 		private System.Windows.Forms.Button buttonDatabaseSelect;
+		private System.Windows.Forms.TabPage tabPageTables;
+		private System.Windows.Forms.Label labelTablesTitle;
+		private System.Windows.Forms.PictureBox pictureBoxTables;
+		private System.Windows.Forms.ListView listViewTables;
+		private System.Windows.Forms.Label labelTablesSelect;
+		private System.Windows.Forms.Button buttonTableProperties;
+		private System.Windows.Forms.ImageList imageListLarge;
+		private System.Windows.Forms.ColumnHeader columnHeaderTableName;
+		private System.Windows.Forms.ColumnHeader columnHeaderTableFields;
+		private System.Windows.Forms.TabPage tabPageRelationships;
+		private System.Windows.Forms.Label labelRelationships;
+		private System.Windows.Forms.PictureBox pictureBoxRelationships;
+		private System.Windows.Forms.Button buttonRelationshipProperties;
+		private System.Windows.Forms.Label labelRelationshipSelect;
+		private System.Windows.Forms.ListView listViewRelationships;
+		private System.Windows.Forms.ColumnHeader columnHeaderLeftTable;
+		private System.Windows.Forms.ColumnHeader columnHeaderLeftField;
+		private System.Windows.Forms.ColumnHeader columnHeaderRightTable;
+		private System.Windows.Forms.ColumnHeader columnHeaderRightField;
 	}
 }

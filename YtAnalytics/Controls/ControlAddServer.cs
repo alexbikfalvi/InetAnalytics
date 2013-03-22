@@ -25,14 +25,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtCrawler.Database;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
-	/// A control that receives user input data to add a video comment.
+	/// A control that receives user input data to add a database server.
 	/// </summary>
-	public partial class ControlAddServer : UserControl
+	public partial class ControlAddServer : ThreadSafeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

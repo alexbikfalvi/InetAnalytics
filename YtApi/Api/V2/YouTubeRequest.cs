@@ -68,7 +68,7 @@ namespace YtApi.Api.V2
 		/// <param name="callback">The callback delegate.</param>
 		/// <param name="state">The user state.</param>
 		/// <returns>An asynchronous result object.</returns>
-		public IAsyncResult Begin(Uri uri, AsyncWebRequestCallback callback, object state = null)
+		public new IAsyncResult Begin(Uri uri, AsyncWebRequestCallback callback, object state = null)
 		{
 			// Create the asynchronous state.
 			AsyncWebResult asyncState = AsyncWebRequest.Create(uri, callback, state);

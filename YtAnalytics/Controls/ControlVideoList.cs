@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtApi.Api.V2.Data;
 
@@ -33,7 +34,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control to display a list of videos.
 	/// </summary>
-	public partial class ControlVideoList : UserControl
+	public partial class ControlVideoList : ThreadSafeControl
 	{
 		private int? countStart = null;
 		private int? countPerPage = null;

@@ -61,6 +61,7 @@
 			this.labelTitle.Size = new System.Drawing.Size(94, 13);
 			this.labelTitle.TabIndex = 1;
 			this.labelTitle.Text = "No event selected";
+			this.labelTitle.UseMnemonic = false;
 			// 
 			// tabControl
 			// 

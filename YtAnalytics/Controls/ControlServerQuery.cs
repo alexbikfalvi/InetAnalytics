@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ namespace YtAnalytics.Controls
 	/// </summary>
 	public partial class ControlServerQuery : ThreadSafeControl
 	{
-		private delegate void ResultEventHandler(DbData table, int recordsAffected);
+		private delegate void ResultEventHandler(DbDataRaw table, int recordsAffected);
 		private delegate void ExceptionEventHandler(Exception exception);
 
 		// UI formatter.
@@ -116,15 +116,16 @@ namespace YtAnalytics.Controls
 		/// <param name="image">The message icon.</param>
 		/// <param name="text">The message text.</param>
 		/// <param name="progress">The visibility of the progress bar.</param>
-		private void ShowMessage(Image image, string text, bool progress = true)
+		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
+		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
 		{
 			// Invoke the function on the UI thread.
 			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress });
+				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
 			else
 			{
 				// Show the message.
-				this.message.Show(image, text, progress);
+				this.message.Show(image, text, progress, duration);
 			}
 		}
 
@@ -524,82 +525,93 @@ namespace YtAnalytics.Controls
 				this.command = null;
 				// Show a connecting message.
 				this.ShowMessage(Resources.DatabaseBusy_48, string.Format("Executing query on the database server \'{0}\'...", this.server.Name));
-				using (DbCommand command = this.server.CreateCommand(this.codeBox.Text))
+				// Create the command.
+				this.command = this.server.CreateCommand(DbQuery.Create(this.codeBox.Text));
+				// Execute the command.
+				command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
 				{
-					// Save the command.
-					this.command = command;
-					// Execute the command.
-					command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
+					try
 					{
-						try
+						// Throw the command exception, if any.
+						if (commandResult.Exception != null) throw commandResult.Exception;
+						// Read the results table.
+						reader.Read(null, (DbAsyncResult readerResult, DbDataRaw result) =>
 						{
-							// Throw the command exception, if any.
-							if (commandResult.Exception != null) throw commandResult.Exception;
-							// Read the results table.
-							reader.Read(null, (DbAsyncResult readerResult, DbData result) =>
+							try
 							{
-								try
+								// Throw the reader exception, if any.
+								if (readerResult.Exception != null)
 								{
-									// Throw the reader exception, if any.
-									if (readerResult.Exception != null)
-									{
-										reader.Close();
-										throw readerResult.Exception;
-									}
-									int recordsAffected = reader.RecordsAffected;
 									reader.Close();
-									// Show a success message.
-									this.ShowMessage(Resources.DatabaseSuccess_48, string.Format("Executing query on the database server \'{0}\' completed successfully.", this.server.Name), false);
-									// Wait.
-									Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
-									// Hide the message.
-									this.HideMessage();
-									// Call the completion method.
-									this.OnQuerySuccess(result, recordsAffected);
+									throw readerResult.Exception;
 								}
-								catch (Exception exception)
-								{
-									// Show an error message.
-									this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
-									// Log the event.
-									this.server.LogEvent(
-										LogEventLevel.Important,
-										LogEventType.Error,
-										"Executing query on the database server \'{0}\' failed. {1}",
-										new object[] { this.server.Name, exception.Message },
-										exception);
-									// Wait.
-									Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
-									// Hide the message.
-									this.HideMessage();
-									// Call the completion method.
-									this.OnQueryFail(exception);
-								}
-							});
-						}
-						catch (Exception exception)
-						{
-							// Show an error message.
-							this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
-							// Log the event.
-							this.server.LogEvent(
-								LogEventLevel.Important,
-								LogEventType.Error,
-								"Executing query on the database server \'{0}\' failed. {1}",
-								new object[] { this.server.Name, exception.Message },
-								exception);
-							// Wait.
-							Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
-							// Hide the message.
-							this.HideMessage();
-							// Call the completion method.
-							this.OnQueryFail(exception);
-						}
-					});
-				}
+								// Get the number of records affected.
+								int recordsAffected = reader.RecordsAffected;
+								// Close the reader.
+								reader.Close();
+								// Dispose and reset the command.
+								this.command.Dispose();
+								this.command = null;
+								// Show a success message.
+								this.ShowMessage(Resources.DatabaseSuccess_48, string.Format("Executing query on the database server \'{0}\' completed successfully.", this.server.Name), false);
+								// Wait.
+								Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+								// Hide the message.
+								this.HideMessage();
+								// Call the completion method.
+								this.OnQuerySuccess(result, recordsAffected);
+							}
+							catch (Exception exception)
+							{
+								// Dispose and reset the command.
+								this.command.Dispose();
+								this.command = null;
+								// Show an error message.
+								this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+								// Log the event.
+								this.server.LogEvent(
+									LogEventLevel.Important,
+									LogEventType.Error,
+									"Executing query on the database server \'{0}\' failed. {1}",
+									new object[] { this.server.Name, exception.Message },
+									exception);
+								// Wait.
+								Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+								// Hide the message.
+								this.HideMessage();
+								// Call the completion method.
+								this.OnQueryFail(exception);
+							}
+						});
+					}
+					catch (Exception exception)
+					{
+						// Dispose and reset the command.
+						this.command.Dispose();
+						this.command = null;
+						// Show an error message.
+						this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+						// Log the event.
+						this.server.LogEvent(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							"Executing query on the database server \'{0}\' failed. {1}",
+							new object[] { this.server.Name, exception.Message },
+							exception);
+						// Wait.
+						Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+						// Hide the message.
+						this.HideMessage();
+						// Call the completion method.
+						this.OnQueryFail(exception);
+					}
+				});
 			}
 			catch (Exception exception)
 			{
+				// Dispose and reset the command.
+				this.command.Dispose();
+				this.command = null;
 				// Show an error message.
 				this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
 				// Log the event.
@@ -623,7 +635,7 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="table">The data table.</param>
 		/// <param name="recordsAffected">The number of records affected by the query.</param>
-		private void OnQuerySuccess(DbData table, int recordsAffected)
+		private void OnQuerySuccess(DbDataRaw table, int recordsAffected)
 		{
 			// Call this method on the UI thread.
 			if (this.InvokeRequired) this.Invoke(new ResultEventHandler(this.OnQuerySuccess), new object[] { table, recordsAffected });
@@ -652,7 +664,7 @@ namespace YtAnalytics.Controls
 					}
 
 					// Update the status box.
-					this.statusLabel.Text = string.Format("Query completed successfully: {0} rows of data fetched.", table.RowCount.ToString());
+					this.statusLabel.Text = string.Format("Query completed successfully: {0} {1} of data fetched.", table.RowCount.ToString(), table.RowCount == 1 ? "row" : "rows");
 				}
 				else
 				{
@@ -717,8 +729,6 @@ namespace YtAnalytics.Controls
 			if (null == this.command) return;
 			// Otherwise, cancel the command.
 			this.command.Cancel();
-			// Set the command to null.
-			this.command = null;
 			// Disable the stop button.
 			this.buttonStop.Enabled = false;
 		}

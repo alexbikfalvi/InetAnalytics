@@ -104,6 +104,25 @@ namespace YtCrawler
 		}
 
 		/// <summary>
+		/// Gets or sets the YouTube categories file name.
+		/// </summary>
+		public string YouTubeCategoriesFileName
+		{
+			get
+			{
+				try
+				{
+					string value;
+					return null != (value = Registry.GetValue(this.root + "\\YouTube\\V2", "CategoriesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\YouTube\\CategoriesV2.xml") as string)
+						? value
+						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\YouTube\\CategoriesV2.xml";
+				}
+				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\YouTube\\CategoriesV2.xml"; }
+			}
+			set { Registry.SetValue(this.root + "\\YouTube\\V2", "CategoriesFileName", value, RegistryValueKind.String); }
+		}
+
+		/// <summary>
 		/// Gets or sets the log file name.
 		/// </summary>
 		public string LogFileName

@@ -42,8 +42,8 @@
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
-			this.linkLabelInner = new System.Windows.Forms.LinkLabel();
 			this.labelInner = new System.Windows.Forms.Label();
+			this.linkLabelInner = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
@@ -57,6 +57,7 @@
 			this.labelException.Size = new System.Drawing.Size(77, 13);
 			this.labelException.TabIndex = 0;
 			this.labelException.Text = "Exception type";
+			this.labelException.UseMnemonic = false;
 			// 
 			// textBoxStack
 			// 
@@ -201,6 +202,15 @@
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
 			// 
+			// labelInner
+			// 
+			this.labelInner.AutoSize = true;
+			this.labelInner.Location = new System.Drawing.Point(8, 113);
+			this.labelInner.Name = "labelInner";
+			this.labelInner.Size = new System.Drawing.Size(34, 13);
+			this.labelInner.TabIndex = 5;
+			this.labelInner.Text = "I&nner:";
+			// 
 			// linkLabelInner
 			// 
 			this.linkLabelInner.Enabled = false;
@@ -214,15 +224,6 @@
 			this.linkLabelInner.Text = "None";
 			this.linkLabelInner.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.linkLabelInner.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnInnerExceptionClick);
-			// 
-			// labelInner
-			// 
-			this.labelInner.AutoSize = true;
-			this.labelInner.Location = new System.Drawing.Point(8, 113);
-			this.labelInner.Name = "labelInner";
-			this.labelInner.Size = new System.Drawing.Size(34, 13);
-			this.labelInner.TabIndex = 5;
-			this.labelInner.Text = "I&nner:";
 			// 
 			// ControlException
 			// 

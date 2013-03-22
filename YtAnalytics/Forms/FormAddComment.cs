@@ -82,13 +82,14 @@ namespace YtAnalytics.Forms
 		/// <param name="owner">The owner window.</param>
 		/// <param name="obj">The object ID.</param>
 		/// <param name="user">The user.</param>
-		public void ShowDialog(IWin32Window owner, string obj, string user)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, string obj, string user)
 		{
 			this.control.Item = obj;
 			this.control.User = user;
 			this.control.Text = string.Empty;
 			this.control.Select();
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 
 		/// <summary>

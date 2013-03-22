@@ -61,6 +61,7 @@
 			this.labelTitle.Size = new System.Drawing.Size(67, 13);
 			this.labelTitle.TabIndex = 0;
 			this.labelTitle.Text = "No comment";
+			this.labelTitle.UseMnemonic = false;
 			// 
 			// tabControl
 			// 

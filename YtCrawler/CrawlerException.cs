@@ -23,6 +23,7 @@ namespace YtCrawler
 	/// <summary>
 	/// A class representing a crawler exception.
 	/// </summary>
+	[Serializable]
 	public class CrawlerException : Exception
 	{
 		/// <summary>

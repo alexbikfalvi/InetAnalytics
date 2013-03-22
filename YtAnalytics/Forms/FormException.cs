@@ -54,17 +54,18 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="exception">The exception.</param>
-		public void ShowDialog(IWin32Window owner, Exception exception)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, Exception exception)
 		{
 			// If the event is null, do nothing.
-			if (null == exception) return;
+			if (null == exception) return DialogResult.Abort;
 
 			// Set the event.
 			this.exception.Exception = exception;
 			// Set the title.
 			this.Text = exception.GetType().ToString();
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 	}
 }

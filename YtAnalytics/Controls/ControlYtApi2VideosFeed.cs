@@ -28,11 +28,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtCrawler;
+using DotNetApi.Windows.Controls;
 using YtApi;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
+using YtCrawler;
 using YtCrawler.Log;
 
 namespace YtAnalytics.Controls
@@ -44,7 +45,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlYtApi2VideosFeed : UserControl
+	public partial class ControlYtApi2VideosFeed : ThreadSafeControl
 	{
 		private string logSource;
 
@@ -148,15 +149,16 @@ namespace YtAnalytics.Controls
 		/// <param name="image">The message icon.</param>
 		/// <param name="text">The message text.</param>
 		/// <param name="progress">The visibility of the progress bar.</param>
-		private void ShowMessage(Image image, string text, bool progress = true)
+		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
+		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
 		{
 			// Invoke the function on the UI thread.
 			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress });
+				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
 			else
 			{
 				// Show the message.
-				this.message.Show(image, text, progress);
+				this.message.Show(image, text, progress, duration);
 				// Disable the control.
 				this.panel.Enabled = false;
 			}

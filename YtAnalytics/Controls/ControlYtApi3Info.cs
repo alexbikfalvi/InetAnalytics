@@ -25,10 +25,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
-	public partial class ControlYtApi3Info : UserControl
+	public partial class ControlYtApi3Info : ThreadSafeControl
 	{
 		public ControlYtApi3Info()
 		{

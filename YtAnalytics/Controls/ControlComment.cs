@@ -25,15 +25,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
-	/// Displays the information of a log event.
+	/// Displays the information of a user comment.
 	/// </summary>
-	public partial class ControlComment : UserControl
+	public partial class ControlComment : ThreadSafeControl
 	{
 		private Comment comment = null;
 

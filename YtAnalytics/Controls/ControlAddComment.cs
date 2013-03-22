@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls
@@ -32,7 +33,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control that receives user input data to add a video comment.
 	/// </summary>
-	public partial class ControlAddComment : UserControl
+	public partial class ControlAddComment : ThreadSafeControl
 	{
 		private Comment.CommentType type;
 

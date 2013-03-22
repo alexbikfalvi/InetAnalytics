@@ -19,13 +19,16 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace YtCrawler.Database
 {
 	/// <summary>
 	/// A class that represents a database exception.
 	/// </summary>
-	public class DbException : Exception
+	[Serializable]
+	public class DbException : Exception, ISerializable
 	{
 		/// <summary>
 		/// Indicates the exception type.
@@ -61,6 +64,18 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
+		/// Creates a new database exception instance during the deserialization.
+		/// </summary>
+		/// <param name="info">The serialization info.</param>
+		/// <param name="ctx">The streaming context.</param>
+		protected DbException(SerializationInfo info, StreamingContext ctx)
+			: base(info, ctx)
+		{
+			this.isDb = info.GetBoolean("isDb");
+			this.dbMessage = info.GetString("dbMessage");
+			this.dbType = (Type)info.GetValue("dbType", typeof(Type));
+		}
+		/// <summary>
 		/// Creates a new exception instance.
 		/// </summary>
 		/// <param name="message">The exception message.</param>
@@ -95,5 +110,19 @@ namespace YtCrawler.Database
 		/// Gets the type for a database exception.
 		/// </summary>
 		public Type DbType { get { return this.dbType; } }
+
+		/// <summary>
+		/// Returns the object data during serialization.
+		/// </summary>
+		/// <param name="info">The serialization info.</param>
+		/// <param name="context">The streaming context.</param>
+		[SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("isDb", this.isDb);
+			info.AddValue("dbMessage", this.dbMessage);
+			info.AddValue("dbType", this.dbType);
+			base.GetObjectData(info, context);
+		}
 	}
 }

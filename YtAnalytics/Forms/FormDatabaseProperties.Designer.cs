@@ -63,7 +63,6 @@
 			this.ClientSize = new System.Drawing.Size(384, 412);
 			this.Controls.Add(this.buttonClose);
 			this.Controls.Add(this.control);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FormDatabaseProperties";

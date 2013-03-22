@@ -54,17 +54,18 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="evt">The event.</param>
-		public void ShowDialog(IWin32Window owner, LogEvent evt)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, LogEvent evt)
 		{
 			// If the event is null, do nothing.
-			if (null == evt) return;
+			if (null == evt) return DialogResult.Abort;
 
 			// Set the event.
 			this.logEvent.Event = evt;
 			// Set the title.
 			this.Text = string.Format("{0} Event at {1}", LogEvent.GetDescription(evt.Type), evt.Timestamp.ToString());
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 	}
 }

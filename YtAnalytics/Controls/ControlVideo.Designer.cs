@@ -831,6 +831,7 @@
 			this.labelVideo.Size = new System.Drawing.Size(34, 13);
 			this.labelVideo.TabIndex = 1;
 			this.labelVideo.Text = "Video";
+			this.labelVideo.UseMnemonic = false;
 			// 
 			// ControlVideo
 			// 

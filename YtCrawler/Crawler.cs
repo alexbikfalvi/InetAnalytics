@@ -30,7 +30,7 @@ namespace YtCrawler
 		private CrawlerConfig config;
 		private YouTubeSettings settings;
 		private YouTubeCategories categories;
-		private Logger logger;
+		private Logger log;
 		private Comments.Comments comments;
 		private DbServers servers;
 		private Spiders spiders;
@@ -46,16 +46,16 @@ namespace YtCrawler
 			this.config = new CrawlerConfig(rootKey, rootPath);
 
 			// Create the YouTube settings
-			this.settings = new YouTubeSettings(this.Config.YouTubeV2ApiKey);
+			this.settings = new YouTubeSettings(this.config.YouTubeV2ApiKey);
 
 			// Create the YouTube categories
-			this.categories = new YouTubeCategories();
+			this.categories = new YouTubeCategories(this.config.YouTubeCategoriesFileName);
 
 			// Create the logger.
-			this.logger = new Logger(this.Config.LogFileName);
+			this.log = new Logger(this.Config.LogFileName);
 
 			// Create the comments.
-			this.comments = new Comments.Comments(this.Config);
+			this.comments = new Comments.Comments(this.config);
 
 			// Create the database servers.
 			this.servers = new DbServers(this.config);
@@ -72,9 +72,11 @@ namespace YtCrawler
 			// Close the database servers.
 			this.servers.Dispose();
 			// Close the log.
-			this.Log.Dispose();
-			// Save the comments.
-			this.Comments.Dispose();
+			this.log.Dispose();
+			// Close the comments.
+			this.comments.Dispose();
+			// Close the YouTube categories.
+			this.categories.Dispose();
 		}
 
 		/// <summary>
@@ -95,7 +97,7 @@ namespace YtCrawler
 		/// <summary>
 		/// Returns the crawler log.
 		/// </summary>
-		public Logger Log { get { return this.logger; } }
+		public Logger Log { get { return this.log; } }
 
 		/// <summary>
 		/// Returns the crawler comments.

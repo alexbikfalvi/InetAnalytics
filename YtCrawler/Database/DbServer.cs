@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using Microsoft.Win32;
+using YtCrawler.Database.Data;
 using YtCrawler.Log;
 
 namespace YtCrawler.Database
@@ -39,11 +40,12 @@ namespace YtCrawler.Database
 			Connected = 1,
 			Failed = 2,
 			Connecting = 3,
-			Disconnecting = 4
+			Disconnecting = 4,
+			Busy = 5
 		};
 
 		// Config.
-		protected string key;
+		protected RegistryKey key;
 
 		// Settings.
 		private string id;
@@ -61,13 +63,17 @@ namespace YtCrawler.Database
 		protected Logger log;
 		protected string logSource;
 
+		// Database tables and relationships.
+		private DbTables tables;
+		private DbRelationships relationships;
+
 		/// <summary>
 		/// Creates a database server with the specified name and configuration.
 		/// </summary>
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServer(string key, string id, string logFile)
+		public DbServer(RegistryKey key, string id, string logFile)
 		{
 			// Set the server ID.
 			this.id = id;
@@ -79,6 +85,10 @@ namespace YtCrawler.Database
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
 			this.logSource = string.Format("Database\\{0}", this.id);
+
+			// Create the database tables and relationships.
+			this.tables = new DbTables(this.key);
+			this.relationships = new DbRelationships(this.key, this.tables);
 
 			// Load the current configuration.
 			this.LoadConfiguration();
@@ -97,7 +107,7 @@ namespace YtCrawler.Database
 		/// <param name="dateCreated">The date when the server was created.</param>
 		/// <param name="dateModified">The date when the server was last modified.</param>
 		public DbServer(
-			string key,
+			RegistryKey key,
 			string id,
 			string name,
 			string dataSource,
@@ -122,6 +132,10 @@ namespace YtCrawler.Database
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
 			this.logSource = string.Format("Database\\{0}", this.id);
+
+			// Create the database tables and relationships.
+			this.tables = new DbTables(this.key);
+			this.relationships = new DbRelationships(this.key, this.tables);
 
 			// Save the configuration.
 			this.SaveConfiguration();
@@ -193,12 +207,35 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the default database for this server.
 		/// </summary>
-		public abstract DbDatabase Database { get; set; }
-
+		public abstract DbObjectDatabase Database { get; set; }
 		/// <summary>
-		/// Gets the query for the server databases.
+		/// Gets the list of database tables for this database server.
 		/// </summary>
-		public abstract string QueryDatabases { get; } 
+		public DbTables Tables { get { return this.tables; } }
+		/// <summary>
+		/// Gets the list of database relationships for this database server.
+		/// </summary>
+		public DbRelationships Relationships { get { return this.relationships; } }
+		/// <summary>
+		/// Gets the database table for this server.
+		/// </summary>
+		public abstract ITable TableDatabase { get; }
+		/// <summary>
+		/// Gets the schema table for this server.
+		/// </summary>
+		public abstract ITable TableSchema { get; }
+		/// <summary>
+		/// Gets the type table for this server.
+		/// </summary>
+		public abstract ITable TableTypes { get; }
+		/// <summary>
+		/// Gets the tables table for this server.
+		/// </summary>
+		public abstract ITable TableTables { get; }
+		/// <summary>
+		/// Gets the columns table for this server.
+		/// </summary>
+		public abstract ITable TableColumns { get; }
 
 		// Public events.
 
@@ -210,6 +247,9 @@ namespace YtCrawler.Database
 		/// An event raised when the server connection state has changed.
 		/// </summary>
 		public event DbServerStateEventHandler StateChanged;
+		/// <summary>
+		/// An event raised when the server default database has changed.
+		/// </summary>
 		public event DbServerDatabaseChangedEventHandler DatabaseChanged;
 		/// <summary>
 		/// An event raised when the server begins opening the connection.
@@ -238,12 +278,17 @@ namespace YtCrawler.Database
 			// Update the modification date.
 			this.dateModified = DateTime.Now;
 
-			Registry.SetValue(this.key, "Name", this.name, RegistryValueKind.String);
-			Registry.SetValue(this.key, "DataSource", this.dataSource, RegistryValueKind.String);
-			Registry.SetValue(this.key, "Username", this.username, RegistryValueKind.String);
-			Registry.SetValue(this.key, "Password", CrawlerCrypto.Encrypt(this.password), RegistryValueKind.Binary);
-			Registry.SetValue(this.key, "DateCreated", this.dateCreated.Ticks, RegistryValueKind.QWord);
-			Registry.SetValue(this.key, "DateModified", this.dateModified.Ticks, RegistryValueKind.QWord);
+			// Save basic configuration.
+			Registry.SetValue(this.key.Name, "Name", this.name, RegistryValueKind.String);
+			Registry.SetValue(this.key.Name, "DataSource", this.dataSource, RegistryValueKind.String);
+			Registry.SetValue(this.key.Name, "Username", this.username, RegistryValueKind.String);
+			Registry.SetValue(this.key.Name, "Password", CrawlerCrypto.Encrypt(this.password), RegistryValueKind.Binary);
+			Registry.SetValue(this.key.Name, "DateCreated", this.dateCreated.Ticks, RegistryValueKind.QWord);
+			Registry.SetValue(this.key.Name, "DateModified", this.dateModified.Ticks, RegistryValueKind.QWord);
+
+			// Save tables and relationship configuration.
+			this.tables.SaveConfiguration();
+			this.relationships.SaveConfiguration();
 
 			// Log the event.
 			this.log.Add(
@@ -260,12 +305,17 @@ namespace YtCrawler.Database
 		/// </summary>
 		public virtual void LoadConfiguration()
 		{
-			this.name = Registry.GetValue(this.key, "Name", null) as string;
-			this.dataSource = Registry.GetValue(this.key, "DataSource", null) as string;
-			this.username = Registry.GetValue(this.key, "Username", null) as string;
-			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key, "Password", null) as byte[]);
-			this.dateCreated = new DateTime((long)Registry.GetValue(this.key, "DateCreated", DateTime.Now.Ticks));
-			this.dateModified = new DateTime((long)Registry.GetValue(this.key, "DateModified", DateTime.Now.Ticks));
+			// Load basic configuration.
+			this.name = Registry.GetValue(this.key.Name, "Name", null) as string;
+			this.dataSource = Registry.GetValue(this.key.Name, "DataSource", null) as string;
+			this.username = Registry.GetValue(this.key.Name, "Username", null) as string;
+			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key.Name, "Password", null) as byte[]);
+			this.dateCreated = new DateTime((long)Registry.GetValue(this.key.Name, "DateCreated", DateTime.Now.Ticks));
+			this.dateModified = new DateTime((long)Registry.GetValue(this.key.Name, "DateModified", DateTime.Now.Ticks));
+
+			// Load tables and relationships configuration.
+			this.tables.LoadConfiguration();
+			this.relationships.LoadConfiguration();
 
 			// Log the event.
 			this.log.Add(
@@ -358,15 +408,7 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="query">The database query.</param>
 		/// <returns>The database command.</returns>
-		public abstract DbCommand CreateCommand(string query);
-
-		/// <summary>
-		/// Creates a database entry from the table data found at the specified index.
-		/// </summary>
-		/// <param name="data">The table data.</param>
-		/// <param name="index">The row index.</param>
-		/// <returns>The database instance.</returns>
-		public abstract DbDatabase CreateDatabase(DbData data, int index);
+		public abstract DbCommand CreateCommand(DbQuery query);
 
 		// Protected methods.
 
@@ -382,6 +424,10 @@ namespace YtCrawler.Database
 		{
 			// Dispose the log.
 			this.log.Dispose();
+			// Dispose the database tables.
+			this.tables.Dispose();
+			// Close the registry key.
+			this.key.Close();
 		}
 
 		/// <summary>
@@ -413,7 +459,7 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="oldDatabase">The old database.</param>
 		/// <param name="newDatabase">The new database.</param>
-		protected void OnDatabaseChanged(DbDatabase oldDatabase, DbDatabase newDatabase)
+		protected void OnDatabaseChanged(DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
 		{
 			// Call the event.
 			if (this.DatabaseChanged != null) this.DatabaseChanged(this, oldDatabase, newDatabase);

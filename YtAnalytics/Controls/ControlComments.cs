@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtCrawler;
 using YtCrawler.Comments;
@@ -19,7 +20,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control displaying a list of video comments.
 	/// </summary>
-	public partial class ControlComments : UserControl
+	public partial class ControlComments : ThreadSafeControl
 	{
 		private CommentsList comments;
 

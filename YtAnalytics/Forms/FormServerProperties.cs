@@ -55,10 +55,11 @@ namespace YtAnalytics.Forms
 		/// <param name="owner">The owner window.</param>
 		/// <param name="server">The database server.</param>
 		/// <param name="isPrimary">Indicates if the database server is primary.</param>
-		public void ShowDialog(IWin32Window owner, DbServer server, bool isPrimary)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, DbServer server, bool isPrimary)
 		{
 			// If the server is null, do nothing.
-			if (null == server) return;
+			if (null == server) return DialogResult.Abort;
 
 			// Set the server.
 			this.control.Server = server;
@@ -70,7 +71,7 @@ namespace YtAnalytics.Forms
 			// Set an event handler for the server state.
 			server.StateChanged += this.OnServerStateChanged;
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 
 		/// <summary>
@@ -98,11 +99,7 @@ namespace YtAnalytics.Forms
 			// Save the configuration and exit.
 			if (this.buttonApply.Enabled)
 			{
-				this.control.Server.Name = this.control.ServerName;
-				this.control.Server.DataSource = this.control.DataSource;
-				this.control.Server.Username = this.control.Username;
-				this.control.Server.Password = this.control.Password;
-				this.control.Server.SaveConfiguration();
+				this.OnApply(sender, e);
 			}
 			this.Close();
 		}

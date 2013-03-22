@@ -28,10 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.panel = new System.Windows.Forms.Panel();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.label = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.panel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -74,6 +76,11 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
+			// timer
+			// 
+			this.timer.Interval = 1000;
+			this.timer.Tick += new System.EventHandler(this.OnTick);
+			// 
 			// ControlMessage
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -93,5 +100,6 @@
 		private System.Windows.Forms.ProgressBar progressBar;
 		private System.Windows.Forms.Label label;
 		private System.Windows.Forms.PictureBox pictureBox;
+		private System.Windows.Forms.Timer timer;
 	}
 }

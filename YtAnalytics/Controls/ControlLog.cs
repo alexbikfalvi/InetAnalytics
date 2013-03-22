@@ -261,15 +261,16 @@ namespace YtAnalytics.Controls
 		/// <param name="image">The message icon.</param>
 		/// <param name="text">The message text.</param>
 		/// <param name="progress">The visibility of the progress bar.</param>
-		private void ShowMessage(Image image, string text, bool progress = true)
+		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
+		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
 		{
 			// Invoke the function on the UI thread.
 			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress });
+				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
 			else
 			{
 				// Show the message.
-				this.message.Show(image, text, progress);
+				this.message.Show(image, text, progress, duration);
 				// Disable the control.
 				this.toolStrip.Enabled = false;
 				this.listView.Enabled = false;

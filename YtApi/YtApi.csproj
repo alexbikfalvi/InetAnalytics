@@ -171,6 +171,7 @@
     <Compile Include="Api\V2\YouTubeException.cs" />
     <Compile Include="Api\V2\YouTubeRequest.cs" />
     <Compile Include="Api\V2\YouTubeSettings.cs" />
+    <Compile Include="Api\V2\YouTube.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

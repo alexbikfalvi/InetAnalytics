@@ -27,6 +27,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
 using YtCrawler;
@@ -40,7 +41,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2Video : UserControl
+	public partial class ControlYtApi2Video : ThreadSafeControl
 	{
 		private static string logSource = "APIv2 Video Entry";
 

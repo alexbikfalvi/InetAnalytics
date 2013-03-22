@@ -25,14 +25,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtCrawler.Database;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
-	/// Displays the information of a log event.
+	/// Displays the information of a database server.
 	/// </summary>
-	public partial class ControlServerProperties : UserControl
+	public partial class ControlServerProperties : ThreadSafeControl
 	{
 		private DbServer server;
 		private static Image[] images = {
@@ -54,7 +55,7 @@ namespace YtAnalytics.Controls
 		// Public properties.
 
 		/// <summary>
-		/// Gets or sets the current log event.
+		/// Gets or sets the current database server.
 		/// </summary>
 		public DbServer Server
 		{

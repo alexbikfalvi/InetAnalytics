@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 
@@ -30,13 +31,13 @@ namespace YtCrawler.Database
 	/// </summary>
 	public abstract class DbCommand : IDisposable
 	{
-		private string query;
+		private DbQuery query;
 
 		/// <summary>
 		/// Creates a new database command with the specified query.
 		/// </summary>
 		/// <param name="query">The command query.</param>
-		public DbCommand(string query)
+		public DbCommand(DbQuery query)
 		{
 			this.query = query;
 		}
@@ -46,7 +47,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets or sets the command query.
 		/// </summary>
-		public string Query { get { return this.query; } }
+		public DbQuery Query { get { return this.query; } }
 
 		// Public methods.
 
@@ -71,6 +72,13 @@ namespace YtCrawler.Database
 		/// Cancels the execution of an asynchronous operation.
 		/// </summary>
 		public abstract void Cancel();
+
+		/// <summary>
+		/// Adds a parameter to the database command.
+		/// </summary>
+		/// <param name="name">The parameter name.</param>
+		/// <param name="value">The parameter value.</param>
+		public abstract void AddParameter(string name, object value);
 
 		/// <summary>
 		/// Disposes the current object.

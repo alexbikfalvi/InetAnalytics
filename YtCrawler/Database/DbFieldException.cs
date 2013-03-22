@@ -23,22 +23,22 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// A class representing a mapping exception.
 	/// </summary>
-	public class DbMappingException : DbException
+	[Serializable]
+	public class DbFieldException : DbException
 	{
-		private Type type;
 		private string property;
 
-		public DbMappingException(string message, Type type, string property)
+		/// <summary>
+		/// Create a new exception instance, with the specified message and property name.
+		/// </summary>
+		/// <param name="message">The exception message.</param>
+		/// <param name="property">The property name.</param>
+		public DbFieldException(string message, string property)
 			: base(message)
 		{
-			this.type = type;
 			this.property = property;
 		}
 
-		/// <summary>
-		/// Gets the type that generated the exception.
-		/// </summary>
-		public new Type Type { get { return this.type; } }
 
 		/// <summary>
 		/// Gets the property name for which the mapping could not be solved.

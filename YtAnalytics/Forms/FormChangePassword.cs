@@ -70,7 +70,8 @@ namespace YtAnalytics.Forms
 		/// <param name="owner">The owner window.</param>
 		/// <param name="oldPassword">The old password.</param>
 		/// <param name="state">The user state.</param>
-		public void ShowDialog(IWin32Window owner, String oldPassword, object state = null)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, String oldPassword, object state = null)
 		{
 			// Save the old password.
 			this.oldPassword = oldPassword;
@@ -81,7 +82,7 @@ namespace YtAnalytics.Forms
 			// Select the control.
 			this.control.Select();
 			// Show the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 
 		// Private methods.

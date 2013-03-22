@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtCrawler.Log;
 
@@ -15,11 +16,13 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control representing an event log list.
 	/// </summary>
-	public partial class ControlLogList : UserControl
+	public partial class ControlLogList : ThreadSafeControl
 	{
 		private int maximumItems;
 		private static int[] maximumValues = { 10, 100, 1000, int.MaxValue };
 		private FormLogEvent formLogEvent = new FormLogEvent();
+
+		private delegate void AddEventHandler(LogEvent evt);
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -34,11 +37,17 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
-		/// Adds a new event to the event log.
+		/// Adds a new event to the event log. The method is thread-safe.
 		/// </summary>
 		/// <param name="evt">The event.</param>
 		public void Add(LogEvent evt)
 		{
+			// Invoke this method on the UI thread.
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new AddEventHandler(this.Add), new object[] { evt });
+				return;
+			}
 			// Create a new list view menu item.
 			ListViewItem item = new ListViewItem(new string[] { DateTime.Now.ToString(), evt.Message }, (int)evt.Type);
 			item.Tag = evt;

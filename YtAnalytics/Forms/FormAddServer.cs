@@ -97,7 +97,8 @@ namespace YtAnalytics.Forms
 		/// <param name="owner">The owner window.</param>
 		/// <param name="primary">The state of the primary check box.</param>
 		/// <param name="primaryEnabled">The enabled state of the primary check box.</param>
-		public void ShowDialog(IWin32Window owner, bool primary, bool primaryEnabled)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, bool primary, bool primaryEnabled)
 		{
 			// Clear the control settings.
 			this.control.Clear();
@@ -107,7 +108,7 @@ namespace YtAnalytics.Forms
 			// Select the control.
 			this.control.Select();
 			// Show the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 
 		// Private methods.

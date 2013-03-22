@@ -17,38 +17,42 @@
  */
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using YtCrawler.Database;
 
-namespace YtCrawler.Database
+namespace YtCrawler.Database.Data
 {
 	/// <summary>
-	/// A class representing the mapping between a .NET type and the corresponding database/table/columns.
+	/// A type representing a table in an SQL Server.
 	/// </summary>
-	public class DbMapping
+	[Serializable]
+	public class DbObjectTable : DbObject
 	{
-		private DbDatabase database;
-		private DbTable table;
-		private Dictionary<string, DbColumn> map = new Dictionary<string,DbColumn>();
+		// Properties.
+
+		[Browsable(true), DisplayName("Name"), ReadOnly(true), Db(DbType.String, false, "name"), Description("The table name.")]
+		public string Name { get; set; }
+		
+		// Methods.
 
 		/// <summary>
-		/// Creates a database type mapping for the following database and table.
+		/// The name of the current object.
 		/// </summary>
-		/// <param name="database">The database.</param>
-		/// <param name="table">The table.</param>
-		public DbMapping(DbDatabase database, DbTable table)
+		/// <returns>The name.</returns>
+		public override string GetName()
 		{
-			this.database = database;
-			this.table = table;
+			return this.Name;
 		}
 
 		/// <summary>
-		/// Gets the database used by the current mapping.
+		/// Compares two database objects.
 		/// </summary>
-		public DbDatabase Database { get { return this.database; } }
-
-		/// <summary>
-		/// Gets the table used by the current mapping.
-		/// </summary>
-		public DbTable Table { get { return this.table; } }
+		/// <param name="obj">The object to compare.</param>
+		/// <returns><b>True</b> if the two objects are equal, <b>false</b> otherwise.</returns>
+		public bool Equals(DbObjectTable obj)
+		{
+			return (this.Name == obj.Name);
+		}
 	}
 }

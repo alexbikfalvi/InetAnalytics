@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtCrawler.Database;
+using YtCrawler.Database.Data;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms
@@ -55,10 +56,11 @@ namespace YtAnalytics.Forms
 		/// <param name="owner">The owner window.</param>
 		/// <param name="database">The database.</param>
 		/// <param name="isSelected">Indicates if the database is selected.</param>
-		public void ShowDialog(IWin32Window owner, DbDatabase database, bool isSelected)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, DbObjectDatabase database, bool isSelected)
 		{
 			// If the server is null, do nothing.
-			if (null == database) return;
+			if (null == database) return DialogResult.Abort;
 
 			// Set the server.
 			this.control.Database = database;
@@ -66,7 +68,7 @@ namespace YtAnalytics.Forms
 			// Set the title.
 			this.Text = string.Format("{0} Database Properties", database.Name);
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 	}
 }

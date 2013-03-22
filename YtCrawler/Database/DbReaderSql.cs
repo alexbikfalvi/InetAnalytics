@@ -19,11 +19,12 @@
 using System;
 using System.Data.SqlClient;
 using System.Threading;
+using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
 {
 	/// <summary>
-	/// A class representing a database reader for a Microsoft SQL server.
+	/// A class representing a database reader for an SQL Server.
 	/// </summary>
 	public sealed class DbReaderSql : DbReader
 	{
@@ -88,13 +89,42 @@ namespace YtCrawler.Database
 			return this.reader.GetName(index);
 		}
 		/// <summary>
+		/// Reads asynchronously the specified number of records. When the query does not use a database table, the result
+		/// returned is raw data. When the query uses a database table, the result returned is object data.
+		/// </summary>
+		/// <param name="query">The query.</param>
+		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The result of the asynchronous operation.</returns>
+		public override IAsyncResult Read(DbQuery query, int? count, DbReaderCallback callback, object userState = null)
+		{
+			// If the query has a database table.
+			if (query.Table != null)
+			{
+				// Use the object data read and convert the result to the generic delagate.
+				return this.Read(query.Table, count, (DbAsyncResult result, DbDataObject table) =>
+					{
+						if (callback != null) callback(result, table);
+					}, userState);
+			}
+			else
+			{
+				// Use the raw data read and convert the result to the generic delegate.
+				return this.Read(count, (DbAsyncResult result, DbDataRaw table) =>
+					{
+						if (callback != null) callback(result, table);
+					}, userState);
+			}
+		}
+		/// <summary>
 		/// Reads asynchronusly the specified number of records.
 		/// </summary>
 		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		public override IAsyncResult Read(int? count, DbReaderCallback callback, object userState = null)
+		public override IAsyncResult Read(int? count, DbReaderRawCallback callback, object userState = null)
 		{
 			// Create the asynchronous result.
 			DbAsyncResult asyncResult = new DbAsyncResult(userState);
@@ -102,7 +132,7 @@ namespace YtCrawler.Database
 			ThreadPool.QueueUserWorkItem((object state) =>
 				{
 					// Create the result.
-					DbData result = new DbData();
+					DbDataRaw result = new DbDataRaw();
 					try
 					{
 						// Read records from the database while there are more records and the records count
@@ -128,6 +158,99 @@ namespace YtCrawler.Database
 					// Call the callback method.
 					if (callback != null) callback(asyncResult, result);
 				});
+			return asyncResult;
+		}
+
+		/// <summary>
+		/// Reads asynchronously the specified number of records, automatically converting to a data table of the specified
+		/// data type.
+		/// </summary>
+		/// <param name="table">The database table containing the mapping between the database and the object names.</param>
+		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns></returns>
+		public override IAsyncResult Read(ITable table, int? count, DbReaderObjectCallback callback, object userState = null)
+		{
+			// Create the asynchronous result.
+			DbAsyncResult asyncResult = new DbAsyncResult(userState);
+			// Execute the read asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				// Create the result.
+				DbDataObject result = new DbDataObject(table);
+				try
+				{
+					// Read records from the database while there are more records and the records count
+					// is less than the specified number or the count is null.
+					for (int index = 0; ((index < (count ?? 0)) || (count == null)) && reader.Read(); index++)
+					{
+						// Add the last row to the results table.
+						result.AddRow(this);
+					}
+				}
+				catch (SqlException exception)
+				{
+					// If an exception occurs, set the exception.
+					asyncResult.Exception = new DbException(string.Format("An SQL error occurred while reading the query results from the database. {0}", exception.Message), exception);
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, set the exception.
+					asyncResult.Exception = new DbException("An error occurred while reading the query results from the database.", exception);
+				}
+				// Complete the asynchronous operation.
+				asyncResult.Complete();
+				// Call the callback method.
+				if (callback != null) callback(asyncResult, result);
+			});
+			return asyncResult;
+		}
+
+		/// <summary>
+		/// Reads asynchronously the specified number of records, automatically converting to a data table of the specified
+		/// data type.
+		/// </summary>
+		/// <typeparam name="T">The data type.</typeparam>
+		/// <param name="table">The database table containing the mapping between the database and object names.</param>
+		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The result of the asynchronous operation.</returns>
+		public override IAsyncResult Read<T>(DbTable<T> table, int? count, DbReaderObjectCallback<T> callback, object userState = null)
+		{
+			// Create the asynchronous result.
+			DbAsyncResult asyncResult = new DbAsyncResult(userState);
+			// Execute the read asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				// Create the result.
+				DbDataObject<T> result = new DbDataObject<T>(table);
+				try
+				{
+					// Read records from the database while there are more records and the records count
+					// is less than the specified number or the count is null.
+					for (int index = 0; ((index < (count ?? 0)) || (count == null)) && reader.Read(); index++)
+					{
+						// Add the last row to the results table.
+						result.AddRow(this);
+					}
+				}
+				catch (SqlException exception)
+				{
+					// If an exception occurs, set the exception.
+					asyncResult.Exception = new DbException(string.Format("An SQL error occurred while reading the query results from the database. {0}", exception.Message), exception);
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, set the exception.
+					asyncResult.Exception = new DbException("An error occurred while reading the query results from the database.", exception);
+				}
+				// Complete the asynchronous operation.
+				asyncResult.Complete();
+				// Call the callback method.
+				if (callback != null) callback(asyncResult, result);
+			});
 			return asyncResult;
 		}
 

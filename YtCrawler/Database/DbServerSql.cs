@@ -17,16 +17,19 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using System.Threading;
-using YtCrawler.Log;
 using Microsoft.Win32;
+using YtCrawler.Log;
+using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
 {
 	/// <summary>
-	/// A class representing a Microsoft SQL Server.
+	/// A class representing an SQL Server.
 	/// </summary>
 	public sealed class DbServerSql : DbServer
 	{
@@ -34,7 +37,14 @@ namespace YtCrawler.Database
 		private SqlConnection connection = new SqlConnection();
 		private Mutex mutex = new Mutex();
 
-		private DbDatabase database = null;
+		private DbObjectDatabase database = null;
+
+		// SQL Server tables.
+		private DbTable<DbObjectSqlDatabase> tableDatabases = new DbTable<DbObjectSqlDatabase>("Databases", "databases", "sys", "master", false);
+		private DbTable<DbObjectSqlType> tableTypes = new DbTable<DbObjectSqlType>("Types", "types", "sys", "master", false);
+		private DbTable<DbObjectSqlSchema> tableSchema = new DbTable<DbObjectSqlSchema>("Schemas", "schemas", "sys", "master", false);
+		private DbTable<DbObjectSqlTable> tableTables = new DbTable<DbObjectSqlTable>("Tables", "tables", "sys", "master", true);
+		private DbTable<DbObjectSqlColumn> tableColumns = new DbTable<DbObjectSqlColumn>("Columns", "columns", "sys", "master", true);
 
 		/// <summary>
 		/// Creates a new server instance.
@@ -42,13 +52,22 @@ namespace YtCrawler.Database
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServerSql(string key, string id, string logFile)
+		public DbServerSql(RegistryKey key, string id, string logFile)
 			: base(key, id, logFile)
 		{
 			// Initialize the server with the current configuration.
 			this.OnInitialized();
 			// Set the event handler for the connection state.
 			this.connection.StateChange += this.OnConnectionStateChanged;
+			// Add tables to the tables list.
+			this.Tables.Add(this.tableDatabases);
+			this.Tables.Add(this.tableSchema);
+			this.Tables.Add(this.tableTypes);
+			this.Tables.Add(this.tableTables);
+			this.Tables.Add(this.tableColumns);
+			// Add relationships to the tables list.
+			this.Relationships.Add(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
+			this.Relationships.Add(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
 		}
 
 		/// <summary>
@@ -64,7 +83,7 @@ namespace YtCrawler.Database
 		/// <param name="dateCreated">The date when the server was created.</param>
 		/// <param name="dateModified">The date when the server was last modified.</param>
 		public DbServerSql(
-			string key,
+			RegistryKey key,
 			string id,
 			string name,
 			string dataSource,
@@ -80,6 +99,15 @@ namespace YtCrawler.Database
 			this.OnInitialized();
 			// Set the event handler for the connection state.
 			this.connection.StateChange += this.OnConnectionStateChanged;
+			// Add tables to the tables list.
+			this.Tables.Add(this.tableDatabases);
+			this.Tables.Add(this.tableSchema);
+			this.Tables.Add(this.tableTypes);
+			this.Tables.Add(this.tableTables);
+			this.Tables.Add(this.tableColumns);
+			// Add relationships to the tables list.
+			this.Relationships.Add(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
+			this.Relationships.Add(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
 		}
 
 		// Public properties.
@@ -113,13 +141,13 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the default database for this database server.
 		/// </summary>
-		public override DbDatabase Database
+		public override DbObjectDatabase Database
 		{
 			get { return this.database; }
 			set
 			{
 				// Save the old database.
-				DbDatabase oldDb = this.database;
+				DbObjectDatabase oldDb = this.database;
 				// Change the current database.
 				this.database = value;
 				// Raise a database change event.
@@ -129,10 +157,25 @@ namespace YtCrawler.Database
 			}
 		}
 		/// <summary>
-		/// Gets the query for the server databases.
+		/// Gets the database table for this server.
 		/// </summary>
-		public override string QueryDatabases { get { return "SELECT [name],[database_id],[create_date] FROM [master].[sys].[databases]"; } }
-
+		public override ITable TableDatabase { get { return this.tableDatabases; } }
+		/// <summary>
+		/// Gets the schema table for this server.
+		/// </summary>
+		public override ITable TableSchema { get { return this.tableSchema; } }
+		/// <summary>
+		/// Gets the type table for this server.
+		/// </summary>
+		public override ITable TableTypes { get { return this.tableTypes; } }
+		/// <summary>
+		/// Gets the tables table for this server.
+		/// </summary>
+		public override ITable TableTables { get { return this.tableTables; } }
+		/// <summary>
+		/// Gets the columns table for this server.
+		/// </summary>
+		public override ITable TableColumns { get { return this.tableColumns; } }
 
 		// Public methods.
 
@@ -142,8 +185,7 @@ namespace YtCrawler.Database
 		public override void SaveConfiguration()
 		{
 			// Save the default databas
-			if (this.database != null) this.database.Save(this.key);
-			else DbDatabaseSql.Delete(this.key);
+			if (this.database != null) DbObject.SaveToRegistry<DbObjectSqlDatabase>(this.database as DbObjectSqlDatabase, this.key.Name, "Database");
 
 			// Call the base class method.
 			base.SaveConfiguration();
@@ -155,8 +197,7 @@ namespace YtCrawler.Database
 		public override void LoadConfiguration()
 		{
 			// Load the default database.
-			try { this.database = DbDatabaseSql.Load(this.key); }
-			catch (Exception) { this.database = null; }
+			this.database = DbObject.CreateFromRegistry<DbObjectSqlDatabase>(this.key.Name, "Database");
 
 			// Call the base class method.
 			base.LoadConfiguration();
@@ -432,6 +473,82 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
+		/// Changes the current password of the database server asynchronously.
+		/// </summary>
+		/// <param name="newPassword">The new password.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public override IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null)
+		{
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
+			// Begin changing the password asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				// Execute asynchronously on the thread pool.
+				try
+				{
+					// Change the database server password.
+					this.ChangePassword(newPassword);
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, set the callback exception.
+					asyncState.Exception = new DbException(string.Format("Changing the password for the database server \'{0}\' failed.", this.Name), exception); ;
+				}
+				// Complete the asynchronous operation.
+				asyncState.Complete();
+				// Call the callback method with the given state.
+				if (callback != null) callback(asyncState);
+			});
+			return asyncState;
+		}
+
+		/// <summary>
+		/// Creates a new database command with the specified query.
+		/// </summary>
+		/// <param name="query">The database query.</param>
+		/// <returns>The database command.</returns>
+		public override DbCommand CreateCommand(DbQuery query)
+		{
+			return new DbCommandSql(this.connection, query);
+		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// A  method called when the server object is being disposed.
+		/// </summary>
+		protected sealed override void OnDispose()
+		{
+			// If the server connection is not closed.
+			if (this.connection.State != ConnectionState.Closed)
+			{
+				// Close the server connection synchronously.
+				this.Close();
+			}
+			// Call the base class method.
+			base.OnDispose();
+		}
+
+		/// <summary>
+		/// Initializes the server configuration.
+		/// </summary>
+		protected sealed override void OnInitialized()
+		{
+			// Create the connection string for this server.
+			this.connectionString.DataSource = this.DataSource;
+			this.connectionString.UserID = this.Username;
+			this.connectionString.Password = this.Password;
+
+			// Set the connection for the connection string.
+			this.connection.ConnectionString = this.connectionString.ConnectionString;
+		}
+
+		// Private methods.
+
+		/// <summary>
 		/// Changes the current password of the database server.
 		/// </summary>
 		/// <param name="newPassword">The new password.</param>
@@ -480,93 +597,6 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// Changes the current password of the database server asynchronously.
-		/// </summary>
-		/// <param name="newPassword">The new password.</param>
-		/// <param name="callback">The callback method.</param>
-		/// <param name="userState">The user state.</param>
-		/// <returns>The asynchronous result.</returns>
-		public override IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null)
-		{
-			// Create a new asynchrounous state for this operation.
-			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
-			// Begin changing the password asynchronously on the thread pool.
-			ThreadPool.QueueUserWorkItem((object state) =>
-			{
-				// Execute asynchronously on the thread pool.
-				try
-				{
-					// Change the database server password.
-					this.ChangePassword(newPassword);
-				}
-				catch (Exception exception)
-				{
-					// If an exception occurs, set the callback exception.
-					asyncState.Exception = new DbException(string.Format("Changing the password for the database server \'{0}\' failed.", this.Name), exception); ;
-				}
-				// Complete the asynchronous operation.
-				asyncState.Complete();
-				// Call the callback method with the given state.
-				if (callback != null) callback(asyncState);
-			});
-			return asyncState;
-		}
-
-		/// <summary>
-		/// Creates a new database command with the specified query.
-		/// </summary>
-		/// <param name="query">The database query.</param>
-		/// <returns>The database command.</returns>
-		public override DbCommand CreateCommand(string query)
-		{
-			return new DbCommandSql(this.connection, query);
-		}
-
-		/// <summary>
-		/// Creates a database entry from the table data found at the specified index.
-		/// </summary>
-		/// <param name="data">The table data.</param>
-		/// <param name="index">The row index.</param>
-		/// <returns>The database instance.</returns>
-		public override DbDatabase CreateDatabase(DbData data, int index)
-		{
-			return DbDatabaseSql.Read(data, index);
-		}
-
-		// Protected methods.
-
-		/// <summary>
-		/// A  method called when the server object is being disposed.
-		/// </summary>
-		protected sealed override void OnDispose()
-		{
-			// If the server connection is not closed.
-			if (this.connection.State != ConnectionState.Closed)
-			{
-				// Close the server connection synchronously.
-				this.Close();
-			}
-			// Call the base class method.
-			base.OnDispose();
-		}
-
-		// Private methods.
-
-		/// <summary>
-		/// Initializes the server configuration.
-		/// </summary>
-		protected sealed override void OnInitialized()
-		{
-			// Create the connection string for this server.
-			this.connectionString.DataSource = this.DataSource;
-			this.connectionString.UserID = this.Username;
-			this.connectionString.Password = this.Password;
-
-			// Set the connection for the connection string.
-			this.connection.ConnectionString = this.connectionString.ConnectionString;
-		}
-
-		/// <summary>
 		/// An event handler called when the state of the database connection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -579,8 +609,6 @@ namespace YtCrawler.Database
 					this.OnStateChange(ServerState.Connecting);
 					break;
 				case ConnectionState.Open:
-				case ConnectionState.Executing:
-				case ConnectionState.Fetching:
 					this.OnStateChange(ServerState.Connected);
 					break;
 				case ConnectionState.Closed:
@@ -588,6 +616,10 @@ namespace YtCrawler.Database
 					break;
 				case ConnectionState.Broken:
 					this.OnStateChange(ServerState.Failed);
+					break;
+				case ConnectionState.Executing:
+				case ConnectionState.Fetching:
+					this.OnStateChange(ServerState.Busy);
 					break;
 			}
 		}

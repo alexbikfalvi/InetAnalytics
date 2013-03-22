@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 
 namespace YtAnalytics.Controls
@@ -32,7 +33,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control that displays an exception.
 	/// </summary>
-	public partial class ControlException : UserControl
+	public partial class ControlException : ThreadSafeControl
 	{
 		private Exception exception = null;
 

@@ -33,6 +33,7 @@ using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
 using YtCrawler;
 using YtCrawler.Database;
+using YtCrawler.Database.Data;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
 using YtAnalytics.Forms;
@@ -43,11 +44,8 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlServer : UserControl
+	public partial class ControlServer : ControlDatabase
 	{
-		private delegate void TableEventHandler(DbData table);
-		private delegate void ExceptionEventHandler(Exception exception);
-
 		private static string logSource = "Database";
 
 		// UI formatter.
@@ -56,14 +54,10 @@ namespace YtAnalytics.Controls
 		private Crawler crawler;
 		private DbServer server;
 
-		private ControlMessage message = new ControlMessage();
-
-		private ShowMessageEventHandler delegateShowMessage;
-		private HideMessageEventHandler delegateHideMessage;
-
 		private FormServerProperties formProperties = new FormServerProperties();
-		private FormChangePassword formChangePassword = new FormChangePassword();
 		private FormDatabaseProperties formDatabaseProperties = new FormDatabaseProperties();
+		private FormTable formTable = new FormTable();
+		private FormRelationship formRelationship = new FormRelationship();
 
 		private TreeNode treeNode = null;
 
@@ -71,6 +65,7 @@ namespace YtAnalytics.Controls
 											Resources.ServerDown_48,
 											Resources.ServerUp_48,
 											Resources.ServerWarning_48,
+											Resources.ServerBusy_48,
 											Resources.ServerBusy_48,
 											Resources.ServerBusy_48
 										};
@@ -80,19 +75,12 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public ControlServer()
 		{
-			// Add the message control.
-			this.Controls.Add(this.message);
-
 			// Initialize component.
 			InitializeComponent();
 
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Delegates.
-			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
-			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 
 			// Set the font.
 			this.formatting.SetFont(this);
@@ -114,63 +102,78 @@ namespace YtAnalytics.Controls
 			this.treeNode = treeNode;
 
 			// Add the event handlers for the database server.
-			this.server.ServerChanged += OnServerChanged;
-			this.server.StateChanged += OnServerStateChanged;
-			this.server.DatabaseChanged += OnDatabaseChanged;
+			this.server.ServerChanged += this.OnServerChanged;
+			this.server.StateChanged += this.OnServerStateChanged;
+			this.server.DatabaseChanged += this.OnDatabaseChanged;
+			this.server.EventLogged += this.OnEventLogged;
 			this.crawler.Servers.ServerPrimaryChanged += this.OnPrimaryServerChanged;
-
-			// Add the event handler to the change password form.
-			this.formChangePassword.PasswordChanged += OnPasswordChanged;
 
 			// Initialize the contols.
 			this.OnServerChanged(this.server);
 			this.OnServerStateChanged(this.server, null);
 
-			// Add the event handler for the database server log.
-			this.server.EventLogged += OnEventLogged;
-
 			// Initialize the server database.
 			this.OnDatabaseChanged(this.server, null, this.server.Database);
+
+			// Initialize the server database tables.
+			this.OnTablesChanged();
+
+			// Initialize the server database relationships.
+			this.OnRelationshipsChanged();
+		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// A method called when connecting to the database server has failed.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		protected override void OnConnectFailed(DbServer server)
+		{
+			this.buttonDatabaseRefresh.Enabled = false;
+		}
+
+		/// <summary>
+		/// A method called when the execution of the database query succeeded and the data is object.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		/// <param name="query">The database query.</param>
+		/// <param name="result">The result data.</param>
+		/// <param name="recordsAffected">The number of records affected.</param>
+		protected override void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
+		{
+			// Add the databases to the list.
+			for (int row = 0; row < result.RowCount; row++)
+			{
+				// Get the database object.
+				DbObjectDatabase database = result[row] as DbObjectDatabase;
+				// Add a new list view item.
+				ListViewItem item = new ListViewItem(new string[] {
+					database.Name,
+					database.DatabaseId.ToString(),
+					database.CreateDate.ToString()
+				});
+				item.Tag = database;
+				item.ImageIndex = database.Equals(this.server.Database) ? 1 : 0;
+				this.listViewDatabases.Items.Add(item);
+			}
+			// Enable the refresh button.
+			this.buttonDatabaseRefresh.Enabled = true;
+		}
+
+		/// <summary>
+		/// A method called when the executiopn of the database query has failed.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		/// <param name="query">The database query.</param>
+		/// <param name="exception">The exception.</param>
+		protected override void OnQueryFailed(DbServer server, DbQuery query, Exception exception)
+		{
+			// Enable the refresh button.
+			this.buttonDatabaseRefresh.Enabled = true;
 		}
 
 		// Private methods.
-
-		/// <summary>
-		/// Shows an alerting message on top of the control.
-		/// </summary>
-		/// <param name="image">The message icon.</param>
-		/// <param name="text">The message text.</param>
-		/// <param name="progress">The visibility of the progress bar.</param>
-		private void ShowMessage(Image image, string text, bool progress = true)
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress });
-			else
-			{
-				// Show the message.
-				this.message.Show(image, text, progress);
-				// Disable the control.
-				this.toolStrip.Enabled = false;
-			}
-		}
-
-		/// <summary>
-		/// Hides the alerting message.
-		/// </summary>
-		private void HideMessage()
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateHideMessage);
-			else
-			{
-				// Hide the message.
-				this.message.Hide();
-				// Enable the control.
-				this.toolStrip.Enabled = true;
-			}
-		}
 
 		/// <summary>
 		/// An event handler called when a server configuration has changed.
@@ -213,12 +216,12 @@ namespace YtAnalytics.Controls
 		/// <param name="server">The server.</param>
 		/// <param name="oldDatabase">The old database.</param>
 		/// <param name="newDatabase">The new database.</param>
-		void OnDatabaseChanged(DbServer server, DbDatabase oldDatabase, DbDatabase newDatabase)
+		private void OnDatabaseChanged(DbServer server, DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
 		{
 			// Update the current database.
 			if (newDatabase != null)
 			{
-				this.textBoxDatabase.Text = string.Format("{0} (ID {1} created on {2})", this.server.Database.Name, this.server.Database.Id, this.server.Database.DateCreate);
+				this.textBoxDatabase.Text = string.Format("{0} (ID {1} created on {2})", this.server.Database.Name, this.server.Database.DatabaseId, this.server.Database.CreateDate);
 				this.buttonDatabaseProperties.Enabled = this.server.Database != null;
 			}
 			else
@@ -231,15 +234,53 @@ namespace YtAnalytics.Controls
 			foreach (ListViewItem item in this.listViewDatabases.Items)
 			{
 				// Get the item database.
-				DbDatabase db = item.Tag as DbDatabase;
-				item.ImageIndex = db.Equals(this.server.Database) ? 1 : 0;
+				DbObjectDatabase db = item.Tag as DbObjectDatabase;
+				item.ImageIndex = db.Equals(this.server.Database) ? 
+					this.imageListSmall.Images.IndexOfKey("DatabaseStar"): 
+					this.imageListSmall.Images.IndexOfKey("Database");
 			}
 			// Update the select button.
 			if (this.listViewDatabases.SelectedItems.Count != 0)
 			{
 				// Get the item databse.
-				DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+				DbObjectDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbObjectDatabase;
 				this.buttonDatabaseSelect.Enabled = !db.Equals(this.server.Database);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the server tables configuration has changed.
+		/// </summary>
+		private void OnTablesChanged()
+		{
+			// Refresh the list of tables.
+			this.listViewTables.Items.Clear();
+			foreach(KeyValuePair<string, ITable> table in this.server.Tables)
+			{
+				ListViewItem item = new ListViewItem(new string[] { table.Value.LocalName, table.Value.FieldCount.ToString() + " field(s)" },
+					table.Value.IsConfigured ?
+					this.imageListLarge.Images.IndexOfKey("TableSuccess") :
+					this.imageListLarge.Images.IndexOfKey("TableWarning"));
+				item.Tag = table.Value;
+				this.listViewTables.Items.Add(item);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the server relationship configuration has changed.
+		/// </summary>
+		private void OnRelationshipsChanged()
+		{
+			// Refresh the list of relationships.
+			this.listViewRelationships.Items.Clear();
+			foreach (DbRelationship relationship in this.server.Relationships)
+			{
+				ListViewItem item = new ListViewItem(new string[] {
+					relationship.TableLeft.LocalName, relationship.FieldLeft,
+					relationship.TableRight.LocalName, relationship.FieldRight },
+					this.imageListSmall.Images.IndexOfKey("Relationship"));
+				item.Tag = relationship;
+				this.listViewRelationships.Items.Add(item);
 			}
 		}
 
@@ -297,118 +338,7 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnConnect(object sender, EventArgs e)
 		{
-			// Show a connecting message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Connecting to the database server \'{0}\'...", this.server.Name)); 
-			try
-			{
-				// Connect asynchronously to the database server.
-				this.server.Open(this.OnConnected);
-			}
-			catch (Exception exception)
-			{
-				// If an exception occurs, hide the connecting message.
-				this.HideMessage();
-				// Display an error message box to the user.
-				MessageBox.Show(
-					this,
-					string.Format("Connecting to the database server \'{0}\' failed. {1}", this.server.Name, exception.Message),
-					"Connecting to Database Failed",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error
-					);
-			}
-		}
-
-		/// <summary>
-		/// A callback method called when a connection to a server has completed.
-		/// </summary>
-		/// <param name="asyncState">The asynchronous state.</param>
-		private void OnConnected(DbServerAsyncState asyncState)
-		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnConnected), new object[] { asyncState });
-			else
-			{
-				// Hide the connecting message.
-				this.HideMessage();
-				// Check if an exception occurred.
-				if (asyncState.Exception != null)
-				{
-					// If this a database exception.
-					if (asyncState.Exception.IsDb)
-					{
-						// Check the error type.
-						switch (asyncState.Exception.DbType)
-						{
-							case DbException.Type.LoginPasswordExpired:
-								if (DialogResult.Yes == MessageBox.Show(
-									this,
-									string.Format("The login password for the database server \'{0}\' has expired. Do you wish to change the password now?", asyncState.Server.Name),
-									"Login Password Expired",
-									MessageBoxButtons.YesNo,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button2
-									))
-								{
-									// Change password.
-									this.OnChangePassword(null, null);
-								}
-								break;
-							case DbException.Type.LoginPasswordMustChange:
-								if (DialogResult.Yes == MessageBox.Show(
-									this,
-									string.Format("To connect to the database server \'{0}\' you must change the password before the first login. Do you wish to change the password now?", asyncState.Server.Name),
-									"Must Change Password",
-									MessageBoxButtons.YesNo,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button2
-									))
-								{
-									// Change password.
-									this.OnChangePassword(null, null);
-								}
-								break;
-							default:
-								// Display an error message.
-								MessageBox.Show(
-									this,
-									string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
-									"Connecting to Database Failed",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Error
-									);
-								break;
-						}
-					}
-					else
-					{
-						// Display an error message.
-						MessageBox.Show(
-							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
-					}
-				}
-				// Else, process the user state.
-				else
-				{
-					// If there exists a user asynchronous state.
-					if (asyncState.AsyncState != null)
-					{
-						// If the user state is an event handler, call that event handler.
-						if (asyncState.AsyncState.GetType() == typeof(EventHandler))
-						{
-							// Get the event handler.
-							EventHandler handler = asyncState.AsyncState as EventHandler;
-							// Call the event handler.
-							handler(this, null);
-						}
-					}
-				}
-			}
+			this.DatabaseConnect(this.server);
 		}
 
 		/// <summary>
@@ -418,164 +348,7 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnDisconnect(object sender, EventArgs e)
 		{
-			// Show a connecting message.
-			this.ShowMessage(Resources.Disconnect_48, string.Format("Disconnecting from the database server \'{0}\'...", this.server.Name));
-			try
-			{
-				// Connect asynchronously to the database server.
-				this.server.Close(this.OnDisconnected);
-			}
-			catch (Exception exception)
-			{
-				// If an exception occurs, hide the connecting message.
-				this.HideMessage();
-				// Display an error message box to the user.
-				MessageBox.Show(
-					this,
-					string.Format("Disconnecting from the database server \'{0}\' failed. {1}", this.server.Name, exception.Message),
-					"Disconnecting from Database Failed",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error
-					);
-			}
-		}
-
-		/// <summary>
-		/// A callback method called when a disconnection to a server has completed.
-		/// </summary>
-		/// <param name="asyncState">The asynchronous state.</param>
-		private void OnDisconnected(DbServerAsyncState asyncState)
-		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnDisconnected), new object[] { asyncState });
-			else
-			{
-				// Hide the connecting message.
-				this.HideMessage();
-				// Check if an exception occurred.
-				if (asyncState.Exception != null)
-				{
-					// If this a database exception.
-					if (asyncState.Exception.IsDb)
-					{
-						// Display a database error message.
-						MessageBox.Show(
-							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
-					}
-					else
-					{
-						// Display a generic error message.
-						MessageBox.Show(
-							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
-					}
-				}
-				// Else, do nothing.
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the user changes the password.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnChangePassword(object sender, EventArgs e)
-		{
-			// Change the password for the selected server.
-			this.formChangePassword.ShowDialog(this, this.server.Password, this.server);
-		}
-
-		/// <summary>
-		/// An event handler called when the user changes the password for a database server.
-		/// </summary>
-		/// <param name="oldPassword">The old password.</param>
-		/// <param name="newPassword">The new password.</param>
-		/// <param name="state">The user state.</param>
-		private void OnPasswordChanged(string oldPassword, string newPassword, object state)
-		{
-			// Get the server.
-			DbServer server = state as DbServer;
-			// Show a password changing message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Changing the password for the database server \'{0}\'...", server.Name));
-			try
-			{
-				// Change the password asynchronously of the database server.
-				server.ChangePassword(newPassword, this.OnPasswordChangeCompleted);
-			}
-			catch (Exception exception)
-			{
-				// If an exception occurs, hide the connecting message.
-				this.HideMessage();
-				// Display an error message box to the user.
-				MessageBox.Show(
-					this,
-					string.Format("Connecting to the database server \'{0}\' failed. {1}", server.Name, exception.Message),
-					"Connecting to Database Failed",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error
-					);
-			}			
-		}
-
-		/// <summary>
-		/// A callback method called when changing the password of a server completed.
-		/// </summary>
-		/// <param name="asyncState"></param>
-		private void OnPasswordChangeCompleted(DbServerAsyncState asyncState)
-		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnPasswordChangeCompleted), new object[] { asyncState });
-			else
-			{
-				// Hide the connecting message.
-				this.HideMessage();
-				// Check if an exception occurred.
-				if (asyncState.Exception != null)
-				{
-					// If this a database exception.
-					if (asyncState.Exception.IsDb)
-					{
-						// Display a database error message.
-						MessageBox.Show(
-							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
-					}
-					else
-					{
-						// Display a generic error message.
-						MessageBox.Show(
-							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
-					}
-				}
-				// Else, show a notification message.
-				else
-				{
-					MessageBox.Show(
-						this,
-						"The database server password has been changed successfully.",
-						"Server Password Changed",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Information);
-				}
-			}
+			this.DatabaseDisconnect(this.server);
 		}
 
 		/// <summary>
@@ -586,7 +359,7 @@ namespace YtAnalytics.Controls
 		private void OnProperties(object sender, EventArgs e)
 		{
 			// Show the properties dialog.
-			this.formProperties.ShowDialog(this, this.server, this.crawler.Servers.IsPrimary(server));
+			this.formProperties.ShowDialog(this, this.server, this.crawler.Servers.IsPrimary(this.server));
 		}
 
 		/// <summary>
@@ -622,183 +395,21 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnRefreshDatabases(object sender, EventArgs e)
 		{
-			// Call this handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(new EventHandler(this.OnRefreshDatabases), new object[] { sender, e });
-				return;
-			}
-
-			// If the database server is not connected, first connect to the database.
-			if (this.server.State != DbServer.ServerState.Connected)
-			{
-				// Show a connecting message.
-				this.ShowMessage(Resources.Connect_48, string.Format("Connecting to the database server \'{0}\'...", this.server.Name));
-				try
-				{
-					// Connect asynchronously to the database server, and add this method as a handler.
-					this.server.Open(this.OnConnected, new EventHandler(this.OnRefreshDatabases));
-				}
-				catch (Exception exception)
-				{
-					// If an exception occurs, hide the connecting message.
-					this.HideMessage();
-					// Display an error message box to the user.
-					MessageBox.Show(
-						this,
-						string.Format("Connecting to the database server \'{0}\' failed. {1}", this.server.Name, exception.Message),
-						"Connecting to Database Failed",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error
-						);
-				} 
-				return;
-			}
-
 			// Refresh the list of databases.
 
-			// Create a new database command for the list of server databases.
-			try
-			{
-				// Clear the databases list.
-				this.listViewDatabases.Items.Clear();
-				// Disable the refresh button.
-				this.buttonDatabaseRefresh.Enabled = false;
-				// Show a connecting message.
-				this.ShowMessage(Resources.DatabaseBusy_48, string.Format("Refreshing the list of databases for the database server \'{0}\'...", this.server.Name));
-				using (DbCommand command = this.server.CreateCommand(this.server.QueryDatabases))
-				{
-					// Execute the command.
-					command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
-					{
-						try
-						{
-							// Throw the command exception, if any.
-							if (commandResult.Exception != null) throw commandResult.Exception;
-							// Read the results table.
-							reader.Read(null, (DbAsyncResult readerResult, DbData result) =>
-							{
-								try
-								{
-									// Throw the reader exception, if any.
-									if (readerResult.Exception != null)
-									{
-										reader.Close();
-										throw readerResult.Exception;
-									}
-									reader.Close();
-									// Show a success message.
-									this.ShowMessage(Resources.DatabaseSuccess_48, string.Format("Refreshing the list of databases for the database server \'{0}\' completed successfully.", this.server.Name), false);
-									// Wait.
-									Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
-									// Hide the message.
-									this.HideMessage();
-									// Call the completion method.
-									this.OnRefreshDatabasesSuccess(result);
-								}
-								catch (Exception exception)
-								{
-									// Show an error message.
-									this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name), false);
-									// Log the event.
-									this.server.LogEvent(
-										LogEventLevel.Important,
-										LogEventType.Error,
-										"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
-										new object[] { this.server.Name, exception.Message },
-										exception);
-									// Wait.
-									Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
-									// Hide the message.
-									this.HideMessage();
-									// Call the completion method.
-									this.OnRefreshDatabasesFail(exception);
-								}
-							});
-						}
-						catch (Exception exception)
-						{
-							// Show an error message.
-							this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name), false);
-							// Log the event.
-							this.server.LogEvent(
-								LogEventLevel.Important,
-								LogEventType.Error,
-								"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
-								new object[] { this.server.Name, exception.Message },
-								exception);
-							// Wait.
-							Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
-							// Hide the message.
-							this.HideMessage();
-							// Call the completion method.
-							this.OnRefreshDatabasesFail(exception);
-						}
-					});
-				}
-			}
-			catch (Exception exception)
-			{
-				// Show an error message.
-				this.ShowMessage(Resources.DatabaseError_48, string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name), false);
-				// Log the event.
-				this.server.LogEvent(
-					LogEventLevel.Important,
-					LogEventType.Error,
-					"Refreshing the list of databases for the database server \'{0}\' failed. {1}",
-					new object[] { this.server.Name, exception.Message },
-					exception);
-				// Wait.
-				Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
-				// Hide the message.
-				this.HideMessage();
-				// Call the completion method.
-				this.OnRefreshDatabasesFail(exception);
-			}
-		}
+			// Clear the databases list.
+			this.listViewDatabases.Items.Clear();
+			// Disable the refresh button.
+			this.buttonDatabaseRefresh.Enabled = false;
+			// Create a select all query for fields in the database table.
+			DbQuery query = DbQuery.CreateSelectAll(this.server.TableDatabase, null);
+			
+			query.MessageStart = string.Format("Refreshing the list of databases for the database server \'{0}\'...", this.server.Name);
+			query.MessageFinishSuccess = string.Format("Refreshing the list of databases for the database server \'{0}\' completed successfully.", this.server.Name);
+			query.MessageFinishFail = string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name);
 
-		/// <summary>
-		/// An event handler called when the refresh of server databases completed successfully.
-		/// </summary>
-		/// <param name="table">The databases table.</param>
-		private void OnRefreshDatabasesSuccess(DbData table)
-		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new TableEventHandler(this.OnRefreshDatabasesSuccess), new object[] { table });
-			else
-			{
-				// Add the databases to the list.
-				for (int row = 0; row < table.RowCount; row++)
-				{
-					// Create the database for this server.
-					DbDatabase db = this.server.CreateDatabase(table, row);
-
-					// Add a new list view item.
-					ListViewItem item = new ListViewItem(new string[] {
-						db.Name,
-						db.Id.ToString(),
-						db.DateCreate.ToString()
-					});
-					item.Tag = db;
-					item.ImageIndex = db.Equals(this.server.Database) ? 1 : 0;
-					this.listViewDatabases.Items.Add(item);
-				}
-				this.buttonDatabaseRefresh.Enabled = true;
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the refresh of server databases failed.
-		/// </summary>
-		/// <param name="exception">The exception.</param>
-		private void OnRefreshDatabasesFail(Exception exception)
-		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ExceptionEventHandler(this.OnRefreshDatabasesFail), new object[] { exception });
-			else
-			{
-				this.buttonDatabaseRefresh.Enabled = true;
-			}
+			// Execute the query.
+			this.DatabaseQuery(this.server, query);
 		}
 
 		/// <summary>
@@ -815,7 +426,7 @@ namespace YtAnalytics.Controls
 			else
 			{
 				// Get the item database.
-				DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+				DbObjectDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbObjectDatabase;
 				// Set the enabled state of the selection button.
 				this.buttonDatabaseSelect.Enabled = !db.Equals(this.server.Database);
 			}
@@ -832,10 +443,22 @@ namespace YtAnalytics.Controls
 			if (this.listViewDatabases.SelectedItems.Count == 0) return;
 
 			// Get the item database.
-			DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+			DbObjectDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbObjectDatabase;
 
-			// Set the database as the current database.
-			this.server.Database = db;
+			try
+			{
+				// Set the database as the current database.
+				this.server.Database = db;
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(
+					this,
+					string.Format("Cannot set the database \'{0}\' as primary. {1}", db.Name, exception.Message),
+					"Select Primary Database Failed",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+			}
 		}
 
 		/// <summary>
@@ -848,9 +471,70 @@ namespace YtAnalytics.Controls
 			// If there are no database items selected, do nothing.
 			if (this.listViewDatabases.SelectedItems.Count == 0) return;
 			// Else, get the database item.
-			DbDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbDatabase;
+			DbObjectDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbObjectDatabase;
 			// Show the database properties.
 			this.formDatabaseProperties.ShowDialog(this, db, db.Equals(this.server.Database));
+		}
+
+		/// <summary>
+		/// An event handler called when the table selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonTableProperties.Enabled = this.listViewTables.SelectedItems.Count != 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a database table.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableProperties(object sender, EventArgs e)
+		{
+			// If there are no selected tables, do nothing.
+			if (this.listViewTables.SelectedItems.Count == 0) return;
+			// Else, get selected table.
+			ITable table = this.listViewTables.SelectedItems[0].Tag as ITable;
+			// Open the table properties dialog.
+			this.formTable.ShowDialog(this, this.server, table);
+		}
+
+
+		/// <summary>
+		/// An event handler called when the relationship selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonRelationshipProperties.Enabled = this.listViewRelationships.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the user activates the properties of a database relationship.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipProperties(object sender, EventArgs e)
+		{
+			// If there are no selected items, do nothing.
+			if (this.listViewRelationships.SelectedItems.Count == 0) return;
+			// Else, get the selected relationship.
+			IRelationship relationship = this.listViewRelationships.SelectedItems[0].Tag as IRelationship;
+			// Open the relationships dialog for the selected relationship.
+			this.formRelationship.ShowDialog(this, this.server, relationship);
+		}
+
+		/// <summary>
+		/// An event handler called when the user changes the password for the current database server.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnChangePassword(object sender, EventArgs e)
+		{
+			this.DatabaseChangePassword(this.server);
 		}
 	}
 }

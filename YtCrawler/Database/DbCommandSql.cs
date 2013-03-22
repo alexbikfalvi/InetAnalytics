@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 
@@ -34,11 +35,31 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="connection">The database server connection.</param>
 		/// <param name="query">The command query.</param>
-		public DbCommandSql(SqlConnection connection, string query)
+		public DbCommandSql(SqlConnection connection, DbQuery query)
 			: base(query)
 		{
-			// Create the SQL command.
-			this.command = new SqlCommand(query, connection);
+			// If the command has parameters.
+			if (query.Parameters.Count > 0)
+			{
+				// Process the query parameters, by creating the list of parameter names.
+				string[] parameterNames = new string[query.Parameters.Count];
+				for (int index = 0; index < query.Parameters.Count; index++)
+				{
+					parameterNames[index] = string.Format("@param{0}", index);
+				}
+				// Replace the parameter names in the query and create the SQL command.
+				this.command = new SqlCommand(string.Format(query.Query, parameterNames), connection);
+				// Add the parameters to the command.
+				for (int index = 0; index < query.Parameters.Count; index++)
+				{
+					this.command.Parameters.AddWithValue(parameterNames[index], query.Parameters[index]);
+				}
+			}
+			else
+			{
+				// Create the SQL command.
+				this.command = new SqlCommand(query.Query, connection);
+			}
 		}
 
 		/// <summary>
@@ -133,6 +154,17 @@ namespace YtCrawler.Database
 				{
 					this.command.Cancel();
 				});
+		}
+
+		/// <summary>
+		/// Adds a parameter to the database command.
+		/// </summary>
+		/// <param name="name">The parameter name.</param>
+		/// <param name="value">The parameter value.</param>
+		public override void AddParameter(string name, object value)
+		{
+			// Add the parameter to the command.
+			this.command.Parameters.AddWithValue(name, value);
 		}
 
 		/// <summary>

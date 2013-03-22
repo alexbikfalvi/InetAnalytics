@@ -54,17 +54,18 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="comment">The comment.</param>
-		public void ShowDialog(IWin32Window owner, Playlist playlist)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, Playlist playlist)
 		{
 			// If the playlist is null, do nothing.
-			if (null == playlist) return;
+			if (null == playlist) return DialogResult.Abort;
 
 			// Set the playlist.
 			this.controlPlaylist.Playlist = playlist;
 			// Set the title.
 			this.Text = string.Format("Playlist {0} Properties", playlist.Id);
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 	}
 }

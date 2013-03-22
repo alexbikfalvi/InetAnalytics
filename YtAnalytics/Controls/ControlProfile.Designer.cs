@@ -787,6 +787,7 @@
 			this.labelProfile.Size = new System.Drawing.Size(36, 13);
 			this.labelProfile.TabIndex = 1;
 			this.labelProfile.Text = "Profile";
+			this.labelProfile.UseMnemonic = false;
 			// 
 			// ControlProfile
 			// 

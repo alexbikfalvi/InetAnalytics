@@ -24,27 +24,9 @@ using System.Threading.Tasks;
 
 namespace YtApi.Api.V2
 {
-	public enum YouTubeStandardFeed
-	{
-		TopRated = 0,
-		TopFavories = 1,
-		MostShared = 2,
-		MostPopular = 3,
-		MostRecent = 4,
-		MostDiscussed = 5,
-		MostResponsed = 6,
-		RecentlyFeatured = 7,
-		TrendingVideos = 8
-	}
-
-	public enum YouTubeTimeId
-	{
-		AllTime = 0,
-		Today = 1,
-		ThisWeek = 2,
-		ThisMonth = 3
-	}
-
+	/// <summary>
+	/// A class that generates YouTube URIs.
+	/// </summary>
 	public class YouTubeUri
 	{
 		private static string[] standardFeedIds = {

@@ -23,6 +23,7 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using Microsoft.Win32;
+using YtCrawler.Database.Data;
 using YtCrawler.Log;
 
 namespace YtCrawler.Database
@@ -31,7 +32,7 @@ namespace YtCrawler.Database
 	public delegate void DbServerIdEventHandler(string id);
 	public delegate void DbServerStateEventHandler(DbServer server, DbServerStateEventArgs e);
 	public delegate void DbServerPrimaryChangedEventHandler(DbServer oldPrimary, DbServer newPrimary);
-	public delegate void DbServerDatabaseChangedEventHandler(DbServer server, DbDatabase oldDatabase, DbDatabase newDatabase);
+	public delegate void DbServerDatabaseChangedEventHandler(DbServer server, DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase);
 
 	/// <summary>
 	/// A class representing the list of database servers.
@@ -74,10 +75,12 @@ namespace YtCrawler.Database
 				// Try to create the database server.
 				try
 				{
-					// Compute the server configuration registry key.
-					string key = string.Format("{0}\\{1}", this.config.DatabaseConfig.Key.Name, id);
+					// Open the server configuration registry key.
+					RegistryKey key = this.config.DatabaseConfig.Key.OpenSubKey(id, true);
+					// If the registry key could not be opened, continue to the next server.
+					if (null == key) continue;
 					// Get the database server type.
-					DbServerType type = (DbServerType)(Registry.GetValue(key, "Type", 0));
+					DbServerType type = (DbServerType)(Registry.GetValue(key.Name, "Type", 0));
 					// Create a server instance for the specified configuration.
 					DbServer server;
 					switch (type)
@@ -196,6 +199,7 @@ namespace YtCrawler.Database
 			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(oldPrimary, this.primary);
 		}
 
+		/// <summary>
 		/// Returns the enumerator for the current list of database servers.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
@@ -248,15 +252,12 @@ namespace YtCrawler.Database
 				switch (type)
 				{
 					case DbServerType.MsSql:
-						server = new DbServerSql(key.Name, id, name, dataSource, username, password, logFile, DateTime.Now, DateTime.Now);
+						server = new DbServerSql(key, id, name, dataSource, username, password, logFile, DateTime.Now, DateTime.Now);
 						break;
 					default: throw new CrawlerException(string.Format("Cannot add a new database server. Unknown database server type \'{0}\'.", type));
 				}
 				// Add the server to the servers list.
 				this.Add(server);
-
-				// Close the registry key.
-				key.Close();
 			}
 			catch (Exception)
 			{

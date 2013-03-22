@@ -24,6 +24,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtApi.Api.V2.Data;
 
 namespace YtAnalytics.Controls
@@ -31,7 +32,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control that displays a video comment.
 	/// </summary>
-	public partial class ControlVideoComment : UserControl
+	public partial class ControlVideoComment : ThreadSafeControl
 	{
 		private Comment comment;
 

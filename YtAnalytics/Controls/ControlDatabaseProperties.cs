@@ -25,16 +25,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtCrawler.Database;
+using YtCrawler.Database.Data;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
-	/// Displays the information of a log event.
+	/// Displays the information of a database.
 	/// </summary>
-	public partial class ControlDatabaseProperties : UserControl
+	public partial class ControlDatabaseProperties : ThreadSafeControl
 	{
-		private DbDatabase database;
+		private DbObjectDatabase database;
 
 		/// <summary>
 		/// Creates a new log event control instance.
@@ -49,7 +51,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// Gets or sets the current database.
 		/// </summary>
-		public DbDatabase Database
+		public DbObjectDatabase Database
 		{
 			get { return this.database; }
 			set
@@ -64,10 +66,11 @@ namespace YtAnalytics.Controls
 				{
 					this.labelTitle.Text = value.Name;
 					this.textBoxName.Text = value.Name;
-					this.textBoxId.Text = value.Id.ToString();
-					this.textBoxDateCreated.Text = value.DateCreate.ToString();
+					this.textBoxId.Text = value.DatabaseId.ToString();
+					this.textBoxDateCreated.Text = value.CreateDate.ToString();
 					this.checkBoxSelected.Enabled = false;
 					this.pictureBox.Image = Resources.Database_32;
+					this.propertyGrid.SelectedObject = value;
 					this.tabControl.Visible = true;
 				}
 				this.tabControl.SelectedTab = this.tabPageGeneral;

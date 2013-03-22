@@ -25,13 +25,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
 	/// A control that displays a calendar along with a tree view.
 	/// </summary>
-	public partial class ControlSideLog : ControlSide
+	public partial class ControlSideLog : ThreadSafeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

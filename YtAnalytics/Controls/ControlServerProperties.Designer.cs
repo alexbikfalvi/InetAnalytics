@@ -31,24 +31,24 @@
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
-			this.checkBoxPrimary = new System.Windows.Forms.CheckBox();
-			this.labelPassword = new System.Windows.Forms.Label();
-			this.labelUsername = new System.Windows.Forms.Label();
-			this.labelDataSource = new System.Windows.Forms.Label();
+			this.textBoxDateModified = new System.Windows.Forms.TextBox();
+			this.textBoxDateCreated = new System.Windows.Forms.TextBox();
 			this.textBoxPassword = new System.Windows.Forms.TextBox();
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
 			this.textBoxDataSource = new System.Windows.Forms.TextBox();
 			this.textBoxType = new System.Windows.Forms.TextBox();
 			this.textBoxId = new System.Windows.Forms.TextBox();
 			this.textBoxName = new System.Windows.Forms.TextBox();
+			this.labelDateModified = new System.Windows.Forms.Label();
+			this.labelDateCreated = new System.Windows.Forms.Label();
+			this.checkBoxPrimary = new System.Windows.Forms.CheckBox();
+			this.labelPassword = new System.Windows.Forms.Label();
+			this.labelUsername = new System.Windows.Forms.Label();
+			this.labelDataSource = new System.Windows.Forms.Label();
 			this.labelType = new System.Windows.Forms.Label();
 			this.labelId = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.textBoxDateCreated = new System.Windows.Forms.TextBox();
-			this.textBoxDateModified = new System.Windows.Forms.TextBox();
-			this.labelDateCreated = new System.Windows.Forms.Label();
-			this.labelDateModified = new System.Windows.Forms.Label();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -62,6 +62,7 @@
 			this.labelTitle.Size = new System.Drawing.Size(67, 13);
 			this.labelTitle.TabIndex = 0;
 			this.labelTitle.Text = "Server name";
+			this.labelTitle.UseMnemonic = false;
 			// 
 			// tabControl
 			// 
@@ -103,43 +104,25 @@
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
 			// 
-			// checkBoxPrimary
+			// textBoxDateModified
 			// 
-			this.checkBoxPrimary.AutoSize = true;
-			this.checkBoxPrimary.Enabled = false;
-			this.checkBoxPrimary.Location = new System.Drawing.Point(102, 220);
-			this.checkBoxPrimary.Name = "checkBoxPrimary";
-			this.checkBoxPrimary.Size = new System.Drawing.Size(92, 17);
-			this.checkBoxPrimary.TabIndex = 16;
-			this.checkBoxPrimary.Text = "P&rimary server";
-			this.checkBoxPrimary.UseVisualStyleBackColor = true;
+			this.textBoxDateModified.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxDateModified.Location = new System.Drawing.Point(102, 194);
+			this.textBoxDateModified.Name = "textBoxDateModified";
+			this.textBoxDateModified.ReadOnly = true;
+			this.textBoxDateModified.Size = new System.Drawing.Size(256, 20);
+			this.textBoxDateModified.TabIndex = 15;
 			// 
-			// labelPassword
+			// textBoxDateCreated
 			// 
-			this.labelPassword.AutoSize = true;
-			this.labelPassword.Location = new System.Drawing.Point(10, 145);
-			this.labelPassword.Name = "labelPassword";
-			this.labelPassword.Size = new System.Drawing.Size(56, 13);
-			this.labelPassword.TabIndex = 10;
-			this.labelPassword.Text = "&Password:";
-			// 
-			// labelUsername
-			// 
-			this.labelUsername.AutoSize = true;
-			this.labelUsername.Location = new System.Drawing.Point(10, 119);
-			this.labelUsername.Name = "labelUsername";
-			this.labelUsername.Size = new System.Drawing.Size(58, 13);
-			this.labelUsername.TabIndex = 8;
-			this.labelUsername.Text = "&Username:";
-			// 
-			// labelDataSource
-			// 
-			this.labelDataSource.AutoSize = true;
-			this.labelDataSource.Location = new System.Drawing.Point(10, 93);
-			this.labelDataSource.Name = "labelDataSource";
-			this.labelDataSource.Size = new System.Drawing.Size(41, 13);
-			this.labelDataSource.TabIndex = 6;
-			this.labelDataSource.Text = "&Server:";
+			this.textBoxDateCreated.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxDateCreated.Location = new System.Drawing.Point(102, 168);
+			this.textBoxDateCreated.Name = "textBoxDateCreated";
+			this.textBoxDateCreated.ReadOnly = true;
+			this.textBoxDateCreated.Size = new System.Drawing.Size(256, 20);
+			this.textBoxDateCreated.TabIndex = 13;
 			// 
 			// textBoxPassword
 			// 
@@ -202,6 +185,62 @@
 			this.textBoxName.TabIndex = 1;
 			this.textBoxName.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
+			// labelDateModified
+			// 
+			this.labelDateModified.AutoSize = true;
+			this.labelDateModified.Location = new System.Drawing.Point(10, 197);
+			this.labelDateModified.Name = "labelDateModified";
+			this.labelDateModified.Size = new System.Drawing.Size(75, 13);
+			this.labelDateModified.TabIndex = 14;
+			this.labelDateModified.Text = "Date &modified:";
+			// 
+			// labelDateCreated
+			// 
+			this.labelDateCreated.AutoSize = true;
+			this.labelDateCreated.Location = new System.Drawing.Point(10, 171);
+			this.labelDateCreated.Name = "labelDateCreated";
+			this.labelDateCreated.Size = new System.Drawing.Size(72, 13);
+			this.labelDateCreated.TabIndex = 12;
+			this.labelDateCreated.Text = "Date &created:";
+			// 
+			// checkBoxPrimary
+			// 
+			this.checkBoxPrimary.AutoSize = true;
+			this.checkBoxPrimary.Enabled = false;
+			this.checkBoxPrimary.Location = new System.Drawing.Point(102, 220);
+			this.checkBoxPrimary.Name = "checkBoxPrimary";
+			this.checkBoxPrimary.Size = new System.Drawing.Size(92, 17);
+			this.checkBoxPrimary.TabIndex = 16;
+			this.checkBoxPrimary.Text = "P&rimary server";
+			this.checkBoxPrimary.UseVisualStyleBackColor = true;
+			// 
+			// labelPassword
+			// 
+			this.labelPassword.AutoSize = true;
+			this.labelPassword.Location = new System.Drawing.Point(10, 145);
+			this.labelPassword.Name = "labelPassword";
+			this.labelPassword.Size = new System.Drawing.Size(56, 13);
+			this.labelPassword.TabIndex = 10;
+			this.labelPassword.Text = "&Password:";
+			// 
+			// labelUsername
+			// 
+			this.labelUsername.AutoSize = true;
+			this.labelUsername.Location = new System.Drawing.Point(10, 119);
+			this.labelUsername.Name = "labelUsername";
+			this.labelUsername.Size = new System.Drawing.Size(58, 13);
+			this.labelUsername.TabIndex = 8;
+			this.labelUsername.Text = "&Username:";
+			// 
+			// labelDataSource
+			// 
+			this.labelDataSource.AutoSize = true;
+			this.labelDataSource.Location = new System.Drawing.Point(10, 93);
+			this.labelDataSource.Name = "labelDataSource";
+			this.labelDataSource.Size = new System.Drawing.Size(41, 13);
+			this.labelDataSource.TabIndex = 6;
+			this.labelDataSource.Text = "&Server:";
+			// 
 			// labelType
 			// 
 			this.labelType.AutoSize = true;
@@ -237,44 +276,6 @@
 			this.pictureBox.Size = new System.Drawing.Size(32, 32);
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
-			// 
-			// textBoxDateCreated
-			// 
-			this.textBoxDateCreated.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxDateCreated.Location = new System.Drawing.Point(102, 168);
-			this.textBoxDateCreated.Name = "textBoxDateCreated";
-			this.textBoxDateCreated.ReadOnly = true;
-			this.textBoxDateCreated.Size = new System.Drawing.Size(256, 20);
-			this.textBoxDateCreated.TabIndex = 13;
-			// 
-			// textBoxDateModified
-			// 
-			this.textBoxDateModified.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxDateModified.Location = new System.Drawing.Point(102, 194);
-			this.textBoxDateModified.Name = "textBoxDateModified";
-			this.textBoxDateModified.ReadOnly = true;
-			this.textBoxDateModified.Size = new System.Drawing.Size(256, 20);
-			this.textBoxDateModified.TabIndex = 15;
-			// 
-			// labelDateCreated
-			// 
-			this.labelDateCreated.AutoSize = true;
-			this.labelDateCreated.Location = new System.Drawing.Point(10, 171);
-			this.labelDateCreated.Name = "labelDateCreated";
-			this.labelDateCreated.Size = new System.Drawing.Size(72, 13);
-			this.labelDateCreated.TabIndex = 12;
-			this.labelDateCreated.Text = "Date &created:";
-			// 
-			// labelDateModified
-			// 
-			this.labelDateModified.AutoSize = true;
-			this.labelDateModified.Location = new System.Drawing.Point(10, 197);
-			this.labelDateModified.Name = "labelDateModified";
-			this.labelDateModified.Size = new System.Drawing.Size(75, 13);
-			this.labelDateModified.TabIndex = 14;
-			this.labelDateModified.Text = "Date &modified:";
 			// 
 			// ControlServerProperties
 			// 

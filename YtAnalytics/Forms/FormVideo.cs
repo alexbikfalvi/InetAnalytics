@@ -60,17 +60,18 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="video">The video.</param>
-		public void ShowDialog(IWin32Window owner, Video video)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, Video video)
 		{
 			// If the event is null, do nothing.
-			if (null == video) return;
+			if (null == video) return DialogResult.Abort;
 
 			// Set the event.
 			this.video.Video = video;
 			// Set the title.
 			this.Text = video.Title;
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 
 		/// <summary>

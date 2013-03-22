@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\ControlServerProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -156,12 +159,6 @@
     </Compile>
     <Compile Include="Controls\ControlYtApi2Info.Designer.cs">
       <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ControlYtApi2Categories.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ControlYtApi2Categories.Designer.cs">
-      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlYtApi2StandardFeed.cs">
       <SubType>UserControl</SubType>
@@ -306,6 +303,78 @@
     </Compile>
     <Compile Include="Controls\ControlServerQuery.Designer.cs">
       <DependentUpon>ControlServerQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2Categories.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlYtApi2Categories.Designer.cs">
+      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlCategory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlCategory.Designer.cs">
+      <DependentUpon>ControlCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlTable.Designer.cs">
+      <DependentUpon>ControlTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlDatabaseSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlDatabaseSelect.Designer.cs">
+      <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlObject.Designer.cs">
+      <DependentUpon>ControlObject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlRelationship.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlRelationship.Designer.cs">
+      <DependentUpon>ControlRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlField.Designer.cs">
+      <DependentUpon>ControlField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormField.Designer.cs">
+      <DependentUpon>FormField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRelationship.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRelationship.Designer.cs">
+      <DependentUpon>FormRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormObject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormObject.Designer.cs">
+      <DependentUpon>FormObject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDatabaseSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDatabaseSelect.Designer.cs">
+      <DependentUpon>FormDatabaseSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormTable.Designer.cs">
+      <DependentUpon>FormTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormDatabaseProperties.cs">
       <SubType>Form</SubType>
@@ -452,9 +521,6 @@
     <EmbeddedResource Include="Controls\ControlYtApi2Info.resx">
       <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2Categories.resx">
-      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlYtApi2Video.resx">
       <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </EmbeddedResource>
@@ -526,6 +592,42 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlServerQuery.resx">
       <DependentUpon>ControlServerQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlYtApi2Categories.resx">
+      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlCategory.resx">
+      <DependentUpon>ControlCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlTable.resx">
+      <DependentUpon>ControlTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlDatabaseSelect.resx">
+      <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlObject.resx">
+      <DependentUpon>ControlObject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlRelationship.resx">
+      <DependentUpon>ControlRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlField.resx">
+      <DependentUpon>ControlField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormField.resx">
+      <DependentUpon>FormField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRelationship.resx">
+      <DependentUpon>FormRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormObject.resx">
+      <DependentUpon>FormObject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDatabaseSelect.resx">
+      <DependentUpon>FormDatabaseSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTable.resx">
+      <DependentUpon>FormTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormDatabaseProperties.resx">
       <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
@@ -619,6 +721,46 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Relationship_48.png" />
+    <None Include="Resources\Relationship_32.png" />
+    <None Include="Resources\Relationship_24.png" />
+    <None Include="Resources\Relationship_16.png" />
+    <None Include="Resources\Object_48.png" />
+    <None Include="Resources\Object_32.png" />
+    <None Include="Resources\Object_24.png" />
+    <None Include="Resources\Object_16.png" />
+    <None Include="Resources\DatabaseRead_48.png" />
+    <None Include="Resources\DatabaseRead_32.png" />
+    <None Include="Resources\DatabaseRead_24.png" />
+    <None Include="Resources\DatabaseRead_16.png" />
+    <None Include="Resources\FieldWarning_48.png" />
+    <None Include="Resources\FieldWarning_32.png" />
+    <None Include="Resources\FieldWarning_24.png" />
+    <None Include="Resources\FieldWarning_16.png" />
+    <None Include="Resources\FieldSuccess_48.png" />
+    <None Include="Resources\FieldSuccess_32.png" />
+    <None Include="Resources\FieldSuccess_24.png" />
+    <None Include="Resources\FieldSuccess_16.png" />
+    <None Include="Resources\Field_48.png" />
+    <None Include="Resources\Field_32.png" />
+    <None Include="Resources\Field_24.png" />
+    <None Include="Resources\Field_16.png" />
+    <None Include="Resources\TableWarning_48.png" />
+    <None Include="Resources\TableWarning_32.png" />
+    <None Include="Resources\TableWarning_24.png" />
+    <None Include="Resources\TableWarning_16.png" />
+    <None Include="Resources\TableSuccess_48.png" />
+    <None Include="Resources\TableSuccess_32.png" />
+    <None Include="Resources\TableSuccess_24.png" />
+    <None Include="Resources\TableSuccess_16.png" />
+    <None Include="Resources\Table_48.png" />
+    <None Include="Resources\Table_32.png" />
+    <None Include="Resources\Table_24.png" />
+    <None Include="Resources\Table_16.png" />
+    <None Include="Resources\Category_48.png" />
+    <None Include="Resources\Category_32.png" />
+    <None Include="Resources\Category_24.png" />
+    <None Include="Resources\Category_16.png" />
     <None Include="Resources\Cubes_48.png" />
     <None Include="Resources\Cubes_32.png" />
     <None Include="Resources\Cubes_24.png" />

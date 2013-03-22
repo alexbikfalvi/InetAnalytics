@@ -28,6 +28,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtApi.Api.V2.Data;
 
@@ -36,7 +37,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control that displays a YouTube video.
 	/// </summary>
-	public partial class ControlVideo : UserControl
+	public partial class ControlVideo : ThreadSafeControl
 	{
 		private Video video;
 		private WebClient web = new WebClient();

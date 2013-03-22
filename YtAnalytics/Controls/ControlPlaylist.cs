@@ -24,6 +24,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtApi.Api.V2.Data;
 
 namespace YtAnalytics.Controls
@@ -31,7 +32,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control that displays a user playlist.
 	/// </summary>
-	public partial class ControlPlaylist : UserControl
+	public partial class ControlPlaylist : ThreadSafeControl
 	{
 		private Playlist playlist;
 
@@ -71,9 +72,12 @@ namespace YtAnalytics.Controls
 					this.textBoxSummary.Text = string.Empty;
 					this.textBoxCount.Text = string.Empty;
 				}
-				this.textBoxId.Select();
-				this.textBoxId.SelectionStart = 0;
-				this.textBoxId.SelectionLength = 0;
+				if (this.Focused)
+				{
+					this.textBoxId.Select();
+					this.textBoxId.SelectionStart = 0;
+					this.textBoxId.SelectionLength = 0;
+				}
 			}
 		}
 	}

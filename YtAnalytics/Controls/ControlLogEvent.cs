@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtApi.Api.V2.Atom;
 using YtApi.Ajax;
@@ -35,7 +36,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// Displays the information of a log event.
 	/// </summary>
-	public partial class ControlLogEvent : UserControl
+	public partial class ControlLogEvent : ThreadSafeControl
 	{
 		private static Image[] eventImage = {
 												Resources.EventInformation_32,

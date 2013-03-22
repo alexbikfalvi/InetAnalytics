@@ -17,28 +17,24 @@
  */
 
 using System;
+using System.ComponentModel;
+using System.Data;
+using YtCrawler.Database;
 
-namespace YtCrawler.Database
+namespace YtCrawler.Database.Data
 {
 	/// <summary>
-	/// A class representing the column properties of a database table.
+	/// A type representing a schema in an SQL Server.
 	/// </summary>
-	public class DbColumn
+	[Serializable]
+	public sealed class DbObjectSqlSchema : DbObjectSchema
 	{
-		private string name;
-		private Type type;
-		private int index;
+		// Properties.
 
-		/// <summary>
-		/// Creates a new table column instance.
-		/// </summary>
-		/// <param name="name">The column name.</param>
-		/// <param name="type">The column type.</param>
-		public DbColumn(string name, Type type, int index)
-		{
-			this.name = name;
-			this.type = type;
-			this.index = index;
-		}
+		[Browsable(true), DisplayName("Schema ID"), ReadOnly(true), Db(DbType.Int32, false, "schema_id"), Description("The schema ID.")]
+		public int SchemaId { get; set; }
+
+		[Browsable(true), DisplayName("Principal ID"), ReadOnly(true), Db(DbType.Int32, true, "principal_id"), Description("The schema principal ID.")]
+		public int? PrincipalId { get; set; }
 	}
 }

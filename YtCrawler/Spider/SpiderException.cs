@@ -23,6 +23,7 @@ namespace YtCrawler.Spider
 	/// <summary>
 	/// A class representing a spider exception.
 	/// </summary>
+	[Serializable]
 	public class SpiderException : CrawlerException
 	{
 		/// <summary>

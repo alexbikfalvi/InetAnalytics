@@ -104,6 +104,7 @@ namespace YtAnalytics.Forms
 		private ControlYtApi2PlaylistsFeed controlYtApi2PlaylistsFeed = new ControlYtApi2PlaylistsFeed();
 		private ControlYtApi2VideosFeed controlYtApi2PlaylistFeed = new ControlYtApi2VideosFeed();
 		private ControlYtApi2VideosFeed controlYtApi2FavoritesFeed = new ControlYtApi2VideosFeed();
+		private ControlYtApi2Categories controlYtApi2Categories = new ControlYtApi2Categories();
 		private ControlYtApi3Info controlYtApi3 = new ControlYtApi3Info();
 		private ControlWeb controlWeb = new ControlWeb();
 		private ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
@@ -263,7 +264,6 @@ namespace YtAnalytics.Forms
 			// Add the panel controls to the split container.
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2VideosFeedsInfo);
-			this.splitContainer.Panel2.Controls.Add(this.controlYtApi3);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Video);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2CommentsFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2StandardFeed);
@@ -276,6 +276,8 @@ namespace YtAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2PlaylistsFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2FavoritesFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2PlaylistFeed);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Categories);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtApi3);
 			this.splitContainer.Panel2.Controls.Add(this.controlWeb);
 			this.splitContainer.Panel2.Controls.Add(this.controlWebStatistics);
 			this.splitContainer.Panel2.Controls.Add(this.controlDatabaseServers);
@@ -301,8 +303,7 @@ namespace YtAnalytics.Forms
 			this.treeNodeBrowserApi2Playlists.Tag = this.controlYtApi2PlaylistsFeed;
 			this.treeNodeBrowserApi2FavoritesFeed.Tag = this.controlYtApi2FavoritesFeed;
 			this.treeNodeBrowserApi2PlaylistFeed.Tag = this.controlYtApi2PlaylistFeed;
-			
-			this.treeNodeBrowserApi2VideoCategories.Tag = null;
+			this.treeNodeBrowserApi2VideoCategories.Tag = this.controlYtApi2Categories;
 
 			this.treeNodeBrowserApi3.Tag = this.controlYtApi3;
 			this.treeNodeBrowserWeb.Tag = this.controlWeb;
@@ -390,6 +391,7 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "APIv2 Uploads Videos Feed");
 			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "APIv2 Favorites Videos Feed");
 			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "APIv2 Playlist Videos Feed");
+			this.controlYtApi2Categories.Initialize(this.crawler);
 			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);

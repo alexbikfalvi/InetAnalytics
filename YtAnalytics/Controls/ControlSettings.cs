@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtCrawler;
 
 namespace YtAnalytics.Controls
@@ -33,7 +34,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control displaying the current configuration settings.
 	/// </summary>
-	public partial class ControlSettings : UserControl
+	public partial class ControlSettings : ThreadSafeControl
 	{
 		private Crawler crawler;
 

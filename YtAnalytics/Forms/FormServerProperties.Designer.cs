@@ -93,7 +93,6 @@
 			this.Controls.Add(this.buttonCancel);
 			this.Controls.Add(this.control);
 			this.Controls.Add(this.buttonApply);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FormServerProperties";

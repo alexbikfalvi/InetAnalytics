@@ -27,20 +27,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtCrawler;
 using YtApi;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
+using YtCrawler;
 using YtCrawler.Log;
 using DotNetApi.Web;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlYtApi2StandardFeed : UserControl
+	public partial class ControlYtApi2StandardFeed : ThreadSafeControl
 	{
 		private static string logSource = "APIv2 Standard Feed";
 
@@ -55,24 +56,6 @@ namespace YtAnalytics.Controls
 
 		private ShowMessageEventHandler delegateShowMessage;
 		private HideMessageEventHandler delegateHideMessage;
-
-		private static YouTubeStandardFeed[] feeds = new YouTubeStandardFeed[] {
-			YouTubeStandardFeed.TopRated,
-			YouTubeStandardFeed.TopFavories,
-			YouTubeStandardFeed.MostShared,
-			YouTubeStandardFeed.MostPopular,
-			YouTubeStandardFeed.MostRecent,
-			YouTubeStandardFeed.MostDiscussed,
-			YouTubeStandardFeed.MostResponsed,
-			YouTubeStandardFeed.RecentlyFeatured,
-			YouTubeStandardFeed.TrendingVideos
-		};
-		private static YouTubeTimeId[] times = new YouTubeTimeId[] {
-			YouTubeTimeId.AllTime,
-			YouTubeTimeId.Today,
-			YouTubeTimeId.ThisWeek,
-			YouTubeTimeId.ThisMonth
-		};
 
 		// Public declarations
 
@@ -109,20 +92,6 @@ namespace YtAnalytics.Controls
 			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 		}
 
-		/// <summary>
-		/// Initializes the control with a crawler object.
-		/// </summary>
-		/// <param name="crawler">The crawler object.</param>
-		public void Initialize(Crawler crawler)
-		{
-			// Save the parameters.
-			this.crawler = crawler;
-			this.request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
-
-			// Enable the control
-			this.Enabled = true;
-		}
-
 		// Public events.
 
 		/// <summary>
@@ -150,6 +119,25 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public event AddCommentItemEventHandler Comment;
 
+		// Public methods.
+
+		/// <summary>
+		/// Initializes the control with a crawler object.
+		/// </summary>
+		/// <param name="crawler">The crawler object.</param>
+		public void Initialize(Crawler crawler)
+		{
+			// Save the parameters.
+			this.crawler = crawler;
+			this.request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
+
+			// Enable the control
+			this.Enabled = true;
+
+			// Update the categories.
+			this.OnUpdateCategories(this, null);
+		}
+
 		// Private methods.
 
 		/// <summary>
@@ -158,15 +146,16 @@ namespace YtAnalytics.Controls
 		/// <param name="image">The message icon.</param>
 		/// <param name="text">The message text.</param>
 		/// <param name="progress">The visibility of the progress bar.</param>
-		private void ShowMessage(Image image, string text, bool progress = true)
+		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
+		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
 		{
 			// Invoke the function on the UI thread.
 			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress });
+				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
 			else
 			{
 				// Show the message.
-				this.message.Show(image, text, progress);
+				this.message.Show(image, text, progress, duration);
 				// Disable the control.
 				this.panel.Enabled = false;
 			}
@@ -203,10 +192,10 @@ namespace YtAnalytics.Controls
 
 			// Compute the URI
 			this.uri = YouTubeUri.GetStandardFeed(
-				ControlYtApi2StandardFeed.feeds[this.comboBoxFeed.SelectedIndex],
+				YouTube.StandardFeeds[this.comboBoxFeed.SelectedIndex],
 				this.comboBoxRegion.SelectedIndex == 0 ? null : YouTubeUri.GetRegionId(this.comboBoxRegion.SelectedItem as string),
 				this.comboBoxCategory.SelectedIndex == 0 ? null : this.crawler.Categories[this.comboBoxCategory.SelectedItem as string].Term,
-				this.comboBoxTime.SelectedIndex == 0 ? null : ControlYtApi2StandardFeed.times[Array.IndexOf(YouTubeUri.TimeNames, this.comboBoxTime.SelectedItem as string)] as YouTubeTimeId?,
+				this.comboBoxTime.SelectedIndex == 0 ? null : YouTube.Times[Array.IndexOf(YouTubeUri.TimeNames, this.comboBoxTime.SelectedItem as string)] as YouTubeTimeId?,
 				1,
 				this.videoList.VideosPerPage);
 			this.linkLabel.Text = this.uri.AbsoluteUri;
@@ -220,13 +209,9 @@ namespace YtAnalytics.Controls
 		private void OnOpenCategories(object sender, EventArgs e)
 		{
 			// If there are no categories in the combobox, refresh the categories list.
-			if (this.crawler.Categories.Count == 0)
+			if (this.crawler.Categories.IsEmpty)
 			{
 				this.OnBeginRefreshCategories(sender, e);
-			}
-			else
-			{
-				this.OnUpdateCategories(sender, e);
 			}
 		}
 
@@ -245,7 +230,10 @@ namespace YtAnalytics.Controls
 				// Update the categories list.
 				this.comboBoxCategory.Items.Clear();
 				this.comboBoxCategory.Items.Add("(any)");
-				this.comboBoxCategory.Items.AddRange(this.crawler.Categories.CategoryLabels);
+				if (this.crawler.Categories.CategoryLabels != null)
+				{
+					this.comboBoxCategory.Items.AddRange(this.crawler.Categories.CategoryLabels);
+				}
 				this.comboBoxCategory.SelectedIndex = 0;
 			}
 		}
@@ -277,7 +265,7 @@ namespace YtAnalytics.Controls
 				// Update the message that the operation completed successfully.
 				this.ShowMessage(
 					Resources.GlobeSuccess_48,
-					"Refreshing the list of YouTube categories...\r\n\r\nDone.",
+					"Refreshing the list of YouTube categories completed successfully.",
 					false
 					);
 				// Update the categories.
@@ -285,17 +273,17 @@ namespace YtAnalytics.Controls
 			}
 			catch (Exception exception)
 			{
-				// Update the message that the operation completed successfully.
+				// Update the message that the operation failed.
 				this.ShowMessage(
 					Resources.GlobeError_48,
-					string.Format("Failed ({0}).", exception.Message),
+					string.Format("Refreshing the list of YouTube categories failed.\r\n{0}", exception.Message),
 					false
 					);
 			}
 			finally
 			{
 				// Delay the closing of the message.
-				Thread.Sleep((int)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds);
+				Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
 				// Hide the message.
 				this.HideMessage();
 			}
@@ -309,7 +297,7 @@ namespace YtAnalytics.Controls
 		private void OnFeedChanged(object sender, EventArgs e)
 		{
 			// Update the time list: get the list of valid time IDs for the current feed.
-			YouTubeTimeId[] ids = YouTubeUri.GetValidTime(ControlYtApi2StandardFeed.feeds[this.comboBoxFeed.SelectedIndex]);
+			YouTubeTimeId[] ids = YouTubeUri.GetValidTime(YouTube.StandardFeeds[this.comboBoxFeed.SelectedIndex]);
 
 			this.comboBoxTime.Items.Clear();
 			this.comboBoxTime.Items.Add("(any)");

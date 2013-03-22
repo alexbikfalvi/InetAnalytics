@@ -54,10 +54,11 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="comment">The comment.</param>
-		public void ShowDialog(IWin32Window owner, Comment comment)
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, Comment comment)
 		{
 			// If the comment is null, do nothing.
-			if (null == comment) return;
+			if (null == comment) return DialogResult.Abort;
 
 			// Set the comment.
 			this.control.Comment = comment;
@@ -78,7 +79,7 @@ namespace YtAnalytics.Forms
 					break;
 			}
 			// Open the dialog.
-			base.ShowDialog(owner);
+			return base.ShowDialog(owner);
 		}
 	}
 }

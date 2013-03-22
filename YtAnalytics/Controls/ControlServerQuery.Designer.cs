@@ -172,6 +172,7 @@
 			this.dataGrid.Location = new System.Drawing.Point(0, 0);
 			this.dataGrid.Name = "dataGrid";
 			this.dataGrid.ReadOnly = true;
+			this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGrid.Size = new System.Drawing.Size(798, 294);
 			this.dataGrid.TabIndex = 0;
 			this.dataGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnCellFormatting);

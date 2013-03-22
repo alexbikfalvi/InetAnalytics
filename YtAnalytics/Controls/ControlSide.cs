@@ -25,13 +25,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
 	/// A generic side control.
 	/// </summary>
-	public partial class ControlSide : UserControl
+	public partial class ControlSide : ThreadSafeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

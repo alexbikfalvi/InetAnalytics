@@ -25,13 +25,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
 	/// A class displaying the list of feeds for the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2VideosFeedsInfo : UserControl
+	public partial class ControlYtApi2VideosFeedsInfo : ThreadSafeControl
 	{
 		/// <summary>
 		/// Creates a new instance of the control.

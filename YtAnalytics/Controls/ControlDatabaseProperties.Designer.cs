@@ -39,9 +39,12 @@
 			this.labelId = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.tabPageObject = new System.Windows.Forms.TabPage();
+			this.propertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+			this.tabPageObject.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// labelTitle
@@ -52,6 +55,7 @@
 			this.labelTitle.Size = new System.Drawing.Size(82, 13);
 			this.labelTitle.TabIndex = 0;
 			this.labelTitle.Text = "Database name";
+			this.labelTitle.UseMnemonic = false;
 			// 
 			// tabControl
 			// 
@@ -59,10 +63,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabPageGeneral);
+			this.tabControl.Controls.Add(this.tabPageObject);
 			this.tabControl.Location = new System.Drawing.Point(3, 58);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(394, 139);
+			this.tabControl.Size = new System.Drawing.Size(394, 310);
 			this.tabControl.TabIndex = 0;
 			this.tabControl.Visible = false;
 			// 
@@ -78,7 +83,7 @@
 			this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabPageGeneral.Name = "tabPageGeneral";
 			this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGeneral.Size = new System.Drawing.Size(386, 113);
+			this.tabPageGeneral.Size = new System.Drawing.Size(386, 284);
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -160,6 +165,25 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
+			// tabPageObject
+			// 
+			this.tabPageObject.Controls.Add(this.propertyGrid);
+			this.tabPageObject.Location = new System.Drawing.Point(4, 22);
+			this.tabPageObject.Name = "tabPageObject";
+			this.tabPageObject.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageObject.Size = new System.Drawing.Size(386, 284);
+			this.tabPageObject.TabIndex = 1;
+			this.tabPageObject.Text = "Object";
+			this.tabPageObject.UseVisualStyleBackColor = true;
+			// 
+			// propertyGrid
+			// 
+			this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.propertyGrid.Location = new System.Drawing.Point(3, 3);
+			this.propertyGrid.Name = "propertyGrid";
+			this.propertyGrid.Size = new System.Drawing.Size(380, 278);
+			this.propertyGrid.TabIndex = 0;
+			// 
 			// ControlDatabaseProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,11 +192,12 @@
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox);
 			this.Name = "ControlDatabaseProperties";
-			this.Size = new System.Drawing.Size(400, 200);
+			this.Size = new System.Drawing.Size(400, 371);
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+			this.tabPageObject.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -191,5 +216,7 @@
 		private System.Windows.Forms.CheckBox checkBoxSelected;
 		private System.Windows.Forms.Label labelDateCreated;
 		private System.Windows.Forms.TextBox textBoxDateCreated;
+		private System.Windows.Forms.TabPage tabPageObject;
+		private System.Windows.Forms.PropertyGrid propertyGrid;
 	}
 }

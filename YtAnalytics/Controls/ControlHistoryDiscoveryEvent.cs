@@ -25,15 +25,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtApi.Ajax;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
-	/// Displays the information of a log event.
+	/// Displays the information of a history discovery event for a YouTube video.
 	/// </summary>
-	public partial class ControlHistoryDiscoveryEvent : UserControl
+	public partial class ControlHistoryDiscoveryEvent : ThreadSafeControl
 	{
 		private AjaxViewsHistoryDiscoveryEvent evt = null;
 

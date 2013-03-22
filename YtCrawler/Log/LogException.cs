@@ -27,6 +27,7 @@ namespace YtCrawler.Log
 	/// <summary>
 	/// A class representing a log exception.
 	/// </summary>
+	[Serializable]
 	public class LogException : Exception
 	{
 		/// <summary>

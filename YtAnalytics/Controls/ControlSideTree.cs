@@ -25,13 +25,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
 	/// A tree control panel.
 	/// </summary>
-	public partial class ControlSideTree : ControlSide
+	public partial class ControlSideTree : ThreadSafeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

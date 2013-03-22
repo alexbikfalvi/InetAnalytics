@@ -60,6 +60,9 @@ namespace YtApi.Api.V2
 			this.deprecated = deprecated;
 			this.browsable = browsable;
 		}
+
+		// Public properties.
+
 		/// <summary>
 		/// The category term.
 		/// </summary>
@@ -80,5 +83,27 @@ namespace YtApi.Api.V2
 		/// The set of browsable regions. It can be null if the category is not browsable.
 		/// </summary>
 		public string[] Browsable { get { return this.browsable; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Parses the argument XML element into a YouTube category.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="xmlnsYt">The XML YouTube namespace.</param>
+		/// <returns>A YouTube category.</returns>
+		public static YouTubeCategory Parse(XElement element, string xmlnsYt)
+		{
+			XElement el;
+			return new YouTubeCategory(
+				element.Attribute(XName.Get("term")).Value,
+				element.Attribute(XName.Get("label")).Value,
+				element.Element(XName.Get("assignable", xmlnsYt)) != null,
+				element.Element(XName.Get("deprecated", xmlnsYt)) != null,
+				(el = element.Element(XName.Get("browsable", xmlnsYt))) != null
+				? el.Attribute(XName.Get("regions")).Value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+				: null
+				);
+		}
 	}
 }

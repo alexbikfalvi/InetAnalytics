@@ -18,10 +18,14 @@
 
 using System;
 using System.Data.SqlClient;
+using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
 {
 	public delegate void DbReaderCallback(DbAsyncResult asyncResult, DbData table);
+	public delegate void DbReaderRawCallback(DbAsyncResult asyncResult, DbDataRaw table);
+	public delegate void DbReaderObjectCallback(DbAsyncResult asyncResult, DbDataObject table);
+	public delegate void DbReaderObjectCallback<T>(DbAsyncResult asyncResult, DbDataObject<T> table) where T : DbObject, new();
 
 	/// <summary>
 	/// A class representing a database reader.
@@ -81,13 +85,45 @@ namespace YtCrawler.Database
 		/// <returns>The column name.</returns>
 		public abstract string GetName(int index);
 		/// <summary>
+		/// Reads asynchronously the specified number of records. When the query does not use a database table, the result
+		/// returned is raw data. When the query uses a database table, the result returned is object data.
+		/// </summary>
+		/// <param name="query">The query.</param>
+		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The result of the asynchronous operation.</returns>
+		public abstract IAsyncResult Read(DbQuery query, int? count, DbReaderCallback callback, object userState = null);
+		/// <summary>
 		/// Reads asynchronusly the specified number of records.
 		/// </summary>
 		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		public abstract IAsyncResult Read(int? count, DbReaderCallback callback, object userState = null);
+		public abstract IAsyncResult Read(int? count, DbReaderRawCallback callback, object userState = null);
+		/// <summary>
+		/// Reads asynchronously the specified number of records, automatically converting to a data table of the specified
+		/// data type.
+		/// </summary>
+		/// <param name="table">The database table containing the mapping between the database and the object names.</param>
+		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns></returns>
+		public abstract IAsyncResult Read(ITable table, int? count, DbReaderObjectCallback callback, object userState = null);
+		/// <summary>
+		/// Reads asynchronously the specified number of records, automatically converting to a data table of the specified
+		/// data type.
+		/// </summary>
+		/// <typeparam name="T">The database data type.</typeparam>
+		/// <param name="table">The database table containing the mapping between the database and object names.</param>
+		/// <param name="count">The number of rows to read. If <b>null</b>, will read all records from the result.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The result of the asynchronous operation.</returns>
+		public abstract IAsyncResult Read<T>(DbTable<T> table, int? count, DbReaderObjectCallback<T> callback, object userState = null) where T : DbObject, new();
+
 		/// <summary>
 		/// Closes the reader.
 		/// </summary>

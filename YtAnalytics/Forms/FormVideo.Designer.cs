@@ -60,7 +60,6 @@
 			this.ClientSize = new System.Drawing.Size(518, 412);
 			this.Controls.Add(this.video);
 			this.Controls.Add(this.buttonClose);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FormVideo";

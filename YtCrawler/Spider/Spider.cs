@@ -81,7 +81,7 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// An event handler called when the spider starts crawling.
 		/// </summary>
-		protected void OnStart()
+		protected void OnStarted()
 		{
 			// Lock the mutex.
 			this.mutex.WaitOne();
@@ -104,7 +104,7 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// An event handler called when the spider finishes crawling.
 		/// </summary>
-		protected void Finished()
+		protected void OnFinished()
 		{
 			// Lock the mutex.
 			this.mutex.WaitOne();

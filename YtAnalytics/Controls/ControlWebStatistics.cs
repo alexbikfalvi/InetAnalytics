@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtApi.Ajax;
 using YtCrawler;
@@ -20,7 +21,7 @@ namespace YtAnalytics.Controls
 	/// <summary>
 	/// A control that displays the video statistics using the web data.
 	/// </summary>
-	public partial class ControlWebStatistics : UserControl
+	public partial class ControlWebStatistics : ThreadSafeControl
 	{
 		private static string logSource = "Web Statistics";
 
