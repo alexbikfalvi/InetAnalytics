@@ -31,14 +31,32 @@ namespace YtCrawler.Database.Data
 	{
 		// Properties.
 
-		[Browsable(true), DisplayName("Object ID"), ReadOnly(true), Db(DbType.Int32, false, "object_id"), Description("The object ID of the corresponding table.")]
-		public int ObjectId { get; set; }
-
 		[Browsable(true), DisplayName("Name"), ReadOnly(true), Db(DbType.String, true, "name"), Description("The table name.")]
 		public string Name { get; set; }
 
 		[Browsable(true), DisplayName("Column ID"), ReadOnly(true), Db(DbType.Int32, false, "column_id"), Description("The column ID.")]
 		public int ColumnId { get; set; }
+
+		[Browsable(true), DisplayName("Object ID"), ReadOnly(true), Db(DbType.Int32, false, "object_id"), Description("The object ID of the corresponding table.")]
+		public int ObjectId { get; set; }
+
+		[Browsable(true), DisplayName("System type ID"), ReadOnly(true), Db(DbType.Int32, false, "system_type_id"), Description("The system type ID of the column type.")]
+		public int SystemTypeId { get; set; }
+
+		[Browsable(true), DisplayName("User type ID"), ReadOnly(true), Db(DbType.Int32, false, "user_type_id"), Description("The user type ID of the column type.")]
+		public int UserTypeId { get; set; }
+
+		[Browsable(true), DisplayName("Maximum length"), ReadOnly(true), Db(DbType.Int32, false, "max_length"), Description("The maximum length for this column.")]
+		public int MaximumLength { get; set; }
+
+		[Browsable(true), DisplayName("Precision"), ReadOnly(true), Db(DbType.Int32, false, "precision"), Description("The precision for this column.")]
+		public int Precision { get; set; }
+
+		[Browsable(true), DisplayName("Scale"), ReadOnly(true), Db(DbType.Int32, false, "scale"), Description("The scale for this column.")]
+		public int Scale { get; set; }
+
+		[Browsable(true), DisplayName("Is nullable"), ReadOnly(true), Db(DbType.Boolean, true, "is_nullable"), Description("Indicates if the column is nullable.")]
+		public bool? IsNullable { get; set; }
 
 		// Methods.
 
@@ -58,7 +76,7 @@ namespace YtCrawler.Database.Data
 		/// <returns><b>True</b> if the two objects are equal, <b>false</b> otherwise.</returns>
 		public bool Equals(DbObjectColumn obj)
 		{
-			return (this.Name == obj.Name) && (this.ColumnId == obj.ColumnId);
+			return (this.Name == obj.Name) && (this.ColumnId == obj.ColumnId) && (this.SystemTypeId == obj.SystemTypeId) && (this.UserTypeId == obj.UserTypeId);
 		}
 	}
 }

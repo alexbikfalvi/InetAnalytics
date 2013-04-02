@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonChange = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlChangePassword();
+			this.control = new YtAnalytics.Controls.Database.ControlChangePassword();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
@@ -92,7 +92,7 @@
 
 		private System.Windows.Forms.Button buttonCancel;
 		private System.Windows.Forms.Button buttonChange;
-		private Controls.ControlChangePassword control;
+		private Controls.Database.ControlChangePassword control;
 
 	}
 }

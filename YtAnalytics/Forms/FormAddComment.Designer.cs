@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonAdd = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlAddComment();
+			this.control = new YtAnalytics.Controls.Comments.ControlAddComment();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
@@ -92,7 +92,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonCancel;
-		private Controls.ControlAddComment control;
+		private Controls.Comments.ControlAddComment control;
 		private System.Windows.Forms.Button buttonAdd;
 
 	}

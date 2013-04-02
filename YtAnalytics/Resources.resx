@@ -1762,4 +1762,52 @@
   <data name="FieldCompare_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FieldCompare_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FileXmlError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlError_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlError_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlError_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlError_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlQuestion_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlQuestion_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlQuestion_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlQuestion_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlQuestion_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlQuestion_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlQuestion_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlQuestion_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlSuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlSuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlSuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlSuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlWarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlWarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlWarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileXmlWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FileXmlWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

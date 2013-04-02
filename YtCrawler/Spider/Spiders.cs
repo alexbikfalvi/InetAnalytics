@@ -27,7 +27,7 @@ namespace YtCrawler.Spider
 	{
 		private Crawler crawler;
 
-		private SpiderStandardFeeds spiderStandardFeedsBrose;
+		private SpiderStandardFeeds spiderStandardFeeds;
 
 		/// <summary>
 		/// Creates a new spider collection instance.
@@ -38,7 +38,7 @@ namespace YtCrawler.Spider
 			this.crawler = crawler;
 
 			// Create the spiders.
-			this.spiderStandardFeedsBrose = new SpiderStandardFeeds(this.crawler);
+			this.spiderStandardFeeds = new SpiderStandardFeeds(this.crawler);
 		}
 
 		// Public properties.
@@ -46,7 +46,7 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// Gets the spider to browse the standard feeds.
 		/// </summary>
-		public SpiderStandardFeeds StandardFeedsBrowse { get { return this.spiderStandardFeedsBrose; } }
+		public SpiderStandardFeeds StandardFeeds { get { return this.spiderStandardFeeds; } }
 
 		// Public methods.
 
@@ -55,7 +55,7 @@ namespace YtCrawler.Spider
 		/// </summary>
 		public void Dispose()
 		{
-			this.spiderStandardFeedsBrose.Dispose();
+			this.spiderStandardFeeds.Dispose();
 		}
 	}
 }

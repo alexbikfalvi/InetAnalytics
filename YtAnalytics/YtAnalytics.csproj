@@ -55,31 +55,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ControlDatabase.cs">
+    <Compile Include="Controls\ControlMessage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlServerProperties.cs">
+    <Compile Include="Controls\Database\ControlDatabase.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlServerProperties.Designer.cs">
+    <Compile Include="Controls\Database\ControlServerProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlVideoComment.cs">
+    <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlVideoComment.Designer.cs">
+    <Compile Include="Controls\Spiders\ControlSpiderInfo.Designer.cs">
+      <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlStandardFeeds.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlStandardFeeds.Designer.cs">
+      <DependentUpon>ControlStandardFeeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlVideoComment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlVideoComment.Designer.cs">
       <DependentUpon>ControlVideoComment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlComments.cs">
+    <Compile Include="Controls\Comments\ControlComments.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlComments.Designer.cs">
+    <Compile Include="Controls\Comments\ControlComments.Designer.cs">
       <DependentUpon>ControlComments.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlAddComment.cs">
+    <Compile Include="Controls\Comments\ControlAddComment.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlAddComment.Designer.cs">
+    <Compile Include="Controls\Comments\ControlAddComment.Designer.cs">
       <DependentUpon>ControlAddComment.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlException.cs">
@@ -88,10 +103,10 @@
     <Compile Include="Controls\ControlException.Designer.cs">
       <DependentUpon>ControlException.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlLog.cs">
+    <Compile Include="Controls\Log\ControlLog.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlLog.Designer.cs">
+    <Compile Include="Controls\Log\ControlLog.Designer.cs">
       <DependentUpon>ControlLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlSettings.cs">
@@ -106,29 +121,29 @@
     <Compile Include="Controls\ControlSide.Designer.cs">
       <DependentUpon>ControlSide.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlSideLog.cs">
+    <Compile Include="Controls\ControlSideCalendar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlSideLog.Designer.cs">
-      <DependentUpon>ControlSideLog.cs</DependentUpon>
+    <Compile Include="Controls\ControlSideCalendar.Designer.cs">
+      <DependentUpon>ControlSideCalendar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlLogEvent.cs">
+    <Compile Include="Controls\Log\ControlLogEvent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlLogEvent.Designer.cs">
+    <Compile Include="Controls\Log\ControlLogEvent.Designer.cs">
       <DependentUpon>ControlLogEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlLogList.cs">
+    <Compile Include="Controls\Log\ControlLogList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlLogList.Designer.cs">
+    <Compile Include="Controls\Log\ControlLogList.Designer.cs">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlMessage.cs">
+    <Compile Include="Controls\ControlMessageBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlMessage.Designer.cs">
-      <DependentUpon>ControlMessage.cs</DependentUpon>
+    <Compile Include="Controls\ControlMessageBox.Designer.cs">
+      <DependentUpon>ControlMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlSideTree.cs">
       <SubType>UserControl</SubType>
@@ -136,196 +151,196 @@
     <Compile Include="Controls\ControlSideTree.Designer.cs">
       <DependentUpon>ControlSideTree.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlVideo.cs">
+    <Compile Include="Controls\YouTube\ControlVideo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlVideo.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlVideo.Designer.cs">
       <DependentUpon>ControlVideo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlVideoList.cs">
+    <Compile Include="Controls\YouTube\ControlVideoList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlVideoList.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlVideoList.Designer.cs">
       <DependentUpon>ControlVideoList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlWebStatistics.cs">
+    <Compile Include="Controls\YouTube\Web\ControlWebStatistics.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlWebStatistics.Designer.cs">
+    <Compile Include="Controls\YouTube\Web\ControlWebStatistics.Designer.cs">
       <DependentUpon>ControlWebStatistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Info.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Info.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.Designer.cs">
       <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2StandardFeed.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2StandardFeed.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.Designer.cs">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Video.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Video.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Video.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Video.Designer.cs">
       <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosFeedsInfo.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosFeedsInfo.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2VideosFeedsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi3Info.cs">
+    <Compile Include="Controls\YouTube\Api3\ControlYtApi3Info.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi3Info.Designer.cs">
+    <Compile Include="Controls\YouTube\Api3\ControlYtApi3Info.Designer.cs">
       <DependentUpon>ControlYtApi3Info.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Search.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Search.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Search.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Search.Designer.cs">
       <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosFeed.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2VideosFeed.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.Designer.cs">
       <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlHistoryDiscoveryEvent.cs">
+    <Compile Include="Controls\YouTube\ControlHistoryDiscoveryEvent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlHistoryDiscoveryEvent.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlHistoryDiscoveryEvent.Designer.cs">
       <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlComment.cs">
+    <Compile Include="Controls\Comments\ControlComment.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlComment.Designer.cs">
+    <Compile Include="Controls\Comments\ControlComment.Designer.cs">
       <DependentUpon>ControlComment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlWeb.cs">
+    <Compile Include="Controls\YouTube\Web\ControlWeb.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlWeb.Designer.cs">
+    <Compile Include="Controls\YouTube\Web\ControlWeb.Designer.cs">
       <DependentUpon>ControlWeb.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlCommentsInfo.cs">
+    <Compile Include="Controls\Comments\ControlCommentsInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlCommentsInfo.Designer.cs">
+    <Compile Include="Controls\Comments\ControlCommentsInfo.Designer.cs">
       <DependentUpon>ControlCommentsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2CommentsFeed.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2CommentsFeed.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlProfile.cs">
+    <Compile Include="Controls\YouTube\ControlProfile.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlProfile.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlProfile.Designer.cs">
       <DependentUpon>ControlProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Profile.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Profile.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Profile.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Profile.Designer.cs">
       <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlCommentList.cs">
+    <Compile Include="Controls\YouTube\ControlCommentList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlCommentList.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlCommentList.Designer.cs">
       <DependentUpon>ControlCommentList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlPlaylist.cs">
+    <Compile Include="Controls\YouTube\ControlPlaylist.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlPlaylist.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlPlaylist.Designer.cs">
       <DependentUpon>ControlPlaylist.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlPlaylistList.cs">
+    <Compile Include="Controls\YouTube\ControlPlaylistList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlPlaylistList.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlPlaylistList.Designer.cs">
       <DependentUpon>ControlPlaylistList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2PlaylistsFeed.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2PlaylistsFeed.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2UserFeedsInfo.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2UserFeedsInfo.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlServers.cs">
+    <Compile Include="Controls\Database\ControlServers.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlServers.Designer.cs">
+    <Compile Include="Controls\Database\ControlServers.Designer.cs">
       <DependentUpon>ControlServers.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlAddServer.cs">
+    <Compile Include="Controls\Database\ControlAddServer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlAddServer.Designer.cs">
+    <Compile Include="Controls\Database\ControlAddServer.Designer.cs">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlChangePassword.cs">
+    <Compile Include="Controls\Database\ControlChangePassword.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlChangePassword.Designer.cs">
+    <Compile Include="Controls\Database\ControlChangePassword.Designer.cs">
       <DependentUpon>ControlChangePassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlServer.cs">
+    <Compile Include="Controls\Database\ControlServer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlServer.Designer.cs">
+    <Compile Include="Controls\Database\ControlServer.Designer.cs">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlDatabaseProperties.cs">
+    <Compile Include="Controls\Database\ControlDatabaseProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlDatabaseProperties.Designer.cs">
+    <Compile Include="Controls\Database\ControlDatabaseProperties.Designer.cs">
       <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlServerQuery.cs">
+    <Compile Include="Controls\Database\ControlServerQuery.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlServerQuery.Designer.cs">
+    <Compile Include="Controls\Database\ControlServerQuery.Designer.cs">
       <DependentUpon>ControlServerQuery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Categories.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlYtApi2Categories.Designer.cs">
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.Designer.cs">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlCategory.cs">
+    <Compile Include="Controls\YouTube\ControlCategory.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlCategory.Designer.cs">
+    <Compile Include="Controls\YouTube\ControlCategory.Designer.cs">
       <DependentUpon>ControlCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlTable.cs">
+    <Compile Include="Controls\Database\ControlTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlTable.Designer.cs">
+    <Compile Include="Controls\Database\ControlTable.Designer.cs">
       <DependentUpon>ControlTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlDatabaseSelect.cs">
+    <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlDatabaseSelect.Designer.cs">
+    <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlObject.cs">
@@ -334,17 +349,35 @@
     <Compile Include="Controls\ControlObject.Designer.cs">
       <DependentUpon>ControlObject.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlRelationship.cs">
+    <Compile Include="Controls\Database\ControlRelationship.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlRelationship.Designer.cs">
+    <Compile Include="Controls\Database\ControlRelationship.Designer.cs">
       <DependentUpon>ControlRelationship.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlField.cs">
+    <Compile Include="Controls\Database\ControlField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlField.Designer.cs">
+    <Compile Include="Controls\Database\ControlField.Designer.cs">
       <DependentUpon>ControlField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlCompareFields.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlCompareFields.Designer.cs">
+      <DependentUpon>ControlCompareFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
+      <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCompareFields.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCompareFields.Designer.cs">
+      <DependentUpon>FormCompareFields.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormField.cs">
       <SubType>Form</SubType>
@@ -473,146 +506,161 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Controls\ControlServerProperties.resx">
+    <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlVideoComment.resx">
+    <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
+      <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlStandardFeeds.resx">
+      <DependentUpon>ControlStandardFeeds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlVideoComment.resx">
       <DependentUpon>ControlVideoComment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlComments.resx">
+    <EmbeddedResource Include="Controls\Comments\ControlComments.resx">
       <DependentUpon>ControlComments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlAddComment.resx">
+    <EmbeddedResource Include="Controls\Comments\ControlAddComment.resx">
       <DependentUpon>ControlAddComment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlException.resx">
       <DependentUpon>ControlException.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlLog.resx">
+    <EmbeddedResource Include="Controls\Log\ControlLog.resx">
       <DependentUpon>ControlLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlSettings.resx">
       <DependentUpon>ControlSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlSideLog.resx">
-      <DependentUpon>ControlSideLog.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlSideCalendar.resx">
+      <DependentUpon>ControlSideCalendar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlLogEvent.resx">
+    <EmbeddedResource Include="Controls\Log\ControlLogEvent.resx">
       <DependentUpon>ControlLogEvent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlLogList.resx">
+    <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlMessage.resx">
-      <DependentUpon>ControlMessage.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlMessageBox.resx">
+      <DependentUpon>ControlMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlSideTree.resx">
       <DependentUpon>ControlSideTree.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlVideo.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlVideo.resx">
       <DependentUpon>ControlVideo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlVideoList.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlVideoList.resx">
       <DependentUpon>ControlVideoList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlWebStatistics.resx">
+    <EmbeddedResource Include="Controls\YouTube\Web\ControlWebStatistics.resx">
       <DependentUpon>ControlWebStatistics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2Info.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Info.resx">
       <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2Video.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Video.resx">
       <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2StandardFeed.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.resx">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2VideosFeedsInfo.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.resx">
       <DependentUpon>ControlYtApi2VideosFeedsInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi3Info.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api3\ControlYtApi3Info.resx">
       <DependentUpon>ControlYtApi3Info.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2Search.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Search.resx">
       <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2VideosFeed.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.resx">
       <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlHistoryDiscoveryEvent.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlHistoryDiscoveryEvent.resx">
       <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlComment.resx">
+    <EmbeddedResource Include="Controls\Comments\ControlComment.resx">
       <DependentUpon>ControlComment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlWeb.resx">
+    <EmbeddedResource Include="Controls\YouTube\Web\ControlWeb.resx">
       <DependentUpon>ControlWeb.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlCommentsInfo.resx">
+    <EmbeddedResource Include="Controls\Comments\ControlCommentsInfo.resx">
       <DependentUpon>ControlCommentsInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2CommentsFeed.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.resx">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlProfile.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlProfile.resx">
       <DependentUpon>ControlProfile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2Profile.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Profile.resx">
       <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlCommentList.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlCommentList.resx">
       <DependentUpon>ControlCommentList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPlaylist.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlPlaylist.resx">
       <DependentUpon>ControlPlaylist.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlPlaylistList.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlPlaylistList.resx">
       <DependentUpon>ControlPlaylistList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2PlaylistsFeed.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.resx">
       <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2UserFeedsInfo.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.resx">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlServers.resx">
+    <EmbeddedResource Include="Controls\Database\ControlServers.resx">
       <DependentUpon>ControlServers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlAddServer.resx">
+    <EmbeddedResource Include="Controls\Database\ControlAddServer.resx">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlChangePassword.resx">
+    <EmbeddedResource Include="Controls\Database\ControlChangePassword.resx">
       <DependentUpon>ControlChangePassword.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlServer.resx">
+    <EmbeddedResource Include="Controls\Database\ControlServer.resx">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlDatabaseProperties.resx">
+    <EmbeddedResource Include="Controls\Database\ControlDatabaseProperties.resx">
       <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlServerQuery.resx">
+    <EmbeddedResource Include="Controls\Database\ControlServerQuery.resx">
       <DependentUpon>ControlServerQuery.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlYtApi2Categories.resx">
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Categories.resx">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlCategory.resx">
+    <EmbeddedResource Include="Controls\YouTube\ControlCategory.resx">
       <DependentUpon>ControlCategory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlTable.resx">
+    <EmbeddedResource Include="Controls\Database\ControlTable.resx">
       <DependentUpon>ControlTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlDatabaseSelect.resx">
+    <EmbeddedResource Include="Controls\Database\ControlDatabaseSelect.resx">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlObject.resx">
       <DependentUpon>ControlObject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlRelationship.resx">
+    <EmbeddedResource Include="Controls\Database\ControlRelationship.resx">
       <DependentUpon>ControlRelationship.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlField.resx">
+    <EmbeddedResource Include="Controls\Database\ControlField.resx">
       <DependentUpon>ControlField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlCompareFields.resx">
+      <DependentUpon>ControlCompareFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Spiders\ControlSpiderStandardFeeds.resx">
+      <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCompareFields.resx">
+      <DependentUpon>FormCompareFields.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormField.resx">
       <DependentUpon>FormField.cs</DependentUpon>
@@ -721,6 +769,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\FileXmlWarning_48.png" />
+    <None Include="Resources\FileXmlWarning_32.png" />
+    <None Include="Resources\FileXmlWarning_24.png" />
+    <None Include="Resources\FileXmlWarning_16.png" />
+    <None Include="Resources\FileXmlSuccess_48.png" />
+    <None Include="Resources\FileXmlSuccess_32.png" />
+    <None Include="Resources\FileXmlSuccess_24.png" />
+    <None Include="Resources\FileXmlSuccess_16.png" />
+    <None Include="Resources\FileXmlQuestion_48.png" />
+    <None Include="Resources\FileXmlQuestion_32.png" />
+    <None Include="Resources\FileXmlQuestion_24.png" />
+    <None Include="Resources\FileXmlQuestion_16.png" />
+    <None Include="Resources\FileXmlError_48.png" />
+    <None Include="Resources\FileXmlError_32.png" />
+    <None Include="Resources\FileXmlError_24.png" />
+    <None Include="Resources\FileXmlError_16.png" />
+    <None Include="Resources\FieldCompare_48.png" />
+    <None Include="Resources\FieldCompare_32.png" />
+    <None Include="Resources\FieldCompare_24.png" />
+    <None Include="Resources\FieldCompare_16.png" />
+    <None Include="Resources\DatabaseCompare_48.png" />
+    <None Include="Resources\DatabaseCompare_32.png" />
+    <None Include="Resources\DatabaseCompare_24.png" />
+    <None Include="Resources\DatabaseCompare_16.png" />
     <None Include="Resources\Relationship_48.png" />
     <None Include="Resources\Relationship_32.png" />
     <None Include="Resources\Relationship_24.png" />

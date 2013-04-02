@@ -29,14 +29,13 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlField();
+			this.control = new YtAnalytics.Controls.Database.ControlField();
 			this.SuspendLayout();
 			// 
 			// buttonClose
 			// 
 			this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonClose.Enabled = false;
 			this.buttonClose.Location = new System.Drawing.Point(297, 377);
 			this.buttonClose.Name = "buttonClose";
 			this.buttonClose.Size = new System.Drawing.Size(75, 23);
@@ -49,9 +48,9 @@
 			this.control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.control.Field = null;
 			this.control.Location = new System.Drawing.Point(12, 0);
 			this.control.Name = "control";
-			this.control.Field = null;
 			this.control.Size = new System.Drawing.Size(360, 371);
 			this.control.TabIndex = 4;
 			// 
@@ -76,7 +75,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private Controls.ControlField control;
+		private Controls.Database.ControlField control;
 
 	}
 }

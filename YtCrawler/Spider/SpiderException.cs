@@ -34,5 +34,15 @@ namespace YtCrawler.Spider
 			: base(message)
 		{
 		}
+
+		/// <summary>
+		/// Creates a new exception instance using the specified message and inner exception.
+		/// </summary>
+		/// <param name="message">The exception message.</param>
+		/// <param name="innerException">The inner exception.</param>
+		public SpiderException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
 	}
 }

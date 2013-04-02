@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtAnalytics.Controls;
+using YtAnalytics.Controls.YouTube.Api2;
 using YtApi.Api.V2.Data;
 using DotNetApi.Windows;
 

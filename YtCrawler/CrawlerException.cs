@@ -34,5 +34,15 @@ namespace YtCrawler
 			: base(message)
 		{
 		}
+
+		/// <summary>
+		/// Creates a crawler exception with the specified message and inner exception.
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="innerException"></param>
+		public CrawlerException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
 	}
 }

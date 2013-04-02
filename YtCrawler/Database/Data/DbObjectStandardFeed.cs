@@ -34,14 +34,14 @@ namespace YtCrawler.Database.Data
 		[Browsable(true), DisplayName("ID"), ReadOnly(true), Db(DbType.String, false), Description("The feed primary key.")]
 		public string Id { get; set; }
 
-		[Browsable(true), DisplayName("Feed"), ReadOnly(true), Db(DbType.Int16, false), Description("The standard feed numeric ID.")]
-		public Int16 FeedId { get; set; }
+		[Browsable(true), DisplayName("Feed"), ReadOnly(true), Db(DbType.Int32, false), Description("The standard feed numeric ID.")]
+		public int FeedId { get; set; }
+
+		[Browsable(true), DisplayName("Time"), ReadOnly(true), Db(DbType.Int32, true), Description("The time numeric ID.")]
+		public int TimeId { get; set; }
 
 		[Browsable(true), DisplayName("Category"), ReadOnly(true), Db(DbType.String, true), Description("The video category.")]
 		public string Category { get; set; }
-
-		[Browsable(true), DisplayName("Time"), ReadOnly(true), Db(DbType.Int16, true), Description("The time numeric ID.")]
-		public Int16 TimeId { get; set; }
 
 		[Browsable(true), DisplayName("Region"), ReadOnly(true), Db(DbType.StringFixedLength, true), Description("The region.")]
 		public string Region { get; set; }
@@ -52,8 +52,8 @@ namespace YtCrawler.Database.Data
 		[Browsable(true), DisplayName("Browsable"), ReadOnly(true), Db(DbType.Boolean, false), Description("Indicates whether the feed is browsable.")]
 		public bool Browsable { get; set; }
 
-		[Browsable(true), DisplayName("Web code"), ReadOnly(true), Db(DbType.Int16, true), Description("Indicates the HTTP response code received from the last access of this feed.")]
-		public Int16? WebCode { get; set; }
+		[Browsable(true), DisplayName("HTTP code"), ReadOnly(true), Db(DbType.Int32, true), Description("Indicates the HTTP response code received from the last access of this feed.")]
+		public int? HttpCode { get; set; }
 
 		// Methods.
 

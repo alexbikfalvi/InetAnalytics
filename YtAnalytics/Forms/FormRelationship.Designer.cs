@@ -31,7 +31,7 @@
 			this.buttonApply = new System.Windows.Forms.Button();
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonOk = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlRelationship();
+			this.control = new YtAnalytics.Controls.Database.ControlRelationship();
 			this.SuspendLayout();
 			// 
 			// buttonApply
@@ -106,7 +106,7 @@
 		private System.Windows.Forms.Button buttonApply;
 		private System.Windows.Forms.Button buttonCancel;
 		private System.Windows.Forms.Button buttonOk;
-		private Controls.ControlRelationship control;
+		private Controls.Database.ControlRelationship control;
 
 	}
 }

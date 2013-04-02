@@ -49,7 +49,7 @@
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlPanelLog = new YtAnalytics.Controls.ControlSideLog();
+			this.controlPanelLog = new YtAnalytics.Controls.ControlSideCalendar();
 			this.controlPanelSpiders = new YtAnalytics.Controls.ControlSideTree();
 			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
 			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
@@ -408,7 +408,7 @@
 		private System.Windows.Forms.Label labelNotAvailable;
 		private System.Windows.Forms.ToolStripMenuItem menuItemHelp;
 		private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
-		private Controls.ControlSideLog controlPanelLog;
+		private Controls.ControlSideCalendar controlPanelLog;
 		private Controls.ControlSideTree controlPanelConfiguration;
 		private Controls.ControlSideTree controlPanelBrowser;
 		private System.Windows.Forms.ContextMenuStrip menuViewVideo;

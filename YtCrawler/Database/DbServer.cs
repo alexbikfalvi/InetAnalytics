@@ -90,6 +90,9 @@ namespace YtCrawler.Database
 			this.tables = new DbTables(this.key);
 			this.relationships = new DbRelationships(this.key, this.tables);
 
+			// Set the event handlers.
+			this.tables.TableChanged += OnTableChanged;
+
 			// Load the current configuration.
 			this.LoadConfiguration();
 		}
@@ -252,6 +255,10 @@ namespace YtCrawler.Database
 		/// </summary>
 		public event DbServerDatabaseChangedEventHandler DatabaseChanged;
 		/// <summary>
+		/// An event raised when a server database table has changed.
+		/// </summary>
+		public event DbServerTableChangedEventHandler TableChanged;
+		/// <summary>
 		/// An event raised when the server begins opening the connection.
 		/// </summary>
 		public event DbServerEventHandler Opening;
@@ -410,6 +417,21 @@ namespace YtCrawler.Database
 		/// <returns>The database command.</returns>
 		public abstract DbCommand CreateCommand(DbQuery query);
 
+		/// <summary>
+		/// Creates a new database command with the specified query and transaction.
+		/// </summary>
+		/// <param name="query">The database query.</param>
+		/// <param name="transaction">The database transaction.</param>
+		/// <returns>The database command.</returns>
+		public abstract DbCommand CreateCommand(DbQuery query, DbTransaction transaction);
+
+		/// <summary>
+		/// Creates and begins a new database transaction.
+		/// </summary>
+		/// <param name="isolation">The transaction isolation level.</param>
+		/// <returns>A transaction object to use with subsequent commands within the transaction.</returns>
+		public abstract DbTransaction BeginTransaction(IsolationLevel isolation);
+
 		// Protected methods.
 
 		/// <summary>
@@ -499,6 +521,16 @@ namespace YtCrawler.Database
 		{
 			// Call the event.
 			if (this.EventLogged != null) this.EventLogged(evt);
+		}
+
+		/// <summary>
+		/// An event handler called when a database table has changed.
+		/// </summary>
+		/// <param name="table">The database table.</param>
+		private void OnTableChanged(ITable table)
+		{
+			// Raise the server event.
+			if (this.TableChanged != null) this.TableChanged(this, table);
 		}
 	}
 }

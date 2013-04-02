@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.controlPlaylist = new YtAnalytics.Controls.ControlPlaylist();
+			this.controlPlaylist = new YtAnalytics.Controls.YouTube.ControlPlaylist();
 			this.SuspendLayout();
 			// 
 			// buttonClose
@@ -76,7 +76,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private Controls.ControlPlaylist controlPlaylist;
+		private Controls.YouTube.ControlPlaylist controlPlaylist;
 
 	}
 }

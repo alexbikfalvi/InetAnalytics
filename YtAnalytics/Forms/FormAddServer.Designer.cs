@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonAdd = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlAddServer();
+			this.control = new YtAnalytics.Controls.Database.ControlAddServer();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
@@ -95,7 +95,7 @@
 
 		private System.Windows.Forms.Button buttonCancel;
 		private System.Windows.Forms.Button buttonAdd;
-		private Controls.ControlAddServer control;
+		private Controls.Database.ControlAddServer control;
 
 	}
 }

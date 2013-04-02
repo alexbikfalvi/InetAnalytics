@@ -58,6 +58,10 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
+		/// Gets the local name of the field.
+		/// </summary>
+		public string LocalName { get { return this.property.Name; } }
+		/// <summary>
 		/// Gets the display name of the field.
 		/// </summary>
 		public string DisplayName
@@ -107,5 +111,27 @@ namespace YtCrawler.Database
 		/// Gets the property information for this field.
 		/// </summary>
 		public PropertyInfo Property { get { return this.property; } }
+		/// <summary>
+		/// Gets the name of the local type.
+		/// </summary>
+		public string LocalType
+		{
+			get
+			{
+				Type type = this.Property.PropertyType;
+				if (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(Nullable<>)))
+					return string.Format("*{0}", type.GetGenericArguments()[0].Name);
+				else
+					return type.Name;
+			}
+		}
+		/// <summary>
+		/// Gets the name of the database type.
+		/// </summary>
+		public string DatabaseType { get { return this.databaseAttribute.Type.ToString(); } }
+		/// <summary>
+		/// Gets whether the field is nullable.
+		/// </summary>
+		public bool IsNullable { get { return this.databaseAttribute.IsNullable; } }
 	}
 }

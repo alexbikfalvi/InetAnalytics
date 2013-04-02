@@ -22,8 +22,8 @@ using DotNetApi.Async;
 
 namespace YtCrawler.Spider
 {
-	public delegate void SpiderCallback(Spider spider, AsyncResult asyncState);
-	public delegate void SpiderStateChangedEventHandler(Spider spider);
+	public delegate void SpiderCallback(Spider spider, SpiderAsyncResult asyncState);
+	public delegate void SpiderEventHandler(Spider spider);
 
 	/// <summary>
 	/// A class that represents a crawling spider, which is the basic unit of gathering YouTube data.
@@ -33,9 +33,9 @@ namespace YtCrawler.Spider
 	{
 		public enum CrawlState
 		{
-			Ready = 0,
+			Stopped = 0,
 			Running = 1,
-			Finished = 2
+			Canceling = 2
 		}
 
 		private CrawlState state;
@@ -47,12 +47,25 @@ namespace YtCrawler.Spider
 		/// </summary>
 		public Spider()
 		{
-			this.state = CrawlState.Ready;
+			this.state = CrawlState.Stopped;
 			this.lastUpdated = DateTime.MinValue;
 		}
 
 		// Public events.
-		public event SpiderStateChangedEventHandler StateChanged;
+		
+		/// <summary>
+		/// An event raised when the spider state has changed.
+		/// </summary>
+		public event SpiderEventHandler StateChanged;
+		/// <summary>
+		/// An event raised when the spider crawl has started.
+		/// </summary>
+		public event SpiderEventHandler CrawlStarted;
+		/// <summary>
+		/// An event raised when the spider crawl has finished.
+		/// </summary>
+		public event SpiderEventHandler CrawlFinished;
+
 
 		// Public properties.
 
@@ -88,11 +101,12 @@ namespace YtCrawler.Spider
 			try
 			{
 				// If the spider is in the running state, throw an exception.
-				if (this.state == CrawlState.Running) throw new SpiderException("Cannot begin spider crawling because the spider is already in the running state.");
+				if (this.state != CrawlState.Stopped) throw new SpiderException("Cannot begin spider crawling because the spider is not in the stopped state.");
 				// Change the spider state to running.
 				this.state = CrawlState.Running;
-				// Raise the event.
+				// Raise the events.
 				if (this.StateChanged != null) this.StateChanged(this);
+				if (this.CrawlStarted != null) this.CrawlStarted(this);
 			}
 			finally
 			{
@@ -111,9 +125,33 @@ namespace YtCrawler.Spider
 			try
 			{
 				// If the spider is not in the running state, throw an exception.
-				if (this.state != CrawlState.Running) throw new SpiderException("Cannot finish spider crawling because the spider is not in the running state.");
+				if (this.state == CrawlState.Stopped) throw new SpiderException("Cannot finish spider crawling because the spider is already in the stopped state.");
 				// Change the spider state to running.
-				this.state = CrawlState.Finished;
+				this.state = CrawlState.Stopped;
+				// Raise the event.
+				if (this.StateChanged != null) this.StateChanged(this);
+				if (this.CrawlFinished != null) this.CrawlFinished(this);
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user cancels the spider crawling.
+		/// </summary>
+		protected void OnCanceled()
+		{
+			// Lock the mutex.
+			this.mutex.WaitOne();
+			try
+			{
+				// If the spider is not in the running state, throw an exception.
+				if (this.state != CrawlState.Running) throw new SpiderException("Cannot cancel spider crawling because the spider is not in the running state.");
+				// Change the spider state to canceling.
+				this.state = CrawlState.Canceling;
 				// Raise the event.
 				if (this.StateChanged != null) this.StateChanged(this);
 			}

@@ -17,7 +17,10 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using DotNetApi.Async;
+using DotNetApi.Web;
 
 namespace YtCrawler.Spider
 {
@@ -26,18 +29,128 @@ namespace YtCrawler.Spider
 	/// </summary>
 	public class SpiderAsyncResult : AsyncResult
 	{
+		private SpiderException exception = null;
+		private object result = null;
+		private bool canceled = false;
+
+		private Mutex mutex = new Mutex(); // A mutex to synchronize access to the asynchronous operation.
+
+		private HashSet<AsyncWebOperation> asyncWeb = new HashSet<AsyncWebOperation>();
+
+
 		/// <summary>
 		/// Creates a new asynchronous result instance using the specified user state.
 		/// </summary>
-		/// <param name="state"></param>
+		/// <param name="state">The user state.</param>
 		public SpiderAsyncResult(object state)
 			: base(state)
 		{
 		}
 
+		// Public properties.
+		
 		/// <summary>
 		/// Gets or sets the asynchronous result exception.
 		/// </summary>
-		public SpiderException Exception { get; set; }
+		public SpiderException Exception
+		{
+			get { return this.exception; }
+			set { this.exception = value; }
+		}
+
+		/// <summary>
+		/// Returns the result of the asynchronous spider operation.
+		/// </summary>
+		public object Result
+		{
+			get { return this.result; }
+			set { this.result = value; }
+		}
+
+		/// <summary>
+		/// If <b>true</b> the asynchronous operation has been canceled.
+		/// </summary>
+		public bool IsCanceled
+		{
+			get { return this.canceled; }
+			set { this.canceled = value; }
+		}
+
+		/// <summary>
+		/// The collection of web requests executed during this asynchronous operation.
+		/// </summary>
+		public ICollection<AsyncWebOperation> AsyncWeb { get { return this.asyncWeb; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Adds the result of an asynchronous web operation to the collection of web requests.
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="result">The result of the web request.</param>
+		public AsyncWebOperation AddAsyncWeb(AsyncWebRequest request, AsyncWebResult result)
+		{
+			// Create the asynchronous web operation.
+			AsyncWebOperation operation = new AsyncWebOperation(request, result);
+			// Lock the mutex.
+			this.mutex.WaitOne();
+			try
+			{
+				// Add the result.
+				this.asyncWeb.Add(operation);
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}
+			// Return the web operation.
+			return operation;
+		}
+
+		/// <summary>
+		/// Removes the result of an asynchronous web operation from the collection of web requests.
+		/// </summary>
+		/// <param name="operation">The asynchronous web operation.</param>
+		public void RemoveAsyncWeb(AsyncWebOperation operation)
+		{
+			// Lock the mutex.
+			this.mutex.WaitOne();
+			try
+			{
+				// Remove the result.
+				this.asyncWeb.Remove(operation);
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}
+		}
+
+		/// <summary>
+		/// Cancels the asynchronous spider operation, by setting the canceled flag to <b>true</b>, and cancelling
+		/// all web requests added for this operation.
+		/// </summary>
+		public void Cancel()
+		{
+			// Set the canceled flag.
+			this.canceled = true;
+			// Lock the mutex.
+			this.mutex.WaitOne();
+			try
+			{
+				// Cancel all web operations.
+				foreach (AsyncWebOperation operation in this.asyncWeb)
+				{
+					operation.Cancel();
+				}
+			}
+			finally
+			{
+				// Unlock the mutex.
+				this.mutex.ReleaseMutex();
+			}
+		}
 	}
 }

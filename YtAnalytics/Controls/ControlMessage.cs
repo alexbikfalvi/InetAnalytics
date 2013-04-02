@@ -17,103 +17,68 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
-	public delegate void ShowMessageEventHandler(Image image, string text, bool progress, int duration);
-	public delegate void HideMessageEventHandler();
-
 	/// <summary>
-	/// A control that displays an information message to the user.
+	/// A controls that displays the message box.
 	/// </summary>
-	public partial class ControlMessage : ThreadSafeControl
+	public class ControlMessage : ThreadSafeControl
 	{
+		private ControlMessageBox message = new ControlMessageBox();
+
+		private ShowMessageEventHandler delegateShowMessage;
+		private HideMessageEventHandler delegateHideMessage;
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
 		public ControlMessage()
 		{
-			InitializeComponent();
-			// Default state.
-			this.Visible = false;
+			// Add the message control.
+			this.Controls.Add(this.message);
+			// Create the delegates.
+			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
+			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 		}
 
 		/// <summary>
-		/// Shows the message control. The method is thread-safe.
+		/// Shows an alerting message on top of the control.
 		/// </summary>
-		/// <param name="image">The image.</param>
-		/// <param name="text">The text.</param>
+		/// <param name="image">The message icon.</param>
+		/// <param name="text">The message text.</param>
 		/// <param name="progress">The visibility of the progress bar.</param>
 		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
-		public void Show(Image image, string text, bool progress, int duration = -1)
+		protected void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
 		{
-			this.pictureBox.Image = image;
-			this.label.Text = text;
-			this.Left = (this.Parent.Width - this.Width) / 2;
-			this.Top = (this.Parent.Height - this.Height) / 2;
-			this.progressBar.Visible = progress;
-
-			// If the duration is positive
-			if (duration > 0)
+			// Invoke the function on the UI thread.
+			if (this.InvokeRequired)
+				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
+			else
 			{
-				// Set the timer interval.
-				this.timer.Interval = duration;
-				// Enable the timer.
-				this.timer.Enabled = true;
+				// Set the message on top of all other controls.
+				this.Controls.SetChildIndex(this.message, 0);
+				// Show the message.
+				this.message.Show(image, text, progress, duration);
 			}
-
-			this.Show();
 		}
 
 		/// <summary>
-		/// Gets or sets the message control icon.
+		/// Hides the alerting message.
 		/// </summary>
-		public Image Image
+		protected void HideMessage()
 		{
-			get { return this.pictureBox.Image; }
-			set { this.pictureBox.Image = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the message control text.
-		/// </summary>
-		public override string Text
-		{
-			get { return this.label.Text; }
-			set { this.label.Text = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the visibility of the progress bar.
-		/// </summary>
-		public bool Progress
-		{
-			get { return this.progressBar.Visible; }
-			set { this.progressBar.Visible = value; }
-		}
-
-		// Private methods.
-
-		/// <summary>
-		/// An event handler called when the timer expires.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnTick(object sender, EventArgs e)
-		{
-			// Disable the timer.
-			this.timer.Enabled = false;
-			// Hide the control.
-			this.Hide();
+			// Invoke the function on the UI thread.
+			if (this.InvokeRequired)
+				this.Invoke(this.delegateHideMessage);
+			else
+			{
+				// Hide the message.
+				this.message.Hide();
+			}
 		}
 	}
 }

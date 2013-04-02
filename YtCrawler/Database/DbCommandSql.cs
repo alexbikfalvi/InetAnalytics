@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,30 +35,43 @@ namespace YtCrawler.Database
 		/// </summary>
 		/// <param name="connection">The database server connection.</param>
 		/// <param name="query">The command query.</param>
-		public DbCommandSql(SqlConnection connection, DbQuery query)
+		/// <param name="transaction">The database transaction, or <b>null</b> if no transaction is used.</param>
+		public DbCommandSql(SqlConnection connection, DbQuery query, DbTransactionSql transaction = null)
 			: base(query)
 		{
+			// Create a modified query for this server, replacing the query parameters.
+			string queryServer = null;
+			// Create an array of parameter names.
+			string[] parameterNames = null;
+			
 			// If the command has parameters.
 			if (query.Parameters.Count > 0)
 			{
 				// Process the query parameters, by creating the list of parameter names.
-				string[] parameterNames = new string[query.Parameters.Count];
+				parameterNames = new string[query.Parameters.Count];
 				for (int index = 0; index < query.Parameters.Count; index++)
 				{
 					parameterNames[index] = string.Format("@param{0}", index);
 				}
-				// Replace the parameter names in the query and create the SQL command.
-				this.command = new SqlCommand(string.Format(query.Query, parameterNames), connection);
-				// Add the parameters to the command.
-				for (int index = 0; index < query.Parameters.Count; index++)
-				{
-					this.command.Parameters.AddWithValue(parameterNames[index], query.Parameters[index]);
-				}
+				// Create the query.
+				queryServer = string.Format(query.Query, parameterNames);
 			}
 			else
 			{
-				// Create the SQL command.
-				this.command = new SqlCommand(query.Query, connection);
+				// If there are no parameters, use the givem query.
+				queryServer = query.Query;
+			}
+			
+			// If the database transaction is not null.
+			if (transaction != null)
+				this.command = new SqlCommand(queryServer, connection, transaction.Transaction);
+			else
+				this.command = new SqlCommand(queryServer, connection);
+
+			// Add the parameters to the command.
+			for (int index = 0; index < query.Parameters.Count; index++)
+			{
+				this.command.Parameters.AddWithValue(parameterNames[index], query.Parameters[index]);
 			}
 		}
 

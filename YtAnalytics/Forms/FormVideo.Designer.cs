@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.video = new YtAnalytics.Controls.ControlVideo();
+			this.video = new YtAnalytics.Controls.YouTube.ControlVideo();
 			this.SuspendLayout();
 			// 
 			// buttonClose
@@ -50,7 +50,7 @@
 			this.video.Size = new System.Drawing.Size(504, 369);
 			this.video.TabIndex = 2;
 			this.video.Video = null;
-			this.video.ViewProfile += new YtAnalytics.Controls.ViewIdEventHandler(this.OnViewProfile);
+			this.video.ViewProfile += new YtAnalytics.Controls.YouTube.Api2.ViewIdEventHandler(this.OnViewProfile);
 			// 
 			// FormVideo
 			// 
@@ -73,7 +73,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private Controls.ControlVideo video;
+		private Controls.YouTube.ControlVideo video;
 
 	}
 }

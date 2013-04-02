@@ -56,6 +56,7 @@
     <Compile Include="Database\Data\DbObjectSqlTable.cs" />
     <Compile Include="Database\Data\DbObjectSqlType.cs" />
     <Compile Include="Database\Data\DbObjectTable.cs" />
+    <Compile Include="Database\Data\DbObjectType.cs" />
     <Compile Include="Database\DbAsyncResult.cs" />
     <Compile Include="Database\DbAttribute.cs" />
     <Compile Include="Database\DbData.cs" />
@@ -79,6 +80,8 @@
     <Compile Include="Database\DbDataRaw.cs" />
     <Compile Include="Database\DbTable.cs" />
     <Compile Include="Database\DbTables.cs" />
+    <Compile Include="Database\DbTransaction.cs" />
+    <Compile Include="Database\DbTransactionSql.cs" />
     <Compile Include="Log\LogEvent.cs" />
     <Compile Include="Log\LogException.cs" />
     <Compile Include="Log\Logger.cs" />

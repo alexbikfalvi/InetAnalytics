@@ -38,6 +38,16 @@ namespace YtCrawler.Database.Data
 		public abstract string GetName();
 
 		/// <summary>
+		/// Returns the value of the specified property.
+		/// </summary>
+		/// <param name="property">The property name.</param>
+		/// <returns>The property value.</returns>
+		public object GetValue(string property)
+		{
+			return this.GetType().GetProperty(property).GetValue(this, null);
+		}
+
+		/// <summary>
 		/// Create a database object from the specified XML file.
 		/// </summary>
 		/// <typeparam name="T">The object type.</typeparam>

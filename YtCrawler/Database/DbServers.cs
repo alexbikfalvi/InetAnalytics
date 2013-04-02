@@ -33,6 +33,7 @@ namespace YtCrawler.Database
 	public delegate void DbServerStateEventHandler(DbServer server, DbServerStateEventArgs e);
 	public delegate void DbServerPrimaryChangedEventHandler(DbServer oldPrimary, DbServer newPrimary);
 	public delegate void DbServerDatabaseChangedEventHandler(DbServer server, DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase);
+	public delegate void DbServerTableChangedEventHandler(DbServer server, ITable table);
 
 	/// <summary>
 	/// A class representing the list of database servers.

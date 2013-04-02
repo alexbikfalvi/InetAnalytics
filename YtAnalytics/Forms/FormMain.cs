@@ -22,13 +22,21 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using YtAnalytics.Controls;
-using YtApi.Api.V2;
-using YtApi.Api.V2.Data;
-using YtCrawler;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
 using Microsoft.Win32;
+using YtAnalytics.Controls;
+using YtAnalytics.Controls.Comments;
+using YtAnalytics.Controls.Database;
+using YtAnalytics.Controls.Log;
+using YtAnalytics.Controls.Spiders;
+using YtAnalytics.Controls.YouTube;
+using YtAnalytics.Controls.YouTube.Api2;
+using YtAnalytics.Controls.YouTube.Api3;
+using YtAnalytics.Controls.YouTube.Web;
+using YtApi.Api.V2;
+using YtApi.Api.V2.Data;
+using YtCrawler;
 
 namespace YtAnalytics.Forms
 {
@@ -109,6 +117,8 @@ namespace YtAnalytics.Forms
 		private ControlWeb controlWeb = new ControlWeb();
 		private ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
 		private ControlServers controlDatabaseServers = new ControlServers();
+		private ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
+		private ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
 		private ControlSettings controlSettings = new ControlSettings();
 		private ControlLog controlLog = new ControlLog();
 		private ControlCommentsInfo controlCommentsInfo = new ControlCommentsInfo();
@@ -281,6 +291,8 @@ namespace YtAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlWeb);
 			this.splitContainer.Panel2.Controls.Add(this.controlWebStatistics);
 			this.splitContainer.Panel2.Controls.Add(this.controlDatabaseServers);
+			this.splitContainer.Panel2.Controls.Add(this.controlSpiderInfo);
+			this.splitContainer.Panel2.Controls.Add(this.controlSpiderStandardFeeds);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
 			this.splitContainer.Panel2.Controls.Add(this.controlCommentsInfo);
@@ -310,6 +322,9 @@ namespace YtAnalytics.Forms
 			this.treeNodeBrowserWebVideos.Tag = this.controlWebStatistics;
 
 			this.treeNodeDatabaseServers.Tag = this.controlDatabaseServers;
+
+			this.treeNodeSpidersLocal.Tag = this.controlSpiderInfo;
+			this.treeNodeSpiderStandardFeeds.Tag = this.controlSpiderStandardFeeds;
 
 			this.treeNodeSettings.Tag = this.controlSettings;
 			this.controlPanelLog.Tag = this.controlLog;
@@ -393,6 +408,7 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "APIv2 Playlist Videos Feed");
 			this.controlYtApi2Categories.Initialize(this.crawler);
 			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
+			this.controlSpiderStandardFeeds.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
@@ -486,6 +502,8 @@ namespace YtAnalytics.Forms
 			this.controlWeb.ClickVideoStatistics += new EventHandler(this.BrowserWebVideosClick);
 
 			this.controlWebStatistics.Comment += this.CommentVideo;
+
+			this.controlSpiderInfo.StandardFeedsClick += this.BrowserSpiderStandardFeedsClick;
 
 			this.controlCommentsInfo.ClickVideos += new EventHandler(this.BrowserCommentsVideosClick);
 			this.controlCommentsInfo.ClickUsers += new EventHandler(this.BrowserCommentsUsersClick);
@@ -670,6 +688,12 @@ namespace YtAnalytics.Forms
 		{
 			this.sideMenu.SelectedItem = this.sideMenuBrowse;
 			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
+		}
+
+		private void BrowserSpiderStandardFeedsClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuSpiders;
+			this.controlPanelSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
 		}
 
 		private void BrowserCommentsVideosClick(object sender, EventArgs e)

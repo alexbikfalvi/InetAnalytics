@@ -68,6 +68,8 @@ namespace YtCrawler.Database
 			// Add relationships to the tables list.
 			this.Relationships.Add(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
 			this.Relationships.Add(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
+			this.Relationships.Add(this.tableTypes, this.tableColumns, "SystemTypeId", "SystemTypeId");
+			this.Relationships.Add(this.tableTypes, this.tableColumns, "UserTypeId", "UserTypeId");
 		}
 
 		/// <summary>
@@ -513,6 +515,27 @@ namespace YtCrawler.Database
 		public override DbCommand CreateCommand(DbQuery query)
 		{
 			return new DbCommandSql(this.connection, query);
+		}
+
+		/// <summary>
+		/// Creates a new database command with the specified query and transaction.
+		/// </summary>
+		/// <param name="query">The database query.</param>
+		/// <param name="transaction">The database transaction.</param>
+		/// <returns>The database command.</returns>
+		public override DbCommand CreateCommand(DbQuery query, DbTransaction transaction)
+		{
+			return new DbCommandSql(this.connection, query, transaction as DbTransactionSql);
+		}
+
+		/// <summary>
+		/// Creates and begins a new database transaction.
+		/// </summary>
+		/// <param name="isolation">The transaction isolation level.</param>
+		/// <returns>A transaction object to use with subsequent commands within the transaction.</returns>
+		public override DbTransaction BeginTransaction(IsolationLevel isolation)
+		{
+			return new DbTransactionSql(this.connection, isolation);
 		}
 
 		// Protected methods.

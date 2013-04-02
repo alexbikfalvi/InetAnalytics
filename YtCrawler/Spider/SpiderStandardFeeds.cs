@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using YtApi.Api.V2;
@@ -28,7 +29,8 @@ using DotNetApi.Web;
 
 namespace YtCrawler.Spider
 {
-	public delegate void SpiderStandardFeedsEventHandler(string feedName);
+	public delegate void SpiderStandardFeedsStartedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
+	public delegate void SpiderStandardFeedsEventHandler(Spider spider, DbObjectStandardFeed obj);
 
 	/// <summary>
 	/// A spider browsing through the YouTube API version 2 standard video feeds.
@@ -45,6 +47,7 @@ namespace YtCrawler.Spider
 		/// <param name="crawler">The crawler object.</param>
 		public SpiderStandardFeeds(Crawler crawler)
 		{
+			// Set the crawler.
 			this.crawler = crawler;
 		}
 
@@ -57,6 +60,10 @@ namespace YtCrawler.Spider
 
 		// Public events.
 
+		/// <summary>
+		/// An event raised when the spider began crawling the feeds.
+		/// </summary>
+		public event SpiderStandardFeedsStartedEventHandler CrawlFeedsStarted;
 		/// <summary>
 		/// An event raised when the spider began crawling a standard feed.
 		/// </summary>
@@ -73,49 +80,165 @@ namespace YtCrawler.Spider
 		/// </summary>
 		/// <param name="callback"></param>
 		/// <param name="userState">The user state.</param>
-		/// <returns>The result of the asynchronous operation.</returns>
-		public IAsyncResult Crawl(SpiderCallback callback, object userState = null)
+		/// <returns>The result of the asynchronous spider operation.</returns>
+		public IAsyncResult BeginCrawl(SpiderCallback callback, object userState = null)
 		{
 			// Update the spider state.
-			this.OnStarted();
+			base.OnStarted();
 
-			// Create a new spider asynchronous result.
-			SpiderAsyncResult result = new SpiderAsyncResult(userState);
+			try
+			{
+				// Compute the standard feeds to crawl.
+				Dictionary<string, DbObjectStandardFeed> feeds = new Dictionary<string, DbObjectStandardFeed>();
 
-			// Execute the crawl on the thread pool.
-			ThreadPool.QueueUserWorkItem((object state) =>
+				// For all standard feeds.
+				foreach (YouTubeStandardFeed feed in YouTube.StandardFeeds)
 				{
-					// Create the table of standard feeds.
+					// Get the valid times for this feed.
+					YouTubeTimeId[] times = YouTubeUri.GetValidTime(feed);
 
-					// For all standard feeds.
-					foreach (YouTubeStandardFeed feed in YouTube.StandardFeeds)
+					// For all times corresponding to this feed.
+					foreach (YouTubeTimeId time in times)
 					{
-						// Get the valid times for this feed.
-						YouTubeTimeId[] times = YouTubeUri.GetValidTime(feed);
+						// Create a new standard feed object.
+						DbObjectStandardFeed obj = new DbObjectStandardFeed();
+						obj.Id = this.EncodeFeedKey(feed, time, null, null);
+						obj.FeedId = (int)feed;
+						obj.TimeId = (int)time;
+						obj.Category = null;
+						obj.Region = null;
+						feeds.Add(obj.Id, obj);
 
-						// For all times corresponding to this feed.
-						foreach (YouTubeTimeId time in times)
+						// For all assignable and non-deprecated categories.
+						foreach (YouTubeCategory category in this.crawler.Categories)
 						{
-							// For all assignable and non-deprecated categories.
-							foreach (YouTubeCategory category in this.crawler.Categories)
+							// If the category supports browsable regions.
+							if (category.Browsable != null)
 							{
-								// If the category supports browsable regions.
-								if (category.Browsable != null)
+								// Create a new standard feed object.
+								obj = new DbObjectStandardFeed();
+								obj.Id = this.EncodeFeedKey(feed, time, category.Label, null);
+								obj.FeedId = (int)feed;
+								obj.TimeId = (int)time;
+								obj.Category = category.Label;
+								obj.Region = null;
+								feeds.Add(obj.Id, obj);
+
+								// For all browsable regions.
+								foreach (string region in category.Browsable)
 								{
-									foreach (string region in category.Browsable)
-									{
-									}
+									// Create a new standard feed object.
+									obj = new DbObjectStandardFeed();
+									obj.Id = this.EncodeFeedKey(feed, time, category.Label, region);
+									obj.FeedId = (int)feed;
+									obj.TimeId = (int)time;
+									obj.Category = category.Label;
+									obj.Region = region;
+									feeds.Add(obj.Id, obj);
 								}
 							}
 						}
 					}
+				}
 
-					// Update the spider state.
-					this.OnFinished();
-				});
-			
-			// Returns the spider object as the asynchronous state.
-			return result;
+				// Raise an event.
+				if (this.CrawlFeedsStarted != null) this.CrawlFeedsStarted(this, feeds);
+
+				// Create a new spider asynchronous result.
+				SpiderAsyncResult asyncResult = new SpiderAsyncResult(userState);
+
+				// Execute the crawl on the thread pool.
+				ThreadPool.QueueUserWorkItem((object state) =>
+					{
+						/*
+						foreach(KeyValuePair<string, DbObjectStandardFeed> feed in feeds)
+						{
+							// Check if the crawl has been canceled.
+							if (asyncResult.IsCanceled) break;
+
+							// Get the object.
+							DbObjectStandardFeed obj = feed.Value;
+
+							// Crawl the feed.
+							this.CrawlFeed(
+								asyncResult,
+								(YouTubeStandardFeed)obj.FeedId,
+								(YouTubeTimeId)obj.TimeId,
+								obj.Category,
+								obj.Region,
+								ref obj);
+						}
+						 */
+
+						// Set the result.
+						asyncResult.Result = feeds;
+
+						// Update the spider state.
+						base.OnFinished();
+					});
+				// Returns the spider object as the asynchronous state.
+				return asyncResult;
+			}
+			catch (Exception)
+			{
+				// If an exception occurs, update the spider state.
+				base.OnFinished();
+				// Rethrow the exception.
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// Completes the spider crawl and returns the crawl result.
+		/// </summary>
+		/// <param name="result">The asynchronous result.</param>
+		/// <returns>The crawled standard feeds.</returns>
+		public IDictionary<string, DbObjectStandardFeed> EndCrawl(IAsyncResult result)
+		{
+			// Convert the result to a spider asynchronous result.
+			SpiderAsyncResult asyncResult = result as SpiderAsyncResult;
+
+			// If an exception occurred during the crawl, throw the exception.
+			if (asyncResult.Exception != null)
+			{
+				throw new SpiderException("An exception occurred during the spider crawling.", asyncResult.Exception);
+			}
+
+			// Else, return the result.
+			return asyncResult.Result as IDictionary<string, DbObjectStandardFeed>;
+		}
+
+		/// <summary>
+		/// Cancels an asynchronous crawling operation.
+		/// </summary>
+		/// <param name="result">The asynchronous result.</param>
+		public void CancelCrawl(IAsyncResult result)
+		{
+			// Update the spider state.
+			base.OnCanceled();
+
+			// Get the asynchronous result.
+			SpiderAsyncResult asyncResult = result as SpiderAsyncResult;
+
+			// Cancel the operation.
+			asyncResult.Cancel();
+		}
+
+		/// <summary>
+		/// Computes the feed key for a set of feed parameters.
+		/// </summary>
+		/// <param name="feedId">The feed ID.</param>
+		/// <param name="timeId">The time ID.</param>
+		/// <param name="category">The category.</param>
+		/// <param name="regionId">The region ID.</param>
+		/// <returns>The feed key.</returns>
+		public string EncodeFeedKey(YouTubeStandardFeed feedId, YouTubeTimeId timeId, string category, string regionId)
+		{
+			return string.Format("{0}.{1}.{2}.{3}",
+				(int)feedId,
+				(int)timeId,
+				category != null ? category : string.Empty,
+				regionId != null ? regionId : string.Empty);
 		}
 
 		// Protected methods.
@@ -134,34 +257,64 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// Crawls the feed at the specified parameters.
 		/// </summary>
+		/// <param name="asyncResult">The asynchronous result.</param>
 		/// <param name="feedId">The feed.</param>
 		/// <param name="timeId">The time.</param>
 		/// <param name="category">The category.</param>
 		/// <param name="regionId">The region.</param>
-		private void CrawlFeed(YouTubeStandardFeed feedId, YouTubeTimeId timeId, string category, string regionId)
+		/// <param name="feeds">The list of standard feeds.</param>
+		private void CrawlFeed(SpiderAsyncResult asyncResult, YouTubeStandardFeed feedId, YouTubeTimeId timeId, string category, string regionId, ref DbObjectStandardFeed obj)
 		{
+			// If the asynchronousn operation has been canceled, do nothing.
+			if (asyncResult.IsCanceled) return;
+
+			// Compute the feed key.
+			string key = this.EncodeFeedKey(feedId, timeId, category, regionId);
+
 			// Compute the feed URI starting at index 1 and ask for 1 result.
 			Uri uri = YouTubeUri.GetStandardFeed(feedId, regionId, category, timeId, 1, 1);
 
 			// Create a new video request.
 			YouTubeRequestFeed<Video> request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
 
+			// Set the feed URL.
+			obj.Url = uri.AbsoluteUri;
+
 			try
 			{
 				// Begin an asynchronous request for the standard feed.
-				IAsyncResult result = request.Begin(uri, (AsyncWebResult asyncResult) => { });
+				AsyncWebResult result = request.Begin(uri, (AsyncWebResult webResult) => { }) as AsyncWebResult;
+
+				// Add the result of the web operation to the collection of web requests.
+				AsyncWebOperation operation = asyncResult.AddAsyncWeb(request, result);
 
 				// Wait for the asynchronous operation to complete.
 				result.AsyncWaitHandle.WaitOne();
 
+				// Remove the result of the web operation from the collection of web requests.
+				asyncResult.RemoveAsyncWeb(operation);
+
 				// Complete the request and get the video feed.
 				Feed<Video> feed = request.End(result);
+
+				// If the operation completed successfully, set the browsable to true.
+				obj.Browsable = true;
+				// Set the response HTTP code.
+				obj.HttpCode = (int)(result as AsyncWebResult).Response.StatusCode;
 			}
 			catch (WebException exception)
 			{
+				// If the operation failed with a web exception, set the browsable to false.
+				obj.Browsable = false;
+				// Set the response HTTP code.
+				obj.HttpCode = (int)(exception.Response as HttpWebResponse).StatusCode;
 			}
-			catch (Exception exception)
+			catch (Exception)
 			{
+				// If the operation failed with a web exception, set the browsable to false.
+				obj.Browsable = false;
+				// Set the response HTTP code to null.
+				obj.HttpCode = null;
 			}
 		}
 	}

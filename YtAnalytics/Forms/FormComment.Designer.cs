@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlComment();
+			this.control = new YtAnalytics.Controls.Comments.ControlComment();
 			this.SuspendLayout();
 			// 
 			// buttonClose
@@ -74,7 +74,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private Controls.ControlComment control;
+		private Controls.Comments.ControlComment control;
 
 	}
 }

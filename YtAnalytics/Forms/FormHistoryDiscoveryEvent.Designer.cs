@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.controlHistoryDiscoveryEvent = new YtAnalytics.Controls.ControlHistoryDiscoveryEvent();
+			this.controlHistoryDiscoveryEvent = new YtAnalytics.Controls.YouTube.ControlHistoryDiscoveryEvent();
 			this.SuspendLayout();
 			// 
 			// buttonClose
@@ -72,7 +72,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private Controls.ControlHistoryDiscoveryEvent controlHistoryDiscoveryEvent;
+		private Controls.YouTube.ControlHistoryDiscoveryEvent controlHistoryDiscoveryEvent;
 
 	}
 }

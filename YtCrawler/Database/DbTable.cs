@@ -26,6 +26,8 @@ using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
 {
+	public delegate void DbTableChangedEventHandler(ITable table);
+
 	/// <summary>
 	/// An interface for a database table.
 	/// </summary>
@@ -87,6 +89,13 @@ namespace YtCrawler.Database
 		/// Returns the collection of relationships for the database table.
 		/// </summary>
 		IEnumerable<IRelationship> Relationships { get; }
+
+		// Public events.
+
+		/// <summary>
+		/// An event raised when the configuration of the table has changed.
+		/// </summary>
+		event DbTableChangedEventHandler TableChanged;
 
 		// Public methods.
 
@@ -294,6 +303,10 @@ namespace YtCrawler.Database
 		/// </summary>
 		public IEnumerable<IRelationship> Relationships { get { return this.relationships; } }
 
+		/// <summary>
+		/// An event raised when the configuration of the table has changed.
+		/// </summary>
+		public event DbTableChangedEventHandler TableChanged;
 
 		// Public methods.
 
@@ -382,6 +395,8 @@ namespace YtCrawler.Database
 			XDocument document = new XDocument(element);
 			// Write the document to registry.
 			Registry.SetValue(key, this.localName, Encoding.UTF8.GetBytes(document.ToString()), RegistryValueKind.Binary);
+			// Raise the table changed event.
+			if (this.TableChanged != null) this.TableChanged(this);
 		}
 
 		/// <summary>

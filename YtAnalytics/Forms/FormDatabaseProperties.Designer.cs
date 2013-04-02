@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.control = new YtAnalytics.Controls.ControlDatabaseProperties();
+			this.control = new YtAnalytics.Controls.Database.ControlDatabaseProperties();
 			this.buttonClose = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
@@ -75,7 +75,7 @@
 
 		#endregion
 
-		private Controls.ControlDatabaseProperties control;
+		private Controls.Database.ControlDatabaseProperties control;
 		private System.Windows.Forms.Button buttonClose;
 
 	}

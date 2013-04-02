@@ -47,7 +47,7 @@ namespace YtCrawler.Database
 			this.key = keyServer.CreateSubKey(DbTables.keyName);
 
 			// Add the static tables.
-			this.tables.Add(this.tableStandardFeeds.LocalName, this.tableStandardFeeds);
+			this.Add(this.tableStandardFeeds);
 		}
 
 		// Public properties.
@@ -62,6 +62,13 @@ namespace YtCrawler.Database
 		/// Gets the standard feeds table.
 		/// </summary>
 		public DbTable<DbObjectStandardFeed> TableStandardFeeds { get { return this.tableStandardFeeds; } }
+
+		// Public events.
+
+		/// <summary>
+		/// An event raised when a database table has changed.
+		/// </summary>
+		public event DbTableChangedEventHandler TableChanged;
 
 		// Public methods.
 
@@ -122,7 +129,23 @@ namespace YtCrawler.Database
 		/// <param name="table">The database table to add.</param>
 		public void Add(ITable table)
 		{
+			// Add the table to the tables list.
 			this.tables.Add(table.LocalName, table);
+			// Setup an event handler for the table.
+			table.TableChanged += this.OnTableChanged;
+		}
+
+		// Private methods.
+
+
+		/// <summary>
+		/// An event handler called when the configuration of a table has changed.
+		/// </summary>
+		/// <param name="table">The database table.</param>
+		private void OnTableChanged(ITable table)
+		{
+			// Raise the event.
+			if (this.TableChanged != null) this.TableChanged(table);
 		}
 	}
 }

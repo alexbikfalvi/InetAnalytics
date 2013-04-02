@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtAnalytics.Controls;
+using YtAnalytics.Controls.Comments;
 using YtCrawler.Comments;
 using DotNetApi.Windows;
 

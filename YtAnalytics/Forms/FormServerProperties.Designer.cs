@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonApply = new System.Windows.Forms.Button();
-			this.control = new YtAnalytics.Controls.ControlServerProperties();
+			this.control = new YtAnalytics.Controls.Database.ControlServerProperties();
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonOk = new System.Windows.Forms.Button();
 			this.SuspendLayout();
@@ -107,7 +107,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonApply;
-		private Controls.ControlServerProperties control;
+		private Controls.Database.ControlServerProperties control;
 		private System.Windows.Forms.Button buttonCancel;
 		private System.Windows.Forms.Button buttonOk;
 
