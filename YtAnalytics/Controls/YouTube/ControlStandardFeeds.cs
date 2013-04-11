@@ -34,39 +34,101 @@ namespace YtAnalytics.Controls.YouTube
 	public partial class ControlStandardFeeds : UserControl
 	{
 		/// <summary>
-		/// An enumeration representing the selection level.
+		/// An enumeration representing the navigation level.
 		/// </summary>
-		private enum SelectionLevel
+		private enum NavigationLevel
 		{
-			Feeds = 0,
-			Feed = 1,
-			Time = 2,
-			Category = 3,
-			Region = 4
+			Feeds = 1,
+			Feed = 2,
+			Time = 3,
+			Category = 4,
+			Region = 5
 		};
 
-		private struct NavigationButton
+		/// <summary>
+		/// A class representing a navigation button.
+		/// </summary>
+		private class NavigationButton
+		{
+			public enum NavigationButtonState
+			{
+				Normal = 0,
+				Highlighted = 1,
+				Pressed = 2
+			}
+
+			/// <summary>
+			/// Creates a new navigation button instance.
+			/// </summary>
+			/// <param name="level">The selection level for this button.</param>
+			/// <param name="text">The button text.</param>
+			/// <param name="state">Teh button state.</param>
+			public NavigationButton(NavigationLevel level, string text = null, NavigationButtonState state = NavigationButtonState.Normal)
+			{
+				this.Level = level;
+				this.Text = text;
+				this.State = state;
+			}
+
+			/// <summary>
+			/// Gets or sets the navigation button state.
+			/// </summary>
+			public NavigationButtonState State { get; set; }
+			/// <summary>
+			/// Gets or sets the navigation level.
+			/// </summary>
+			public NavigationLevel Level { get; set; }
+			/// <summary>
+			/// Gets or sets the navigation button text.
+			/// </summary>
+			public string Text { get; set; }
+			/// <summary>
+			/// Gets or sets the text size.
+			/// </summary>
+			public Size TextSize { get; set; }
+			/// <summary>
+			/// Gets or sets the navigation button bounds.
+			/// </summary>
+			public Rectangle Bounds { get; set; }
+			/// <summary>
+			/// Gets or sets the text bounds.
+			/// </summary>
+			public Rectangle TextBounds { get; set; }
+			/// <summary>
+			/// Gets or sets the item fill path.
+			/// </summary>
+			public GraphicsPath FillPath { get; set; }
+			/// <summary>
+			/// Gets or sets the item fill rectangle.
+			/// </summary>
+			public Rectangle FillRectangle { get; set; }
+		}
+
+		private class ItemButton
 		{
 		}
 
-		private struct ItemButton
-		{
-		}
-
+		private int buttonItemWidth = 100;		// The width of the item button.
 		private int buttonItemHeight = 48;		// The height of the item button.
 		private int buttonScrollHeight = 12;	// The height of the scroll button.
-		private int legendHeight = 23;			// The height of the legend.
+		private int buttonGridRows;
+		private int buttonGridColumns;
+		private Padding buttonNavigationPadding = new Padding(3, 0, 0, 0);
+		private int buttonNavigationChevron = 5;
+		//private int legendHeight = 23;			// The height of the legend.
 
-		private Color colorNavigationOuterBorder = ProfessionalColors.MenuBorder;
-		private Color colorNavigationInnerBorder = Color.FromArgb(250, 252, 254);
-		private Color colorNavigationFill = Color.FromArgb(248, 250, 253);
-		private Color colorNavigationItemOuterBorder = Color.FromArgb(60, 127, 177);
-		//private Color colorNavigationItemInnerBorder = C
+		private Rectangle rectNavigationBorder = new Rectangle();
 
-		private Rectangle rectNavigationOuterBorder = new Rectangle();
-		private Rectangle rectNavigationInnerBorder = new Rectangle();
+		private NavigationLevel navigationLevel = NavigationLevel.Region;
+		private NavigationButton[] navigationButtons = new NavigationButton[5] {
+			new NavigationButton(NavigationLevel.Feeds, "Standard feeds"),
+			new NavigationButton(NavigationLevel.Feed, "Feed"),
+			new NavigationButton(NavigationLevel.Time, "All time"),
+			new NavigationButton(NavigationLevel.Category, "Movies"),
+			new NavigationButton(NavigationLevel.Region, "Brazil")
+		};
 
-		private SelectionLevel selectionLevel = SelectionLevel.Feeds;
+		private ColorBlend colorBlend = new ColorBlend(3);
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -78,9 +140,13 @@ namespace YtAnalytics.Controls.YouTube
 			// Set the padding.
 			this.Padding = new Padding(3);
 
-			// Set the heights.
-			this.rectNavigationOuterBorder.Height = 20;
-			this.rectNavigationInnerBorder.Height = this.rectNavigationOuterBorder.Height - 2;
+			// Set the dimensions.
+			this.rectNavigationBorder.Height = 20;
+
+			// Set the colorblend positions.
+			this.colorBlend.Positions[0] = 0.0f;
+			this.colorBlend.Positions[1] = 0.5f;
+			this.colorBlend.Positions[2] = 1.0f;
 		}
 
 		// Public properties.
@@ -90,18 +156,41 @@ namespace YtAnalytics.Controls.YouTube
 		/// </summary>
 		public int NavigationBarHeight
 		{
-			get { return this.rectNavigationOuterBorder.Height; }
+			get { return this.rectNavigationBorder.Height; }
 			set
 			{
-				this.rectNavigationOuterBorder.Height = value;
-				this.rectNavigationInnerBorder.Height = value - 2;
+				this.rectNavigationBorder.Height = value;
 				this.Refresh();
 			}
+		}
+		/// <summary>
+		/// Gets or sets the navigation button padding.
+		/// </summary>
+		public Padding ButtonNavigationPadding
+		{
+			get { return this.buttonNavigationPadding; }
+			set { this.buttonNavigationPadding = value; }
+		}
+		/// <summary>
+		/// Gets or sets the navigation button chevron size.
+		/// </summary>
+		public int ButtonNavigationChevron
+		{
+			get { return this.buttonNavigationChevron; }
+			set { this.buttonNavigationChevron = value; }
 		}
 
 		// Public methods.
 
+		// Private properties.
+
+		public int ButtonNavigationWidthDelta
+		{
+			get { return this.ButtonNavigationPadding.Left + this.ButtonNavigationPadding.Right + this.ButtonNavigationChevron; }
+		}
+
 		// Private methods.
+
 
 		/// <summary>
 		/// An event handler called when painting the control.
@@ -110,12 +199,25 @@ namespace YtAnalytics.Controls.YouTube
 		/// <param name="e">The event arguments.</param>
 		private void OnPaint(object sender, PaintEventArgs e)
 		{
+			// Set the smoothing mode.
+			e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
 			// Create the pen.
-			using(Pen pen = new Pen(this.colorNavigationOuterBorder))
+			using(Pen pen = new Pen(ProfessionalColors.MenuBorder))
 			{
-				e.Graphics.DrawRectangle(pen, this.rectNavigationOuterBorder);
-				pen.Color = this.colorNavigationInnerBorder;
-				e.Graphics.DrawRectangle(pen, this.rectNavigationInnerBorder);
+				// Draw the navigation bar.
+				e.Graphics.DrawRectangle(pen, this.rectNavigationBorder);
+
+				// Paint the navigation bar buttons.
+				int navigationLeft = this.rectNavigationBorder.Left;
+				for (int index = 0; index < (int)this.navigationLevel; index++)
+				{
+					this.OnPaintNavigationButton(
+						e.Graphics,
+						pen,
+						this.navigationButtons[index],
+						navigationLeft);
+				}
 			}
 
 			/*
@@ -140,6 +242,47 @@ namespace YtAnalytics.Controls.YouTube
 			 * */
 		}
 
+		private void OnPaintNavigationButton(Graphics g, Pen pen, NavigationButton button, int left)
+		{
+			// Compute the background colors for this item.
+			Color colorBegin = Color.Black;
+			Color colorEnd = Color.Black;
+			switch (button.State)
+			{
+				case NavigationButton.NavigationButtonState.Normal:
+					colorBegin = ProfessionalColors.MenuStripGradientBegin;
+					colorEnd = ProfessionalColors.MenuStripGradientEnd;
+					break;
+				case NavigationButton.NavigationButtonState.Highlighted:
+					colorBegin = ProfessionalColors.ButtonSelectedGradientBegin;
+					colorEnd = ProfessionalColors.ButtonSelectedGradientEnd;
+					break;
+				case NavigationButton.NavigationButtonState.Pressed:
+					colorBegin = ProfessionalColors.ButtonPressedGradientBegin;
+					colorEnd = ProfessionalColors.ButtonPressedGradientEnd;
+					break;
+			}
+
+			// Fill the button.
+			using (Brush brush = new LinearGradientBrush(button.FillRectangle, colorEnd, colorBegin, LinearGradientMode.Vertical))
+			{
+				g.FillPath(brush, button.FillPath);
+			}
+			
+			// Draw the button outer border.
+			pen.Color = ProfessionalColors.MenuBorder;
+			g.DrawPath(pen, button.FillPath);			
+
+			// Draw the text.
+			TextRenderer.DrawText(
+				g,
+				button.Text,
+				this.Font,
+				button.TextBounds,
+				SystemColors.MenuText,
+				TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+		}
+
 		/// <summary>
 		/// An event handler called when resizing the control.
 		/// </summary>
@@ -147,13 +290,161 @@ namespace YtAnalytics.Controls.YouTube
 		/// <param name="e">The event arguments.</param>
 		private void OnResize(object sender, EventArgs e)
 		{
-			this.rectNavigationOuterBorder.X = this.ClientRectangle.X + this.Padding.Left;
-			this.rectNavigationOuterBorder.Y = this.ClientRectangle.Y + this.Padding.Top;
-			this.rectNavigationOuterBorder.Width = this.ClientRectangle.Width - this.Padding.Left - this.Padding.Right - 1;
+			// Resize the navigation bar.
+			this.OnResizeNavigation();
+			this.Refresh();
+		}
 
-			this.rectNavigationInnerBorder.X = this.rectNavigationOuterBorder.X + 1;
-			this.rectNavigationInnerBorder.Y = this.rectNavigationOuterBorder.Y + 1;
-			this.rectNavigationInnerBorder.Width = this.rectNavigationOuterBorder.Width - 2;
+		/// <summary>
+		/// An event handler called when resizing all navigation buttons.
+		/// </summary>
+		private void OnResizeNavigation()
+		{
+			// Resize the navigation bar outer border.
+			this.rectNavigationBorder.X = this.ClientRectangle.X + this.Padding.Left;
+			this.rectNavigationBorder.Y = this.ClientRectangle.Y + this.Padding.Top;
+			this.rectNavigationBorder.Width = this.ClientRectangle.Width - this.Padding.Left - this.Padding.Right - 1;
+
+			// Compute the preferred width for the navigation bar.
+			int preferredWidth = this.buttonNavigationChevron;
+			for (int index = 0; index < (int)this.navigationLevel; index++)
+			{
+				// Add the preferred width for each navigation button.
+				preferredWidth += TextRenderer.MeasureText(this.navigationButtons[index].Text, this.Font).Width;
+			}
+			// Compute the resize factor.
+			double resize = (double)(this.rectNavigationBorder.Width - ((int)this.navigationLevel)*(this.buttonNavigationPadding.Left + this.buttonNavigationPadding.Right + this.buttonNavigationChevron)) / preferredWidth;
+			resize = (resize < 0.0) ? 0.0 : resize;
+			resize = (resize > 1.0) ? 1.0 : resize;
+			// Resize all navigation buttons.
+			for (int index = 0; index < this.navigationButtons.Length; index++)
+			{
+				this.OnResizeNavigation(index, resize);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when resizing the navigation button at the specified index.
+		/// </summary>
+		/// <param name="index">The navigation button index.</param>
+		/// <param name="resize">The resize factor for this button.</param>
+		private void OnResizeNavigation(int index, double resize)
+		{
+			// Get the button.
+			NavigationButton button = this.navigationButtons[index];
+
+			// Compute the text size.
+			Size textSize = TextRenderer.MeasureText(button.Text, this.Font);
+			// Resize the button.
+			textSize.Width = (int)(textSize.Width * resize);
+			// Set the text size.
+			button.TextSize = textSize;
+
+			// Compute the button bounds.
+			button.Bounds = new Rectangle(
+				(index > 0) ? this.navigationButtons[index-1].Bounds.Right : this.rectNavigationBorder.Left,
+				this.rectNavigationBorder.Y,
+				button.TextSize.Width + this.buttonNavigationPadding.Left + this.buttonNavigationPadding.Right + this.buttonNavigationChevron,// + ((index > 0) ? this.buttonNavigationChevron : 0),
+				this.rectNavigationBorder.Height);
+			// Compute the text bounds.
+			button.TextBounds = new Rectangle(
+				button.Bounds.X + this.buttonNavigationPadding.Left,
+				button.Bounds.Y,
+				button.TextSize.Width,
+				button.Bounds.Height);
+
+			// Compute the fill rectangle.
+			button.FillRectangle = new Rectangle(
+				button.Bounds.Left,
+				button.Bounds.Top,
+				button.Bounds.Right,
+				button.Bounds.Bottom);
+
+			// If this is the first button.
+			if (index == 0)
+			{
+				// Compute the button fill path.
+				button.FillPath = new GraphicsPath(new Point[] {
+					new Point(button.Bounds.Left, button.Bounds.Bottom),
+					new Point(button.Bounds.Left, button.Bounds.Top),
+					new Point(button.Bounds.Right - this.buttonNavigationChevron, button.Bounds.Top),
+					new Point(button.Bounds.Right, (button.Bounds.Top + button.Bounds.Bottom) / 2),
+					new Point(button.Bounds.Right - this.buttonNavigationChevron, button.Bounds.Bottom),
+					new Point(button.Bounds.Left, button.Bounds.Bottom)
+				}, new byte[] {
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line
+				});
+			}
+			else
+			{
+				// Compute the button fill path.
+				button.FillPath = new GraphicsPath(new Point[] {
+					new Point(button.Bounds.Left - this.buttonNavigationChevron, button.Bounds.Bottom),
+					new Point(button.Bounds.Left, (button.Bounds.Top + button.Bounds.Bottom) / 2),
+					new Point(button.Bounds.Left - this.buttonNavigationChevron, button.Bounds.Top),
+					new Point(button.Bounds.Right - this.buttonNavigationChevron, button.Bounds.Top),
+					new Point(button.Bounds.Right, (button.Bounds.Top + button.Bounds.Bottom) / 2),
+					new Point(button.Bounds.Right - this.buttonNavigationChevron, button.Bounds.Bottom),
+					new Point(button.Bounds.Left - this.buttonNavigationChevron, button.Bounds.Bottom)
+				}, new byte[] {
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line,
+					(byte)PathPointType.Line
+				});
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the mouse moves over the control.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseMove(object sender, MouseEventArgs e)
+		{
+			// Mouse move over the navigation bar.
+			foreach (NavigationButton button in this.navigationButtons)
+			{
+				
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the mouse leaves the control.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseLeave(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when a mouse button is pressed over the control.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseDown(object sender, MouseEventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when a mouse button is released over the control.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseUp(object sender, MouseEventArgs e)
+		{
+
 		}
 	}
 }

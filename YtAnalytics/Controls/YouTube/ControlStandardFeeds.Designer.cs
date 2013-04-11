@@ -13,10 +13,12 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			if (disposing && (this.components != null))
 			{
-				components.Dispose();
+				// Dispose the components.
+				this.components.Dispose();
 			}
+			// Call the base class function.
 			base.Dispose(disposing);
 		}
 
@@ -37,6 +39,10 @@
 			this.DoubleBuffered = true;
 			this.Name = "ControlStandardFeeds";
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+			this.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
 			this.Resize += new System.EventHandler(this.OnResize);
 			this.ResumeLayout(false);
 

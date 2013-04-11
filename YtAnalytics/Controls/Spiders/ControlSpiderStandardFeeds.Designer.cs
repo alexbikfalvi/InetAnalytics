@@ -31,7 +31,9 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSpiderStandardFeeds));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.controlStandardFeeds = new YtAnalytics.Controls.YouTube.ControlStandardFeeds();
+			this.progressListBox1 = new DotNetApi.Windows.Controls.ProgressListBox();
+			this.itemTopRated = new DotNetApi.Windows.Controls.ProgressListBoxItem();
+			this.itemTopFavorites = new DotNetApi.Windows.Controls.ProgressListBoxItem();
 			this.panel = new System.Windows.Forms.Panel();
 			this.labelProgress = new System.Windows.Forms.Label();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -58,7 +60,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.controlStandardFeeds);
+			this.splitContainer.Panel1.Controls.Add(this.progressListBox1);
 			this.splitContainer.Panel1.Controls.Add(this.panel);
 			// 
 			// splitContainer.Panel2
@@ -68,13 +70,29 @@
 			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.TabIndex = 2;
 			// 
-			// controlStandardFeeds
+			// progressListBox1
 			// 
-			this.controlStandardFeeds.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlStandardFeeds.Location = new System.Drawing.Point(0, 82);
-			this.controlStandardFeeds.Name = "controlStandardFeeds";
-			this.controlStandardFeeds.Size = new System.Drawing.Size(598, 141);
-			this.controlStandardFeeds.TabIndex = 1;
+			this.progressListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.progressListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.progressListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.progressListBox1.FormattingEnabled = true;
+			this.progressListBox1.IntegralHeight = false;
+			this.progressListBox1.ItemHeight = 48;
+			this.progressListBox1.Items.AddRange(new DotNetApi.Windows.Controls.ProgressListBoxItem[] {
+            this.itemTopRated,
+            this.itemTopFavorites});
+			this.progressListBox1.Location = new System.Drawing.Point(0, 82);
+			this.progressListBox1.Name = "progressListBox1";
+			this.progressListBox1.Size = new System.Drawing.Size(598, 141);
+			this.progressListBox1.TabIndex = 1;
+			// 
+			// itemTopRated
+			// 
+			this.itemTopRated.Text = "Top rated";
+			// 
+			// itemTopFavorites
+			// 
+			this.itemTopFavorites.Text = "Top favorites";
 			// 
 			// panel
 			// 
@@ -188,7 +206,8 @@
 		private System.Windows.Forms.Label labelProgress;
 		private System.Windows.Forms.ProgressBar progressBar;
 		private System.Windows.Forms.ImageList imageList;
-		private YouTube.ControlStandardFeeds controlStandardFeeds;
-
+		private DotNetApi.Windows.Controls.ProgressListBox progressListBox1;
+		private DotNetApi.Windows.Controls.ProgressListBoxItem itemTopRated;
+		private DotNetApi.Windows.Controls.ProgressListBoxItem itemTopFavorites;
 	}
 }
