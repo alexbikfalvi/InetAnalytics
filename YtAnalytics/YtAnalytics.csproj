@@ -55,9 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Database\ControlDatabase.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Database\ControlDatabase.cs" />
     <Compile Include="Controls\Database\ControlServerProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,9 +98,7 @@
     <Compile Include="Controls\ControlException.Designer.cs">
       <DependentUpon>ControlException.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Log\ControlLog.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Log\ControlLog.cs" />
     <Compile Include="Controls\Log\ControlLog.Designer.cs">
       <DependentUpon>ControlLog.cs</DependentUpon>
     </Compile>
@@ -166,9 +162,7 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.Designer.cs">
       <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.cs" />
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.Designer.cs">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </Compile>
@@ -274,9 +268,7 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServers.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Database\ControlServers.cs" />
     <Compile Include="Controls\Database\ControlServers.Designer.cs">
       <DependentUpon>ControlServers.cs</DependentUpon>
     </Compile>
@@ -292,9 +284,7 @@
     <Compile Include="Controls\Database\ControlChangePassword.Designer.cs">
       <DependentUpon>ControlChangePassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Database\ControlServer.cs" />
     <Compile Include="Controls\Database\ControlServer.Designer.cs">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </Compile>
@@ -304,15 +294,11 @@
     <Compile Include="Controls\Database\ControlDatabaseProperties.Designer.cs">
       <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServerQuery.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Database\ControlServerQuery.cs" />
     <Compile Include="Controls\Database\ControlServerQuery.Designer.cs">
       <DependentUpon>ControlServerQuery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.cs" />
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.Designer.cs">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </Compile>
@@ -322,15 +308,11 @@
     <Compile Include="Controls\YouTube\ControlCategory.Designer.cs">
       <DependentUpon>ControlCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlTable.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Database\ControlTable.cs" />
     <Compile Include="Controls\Database\ControlTable.Designer.cs">
       <DependentUpon>ControlTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Database\ControlDatabaseSelect.cs" />
     <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </Compile>
@@ -358,9 +340,7 @@
     <Compile Include="Controls\Database\ControlCompareFields.Designer.cs">
       <DependentUpon>ControlCompareFields.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.cs" />
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
     </Compile>
@@ -758,6 +738,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\TestsLarge_48.png" />
+    <None Include="Resources\TestsLarge_32.png" />
+    <None Include="Resources\TestsLarge_24.png" />
+    <None Include="Resources\TestsLarge_16.png" />
     <None Include="Resources\FileXmlWarning_48.png" />
     <None Include="Resources\FileXmlWarning_32.png" />
     <None Include="Resources\FileXmlWarning_24.png" />

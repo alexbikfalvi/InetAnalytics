@@ -55,6 +55,7 @@ namespace YtAnalytics.Forms
 		private SideMenuItem sideMenuConfiguration;
 		private SideMenuItem sideMenuLog;
 		private SideMenuItem sideMenuComments;
+		private SideMenuItem sideMenuTests;
 
 		// Tree view nodes.
 		private TreeNode treeNodeBrowserApi2;
@@ -366,6 +367,13 @@ namespace YtAnalytics.Forms
 				Resources.ServersCube_32,
 				this.SideMenuSelect,
 				this.controlPanelSpiders
+				);
+			this.sideMenuTests = this.sideMenu.AddItem(
+				"Tests",
+				Resources.TestsLarge_16,
+				Resources.TestsLarge_32,
+				this.SideMenuSelect,
+				this.controlPanelTests
 				);
 			this.sideMenuConfiguration = this.sideMenu.AddItem(
 				"Configuration",
