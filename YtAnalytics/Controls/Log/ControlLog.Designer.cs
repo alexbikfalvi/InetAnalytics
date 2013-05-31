@@ -45,7 +45,6 @@
 			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
 			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
 			this.controlLogEvent = new YtAnalytics.Controls.Log.ControlLogEvent();
-			this.message = new YtAnalytics.Controls.ControlMessageBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -207,21 +206,10 @@
 			this.controlLogEvent.Size = new System.Drawing.Size(598, 194);
 			this.controlLogEvent.TabIndex = 0;
 			// 
-			// message
-			// 
-			this.message.Image = null;
-			this.message.Location = new System.Drawing.Point(0, 0);
-			this.message.Name = "message";
-			this.message.Progress = true;
-			this.message.Size = new System.Drawing.Size(300, 100);
-			this.message.TabIndex = 1;
-			this.message.Visible = false;
-			// 
 			// ControlLog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.message);
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlLog";
 			this.Size = new System.Drawing.Size(600, 400);
@@ -243,7 +231,6 @@
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderTimestamp;
 		private System.Windows.Forms.ColumnHeader columnHeaderDescription;
-		private ControlMessageBox message;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ColumnHeader columnHeaderSource;
 		private System.Windows.Forms.ToolStrip toolStrip;

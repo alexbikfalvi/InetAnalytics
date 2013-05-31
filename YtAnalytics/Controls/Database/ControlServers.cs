@@ -436,7 +436,7 @@ namespace YtAnalytics.Controls.Database
 		private void OnAdded(object sender, EventArgs e)
 		{
 			// Show a message.
-			this.ShowMessage(Resources.ServerAdd_48, "Adding a new database server...");
+			this.ShowMessage(Resources.ServerAdd_48, "Database", "Adding a new database server...");
 
 			// Check if the new server changes the primary server.
 			bool primary = this.formAdd.IsPrimary;
@@ -513,6 +513,7 @@ namespace YtAnalytics.Controls.Database
 					// Show a message to the user.
 					this.ShowMessage(
 						Resources.ServerRemove_48,
+						"Database",
 						string.Format("Removing the database server with ID \'{0}\'.\r\nThe server will be removed only after the current connection to the server is closed.", server.Id)
 						);
 					// Begin an asynchronous remove of the database server.

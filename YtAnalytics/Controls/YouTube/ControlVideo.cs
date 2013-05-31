@@ -201,7 +201,11 @@ namespace YtAnalytics.Controls.YouTube
 		/// <param name="e">The event arguments.</param>
 		void DownloadThumbnailCompleted(object sender, DownloadDataCompletedEventArgs e)
 		{
-			this.DownloadThumbnailCompleted(e.UserState as Video, e.Cancelled, e.Error, e.Cancelled ? null : e.Result);
+			this.DownloadThumbnailCompleted(
+				e.UserState as Video,
+				e.Cancelled,
+				e.Error,
+				e.Cancelled ? null : e.Error == null ? e.Result : null);
 		}
 
 		/// <summary>
@@ -240,14 +244,14 @@ namespace YtAnalytics.Controls.YouTube
 				Image image = null;
 
 				// If no error occurred, get the image.
-				if (null == exception)
+				if ((null == exception) && (null != data))
 				{
 					// Create a memory stream from the specified data.
 					using (MemoryStream stream = new MemoryStream(data))
 					{
+						// Create the image from the specified stream.
 						try
 						{
-							// Create the image from the specified stream.
 							image = Image.FromStream(stream);
 						}
 						catch (Exception) { }
@@ -300,8 +304,11 @@ namespace YtAnalytics.Controls.YouTube
 
 				if ((video == this.video) && (this.thumbnails.Count > 0))
 				{
-					this.pictureBox.Image = this.thumbnails[0];
-					this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+					if (thumbnails[0] != null)
+					{
+						this.pictureBox.Image = this.thumbnails[0];
+						this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+					}
 
 					for (int index = 0; (index < video.Thumbnails.Count) && (index < this.thumbnails.Count); index++)
 					{

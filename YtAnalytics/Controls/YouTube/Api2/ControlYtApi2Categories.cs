@@ -41,16 +41,11 @@ namespace YtAnalytics.Controls.YouTube.Api2
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2Categories : ThreadSafeControl
+	public partial class ControlYtApi2Categories : NotificationControl
 	{
 		private static string logSource = "APIv2 Categories";
 
 		private Crawler crawler;
-
-		private ControlMessageBox message = new ControlMessageBox();
-
-		private ShowMessageEventHandler delegateShowMessage;
-		private HideMessageEventHandler delegateHideMessage;
 
 		private IAsyncResult asyncResult = null;
 
@@ -59,19 +54,12 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// </summary>
 		public ControlYtApi2Categories()
 		{
-			// Add the message control.
-			this.Controls.Add(this.message);
-
 			// Initialize component.
 			InitializeComponent();
 
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Delegates.
-			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
-			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 		}
 
 		// Public methods.
@@ -92,43 +80,6 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		// Private methods.
 
 		/// <summary>
-		/// Shows an alerting message on top of the control.
-		/// </summary>
-		/// <param name="image">The message icon.</param>
-		/// <param name="text">The message text.</param>
-		/// <param name="progress">The visibility of the progress bar.</param>
-		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
-		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
-			else
-			{
-				// Show the message.
-				this.message.Show(image, text, progress, duration);
-			}
-		}
-
-		/// <summary>
-		/// Hides the alerting message.
-		/// </summary>
-		private void HideMessage()
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateHideMessage);
-			else
-			{
-				// Hide the message.
-				this.message.Hide();
-				// Enable the default button states.
-				this.buttonRefresh.Enabled = true;
-				this.buttonCancel.Enabled = false;
-			}
-		}
-
-		/// <summary>
 		/// An event handler called when the user refreshes the categories list.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -136,7 +87,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private void OnRefresh(object sender, EventArgs e)
 		{
 			// Show a message to alert the user.
-			this.ShowMessage(Resources.GlobeClock_48, "Refreshing the list of YouTube categories...");
+			this.ShowMessage(Resources.GlobeClock_48, "Video Categories", "Refreshing the list of YouTube categories...");
 			// Disable the refresh button.
 			this.buttonRefresh.Enabled = false;
 			// Enable the cancel button.
@@ -153,6 +104,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							// Update the message that the operation completed successfully.
 							this.ShowMessage(
 								Resources.GlobeSuccess_48,
+								"Video Categories",
 								"Refreshing the list of YouTube categories completed successfully.",
 								false
 								);
@@ -170,6 +122,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							// Update the message that the operation failed.
 							this.ShowMessage(
 								Resources.GlobeError_48,
+								"Video Categories",
 								string.Format("Refreshing the list of YouTube categories failed.\r\n{0}", exception.Message),
 								false
 								);
@@ -189,7 +142,11 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							// Delay the closing of the user message.
 							Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
 							// Hide the progress message.
-							this.HideMessage();
+							this.HideMessage(() =>
+							{
+								this.buttonRefresh.Enabled = true;
+								this.buttonCancel.Enabled = false;
+							});
 						}
 					});
 			}
@@ -198,6 +155,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				// Update the message that the operation failed.
 				this.ShowMessage(
 					Resources.GlobeError_48,
+					"Video Categories",
 					string.Format("Refreshing the list of YouTube categories failed.\r\n{0}", exception.Message),
 					false
 					);
@@ -207,7 +165,11 @@ namespace YtAnalytics.Controls.YouTube.Api2
 						// Delay the closing of the user message.
 						Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
 						// Hide the progress message.
-						this.HideMessage();
+						this.HideMessage(() =>
+						{
+							this.buttonRefresh.Enabled = true;
+							this.buttonCancel.Enabled = false;
+						});
 					});
 			}
 		}
@@ -235,7 +197,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 			// Execute the method on the UI thread.
 			if (this.InvokeRequired)
 			{
-				this.Invoke(new HideMessageEventHandler(this.OnUpdateList));
+				this.Invoke(new NotificationTaskEventHandler(this.OnUpdateList));
 				return;
 			}
 

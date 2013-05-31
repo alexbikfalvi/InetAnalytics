@@ -48,14 +48,10 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		// Private variables.
 
 		private Crawler crawler;
-		private ControlMessageBox message = new ControlMessageBox();
 		private Uri uri = null;
 		private YouTubeRequestFeed<Video> request;
 		private IAsyncResult result;
 		private Feed<Video> feed = null;
-
-		private ShowMessageEventHandler delegateShowMessage;
-		private HideMessageEventHandler delegateHideMessage;
 
 		private static YouTubeStandardFeed[] feeds = new YouTubeStandardFeed[] {
 			YouTubeStandardFeed.TopRated,
@@ -82,19 +78,12 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// </summary>
 		public ControlYtApi2Search()
 		{
-			// Add the message control.
-			this.Controls.Add(this.message);
-
 			// Initialize component.
 			InitializeComponent();
 
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Delegates.
-			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
-			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 		}
 
 		/// <summary>
@@ -139,44 +128,6 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		public event AddCommentItemEventHandler Comment;
 
 		// Private methods.
-
-		/// <summary>
-		/// Shows an alerting message on top of the control.
-		/// </summary>
-		/// <param name="image">The message icon.</param>
-		/// <param name="text">The message text.</param>
-		/// <param name="progress">The visibility of the progress bar.</param>
-		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
-		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
-			else
-			{
-				// Show the message.
-				this.message.Show(image, text, progress, duration);
-				// Disable the control.
-				this.panel.Enabled = false;
-			}
-		}
-
-		/// <summary>
-		/// Hides the alerting message.
-		/// </summary>
-		private void HideMessage()
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateHideMessage);
-			else
-			{
-				// Hide the message.
-				this.message.Hide();
-				// Enable the control.
-				this.panel.Enabled = true;
-			}
-		}
 
 		/// <summary>
 		/// An event handler for when the search text has changed.

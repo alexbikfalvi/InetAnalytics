@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,10 @@ namespace YtAnalytics.Controls.Spiders
 		private SpiderStandardFeedsEventHandler delegateSpiderFeedStarted;
 		private SpiderStandardFeedsEventHandler delegateSpiderFeedFinished;
 
+		private IAsyncResult crawlResult = null;
+
+		private ProgressItem[] progressItems = new ProgressItem[YouTubeUri.StandardFeedNames.Length];
+
 		// Public declarations
 
 		/// <summary>
@@ -79,6 +83,13 @@ namespace YtAnalytics.Controls.Spiders
 			this.delegateSpiderFeedsStarted = new SpiderStandardFeedsStartedEventHandler(this.OnSpiderCrawlFeedsStarted);
 			this.delegateSpiderFeedStarted = new SpiderStandardFeedsEventHandler(this.OnSpiderCrawlFeedStarted);
 			this.delegateSpiderFeedFinished = new SpiderStandardFeedsEventHandler(this.OnSpiderCrawlFeedFinished);
+
+			// Initialize the progress list box.
+			for (int index = 0; index < YouTubeUri.StandardFeedNames.Length; index++)
+			{
+				progressItems[index] = new ProgressItem(YouTubeUri.StandardFeedNames[index], this.progressLegend);
+			}
+			this.progressListBox.Items.AddRange(this.progressItems);
 		}
 
 		/// <summary>
@@ -117,11 +128,11 @@ namespace YtAnalytics.Controls.Spiders
 		{
 			// Change the controls state.
 			this.buttonStart.Enabled = false;
-			
+
 			try
 			{
 				// Begin crawling.
-				this.crawler.Spiders.StandardFeeds.BeginCrawl((Spider spider, SpiderAsyncResult asyncResult) =>
+				this.crawlResult = this.crawler.Spiders.StandardFeeds.BeginCrawl((Spider spider, SpiderAsyncResult asyncResult) =>
 					{
 					});
 			}
@@ -147,6 +158,9 @@ namespace YtAnalytics.Controls.Spiders
 			// Disable the stop button.
 			this.buttonStop.Enabled = false;
 			// Stop the crawling.
+			this.crawler.Spiders.StandardFeeds.CancelCrawl(this.crawlResult);
+			// Set the crawl result to null.
+			this.crawlResult = null;
 		}
 
 		/// <summary>
@@ -216,20 +230,21 @@ namespace YtAnalytics.Controls.Spiders
 			// Set the progress bar.
 			this.progressBar.Maximum = feeds.Count;
 			this.labelProgress.Text = string.Format("Crawling {0} standard feeds.", feeds.Count);
-			// Clear the list view.
-			//this.listView.Items.Clear();
-			// Add the feeds to the list view.
+			// Suspend the list box progress events.
+			this.progressListBox.SuspendProgressEvents();
+			// Reset the progress items count.
+			foreach (ProgressItem item in this.progressItems)
+			{
+				item.Progress.Count = 0;
+			}
+			// Update the progress list box.
 			foreach (KeyValuePair<string, DbObjectStandardFeed> feed in feeds)
 			{
-				ListViewItem item = new ListViewItem(new string[] {
-					YtApi.Api.V2.YouTubeUri.StandardFeedNames[feed.Value.FeedId],
-					YtApi.Api.V2.YouTubeUri.TimeNames[feed.Value.TimeId],
-					feed.Value.Category,
-					feed.Value.Region
-				});
-				item.ImageKey = "FeedQuestion";
-				//this.listView.Items.Add(item);
+				// Increment the progress count for each feed.
+				this.progressItems[feed.Value.FeedId].Progress.Count++;
 			}
+			// Resume the list box progress events.
+			this.progressListBox.ResumeProgressEvents();
 		}
 
 		/// <summary>

@@ -42,21 +42,17 @@ namespace YtAnalytics.Controls.YouTube.Api2
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlYtApi2StandardFeed : ThreadSafeControl
+	public partial class ControlYtApi2StandardFeed : NotificationControl
 	{
 		private static string logSource = "APIv2 Standard Feed";
 
 		// Private variables.
 
 		private Crawler crawler;
-		private ControlMessageBox message = new ControlMessageBox();
 		private Uri uri = null;
 		private YouTubeRequestFeed<Video> request;
 		private IAsyncResult result;
 		private Feed<Video> feed = null;
-
-		private ShowMessageEventHandler delegateShowMessage;
-		private HideMessageEventHandler delegateHideMessage;
 
 		// Public declarations
 
@@ -65,9 +61,6 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// </summary>
 		public ControlYtApi2StandardFeed()
 		{
-			// Add the message control.
-			this.Controls.Add(this.message);
-
 			// Initialize component.
 			InitializeComponent();
 
@@ -87,10 +80,6 @@ namespace YtAnalytics.Controls.YouTube.Api2
 			this.comboBoxRegion.Items.Add("(any)");
 			this.comboBoxRegion.Items.AddRange(YouTubeUri.RegionNames);
 			this.comboBoxRegion.SelectedIndex = 0;
-
-			// Delegates.
-			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
-			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 		}
 
 		// Public events.
@@ -140,44 +129,6 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		}
 
 		// Private methods.
-
-		/// <summary>
-		/// Shows an alerting message on top of the control.
-		/// </summary>
-		/// <param name="image">The message icon.</param>
-		/// <param name="text">The message text.</param>
-		/// <param name="progress">The visibility of the progress bar.</param>
-		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
-		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
-			else
-			{
-				// Show the message.
-				this.message.Show(image, text, progress, duration);
-				// Disable the control.
-				this.panel.Enabled = false;
-			}
-		}
-
-		/// <summary>
-		/// Hides the alerting message.
-		/// </summary>
-		private void HideMessage()
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateHideMessage);
-			else
-			{
-				// Hide the message.
-				this.message.Hide();
-				// Enable the control.
-				this.panel.Enabled = true;
-			}
-		}
 
 		/// <summary>
 		/// An event handler for when the selection of the current options has changed.
@@ -247,7 +198,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private void OnBeginRefreshCategories(object sender, EventArgs e)
 		{
 			// Show a message to alert the user.
-			this.ShowMessage(Resources.GlobeClock_48, "Refreshing the list of YouTube categories...");
+			this.ShowMessage(Resources.GlobeClock_48, "Video Categories", "Refreshing the list of YouTube categories...");
 
 			// Refresh the list of categories.
 			this.crawler.Categories.BeginRefresh(new AsyncWebRequestCallback(this.OnEndRefreshCategories), null);
@@ -266,9 +217,9 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				// Update the message that the operation completed successfully.
 				this.ShowMessage(
 					Resources.GlobeSuccess_48,
+					"Video Categories",
 					"Refreshing the list of YouTube categories completed successfully.",
-					false
-					);
+					false);
 				// Update the categories.
 				this.OnOpenCategories(null, null);
 			}
@@ -277,6 +228,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				// Update the message that the operation failed.
 				this.ShowMessage(
 					Resources.GlobeError_48,
+					"Video Categories",
 					string.Format("Refreshing the list of YouTube categories failed.\r\n{0}", exception.Message),
 					false
 					);

@@ -36,15 +36,12 @@ namespace YtAnalytics.Controls.Log
 	/// <summary>
 	/// A control that displays an event log.
 	/// </summary>
-	public partial class ControlLog : ThreadSafeControl
+	public partial class ControlLog : NotificationControl
 	{
 		private CrawlerConfig config;
 		private Logger log;
 		private ControlLogUpdateState state = null;
 		private List<LogEvent> events = null;
-
-		private ShowMessageEventHandler delegateShowMessage;
-		private HideMessageEventHandler delegateHideMessage;
 
 		private FormLogEvent formLogEvent = new FormLogEvent();
 
@@ -60,10 +57,6 @@ namespace YtAnalytics.Controls.Log
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
 
-			// Initialize the delegates.
-			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
-			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
-			
 			// Initialize the calendar
 			this.calendar.Calendar.MaxSelectionCount = 3600;
 			this.calendar.Calendar.DateChanged += OnCalendarDateChanged;
@@ -92,7 +85,7 @@ namespace YtAnalytics.Controls.Log
 		}
 
 		/// <summary>
-		/// Changes the calendar to the specified range.
+		/// Changes the log calendar to the specified range.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The date range event arguments.</param>
@@ -107,6 +100,26 @@ namespace YtAnalytics.Controls.Log
 		}
 
 		/// <summary>
+		/// Refreshes the log to the specified range.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The date range event arguments.</param>
+		public void DateRefresh(object sender, DateRangeEventArgs e)
+		{
+			// If the function is called before the initialization of the crawler, do nothing.
+			if (null == this.log) return;
+
+			// Update the calendar.
+			this.calendar.Calendar.SelectionStart = e.Start;
+			this.calendar.Calendar.SelectionEnd = e.End;
+
+			// Refresh the log.
+			this.OnCalendarDateChanged(sender, e);
+		}
+
+		// Private methods.
+
+		/// <summary>
 		/// An event handler called when the calendar range has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -114,7 +127,7 @@ namespace YtAnalytics.Controls.Log
 		private void OnCalendarDateChanged(object sender, DateRangeEventArgs e)
 		{
 			// Show a waiting message.
-			this.ShowMessage(Resources.LogClock_48, "Reading log files...", true);
+			this.ShowMessage(Resources.LogClock_48, "Log", "Reading log files...", true);
 			this.listView.Enabled = false;
 			this.toolStrip.Enabled = false;
 			this.listView.Items.Clear();
@@ -169,6 +182,7 @@ namespace YtAnalytics.Controls.Log
 					// Update the message for a successful refresh.
 					this.ShowMessage(
 						Resources.LogSuccess_48,
+						"Log",
 						string.Format("Refreshing the log for dates {0} to {1} completed successfully.", state.Range.Start.ToShortDateString(), state.Range.End.ToShortDateString()),
 						false);
 				}
@@ -181,6 +195,7 @@ namespace YtAnalytics.Controls.Log
 					// Update the message for a failed refresh.
 					this.ShowMessage(
 						Resources.Error_48,
+						"Log",
 						string.Format("Refreshing the log failed. {0}", exception.Message),
 						false);
 				}
@@ -252,46 +267,6 @@ namespace YtAnalytics.Controls.Log
 						}
 					}					
 				}
-			}
-		}
-
-		/// <summary>
-		/// Shows an alerting message on top of the control.
-		/// </summary>
-		/// <param name="image">The message icon.</param>
-		/// <param name="text">The message text.</param>
-		/// <param name="progress">The visibility of the progress bar.</param>
-		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
-		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
-			else
-			{
-				// Show the message.
-				this.message.Show(image, text, progress, duration);
-				// Disable the control.
-				this.toolStrip.Enabled = false;
-				this.listView.Enabled = false;
-			}
-		}
-
-		/// <summary>
-		/// Hides the alerting message.
-		/// </summary>
-		private void HideMessage()
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateHideMessage);
-			else
-			{
-				// Hide the message.
-				this.message.Hide();
-				// Enable the control.
-				this.toolStrip.Enabled = true;
-				this.listView.Enabled = false;
 			}
 		}
 

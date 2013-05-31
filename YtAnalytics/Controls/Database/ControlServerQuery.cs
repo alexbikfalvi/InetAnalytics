@@ -44,7 +44,7 @@ namespace YtAnalytics.Controls.Database
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlServerQuery : ThreadSafeControl
+	public partial class ControlServerQuery : NotificationControl
 	{
 		private delegate void ResultEventHandler(DbDataRaw table, int recordsAffected);
 		private delegate void ExceptionEventHandler(Exception exception);
@@ -54,11 +54,6 @@ namespace YtAnalytics.Controls.Database
 
 		private Crawler crawler;
 		private DbServer server;
-
-		private ControlMessageBox message = new ControlMessageBox();
-
-		private ShowMessageEventHandler delegateShowMessage;
-		private HideMessageEventHandler delegateHideMessage;
 
 		private FormChangePassword formChangePassword = new FormChangePassword();
 
@@ -70,19 +65,12 @@ namespace YtAnalytics.Controls.Database
 		/// </summary>
 		public ControlServerQuery()
 		{
-			// Add the message control.
-			this.Controls.Add(this.message);
-
 			// Initialize component.
 			InitializeComponent();
 
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Delegates.
-			this.delegateShowMessage = new ShowMessageEventHandler(this.ShowMessage);
-			this.delegateHideMessage = new HideMessageEventHandler(this.HideMessage);
 
 			// Set the font.
 			this.formatting.SetFont(this);
@@ -109,40 +97,6 @@ namespace YtAnalytics.Controls.Database
 		}
 
 		// Private methods.
-
-		/// <summary>
-		/// Shows an alerting message on top of the control.
-		/// </summary>
-		/// <param name="image">The message icon.</param>
-		/// <param name="text">The message text.</param>
-		/// <param name="progress">The visibility of the progress bar.</param>
-		/// <param name="duration">The duration of the message in milliseconds. If negative, the message will be displayed indefinitely.</param>
-		private void ShowMessage(Image image, string text, bool progress = true, int duration = -1)
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateShowMessage, new object[] { image, text, progress, duration });
-			else
-			{
-				// Show the message.
-				this.message.Show(image, text, progress, duration);
-			}
-		}
-
-		/// <summary>
-		/// Hides the alerting message.
-		/// </summary>
-		private void HideMessage()
-		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(this.delegateHideMessage);
-			else
-			{
-				// Hide the message.
-				this.message.Hide();
-			}
-		}
 
 		/// <summary>
 		/// An event handler called when the state of a server connection has changed.
@@ -172,7 +126,7 @@ namespace YtAnalytics.Controls.Database
 			// Disable the tool strip.
 			this.toolStrip.Enabled = false;
 			// Show a connecting message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Connecting to the database server \'{0}\'...", this.server.Name)); 
+			this.ShowMessage(Resources.Connect_48, "Database Server", string.Format("Connecting to the database server \'{0}\'...", this.server.Name)); 
 			try
 			{
 				// Connect asynchronously to the database server.
@@ -297,7 +251,7 @@ namespace YtAnalytics.Controls.Database
 		private void OnDisconnect(object sender, EventArgs e)
 		{
 			// Show a connecting message.
-			this.ShowMessage(Resources.Disconnect_48, string.Format("Disconnecting from the database server \'{0}\'...", this.server.Name));
+			this.ShowMessage(Resources.Disconnect_48, "Database Server", string.Format("Disconnecting from the database server \'{0}\'...", this.server.Name));
 			try
 			{
 				// Connect asynchronously to the database server.
@@ -383,7 +337,7 @@ namespace YtAnalytics.Controls.Database
 			// Get the server.
 			DbServer server = state as DbServer;
 			// Show a password changing message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Changing the password for the database server \'{0}\'...", server.Name));
+			this.ShowMessage(Resources.Connect_48, "Database", string.Format("Changing the password for the database server \'{0}\'...", server.Name));
 			try
 			{
 				// Change the password asynchronously of the database server.
@@ -485,7 +439,7 @@ namespace YtAnalytics.Controls.Database
 			if (this.server.State != DbServer.ServerState.Connected)
 			{
 				// Show a connecting message.
-				this.ShowMessage(Resources.Connect_48, string.Format("Connecting to the database server \'{0}\'...", this.server.Name));
+				this.ShowMessage(Resources.Connect_48, "Database", string.Format("Connecting to the database server \'{0}\'...", this.server.Name));
 				try
 				{
 					// Connect asynchronously to the database server, and add this method as a handler.
@@ -524,7 +478,7 @@ namespace YtAnalytics.Controls.Database
 				// Set the command to null.
 				this.command = null;
 				// Show a connecting message.
-				this.ShowMessage(Resources.DatabaseBusy_48, string.Format("Executing query on the database server \'{0}\'...", this.server.Name));
+				this.ShowMessage(Resources.DatabaseBusy_48, "Database", string.Format("Executing query on the database server \'{0}\'...", this.server.Name));
 				// Create the command.
 				this.command = this.server.CreateCommand(DbQuery.Create(this.codeBox.Text));
 				// Execute the command.
@@ -553,7 +507,7 @@ namespace YtAnalytics.Controls.Database
 								this.command.Dispose();
 								this.command = null;
 								// Show a success message.
-								this.ShowMessage(Resources.DatabaseSuccess_48, string.Format("Executing query on the database server \'{0}\' completed successfully.", this.server.Name), false);
+								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", string.Format("Executing query on the database server \'{0}\' completed successfully.", this.server.Name), false);
 								// Wait.
 								Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
 								// Hide the message.
@@ -567,7 +521,7 @@ namespace YtAnalytics.Controls.Database
 								this.command.Dispose();
 								this.command = null;
 								// Show an error message.
-								this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+								this.ShowMessage(Resources.DatabaseError_48, "Database", string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
 								// Log the event.
 								this.server.LogEvent(
 									LogEventLevel.Important,
@@ -590,7 +544,7 @@ namespace YtAnalytics.Controls.Database
 						this.command.Dispose();
 						this.command = null;
 						// Show an error message.
-						this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+						this.ShowMessage(Resources.DatabaseError_48, "Database", string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
 						// Log the event.
 						this.server.LogEvent(
 							LogEventLevel.Important,
@@ -613,7 +567,7 @@ namespace YtAnalytics.Controls.Database
 				this.command.Dispose();
 				this.command = null;
 				// Show an error message.
-				this.ShowMessage(Resources.DatabaseError_48, string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+				this.ShowMessage(Resources.DatabaseError_48, "Database", string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
 				// Log the event.
 				this.server.LogEvent(
 					LogEventLevel.Important,

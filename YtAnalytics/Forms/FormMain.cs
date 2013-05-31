@@ -836,6 +836,17 @@ namespace YtAnalytics.Forms
 			this.controlLog.DateChanged(sender, e);
 		}
 
+		/// <summary>
+		/// An event handler called when the log is refreshed.
+		/// </summary>
+		/// <param name="sender">The sender control.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnLogDateRefresh(object sender, DateRangeEventArgs e)
+		{
+			// Refresh the log.
+			this.controlLog.DateRefresh(sender, e);
+		}
+
 		// private void TestApi(object sender, EventArgs e)
 	   // {
 	   //	 ytService.Key = FormMain.apiKey;

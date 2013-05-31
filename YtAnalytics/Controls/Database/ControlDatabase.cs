@@ -31,7 +31,7 @@ namespace YtAnalytics.Controls.Database
 	/// <summary>
 	/// A generic control that allows a background database operation.
 	/// </summary>
-	public class ControlDatabase : ControlMessage
+	public class ControlDatabase : NotificationControl
 	{
 		protected delegate void QueryEventHandler(DbServer server, DbQuery query);
 		protected delegate void ResultRawEventHandler(DbServer server, DbQuery query, DbDataRaw result, int recordsAffected);
@@ -157,7 +157,7 @@ namespace YtAnalytics.Controls.Database
 			// Call the connecting method.
 			this.OnConnectStarted(server);
 			// Show a connecting message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Connecting to the database server \'{0}\'...", server.Name));
+			this.ShowMessage(Resources.Connect_48, "Database", string.Format("Connecting to the database server \'{0}\'...", server.Name));
 			try
 			{
 				// Connect asynchronously to the database server.
@@ -189,7 +189,7 @@ namespace YtAnalytics.Controls.Database
 			// Call the disconnecting method.
 			this.OnDisconnectStarted(server);
 			// Show a connecting message.
-			this.ShowMessage(Resources.Disconnect_48, string.Format("Disconnecting from the database server \'{0}\'...", server.Name));
+			this.ShowMessage(Resources.Disconnect_48, "Database", string.Format("Disconnecting from the database server \'{0}\'...", server.Name));
 			try
 			{
 				// Connect asynchronously to the database server.
@@ -231,7 +231,7 @@ namespace YtAnalytics.Controls.Database
 			// Else, create a database command that selects all items for the specified table.
 
 			// Show a connecting message.
-			this.ShowMessage(Resources.DatabaseBusy_48, query.MessageStart);
+			this.ShowMessage(Resources.DatabaseBusy_48, "Database", query.MessageStart);
 			// Create a new database command.
 			DbCommand command = server.CreateCommand(query);
 			// Call the query start method.
@@ -263,7 +263,7 @@ namespace YtAnalytics.Controls.Database
 									// Dispose and reset the command.
 									command.Dispose();
 									// Show a success message.
-									this.ShowMessage(Resources.DatabaseSuccess_48, query.MessageFinishSuccess, false);
+									this.ShowMessage(Resources.DatabaseSuccess_48, "Database", query.MessageFinishSuccess, false);
 									// Wait.
 									Thread.Sleep(this.consoleMessageCloseDelay);
 									// Hide the message.
@@ -279,7 +279,7 @@ namespace YtAnalytics.Controls.Database
 									// Dispose the command.
 									command.Dispose();
 									// Show an error message.
-									this.ShowMessage(Resources.DatabaseError_48, query.MessageFinishFail, false);
+									this.ShowMessage(Resources.DatabaseError_48, "Database", query.MessageFinishFail, false);
 									// Log the event.
 									server.LogEvent(
 										LogEventLevel.Important,
@@ -301,7 +301,7 @@ namespace YtAnalytics.Controls.Database
 						// Dispose the command.
 						command.Dispose();
 						// Show an error message.
-						this.ShowMessage(Resources.DatabaseError_48, query.MessageFinishFail, false);
+						this.ShowMessage(Resources.DatabaseError_48, "Database", query.MessageFinishFail, false);
 						// Log the event.
 						server.LogEvent(
 							LogEventLevel.Important,
@@ -323,7 +323,7 @@ namespace YtAnalytics.Controls.Database
 				// Dispose the command.
 				command.Dispose();
 				// Show an error message.
-				this.ShowMessage(Resources.DatabaseError_48, query.MessageFinishFail, false);
+				this.ShowMessage(Resources.DatabaseError_48, "Database", query.MessageFinishFail, false);
 				// Log the event.
 				server.LogEvent(
 					LogEventLevel.Important,
@@ -561,7 +561,7 @@ namespace YtAnalytics.Controls.Database
 			// Get the database server.
 			DbServer server = state as DbServer;
 			// Show a password changing message.
-			this.ShowMessage(Resources.Connect_48, string.Format("Changing the password for the database server \'{0}\'...", server.Name));
+			this.ShowMessage(Resources.Connect_48, "Database", string.Format("Changing the password for the database server \'{0}\'...", server.Name));
 			try
 			{
 				// Change the password asynchronously of the database server.

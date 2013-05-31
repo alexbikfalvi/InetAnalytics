@@ -93,8 +93,9 @@ namespace YtAnalytics.Controls.YouTube.Web
 			// Change the controls state.
 			this.buttonStart.Enabled = false;
 			this.buttonStop.Enabled = true;
-			this.textBox.Enabled = false;
+			this.buttonDiscovery.Enabled = false;
 			this.buttonComment.Enabled = false;
+			this.textBox.Enabled = false;
 			this.statisticsVideo = null;
 
 			// Clear the previous results.

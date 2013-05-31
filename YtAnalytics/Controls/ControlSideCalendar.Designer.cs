@@ -136,12 +136,12 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
-			// ControlSideLog
+			// ControlSideCalendar
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.Controls.Add(this.panel);
 			this.Controls.Add(this.tableLayoutPanel);
-			this.Name = "ControlSideLog";
+			this.Name = "ControlSideCalendar";
 			this.Size = new System.Drawing.Size(283, 364);
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.panel.ResumeLayout(false);

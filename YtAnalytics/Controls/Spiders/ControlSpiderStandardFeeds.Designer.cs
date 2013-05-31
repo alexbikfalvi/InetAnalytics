@@ -28,12 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSpiderStandardFeeds));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.progressListBox1 = new DotNetApi.Windows.Controls.ProgressListBox();
-			this.itemTopRated = new DotNetApi.Windows.Controls.ProgressListBoxItem();
-			this.itemTopFavorites = new DotNetApi.Windows.Controls.ProgressListBoxItem();
+			this.progressListBox = new DotNetApi.Windows.Controls.ProgressListBox();
 			this.panel = new System.Windows.Forms.Panel();
 			this.labelProgress = new System.Windows.Forms.Label();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -41,7 +37,11 @@
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.linkLabel = new System.Windows.Forms.LinkLabel();
 			this.log = new YtAnalytics.Controls.Log.ControlLogList();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.progressLegend = new DotNetApi.Windows.Controls.ProgressLegend();
+			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -60,7 +60,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.progressListBox1);
+			this.splitContainer.Panel1.Controls.Add(this.progressListBox);
 			this.splitContainer.Panel1.Controls.Add(this.panel);
 			// 
 			// splitContainer.Panel2
@@ -70,29 +70,19 @@
 			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.TabIndex = 2;
 			// 
-			// progressListBox1
+			// progressListBox
 			// 
-			this.progressListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.progressListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.progressListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.progressListBox1.FormattingEnabled = true;
-			this.progressListBox1.IntegralHeight = false;
-			this.progressListBox1.ItemHeight = 48;
-			this.progressListBox1.Items.AddRange(new DotNetApi.Windows.Controls.ProgressListBoxItem[] {
-            this.itemTopRated,
-            this.itemTopFavorites});
-			this.progressListBox1.Location = new System.Drawing.Point(0, 82);
-			this.progressListBox1.Name = "progressListBox1";
-			this.progressListBox1.Size = new System.Drawing.Size(598, 141);
-			this.progressListBox1.TabIndex = 1;
-			// 
-			// itemTopRated
-			// 
-			this.itemTopRated.Text = "Top rated";
-			// 
-			// itemTopFavorites
-			// 
-			this.itemTopFavorites.Text = "Top favorites";
+			this.progressListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.progressListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.progressListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.progressListBox.FormattingEnabled = true;
+			this.progressListBox.IntegralHeight = false;
+			this.progressListBox.ItemHeight = 48;
+			this.progressListBox.Location = new System.Drawing.Point(0, 82);
+			this.progressListBox.Name = "progressListBox";
+			this.progressListBox.ScrollAlwaysVisible = true;
+			this.progressListBox.Size = new System.Drawing.Size(598, 141);
+			this.progressListBox.TabIndex = 1;
 			// 
 			// panel
 			// 
@@ -166,15 +156,33 @@
 			this.log.Size = new System.Drawing.Size(598, 169);
 			this.log.TabIndex = 0;
 			// 
-			// imageList
+			// progressLegend
 			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Feed");
-			this.imageList.Images.SetKeyName(1, "FeedQuestion");
-			this.imageList.Images.SetKeyName(2, "FeedSuccess");
-			this.imageList.Images.SetKeyName(3, "FeedWarning");
-			this.imageList.Images.SetKeyName(4, "FeedError");
+			this.progressLegend.Items.AddRange(new DotNetApi.Windows.Controls.ProgressLegendItem[] {
+            this.legendItemPending,
+            this.legendItemSuccess,
+            this.legendItemFail,
+            this.legendItemWarning});
+			// 
+			// legendItemPending
+			// 
+			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			this.legendItemPending.Text = "Pending";
+			// 
+			// legendItemSuccess
+			// 
+			this.legendItemSuccess.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+			this.legendItemSuccess.Text = "Success";
+			// 
+			// legendItemFail
+			// 
+			this.legendItemFail.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.legendItemFail.Text = "Fail";
+			// 
+			// legendItemWarning
+			// 
+			this.legendItemWarning.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+			this.legendItemWarning.Text = "Warning";
 			// 
 			// ControlSpiderStandardFeeds
 			// 
@@ -205,9 +213,11 @@
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.Label labelProgress;
 		private System.Windows.Forms.ProgressBar progressBar;
-		private System.Windows.Forms.ImageList imageList;
-		private DotNetApi.Windows.Controls.ProgressListBox progressListBox1;
-		private DotNetApi.Windows.Controls.ProgressListBoxItem itemTopRated;
-		private DotNetApi.Windows.Controls.ProgressListBoxItem itemTopFavorites;
+		private DotNetApi.Windows.Controls.ProgressListBox progressListBox;
+		private DotNetApi.Windows.Controls.ProgressLegend progressLegend;
+		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemPending;
+		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemSuccess;
+		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemFail;
+		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemWarning;
 	}
 }

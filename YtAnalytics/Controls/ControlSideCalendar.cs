@@ -47,6 +47,10 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public event DateRangeEventHandler DateChanged;
 		/// <summary>
+		/// An event raised when the user clicks on the refresh button.
+		/// </summary>
+		public event DateRangeEventHandler DateRefresh;
+		/// <summary>
 		/// An event raised when the control selection has changed.
 		/// </summary>
 		public event ControlEventHandler ControlChanged;
@@ -84,7 +88,7 @@ namespace YtAnalytics.Controls
 			// Update the labels.
 			this.labelStart.Text = e.Start.ToShortDateString();
 			this.labelEnd.Text = e.End.ToShortDateString();
-			// Call the event handler.
+			// Raise the event.
 			if (null != this.DateChanged) this.DateChanged(sender, e);
 		}
 
@@ -95,8 +99,8 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnRefresh(object sender, EventArgs e)
 		{
-			// Call the event handler.
-			this.OnDateChanged(this, new DateRangeEventArgs(this.calendar.SelectionStart, this.calendar.SelectionEnd));
+			// Raise the event.
+			if (this.DateRefresh != null) this.DateRefresh(this, new DateRangeEventArgs(this.calendar.SelectionStart, this.calendar.SelectionEnd));
 		}
 	}
 }

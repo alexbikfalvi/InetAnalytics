@@ -50,9 +50,9 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
 			this.controlPanelLog = new YtAnalytics.Controls.ControlSideCalendar();
-			this.controlPanelSpiders = new YtAnalytics.Controls.ControlSideTree();
 			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
 			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelSpiders = new YtAnalytics.Controls.ControlSideTree();
 			this.controlPanelDatabase = new YtAnalytics.Controls.ControlSideTree();
 			this.controlPanelBrowser = new YtAnalytics.Controls.ControlSideTree();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -303,19 +303,8 @@
 			this.controlPanelLog.TabIndex = 2;
 			this.controlPanelLog.Visible = false;
 			this.controlPanelLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlPanelLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
 			this.controlPanelLog.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelSpiders
-			// 
-			this.controlPanelSpiders.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelSpiders.ImageList = this.imageList;
-			this.controlPanelSpiders.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelSpiders.Name = "controlPanelSpiders";
-			this.controlPanelSpiders.SelectedNode = null;
-			this.controlPanelSpiders.Size = new System.Drawing.Size(244, 442);
-			this.controlPanelSpiders.TabIndex = 5;
-			this.controlPanelSpiders.Visible = false;
-			this.controlPanelSpiders.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
 			// 
 			// controlPanelComments
 			// 
@@ -340,6 +329,18 @@
 			this.controlPanelConfiguration.TabIndex = 1;
 			this.controlPanelConfiguration.Visible = false;
 			this.controlPanelConfiguration.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelSpiders
+			// 
+			this.controlPanelSpiders.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelSpiders.ImageList = this.imageList;
+			this.controlPanelSpiders.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelSpiders.Name = "controlPanelSpiders";
+			this.controlPanelSpiders.SelectedNode = null;
+			this.controlPanelSpiders.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelSpiders.TabIndex = 5;
+			this.controlPanelSpiders.Visible = false;
+			this.controlPanelSpiders.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
 			// 
 			// controlPanelDatabase
 			// 
