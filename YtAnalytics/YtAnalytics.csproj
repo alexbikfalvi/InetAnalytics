@@ -55,12 +55,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Database\ControlDatabase.cs" />
+    <Compile Include="Controls\ControlMap.cs" />
+    <Compile Include="Controls\Database\ControlDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlServerProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSites.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSites.Designer.cs">
+      <DependentUpon>ControlPlanetLabSites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLab.Designer.cs">
+      <DependentUpon>ControlPlanetLab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSettings.Designer.cs">
+      <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
@@ -68,11 +89,23 @@
     <Compile Include="Controls\Spiders\ControlSpiderInfo.Designer.cs">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlStandardFeeds.cs">
+    <Compile Include="Controls\Testing\ControlAddHttpRequestHeader.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlStandardFeeds.Designer.cs">
-      <DependentUpon>ControlStandardFeeds.cs</DependentUpon>
+    <Compile Include="Controls\Testing\ControlAddHttpRequestHeader.Designer.cs">
+      <DependentUpon>ControlAddHttpRequestHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlHttpHeader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlHttpHeader.Designer.cs">
+      <DependentUpon>ControlHttpHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingWebRequest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingWebRequest.Designer.cs">
+      <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoComment.cs">
       <SubType>UserControl</SubType>
@@ -98,7 +131,9 @@
     <Compile Include="Controls\ControlException.Designer.cs">
       <DependentUpon>ControlException.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Log\ControlLog.cs" />
+    <Compile Include="Controls\Log\ControlLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Log\ControlLog.Designer.cs">
       <DependentUpon>ControlLog.cs</DependentUpon>
     </Compile>
@@ -162,7 +197,9 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.Designer.cs">
       <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.cs" />
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.Designer.cs">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </Compile>
@@ -268,7 +305,9 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServers.cs" />
+    <Compile Include="Controls\Database\ControlServers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlServers.Designer.cs">
       <DependentUpon>ControlServers.cs</DependentUpon>
     </Compile>
@@ -284,7 +323,9 @@
     <Compile Include="Controls\Database\ControlChangePassword.Designer.cs">
       <DependentUpon>ControlChangePassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServer.cs" />
+    <Compile Include="Controls\Database\ControlServer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlServer.Designer.cs">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </Compile>
@@ -294,11 +335,15 @@
     <Compile Include="Controls\Database\ControlDatabaseProperties.Designer.cs">
       <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServerQuery.cs" />
+    <Compile Include="Controls\Database\ControlServerQuery.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlServerQuery.Designer.cs">
       <DependentUpon>ControlServerQuery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.cs" />
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.Designer.cs">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </Compile>
@@ -308,11 +353,15 @@
     <Compile Include="Controls\YouTube\ControlCategory.Designer.cs">
       <DependentUpon>ControlCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlTable.cs" />
+    <Compile Include="Controls\Database\ControlTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlTable.Designer.cs">
       <DependentUpon>ControlTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlDatabaseSelect.cs" />
+    <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </Compile>
@@ -340,9 +389,23 @@
     <Compile Include="Controls\Database\ControlCompareFields.Designer.cs">
       <DependentUpon>ControlCompareFields.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.cs" />
+    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormHttpHeader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormHttpHeader.Designer.cs">
+      <DependentUpon>FormHttpHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddHttpRequestHeader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddHttpRequestHeader.Designer.cs">
+      <DependentUpon>FormAddHttpRequestHeader.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormCompareFields.cs">
       <SubType>Form</SubType>
@@ -480,11 +543,27 @@
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSites.resx">
+      <DependentUpon>ControlPlanetLabSites.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLab.resx">
+      <DependentUpon>ControlPlanetLab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSettings.resx">
+      <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\YouTube\ControlStandardFeeds.resx">
-      <DependentUpon>ControlStandardFeeds.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Testing\ControlAddHttpRequestHeader.resx">
+      <DependentUpon>ControlAddHttpRequestHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Testing\ControlHttpHeader.resx">
+      <DependentUpon>ControlHttpHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Testing\ControlTestingWebRequest.resx">
+      <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlVideoComment.resx">
       <DependentUpon>ControlVideoComment.cs</DependentUpon>
@@ -628,6 +707,12 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHttpHeader.resx">
+      <DependentUpon>FormHttpHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddHttpRequestHeader.resx">
+      <DependentUpon>FormAddHttpRequestHeader.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompareFields.resx">
       <DependentUpon>FormCompareFields.cs</DependentUpon>
     </EmbeddedResource>
@@ -724,6 +809,10 @@
       <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
       <Name>DotNetApi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PlanetLab\PlanetLab\PlanetLab.csproj">
+      <Project>{8d8a9a27-a8ca-4a27-95e5-c2246bdabc85}</Project>
+      <Name>PlanetLab</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YtApi\YtApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>YtApi</Name>
@@ -738,6 +827,34 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\GlobeSettings_48.png" />
+    <None Include="Resources\GlobeSettings_32.png" />
+    <None Include="Resources\GlobeSettings_24.png" />
+    <None Include="Resources\GlobeSettings_16.png" />
+    <None Include="Resources\GlobeSchema_48.png" />
+    <None Include="Resources\GlobeSchema_32.png" />
+    <None Include="Resources\GlobeSchema_24.png" />
+    <None Include="Resources\GlobeSchema_16.png" />
+    <None Include="Resources\GlobeLab_48.png" />
+    <None Include="Resources\GlobeLab_32.png" />
+    <None Include="Resources\GlobeLab_24.png" />
+    <None Include="Resources\GlobeLab_16.png" />
+    <None Include="Resources\HeaderRemove_48.png" />
+    <None Include="Resources\HeaderRemove_32.png" />
+    <None Include="Resources\HeaderRemove_24.png" />
+    <None Include="Resources\HeaderRemove_16.png" />
+    <None Include="Resources\HeaderAdd_48.png" />
+    <None Include="Resources\HeaderAdd_32.png" />
+    <None Include="Resources\HeaderAdd_24.png" />
+    <None Include="Resources\HeaderAdd_16.png" />
+    <None Include="Resources\Header_48.png" />
+    <None Include="Resources\Header_32.png" />
+    <None Include="Resources\Header_24.png" />
+    <None Include="Resources\Header_16.png" />
+    <None Include="Resources\TestGlobeGoto_48.png" />
+    <None Include="Resources\TestGlobeGoto_32.png" />
+    <None Include="Resources\TestGlobeGoto_24.png" />
+    <None Include="Resources\TestGlobeGoto_16.png" />
     <None Include="Resources\TestsLarge_48.png" />
     <None Include="Resources\TestsLarge_32.png" />
     <None Include="Resources\TestsLarge_24.png" />

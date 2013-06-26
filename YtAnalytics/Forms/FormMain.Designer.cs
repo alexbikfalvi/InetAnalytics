@@ -34,7 +34,15 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
+			this.controlPanelLog = new YtAnalytics.Controls.ControlSideCalendar();
+			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelTesting = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelPlanetLab = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelSpiders = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelDatabase = new YtAnalytics.Controls.ControlSideTree();
+			this.controlPanelBrowser = new YtAnalytics.Controls.ControlSideTree();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,12 +57,6 @@
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlPanelLog = new YtAnalytics.Controls.ControlSideCalendar();
-			this.controlPanelComments = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelConfiguration = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelSpiders = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelDatabase = new YtAnalytics.Controls.ControlSideTree();
-			this.controlPanelBrowser = new YtAnalytics.Controls.ControlSideTree();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -122,6 +124,8 @@
 			this.sideMenu.Controls.Add(this.controlPanelLog);
 			this.sideMenu.Controls.Add(this.controlPanelComments);
 			this.sideMenu.Controls.Add(this.controlPanelConfiguration);
+			this.sideMenu.Controls.Add(this.controlPanelTesting);
+			this.sideMenu.Controls.Add(this.controlPanelPlanetLab);
 			this.sideMenu.Controls.Add(this.controlPanelSpiders);
 			this.sideMenu.Controls.Add(this.controlPanelDatabase);
 			this.sideMenu.Controls.Add(this.controlPanelBrowser);
@@ -138,6 +142,30 @@
 			this.sideMenu.Size = new System.Drawing.Size(244, 526);
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.VisibleItems = 0;
+			// 
+			// controlPanelLog
+			// 
+			this.controlPanelLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelLog.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelLog.Name = "controlPanelLog";
+			this.controlPanelLog.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelLog.TabIndex = 2;
+			this.controlPanelLog.Visible = false;
+			this.controlPanelLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlPanelLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
+			this.controlPanelLog.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelComments
+			// 
+			this.controlPanelComments.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelComments.ImageList = this.imageList;
+			this.controlPanelComments.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelComments.Name = "controlPanelComments";
+			this.controlPanelComments.SelectedNode = null;
+			this.controlPanelComments.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelComments.TabIndex = 3;
+			this.controlPanelComments.Visible = false;
+			this.controlPanelComments.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
 			// 
 			// imageList
 			// 
@@ -181,6 +209,81 @@
 			this.imageList.Images.SetKeyName(35, "QueryDatabase");
 			this.imageList.Images.SetKeyName(36, "Cube");
 			this.imageList.Images.SetKeyName(37, "Cubes");
+			this.imageList.Images.SetKeyName(38, "GlobeSettings");
+			this.imageList.Images.SetKeyName(39, "GlobeSchema");
+			this.imageList.Images.SetKeyName(40, "TestGlobeGoto");
+			// 
+			// controlPanelConfiguration
+			// 
+			this.controlPanelConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelConfiguration.ImageList = this.imageList;
+			this.controlPanelConfiguration.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelConfiguration.Name = "controlPanelConfiguration";
+			this.controlPanelConfiguration.SelectedNode = null;
+			this.controlPanelConfiguration.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelConfiguration.TabIndex = 1;
+			this.controlPanelConfiguration.Visible = false;
+			this.controlPanelConfiguration.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelTesting
+			// 
+			this.controlPanelTesting.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelTesting.ImageList = this.imageList;
+			this.controlPanelTesting.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelTesting.Name = "controlPanelTesting";
+			this.controlPanelTesting.SelectedNode = null;
+			this.controlPanelTesting.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelTesting.TabIndex = 6;
+			this.controlPanelTesting.Visible = false;
+			this.controlPanelTesting.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelPlanetLab
+			// 
+			this.controlPanelPlanetLab.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelPlanetLab.ImageList = this.imageList;
+			this.controlPanelPlanetLab.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelPlanetLab.Name = "controlPanelPlanetLab";
+			this.controlPanelPlanetLab.SelectedNode = null;
+			this.controlPanelPlanetLab.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelPlanetLab.TabIndex = 7;
+			this.controlPanelPlanetLab.Visible = false;
+			this.controlPanelPlanetLab.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelSpiders
+			// 
+			this.controlPanelSpiders.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelSpiders.ImageList = this.imageList;
+			this.controlPanelSpiders.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelSpiders.Name = "controlPanelSpiders";
+			this.controlPanelSpiders.SelectedNode = null;
+			this.controlPanelSpiders.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelSpiders.TabIndex = 5;
+			this.controlPanelSpiders.Visible = false;
+			this.controlPanelSpiders.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelDatabase
+			// 
+			this.controlPanelDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelDatabase.ImageList = this.imageList;
+			this.controlPanelDatabase.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelDatabase.Name = "controlPanelDatabase";
+			this.controlPanelDatabase.SelectedNode = null;
+			this.controlPanelDatabase.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelDatabase.TabIndex = 4;
+			this.controlPanelDatabase.Visible = false;
+			this.controlPanelDatabase.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
+			// 
+			// controlPanelBrowser
+			// 
+			this.controlPanelBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlPanelBrowser.ImageList = this.imageList;
+			this.controlPanelBrowser.Location = new System.Drawing.Point(0, 28);
+			this.controlPanelBrowser.Name = "controlPanelBrowser";
+			this.controlPanelBrowser.SelectedNode = null;
+			this.controlPanelBrowser.Size = new System.Drawing.Size(244, 442);
+			this.controlPanelBrowser.TabIndex = 0;
+			this.controlPanelBrowser.Visible = false;
+			this.controlPanelBrowser.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
 			// 
 			// labelNotAvailable
 			// 
@@ -217,7 +320,7 @@
 			this.menuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
 			this.menuItemExit.Size = new System.Drawing.Size(134, 22);
 			this.menuItemExit.Text = "E&xit";
-			this.menuItemExit.Click += new System.EventHandler(this.Close);
+			this.menuItemExit.Click += new System.EventHandler(this.OnClose);
 			// 
 			// menuItemHelp
 			// 
@@ -294,78 +397,6 @@
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
-			// controlPanelLog
-			// 
-			this.controlPanelLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelLog.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelLog.Name = "controlPanelLog";
-			this.controlPanelLog.Size = new System.Drawing.Size(244, 442);
-			this.controlPanelLog.TabIndex = 2;
-			this.controlPanelLog.Visible = false;
-			this.controlPanelLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlPanelLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlPanelLog.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelComments
-			// 
-			this.controlPanelComments.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelComments.ImageList = this.imageList;
-			this.controlPanelComments.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelComments.Name = "controlPanelComments";
-			this.controlPanelComments.SelectedNode = null;
-			this.controlPanelComments.Size = new System.Drawing.Size(244, 442);
-			this.controlPanelComments.TabIndex = 3;
-			this.controlPanelComments.Visible = false;
-			this.controlPanelComments.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelConfiguration
-			// 
-			this.controlPanelConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelConfiguration.ImageList = this.imageList;
-			this.controlPanelConfiguration.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelConfiguration.Name = "controlPanelConfiguration";
-			this.controlPanelConfiguration.SelectedNode = null;
-			this.controlPanelConfiguration.Size = new System.Drawing.Size(244, 442);
-			this.controlPanelConfiguration.TabIndex = 1;
-			this.controlPanelConfiguration.Visible = false;
-			this.controlPanelConfiguration.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelSpiders
-			// 
-			this.controlPanelSpiders.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelSpiders.ImageList = this.imageList;
-			this.controlPanelSpiders.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelSpiders.Name = "controlPanelSpiders";
-			this.controlPanelSpiders.SelectedNode = null;
-			this.controlPanelSpiders.Size = new System.Drawing.Size(244, 442);
-			this.controlPanelSpiders.TabIndex = 5;
-			this.controlPanelSpiders.Visible = false;
-			this.controlPanelSpiders.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelDatabase
-			// 
-			this.controlPanelDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelDatabase.ImageList = this.imageList;
-			this.controlPanelDatabase.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelDatabase.Name = "controlPanelDatabase";
-			this.controlPanelDatabase.SelectedNode = null;
-			this.controlPanelDatabase.Size = new System.Drawing.Size(244, 442);
-			this.controlPanelDatabase.TabIndex = 4;
-			this.controlPanelDatabase.Visible = false;
-			this.controlPanelDatabase.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
-			// controlPanelBrowser
-			// 
-			this.controlPanelBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlPanelBrowser.ImageList = this.imageList;
-			this.controlPanelBrowser.Location = new System.Drawing.Point(0, 28);
-			this.controlPanelBrowser.Name = "controlPanelBrowser";
-			this.controlPanelBrowser.SelectedNode = null;
-			this.controlPanelBrowser.Size = new System.Drawing.Size(244, 442);
-			this.controlPanelBrowser.TabIndex = 0;
-			this.controlPanelBrowser.Visible = false;
-			this.controlPanelBrowser.ControlChanged += new System.Windows.Forms.ControlEventHandler(this.OnControlChanged);
-			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -423,6 +454,8 @@
 		private Controls.ControlSideTree controlPanelComments;
 		private Controls.ControlSideTree controlPanelDatabase;
 		private Controls.ControlSideTree controlPanelSpiders;
+		private Controls.ControlSideTree controlPanelTesting;
+		private Controls.ControlSideTree controlPanelPlanetLab;
 	}
 }
 

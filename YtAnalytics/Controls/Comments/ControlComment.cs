@@ -39,7 +39,7 @@ namespace YtAnalytics.Controls.Comments
 		private Comment comment = null;
 
 		/// <summary>
-		/// Creates a new log event control instance.
+		/// Creates a new comment control instance.
 		/// </summary>
 		public ControlComment()
 		{
@@ -47,7 +47,7 @@ namespace YtAnalytics.Controls.Comments
 		}
 
 		/// <summary>
-		/// Gets or sets the current history discovery event.
+		/// Gets or sets the current comment.
 		/// </summary>
 		public Comment Comment
 		{

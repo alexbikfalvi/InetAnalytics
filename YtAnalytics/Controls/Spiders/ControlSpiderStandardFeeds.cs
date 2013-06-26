@@ -45,7 +45,7 @@ namespace YtAnalytics.Controls.Spiders
 	/// </summary>
 	public partial class ControlSpiderStandardFeeds : ControlDatabase
 	{
-		private string logSource = "Spider\\Standard Feeds";
+		//private string logSource = "Spider\\Standard Feeds";
 
 		// Private variables.
 
@@ -87,7 +87,10 @@ namespace YtAnalytics.Controls.Spiders
 			// Initialize the progress list box.
 			for (int index = 0; index < YouTubeUri.StandardFeedNames.Length; index++)
 			{
+				// Initialize the progress item.
 				progressItems[index] = new ProgressItem(YouTubeUri.StandardFeedNames[index], this.progressLegend);
+				// Set the default progress.
+				progressItems[index].Progress.Default = this.progressLegend.Items.Count - 1;
 			}
 			this.progressListBox.Items.AddRange(this.progressItems);
 		}
@@ -107,6 +110,7 @@ namespace YtAnalytics.Controls.Spiders
 			// Set the button enabled state.
 			this.buttonStart.Enabled = this.crawler.Spiders.StandardFeeds.State == Spider.CrawlState.Stopped;
 			this.buttonStop.Enabled = this.crawler.Spiders.StandardFeeds.State == Spider.CrawlState.Running;
+			this.buttonFeeds.Enabled = this.crawler.Spiders.StandardFeeds.State == Spider.CrawlState.Stopped;
 
 			// Create the event handlers.
 			this.crawler.Spiders.StandardFeeds.StateChanged += this.delegateSpiderStateChanged;
@@ -115,6 +119,20 @@ namespace YtAnalytics.Controls.Spiders
 			this.crawler.Spiders.StandardFeeds.CrawlFeedsStarted += this.delegateSpiderFeedsStarted;
 			this.crawler.Spiders.StandardFeeds.CrawlFeedStarted += this.delegateSpiderFeedStarted;
 			this.crawler.Spiders.StandardFeeds.CrawlFeedFinished += this.delegateSpiderFeedFinished;
+
+			// Initialize the progress list box and checked list.
+			for (int index = 0; index < YouTubeUri.StandardFeedNames.Length; index++)
+			{
+				// Get whether the feed is selected.
+				bool selected = this.crawler.Spiders.StandardFeeds.GetFeedSelected(YtApi.Api.V2.YouTube.StandardFeeds[index]);
+				// Initialize the progress item.
+				progressItems[index].Enabled = selected;
+				// Initialize the checked item.
+				this.checkedListFeeds.AddItem(
+					index,
+					YouTubeUri.StandardFeedNames[index],
+					selected ? CheckState.Checked : CheckState.Unchecked);
+			}
 		}
 
 		// Private methods.
@@ -128,6 +146,7 @@ namespace YtAnalytics.Controls.Spiders
 		{
 			// Change the controls state.
 			this.buttonStart.Enabled = false;
+			this.buttonFeeds.Enabled = false;
 
 			try
 			{
@@ -178,6 +197,7 @@ namespace YtAnalytics.Controls.Spiders
 			// Change the button state.
 			this.buttonStart.Enabled = spider.State == Spider.CrawlState.Stopped;
 			this.buttonStop.Enabled = spider.State == Spider.CrawlState.Running;
+			this.buttonFeeds.Enabled = spider.State == Spider.CrawlState.Stopped;
 		}
 
 		/// <summary>
@@ -251,25 +271,62 @@ namespace YtAnalytics.Controls.Spiders
 		/// An event handler called when the spider starts crawling a standard feed.
 		/// </summary>
 		/// <param name="spider">The spider.</param>
+		/// <param name="feeds">The list of standard feeds.</param>
 		/// <param name="obj">The standard feed object.</param>
-		private void OnSpiderCrawlFeedStarted(Spider spider, DbObjectStandardFeed obj)
+		/// <param name="index">The feed index.</param>
+		private void OnSpiderCrawlFeedStarted(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds, DbObjectStandardFeed obj, int index)
 		{
 			// Call this method on the UI thread.
 			if (this.InvokeRequired)
 			{
-				this.Invoke(this.delegateSpiderFeedStarted, new object[] { spider, obj });
+				this.Invoke(this.delegateSpiderFeedStarted, new object[] { spider, feeds, obj, index });
 				return;
 			}
+
+			// Update the progress label.
+			this.labelProgress.Text = string.Format("Crawling feed {0} of {1}.", index, feeds.Count);			
 		}
 
-		private void OnSpiderCrawlFeedFinished(Spider spider, DbObjectStandardFeed obj)
+		/// <summary>
+		/// An event handler called when the spider finishes crawling a standard feed.
+		/// </summary>
+		/// <param name="spider">The spider.</param>
+		/// <param name="feeds">The list of standard feeds.</param>
+		/// <param name="obj">The standard feed object.</param>
+		/// <param name="index">The feed index.</param>
+		private void OnSpiderCrawlFeedFinished(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds, DbObjectStandardFeed obj, int index)
 		{
 			// Call this method on the UI thread.
 			if (this.InvokeRequired)
 			{
-				this.Invoke(this.delegateSpiderFeedFinished, new object[] { spider, obj });
+				this.Invoke(this.delegateSpiderFeedFinished, new object[] { spider, feeds, obj, index });
 				return;
 			}
+
+			// Update the progress item corresponding to this feed.
+			this.progressItems[obj.FeedId].Progress.Change(0);
+			// Update the progress bar.
+			this.progressBar.Value++;
+		}
+
+		/// <summary>
+		/// An event handler called when the user changes the checked state of a standard feed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFeedCheck(object sender, ItemCheckEventArgs e)
+		{
+			// If the checked item index is outside the bounds of the progress list box items, do nothing.
+			if (e.Index >= this.progressListBox.Items.Count) return;
+
+			// Update the enabled state of the corresponding progress item.
+			this.progressListBox.Items[e.Index].Enabled = e.NewValue == CheckState.Checked;
+
+			// Save the state in the spider configuration.
+			this.crawler.Spiders.StandardFeeds.SetFeedSelected(YtApi.Api.V2.YouTube.StandardFeeds[e.Index], e.NewValue == CheckState.Checked);
+			
+			// Refresh the progress list box.
+			this.progressListBox.Refresh();
 		}
 	}
 }

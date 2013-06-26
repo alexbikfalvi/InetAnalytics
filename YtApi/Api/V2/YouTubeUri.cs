@@ -230,6 +230,8 @@ namespace YtApi.Api.V2
 		/// </summary>
 		public static Uri UriCategories { get { return YouTubeUri.uriCategories; } }
 
+		public static string[] StandardFeedsIds { get { return YouTubeUri.standardFeedIds; } }
+
 		/// <summary>
 		/// Returns the list of standard feed names.
 		/// </summary>

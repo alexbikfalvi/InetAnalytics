@@ -51,7 +51,7 @@ namespace YtApi.Ajax
 		/// </summary>
 		/// <param name="result">The asynchronous result.</param>
 		/// <returns>An XML document representing the data received during the asynchronous operation.</returns>
-		public XDocument End(IAsyncResult result)
+		public new XDocument End(IAsyncResult result)
 		{
 			// Get the asynchronous result.
 			AsyncWebResult asyncResult = (AsyncWebResult)result;

@@ -79,7 +79,7 @@ namespace YtApi.Api.V2
 		/// </summary>
 		/// <param name="result">The asynchronous result.</param>
 		/// <returns>The comment feed object.</returns>
-		public Feed<T> End(IAsyncResult result)
+		public new Feed<T> End(IAsyncResult result)
 		{
 			object state;
 			return this.funcConvert.GetResult(base.End(result, out state));

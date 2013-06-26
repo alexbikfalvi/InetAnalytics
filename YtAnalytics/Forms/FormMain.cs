@@ -30,6 +30,8 @@ using YtAnalytics.Controls.Comments;
 using YtAnalytics.Controls.Database;
 using YtAnalytics.Controls.Log;
 using YtAnalytics.Controls.Spiders;
+using YtAnalytics.Controls.PlanetLab;
+using YtAnalytics.Controls.Testing;
 using YtAnalytics.Controls.YouTube;
 using YtAnalytics.Controls.YouTube.Api2;
 using YtAnalytics.Controls.YouTube.Api3;
@@ -52,10 +54,11 @@ namespace YtAnalytics.Forms
 		private SideMenuItem sideMenuBrowse;
 		private SideMenuItem sideMenuDatabase;
 		private SideMenuItem sideMenuSpiders;
+		private SideMenuItem sideMenuPlanetLab;
 		private SideMenuItem sideMenuConfiguration;
 		private SideMenuItem sideMenuLog;
 		private SideMenuItem sideMenuComments;
-		private SideMenuItem sideMenuTests;
+		private SideMenuItem sideMenuTesting;
 
 		// Tree view nodes.
 		private TreeNode treeNodeBrowserApi2;
@@ -84,6 +87,11 @@ namespace YtAnalytics.Forms
 
 		private TreeNode treeNodeSpidersLocal;
 		private TreeNode treeNodeSpiderStandardFeeds;
+
+		private TreeNode treeNodePlanetLab;
+		private TreeNode treeNodePlanetLabSites;
+
+		private TreeNode treeNodeTestingWebRequest;
 
 		private TreeNode treeNodeSettings;
 
@@ -117,11 +125,21 @@ namespace YtAnalytics.Forms
 		private ControlYtApi3Info controlYtApi3 = new ControlYtApi3Info();
 		private ControlWeb controlWeb = new ControlWeb();
 		private ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
+		
 		private ControlServers controlDatabaseServers = new ControlServers();
+		
 		private ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
 		private ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
+
+		private ControlPlanetLab controlPlanetLab = new ControlPlanetLab();
+		private ControlPlanetLabSites controlPlanetLabSites = new ControlPlanetLabSites();
+
+		private ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
+		
 		private ControlSettings controlSettings = new ControlSettings();
+		
 		private ControlLog controlLog = new ControlLog();
+		
 		private ControlCommentsInfo controlCommentsInfo = new ControlCommentsInfo();
 		private ControlComments controlCommentsVideos = new ControlComments();
 		private ControlComments controlCommentsUsers = new ControlComments();
@@ -250,6 +268,20 @@ namespace YtAnalytics.Forms
 					this.treeNodeSpiderStandardFeeds
 				});
 
+			this.treeNodePlanetLabSites = new TreeNode("Sites",
+				this.imageList.Images.IndexOfKey("GlobeSchema"),
+				this.imageList.Images.IndexOfKey("GlobeSchema"));
+			this.treeNodePlanetLab = new TreeNode("Planet Lab",
+				this.imageList.Images.IndexOfKey("GlobeSettings"),
+				this.imageList.Images.IndexOfKey("GlobeSettings"),
+				new TreeNode[] {
+					this.treeNodePlanetLabSites
+				});
+
+			this.treeNodeTestingWebRequest = new TreeNode("Web request",
+				this.imageList.Images.IndexOfKey("TestGlobeGoto"),
+				this.imageList.Images.IndexOfKey("TestGlobeGoto"));
+
 			this.treeNodeSettings = new TreeNode("Settings",
 				this.imageList.Images.IndexOfKey("Settings"),
 				this.imageList.Images.IndexOfKey("Settings"));
@@ -294,6 +326,9 @@ namespace YtAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlDatabaseServers);
 			this.splitContainer.Panel2.Controls.Add(this.controlSpiderInfo);
 			this.splitContainer.Panel2.Controls.Add(this.controlSpiderStandardFeeds);
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLab);
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSites);
+			this.splitContainer.Panel2.Controls.Add(this.controlTestingWebRequest);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
 			this.splitContainer.Panel2.Controls.Add(this.controlCommentsInfo);
@@ -327,6 +362,11 @@ namespace YtAnalytics.Forms
 			this.treeNodeSpidersLocal.Tag = this.controlSpiderInfo;
 			this.treeNodeSpiderStandardFeeds.Tag = this.controlSpiderStandardFeeds;
 
+			this.treeNodePlanetLab.Tag = this.controlPlanetLab;
+			this.treeNodePlanetLabSites.Tag = this.controlPlanetLabSites;
+
+			this.treeNodeTestingWebRequest.Tag = this.controlTestingWebRequest;
+
 			this.treeNodeSettings.Tag = this.controlSettings;
 			this.controlPanelLog.Tag = this.controlLog;
 			this.treeNodeComments.Tag = this.controlCommentsInfo;
@@ -343,6 +383,8 @@ namespace YtAnalytics.Forms
 				});
 			this.controlPanelDatabase.Add(this.treeNodeDatabaseServers);
 			this.controlPanelSpiders.Add(this.treeNodeSpidersLocal);
+			this.controlPanelPlanetLab.Add(this.treeNodePlanetLab);
+			this.controlPanelTesting.Add(this.treeNodeTestingWebRequest);
 			this.controlPanelConfiguration.Add(this.treeNodeSettings);
 			this.controlPanelComments.Add(this.treeNodeComments);
 
@@ -351,56 +393,62 @@ namespace YtAnalytics.Forms
 				"Browser",
 				Resources.ServersBrowse_16,
 				Resources.ServersBrowse_32,
-				this.SideMenuSelect,
+				this.OnSideMenuSelect,
 				this.controlPanelBrowser
 				);
 			this.sideMenuDatabase = this.sideMenu.AddItem(
 				"Database",
 				Resources.ServersDatabase_16,
 				Resources.ServersDatabase_32,
-				this.SideMenuSelect,
+				this.OnSideMenuSelect,
 				this.controlPanelDatabase
 				);
 			this.sideMenuSpiders = this.sideMenu.AddItem(
 				"Spiders",
 				Resources.ServersCube_16,
 				Resources.ServersCube_32,
-				this.SideMenuSelect,
+				this.OnSideMenuSelect,
 				this.controlPanelSpiders
 				);
-			this.sideMenuTests = this.sideMenu.AddItem(
-				"Tests",
+			this.sideMenuPlanetLab = this.sideMenu.AddItem(
+				"Planet Lab",
+				Resources.GlobeLab_16,
+				Resources.GlobeLab_32,
+				this.OnSideMenuSelect,
+				this.controlPanelPlanetLab
+				);
+			this.sideMenuTesting = this.sideMenu.AddItem(
+				"Testing",
 				Resources.TestsLarge_16,
 				Resources.TestsLarge_32,
-				this.SideMenuSelect,
-				this.controlPanelTests
+				this.OnSideMenuSelect,
+				this.controlPanelTesting
 				);
 			this.sideMenuConfiguration = this.sideMenu.AddItem(
 				"Configuration",
 				Resources.ConfigurationSettings_16,
 				Resources.ConfigurationSettings_32,
-				this.SideMenuSelect,
+				this.OnSideMenuSelect,
 				this.controlPanelConfiguration
 				);
 			this.sideMenuLog = this.sideMenu.AddItem(
 				"Log",
 				Resources.Log_16,
 				Resources.Log_32,
-				this.SideMenuSelectLog,
+				this.OnSideMenuSelectLog,
 				this.controlPanelLog
 				);
 			this.sideMenuComments = this.sideMenu.AddItem(
 				"Comments",
 				Resources.Comments_16,
 				Resources.Comments_32,
-				this.SideMenuSelect,
+				this.OnSideMenuSelect,
 				this.controlPanelComments
 				);
 
 			this.sideMenu.VisibleItems = this.crawler.Config.ConsoleSideMenuVisibleItems;
 			this.sideMenu.MinimizedItems = this.crawler.Config.ConsoleSideMenuMinimizedItems;
-
-			this.sideMenu.ItemVisibilityChanged += OnSideMenuItemVisibilityChanged;
+			this.sideMenu.ItemVisibilityChanged += this.OnSideMenuItemVisibilityChanged;
 
 			// Initialize the controls.
 			this.controlYtApi2Video.Initialize(this.crawler);
@@ -417,6 +465,9 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2Categories.Initialize(this.crawler);
 			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
+			this.controlPlanetLab.Initialize(this.crawler);
+			this.controlPlanetLabSites.Initialize(this.crawler);
+			this.controlTestingWebRequest.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
@@ -507,15 +558,17 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2PlaylistFeed.ViewVideoInWeb += this.ViewVideoInWeb;
 			this.controlYtApi2PlaylistFeed.Comment += this.CommentVideo;
 
-			this.controlWeb.ClickVideoStatistics += new EventHandler(this.BrowserWebVideosClick);
+			this.controlWeb.ClickVideoStatistics += this.BrowserWebVideosClick;
 
 			this.controlWebStatistics.Comment += this.CommentVideo;
 
+			this.controlPlanetLab.ClickSites += this.PlanetLabSitesClick;
+
 			this.controlSpiderInfo.StandardFeedsClick += this.BrowserSpiderStandardFeedsClick;
 
-			this.controlCommentsInfo.ClickVideos += new EventHandler(this.BrowserCommentsVideosClick);
-			this.controlCommentsInfo.ClickUsers += new EventHandler(this.BrowserCommentsUsersClick);
-			this.controlCommentsInfo.ClickPlaylists += new EventHandler(this.BrowserCommentsPlaylistsClick);
+			this.controlCommentsInfo.ClickVideos += this.BrowserCommentsVideosClick;
+			this.controlCommentsInfo.ClickUsers += this.BrowserCommentsUsersClick;
+			this.controlCommentsInfo.ClickPlaylists += this.BrowserCommentsPlaylistsClick;
 
 			// Selected control
 			this.controlPanelSelected = this.labelNotAvailable;
@@ -528,7 +581,7 @@ namespace YtAnalytics.Forms
 		/// An event handler called when the selected side menu item has changed.
 		/// </summary>
 		/// <param name="item">The side menu item.</param>
-		private void SideMenuSelect(SideMenuItem item)
+		private void OnSideMenuSelect(SideMenuItem item)
 		{
 			// If the tag of the menu item is not null.
 			if (null != item.Tag)
@@ -555,10 +608,14 @@ namespace YtAnalytics.Forms
 			}
 		}
 
-		private void SideMenuSelectLog(SideMenuItem item)
+		/// <summary>
+		/// An event handler called when the selected side menu log has changed.
+		/// </summary>
+		/// <param name="item"></param>
+		private void OnSideMenuSelectLog(SideMenuItem item)
 		{
 			// Select the side menu item.
-			this.SideMenuSelect(item);
+			this.OnSideMenuSelect(item);
 			// Refresh the log.
 			this.controlLog.DateChanged(this, new DateRangeEventArgs(this.controlPanelLog.Calendar.SelectionStart, this.controlPanelLog.Calendar.SelectionEnd));
 		}
@@ -704,6 +761,12 @@ namespace YtAnalytics.Forms
 			this.controlPanelSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
 		}
 
+		private void PlanetLabSitesClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuPlanetLab;
+			this.controlPanelPlanetLab.SelectedNode = this.treeNodePlanetLabSites;
+		}
+
 		private void BrowserCommentsVideosClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuComments;
@@ -814,11 +877,11 @@ namespace YtAnalytics.Forms
 		}
 
 		/// <summary>
-		/// Closes the current window and the application.
+		/// An event handler called when the user closes the current window and the application.
 		/// </summary>
 		/// <param name="sender">The sender control.</param>
 		/// <param name="e">The event arguments.</param>
-		private void Close(object sender, EventArgs e)
+		private void OnClose(object sender, EventArgs e)
 		{
 			this.Close();
 		}

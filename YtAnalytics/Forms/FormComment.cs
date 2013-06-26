@@ -31,7 +31,7 @@ using DotNetApi.Windows;
 namespace YtAnalytics.Forms
 {
 	/// <summary>
-	/// A form dialog displaying a log event.
+	/// A form dialog displaying a user comment.
 	/// </summary>
 	public partial class FormComment : Form
 	{

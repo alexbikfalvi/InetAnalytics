@@ -229,7 +229,7 @@ namespace YtCrawler
 					object value = Registry.GetValue(this.root + "\\Console", "MessageCloseDelay", 1000);	
 					return TimeSpan.FromMilliseconds((int)(null != value ? value : 1000));
 				}
-				catch (Exception) { return TimeSpan.FromMilliseconds(1000); }
+				catch { return TimeSpan.FromMilliseconds(1000); }
 			}
 			set { Registry.SetValue(this.root + "\\Console", "MessageCloseDelay", value, RegistryValueKind.DWord); }
 		}
@@ -241,7 +241,8 @@ namespace YtCrawler
 		{
 			get
 			{
-				return (int)Registry.GetValue(this.root + "\\Console", "SideMenuVisibleItems", 4);
+				try { return (int)Registry.GetValue(this.root + "\\Console", "SideMenuVisibleItems", 4); }
+				catch { return 4; }
 			}
 			set { Registry.SetValue(this.root + "\\Console", "SideMenuVisibleItems", value, RegistryValueKind.DWord); }
 		}
@@ -253,14 +254,54 @@ namespace YtCrawler
 		{
 			get
 			{
-				return (int)Registry.GetValue(this.root + "\\Console", "SideMenuMinimizedtems", 2);
+				try { return (int)Registry.GetValue(this.root + "\\Console", "SideMenuMinimizedtems", 2); }
+				catch { return 2; }
 			}
 			set { Registry.SetValue(this.root + "\\Console", "SideMenuMinimizedtems", value, RegistryValueKind.DWord); }
+		}
+
+		/// <summary>
+		/// Gets or sets the PlanetLab account name.
+		/// </summary>
+		public string PlanetLabUserName
+		{
+			get
+			{
+				try
+				{
+					string value;
+					return null != (value = Registry.GetValue(this.root + "\\PlanetLab", "UserName", string.Empty) as string) ? value : string.Empty;
+				}
+				catch (Exception) { return string.Empty; }
+			}
+			set { Registry.SetValue(this.root + "\\PlanetLab", "UserName", value, RegistryValueKind.String); }
+		}
+
+		/// <summary>
+		/// Gets or sets the PlanetLab account password.
+		/// </summary>
+		public string PlanetLabPassword
+		{
+			get
+			{
+				try
+				{
+					string value;
+					return null != (value = CrawlerCrypto.Decrypt(Registry.GetValue(this.root + "\\PlanetLab", "Password", null) as byte[])) ? value : string.Empty;
+				}
+				catch (Exception) { return string.Empty; }
+			}
+			set { Registry.SetValue(this.root + "\\PlanetLab", "Password", CrawlerCrypto.Encrypt(value), RegistryValueKind.Binary); }
 		}
 
 		/// <summary>
 		/// Gets the database configuration.
 		/// </summary>
 		public DbConfig DatabaseConfig { get { return this.dbConfig; } }
+
+		/// <summary>
+		/// Gets the spiders configuration path.
+		/// </summary>
+		public string SpidersConfigPath { get { return this.root + "\\Spiders"; } }
 	}
 }

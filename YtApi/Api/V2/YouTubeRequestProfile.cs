@@ -83,7 +83,7 @@ namespace YtApi.Api.V2
 		/// </summary>
 		/// <param name="result">The asynchronous result.</param>
 		/// <returns>The profile object.</returns>
-		public Profile End(IAsyncResult result)
+		public new Profile End(IAsyncResult result)
 		{
 			object state;
 			return this.funcConvert.GetResult(base.End(result, out state));

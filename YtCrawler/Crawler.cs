@@ -21,6 +21,7 @@ using YtApi.Api.V2;
 using YtCrawler.Database;
 using YtCrawler.Log;
 using YtCrawler.Spider;
+using YtCrawler.Testing;
 using Microsoft.Win32;
 
 namespace YtCrawler
@@ -34,6 +35,8 @@ namespace YtCrawler
 		private Comments.Comments comments;
 		private DbServers servers;
 		private Spiders spiders;
+		private PlanetLab.PlanetLab planetLab;
+		private Testing.Testing testing;
 
 		/// <summary>
 		/// Creates a new crawer global object, based on a configuration from the specified root registry key.
@@ -60,8 +63,14 @@ namespace YtCrawler
 			// Create the database servers.
 			this.servers = new DbServers(this.config);
 
-			// Created the crawler spiders.
+			// Create the crawler spiders.
 			this.spiders = new Spiders(this);
+
+			// Create the PlanetLab configuration.
+			this.planetLab = new PlanetLab.PlanetLab(this.config);
+
+			// Create the crawler testing.
+			this.testing = new Testing.Testing(rootKey, rootPath);
 		}
 
 		/// <summary>
@@ -113,5 +122,15 @@ namespace YtCrawler
 		/// Returns the crawler spiders.
 		/// </summary>
 		public Spiders Spiders { get { return this.spiders; } }
+
+		/// <summary>
+		/// Returns the PlanetLab configuration.
+		/// </summary>
+		public PlanetLab.PlanetLab PlanetLab { get { return this.planetLab; } }
+
+		/// <summary>
+		/// Returns the crawler testing configuration.
+		/// </summary>
+		public Testing.Testing Testing { get { return this.testing; } }
 	}
 }

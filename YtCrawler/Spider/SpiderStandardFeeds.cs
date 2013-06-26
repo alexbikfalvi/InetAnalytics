@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
+using Microsoft.Win32;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
 using YtCrawler.Database;
@@ -30,7 +31,7 @@ using DotNetApi.Web;
 namespace YtCrawler.Spider
 {
 	public delegate void SpiderStandardFeedsStartedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
-	public delegate void SpiderStandardFeedsEventHandler(Spider spider, DbObjectStandardFeed obj);
+	public delegate void SpiderStandardFeedsEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds, DbObjectStandardFeed obj, int index);
 
 	/// <summary>
 	/// A spider browsing through the YouTube API version 2 standard video feeds.
@@ -94,6 +95,9 @@ namespace YtCrawler.Spider
 				// For all standard feeds.
 				foreach (YouTubeStandardFeed feed in YouTube.StandardFeeds)
 				{
+					// If the feed is not selected, continue.
+					if (!this.GetFeedSelected(feed)) continue;
+
 					// Get the valid times for this feed.
 					YouTubeTimeId[] times = YouTubeUri.GetValidTime(feed);
 
@@ -150,17 +154,24 @@ namespace YtCrawler.Spider
 				// Execute the crawl on the thread pool.
 				ThreadPool.QueueUserWorkItem((object state) =>
 					{
-						/*
+						// Set the feed index.
+						int index = 0;
+						// For each feed in the feeds collection.
 						foreach(KeyValuePair<string, DbObjectStandardFeed> feed in feeds)
 						{
 							// Check if the crawl has been canceled.
 							if (asyncResult.IsCanceled) break;
+
+							// Increment the feed index.
+							index++;
 
 							// Get the object.
 							DbObjectStandardFeed obj = feed.Value;
 
 							// Crawl the feed.
 							this.CrawlFeed(
+								feeds,
+								index,
 								asyncResult,
 								(YouTubeStandardFeed)obj.FeedId,
 								(YouTubeTimeId)obj.TimeId,
@@ -168,7 +179,6 @@ namespace YtCrawler.Spider
 								obj.Region,
 								ref obj);
 						}
-						 */
 
 						// Set the result.
 						asyncResult.Result = feeds;
@@ -241,6 +251,36 @@ namespace YtCrawler.Spider
 				regionId != null ? regionId : string.Empty);
 		}
 
+		/// <summary>
+		/// Gets whether the specified standard feed is selected.
+		/// </summary>
+		/// <param name="feed">The standard feed.</param>
+		/// <returns><b>True</b> if the standard feed is selected, <b>false</b> otherwise.</returns>
+		public bool GetFeedSelected(YouTubeStandardFeed feed)
+		{
+			// Get the name of the standard feed.
+			try
+			{
+				object value;
+				if ((value = Registry.GetValue(this.crawler.Config.SpidersConfigPath + "\\StandardFeeds", feed.ToString(), 0)) != null)
+				{
+					return (int)value != 0;
+				}
+				else return false;
+			}
+			catch { return false; }
+		}
+
+		/// <summary>
+		/// Sets whether the specified standard feed is selected.
+		/// </summary>
+		/// <param name="feed">The standard feed.</param>
+		/// <param name="selected"><b>True</b> if the standard feed is selected, <b>false</b> otherwise.</param>
+		public void SetFeedSelected(YouTubeStandardFeed feed, bool selected)
+		{
+			Registry.SetValue(this.crawler.Config.SpidersConfigPath + "\\StandardFeeds", feed.ToString(), selected ? 1 : 0, RegistryValueKind.DWord);
+		}
+
 		// Protected methods.
 
 		/// <summary>
@@ -257,16 +297,29 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// Crawls the feed at the specified parameters.
 		/// </summary>
+		/// <param name="feeds">The list of standard feeds.</param>
+		/// <param name="index">The index of the current feed.</param>
 		/// <param name="asyncResult">The asynchronous result.</param>
 		/// <param name="feedId">The feed.</param>
 		/// <param name="timeId">The time.</param>
 		/// <param name="category">The category.</param>
 		/// <param name="regionId">The region.</param>
-		/// <param name="feeds">The list of standard feeds.</param>
-		private void CrawlFeed(SpiderAsyncResult asyncResult, YouTubeStandardFeed feedId, YouTubeTimeId timeId, string category, string regionId, ref DbObjectStandardFeed obj)
+		/// <param name="obj">The standard feed object.</param>
+		private void CrawlFeed(
+			IDictionary<string, DbObjectStandardFeed> feeds,
+			int index,
+			SpiderAsyncResult asyncResult,
+			YouTubeStandardFeed feedId,
+			YouTubeTimeId timeId,
+			string category,
+			string regionId,
+			ref DbObjectStandardFeed obj)
 		{
 			// If the asynchronousn operation has been canceled, do nothing.
 			if (asyncResult.IsCanceled) return;
+
+			// Call the feed started event handler.
+			if (this.CrawlFeedStarted != null) this.CrawlFeedStarted(this, feeds, obj, index);
 
 			// Compute the feed key.
 			string key = this.EncodeFeedKey(feedId, timeId, category, regionId);
@@ -274,6 +327,12 @@ namespace YtCrawler.Spider
 			// Compute the feed URI starting at index 1 and ask for 1 result.
 			Uri uri = YouTubeUri.GetStandardFeed(feedId, regionId, category, timeId, 1, 1);
 
+			Thread.Sleep(500);
+
+			// Call the feed finished event handler.
+			if (this.CrawlFeedFinished != null) this.CrawlFeedFinished(this, feeds, obj, index);
+
+			/*
 			// Create a new video request.
 			YouTubeRequestFeed<Video> request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
 
@@ -316,6 +375,7 @@ namespace YtCrawler.Spider
 				// Set the response HTTP code to null.
 				obj.HttpCode = null;
 			}
+			 */
 		}
 	}
 }

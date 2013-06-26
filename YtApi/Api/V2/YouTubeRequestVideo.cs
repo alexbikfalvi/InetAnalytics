@@ -83,7 +83,7 @@ namespace YtApi.Api.V2
 		/// </summary>
 		/// <param name="result">The asynchronous result.</param>
 		/// <returns>The video object.</returns>
-		public Video End(IAsyncResult result)
+		public new Video End(IAsyncResult result)
 		{
 			object state;
 			return this.funcConvert.GetResult(base.End(result, out state));
