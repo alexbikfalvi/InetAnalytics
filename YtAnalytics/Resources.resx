@@ -1906,4 +1906,264 @@
   <data name="GlobeSettings_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\GlobeSettings_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SchemaView_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SchemaView_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SchemaView_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SchemaView_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SchemaView_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SchemaView_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SchemaView_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SchemaView_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DemoOldInsightsAjax" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;root&gt;
+  &lt;html_content&gt;
+    &lt;![CDATA[
+
+
+
+
+
+
+
+    &lt;div id="watch-actions-stats" class="watch-actions-stats"&gt;
+        &lt;div class="stats-header"&gt;
+    &lt;h1&gt;
+Video statistics    &lt;/h1&gt;
+  &lt;/div&gt;
+
+          &lt;div class="views"&gt;
+      &lt;h2&gt;Views and discovery&lt;/h2&gt;
+      &lt;div class="stats-box yt-uix-expander yt-uix-expander-collapsed"&gt;
+          &lt;div class="stats-big-chart"&gt;
+            &lt;img class="stats-big-chart-collapsed" src="http://chart.apis.google.com/chart?cht=lc:nda&amp;amp;chs=460x100&amp;amp;chf=bg,s,F4F4F4&amp;amp;chco=5F8FC9&amp;amp;chls=1.5&amp;amp;chg=0,-1,1,1&amp;amp;chxt=y,x&amp;amp;chxtc=0,0&amp;amp;chxs=0N*s* ,333333,10|1,333333,10&amp;amp;chxl=1:|04/12/12|07/29/12|11/14/12&amp;amp;chxp=1,5,50,95&amp;amp;chxr=0,0,44848|1,0,100&amp;amp;chd=t:0.0,1.6,3.1,6.4,13.0,17.7,19.2,20.5,21.8,22.8,24.4,25.0,25.7,26.5,27.3,28.6,29.5,30.2,31.0,32.2,32.7,33.3,34.2,35.1,36.2,36.8,37.4,38.0,38.8,40.1,40.8,41.4,42.2,43.2,43.9,44.7,45.6,46.2,47.4,48.1,48.6,49.0,49.9,51.1,51.7,52.4,53.1,53.9,54.9,55.4,55.8,56.2,56.7,57.0,57.3,57.6,57.9,58.4,58.9,59.3,59.6,59.9,60.4,60.6,60.8,61.0,61.4,61.7,61.9,62.2,62.5,62.8,63.0,63.3,63.5,63.7,64.1,64.4,64.8,65.3,65.7,66.3,66.6,67.0,67.4,67.9,68.4,68.8,69.2,69.6,70.2,70.5,70.7,71.1,71.5,74.4,76.9,78.8,81.1,83.3&amp;amp;chm=B,dce7eed4,0,0,0|AA,333333,0,0,10|AB,333333,0,0,10" alt=""&gt;
+              &lt;img class="stats-big-chart-expanded" src="http://chart.apis.google.com/chart?cht=lc:nda&amp;amp;chs=460x100&amp;amp;chf=bg,s,F4F4F4&amp;amp;chco=5F8FC9&amp;amp;chls=1.5&amp;amp;chg=0,-1,1,1&amp;amp;chxt=y,x&amp;amp;chxtc=0,0&amp;amp;chxs=0N*s* ,333333,10|1,333333,10&amp;amp;chxl=1:|04/12/12|07/29/12|11/14/12&amp;amp;chxp=1,5,50,95&amp;amp;chxr=0,0,44848|1,0,100&amp;amp;chd=t:0.0,1.6,3.1,6.4,13.0,17.7,19.2,20.5,21.8,22.8,24.4,25.0,25.7,26.5,27.3,28.6,29.5,30.2,31.0,32.2,32.7,33.3,34.2,35.1,36.2,36.8,37.4,38.0,38.8,40.1,40.8,41.4,42.2,43.2,43.9,44.7,45.6,46.2,47.4,48.1,48.6,49.0,49.9,51.1,51.7,52.4,53.1,53.9,54.9,55.4,55.8,56.2,56.7,57.0,57.3,57.6,57.9,58.4,58.9,59.3,59.6,59.9,60.4,60.6,60.8,61.0,61.4,61.7,61.9,62.2,62.5,62.8,63.0,63.3,63.5,63.7,64.1,64.4,64.8,65.3,65.7,66.3,66.6,67.0,67.4,67.9,68.4,68.8,69.2,69.6,70.2,70.5,70.7,71.1,71.5,74.4,76.9,78.8,81.1,83.3&amp;amp;chm=B,dce7eed4,0,0,0|AA,333333,0,0,10|AB,333333,0,0,10|AC,333333,0,0,10|AD,333333,0,0,10|AE,333333,0,0,10|AF,333333,0,0,10|AG,333333,0,1,10|AH,333333,0,1,10|AI,333333,0,1,10|AJ,333333,0,94,10" alt=""&gt;
+          &lt;/div&gt;
+
+        &lt;div class="stats-views"&gt;
+&lt;h3&gt;37,421&lt;/h3&gt;Views
+        &lt;/div&gt;
+
+          &lt;div class="horizontal-line"&gt;&lt;/div&gt;
+          &lt;h4&gt;Key discovery events
+&lt;/h4&gt;
+            &lt;div class="stats-discovery-events"&gt;
+    &lt;dl&gt;
+          &lt;dt class="stats-label"&gt;A&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First referral from YouTube search:&lt;/span&gt;
+          &lt;span class="extra"&gt;              &lt;a rel="nofollow" href="/results?search_query=crisis" dir="ltr"&gt;crisis&lt;/a&gt;          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 12, 2012 - 887 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+          &lt;dt class="stats-label"&gt;B&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First referral from YouTube search:&lt;/span&gt;
+          &lt;span class="extra"&gt;              &lt;a rel="nofollow" href="/results?search_query=simocracia" dir="ltr"&gt;simocracia&lt;/a&gt;          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 12, 2012 - 1,156 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+    &lt;/dl&gt;
+      &lt;dl class="extra-events"&gt;
+            &lt;dt class="stats-label"&gt;C&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First referral from:&lt;/span&gt;
+          &lt;span class="extra"&gt;              facebook.com          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 12, 2012 - 1,551 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+            &lt;dt class="stats-label"&gt;D&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First embedded on:&lt;/span&gt;
+          &lt;span class="extra"&gt;              &lt;a rel="nofollow" href="http://facebook.com" dir="ltr"&gt;facebook.com&lt;/a&gt;          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 12, 2012 - 2,956 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+            &lt;dt class="stats-label"&gt;E&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;          First view from a mobile device
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 12, 2012 - 7,400 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+            &lt;dt class="stats-label"&gt;F&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First referral from YouTube search:&lt;/span&gt;
+          &lt;span class="extra"&gt;              &lt;a rel="nofollow" href="/results?search_query=crisis%20espa%C3%B1a" dir="ltr"&gt;crisis españa&lt;/a&gt;          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 14, 2012 - 1,036 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+            &lt;dt class="stats-label"&gt;G&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;          First referral from related video
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 16, 2012 - 732 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+            &lt;dt class="stats-label"&gt;H&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First referral from YouTube search:&lt;/span&gt;
+          &lt;span class="extra"&gt;              &lt;a rel="nofollow" href="/results?search_query=simiocracia%20el%20comic%20de%20la%20crisis%20espa%C3%B1ola" dir="ltr"&gt;simiocracia el comic de la crisis española&lt;/a&gt;          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 16, 2012 - 1,126 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+            &lt;dt class="stats-label"&gt;I&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First referral from related video:&lt;/span&gt;
+          &lt;span class="extra"&gt;              &lt;a rel="nofollow" href="/watch?v=mC2x5nL_LKk" dir="ltr"&gt;Generación Perdida · Anicet Lavodrama&lt;/a&gt;          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Apr 16, 2012 - 2,343 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+            &lt;dt class="stats-label"&gt;J&lt;/dt&gt;
+  &lt;dd class="event"&gt;
+    &lt;p&gt;            &lt;span&gt;First referral from related video:&lt;/span&gt;
+          &lt;span class="extra"&gt;              &lt;a rel="nofollow" href="/watch?v=XUFMxmIoFRc" dir="ltr"&gt;La crisis española desde un punto de vista diferente&lt;/a&gt;          &lt;/span&gt;
+    &lt;/p&gt;
+
+
+      &lt;p class="sub-data"&gt;Nov  2, 2012 - 1,107 views
+      &lt;/p&gt;
+  &lt;/dd&gt;
+
+      &lt;/dl&gt;
+      &lt;div class="stats-discovery-toggle"&gt;
+        &lt;a class="expand yt-uix-expander-head"&gt;
+          Show more events
+
+          &lt;img src="//s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif" alt=""&gt;
+        &lt;/a&gt;
+        &lt;a class="collapse yt-uix-expander-head"&gt;
+          Show less events
+
+          &lt;img src="//s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif" alt=""&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+  &lt;/div&gt;
+
+     &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="clearL"&gt;&lt;/div&gt;
+
+    &lt;div class="engagement-audience"&gt;
+        &lt;div class="stats-engagement"&gt;
+          &lt;h2&gt;Engagement&lt;/h2&gt;
+          &lt;div class="stats-box"&gt;
+            &lt;table&gt;
+              &lt;tr&gt;
+                &lt;td class="stats-box-top stats-box-left"&gt;
+                  &lt;img class="stats-engagement-chart" src="http://chart.apis.google.com/chart?cht=ls&amp;amp;chs=80x18&amp;amp;chf=bg,s,F4F4F4&amp;amp;chco=5F8FC9&amp;amp;chls=1&amp;amp;chm=B,DCE6EDdd,0,0,0&amp;amp;chd=t:0.0,1.8,3.7,7.4,12.9,12.9,12.9,14.8,14.8,18.5,18.5,20.3,20.3,20.3,20.3,24.0,24.0,24.0,24.0,25.9,27.7,27.7,27.7,27.7,27.7,27.7,27.7,31.4,31.4,31.4,35.1,35.1,37.0,37.0,38.8,48.1,48.1,50.0,55.5,55.5,55.5,62.9,62.9,62.9,62.9,62.9,62.9,62.9,66.6,66.6,68.5,68.5,68.5,70.3,70.3,70.3,70.3,70.3,70.3,70.3,72.2,72.2,72.2,72.2,72.2,74.0,74.0,74.0,74.0,74.0,75.9,75.9,75.9,75.9,75.9,75.9,75.9,75.9,75.9,75.9,75.9,79.6,83.3,83.3,83.3,87.0,87.0,87.0,88.8,88.8,90.7,90.7,94.4,94.4,94.4,94.4,98.1,98.1,100.0,100.0" alt=""&gt;
+                  &lt;span&gt;
+&lt;h4&gt;54&lt;/h4&gt;Comments
+                  &lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td class="stats-box-top stats-box-right"&gt;
+                  &lt;img class="stats-engagement-chart" src="http://chart.apis.google.com/chart?cht=ls&amp;amp;chs=80x18&amp;amp;chf=bg,s,F4F4F4&amp;amp;chco=5F8FC9&amp;amp;chls=1&amp;amp;chm=B,DCE6EDdd,0,0,0&amp;amp;chd=t:0.0,0.0,2.2,3.4,19.5,22.9,25.2,28.7,31.0,33.3,36.7,37.9,37.9,37.9,37.9,41.3,42.5,44.8,44.8,48.2,48.2,50.5,51.7,51.7,52.8,52.8,52.8,52.8,52.8,52.8,52.8,54.0,56.3,57.4,57.4,58.6,60.9,60.9,65.5,66.6,66.6,66.6,67.8,67.8,67.8,68.9,72.4,73.5,73.5,73.5,73.5,73.5,73.5,73.5,73.5,74.7,77.0,78.1,79.3,80.4,81.6,81.6,81.6,81.6,81.6,81.6,82.7,82.7,83.9,83.9,85.0,86.2,86.2,86.2,86.2,86.2,86.2,86.2,86.2,86.2,87.3,88.5,89.6,90.8,90.8,90.8,91.9,93.1,93.1,93.1,93.1,93.1,93.1,93.1,94.2,96.5,96.5,97.7,98.8,100.0" alt=""&gt;
+                  &lt;span&gt;
+&lt;h4&gt;0&lt;/h4&gt;Favorites
+                  &lt;/span&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+              &lt;tr&gt;
+                &lt;td class="stats-box-bottom stats-box-left"&gt;
+                  &lt;img class="stats-engagement-chart" src="http://chart.apis.google.com/chart?cht=ls&amp;amp;chs=80x18&amp;amp;chf=bg,s,F4F4F4&amp;amp;chco=5F8FC9&amp;amp;chls=1&amp;amp;chm=B,DCE6EDdd,0,0,0&amp;amp;chd=t:0.0,2.0,3.4,7.6,17.4,22.9,24.7,28.2,29.9,30.3,31.7,33.1,33.7,34.8,36.2,38.3,39.3,41.1,42.8,45.2,45.9,47.3,49.4,49.8,50.5,51.2,51.2,51.9,52.2,54.7,55.0,55.7,57.1,57.8,58.1,58.8,59.9,60.6,62.7,64.1,64.1,64.1,64.4,65.1,65.1,65.8,66.8,67.5,68.6,68.6,68.9,69.3,69.6,69.6,69.6,70.0,71.0,72.1,72.8,74.5,74.9,74.9,74.9,74.9,75.6,75.6,77.0,77.7,78.3,78.7,79.4,79.4,79.7,79.7,79.7,79.7,79.7,80.1,80.4,81.1,82.2,82.5,83.9,83.9,83.9,84.6,85.3,85.7,87.1,87.4,87.8,88.1,88.5,88.8,89.8,91.2,93.7,95.4,96.8,100.0" alt=""&gt;
+                  &lt;span&gt;
+&lt;h4&gt;272&lt;/h4&gt;Likes
+                  &lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td class="stats-box-bottom stats-box-right"&gt;
+                  &lt;img class="stats-engagement-chart" src="http://chart.apis.google.com/chart?cht=ls&amp;amp;chs=80x18&amp;amp;chf=bg,s,F4F4F4&amp;amp;chco=5F8FC9&amp;amp;chls=1&amp;amp;chm=B,DCE6EDdd,0,0,0&amp;amp;chd=t:0.0,0.0,0.0,14.2,14.2,14.2,14.2,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,28.5,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,42.8,71.4,71.4,71.4,71.4,71.4,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,85.7,100.0,100.0" alt=""&gt;
+                  &lt;span&gt;
+&lt;h4&gt;3&lt;/h4&gt;Dislikes
+                  &lt;/span&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/table&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+      &lt;div class="stats-audience"&gt;
+        &lt;h2&gt;Audience&lt;/h2&gt;
+        &lt;div class="stats-box"&gt;
+            &lt;h4&gt;Top locations&lt;/h4&gt;
+            &lt;dl&gt;
+                &lt;dd&gt;
+                  Spain
+                &lt;/dd&gt;
+                &lt;dd&gt;
+                  Argentina
+                &lt;/dd&gt;
+                &lt;dd&gt;
+                  Andorra
+                &lt;/dd&gt;
+            &lt;/dl&gt;
+            &lt;h4&gt;Top demographics&lt;/h4&gt;
+            &lt;dl&gt;
+                &lt;dd&gt;
+Male, 45-54 years
+                &lt;/dd&gt;
+                &lt;dd&gt;
+Male, 35-44 years
+                &lt;/dd&gt;
+                &lt;dd&gt;
+Female, 45-54 years
+                &lt;/dd&gt;
+            &lt;/dl&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+
+
+    &lt;div class="clearL"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+
+
+
+
+
+
+]]&gt;
+  &lt;/html_content&gt;
+  &lt;return_code&gt;&lt;![CDATA[0]]&gt;&lt;/return_code&gt;
+&lt;/root&gt;</value>
+  </data>
 </root>

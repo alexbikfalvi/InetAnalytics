@@ -86,6 +86,8 @@ namespace YtCrawler
 			this.comments.Dispose();
 			// Close the YouTube categories.
 			this.categories.Dispose();
+			// Close the PlanetLab.
+			this.planetLab.Dispose();
 		}
 
 		/// <summary>

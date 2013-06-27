@@ -90,6 +90,13 @@ namespace YtAnalytics.Controls.YouTube.Web
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
+			// Check if executing the demo.
+			if (this.textBox.Text.ToLower() == "demo")
+			{
+				this.OnDemo();
+				return;
+			}
+
 			// Change the controls state.
 			this.buttonStart.Enabled = false;
 			this.buttonStop.Enabled = true;
@@ -263,6 +270,116 @@ namespace YtAnalytics.Controls.YouTube.Web
 			}
 		}
 
+		/// <summary>
+		/// An event handler called when executing the demo.
+		/// </summary>
+		private void OnDemo()
+		{
+			try
+			{
+				this.statistics = AjaxVideoStatistics.Parse(Resources.DemoOldInsightsAjax);
+				this.statisticsVideo = this.textBox.Text;
+
+				this.menuItemViews.Enabled = this.statistics.ViewsHistory != null;
+				this.menuItemLikes.Enabled = this.statistics.LikesHistory != null;
+				this.menuItemDislikes.Enabled = this.statistics.DislikesHistory != null;
+				this.menuItemFavorites.Enabled = this.statistics.FavoritesHistory != null;
+				this.menuItemComments.Enabled = this.statistics.CommentsHistory != null;
+				this.menuItemPopularity.Enabled = this.statistics.ViewsHistory != null;
+
+				this.buttonComment.Enabled = true;
+
+				if (this.statistics.ViewsHistory != null)
+				{
+					this.OnChartViewsCount(null, null);
+				}
+
+				// Compute the event type.
+				LogEventType eventType = (this.statistics.ViewsHistory.DiscoveryExceptions.Count == 0) ? LogEventType.Success : LogEventType.SuccessWarning;
+				string eventMessage = eventType == LogEventType.Success ?
+					"The request for the web statistics of the video \'{0}\' completed successfully." :
+					"The request for the web statistics of the video \'{0}\' completed partially successfully. However, some errors have occurred.";
+
+				// If there are failures, create a new subevent list.
+				List<LogEvent> subevents = null;
+				if (this.statistics.ViewsHistory.DiscoveryExceptions.Count != 0)
+				{
+					subevents = new List<LogEvent>();
+					foreach (AjaxException exception in this.statistics.ViewsHistory.DiscoveryExceptions)
+					{
+						subevents.Add(new LogEvent(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							DateTime.MinValue,
+							ControlWebStatistics.logSource,
+							"Parsing of a views history discovery event has failed.",
+							null,
+							exception));
+					}
+				}
+
+				// Log
+				this.log.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					eventType,
+					ControlWebStatistics.logSource,
+					eventMessage,
+					new object[] { this.textBox.Text },
+					null,
+					subevents));
+			}
+			catch (AjaxRequestException exception)
+			{
+				this.log.Add(this.crawler.Log.Add(
+					LogEventLevel.Normal,
+					LogEventType.Warning,
+					ControlWebStatistics.logSource,
+					"The web statistics for the video \'{0}\' are not available. {1}",
+					new object[] { this.textBox.Text, exception.Message },
+					exception));
+			}
+			catch (WebException exception)
+			{
+				if (exception.Status == WebExceptionStatus.RequestCanceled)
+					this.log.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Canceled,
+						ControlWebStatistics.logSource,
+						"The request for the web statistics of the video \'{0}\' has been canceled.",
+						new object[] { this.textBox.Text }));
+				else
+					this.log.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlWebStatistics.logSource,
+						"The request for the web statistics of the video \'{0}\' failed. {1}",
+						new object[] { this.textBox.Text, exception.Message },
+						exception));
+			}
+			catch (Exception exception)
+			{
+				this.log.Add(this.crawler.Log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					ControlWebStatistics.logSource,
+					"The request for the web statistics of the video \'{0}\' failed. {1}",
+					new object[] { this.textBox.Text, exception.Message },
+					exception));
+			}
+			finally
+			{
+				this.buttonStart.Enabled = true;
+				this.buttonStop.Enabled = false;
+				this.textBox.Enabled = true;
+			}
+		}
+
+		/// <summary>
+		/// Displays the history for the current statistics.
+		/// </summary>
+		/// <param name="history">The views history.</param>
+		/// <param name="axisX">The X axis.</param>
+		/// <param name="axisY">The Y axis.</param>
 		private void DisplayHistory(AjaxViewsHistory history, string axisX, string axisY)
 		{
 			if (null == history) return;
@@ -350,6 +467,12 @@ namespace YtAnalytics.Controls.YouTube.Web
 			}
 		}
 
+		/// <summary>
+		/// Displays the history variation for the current statistics.
+		/// </summary>
+		/// <param name="history">The views history.</param>
+		/// <param name="axisX">The X axis.</param>
+		/// <param name="axisY">The Y axis.</param>
 		private void DisplayHistoryVariation(AjaxViewsHistory history, string axisX, string axisY)
 		{
 			if (null == history) return;
@@ -455,6 +578,12 @@ namespace YtAnalytics.Controls.YouTube.Web
 			}
 		}
 
+		/// <summary>
+		/// Displays the statistics history.
+		/// </summary>
+		/// <param name="history">The statistics history.</param>
+		/// <param name="axisX">The X axis.</param>
+		/// <param name="axisY">The Y axis.</param>
 		private void DisplayHistory(AjaxHistory history, string axisX, string axisY)
 		{
 			if (null == history) return;

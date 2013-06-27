@@ -28,18 +28,29 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPlanetLabSites));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.worldMap = new DotNetApi.Windows.Controls.WorldMap();
+			this.worldMap = new DotNetApi.Windows.Controls.GeoWorldMap();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
+			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
+			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
+			this.listViewSites = new System.Windows.Forms.ListView();
+			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderLatitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderLongitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
-			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
+			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -48,7 +59,6 @@
 			// 
 			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
 			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -57,8 +67,12 @@
 			// 
 			this.splitContainer.Panel1.Controls.Add(this.worldMap);
 			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			// 
+			// splitContainer.Panel2
+			// 
+			this.splitContainer.Panel2.Controls.Add(this.listViewSites);
 			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 225;
+			this.splitContainer.SplitterDistance = 275;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// worldMap
@@ -70,7 +84,7 @@
 			this.worldMap.GridMinor = true;
 			this.worldMap.Location = new System.Drawing.Point(0, 25);
 			this.worldMap.Name = "worldMap";
-			this.worldMap.Size = new System.Drawing.Size(598, 198);
+			this.worldMap.Size = new System.Drawing.Size(598, 248);
 			this.worldMap.TabIndex = 10;
 			// 
 			// toolStrip
@@ -83,26 +97,6 @@
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
-			// 
-			// legendItemSuccess
-			// 
-			this.legendItemSuccess.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-			this.legendItemSuccess.Text = "Success";
-			// 
-			// legendItemFail
-			// 
-			this.legendItemFail.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.legendItemFail.Text = "Fail";
-			// 
-			// legendItemWarning
-			// 
-			this.legendItemWarning.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-			this.legendItemWarning.Text = "Warning";
-			// 
-			// legendItemPending
-			// 
-			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			this.legendItemPending.Text = "Pending";
 			// 
 			// buttonRefresh
 			// 
@@ -124,17 +118,101 @@
 			this.buttonCancel.Text = "&Cancel";
 			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
 			// 
-			// ControlPlanetLabNodes
+			// listViewSites
+			// 
+			this.listViewSites.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listViewSites.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderId,
+            this.columnHeaderName,
+            this.columnHeaderUrl,
+            this.columnHeaderDateCreated,
+            this.columnHeaderLastUpdated,
+            this.columnHeaderLatitude,
+            this.columnHeaderLongitude});
+			this.listViewSites.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listViewSites.FullRowSelect = true;
+			this.listViewSites.GridLines = true;
+			this.listViewSites.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewSites.HideSelection = false;
+			this.listViewSites.Location = new System.Drawing.Point(0, 0);
+			this.listViewSites.Name = "listViewSites";
+			this.listViewSites.Size = new System.Drawing.Size(598, 119);
+			this.listViewSites.SmallImageList = this.imageList;
+			this.listViewSites.TabIndex = 0;
+			this.listViewSites.UseCompatibleStateImageBehavior = false;
+			this.listViewSites.View = System.Windows.Forms.View.Details;
+			this.listViewSites.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
+			// 
+			// columnHeaderId
+			// 
+			this.columnHeaderId.Text = "ID";
+			// 
+			// columnHeaderName
+			// 
+			this.columnHeaderName.Text = "Name";
+			this.columnHeaderName.Width = 120;
+			// 
+			// columnHeaderUrl
+			// 
+			this.columnHeaderUrl.Text = "URL";
+			this.columnHeaderUrl.Width = 120;
+			// 
+			// columnHeaderDateCreated
+			// 
+			this.columnHeaderDateCreated.Text = "Date created";
+			this.columnHeaderDateCreated.Width = 120;
+			// 
+			// columnHeaderLastUpdated
+			// 
+			this.columnHeaderLastUpdated.Text = "Last updated";
+			this.columnHeaderLastUpdated.Width = 120;
+			// 
+			// columnHeaderLatitude
+			// 
+			this.columnHeaderLatitude.Text = "Latitude";
+			// 
+			// columnHeaderLongitude
+			// 
+			this.columnHeaderLongitude.Text = "Longitude";
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "SchemaView");
+			// 
+			// legendItemSuccess
+			// 
+			this.legendItemSuccess.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+			this.legendItemSuccess.Text = "Success";
+			// 
+			// legendItemFail
+			// 
+			this.legendItemFail.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.legendItemFail.Text = "Fail";
+			// 
+			// legendItemWarning
+			// 
+			this.legendItemWarning.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+			this.legendItemWarning.Text = "Warning";
+			// 
+			// legendItemPending
+			// 
+			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			this.legendItemPending.Text = "Pending";
+			// 
+			// ControlPlanetLabSites
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
-			this.Name = "ControlPlanetLabNodes";
+			this.Name = "ControlPlanetLabSites";
 			this.Size = new System.Drawing.Size(600, 400);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel1.PerformLayout();
+			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
@@ -151,8 +229,17 @@
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemFail;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemWarning;
 		private System.Windows.Forms.ToolStrip toolStrip;
-		private DotNetApi.Windows.Controls.WorldMap worldMap;
+		private DotNetApi.Windows.Controls.GeoWorldMap worldMap;
 		private System.Windows.Forms.ToolStripButton buttonRefresh;
 		private System.Windows.Forms.ToolStripButton buttonCancel;
+		private System.Windows.Forms.ListView listViewSites;
+		private System.Windows.Forms.ColumnHeader columnHeaderId;
+		private System.Windows.Forms.ColumnHeader columnHeaderName;
+		private System.Windows.Forms.ColumnHeader columnHeaderUrl;
+		private System.Windows.Forms.ColumnHeader columnHeaderDateCreated;
+		private System.Windows.Forms.ColumnHeader columnHeaderLastUpdated;
+		private System.Windows.Forms.ColumnHeader columnHeaderLatitude;
+		private System.Windows.Forms.ColumnHeader columnHeaderLongitude;
+		private System.Windows.Forms.ImageList imageList;
 	}
 }

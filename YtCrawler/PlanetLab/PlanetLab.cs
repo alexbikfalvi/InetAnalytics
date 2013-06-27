@@ -24,8 +24,10 @@ namespace YtCrawler.PlanetLab
 	/// <summary>
 	/// A class representing the PlanetLab configuration.
 	/// </summary>
-	public class PlanetLab
+	public class PlanetLab : IDisposable
 	{
+		private CrawlerConfig config;
+
 		private PlSites sites = new PlSites();
 
 		/// <summary>
@@ -34,11 +36,37 @@ namespace YtCrawler.PlanetLab
 		/// <param name="config">The crawler configuration.</param>
 		public PlanetLab(CrawlerConfig config)
 		{
+			// Set the crawler configuration.
+			this.config = config;
+
+			try
+			{
+				// Load the PlanetLab configuration.
+				this.Sites.LoadFromFile(this.config.PlanetLabSitesFileName);
+			}
+			catch { }
 		}
+
+		// Public properties.
 
 		/// <summary>
 		/// Gets the collection of Planet-Lab sites.
 		/// </summary>
 		public PlSites Sites { get { return this.sites; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			try
+			{
+				// Save the PlanetLab configuration.
+				this.Sites.SaveToFile(this.config.PlanetLabSitesFileName);
+			}
+			catch { }
+		}
 	}
 }

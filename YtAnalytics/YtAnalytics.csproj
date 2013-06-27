@@ -827,6 +827,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\SchemaView_48.png" />
+    <None Include="Resources\SchemaView_32.png" />
+    <None Include="Resources\SchemaView_24.png" />
+    <None Include="Resources\SchemaView_16.png" />
     <None Include="Resources\GlobeSettings_48.png" />
     <None Include="Resources\GlobeSettings_32.png" />
     <None Include="Resources\GlobeSettings_24.png" />

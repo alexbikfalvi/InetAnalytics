@@ -17,10 +17,13 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
+using PlanetLab.Api;
 using PlanetLab.Requests;
 using YtCrawler;
 
@@ -35,6 +38,12 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private Crawler crawler = null;
 		private PlRequestGetSites request = new PlRequestGetSites();
+		private GeoMarker marker = null;
+
+		private static Color colorSelectedMarkerLine = Color.FromArgb(153, 51, 51);
+		private static Color colorSelectedMarkerFill = Color.FromArgb(255, 51, 51);
+		private static Color colorMarkerLine = Color.FromArgb(255, 153, 0);
+		private static Color colorMarkerFill = Color.FromArgb(248, 224, 124);
 
 		// Public declarations
 
@@ -62,6 +71,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		
 			// Enable the control.
 			this.Enabled = true;
+
+			// Update the list of PlanetLab sites.
+			this.OnUpdateSites();
 		}
 
 		/// <summary>
@@ -140,6 +152,9 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 				else
 				{
+					// Update the list of PlanetLab sites.
+					this.crawler.PlanetLab.Sites.Update(rpcResponse.Value as XmlRpcArray);
+
 					// Show a success message.
 					this.ShowMessage(
 						Resources.GlobeSuccess_48,
@@ -148,6 +163,9 @@ namespace YtAnalytics.Controls.PlanetLab
 						false,
 						(int)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
+
+					// Update the list of sites.
+					this.OnUpdateSites();
 				}
 
 			}
@@ -171,6 +189,75 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
+		}
+
+		/// <summary>
+		/// Updates the list of PlanetLab sites.
+		/// </summary>
+		private void OnUpdateSites()
+		{
+			// Clear the list view.
+			this.listViewSites.Items.Clear();
+
+			// Add the list view items.
+			foreach (PlSite site in this.crawler.PlanetLab.Sites)
+			{
+				// Create a new geo marker for this site.
+				GeoMarker marker = null;
+				// If the site has coordinates.
+				if(site.Latitude.HasValue && site.Longitude.HasValue)
+				{
+					// Create a circular marker.
+					marker = new GeoMarkerCircle(new PointF((float)site.Longitude.Value, (float)site.Latitude.Value));
+					marker.ColorLine = ControlPlanetLabSites.colorMarkerLine;
+					marker.ColorFill = ControlPlanetLabSites.colorMarkerFill;
+					// Add the marker to the map.
+					this.worldMap.Markers.Add(marker);
+				}
+				
+				// Create the list view item.
+				ListViewItem item = new ListViewItem(new string[] {
+					site.SiteId.ToString(),
+					site.Name,
+					site.Url,
+					site.DateCreated.ToString(),
+					site.LastUpdated.ToString(),
+					site.Latitude.ToString(),
+					site.Longitude.ToString()
+				}, 0);
+				item.Tag = new KeyValuePair<PlSite, GeoMarker>(site, marker);
+				this.listViewSites.Items.Add(item);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the site selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectionChanged(object sender, EventArgs e)
+		{
+			// If there exists an emphasized marker, de-emphasize it.
+			if (this.marker != null)
+			{
+				this.marker.ColorLine = ControlPlanetLabSites.colorMarkerLine;
+				this.marker.ColorFill = ControlPlanetLabSites.colorMarkerFill;
+				this.marker.Emphasis = false;
+				this.marker = null;
+			}
+			// If no site is selected, do nothing.
+			if (this.listViewSites.SelectedItems.Count == 0) return;
+
+			// Get the site-marker for this item.
+			KeyValuePair<PlSite, GeoMarker> tag = (KeyValuePair<PlSite, GeoMarker>)this.listViewSites.SelectedItems[0].Tag;
+			// If the marker is not null, emphasize the marker.
+			if (tag.Value != null)
+			{
+				this.marker = tag.Value;
+				this.marker.ColorLine = ControlPlanetLabSites.colorSelectedMarkerLine;
+				this.marker.ColorFill = ControlPlanetLabSites.colorSelectedMarkerFill;
+				this.marker.Emphasis = true;
+			}
 		}
 	}
 }

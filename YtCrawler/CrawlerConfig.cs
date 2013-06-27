@@ -295,6 +295,25 @@ namespace YtCrawler
 		}
 
 		/// <summary>
+		/// Gets or sets the PlanetLab sites file name.
+		/// </summary>
+		public string PlanetLabSitesFileName
+		{
+			get
+			{
+				try
+				{
+					string value;
+					return null != (value = Registry.GetValue(this.root + "\\PlanetLab", "SitesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml") as string)
+						? value
+						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml";
+				}
+				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml"; }
+			}
+			set { Registry.SetValue(this.root + "\\PlanetLab", "SitesFileName", value, RegistryValueKind.String); }
+		}
+
+		/// <summary>
 		/// Gets the database configuration.
 		/// </summary>
 		public DbConfig DatabaseConfig { get { return this.dbConfig; } }

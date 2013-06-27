@@ -1181,6 +1181,36 @@ namespace YtAnalytics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;root&gt;
+        ///  &lt;html_content&gt;
+        ///    &lt;![CDATA[
+        ///
+        ///
+        ///
+        ///
+        ///
+        ///
+        ///
+        ///    &lt;div id=&quot;watch-actions-stats&quot; class=&quot;watch-actions-stats&quot;&gt;
+        ///        &lt;div class=&quot;stats-header&quot;&gt;
+        ///    &lt;h1&gt;
+        ///Video statistics    &lt;/h1&gt;
+        ///  &lt;/div&gt;
+        ///
+        ///          &lt;div class=&quot;views&quot;&gt;
+        ///      &lt;h2&gt;Views and discovery&lt;/h2&gt;
+        ///      &lt;div class=&quot;stats-box yt-uix-expander yt-uix-expander-collapsed&quot;&gt;
+        ///          &lt;div class=&quot;stats-big-chart&quot;&gt;
+        ///            &lt;img class=&quot;stats-big-chart-collapsed&quot; src=&quot;http://chart.apis.google.com/chart?cht=lc:nda&amp;amp;ch [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DemoOldInsightsAjax {
+            get {
+                return ResourceManager.GetString("DemoOldInsightsAjax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Disconnect_16 {
@@ -4696,6 +4726,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap SaveAll_48 {
             get {
                 object obj = ResourceManager.GetObject("SaveAll_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SchemaView_16 {
+            get {
+                object obj = ResourceManager.GetObject("SchemaView_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SchemaView_24 {
+            get {
+                object obj = ResourceManager.GetObject("SchemaView_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SchemaView_32 {
+            get {
+                object obj = ResourceManager.GetObject("SchemaView_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SchemaView_48 {
+            get {
+                object obj = ResourceManager.GetObject("SchemaView_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
