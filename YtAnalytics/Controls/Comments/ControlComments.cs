@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Comments;
 using YtCrawler;
 using YtCrawler.Comments;
 
@@ -25,7 +25,7 @@ namespace YtAnalytics.Controls.Comments
 		private CommentsList comments;
 
 		private FormAddComment formAdd = new FormAddComment();
-		private FormComment formComment = new FormComment();
+		private FormCommentProperties formComment = new FormCommentProperties();
 
 		/// <summary>
 		/// Creates a new control instance.

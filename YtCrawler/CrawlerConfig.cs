@@ -17,7 +17,9 @@
  */
 
 using System;
+using System.Security;
 using Microsoft.Win32;
+using DotNetApi.Security;
 using YtCrawler.Database;
 
 namespace YtCrawler
@@ -89,18 +91,18 @@ namespace YtCrawler
 		/// <summary>
 		/// Gets or sets the YouTube account password.
 		/// </summary>
-		public string YouTubePassword
+		public SecureString YouTubePassword
 		{
 			get
 			{
 				try
 				{
-					string value;
-					return null != (value = CrawlerCrypto.Decrypt(Registry.GetValue(this.root + "\\YouTube", "Password", null) as byte[])) ? value : string.Empty;
+					SecureString value;
+					return null != (value = (Registry.GetValue(this.root + "\\YouTube", "Password", null) as byte[]).DecryptString()) ? value : SecureStringExtensions.Empty;
 				}
-				catch (Exception) { return string.Empty; }
+				catch (Exception) { return SecureStringExtensions.Empty; }
 			}
-			set { Registry.SetValue(this.root + "\\YouTube", "Password", CrawlerCrypto.Encrypt(value), RegistryValueKind.Binary); }
+			set { Registry.SetValue(this.root + "\\YouTube", "Password", value.EncryptString(), RegistryValueKind.Binary); }
 		}
 
 		/// <summary>
@@ -248,19 +250,6 @@ namespace YtCrawler
 		}
 
 		/// <summary>
-		/// Gets or sets the number of side menu minimized items.
-		/// </summary>
-		public int ConsoleSideMenuMinimizedItems
-		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.root + "\\Console", "SideMenuMinimizedtems", 2); }
-				catch { return 2; }
-			}
-			set { Registry.SetValue(this.root + "\\Console", "SideMenuMinimizedtems", value, RegistryValueKind.DWord); }
-		}
-
-		/// <summary>
 		/// Gets or sets the PlanetLab account name.
 		/// </summary>
 		public string PlanetLabUserName
@@ -280,18 +269,18 @@ namespace YtCrawler
 		/// <summary>
 		/// Gets or sets the PlanetLab account password.
 		/// </summary>
-		public string PlanetLabPassword
+		public SecureString PlanetLabPassword
 		{
 			get
 			{
 				try
 				{
-					string value;
-					return null != (value = CrawlerCrypto.Decrypt(Registry.GetValue(this.root + "\\PlanetLab", "Password", null) as byte[])) ? value : string.Empty;
+					SecureString value;
+					return null != (value = (Registry.GetValue(this.root + "\\PlanetLab", "Password", null) as byte[]).DecryptString()) ? value : SecureStringExtensions.Empty;
 				}
-				catch (Exception) { return string.Empty; }
+				catch (Exception) { return SecureStringExtensions.Empty; }
 			}
-			set { Registry.SetValue(this.root + "\\PlanetLab", "Password", CrawlerCrypto.Encrypt(value), RegistryValueKind.Binary); }
+			set { Registry.SetValue(this.root + "\\PlanetLab", "Password", value.EncryptString(), RegistryValueKind.Binary); }
 		}
 
 		/// <summary>

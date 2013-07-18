@@ -28,12 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
 			this.textBoxDateModified = new System.Windows.Forms.TextBox();
 			this.textBoxDateCreated = new System.Windows.Forms.TextBox();
-			this.textBoxPassword = new System.Windows.Forms.TextBox();
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
 			this.textBoxDataSource = new System.Windows.Forms.TextBox();
 			this.textBoxType = new System.Windows.Forms.TextBox();
@@ -49,6 +49,7 @@
 			this.labelId = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.textBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -59,9 +60,9 @@
 			this.labelTitle.AutoSize = true;
 			this.labelTitle.Location = new System.Drawing.Point(59, 29);
 			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(67, 13);
+			this.labelTitle.Size = new System.Drawing.Size(96, 13);
 			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "Server name";
+			this.labelTitle.Text = "No server selected";
 			this.labelTitle.UseMnemonic = false;
 			// 
 			// tabControl
@@ -79,9 +80,9 @@
 			// 
 			// tabPageGeneral
 			// 
+			this.tabPageGeneral.Controls.Add(this.textBoxPassword);
 			this.tabPageGeneral.Controls.Add(this.textBoxDateModified);
 			this.tabPageGeneral.Controls.Add(this.textBoxDateCreated);
-			this.tabPageGeneral.Controls.Add(this.textBoxPassword);
 			this.tabPageGeneral.Controls.Add(this.textBoxUsername);
 			this.tabPageGeneral.Controls.Add(this.textBoxDataSource);
 			this.tabPageGeneral.Controls.Add(this.textBoxType);
@@ -123,17 +124,6 @@
 			this.textBoxDateCreated.ReadOnly = true;
 			this.textBoxDateCreated.Size = new System.Drawing.Size(256, 20);
 			this.textBoxDateCreated.TabIndex = 13;
-			// 
-			// textBoxPassword
-			// 
-			this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPassword.Location = new System.Drawing.Point(102, 142);
-			this.textBoxPassword.Name = "textBoxPassword";
-			this.textBoxPassword.Size = new System.Drawing.Size(256, 20);
-			this.textBoxPassword.TabIndex = 11;
-			this.textBoxPassword.UseSystemPasswordChar = true;
-			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
 			// textBoxUsername
 			// 
@@ -277,6 +267,17 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
+			// textBoxPassword
+			// 
+			this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPassword.Location = new System.Drawing.Point(102, 142);
+			this.textBoxPassword.Name = "textBoxPassword";
+			this.textBoxPassword.SecureText = secureString1;
+			this.textBoxPassword.Size = new System.Drawing.Size(256, 20);
+			this.textBoxPassword.TabIndex = 17;
+			this.textBoxPassword.UseSystemPasswordChar = true;
+			// 
 			// ControlServerProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -307,7 +308,6 @@
 		private System.Windows.Forms.TextBox textBoxName;
 		private System.Windows.Forms.TextBox textBoxId;
 		private System.Windows.Forms.TextBox textBoxType;
-		private System.Windows.Forms.TextBox textBoxPassword;
 		private System.Windows.Forms.TextBox textBoxUsername;
 		private System.Windows.Forms.TextBox textBoxDataSource;
 		private System.Windows.Forms.Label labelPassword;
@@ -318,5 +318,6 @@
 		private System.Windows.Forms.Label labelDateCreated;
 		private System.Windows.Forms.TextBox textBoxDateModified;
 		private System.Windows.Forms.TextBox textBoxDateCreated;
+		private DotNetApi.Windows.Controls.SecureTextBox textBoxPassword;
 	}
 }

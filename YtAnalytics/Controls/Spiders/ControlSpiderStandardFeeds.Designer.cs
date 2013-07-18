@@ -37,15 +37,14 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonFeeds = new System.Windows.Forms.ToolStripDropDownButton();
 			this.checkedListFeeds = new DotNetApi.Windows.Controls.ToolStripDropDownCheckedList();
-			this.labelProgress = new System.Windows.Forms.Label();
-			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.linkLabel = new System.Windows.Forms.LinkLabel();
 			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.progressLegend = new DotNetApi.Windows.Controls.ProgressLegend();
-			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.progressBox = new DotNetApi.Windows.Controls.ProgressBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -91,9 +90,8 @@
 			// 
 			// panel
 			// 
+			this.panel.Controls.Add(this.progressBox);
 			this.panel.Controls.Add(this.toolStrip);
-			this.panel.Controls.Add(this.labelProgress);
-			this.panel.Controls.Add(this.progressBar);
 			this.panel.Controls.Add(this.linkLabel);
 			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel.Location = new System.Drawing.Point(0, 0);
@@ -157,24 +155,6 @@
 			this.checkedListFeeds.Size = new System.Drawing.Size(208, 205);
 			this.checkedListFeeds.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnFeedCheck);
 			// 
-			// labelProgress
-			// 
-			this.labelProgress.AutoSize = true;
-			this.labelProgress.Location = new System.Drawing.Point(2, 47);
-			this.labelProgress.Name = "labelProgress";
-			this.labelProgress.Size = new System.Drawing.Size(50, 13);
-			this.labelProgress.TabIndex = 8;
-			this.labelProgress.Text = "Stopped.";
-			// 
-			// progressBar
-			// 
-			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar.Location = new System.Drawing.Point(3, 63);
-			this.progressBar.Name = "progressBar";
-			this.progressBar.Size = new System.Drawing.Size(592, 16);
-			this.progressBar.TabIndex = 7;
-			// 
 			// linkLabel
 			// 
 			this.linkLabel.AutoSize = true;
@@ -195,29 +175,38 @@
 			// 
 			this.progressLegend.Items.AddRange(new DotNetApi.Windows.Controls.ProgressLegendItem[] {
             this.legendItemSuccess,
-            this.legendItemFail,
             this.legendItemWarning,
+            this.legendItemFail,
             this.legendItemPending});
-			// 
-			// legendItemPending
-			// 
-			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			this.legendItemPending.Text = "Pending";
 			// 
 			// legendItemSuccess
 			// 
 			this.legendItemSuccess.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
 			this.legendItemSuccess.Text = "Success";
 			// 
+			// legendItemWarning
+			// 
+			this.legendItemWarning.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+			this.legendItemWarning.Text = "Warning";
+			// 
 			// legendItemFail
 			// 
 			this.legendItemFail.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.legendItemFail.Text = "Fail";
 			// 
-			// legendItemWarning
+			// legendItemPending
 			// 
-			this.legendItemWarning.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-			this.legendItemWarning.Text = "Warning";
+			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			this.legendItemPending.Text = "Pending";
+			// 
+			// progressBox
+			// 
+			this.progressBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.progressBox.Location = new System.Drawing.Point(0, 25);
+			this.progressBox.Name = "progressBox";
+			this.progressBox.Progress = null;
+			this.progressBox.Size = new System.Drawing.Size(598, 57);
+			this.progressBox.TabIndex = 10;
 			// 
 			// ControlSpiderStandardFeeds
 			// 
@@ -246,8 +235,6 @@
 		private Log.ControlLogList log;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.LinkLabel linkLabel;
-		private System.Windows.Forms.Label labelProgress;
-		private System.Windows.Forms.ProgressBar progressBar;
 		private DotNetApi.Windows.Controls.ProgressListBox progressListBox;
 		private DotNetApi.Windows.Controls.ProgressLegend progressLegend;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemPending;
@@ -260,5 +247,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripDropDownButton buttonFeeds;
 		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList checkedListFeeds;
+		private DotNetApi.Windows.Controls.ProgressBox progressBox;
 	}
 }

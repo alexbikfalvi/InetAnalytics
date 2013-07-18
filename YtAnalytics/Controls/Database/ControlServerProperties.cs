@@ -17,13 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using YtCrawler.Database;
@@ -62,30 +57,12 @@ namespace YtAnalytics.Controls.Database
 			get { return this.server; }
 			set
 			{
+				// Save the old value.
+				DbServer old = this.server;
+				// Set the new server.
 				this.server = value;
-				if (value == null)
-				{
-					this.labelTitle.Text = string.Empty;
-					this.tabControl.Visible = false;
-				}
-				else
-				{
-					this.labelTitle.Text = value.Name;
-					this.textBoxName.Text = value.Name;
-					this.textBoxId.Text = value.Id;
-					this.textBoxType.Text = DbServers.ServerTypeNames[(int)value.Type];
-					this.textBoxDataSource.Text = value.DataSource;
-					this.textBoxUsername.Text = value.Username;
-					this.textBoxPassword.Text = value.Password;
-					this.textBoxDateCreated.Text = value.DateCreated.ToString();
-					this.textBoxDateModified.Text = value.DateModified.ToString();
-					this.tabControl.Visible = true;
-					this.pictureBox.Image = ControlServerProperties.images[(int)value.State];
-				}
-				this.tabControl.SelectedTab = this.tabPageGeneral;
-				this.textBoxName.Select();
-				this.textBoxName.SelectionStart = 0;
-				this.textBoxName.SelectionLength = 0;
+				// Call the event handler.
+				this.OnServerSet(old, value);
 			}
 		}
 		/// <summary>
@@ -111,7 +88,7 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// Gets the new server password.
 		/// </summary>
-		public string Password { get { return this.textBoxPassword.Text; } }
+		public SecureString Password { get { return this.textBoxPassword.SecureText; } }
 
 		// Public events.
 
@@ -133,13 +110,53 @@ namespace YtAnalytics.Controls.Database
 			// Else, update the state.
 			this.pictureBox.Image = ControlServerProperties.images[(int)server.State];
 		}
+		
+		// Protected methods.
+
+		/// <summary>
+		/// An event handler called when a new database server has been set.
+		/// </summary>
+		/// <param name="oldServer">The old server.</param>
+		/// <param name="newServer">The new server.</param>
+		protected virtual void OnServerSet(DbServer oldServer, DbServer newServer)
+		{
+			// If the server has not changed, do nothing.
+			if (oldServer == newServer) return;
+
+			if (newServer == null)
+			{
+				this.labelTitle.Text = "No server selected";
+				this.tabControl.Visible = false;
+			}
+			else
+			{
+				this.labelTitle.Text = newServer.Name;
+				this.textBoxName.Text = newServer.Name;
+				this.textBoxId.Text = newServer.Id;
+				this.textBoxType.Text = DbServers.ServerTypeNames[(int)newServer.Type];
+				this.textBoxDataSource.Text = newServer.DataSource;
+				this.textBoxUsername.Text = newServer.Username;
+				this.textBoxPassword.SecureText = newServer.Password;
+				this.textBoxDateCreated.Text = newServer.DateCreated.ToString();
+				this.textBoxDateModified.Text = newServer.DateModified.ToString();
+				this.pictureBox.Image = ControlServerProperties.images[(int)newServer.State];
+				this.tabControl.Visible = true;
+			}
+			this.tabControl.SelectedTab = this.tabPageGeneral;
+			if (this.Focused)
+			{
+				this.textBoxName.Select();
+				this.textBoxName.SelectionStart = 0;
+				this.textBoxName.SelectionLength = 0;
+			}
+		}
 
 		/// <summary>
 		/// An event handler called when the configuration changes.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnChanged(object sender, EventArgs e)
+		protected virtual void OnChanged(object sender, EventArgs e)
 		{
 			// Update the title.
 			this.labelTitle.Text = this.textBoxName.Text;

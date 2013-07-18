@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtCrawler;
+using DotNetApi.Security;
 
 namespace YtAnalytics.Controls.PlanetLab
 {
@@ -64,7 +65,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (this.crawler != null)
 			{
 				this.textBoxUsername.Text = this.crawler.Config.PlanetLabUserName;
-				this.textBoxPassword.Text = this.crawler.Config.PlanetLabPassword;
+				this.textBoxPassword.SecureText = this.crawler.Config.PlanetLabPassword;
 				this.buttonSave.Enabled = false;
 			}
 		}
@@ -79,7 +80,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (this.crawler != null)
 			{
 				this.crawler.Config.PlanetLabUserName = this.textBoxUsername.Text;
-				this.crawler.Config.PlanetLabPassword = this.textBoxPassword.Text;
+				this.crawler.Config.PlanetLabPassword = this.textBoxPassword.SecureText;
 				this.buttonSave.Enabled = false;
 			}
 		}
@@ -93,7 +94,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			this.buttonSave.Enabled =
 				(this.textBoxUsername.Text != string.Empty) &&
-				(this.textBoxPassword.Text != string.Empty);
+				(!this.textBoxPassword.SecureText.IsEmpty());
 		}
 	}
 }

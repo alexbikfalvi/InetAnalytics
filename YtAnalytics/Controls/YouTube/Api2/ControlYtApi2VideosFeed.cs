@@ -60,6 +60,9 @@ namespace YtAnalytics.Controls.YouTube.Api2
 
 		private VideosFeedEventHandler delegateFeed = null;
 
+		private string feedName = null;
+		private string objectName = null;
+
 		// Public declarations
 
 		/// <summary>
@@ -79,12 +82,19 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// Initializes the control with a crawler object.
 		/// </summary>
 		/// <param name="crawler">The crawler object.</param>
-		public void Initialize(Crawler crawler, VideosFeedEventHandler delegateFeed, string idName, string logSource)
+		/// <param name="delegateFeed">The feed event handler.</param>
+		/// <param name="idName">The ID name.</param>
+		/// <param name="feedName">The feed name.</param>
+		/// <param name="objectName">The object name.</param>
+		/// <param name="logSource">The log source.</param>
+		public void Initialize(Crawler crawler, VideosFeedEventHandler delegateFeed, string idName, string feedName, string objectName, string logSource)
 		{
 			// Save the parameters.
 			this.crawler = crawler;
 			this.delegateFeed = delegateFeed;
 			this.labelId.Text = idName;
+			this.feedName = feedName;
+			this.objectName = objectName;
 			this.logSource = logSource;
 			this.request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
 		
@@ -185,7 +195,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				this.logSource,
-				"Started request for the related videos feed of the video \'{0}\'.",
+				string.Format("Started request for the {0} of the {1} \'{{0}}\'.", this.feedName, this.objectName),
 				new object[] { this.textBoxId.Text, this.linkLabel.Text }));
 
 			// Clear the list view.
@@ -202,7 +212,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 					LogEventLevel.Important,
 					LogEventType.Error,
 					this.logSource,
-					"The request for the related videos feed of the video \'{0}\' failed. {1}",
+					string.Format("The request for the {0} of the {1} \'{{0}}\' failed. {{1}}", this.feedName, this.objectName),
 					new object[] { this.textBoxId.Text, exception.Message, this.linkLabel.Text },
 					exception));
 			}
@@ -255,8 +265,8 @@ namespace YtAnalytics.Controls.YouTube.Api2
 					LogEventType eventType = (this.feed.FailuresAtom.Count == 0) && (this.feed.FailuresEntry.Count == 0) ?
 						LogEventType.Success : LogEventType.SuccessWarning;
 					string eventMessage = eventType == LogEventType.Success ?
-						"The request for the related videos feed of the video \'{0}\' completed successfully." :
-						"The request for the related videos feed of the video \'{0}\' completed partially successfully. However, some errors have occurred.";
+						string.Format("The request for the {0} of the {1} \'{{0}}\' completed successfully.", this.feedName, this.objectName) :
+						string.Format("The request for the {0} of the {1} \'{{0}}\' completed partially successfully. However, some errors have occurred.", this.feedName, this.objectName);
 
 					// If there are failures, create a new subevent list.
 					List<LogEvent> subevents = null;
@@ -304,14 +314,14 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							LogEventLevel.Verbose,
 							LogEventType.Canceled,
 							this.logSource,
-							"The request for the related videos feed of the video \'{0}\' has been canceled.",
+							string.Format("The request for the {0} of the {1} \'{{0}}\' has been canceled.", this.feedName, this.objectName),
 							new object[] { this.textBoxId.Text, this.linkLabel.Text }));
 					else
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
 							this.logSource,
-							"The request for the related videos feed of the video \'{0}\' failed. {1}",
+							string.Format("The request for the {0} of the {1} \'{{0}}\' failed. {{1}}", this.feedName, this.objectName),
 							new object[] { this.textBoxId.Text, exception.Message, this.linkLabel.Text },
 							exception));
 				}
@@ -321,7 +331,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 						LogEventLevel.Important,
 						LogEventType.Error,
 						this.logSource,
-						"The request for the related videos feed of the video \'{0}\' failed. {1}",
+						string.Format("The request for the {0} of the {1} \'{{0}}\' failed. {{1}}", this.feedName, this.objectName),
 						new object[] { this.textBoxId.Text, exception.Message, this.linkLabel.Text },
 						exception));
 				}

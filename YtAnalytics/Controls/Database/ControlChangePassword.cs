@@ -17,13 +17,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using YtCrawler.Database;
@@ -51,26 +45,26 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// Gets the old password.
 		/// </summary>
-		public string Old { get { return this.textBoxOld.Text; } }
+		public SecureString Old { get { return this.textBoxOld.SecureText; } }
 
 		/// <summary>
 		/// Gets the new password.
 		/// </summary>
-		public string New { get { return this.textBoxNew.Text; } }
+		public SecureString New { get { return this.textBoxNew.SecureText; } }
 
 		/// <summary>
 		/// Gets the confirmed new password.
 		/// </summary>
-		public string Confirm { get { return this.textBoxConfirm.Text; } }
+		public SecureString Confirm { get { return this.textBoxConfirm.SecureText; } }
 
 		/// <summary>
 		/// Clears the current settings.
 		/// </summary>
 		public void Clear()
 		{
-			this.textBoxOld.Text = string.Empty;
-			this.textBoxNew.Text = string.Empty;
-			this.textBoxConfirm.Text = string.Empty;
+			this.textBoxOld.Clear();
+			this.textBoxNew.Clear();
+			this.textBoxConfirm.Clear();
 		}
 
 		/// <summary>

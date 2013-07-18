@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
@@ -37,19 +38,19 @@
 			this.labelMessageCloseDelay = new System.Windows.Forms.Label();
 			this.tabPageYouTube = new System.Windows.Forms.TabPage();
 			this.labelYtPassword = new System.Windows.Forms.Label();
-			this.textBoxYtPassword = new System.Windows.Forms.TextBox();
 			this.textBoxYtUserName = new System.Windows.Forms.TextBox();
 			this.labelYtUserName = new System.Windows.Forms.Label();
 			this.tabPageLog = new System.Windows.Forms.TabPage();
 			this.textBoxLogFile = new System.Windows.Forms.TextBox();
 			this.labelLogFile = new System.Windows.Forms.Label();
 			this.tabPageComments = new System.Windows.Forms.TabPage();
+			this.labelPlaylistCommentsFile = new System.Windows.Forms.Label();
+			this.textBoxPlaylistCommentsFile = new System.Windows.Forms.TextBox();
+			this.textBoxUserCommentsFile = new System.Windows.Forms.TextBox();
+			this.labelUserCommentsFile = new System.Windows.Forms.Label();
 			this.textBoxVideoCommentsFile = new System.Windows.Forms.TextBox();
 			this.labelVideoCommentsFile = new System.Windows.Forms.Label();
-			this.labelUserCommentsFile = new System.Windows.Forms.Label();
-			this.textBoxUserCommentsFile = new System.Windows.Forms.TextBox();
-			this.textBoxPlaylistCommentsFile = new System.Windows.Forms.TextBox();
-			this.labelPlaylistCommentsFile = new System.Windows.Forms.Label();
+			this.textBoxYtPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.toolStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
@@ -146,8 +147,8 @@
 			// 
 			// tabPageYouTube
 			// 
-			this.tabPageYouTube.Controls.Add(this.labelYtPassword);
 			this.tabPageYouTube.Controls.Add(this.textBoxYtPassword);
+			this.tabPageYouTube.Controls.Add(this.labelYtPassword);
 			this.tabPageYouTube.Controls.Add(this.textBoxYtUserName);
 			this.tabPageYouTube.Controls.Add(this.labelYtUserName);
 			this.tabPageYouTube.Location = new System.Drawing.Point(4, 22);
@@ -166,15 +167,6 @@
 			this.labelYtPassword.Size = new System.Drawing.Size(56, 13);
 			this.labelYtPassword.TabIndex = 5;
 			this.labelYtPassword.Text = "&Password:";
-			// 
-			// textBoxYtPassword
-			// 
-			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 39);
-			this.textBoxYtPassword.Name = "textBoxYtPassword";
-			this.textBoxYtPassword.Size = new System.Drawing.Size(150, 20);
-			this.textBoxYtPassword.TabIndex = 4;
-			this.textBoxYtPassword.UseSystemPasswordChar = true;
-			this.textBoxYtPassword.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
 			// textBoxYtUserName
 			// 
@@ -241,6 +233,44 @@
 			this.tabPageComments.Text = "Comments";
 			this.tabPageComments.UseVisualStyleBackColor = true;
 			// 
+			// labelPlaylistCommentsFile
+			// 
+			this.labelPlaylistCommentsFile.AutoSize = true;
+			this.labelPlaylistCommentsFile.Location = new System.Drawing.Point(16, 68);
+			this.labelPlaylistCommentsFile.Name = "labelPlaylistCommentsFile";
+			this.labelPlaylistCommentsFile.Size = new System.Drawing.Size(109, 13);
+			this.labelPlaylistCommentsFile.TabIndex = 9;
+			this.labelPlaylistCommentsFile.Text = "&Playlist comments file:";
+			// 
+			// textBoxPlaylistCommentsFile
+			// 
+			this.textBoxPlaylistCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPlaylistCommentsFile.Location = new System.Drawing.Point(150, 65);
+			this.textBoxPlaylistCommentsFile.Name = "textBoxPlaylistCommentsFile";
+			this.textBoxPlaylistCommentsFile.ReadOnly = true;
+			this.textBoxPlaylistCommentsFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxPlaylistCommentsFile.TabIndex = 8;
+			// 
+			// textBoxUserCommentsFile
+			// 
+			this.textBoxUserCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxUserCommentsFile.Location = new System.Drawing.Point(150, 39);
+			this.textBoxUserCommentsFile.Name = "textBoxUserCommentsFile";
+			this.textBoxUserCommentsFile.ReadOnly = true;
+			this.textBoxUserCommentsFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxUserCommentsFile.TabIndex = 7;
+			// 
+			// labelUserCommentsFile
+			// 
+			this.labelUserCommentsFile.AutoSize = true;
+			this.labelUserCommentsFile.Location = new System.Drawing.Point(16, 42);
+			this.labelUserCommentsFile.Name = "labelUserCommentsFile";
+			this.labelUserCommentsFile.Size = new System.Drawing.Size(99, 13);
+			this.labelUserCommentsFile.TabIndex = 6;
+			this.labelUserCommentsFile.Text = "&User comments file:";
+			// 
 			// textBoxVideoCommentsFile
 			// 
 			this.textBoxVideoCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -261,43 +291,14 @@
 			this.labelVideoCommentsFile.TabIndex = 4;
 			this.labelVideoCommentsFile.Text = "&Video comments file:";
 			// 
-			// labelUserCommentsFile
+			// textBoxYtPassword
 			// 
-			this.labelUserCommentsFile.AutoSize = true;
-			this.labelUserCommentsFile.Location = new System.Drawing.Point(16, 42);
-			this.labelUserCommentsFile.Name = "labelUserCommentsFile";
-			this.labelUserCommentsFile.Size = new System.Drawing.Size(99, 13);
-			this.labelUserCommentsFile.TabIndex = 6;
-			this.labelUserCommentsFile.Text = "&User comments file:";
-			// 
-			// textBoxUserCommentsFile
-			// 
-			this.textBoxUserCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxUserCommentsFile.Location = new System.Drawing.Point(150, 39);
-			this.textBoxUserCommentsFile.Name = "textBoxUserCommentsFile";
-			this.textBoxUserCommentsFile.ReadOnly = true;
-			this.textBoxUserCommentsFile.Size = new System.Drawing.Size(400, 20);
-			this.textBoxUserCommentsFile.TabIndex = 7;
-			// 
-			// textBoxPlaylistCommentsFile
-			// 
-			this.textBoxPlaylistCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPlaylistCommentsFile.Location = new System.Drawing.Point(150, 65);
-			this.textBoxPlaylistCommentsFile.Name = "textBoxPlaylistCommentsFile";
-			this.textBoxPlaylistCommentsFile.ReadOnly = true;
-			this.textBoxPlaylistCommentsFile.Size = new System.Drawing.Size(400, 20);
-			this.textBoxPlaylistCommentsFile.TabIndex = 8;
-			// 
-			// labelPlaylistCommentsFile
-			// 
-			this.labelPlaylistCommentsFile.AutoSize = true;
-			this.labelPlaylistCommentsFile.Location = new System.Drawing.Point(16, 68);
-			this.labelPlaylistCommentsFile.Name = "labelPlaylistCommentsFile";
-			this.labelPlaylistCommentsFile.Size = new System.Drawing.Size(109, 13);
-			this.labelPlaylistCommentsFile.TabIndex = 9;
-			this.labelPlaylistCommentsFile.Text = "&Playlist comments file:";
+			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 39);
+			this.textBoxYtPassword.Name = "textBoxYtPassword";
+			this.textBoxYtPassword.SecureText = secureString1;
+			this.textBoxYtPassword.Size = new System.Drawing.Size(150, 20);
+			this.textBoxYtPassword.TabIndex = 6;
+			this.textBoxYtPassword.UseSystemPasswordChar = true;
 			// 
 			// ControlSettings
 			// 
@@ -339,7 +340,6 @@
 		private System.Windows.Forms.NumericUpDown numericMessageCloseDelay;
 		private System.Windows.Forms.Label labelYtUserName;
 		private System.Windows.Forms.TextBox textBoxYtUserName;
-		private System.Windows.Forms.TextBox textBoxYtPassword;
 		private System.Windows.Forms.Label labelYtPassword;
 		private System.Windows.Forms.Label labelLogFile;
 		private System.Windows.Forms.TextBox textBoxLogFile;
@@ -349,5 +349,6 @@
 		private System.Windows.Forms.TextBox textBoxPlaylistCommentsFile;
 		private System.Windows.Forms.TextBox textBoxUserCommentsFile;
 		private System.Windows.Forms.Label labelUserCommentsFile;
+		private DotNetApi.Windows.Controls.SecureTextBox textBoxYtPassword;
 	}
 }

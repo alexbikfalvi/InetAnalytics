@@ -34,7 +34,7 @@ using YtCrawler;
 using YtCrawler.Database;
 using YtCrawler.Log;
 using YtAnalytics.Controls.Log;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Database;
 using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls.Database

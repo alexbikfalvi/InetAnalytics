@@ -17,68 +17,37 @@
  */
 
 using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
+using System.Security;
+using DotNetApi.Security;
 
 namespace YtCrawler
 {
-	public sealed class CrawlerCrypto
+	/// <summary>
+	/// A class used to encrypt and decrypt security-sensitive configuration data.
+	/// </summary>
+	public static class CrawlerCrypto
 	{
 		private static byte[] cryptoKey = {155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31};
 		private static byte[] cryptoIV = {61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131};
 
-		public static byte[] Encrypt(string value)
+		/// <summary>
+		/// Encrypts the specified string into a byte array.
+		/// </summary>
+		/// <param name="value">The string to encrypt.</param>
+		/// <returns>The encrypted string as a byte array.</returns>
+		public static byte[] EncryptString(this SecureString value)
 		{
-			if (null == value) return null;
-
-			UTF8Encoding utf8Encoder = new UTF8Encoding();
-			byte[] bytes = utf8Encoder.GetBytes(value);
-		
-			AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider();
-			ICryptoTransform cryptoTransform = aesProvider.CreateEncryptor(CrawlerCrypto.cryptoKey, CrawlerCrypto.cryptoIV);
-
-			MemoryStream encryptedStream = new MemoryStream();
-			CryptoStream cryptStream = new CryptoStream(encryptedStream, cryptoTransform, CryptoStreamMode.Write);
-
-			cryptStream.Write(bytes, 0, bytes.Length);
-			cryptStream.FlushFinalBlock();
-			encryptedStream.Position = 0;
-
-			byte[] result = new byte[encryptedStream.Length];
-			encryptedStream.Read(result, 0, (int)encryptedStream.Length);
-
-			cryptStream.Close();
-
-			return result;
+			return value.EncryptSecureStringAes(CrawlerCrypto.cryptoKey, CrawlerCrypto.cryptoIV);
 		}
 
-		public static string Decrypt(byte[] value)
+		/// <summary>
+		/// Decrypts the specified byte array buffer into a string.
+		/// </summary>
+		/// <param name="value">The byte array to decrypt.</param>
+		/// <returns>The descrypted data as a string.</returns>
+		public static SecureString DecryptString(this byte[] value)
 		{
-			if (null == value) return null;
-
-			UTF8Encoding utf8Encoding = new UTF8Encoding();
-		
-			AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider();
-
-			//aesProvider.GenerateIV();
-			//aesProvider.GenerateKey();
-
-			ICryptoTransform cryptoTransform = aesProvider.CreateDecryptor(CrawlerCrypto.cryptoKey, CrawlerCrypto.cryptoIV);
-
-			MemoryStream decryptedStream = new MemoryStream();
-			CryptoStream cryptStream = new CryptoStream(decryptedStream, cryptoTransform, CryptoStreamMode.Write);
-
-			cryptStream.Write(value, 0, value.Length);
-			cryptStream.FlushFinalBlock();
-			decryptedStream.Position = 0;
-
-			byte[] result = new byte[decryptedStream.Length];
-			decryptedStream.Read(result, 0, (int)decryptedStream.Length);
-
-			cryptStream.Close();
-
-			return utf8Encoding.GetString(result);
+			return value.DecryptSecureStringAes(CrawlerCrypto.cryptoKey, CrawlerCrypto.cryptoIV);
 		}
 	}
 }

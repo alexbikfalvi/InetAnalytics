@@ -28,11 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
 			this.labelUsername = new System.Windows.Forms.Label();
-			this.textBoxPassword = new System.Windows.Forms.TextBox();
 			this.labelPassword = new System.Windows.Forms.Label();
 			this.buttonSave = new System.Windows.Forms.Button();
+			this.textBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.SuspendLayout();
 			// 
 			// textBoxUsername
@@ -51,15 +52,6 @@
 			this.labelUsername.Size = new System.Drawing.Size(58, 13);
 			this.labelUsername.TabIndex = 1;
 			this.labelUsername.Text = "&Username:";
-			// 
-			// textBoxPassword
-			// 
-			this.textBoxPassword.Location = new System.Drawing.Point(91, 31);
-			this.textBoxPassword.Name = "textBoxPassword";
-			this.textBoxPassword.Size = new System.Drawing.Size(200, 20);
-			this.textBoxPassword.TabIndex = 2;
-			this.textBoxPassword.UseSystemPasswordChar = true;
-			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
 			// labelPassword
 			// 
@@ -82,14 +74,23 @@
 			this.buttonSave.UseVisualStyleBackColor = true;
 			this.buttonSave.Click += new System.EventHandler(this.OnSave);
 			// 
+			// textBoxPassword
+			// 
+			this.textBoxPassword.Location = new System.Drawing.Point(91, 31);
+			this.textBoxPassword.Name = "textBoxPassword";
+			this.textBoxPassword.SecureText = secureString1;
+			this.textBoxPassword.Size = new System.Drawing.Size(200, 20);
+			this.textBoxPassword.TabIndex = 5;
+			this.textBoxPassword.UseSystemPasswordChar = true;
+			// 
 			// ControlPlanetLabSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
+			this.Controls.Add(this.textBoxPassword);
 			this.Controls.Add(this.buttonSave);
 			this.Controls.Add(this.labelPassword);
-			this.Controls.Add(this.textBoxPassword);
 			this.Controls.Add(this.labelUsername);
 			this.Controls.Add(this.textBoxUsername);
 			this.Name = "ControlPlanetLabSettings";
@@ -103,8 +104,8 @@
 
 		private System.Windows.Forms.TextBox textBoxUsername;
 		private System.Windows.Forms.Label labelUsername;
-		private System.Windows.Forms.TextBox textBoxPassword;
 		private System.Windows.Forms.Label labelPassword;
 		private System.Windows.Forms.Button buttonSave;
+		private DotNetApi.Windows.Controls.SecureTextBox textBoxPassword;
 	}
 }

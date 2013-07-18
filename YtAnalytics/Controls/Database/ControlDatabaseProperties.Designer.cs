@@ -38,13 +38,13 @@
 			this.checkBoxSelected = new System.Windows.Forms.CheckBox();
 			this.labelId = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
-			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.tabPageObject = new System.Windows.Forms.TabPage();
 			this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.tabPageObject.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// labelTitle
@@ -52,9 +52,9 @@
 			this.labelTitle.AutoSize = true;
 			this.labelTitle.Location = new System.Drawing.Point(59, 29);
 			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(82, 13);
+			this.labelTitle.Size = new System.Drawing.Size(111, 13);
 			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "Database name";
+			this.labelTitle.Text = "No database selected";
 			this.labelTitle.UseMnemonic = false;
 			// 
 			// tabControl
@@ -69,7 +69,6 @@
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(394, 310);
 			this.tabControl.TabIndex = 0;
-			this.tabControl.Visible = false;
 			// 
 			// tabPageGeneral
 			// 
@@ -156,15 +155,6 @@
 			this.labelName.TabIndex = 0;
 			this.labelName.Text = "&Name:";
 			// 
-			// pictureBox
-			// 
-			this.pictureBox.Image = global::YtAnalytics.Resources.Database_32;
-			this.pictureBox.Location = new System.Drawing.Point(20, 20);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(32, 32);
-			this.pictureBox.TabIndex = 0;
-			this.pictureBox.TabStop = false;
-			// 
 			// tabPageObject
 			// 
 			this.tabPageObject.Controls.Add(this.propertyGrid);
@@ -184,6 +174,15 @@
 			this.propertyGrid.Size = new System.Drawing.Size(380, 278);
 			this.propertyGrid.TabIndex = 0;
 			// 
+			// pictureBox
+			// 
+			this.pictureBox.Image = global::YtAnalytics.Resources.Database_32;
+			this.pictureBox.Location = new System.Drawing.Point(20, 20);
+			this.pictureBox.Name = "pictureBox";
+			this.pictureBox.Size = new System.Drawing.Size(32, 32);
+			this.pictureBox.TabIndex = 0;
+			this.pictureBox.TabStop = false;
+			// 
 			// ControlDatabaseProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,8 +195,8 @@
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.tabPageObject.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

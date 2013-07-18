@@ -45,7 +45,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonComment = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.controlVideo = new YtAnalytics.Controls.YouTube.ControlVideo();
+			this.controlVideo = new YtAnalytics.Controls.YouTube.ControlVideoProperties();
 			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.menuItemComments = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip.SuspendLayout();
@@ -265,7 +265,7 @@
 		private System.Windows.Forms.ToolStripButton buttonStop;
 		private System.Windows.Forms.SplitContainer splitContainer;
 		private Log.ControlLogList log;
-		private ControlVideo controlVideo;
+		private ControlVideoProperties controlVideo;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripDropDownButton buttonView;
 		private System.Windows.Forms.ToolStripMenuItem menuItemRelated;

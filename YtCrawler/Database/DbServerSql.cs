@@ -20,9 +20,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security;
 using System.Text;
 using System.Threading;
 using Microsoft.Win32;
+using DotNetApi.Security;
 using YtCrawler.Log;
 using YtCrawler.Database.Data;
 
@@ -90,7 +92,7 @@ namespace YtCrawler.Database
 			string name,
 			string dataSource,
 			string username,
-			string password,
+			SecureString password,
 			string logFile,
 			DateTime dateCreated,
 			DateTime dateModified
@@ -481,7 +483,7 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public override IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null)
+		public override IAsyncResult ChangePassword(SecureString newPassword, DbServerCallback callback, object userState = null)
 		{
 			// Create a new asynchrounous state for this operation.
 			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
@@ -563,7 +565,7 @@ namespace YtCrawler.Database
 			// Create the connection string for this server.
 			this.connectionString.DataSource = this.DataSource;
 			this.connectionString.UserID = this.Username;
-			this.connectionString.Password = this.Password;
+			this.connectionString.Password = this.Password.ConvertToUnsecureString();
 
 			// Set the connection for the connection string.
 			this.connection.ConnectionString = this.connectionString.ConnectionString;
@@ -575,7 +577,7 @@ namespace YtCrawler.Database
 		/// Changes the current password of the database server.
 		/// </summary>
 		/// <param name="newPassword">The new password.</param>
-		private void ChangePassword(string newPassword)
+		private void ChangePassword(SecureString newPassword)
 		{
 			try
 			{
@@ -584,7 +586,7 @@ namespace YtCrawler.Database
 				// Initialize the server.
 				this.OnInitialized();
 				// Change the server password.
-				SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword);
+				SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword.ConvertToUnsecureString());
 				// If the password change was successfull, update the configuration.
 				this.Password = newPassword;
 				// Log the event.

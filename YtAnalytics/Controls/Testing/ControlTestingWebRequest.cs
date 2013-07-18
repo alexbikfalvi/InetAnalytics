@@ -23,7 +23,7 @@ using System.Text;
 using System.Windows.Forms;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Net;
 using YtCrawler;
 using YtCrawler.Log;
 
@@ -43,8 +43,8 @@ namespace YtAnalytics.Controls.Testing
 		private AsyncWebRequest request = new AsyncWebRequest();
 		private IAsyncResult result = null;
 
-		private FormAddHttpRequestHeader formAddHttpRequestHeader = new FormAddHttpRequestHeader();
-		private FormHttpHeader formHttpHeader = new FormHttpHeader();
+		private FormHttpAddRequestHeader formAddHttpRequestHeader = new FormHttpAddRequestHeader();
+		private FormHttpHeaderProperties formHttpHeader = new FormHttpHeaderProperties();
 
 		private EncodingInfo[] encodings;
 		private Dictionary<int, int> encodingPages = new Dictionary<int,int>();

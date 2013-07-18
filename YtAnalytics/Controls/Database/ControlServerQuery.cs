@@ -17,17 +17,18 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+//using System.Collections.Generic;
+//using System.ComponentModel;
+//using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
+//using System.Diagnostics;
+//using System.Drawing;
+//using System.Linq;
 using System.Net;
+using System.Security;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
@@ -35,7 +36,7 @@ using YtCrawler;
 using YtCrawler.Database;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Database;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
 
@@ -332,7 +333,7 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="oldPassword">The old password.</param>
 		/// <param name="newPassword">The new password.</param>
 		/// <param name="state">The user state.</param>
-		private void OnPasswordChanged(string oldPassword, string newPassword, object state)
+		private void OnPasswordChanged(SecureString oldPassword, SecureString newPassword, object state)
 		{
 			// Get the server.
 			DbServer server = state as DbServer;

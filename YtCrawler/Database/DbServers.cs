@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security;
 using System.Threading;
 using Microsoft.Win32;
 using YtCrawler.Database.Data;
@@ -234,7 +235,7 @@ namespace YtCrawler.Database
 			string name,
 			string dataSource,
 			string username,
-			string password,
+			SecureString password,
 			bool primary
 			)
 		{

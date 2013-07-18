@@ -47,7 +47,7 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonImport = new System.Windows.Forms.ToolStripButton();
 			this.buttonExport = new System.Windows.Forms.ToolStripButton();
-			this.controlComment = new YtAnalytics.Controls.Comments.ControlComment();
+			this.controlComment = new YtAnalytics.Controls.Comments.ControlCommentProperties();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -264,7 +264,7 @@
 		private System.Windows.Forms.SplitContainer splitContainer;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ToolStrip toolStrip;
-		private ControlComment controlComment;
+		private ControlCommentProperties controlComment;
 		private System.Windows.Forms.ToolStripButton buttonAdd;
 		private System.Windows.Forms.ToolStripButton buttonRemove;
 		private System.Windows.Forms.ColumnHeader columnHeaderTime;

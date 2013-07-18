@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ControlMap.cs" />
     <Compile Include="Controls\Database\ControlDatabase.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -65,17 +64,23 @@
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.Designer.cs">
+      <DependentUpon>ControlPlanetLabSiteProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabSites.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabSites.Designer.cs">
       <DependentUpon>ControlPlanetLabSites.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLab.cs">
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLab.Designer.cs">
-      <DependentUpon>ControlPlanetLab.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabInfo.Designer.cs">
+      <DependentUpon>ControlPlanetLabInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabSettings.cs">
       <SubType>UserControl</SubType>
@@ -89,17 +94,17 @@
     <Compile Include="Controls\Spiders\ControlSpiderInfo.Designer.cs">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Testing\ControlAddHttpRequestHeader.cs">
+    <Compile Include="Controls\Net\ControlHttpAddRequestHeader.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Testing\ControlAddHttpRequestHeader.Designer.cs">
-      <DependentUpon>ControlAddHttpRequestHeader.cs</DependentUpon>
+    <Compile Include="Controls\Net\ControlHttpAddRequestHeader.Designer.cs">
+      <DependentUpon>ControlHttpAddRequestHeader.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Testing\ControlHttpHeader.cs">
+    <Compile Include="Controls\Net\ControlHttpHeaderProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Testing\ControlHttpHeader.Designer.cs">
-      <DependentUpon>ControlHttpHeader.cs</DependentUpon>
+    <Compile Include="Controls\Net\ControlHttpHeaderProperties.Designer.cs">
+      <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Testing\ControlTestingWebRequest.cs">
       <SubType>UserControl</SubType>
@@ -107,11 +112,11 @@
     <Compile Include="Controls\Testing\ControlTestingWebRequest.Designer.cs">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlVideoComment.cs">
+    <Compile Include="Controls\YouTube\ControlCommentProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlVideoComment.Designer.cs">
-      <DependentUpon>ControlVideoComment.cs</DependentUpon>
+    <Compile Include="Controls\YouTube\ControlCommentProperties.Designer.cs">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Comments\ControlComments.cs">
       <SubType>UserControl</SubType>
@@ -125,11 +130,11 @@
     <Compile Include="Controls\Comments\ControlAddComment.Designer.cs">
       <DependentUpon>ControlAddComment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlException.cs">
+    <Compile Include="Controls\ControlExceptionProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlException.Designer.cs">
-      <DependentUpon>ControlException.cs</DependentUpon>
+    <Compile Include="Controls\ControlExceptionProperties.Designer.cs">
+      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Log\ControlLog.cs">
       <SubType>UserControl</SubType>
@@ -155,11 +160,11 @@
     <Compile Include="Controls\ControlSideCalendar.Designer.cs">
       <DependentUpon>ControlSideCalendar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Log\ControlLogEvent.cs">
+    <Compile Include="Controls\Log\ControlLogEventProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Log\ControlLogEvent.Designer.cs">
-      <DependentUpon>ControlLogEvent.cs</DependentUpon>
+    <Compile Include="Controls\Log\ControlLogEventProperties.Designer.cs">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Log\ControlLogList.cs">
       <SubType>UserControl</SubType>
@@ -173,11 +178,11 @@
     <Compile Include="Controls\ControlSideTree.Designer.cs">
       <DependentUpon>ControlSideTree.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlVideo.cs">
+    <Compile Include="Controls\YouTube\ControlVideoProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlVideo.Designer.cs">
-      <DependentUpon>ControlVideo.cs</DependentUpon>
+    <Compile Include="Controls\YouTube\ControlVideoProperties.Designer.cs">
+      <DependentUpon>ControlVideoProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoList.cs">
       <SubType>UserControl</SubType>
@@ -233,17 +238,17 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.Designer.cs">
       <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlHistoryDiscoveryEvent.cs">
+    <Compile Include="Controls\YouTube\ControlDiscoveryProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlHistoryDiscoveryEvent.Designer.cs">
-      <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
+    <Compile Include="Controls\YouTube\ControlDiscoveryProperties.Designer.cs">
+      <DependentUpon>ControlDiscoveryProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Comments\ControlComment.cs">
+    <Compile Include="Controls\Comments\ControlCommentProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Comments\ControlComment.Designer.cs">
-      <DependentUpon>ControlComment.cs</DependentUpon>
+    <Compile Include="Controls\Comments\ControlCommentProperties.Designer.cs">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Web\ControlWeb.cs">
       <SubType>UserControl</SubType>
@@ -263,11 +268,11 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlProfile.cs">
+    <Compile Include="Controls\YouTube\ControlProfileProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlProfile.Designer.cs">
-      <DependentUpon>ControlProfile.cs</DependentUpon>
+    <Compile Include="Controls\YouTube\ControlProfileProperties.Designer.cs">
+      <DependentUpon>ControlProfileProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Profile.cs">
       <SubType>UserControl</SubType>
@@ -281,11 +286,11 @@
     <Compile Include="Controls\YouTube\ControlCommentList.Designer.cs">
       <DependentUpon>ControlCommentList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlPlaylist.cs">
+    <Compile Include="Controls\YouTube\ControlPlaylistProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlPlaylist.Designer.cs">
-      <DependentUpon>ControlPlaylist.cs</DependentUpon>
+    <Compile Include="Controls\YouTube\ControlPlaylistProperties.Designer.cs">
+      <DependentUpon>ControlPlaylistProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlPlaylistList.cs">
       <SubType>UserControl</SubType>
@@ -347,17 +352,17 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.Designer.cs">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlCategory.cs">
+    <Compile Include="Controls\YouTube\ControlCategoryProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\YouTube\ControlCategory.Designer.cs">
-      <DependentUpon>ControlCategory.cs</DependentUpon>
+    <Compile Include="Controls\YouTube\ControlCategoryProperties.Designer.cs">
+      <DependentUpon>ControlCategoryProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlTable.cs">
+    <Compile Include="Controls\Database\ControlTableProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Database\ControlTable.Designer.cs">
-      <DependentUpon>ControlTable.cs</DependentUpon>
+    <Compile Include="Controls\Database\ControlTableProperties.Designer.cs">
+      <DependentUpon>ControlTableProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
       <SubType>UserControl</SubType>
@@ -365,23 +370,23 @@
     <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlObject.cs">
+    <Compile Include="Controls\Database\ControlObjectProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlObject.Designer.cs">
-      <DependentUpon>ControlObject.cs</DependentUpon>
+    <Compile Include="Controls\Database\ControlObjectProperties.Designer.cs">
+      <DependentUpon>ControlObjectProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlRelationship.cs">
+    <Compile Include="Controls\Database\ControlRelationshipProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Database\ControlRelationship.Designer.cs">
-      <DependentUpon>ControlRelationship.cs</DependentUpon>
+    <Compile Include="Controls\Database\ControlRelationshipProperties.Designer.cs">
+      <DependentUpon>ControlRelationshipProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlField.cs">
+    <Compile Include="Controls\Database\ControlFieldProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Database\ControlField.Designer.cs">
-      <DependentUpon>ControlField.cs</DependentUpon>
+    <Compile Include="Controls\Database\ControlFieldProperties.Designer.cs">
+      <DependentUpon>ControlFieldProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlCompareFields.cs">
       <SubType>UserControl</SubType>
@@ -395,83 +400,89 @@
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormHttpHeader.cs">
+    <Compile Include="Forms\PlanetLab\FormSiteProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormHttpHeader.Designer.cs">
-      <DependentUpon>FormHttpHeader.cs</DependentUpon>
+    <Compile Include="Forms\PlanetLab\FormSiteProperties.Designer.cs">
+      <DependentUpon>FormSiteProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormAddHttpRequestHeader.cs">
+    <Compile Include="Forms\Net\FormHttpHeaderProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormAddHttpRequestHeader.Designer.cs">
-      <DependentUpon>FormAddHttpRequestHeader.cs</DependentUpon>
+    <Compile Include="Forms\Net\FormHttpHeaderProperties.Designer.cs">
+      <DependentUpon>FormHttpHeaderProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormCompareFields.cs">
+    <Compile Include="Forms\Net\FormHttpAddRequestHeader.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormCompareFields.Designer.cs">
+    <Compile Include="Forms\Net\FormHttpAddRequestHeader.Designer.cs">
+      <DependentUpon>FormHttpAddRequestHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormCompareFields.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormCompareFields.Designer.cs">
       <DependentUpon>FormCompareFields.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormField.cs">
+    <Compile Include="Forms\Database\FormFieldProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormField.Designer.cs">
-      <DependentUpon>FormField.cs</DependentUpon>
+    <Compile Include="Forms\Database\FormFieldProperties.Designer.cs">
+      <DependentUpon>FormFieldProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormRelationship.cs">
+    <Compile Include="Forms\Database\FormRelationshipProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormRelationship.Designer.cs">
-      <DependentUpon>FormRelationship.cs</DependentUpon>
+    <Compile Include="Forms\Database\FormRelationshipProperties.Designer.cs">
+      <DependentUpon>FormRelationshipProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormObject.cs">
+    <Compile Include="Forms\Database\FormObjectProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormObject.Designer.cs">
-      <DependentUpon>FormObject.cs</DependentUpon>
+    <Compile Include="Forms\Database\FormObjectProperties.Designer.cs">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormDatabaseSelect.cs">
+    <Compile Include="Forms\Database\FormDatabaseSelect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormDatabaseSelect.Designer.cs">
+    <Compile Include="Forms\Database\FormDatabaseSelect.Designer.cs">
       <DependentUpon>FormDatabaseSelect.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormTable.cs">
+    <Compile Include="Forms\Database\FormTableProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormTable.Designer.cs">
-      <DependentUpon>FormTable.cs</DependentUpon>
+    <Compile Include="Forms\Database\FormTableProperties.Designer.cs">
+      <DependentUpon>FormTableProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormDatabaseProperties.cs">
+    <Compile Include="Forms\Database\FormDatabaseProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormDatabaseProperties.Designer.cs">
+    <Compile Include="Forms\Database\FormDatabaseProperties.Designer.cs">
       <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormChangePassword.cs">
+    <Compile Include="Forms\Database\FormChangePassword.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormChangePassword.Designer.cs">
+    <Compile Include="Forms\Database\FormChangePassword.Designer.cs">
       <DependentUpon>FormChangePassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormServerProperties.cs">
+    <Compile Include="Forms\Database\FormServerProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormServerProperties.Designer.cs">
+    <Compile Include="Forms\Database\FormServerProperties.Designer.cs">
       <DependentUpon>FormServerProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormAddServer.cs">
+    <Compile Include="Forms\Database\FormAddServer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormAddServer.Designer.cs">
+    <Compile Include="Forms\Database\FormAddServer.Designer.cs">
       <DependentUpon>FormAddServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormPlaylist.cs">
+    <Compile Include="Forms\YouTube\FormPlaylistProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormPlaylist.Designer.cs">
-      <DependentUpon>FormPlaylist.cs</DependentUpon>
+    <Compile Include="Forms\YouTube\FormPlaylistProperties.Designer.cs">
+      <DependentUpon>FormPlaylistProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormAbout.cs">
       <SubType>Form</SubType>
@@ -485,16 +496,16 @@
     <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormComment.cs">
+    <Compile Include="Forms\Comments\FormCommentProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormComment.Designer.cs">
-      <DependentUpon>FormComment.cs</DependentUpon>
+    <Compile Include="Forms\Comments\FormCommentProperties.Designer.cs">
+      <DependentUpon>FormCommentProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormAddComment.cs">
+    <Compile Include="Forms\Comments\FormAddComment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormAddComment.Designer.cs">
+    <Compile Include="Forms\Comments\FormAddComment.Designer.cs">
       <DependentUpon>FormAddComment.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormCrash.cs">
@@ -503,17 +514,17 @@
     <Compile Include="Forms\FormCrash.Designer.cs">
       <DependentUpon>FormCrash.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormHistoryDiscoveryEvent.cs">
+    <Compile Include="Forms\YouTube\FormDiscoveryProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormHistoryDiscoveryEvent.Designer.cs">
-      <DependentUpon>FormHistoryDiscoveryEvent.cs</DependentUpon>
+    <Compile Include="Forms\YouTube\FormDiscoveryProperties.Designer.cs">
+      <DependentUpon>FormDiscoveryProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormException.cs">
+    <Compile Include="Forms\FormExceptionProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormException.Designer.cs">
-      <DependentUpon>FormException.cs</DependentUpon>
+    <Compile Include="Forms\FormExceptionProperties.Designer.cs">
+      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormImage.cs">
       <SubType>Form</SubType>
@@ -521,17 +532,17 @@
     <Compile Include="Forms\FormImage.Designer.cs">
       <DependentUpon>FormImage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormVideo.cs">
+    <Compile Include="Forms\YouTube\FormVideoProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormVideo.Designer.cs">
-      <DependentUpon>FormVideo.cs</DependentUpon>
+    <Compile Include="Forms\YouTube\FormVideoProperties.Designer.cs">
+      <DependentUpon>FormVideoProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormLogEvent.cs">
+    <Compile Include="Forms\Log\FormEventProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormLogEvent.Designer.cs">
-      <DependentUpon>FormLogEvent.cs</DependentUpon>
+    <Compile Include="Forms\Log\FormEventProperties.Designer.cs">
+      <DependentUpon>FormEventProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -543,12 +554,15 @@
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.resx">
+      <DependentUpon>ControlPlanetLabSiteProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSites.resx">
       <DependentUpon>ControlPlanetLabSites.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLab.resx">
-      <DependentUpon>ControlPlanetLab.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabInfo.resx">
+      <DependentUpon>ControlPlanetLabInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSettings.resx">
       <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
@@ -556,17 +570,17 @@
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Testing\ControlAddHttpRequestHeader.resx">
-      <DependentUpon>ControlAddHttpRequestHeader.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Net\ControlHttpAddRequestHeader.resx">
+      <DependentUpon>ControlHttpAddRequestHeader.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Testing\ControlHttpHeader.resx">
-      <DependentUpon>ControlHttpHeader.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Net\ControlHttpHeaderProperties.resx">
+      <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Testing\ControlTestingWebRequest.resx">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\YouTube\ControlVideoComment.resx">
-      <DependentUpon>ControlVideoComment.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\YouTube\ControlCommentProperties.resx">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Comments\ControlComments.resx">
       <DependentUpon>ControlComments.cs</DependentUpon>
@@ -574,8 +588,8 @@
     <EmbeddedResource Include="Controls\Comments\ControlAddComment.resx">
       <DependentUpon>ControlAddComment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlException.resx">
-      <DependentUpon>ControlException.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ControlExceptionProperties.resx">
+      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Log\ControlLog.resx">
       <DependentUpon>ControlLog.cs</DependentUpon>
@@ -586,8 +600,8 @@
     <EmbeddedResource Include="Controls\ControlSideCalendar.resx">
       <DependentUpon>ControlSideCalendar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Log\ControlLogEvent.resx">
-      <DependentUpon>ControlLogEvent.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Log\ControlLogEventProperties.resx">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
       <DependentUpon>ControlLogList.cs</DependentUpon>
@@ -595,8 +609,8 @@
     <EmbeddedResource Include="Controls\ControlSideTree.resx">
       <DependentUpon>ControlSideTree.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\YouTube\ControlVideo.resx">
-      <DependentUpon>ControlVideo.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\YouTube\ControlVideoProperties.resx">
+      <DependentUpon>ControlVideoProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlVideoList.resx">
       <DependentUpon>ControlVideoList.cs</DependentUpon>
@@ -625,11 +639,11 @@
     <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.resx">
       <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\YouTube\ControlHistoryDiscoveryEvent.resx">
-      <DependentUpon>ControlHistoryDiscoveryEvent.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\YouTube\ControlDiscoveryProperties.resx">
+      <DependentUpon>ControlDiscoveryProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Comments\ControlComment.resx">
-      <DependentUpon>ControlComment.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Comments\ControlCommentProperties.resx">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\Web\ControlWeb.resx">
       <DependentUpon>ControlWeb.cs</DependentUpon>
@@ -640,8 +654,8 @@
     <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.resx">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\YouTube\ControlProfile.resx">
-      <DependentUpon>ControlProfile.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\YouTube\ControlProfileProperties.resx">
+      <DependentUpon>ControlProfileProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Profile.resx">
       <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
@@ -649,8 +663,8 @@
     <EmbeddedResource Include="Controls\YouTube\ControlCommentList.resx">
       <DependentUpon>ControlCommentList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\YouTube\ControlPlaylist.resx">
-      <DependentUpon>ControlPlaylist.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\YouTube\ControlPlaylistProperties.resx">
+      <DependentUpon>ControlPlaylistProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlPlaylistList.resx">
       <DependentUpon>ControlPlaylistList.cs</DependentUpon>
@@ -682,23 +696,23 @@
     <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Categories.resx">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\YouTube\ControlCategory.resx">
-      <DependentUpon>ControlCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\YouTube\ControlCategoryProperties.resx">
+      <DependentUpon>ControlCategoryProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Database\ControlTable.resx">
-      <DependentUpon>ControlTable.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Database\ControlTableProperties.resx">
+      <DependentUpon>ControlTableProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlDatabaseSelect.resx">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlObject.resx">
-      <DependentUpon>ControlObject.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Database\ControlObjectProperties.resx">
+      <DependentUpon>ControlObjectProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Database\ControlRelationship.resx">
-      <DependentUpon>ControlRelationship.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Database\ControlRelationshipProperties.resx">
+      <DependentUpon>ControlRelationshipProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Database\ControlField.resx">
-      <DependentUpon>ControlField.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Database\ControlFieldProperties.resx">
+      <DependentUpon>ControlFieldProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlCompareFields.resx">
       <DependentUpon>ControlCompareFields.cs</DependentUpon>
@@ -707,44 +721,47 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormHttpHeader.resx">
-      <DependentUpon>FormHttpHeader.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlanetLab\FormSiteProperties.resx">
+      <DependentUpon>FormSiteProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormAddHttpRequestHeader.resx">
-      <DependentUpon>FormAddHttpRequestHeader.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Net\FormHttpHeaderProperties.resx">
+      <DependentUpon>FormHttpHeaderProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormCompareFields.resx">
+    <EmbeddedResource Include="Forms\Net\FormHttpAddRequestHeader.resx">
+      <DependentUpon>FormHttpAddRequestHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormCompareFields.resx">
       <DependentUpon>FormCompareFields.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormField.resx">
-      <DependentUpon>FormField.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\FormFieldProperties.resx">
+      <DependentUpon>FormFieldProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormRelationship.resx">
-      <DependentUpon>FormRelationship.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\FormRelationshipProperties.resx">
+      <DependentUpon>FormRelationshipProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormObject.resx">
-      <DependentUpon>FormObject.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\FormObjectProperties.resx">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormDatabaseSelect.resx">
+    <EmbeddedResource Include="Forms\Database\FormDatabaseSelect.resx">
       <DependentUpon>FormDatabaseSelect.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormTable.resx">
-      <DependentUpon>FormTable.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\FormTableProperties.resx">
+      <DependentUpon>FormTableProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormDatabaseProperties.resx">
+    <EmbeddedResource Include="Forms\Database\FormDatabaseProperties.resx">
       <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormChangePassword.resx">
+    <EmbeddedResource Include="Forms\Database\FormChangePassword.resx">
       <DependentUpon>FormChangePassword.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormServerProperties.resx">
+    <EmbeddedResource Include="Forms\Database\FormServerProperties.resx">
       <DependentUpon>FormServerProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormAddServer.resx">
+    <EmbeddedResource Include="Forms\Database\FormAddServer.resx">
       <DependentUpon>FormAddServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormPlaylist.resx">
-      <DependentUpon>FormPlaylist.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\YouTube\FormPlaylistProperties.resx">
+      <DependentUpon>FormPlaylistProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
@@ -752,29 +769,29 @@
     <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormComment.resx">
-      <DependentUpon>FormComment.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Comments\FormCommentProperties.resx">
+      <DependentUpon>FormCommentProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormAddComment.resx">
+    <EmbeddedResource Include="Forms\Comments\FormAddComment.resx">
       <DependentUpon>FormAddComment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCrash.resx">
       <DependentUpon>FormCrash.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormHistoryDiscoveryEvent.resx">
-      <DependentUpon>FormHistoryDiscoveryEvent.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\YouTube\FormDiscoveryProperties.resx">
+      <DependentUpon>FormDiscoveryProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormException.resx">
-      <DependentUpon>FormException.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormExceptionProperties.resx">
+      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormImage.resx">
       <DependentUpon>FormImage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormVideo.resx">
-      <DependentUpon>FormVideo.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\YouTube\FormVideoProperties.resx">
+      <DependentUpon>FormVideoProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormLogEvent.resx">
-      <DependentUpon>FormLogEvent.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Log\FormEventProperties.resx">
+      <DependentUpon>FormEventProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

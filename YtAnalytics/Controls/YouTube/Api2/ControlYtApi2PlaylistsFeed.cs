@@ -18,19 +18,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.YouTube;
 using YtApi;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Atom;
@@ -55,7 +48,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private IAsyncResult result;
 		private Feed<Playlist> feed = null;
 
-		private FormPlaylist formPlaylist = new FormPlaylist();
+		private FormPlaylistProperties formPlaylist = new FormPlaylistProperties();
 
 		// Public declarations
 

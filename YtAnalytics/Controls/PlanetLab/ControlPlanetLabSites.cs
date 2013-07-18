@@ -23,8 +23,10 @@ using System.Windows.Forms;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
+using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -34,6 +36,10 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlPlanetLabSites : NotificationControl
 	{
+		// Private delegates.
+
+		private delegate void UpdateSitesEventHandler();
+		
 		// Private variables.
 
 		private Crawler crawler = null;
@@ -44,6 +50,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		private static Color colorSelectedMarkerFill = Color.FromArgb(255, 51, 51);
 		private static Color colorMarkerLine = Color.FromArgb(255, 153, 0);
 		private static Color colorMarkerFill = Color.FromArgb(248, 224, 124);
+
+		private UpdateSitesEventHandler delegateUpdateSites = null;
+
+		private FormSiteProperties formSiteProperties = new FormSiteProperties();
 
 		// Public declarations
 
@@ -58,6 +68,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
+
+			// Initialize the delegates.
+			this.delegateUpdateSites = new UpdateSitesEventHandler(this.OnUpdateSites);
 		}
 
 		/// <summary>
@@ -167,7 +180,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Update the list of sites.
 					this.OnUpdateSites();
 				}
-
 			}
 			catch (Exception exception)
 			{
@@ -196,8 +208,17 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnUpdateSites()
 		{
+			// Execute this method on the UI thread.
+			if (this.InvokeRequired)
+			{
+				this.Invoke(this.delegateUpdateSites);
+				return;
+			}
+
 			// Clear the list view.
 			this.listViewSites.Items.Clear();
+			// Clear the map markers.
+			this.worldMap.Markers.Clear();
 
 			// Add the list view items.
 			foreach (PlSite site in this.crawler.PlanetLab.Sites)
@@ -222,12 +243,15 @@ namespace YtAnalytics.Controls.PlanetLab
 					site.Url,
 					site.DateCreated.ToString(),
 					site.LastUpdated.ToString(),
-					site.Latitude.ToString(),
-					site.Longitude.ToString()
+					site.Latitude.HasValue ? PlUtil.LatitudeToString(site.Latitude.Value) : string.Empty,
+					site.Longitude.HasValue ? PlUtil.LongitudeToString(site.Longitude.Value) : string.Empty
 				}, 0);
 				item.Tag = new KeyValuePair<PlSite, GeoMarker>(site, marker);
 				this.listViewSites.Items.Add(item);
 			}
+
+			// Update the label.
+			this.labelSites.Text = string.Format("{0} sites available", this.crawler.PlanetLab.Sites.Count);
 		}
 
 		/// <summary>
@@ -245,19 +269,44 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.marker.Emphasis = false;
 				this.marker = null;
 			}
-			// If no site is selected, do nothing.
-			if (this.listViewSites.SelectedItems.Count == 0) return;
+			// If no site is selected.
+			if (this.listViewSites.SelectedItems.Count == 0)
+			{
+				// Change the properties button enabled state.
+				this.buttonProperties.Enabled = false;
+			}
+			else
+			{
+				// Change the properties button enabled state.
+				this.buttonProperties.Enabled = true;
+				// Get the site-marker for this item.
+				KeyValuePair<PlSite, GeoMarker> tag = (KeyValuePair<PlSite, GeoMarker>)this.listViewSites.SelectedItems[0].Tag;
+				// If the marker is not null, emphasize the marker.
+				if (tag.Value != null)
+				{
+					this.marker = tag.Value;
+					this.marker.ColorLine = ControlPlanetLabSites.colorSelectedMarkerLine;
+					this.marker.ColorFill = ControlPlanetLabSites.colorSelectedMarkerFill;
+					this.marker.Emphasis = true;
+				}
+			}
+		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view the site properties.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnProperties(object sender, EventArgs e)
+		{
+			// If there is no selected site item, do nothing.
+			if(this.listViewSites.SelectedItems.Count == 0) return;
+	
 			// Get the site-marker for this item.
 			KeyValuePair<PlSite, GeoMarker> tag = (KeyValuePair<PlSite, GeoMarker>)this.listViewSites.SelectedItems[0].Tag;
-			// If the marker is not null, emphasize the marker.
-			if (tag.Value != null)
-			{
-				this.marker = tag.Value;
-				this.marker.ColorLine = ControlPlanetLabSites.colorSelectedMarkerLine;
-				this.marker.ColorFill = ControlPlanetLabSites.colorSelectedMarkerFill;
-				this.marker.Emphasis = true;
-			}
+
+			// Show the site properties.
+			this.formSiteProperties.ShowDialog(this, tag.Key);
 		}
 	}
 }

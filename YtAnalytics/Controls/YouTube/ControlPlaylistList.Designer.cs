@@ -43,7 +43,7 @@
 			this.labelPlaylistsPerPage = new System.Windows.Forms.ToolStripLabel();
 			this.comboBoxPerPage = new System.Windows.Forms.ToolStripComboBox();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.controlPlaylist = new YtAnalytics.Controls.YouTube.ControlPlaylist();
+			this.controlPlaylist = new YtAnalytics.Controls.YouTube.ControlPlaylistProperties();
 			this.panel = new System.Windows.Forms.Panel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -232,6 +232,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderTitle;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.Panel panel;
-		private ControlPlaylist controlPlaylist;
+		private ControlPlaylistProperties controlPlaylist;
 	}
 }

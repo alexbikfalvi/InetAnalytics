@@ -18,16 +18,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
@@ -36,7 +27,7 @@ using YtCrawler.Database;
 using YtCrawler.Database.Data;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Database;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Controls.Database
@@ -56,8 +47,8 @@ namespace YtAnalytics.Controls.Database
 
 		private FormServerProperties formProperties = new FormServerProperties();
 		private FormDatabaseProperties formDatabaseProperties = new FormDatabaseProperties();
-		private FormTable formTable = new FormTable();
-		private FormRelationship formRelationship = new FormRelationship();
+		private FormTableProperties formTable = new FormTableProperties();
+		private FormRelationshipProperties formRelationship = new FormRelationshipProperties();
 
 		private TreeNode treeNode = null;
 

@@ -17,15 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
@@ -157,6 +150,9 @@ namespace YtAnalytics.Controls.YouTube.Api2
 			}
 			catch (Exception exception)
 			{
+				// Set the profile to null.
+				this.controlProfile.Profile = null;
+				// Log the request result.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
 					LogEventType.Error,
@@ -206,6 +202,9 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				}
 				catch (WebException exception)
 				{
+					// Set the profile to null.
+					this.controlProfile.Profile = null;
+					// Log the request result.
 					if (exception.Status == WebExceptionStatus.RequestCanceled)
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
@@ -224,6 +223,9 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				}
 				catch (Exception exception)
 				{
+					// Set the profile to null.
+					this.controlProfile.Profile = null;
+					// Log the request result.
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,

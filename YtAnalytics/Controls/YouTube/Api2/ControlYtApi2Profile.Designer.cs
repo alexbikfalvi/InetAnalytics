@@ -43,7 +43,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonComment = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.controlProfile = new YtAnalytics.Controls.YouTube.ControlProfile();
+			this.controlProfile = new YtAnalytics.Controls.YouTube.ControlProfileProperties();
 			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -243,7 +243,7 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemYouTube;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton buttonComment;
-		private ControlProfile controlProfile;
+		private ControlProfileProperties controlProfile;
 		private System.Windows.Forms.ToolStripMenuItem menuItemUploads;
 		private System.Windows.Forms.ToolStripMenuItem menuItemFavorites;
 		private System.Windows.Forms.ToolStripMenuItem menuItemPlaylists;

@@ -17,16 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.YouTube;
 using YtApi.Api.V2.Data;
 
 namespace YtAnalytics.Controls.YouTube
@@ -47,7 +40,7 @@ namespace YtAnalytics.Controls.YouTube
 
 		private ContextMenuStrip contextMenu = null;
 
-		private FormPlaylist formPlaylist = new FormPlaylist();
+		private FormPlaylistProperties formPlaylist = new FormPlaylistProperties();
 
 		/// <summary>
 		/// Constructor.

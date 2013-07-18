@@ -30,14 +30,24 @@ using DotNetApi.Web;
 
 namespace YtCrawler.Spider
 {
-	public delegate void SpiderStandardFeedsStartedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
-	public delegate void SpiderStandardFeedsEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds, DbObjectStandardFeed obj, int index);
-
 	/// <summary>
 	/// A spider browsing through the YouTube API version 2 standard video feeds.
 	/// </summary>
 	public class SpiderStandardFeeds : Spider 
 	{
+		public delegate void CrawlStartedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
+		public delegate void CrawlFinishedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
+		public delegate void FeedStartedEventHandler(Spider spider, DbObjectStandardFeed obj, int index, int count);
+		public delegate void FeedFinishedEventHandler(Spider spider, DbObjectStandardFeed obj, int index, int count, CrawlResult result);
+
+		public enum CrawlResult
+		{
+			Success = 0,
+			Warning = 1,
+			Fail = 2,
+			Canceled = 3
+		}
+
 		private Crawler crawler;
 
 		private DbObjectStandardFeed[] standardFeeds = null;
@@ -64,15 +74,19 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// An event raised when the spider began crawling the feeds.
 		/// </summary>
-		public event SpiderStandardFeedsStartedEventHandler CrawlFeedsStarted;
+		public event CrawlStartedEventHandler FeedsCrawlStarted;
+		/// <summary>
+		/// An event raised when the spider finished crawling the feeds.
+		/// </summary>
+		public event CrawlFinishedEventHandler FeedsCrawlFinished;
 		/// <summary>
 		/// An event raised when the spider began crawling a standard feed.
 		/// </summary>
-		public event SpiderStandardFeedsEventHandler CrawlFeedStarted;
+		public event FeedStartedEventHandler FeedCrawlStarted;
 		/// <summary>
 		/// An event raised when the spider finished crawling a standard feed.
 		/// </summary>
-		public event SpiderStandardFeedsEventHandler CrawlFeedFinished;
+		public event FeedFinishedEventHandler FeedCrawlFinished;
 
 		// Public methods.
 
@@ -145,11 +159,17 @@ namespace YtCrawler.Spider
 					}
 				}
 
-				// Raise an event.
-				if (this.CrawlFeedsStarted != null) this.CrawlFeedsStarted(this, feeds);
+				// Raise the crawl feeds started event.
+				if (this.FeedsCrawlStarted != null) this.FeedsCrawlStarted(this, feeds);
 
 				// Create a new spider asynchronous result.
 				SpiderAsyncResult asyncResult = new SpiderAsyncResult(userState);
+
+				// Set the crawl result counters.
+				int counterSuccess = 0;
+				int counterWarning = 0;
+				int counterFailed = 0;
+				int counterPending = feeds.Count;
 
 				// Execute the crawl on the thread pool.
 				ThreadPool.QueueUserWorkItem((object state) =>
@@ -168,20 +188,27 @@ namespace YtCrawler.Spider
 							// Get the object.
 							DbObjectStandardFeed obj = feed.Value;
 
+							// Call the feed started event handler.
+							if (this.FeedCrawlStarted != null) this.FeedCrawlStarted(this, obj, index, feeds.Count);
+
 							// Crawl the feed.
-							this.CrawlFeed(
-								feeds,
-								index,
+							CrawlResult result = this.CrawlFeed(
 								asyncResult,
 								(YouTubeStandardFeed)obj.FeedId,
 								(YouTubeTimeId)obj.TimeId,
 								obj.Category,
 								obj.Region,
 								ref obj);
+
+							// Call the feed finished event handler.
+							if (this.FeedCrawlFinished != null) this.FeedCrawlFinished(this, obj, index, feeds.Count, result);
 						}
 
 						// Set the result.
 						asyncResult.Result = feeds;
+
+						// Raise the crawl feeds finished event.
+						if (this.FeedsCrawlFinished != null) this.FeedsCrawlFinished(this, feeds);
 
 						// Update the spider state.
 						base.OnFinished();
@@ -297,17 +324,14 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// Crawls the feed at the specified parameters.
 		/// </summary>
-		/// <param name="feeds">The list of standard feeds.</param>
-		/// <param name="index">The index of the current feed.</param>
 		/// <param name="asyncResult">The asynchronous result.</param>
 		/// <param name="feedId">The feed.</param>
 		/// <param name="timeId">The time.</param>
 		/// <param name="category">The category.</param>
 		/// <param name="regionId">The region.</param>
 		/// <param name="obj">The standard feed object.</param>
-		private void CrawlFeed(
-			IDictionary<string, DbObjectStandardFeed> feeds,
-			int index,
+		/// <returns>The crawl result.</returns>
+		private CrawlResult CrawlFeed(
 			SpiderAsyncResult asyncResult,
 			YouTubeStandardFeed feedId,
 			YouTubeTimeId timeId,
@@ -316,10 +340,7 @@ namespace YtCrawler.Spider
 			ref DbObjectStandardFeed obj)
 		{
 			// If the asynchronousn operation has been canceled, do nothing.
-			if (asyncResult.IsCanceled) return;
-
-			// Call the feed started event handler.
-			if (this.CrawlFeedStarted != null) this.CrawlFeedStarted(this, feeds, obj, index);
+			if (asyncResult.IsCanceled) return CrawlResult.Canceled;
 
 			// Compute the feed key.
 			string key = this.EncodeFeedKey(feedId, timeId, category, regionId);
@@ -327,12 +348,6 @@ namespace YtCrawler.Spider
 			// Compute the feed URI starting at index 1 and ask for 1 result.
 			Uri uri = YouTubeUri.GetStandardFeed(feedId, regionId, category, timeId, 1, 1);
 
-			Thread.Sleep(500);
-
-			// Call the feed finished event handler.
-			if (this.CrawlFeedFinished != null) this.CrawlFeedFinished(this, feeds, obj, index);
-
-			/*
 			// Create a new video request.
 			YouTubeRequestFeed<Video> request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
 
@@ -360,6 +375,9 @@ namespace YtCrawler.Spider
 				obj.Browsable = true;
 				// Set the response HTTP code.
 				obj.HttpCode = (int)(result as AsyncWebResult).Response.StatusCode;
+				
+				// Return the result.
+				return (feed.FailuresAtom.Count == 0) && (feed.FailuresEntry.Count == 0) ? CrawlResult.Success : CrawlResult.Warning;
 			}
 			catch (WebException exception)
 			{
@@ -367,6 +385,8 @@ namespace YtCrawler.Spider
 				obj.Browsable = false;
 				// Set the response HTTP code.
 				obj.HttpCode = (int)(exception.Response as HttpWebResponse).StatusCode;
+				// Return the result.
+				return CrawlResult.Fail;
 			}
 			catch (Exception)
 			{
@@ -374,8 +394,9 @@ namespace YtCrawler.Spider
 				obj.Browsable = false;
 				// Set the response HTTP code to null.
 				obj.HttpCode = null;
+				// Return the result.
+				return CrawlResult.Fail;
 			}
-			 */
 		}
 	}
 }

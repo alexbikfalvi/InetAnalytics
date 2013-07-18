@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.YouTube;
 using YtApi.Ajax;
 using YtCrawler;
 using YtCrawler.Comments;
@@ -33,7 +28,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		private AjaxVideoStatistics statistics = null;
 		private string statisticsVideo = null;
 
-		private FormHistoryDiscoveryEvent formEvent = new FormHistoryDiscoveryEvent();
+		private FormDiscoveryProperties formEvent = new FormDiscoveryProperties();
 
 		/// <summary>
 		/// Creates a new control instance.

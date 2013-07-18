@@ -17,18 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Database;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
 using YtCrawler.Log;
@@ -47,7 +37,7 @@ namespace YtAnalytics.Controls.Database
 		private DbQuery query = null;
 		private DbDataObject result = null;
 
-		private FormObject formObject = new FormObject();
+		private FormObjectProperties formObject = new FormObjectProperties();
 
 		/// <summary>
 		/// Creates a new control instance.

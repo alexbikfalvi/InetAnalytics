@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Log;
 using YtCrawler.Log;
 
 namespace YtAnalytics.Controls.Log
@@ -20,7 +20,7 @@ namespace YtAnalytics.Controls.Log
 	{
 		private int maximumItems;
 		private static int[] maximumValues = { 10, 100, 1000, int.MaxValue };
-		private FormLogEvent formLogEvent = new FormLogEvent();
+		private FormEventProperties formLogEvent = new FormEventProperties();
 
 		private delegate void AddEventHandler(LogEvent evt);
 

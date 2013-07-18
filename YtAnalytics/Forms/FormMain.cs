@@ -50,15 +50,15 @@ namespace YtAnalytics.Forms
 		// UI formatter.
 		private Formatting formatting = new Formatting();
 
-		// Side menu items.
-		private SideMenuItem sideMenuBrowse;
-		private SideMenuItem sideMenuDatabase;
-		private SideMenuItem sideMenuSpiders;
-		private SideMenuItem sideMenuPlanetLab;
-		private SideMenuItem sideMenuConfiguration;
-		private SideMenuItem sideMenuLog;
-		private SideMenuItem sideMenuComments;
-		private SideMenuItem sideMenuTesting;
+		//// Side menu items.
+		//private SideMenuItem sideMenuBrowse;
+		//private SideMenuItem sideMenuDatabase;
+		//private SideMenuItem sideMenuSpiders;
+		//private SideMenuItem sideMenuPlanetLab;
+		//private SideMenuItem sideMenuConfiguration;
+		//private SideMenuItem sideMenuLog;
+		//private SideMenuItem sideMenuComments;
+		//private SideMenuItem sideMenuTesting;
 
 		// Tree view nodes.
 		private TreeNode treeNodeBrowserApi2;
@@ -131,11 +131,11 @@ namespace YtAnalytics.Forms
 		private ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
 		private ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
 
-		private ControlPlanetLab controlPlanetLab = new ControlPlanetLab();
+		private ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
 		private ControlPlanetLabSites controlPlanetLabSites = new ControlPlanetLabSites();
 
 		private ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
-		
+
 		private ControlSettings controlSettings = new ControlSettings();
 		
 		private ControlLog controlLog = new ControlLog();
@@ -388,66 +388,65 @@ namespace YtAnalytics.Forms
 			this.controlPanelConfiguration.Add(this.treeNodeSettings);
 			this.controlPanelComments.Add(this.treeNodeComments);
 
-			// Create the side menu items
-			this.sideMenuBrowse = this.sideMenu.AddItem(
-				"Browser",
-				Resources.ServersBrowse_16,
-				Resources.ServersBrowse_32,
-				this.OnSideMenuSelect,
-				this.controlPanelBrowser
-				);
-			this.sideMenuDatabase = this.sideMenu.AddItem(
-				"Database",
-				Resources.ServersDatabase_16,
-				Resources.ServersDatabase_32,
-				this.OnSideMenuSelect,
-				this.controlPanelDatabase
-				);
-			this.sideMenuSpiders = this.sideMenu.AddItem(
-				"Spiders",
-				Resources.ServersCube_16,
-				Resources.ServersCube_32,
-				this.OnSideMenuSelect,
-				this.controlPanelSpiders
-				);
-			this.sideMenuPlanetLab = this.sideMenu.AddItem(
-				"Planet Lab",
-				Resources.GlobeLab_16,
-				Resources.GlobeLab_32,
-				this.OnSideMenuSelect,
-				this.controlPanelPlanetLab
-				);
-			this.sideMenuTesting = this.sideMenu.AddItem(
-				"Testing",
-				Resources.TestsLarge_16,
-				Resources.TestsLarge_32,
-				this.OnSideMenuSelect,
-				this.controlPanelTesting
-				);
-			this.sideMenuConfiguration = this.sideMenu.AddItem(
-				"Configuration",
-				Resources.ConfigurationSettings_16,
-				Resources.ConfigurationSettings_32,
-				this.OnSideMenuSelect,
-				this.controlPanelConfiguration
-				);
-			this.sideMenuLog = this.sideMenu.AddItem(
-				"Log",
-				Resources.Log_16,
-				Resources.Log_32,
-				this.OnSideMenuSelectLog,
-				this.controlPanelLog
-				);
-			this.sideMenuComments = this.sideMenu.AddItem(
-				"Comments",
-				Resources.Comments_16,
-				Resources.Comments_32,
-				this.OnSideMenuSelect,
-				this.controlPanelComments
-				);
+			//// Create the side menu items
+			//this.sideMenuBrowse = this.sideMenu.AddItem(
+			//	"Browser",
+			//	Resources.ServersBrowse_16,
+			//	Resources.ServersBrowse_32,
+			//	this.OnSideMenuSelect,
+			//	this.controlPanelBrowser
+			//	);
+			//this.sideMenuDatabase = this.sideMenu.AddItem(
+			//	"Database",
+			//	Resources.ServersDatabase_16,
+			//	Resources.ServersDatabase_32,
+			//	this.OnSideMenuSelect,
+			//	this.controlPanelDatabase
+			//	);
+			//this.sideMenuSpiders = this.sideMenu.AddItem(
+			//	"Spiders",
+			//	Resources.ServersCube_16,
+			//	Resources.ServersCube_32,
+			//	this.OnSideMenuSelect,
+			//	this.controlPanelSpiders
+			//	);
+			//this.sideMenuPlanetLab = this.sideMenu.AddItem(
+			//	"Planet Lab",
+			//	Resources.GlobeLab_16,
+			//	Resources.GlobeLab_32,
+			//	this.OnSideMenuSelect,
+			//	this.controlPanelPlanetLab
+			//	);
+			//this.sideMenuTesting = this.sideMenu.AddItem(
+			//	"Testing",
+			//	Resources.TestsLarge_16,
+			//	Resources.TestsLarge_32,
+			//	this.OnSideMenuSelect,
+			//	this.controlPanelTesting
+			//	);
+			//this.sideMenuConfiguration = this.sideMenu.AddItem(
+			//	"Configuration",
+			//	Resources.ConfigurationSettings_16,
+			//	Resources.ConfigurationSettings_32,
+			//	this.OnSideMenuSelect,
+			//	this.controlPanelConfiguration
+			//	);
+			//this.sideMenuLog = this.sideMenu.AddItem(
+			//	"Log",
+			//	Resources.Log_16,
+			//	Resources.Log_32,
+			//	this.OnSideMenuSelectLog,
+			//	this.controlPanelLog
+			//	);
+			//this.sideMenuComments = this.sideMenu.AddItem(
+			//	"Comments",
+			//	Resources.Comments_16,
+			//	Resources.Comments_32,
+			//	this.OnSideMenuSelect,
+			//	this.controlPanelComments
+			//	);
 
 			this.sideMenu.VisibleItems = this.crawler.Config.ConsoleSideMenuVisibleItems;
-			this.sideMenu.MinimizedItems = this.crawler.Config.ConsoleSideMenuMinimizedItems;
 			this.sideMenu.ItemVisibilityChanged += this.OnSideMenuItemVisibilityChanged;
 
 			// Initialize the controls.
@@ -455,13 +454,13 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2CommentsFeed.Initialize(this.crawler);
 			this.controlYtApi2StandardFeed.Initialize(this.crawler);
 			this.controlYtApi2Search.Initialize(this.crawler);
-			this.controlYtApi2RelatedFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetRelatedVideosFeed), "&Video:", "APIv2 Related Videos Feed");
-			this.controlYtApi2ResponseFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetResponseVideosFeed), "&Video:", "APIv2 Response Videos Feed");
+			this.controlYtApi2RelatedFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetRelatedVideosFeed), "&Video:", "related videos feed", "video", "APIv2 Related Videos Feed");
+			this.controlYtApi2ResponseFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetResponseVideosFeed), "&Video:", "response videos feed", "video", "APIv2 Response Videos Feed");
 			this.controlYtApi2Profile.Initialize(this.crawler);
 			this.controlYtApi2PlaylistsFeed.Initialize(this.crawler);
-			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "APIv2 Uploads Videos Feed");
-			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "APIv2 Favorites Videos Feed");
-			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "APIv2 Playlist Videos Feed");
+			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "uploads video feed", "user", "APIv2 Uploads Videos Feed");
+			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "favorites video feed", "user", "APIv2 Favorites Videos Feed");
+			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "playlist video feed", "user", "APIv2 Playlist Videos Feed");
 			this.controlYtApi2Categories.Initialize(this.crawler);
 			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
@@ -623,13 +622,11 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event handler called when the visibility of a side menu item has changed.
 		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSideMenuItemVisibilityChanged(object sender, EventArgs e)
+		/// <param name="sideMenu">The side menu.</param>
+		private void OnSideMenuItemVisibilityChanged(SideMenu sideMenu)
 		{
 			// Update the confguration.
 			this.crawler.Config.ConsoleSideMenuVisibleItems = this.sideMenu.VisibleItems;
-			this.crawler.Config.ConsoleSideMenuMinimizedItems = this.sideMenu.MinimizedItems;
 		}
 
 		/// <summary>

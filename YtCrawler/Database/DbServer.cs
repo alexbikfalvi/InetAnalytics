@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Security;
 using System.Threading;
 using Microsoft.Win32;
 using YtCrawler.Database.Data;
@@ -52,7 +53,7 @@ namespace YtCrawler.Database
 		private string name;
 		private string dataSource;
 		private string username;
-		private string password;
+		private SecureString password;
 		private DateTime dateCreated;
 		private DateTime dateModified;
 
@@ -115,7 +116,7 @@ namespace YtCrawler.Database
 			string name,
 			string dataSource,
 			string username,
-			string password,
+			SecureString password,
 			string logFile,
 			DateTime dateCreated,
 			DateTime dateModified
@@ -182,7 +183,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets or sets the server password.
 		/// </summary>
-		public string Password
+		public SecureString Password
 		{
 			get { return this.password; }
 			set { this.password = value; this.OnServerChanged(); }
@@ -289,7 +290,7 @@ namespace YtCrawler.Database
 			Registry.SetValue(this.key.Name, "Name", this.name, RegistryValueKind.String);
 			Registry.SetValue(this.key.Name, "DataSource", this.dataSource, RegistryValueKind.String);
 			Registry.SetValue(this.key.Name, "Username", this.username, RegistryValueKind.String);
-			Registry.SetValue(this.key.Name, "Password", CrawlerCrypto.Encrypt(this.password), RegistryValueKind.Binary);
+			Registry.SetValue(this.key.Name, "Password", this.password, RegistryValueKind.Binary);
 			Registry.SetValue(this.key.Name, "DateCreated", this.dateCreated.Ticks, RegistryValueKind.QWord);
 			Registry.SetValue(this.key.Name, "DateModified", this.dateModified.Ticks, RegistryValueKind.QWord);
 
@@ -316,7 +317,7 @@ namespace YtCrawler.Database
 			this.name = Registry.GetValue(this.key.Name, "Name", null) as string;
 			this.dataSource = Registry.GetValue(this.key.Name, "DataSource", null) as string;
 			this.username = Registry.GetValue(this.key.Name, "Username", null) as string;
-			this.password = CrawlerCrypto.Decrypt(Registry.GetValue(this.key.Name, "Password", null) as byte[]);
+			this.password = (Registry.GetValue(this.key.Name, "Password", null) as byte[]).DecryptString();
 			this.dateCreated = new DateTime((long)Registry.GetValue(this.key.Name, "DateCreated", DateTime.Now.Ticks));
 			this.dateModified = new DateTime((long)Registry.GetValue(this.key.Name, "DateModified", DateTime.Now.Ticks));
 
@@ -408,7 +409,7 @@ namespace YtCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult ChangePassword(string newPassword, DbServerCallback callback, object userState = null);
+		public abstract IAsyncResult ChangePassword(SecureString newPassword, DbServerCallback callback, object userState = null);
 
 		/// <summary>
 		/// Creates a new database command with the specified query.

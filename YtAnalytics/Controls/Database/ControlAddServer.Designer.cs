@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.textBoxDataSource = new System.Windows.Forms.TextBox();
 			this.textBoxName = new System.Windows.Forms.TextBox();
@@ -35,12 +36,12 @@
 			this.labelDataSource = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
-			this.textBoxPassword = new System.Windows.Forms.TextBox();
 			this.labelPassword = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.comboBoxType = new System.Windows.Forms.ComboBox();
 			this.labelType = new System.Windows.Forms.Label();
 			this.checkBoxPrimary = new System.Windows.Forms.CheckBox();
+			this.textBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -111,17 +112,6 @@
 			this.textBoxUsername.TabIndex = 8;
 			this.textBoxUsername.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
-			// textBoxPassword
-			// 
-			this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPassword.Location = new System.Drawing.Point(99, 178);
-			this.textBoxPassword.Name = "textBoxPassword";
-			this.textBoxPassword.Size = new System.Drawing.Size(270, 20);
-			this.textBoxPassword.TabIndex = 10;
-			this.textBoxPassword.UseSystemPasswordChar = true;
-			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnInputChanged);
-			// 
 			// labelPassword
 			// 
 			this.labelPassword.AutoSize = true;
@@ -171,16 +161,27 @@
 			this.checkBoxPrimary.Text = "Make this the primary database server";
 			this.checkBoxPrimary.UseVisualStyleBackColor = true;
 			// 
+			// textBoxPassword
+			// 
+			this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPassword.Location = new System.Drawing.Point(99, 178);
+			this.textBoxPassword.Name = "textBoxPassword";
+			this.textBoxPassword.SecureText = secureString1;
+			this.textBoxPassword.Size = new System.Drawing.Size(270, 20);
+			this.textBoxPassword.TabIndex = 12;
+			this.textBoxPassword.UseSystemPasswordChar = true;
+			// 
 			// ControlAddServer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
+			this.Controls.Add(this.textBoxPassword);
 			this.Controls.Add(this.checkBoxPrimary);
 			this.Controls.Add(this.labelType);
 			this.Controls.Add(this.comboBoxType);
 			this.Controls.Add(this.labelPassword);
-			this.Controls.Add(this.textBoxPassword);
 			this.Controls.Add(this.textBoxUsername);
 			this.Controls.Add(this.textBoxDataSource);
 			this.Controls.Add(this.textBoxName);
@@ -208,10 +209,10 @@
 		private System.Windows.Forms.Label labelDataSource;
 		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.TextBox textBoxUsername;
-		private System.Windows.Forms.TextBox textBoxPassword;
 		private System.Windows.Forms.Label labelPassword;
 		private System.Windows.Forms.ComboBox comboBoxType;
 		private System.Windows.Forms.Label labelType;
 		private System.Windows.Forms.CheckBox checkBoxPrimary;
+		private DotNetApi.Windows.Controls.SecureTextBox textBoxPassword;
 	}
 }

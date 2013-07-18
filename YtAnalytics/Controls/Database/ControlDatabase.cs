@@ -18,9 +18,10 @@
 
 using System;
 using System.Drawing;
+using System.Security;
 using System.Threading;
 using System.Windows.Forms;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Database;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
 using YtCrawler.Log;
@@ -556,7 +557,7 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="oldPassword">The old password.</param>
 		/// <param name="newPassword">The new password.</param>
 		/// <param name="state">The user state.</param>
-		private void OnPasswordChanged(string oldPassword, string newPassword, object state)
+		private void OnPasswordChanged(SecureString oldPassword, SecureString newPassword, object state)
 		{
 			// Get the database server.
 			DbServer server = state as DbServer;

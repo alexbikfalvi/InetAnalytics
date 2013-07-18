@@ -17,14 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security;
 using System.Windows.Forms;
+using DotNetApi.Security;
 using DotNetApi.Windows.Controls;
 using YtCrawler.Database;
 
@@ -75,7 +70,7 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// Gets the server password.
 		/// </summary>
-		public string Password { get { return this.textBoxPassword.Text; } }
+		public SecureString Password { get { return this.textBoxPassword.SecureText; } }
 
 		/// <summary>
 		/// Gets or sets whether this is the main primary database server.
@@ -104,7 +99,7 @@ namespace YtAnalytics.Controls.Database
 			this.textBoxName.Text = string.Empty;
 			this.textBoxDataSource.Text = string.Empty;
 			this.textBoxUsername.Text = string.Empty;
-			this.textBoxPassword.Text = string.Empty;
+			this.textBoxPassword.SecureText.Clear();
 			this.checkBoxPrimary.Checked = false;
 			this.checkBoxPrimary.Enabled = true;
 		}

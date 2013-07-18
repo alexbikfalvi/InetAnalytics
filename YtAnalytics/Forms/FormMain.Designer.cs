@@ -130,10 +130,8 @@
 			this.sideMenu.Controls.Add(this.controlPanelDatabase);
 			this.sideMenu.Controls.Add(this.controlPanelBrowser);
 			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.sideMenu.HiddenItems = 0;
 			this.sideMenu.ItemHeight = 48;
 			this.sideMenu.Location = new System.Drawing.Point(0, 0);
-			this.sideMenu.MinimizedItems = 0;
 			this.sideMenu.MinimizedItemWidth = 25;
 			this.sideMenu.MinimumPanelHeight = 50;
 			this.sideMenu.Name = "sideMenu";

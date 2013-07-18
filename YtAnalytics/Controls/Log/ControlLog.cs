@@ -18,15 +18,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using YtAnalytics.Forms;
+using YtAnalytics.Forms.Log;
 using YtCrawler;
 using YtCrawler.Log;
 using DotNetApi.Windows.Controls;
@@ -43,7 +37,7 @@ namespace YtAnalytics.Controls.Log
 		private ControlLogUpdateState state = null;
 		private List<LogEvent> events = null;
 
-		private FormLogEvent formLogEvent = new FormLogEvent();
+		private FormEventProperties formLogEvent = new FormEventProperties();
 
 		/// <summary>
 		/// Creates a new control instance.

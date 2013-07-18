@@ -56,29 +56,15 @@ namespace YtAnalytics.Controls.Database
 			get { return this.database; }
 			set
 			{
+				// Save the old value.
+				DbObjectDatabase old = this.database;
+				// Set the new value.
 				this.database = value;
-				if (value == null)
-				{
-					this.labelTitle.Text = string.Empty;
-					this.tabControl.Visible = false;
-				}
-				else
-				{
-					this.labelTitle.Text = value.Name;
-					this.textBoxName.Text = value.Name;
-					this.textBoxId.Text = value.DatabaseId.ToString();
-					this.textBoxDateCreated.Text = value.CreateDate.ToString();
-					this.checkBoxSelected.Enabled = false;
-					this.pictureBox.Image = Resources.Database_32;
-					this.propertyGrid.SelectedObject = value;
-					this.tabControl.Visible = true;
-				}
-				this.tabControl.SelectedTab = this.tabPageGeneral;
-				this.textBoxName.Select();
-				this.textBoxName.SelectionStart = 0;
-				this.textBoxName.SelectionLength = 0;
+				// Call the event handler.
+				this.OnDatabaseSet(old, value);
 			}
 		}
+
 		/// <summary>
 		/// Gets or sets whether this is the primary database server.
 		/// </summary>
@@ -89,6 +75,43 @@ namespace YtAnalytics.Controls.Database
 			{
 				this.checkBoxSelected.Checked = value;
 				this.pictureBox.Image = value ? Resources.DatabaseStar_32 : Resources.Database_32;
+			}
+		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// An event handler called when a new database has been set.
+		/// </summary>
+		/// <param name="oldDatabase">The old database.</param>
+		/// <param name="newDatabase">The new database.</param>
+		protected virtual void OnDatabaseSet(DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
+		{
+			// If the database has not changed, do nothing.
+			if (oldDatabase == newDatabase) return;
+
+			if (newDatabase == null)
+			{
+				this.labelTitle.Text = "No database selected";
+				this.tabControl.Visible = false;
+			}
+			else
+			{
+				this.labelTitle.Text = newDatabase.Name;
+				this.textBoxName.Text = newDatabase.Name;
+				this.textBoxId.Text = newDatabase.DatabaseId.ToString();
+				this.textBoxDateCreated.Text = newDatabase.CreateDate.ToString();
+				this.checkBoxSelected.Enabled = false;
+				this.pictureBox.Image = Resources.Database_32;
+				this.propertyGrid.SelectedObject = newDatabase;
+				this.tabControl.Visible = true;
+			}
+			this.tabControl.SelectedTab = this.tabPageGeneral;
+			if (this.Focused)
+			{
+				this.textBoxName.Select();
+				this.textBoxName.SelectionStart = 0;
+				this.textBoxName.SelectionLength = 0;
 			}
 		}
 	}

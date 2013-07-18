@@ -42,7 +42,7 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.log = new YtAnalytics.Controls.Log.ControlLogList();
-			this.controlCategory = new YtAnalytics.Controls.YouTube.ControlCategory();
+			this.controlCategory = new YtAnalytics.Controls.YouTube.ControlCategoryProperties();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -223,6 +223,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderAssignable;
 		private System.Windows.Forms.ColumnHeader columnHeaderDeprecated;
 		private System.Windows.Forms.ImageList imageList;
-		private ControlCategory controlCategory;
+		private ControlCategoryProperties controlCategory;
 	}
 }
