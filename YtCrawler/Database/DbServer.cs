@@ -287,12 +287,12 @@ namespace YtCrawler.Database
 			this.dateModified = DateTime.Now;
 
 			// Save basic configuration.
-			Registry.SetValue(this.key.Name, "Name", this.name, RegistryValueKind.String);
-			Registry.SetValue(this.key.Name, "DataSource", this.dataSource, RegistryValueKind.String);
-			Registry.SetValue(this.key.Name, "Username", this.username, RegistryValueKind.String);
-			Registry.SetValue(this.key.Name, "Password", this.password, RegistryValueKind.Binary);
-			Registry.SetValue(this.key.Name, "DateCreated", this.dateCreated.Ticks, RegistryValueKind.QWord);
-			Registry.SetValue(this.key.Name, "DateModified", this.dateModified.Ticks, RegistryValueKind.QWord);
+			DotNetApi.Windows.Registry.SetString(this.key.Name, "Name", this.name);
+			DotNetApi.Windows.Registry.SetString(this.key.Name, "DataSource", this.dataSource);
+			DotNetApi.Windows.Registry.SetString(this.key.Name, "Username", this.username);
+			DotNetApi.Windows.Registry.SetSecureString(this.key.Name, "Password", this.password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateCreated", this.dateCreated);
+			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateModified", this.dateModified);
 
 			// Save tables and relationship configuration.
 			this.tables.SaveConfiguration();
@@ -314,12 +314,12 @@ namespace YtCrawler.Database
 		public virtual void LoadConfiguration()
 		{
 			// Load basic configuration.
-			this.name = Registry.GetValue(this.key.Name, "Name", null) as string;
-			this.dataSource = Registry.GetValue(this.key.Name, "DataSource", null) as string;
-			this.username = Registry.GetValue(this.key.Name, "Username", null) as string;
-			this.password = (Registry.GetValue(this.key.Name, "Password", null) as byte[]).DecryptString();
-			this.dateCreated = new DateTime((long)Registry.GetValue(this.key.Name, "DateCreated", DateTime.Now.Ticks));
-			this.dateModified = new DateTime((long)Registry.GetValue(this.key.Name, "DateModified", DateTime.Now.Ticks));
+			this.name = DotNetApi.Windows.Registry.GetString(this.key.Name, "Name", null);
+			this.dataSource = DotNetApi.Windows.Registry.GetString(this.key.Name, "DataSource", null);
+			this.username = DotNetApi.Windows.Registry.GetString(this.key.Name, "Username", null);
+			this.password = DotNetApi.Windows.Registry.GetSecureString(this.key.Name, "Password", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			this.dateCreated = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateCreated", DateTime.Now);
+			this.dateModified = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateModified", DateTime.Now);
 
 			// Load tables and relationships configuration.
 			this.tables.LoadConfiguration();

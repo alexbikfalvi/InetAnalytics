@@ -108,6 +108,10 @@ namespace YtAnalytics.Controls.Testing
 			this.listViewResponseHeaders.Items.Clear();
 			// Clear the response data.
 			this.textBoxResponseData.Text = string.Empty;
+			// Clear the status bar.
+			this.statusLabelMessage.Text = "Executing the HTTP request...";
+			this.statusLabelMessage.Image = Resources.Busy_16;
+			this.statusLabelData.Text = string.Empty;
 
 			// Log
 			this.log.Add(this.crawler.Log.Add(
@@ -165,8 +169,8 @@ namespace YtAnalytics.Controls.Testing
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.statusLabel.Text = string.Format("The HTTP request for web URL failed. {0}", exception.Message);
-				this.statusLabel.Image = Resources.Error_16;
+				this.statusLabelMessage.Text = string.Format("The HTTP request for web URL failed. {0}", exception.Message);
+				this.statusLabelMessage.Image = Resources.Error_16;
 				// Log the result.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
@@ -221,8 +225,9 @@ namespace YtAnalytics.Controls.Testing
 					}
 
 					// Update the status label.
-					this.statusLabel.Text = "The HTTP request for the web URL completed successfully.";
-					this.statusLabel.Image = Resources.Success_16;
+					this.statusLabelMessage.Text = "The HTTP request for the web URL completed successfully.";
+					this.statusLabelMessage.Image = Resources.Success_16;
+					this.statusLabelData.Text = string.Format("{0} bytes of data received", asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0);
 					// Log the result.
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Verbose,
@@ -236,8 +241,8 @@ namespace YtAnalytics.Controls.Testing
 					if (exception.Status == WebExceptionStatus.RequestCanceled)
 					{
 						// Update the status label.
-						this.statusLabel.Text = "The HTTP request for the web URL has been canceled.";
-						this.statusLabel.Image = Resources.Canceled_16;
+						this.statusLabelMessage.Text = "The HTTP request for the web URL has been canceled.";
+						this.statusLabelMessage.Image = Resources.Canceled_16;
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
@@ -249,8 +254,8 @@ namespace YtAnalytics.Controls.Testing
 					else
 					{
 						// Update the status label.
-						this.statusLabel.Text = string.Format("The HTTP request for the web URL failed. {0}", exception.Message);
-						this.statusLabel.Image = Resources.Error_16;
+						this.statusLabelMessage.Text = string.Format("The HTTP request for the web URL failed. {0}", exception.Message);
+						this.statusLabelMessage.Image = Resources.Error_16;
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
@@ -264,8 +269,8 @@ namespace YtAnalytics.Controls.Testing
 				catch (Exception exception)
 				{
 					// Update the status label.
-					this.statusLabel.Text = string.Format("The HTTP request for the web URL \'{0}\' failed. {1}", this.textBoxUrl.Text, exception.Message);
-					this.statusLabel.Image = Resources.Error_16;
+					this.statusLabelMessage.Text = string.Format("The HTTP request for the web URL \'{0}\' failed. {1}", this.textBoxUrl.Text, exception.Message);
+					this.statusLabelMessage.Image = Resources.Error_16;
 					// Log the result.
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,

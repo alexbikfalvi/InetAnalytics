@@ -281,7 +281,7 @@ namespace YtAnalytics.Controls.Database
 			if (query.State != null)
 			{
 				// If the query state is a delegate.
-				if (query.State.GetType() == typeof(QuerySuccessEventHandler))
+				if (query.State is QuerySuccessEventHandler)
 				{
 					// Get the call the delegate.
 					QuerySuccessEventHandler handler = query.State as QuerySuccessEventHandler;

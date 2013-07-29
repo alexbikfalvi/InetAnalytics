@@ -50,9 +50,6 @@ namespace YtAnalytics.Controls.Database
 		private delegate void ResultEventHandler(DbDataRaw table, int recordsAffected);
 		private delegate void ExceptionEventHandler(Exception exception);
 
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		private Crawler crawler;
 		private DbServer server;
 
@@ -74,7 +71,7 @@ namespace YtAnalytics.Controls.Database
 			this.Dock = DockStyle.Fill;
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>
@@ -232,7 +229,7 @@ namespace YtAnalytics.Controls.Database
 					if (asyncState.AsyncState != null)
 					{
 						// If the user state is an event handler, call that event handler.
-						if (asyncState.AsyncState.GetType() == typeof(EventHandler))
+						if (asyncState.AsyncState is EventHandler)
 						{
 							// Get the event handler.
 							EventHandler handler = asyncState.AsyncState as EventHandler;
@@ -510,7 +507,7 @@ namespace YtAnalytics.Controls.Database
 								// Show a success message.
 								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", string.Format("Executing query on the database server \'{0}\' completed successfully.", this.server.Name), false);
 								// Wait.
-								Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+								Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 								// Hide the message.
 								this.HideMessage();
 								// Call the completion method.
@@ -531,7 +528,7 @@ namespace YtAnalytics.Controls.Database
 									new object[] { this.server.Name, exception.Message },
 									exception);
 								// Wait.
-								Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+								Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 								// Hide the message.
 								this.HideMessage();
 								// Call the completion method.
@@ -554,7 +551,7 @@ namespace YtAnalytics.Controls.Database
 							new object[] { this.server.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.
@@ -577,7 +574,7 @@ namespace YtAnalytics.Controls.Database
 					new object[] { this.server.Name, exception.Message },
 					exception);
 				// Wait.
-				Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+				Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 				// Hide the message.
 				this.HideMessage();
 				// Call the completion method.
@@ -662,7 +659,7 @@ namespace YtAnalytics.Controls.Database
 			// If the value is null, do nothing.
 			if (e.Value == null) return;
 			// If the value is a byte array, update the cell value with the corresponding string.
-			if (e.Value.GetType() == typeof(byte[]))
+			if (e.Value is byte[])
 			{
 				StringBuilder builder = new StringBuilder("0x");
 				foreach(byte value in e.Value as byte[])

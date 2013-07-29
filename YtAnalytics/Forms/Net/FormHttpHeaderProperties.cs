@@ -29,9 +29,6 @@ namespace YtAnalytics.Forms.Net
 	/// </summary>
 	public partial class FormHttpHeaderProperties : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
@@ -40,7 +37,7 @@ namespace YtAnalytics.Forms.Net
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>

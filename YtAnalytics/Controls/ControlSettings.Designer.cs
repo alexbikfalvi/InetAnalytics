@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			System.Security.SecureString secureString1 = new System.Security.SecureString();
+			System.Security.SecureString secureString2 = new System.Security.SecureString();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
@@ -37,6 +38,10 @@
 			this.numericMessageCloseDelay = new System.Windows.Forms.NumericUpDown();
 			this.labelMessageCloseDelay = new System.Windows.Forms.Label();
 			this.tabPageYouTube = new System.Windows.Forms.TabPage();
+			this.groupBoxYt2 = new System.Windows.Forms.GroupBox();
+			this.labelYt2Key = new System.Windows.Forms.Label();
+			this.textBoxYt2Key = new DotNetApi.Windows.Controls.SecureTextBox();
+			this.textBoxYtPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.labelYtPassword = new System.Windows.Forms.Label();
 			this.textBoxYtUserName = new System.Windows.Forms.TextBox();
 			this.labelYtUserName = new System.Windows.Forms.Label();
@@ -50,12 +55,12 @@
 			this.labelUserCommentsFile = new System.Windows.Forms.Label();
 			this.textBoxVideoCommentsFile = new System.Windows.Forms.TextBox();
 			this.labelVideoCommentsFile = new System.Windows.Forms.Label();
-			this.textBoxYtPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.toolStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericMessageCloseDelay)).BeginInit();
 			this.tabPageYouTube.SuspendLayout();
+			this.groupBoxYt2.SuspendLayout();
 			this.tabPageLog.SuspendLayout();
 			this.tabPageComments.SuspendLayout();
 			this.SuspendLayout();
@@ -147,6 +152,7 @@
 			// 
 			// tabPageYouTube
 			// 
+			this.tabPageYouTube.Controls.Add(this.groupBoxYt2);
 			this.tabPageYouTube.Controls.Add(this.textBoxYtPassword);
 			this.tabPageYouTube.Controls.Add(this.labelYtPassword);
 			this.tabPageYouTube.Controls.Add(this.textBoxYtUserName);
@@ -158,6 +164,50 @@
 			this.tabPageYouTube.TabIndex = 1;
 			this.tabPageYouTube.Text = "YouTube";
 			this.tabPageYouTube.UseVisualStyleBackColor = true;
+			// 
+			// groupBoxYt2
+			// 
+			this.groupBoxYt2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBoxYt2.Controls.Add(this.labelYt2Key);
+			this.groupBoxYt2.Controls.Add(this.textBoxYt2Key);
+			this.groupBoxYt2.Location = new System.Drawing.Point(6, 65);
+			this.groupBoxYt2.Name = "groupBoxYt2";
+			this.groupBoxYt2.Size = new System.Drawing.Size(574, 53);
+			this.groupBoxYt2.TabIndex = 7;
+			this.groupBoxYt2.TabStop = false;
+			this.groupBoxYt2.Text = "API version 2";
+			// 
+			// labelYt2Key
+			// 
+			this.labelYt2Key.AutoSize = true;
+			this.labelYt2Key.Location = new System.Drawing.Point(10, 22);
+			this.labelYt2Key.Name = "labelYt2Key";
+			this.labelYt2Key.Size = new System.Drawing.Size(28, 13);
+			this.labelYt2Key.TabIndex = 8;
+			this.labelYt2Key.Text = "&Key:";
+			// 
+			// textBoxYt2Key
+			// 
+			this.textBoxYt2Key.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxYt2Key.Location = new System.Drawing.Point(144, 19);
+			this.textBoxYt2Key.Name = "textBoxYt2Key";
+			this.textBoxYt2Key.SecureText = secureString1;
+			this.textBoxYt2Key.Size = new System.Drawing.Size(424, 20);
+			this.textBoxYt2Key.TabIndex = 7;
+			this.textBoxYt2Key.UseSystemPasswordChar = true;
+			this.textBoxYt2Key.TextChanged += new System.EventHandler(this.OnSettingsChanged);
+			// 
+			// textBoxYtPassword
+			// 
+			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 39);
+			this.textBoxYtPassword.Name = "textBoxYtPassword";
+			this.textBoxYtPassword.SecureText = secureString2;
+			this.textBoxYtPassword.Size = new System.Drawing.Size(150, 20);
+			this.textBoxYtPassword.TabIndex = 6;
+			this.textBoxYtPassword.UseSystemPasswordChar = true;
+			this.textBoxYtPassword.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
 			// labelYtPassword
 			// 
@@ -291,15 +341,6 @@
 			this.labelVideoCommentsFile.TabIndex = 4;
 			this.labelVideoCommentsFile.Text = "&Video comments file:";
 			// 
-			// textBoxYtPassword
-			// 
-			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 39);
-			this.textBoxYtPassword.Name = "textBoxYtPassword";
-			this.textBoxYtPassword.SecureText = secureString1;
-			this.textBoxYtPassword.Size = new System.Drawing.Size(150, 20);
-			this.textBoxYtPassword.TabIndex = 6;
-			this.textBoxYtPassword.UseSystemPasswordChar = true;
-			// 
 			// ControlSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -317,6 +358,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericMessageCloseDelay)).EndInit();
 			this.tabPageYouTube.ResumeLayout(false);
 			this.tabPageYouTube.PerformLayout();
+			this.groupBoxYt2.ResumeLayout(false);
+			this.groupBoxYt2.PerformLayout();
 			this.tabPageLog.ResumeLayout(false);
 			this.tabPageLog.PerformLayout();
 			this.tabPageComments.ResumeLayout(false);
@@ -350,5 +393,8 @@
 		private System.Windows.Forms.TextBox textBoxUserCommentsFile;
 		private System.Windows.Forms.Label labelUserCommentsFile;
 		private DotNetApi.Windows.Controls.SecureTextBox textBoxYtPassword;
+		private System.Windows.Forms.GroupBox groupBoxYt2;
+		private DotNetApi.Windows.Controls.SecureTextBox textBoxYt2Key;
+		private System.Windows.Forms.Label labelYt2Key;
 	}
 }

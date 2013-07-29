@@ -106,7 +106,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 			this.listViewDiscovery.Items.Clear();
 
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if (item.GetType() == typeof(ToolStripMenuItem))
+				if (item is ToolStripMenuItem)
 				{
 					(item as ToolStripMenuItem).Checked = false;
 					(item as ToolStripMenuItem).Enabled = false;
@@ -611,7 +611,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		{
 			if (this.menuItemViews.Checked) return;
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if (item.GetType() == typeof(ToolStripMenuItem))
+				if (item is ToolStripMenuItem)
 					(item as ToolStripMenuItem).Checked = false;
 			this.menuItemViews.Checked = true;
 			this.buttonChart.Text = this.menuItemViews.Text;
@@ -627,7 +627,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		{
 			if (this.menuItemLikes.Checked) return;
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if (item.GetType() == typeof(ToolStripMenuItem))
+				if (item is ToolStripMenuItem)
 					(item as ToolStripMenuItem).Checked = false;
 			this.menuItemLikes.Checked = true;
 			this.buttonChart.Text = this.menuItemLikes.Text;
@@ -643,7 +643,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		{
 			if (this.menuItemDislikes.Checked) return;
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if (item.GetType() == typeof(ToolStripMenuItem))
+				if (item is ToolStripMenuItem)
 					(item as ToolStripMenuItem).Checked = false;
 			this.menuItemDislikes.Checked = true;
 			this.buttonChart.Text = this.menuItemDislikes.Text;
@@ -659,7 +659,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		{
 			if (this.menuItemFavorites.Checked) return;
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if (item.GetType() == typeof(ToolStripMenuItem))
+				if (item is ToolStripMenuItem)
 					(item as ToolStripMenuItem).Checked = false;
 			this.menuItemFavorites.Checked = true;
 			this.buttonChart.Text = this.menuItemFavorites.Text;
@@ -675,7 +675,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		{
 			if (this.menuItemComments.Checked) return;
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if (item.GetType() == typeof(ToolStripMenuItem))
+				if (item is ToolStripMenuItem)
 					(item as ToolStripMenuItem).Checked = false;
 			this.menuItemComments.Checked = true;
 			this.buttonChart.Text = this.menuItemComments.Text;
@@ -691,7 +691,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		{
 			if (this.menuItemPopularity.Checked) return;
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if(item.GetType() == typeof(ToolStripMenuItem))
+				if(item is ToolStripMenuItem)
 					(item as ToolStripMenuItem).Checked = false;
 			this.menuItemPopularity.Checked = true;
 			this.buttonChart.Text = this.menuItemPopularity.Text;

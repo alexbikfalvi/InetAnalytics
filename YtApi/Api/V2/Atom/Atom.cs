@@ -17,19 +17,32 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// Base class for a YouTube atom.
+	/// Base class for an atom object.
 	/// </summary>
 	[Serializable]
 	public abstract class Atom
 	{
+		/// <summary>
+		/// Creates a new atom instance.
+		/// </summary>
+		/// <param name="xmlPrefix">The XML prefix.</param>
+		/// <param name="xmlName">The XML name.</param>
+		/// <param name="element">The XML element.</param>
+		protected Atom(string xmlPrefix, string xmlName, XElement element)
+		{
+			// Check the XML element name.
+			if (!element.HasName(xmlPrefix, xmlName))
+			{
+				bool b = element.HasName(xmlPrefix, xmlName);
+				throw new AtomException(string.Format("XML element name mismatch. Current name is \'{0}:{1}\'. Expected name is \'{2}:{3}\'",
+					element.GetPrefixOfNamespace(element.Name.Namespace), element.Name.LocalName, xmlPrefix, xmlName), element);
+			}
+		}
 	}
 }

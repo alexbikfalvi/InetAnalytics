@@ -84,7 +84,7 @@ namespace YtCrawler.Database
 			: base(message, innerException)
 		{
 			// If the message type 
-			if (typeof(SqlException) == innerException.GetType())
+			if (innerException is SqlException)
 			{
 				SqlException exception = innerException as SqlException;
 				this.isDb = true;

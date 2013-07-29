@@ -35,9 +35,6 @@ namespace YtAnalytics.Forms
 	/// </summary>
 	public partial class FormExceptionProperties : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
@@ -46,7 +43,7 @@ namespace YtAnalytics.Forms
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>

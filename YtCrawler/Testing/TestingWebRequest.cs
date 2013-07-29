@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
-using Microsoft.Win32;
+using DotNetApi.Windows;
 
 namespace YtCrawler.Testing
 {
@@ -62,15 +62,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string Url
 		{
-			get
-			{
-				try { return (string) Registry.GetValue(this.key, "Url", string.Empty); }
-				catch { return string.Empty; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "Url", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "Url", string.Empty); }
+			set { Registry.SetString(this.key, "Url", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -78,15 +71,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string Method
 		{
-			get
-			{
-				try { return (string) Registry.GetValue(this.key, "Method", "GET"); }
-				catch { return "GET"; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "Method", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "Method", "GET"); }
+			set { Registry.SetString(this.key, "Method", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -94,15 +80,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string Data
 		{
-			get
-			{
-				try { return (string)Registry.GetValue(this.key, "Data", string.Empty); }
-				catch { return string.Empty; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "Data", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "Data", string.Empty); }
+			set { Registry.SetString(this.key, "Data", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -110,15 +89,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public int DataEncoding
 		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.key, "DataEncoding", 65001); }
-				catch { return 65001; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "DataEncoding", value, RegistryValueKind.DWord);
-			}
+			get { return Registry.GetInteger(this.key, "DataEncoding", 65001); }
+			set { Registry.SetInteger(this.key, "DataEncoding", value); }
 		}
 
 		/// <summary>
@@ -126,15 +98,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public bool AcceptHeaderChecked
 		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.key, "AcceptHeaderChecked", 0) != 0; }
-				catch { return false; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "AcceptHeaderChecked", value ? 1 : 0, RegistryValueKind.DWord);
-			}
+			get { return Registry.GetBoolean(this.key, "AcceptHeaderChecked", false); }
+			set { Registry.SetBoolean(this.key, "AcceptHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -142,15 +107,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public bool ContentTypeHeaderChecked
 		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.key, "ContentTypeHeaderChecked", 0) != 0; }
-				catch { return false; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "ContentTypeHeaderChecked", value ? 1 : 0, RegistryValueKind.DWord);
-			}
+			get { return Registry.GetBoolean(this.key, "ContentTypeHeaderChecked", false); }
+			set { Registry.SetBoolean(this.key, "ContentTypeHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -158,15 +116,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public bool DateHeaderChecked
 		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.key, "DateHeaderChecked", 0) != 0; }
-				catch { return false; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "DateHeaderChecked", value ? 1 : 0, RegistryValueKind.DWord);
-			}
+			get { return Registry.GetBoolean(this.key, "DateHeaderChecked", false); }
+			set { Registry.SetBoolean(this.key, "DateHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -174,15 +125,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public bool ExpectHeaderChecked
 		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.key, "ExpectHeaderChecked", 0) != 0; }
-				catch { return false; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "ExpectHeaderChecked", value ? 1 : 0, RegistryValueKind.DWord);
-			}
+			get { return Registry.GetBoolean(this.key, "ExpectHeaderChecked", false); }
+			set { Registry.SetBoolean(this.key, "ExpectHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -190,15 +134,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public bool RefererHeaderChecked
 		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.key, "RefererHeaderChecked", 0) != 0; }
-				catch { return false; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "RefererHeaderChecked", value ? 1 : 0, RegistryValueKind.DWord);
-			}
+			get { return Registry.GetBoolean(this.key, "RefererHeaderChecked", false); }
+			set { Registry.SetBoolean(this.key, "RefererHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -206,15 +143,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public bool UserAgentHeaderChecked
 		{
-			get
-			{
-				try { return (int)Registry.GetValue(this.key, "UserAgentHeaderChecked", 0) != 0; }
-				catch { return false; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "UserAgentHeaderChecked", value ? 1 : 0, RegistryValueKind.DWord);
-			}
+			get { return Registry.GetBoolean(this.key, "UserAgentHeaderChecked", false); }
+			set { Registry.SetBoolean(this.key, "UserAgentHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -222,15 +152,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string AcceptHeaderValue
 		{
-			get
-			{
-				try { return (string)Registry.GetValue(this.key, "AcceptHeaderValue", string.Empty); }
-				catch { return string.Empty; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "AcceptHeaderValue", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "AcceptHeaderValue", string.Empty); }
+			set { Registry.SetString(this.key, "AcceptHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -238,15 +161,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string ContentTypeHeaderValue
 		{
-			get
-			{
-				try { return (string)Registry.GetValue(this.key, "ContentTypeHeaderValue", string.Empty); }
-				catch { return string.Empty; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "ContentTypeHeaderValue", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "ContentTypeHeaderValue", string.Empty); }
+			set { Registry.SetString(this.key, "ContentTypeHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -254,15 +170,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public DateTime DateHeaderValue
 		{
-			get
-			{
-				try { return DateTime.Parse(Registry.GetValue(this.key, "DateHeaderValue", DateTime.Now.ToString()) as string); }
-				catch { return DateTime.Now; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "DateHeaderValue", value.ToString(), RegistryValueKind.String);
-			}
+			get { return Registry.GetDateTime(this.key, "DateHeaderValue", DateTime.Now); }
+			set { Registry.SetDateTime(this.key, "DateHeaderValue", value); }
 		}
 
 		/// <summary>
@@ -270,15 +179,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string ExpectHeaderValue
 		{
-			get
-			{
-				try { return (string)Registry.GetValue(this.key, "ExpectHeaderValue", string.Empty); }
-				catch { return string.Empty; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "ExpectHeaderValue", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "ExpectHeaderValue", string.Empty); }
+			set { Registry.SetString(this.key, "ExpectHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -286,15 +188,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string RefererHeaderValue
 		{
-			get
-			{
-				try { return (string)Registry.GetValue(this.key, "RefererHeaderValue", string.Empty); }
-				catch { return string.Empty; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "RefererHeaderValue", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "RefererHeaderValue", string.Empty); }
+			set { Registry.SetString(this.key, "RefererHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -302,15 +197,8 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public string UserAgentHeaderValue
 		{
-			get
-			{
-				try { return (string)Registry.GetValue(this.key, "UserAgentHeaderValue", string.Empty); }
-				catch { return string.Empty; }
-			}
-			set
-			{
-				Registry.SetValue(this.key, "UserAgentHeaderValue", value != null ? value : string.Empty, RegistryValueKind.String);
-			}
+			get { return Registry.GetString(this.key, "UserAgentHeaderValue", string.Empty); }
+			set { Registry.SetString(this.key, "UserAgentHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -333,7 +221,7 @@ namespace YtCrawler.Testing
 			try
 			{
 				// Read the headers string from the registry.
-				string[] list = Registry.GetValue(this.key, "Headers", null) as string[];
+				string[] list = Registry.GetMultiString(this.key, "Headers", null);
 				// If the list of headers is not null.
 				if (null != list)
 				{
@@ -370,7 +258,7 @@ namespace YtCrawler.Testing
 				list[index++] = string.Format("{0}:{1}", header.Key, header.Value);
 			}
 			// Write the headers string builder to the registry.
-			Registry.SetValue(this.key, "Headers", list, RegistryValueKind.MultiString);
+			Registry.SetMultiString(this.key, "Headers", list);
 		}
 
 		/// <summary>

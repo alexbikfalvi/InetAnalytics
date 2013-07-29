@@ -28,9 +28,6 @@ namespace YtAnalytics.Forms.Comments
 	/// </summary>
 	public partial class FormCommentProperties : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
@@ -39,7 +36,7 @@ namespace YtAnalytics.Forms.Comments
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>

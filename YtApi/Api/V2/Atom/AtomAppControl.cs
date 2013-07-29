@@ -17,34 +17,81 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class respresenting an AppControl atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomAppControl : Atom
 	{
-		private AtomAppControl() { }
+		internal const string xmlPrefix = "app";
+		internal const string xmlName = "control";
 
-		public static AtomAppControl Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomAppControl(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomAppControl atom = new AtomAppControl();
-			XElement el;
-
-			XmlNamespace ns = new XmlNamespace(element, top);
-
-			// Optional elements
-			atom.YtState = (el = element.Element(XName.Get("state", ns["yt"]))) != null ? AtomYtState.Parse(el) : null;
-			atom.AppDraft = (el = element.Element(XName.Get("draft", ns["app"]))) != null ? AtomAppDraft.Parse(el) : null;
-
-			return atom;
+			// Set the optional elements.
+			this.AppDraft = AtomAppDraft.ParseChild(element, false);
+			this.YtState = AtomYtState.ParseChild(element, true);
 		}
 
-		public AtomAppDraft AppDraft { get; set; }
-		public AtomYtState YtState { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomAppControl Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomAppControl(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomAppControl ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+ 				return AtomAppControl.Parse(element.Element(AtomAppControl.xmlPrefix, AtomAppControl.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Public properties.
+
+		// Elements.
+		public AtomAppDraft AppDraft { get; private set; }
+		public AtomYtState YtState { get; private set; }
 	}
 }

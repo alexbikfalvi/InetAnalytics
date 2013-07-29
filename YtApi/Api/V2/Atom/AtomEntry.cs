@@ -17,33 +17,36 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// Represents the base class of an atom entry.
+	/// Represents the base class of an entry atom.
 	/// </summary>
 	[Serializable]
 	public abstract class AtomEntry : Atom
 	{
-		protected AtomEntry() { }
+		internal const string xmlPrefix = null;
+		internal const string xmlName = "entry";
 
-		public static void Parse(XElement element, AtomEntry atom, XmlNamespace top)
+		/// <summary>
+		/// Creates a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		protected AtomEntry(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			XmlNamespace ns = new XmlNamespace(element, top);
-
-			atom.Id = AtomId.Parse(element.Element(XName.Get("id", ns["xmlns"])));
-			atom.Link = new List<AtomLink>();
-			foreach (XElement child in element.Elements(XName.Get("link", ns["xmlns"])))
-				atom.Link.Add(AtomLink.Parse(child, ns));
+			// Set the elements.
+			this.Id = AtomId.ParseChild(element, true);
+			this.Links = AtomLinkList.ParseChildren(element);
 		}
 
-		public AtomId Id { get; set; }
-		public List<AtomLink> Link { get; set; }
+		// Properties.
+
+		// Elements.
+		public AtomId Id { get; private set; }
+		public AtomLinkList Links { get; private set; }
 	}
 }

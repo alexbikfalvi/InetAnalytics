@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Xml;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtAnalytics.Forms.Log;
@@ -78,6 +79,7 @@ namespace YtAnalytics.Controls.Log
 				// Set the new event.
 				this.evt = value;
 				// Call the event handler.
+				this.OnEventSet(old, value);
 			}
 		}
 
@@ -259,21 +261,14 @@ namespace YtAnalytics.Controls.Log
 		private bool OnLoadXml(Exception exception)
 		{
 			if (null == exception) return false;
-			if (exception.GetType() == typeof(AtomException))
-			{
-				AtomException ex = exception as AtomException;
-				this.listViewXml.Items.Clear();
-				for(XmlNamespace ns = ex.Namespace; null != ns; ns = ns.Top)
-				{
-					foreach (KeyValuePair<string, string> entry in ns.Entries)
-					{
-						ListViewItem item = new ListViewItem(new string[] { entry.Key, entry.Value }, 9);
-						this.listViewXml.Items.Add(item);
-					}
-				}
-				return true;
-			}
-			else return false;
+			//if (exception.GetType() == typeof(AtomException))
+			//{
+			//	AtomException ex = exception as AtomException;
+			//	this.listViewXml.Items.Clear();
+			//	return true;
+			//}
+			//else return false;
+			return false;
 		}
 
 		/// <summary>
@@ -284,13 +279,13 @@ namespace YtAnalytics.Controls.Log
 		private bool OnLoadCode(Exception exception)
 		{
 			if (null == exception) return false;
-			if (exception.GetType() == typeof(AtomException))
+			if (exception is AtomException)
 			{
 				AtomException ex = exception as AtomException;
 				this.textBoxCode.Text = ex.Xml;
 				return true;
 			}
-			else if (exception.GetType() == typeof(AjaxParsingException))
+			else if (exception is AjaxParsingException)
 			{
 				AjaxParsingException ex = exception as AjaxParsingException;
 				this.textBoxCode.Text = ex.Html;

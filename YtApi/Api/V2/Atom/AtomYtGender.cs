@@ -17,36 +17,85 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// A class representing a user's gender.
+	/// A class representing a yt:gender atom.
 	/// </summary>
 	[Serializable]
-	public sealed class AtomYtGender
+	public sealed class AtomYtGender : Atom
 	{
-		private AtomYtGender() { }
+		internal const string xmlPrefix = "yt";
+		internal const string xmlName = "gender";
 
-		public static AtomYtGender Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomYtGender(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomYtGender atom = new AtomYtGender();
-
+			// Set the value.
 			switch (element.Value.ToLower())
 			{
-				case "m": atom.Value = Gender.Male; break;
-				case "f": atom.Value = Gender.Female; break;
-				default: atom.Value = Gender.Unknown; break;
+				case "m": this.Value = Gender.Male; break;
+				case "f": this.Value = Gender.Female; break;
+				default: this.Value = Gender.Unknown; break;
 			}
-
-			return atom;
 		}
 
-		public Gender Value { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtGender Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomYtGender(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtGender ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomYtGender.Parse(element.Element(AtomYtGender.xmlPrefix, AtomYtGender.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Value.
+		public Gender Value { get; private set; }
 	}
 
 	public enum Gender

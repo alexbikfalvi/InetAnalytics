@@ -78,17 +78,17 @@ namespace YtApi.Api.V2.Data
 
 			this.author = this.atom.Author != null ? new Author(this.atom.Author) : null;
 			this.category = new Category(this.atom.MediaGroup.MediaCategory);
-            this.prices = new PriceList(this.atom.MediaGroup.MediaPrice);
+            this.prices = new PriceList(this.atom.MediaGroup.MediaPrices);
 			this.contentRating = this.atom.MediaGroup.MediaRating != null ? new ContentRating(this.atom.MediaGroup.MediaRating) : null;
 			this.restriction = this.atom.MediaGroup.MediaRestriction != null ? new Restriction(this.atom.MediaGroup.MediaRestriction) : null;
 			this.statistics = this.atom.YtStatistics != null ? new Statistics(this.atom.YtStatistics) : null;
 			this.userRatingStar = this.atom.GdRating != null ? new UserRatingStar(this.atom.GdRating) : null;
             this.userRatingLike = this.atom.YtRating != null ? new UserRatingLike(this.atom.YtRating) : null;
-            this.accessControl = new AccessControlList(this.atom.YtAccessControl);
+            this.accessControl = new AccessControlList(this.atom.YtAccessControlList);
 			this.availability = this.atom.YtAvailability != null ? new Availability(this.atom.YtAvailability) : null;
 			this.location = this.atom.GeoRssWhere != null ? new GeoLocation(this.atom.GeoRssWhere) : null;
 			this.state = this.atom.AppControl != null ? new PublishingState(this.atom.AppControl) : null;
-			this.thumbnails = new ThumbnailList(this.atom.MediaGroup.MediaThumbnail);
+			this.thumbnails = new ThumbnailList(this.atom.MediaGroup.MediaThumbnails);
 		}
 
 		/// <summary>
@@ -155,7 +155,7 @@ namespace YtApi.Api.V2.Data
 		/// <summary>
 		/// The video prices, if any. It cannot be null, however it may have zero elements.
 		/// </summary>
-		public List<Price> Prices { get { return this.prices; } }
+		public PriceList Prices { get { return this.prices; } }
 
 		/// <summary>
 		/// The content rating, if any. It can be null.

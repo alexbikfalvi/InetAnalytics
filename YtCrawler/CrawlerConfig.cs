@@ -29,6 +29,9 @@ namespace YtCrawler
 	/// </summary>
 	public class CrawlerConfig
 	{
+		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
+		internal static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
+
 		private RegistryKey rootKey;
 		private string rootPath;
 		private string root;
@@ -52,23 +55,23 @@ namespace YtCrawler
 			}
 
 			this.dbConfig = new DbConfig(dbKey);
-		}
 
-		/// <summary>
-		/// Gets or sets the YouTube API version 2 developer key.
-		/// </summary>
-		public string YouTubeV2ApiKey
-		{
-			get
-			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\YouTube\\V2", "ApiKey", string.Empty) as string) ? value : string.Empty;
-				}
-				catch (Exception) { return string.Empty; }
-			}
-			set { Registry.SetValue(this.root + "\\YouTube\\V2", "ApiKey", value, RegistryValueKind.String); }
+			// Initialize the static configuration.
+			CrawlerStatic.youTubeUserName = this.YouTubeUserName;
+			CrawlerStatic.youTubePassword = this.YouTubePassword;
+			CrawlerStatic.youTubeCategoriesFileName = this.YouTubeCategoriesFileName;
+			CrawlerStatic.youTubeV2ApiKey = this.YouTubeV2ApiKey;
+			CrawlerStatic.logFileName = this.LogFileName;
+			CrawlerStatic.databaseLogFileName = this.DatabaseLogFileName;
+			CrawlerStatic.commentsVideosFileName = this.CommentsVideosFileName;
+			CrawlerStatic.commentsUsersFileName = this.CommentsUsersFileName;
+			CrawlerStatic.commentsPlaylistsFileName = this.CommentsVideosFileName;
+			CrawlerStatic.consoleMessageCloseDelay = this.ConsoleMessageCloseDelay;
+			CrawlerStatic.consoleSideMenuVisibleItems = this.ConsoleSideMenuVisibleItems;
+			CrawlerStatic.consoleSideMenuSelectedItem = this.ConsoleSideMenuSelectedItem;
+			CrawlerStatic.planetLabUserName = this.PlanetLabUserName;
+			CrawlerStatic.planetLabPassword = this.PlanetLabPassword;
+			CrawlerStatic.planetLabSitesFileName = this.PlanetLabSitesFileName;
 		}
 
 		/// <summary>
@@ -78,14 +81,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\YouTube", "UserName", string.Empty) as string) ? value : string.Empty;
-				}
-				catch (Exception) { return string.Empty; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\YouTube", "UserName", string.Empty);
 			}
-			set { Registry.SetValue(this.root + "\\YouTube", "UserName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\YouTube", "UserName", value);
+				CrawlerStatic.youTubeUserName = value;
+			}
 		}
 
 		/// <summary>
@@ -95,14 +97,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					SecureString value;
-					return null != (value = (Registry.GetValue(this.root + "\\YouTube", "Password", null) as byte[]).DecryptString()) ? value : SecureStringExtensions.Empty;
-				}
-				catch (Exception) { return SecureStringExtensions.Empty; }
+				return DotNetApi.Windows.Registry.GetSecureString(this.root + "\\YouTube", "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			}
-			set { Registry.SetValue(this.root + "\\YouTube", "Password", value.EncryptString(), RegistryValueKind.Binary); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetSecureString(this.root + "\\YouTube", "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				CrawlerStatic.youTubePassword = value;
+			}
 		}
 
 		/// <summary>
@@ -112,16 +113,29 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\YouTube\\V2", "CategoriesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\YouTube\\CategoriesV2.xml") as string)
-						? value
-						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\YouTube\\CategoriesV2.xml";
-				}
-				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\YouTube\\CategoriesV2.xml"; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\YouTube\\V2", "CategoriesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\YouTube\\CategoriesV2.xml");
 			}
-			set { Registry.SetValue(this.root + "\\YouTube\\V2", "CategoriesFileName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\YouTube\\V2", "CategoriesFileName", value);
+				CrawlerStatic.youTubeCategoriesFileName = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the YouTube API version 2 developer key.
+		/// </summary>
+		public SecureString YouTubeV2ApiKey
+		{
+			get
+			{
+				return DotNetApi.Windows.Registry.GetSecureString(this.root + "\\YouTube\\V2", "ApiKey", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			}
+			set
+			{
+				DotNetApi.Windows.Registry.SetSecureString(this.root + "\\YouTube\\V2", "ApiKey", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				CrawlerStatic.youTubeV2ApiKey = value;
+			}
 		}
 
 		/// <summary>
@@ -131,16 +145,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\Log", "FileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-{0}-{1}-{2}.xml") as string)
-						? value
-						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-{0}-{1}-{2}.xml";
-				}
-				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-{0}-{1}-{2}.xml"; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\Log", "FileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-{0}-{1}-{2}.xml");
 			}
-			set { Registry.SetValue(this.root + "\\Log", "FileName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\Log", "FileName", value);
+				CrawlerStatic.logFileName = value;
+			}
 		}
 
 		/// <summary>
@@ -150,16 +161,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\Log", "DatabaseFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-Db-{0}-{1}-{2}-{3}.xml") as string)
-						? value
-						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-Db-{0}-{1}-{2}-{3}.xml";
-				}
-				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-Db-{0}-{1}-{2}-{3}.xml"; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\Log", "DatabaseFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Log\\YtLog-Db-{0}-{1}-{2}-{3}.xml");
 			}
-			set { Registry.SetValue(this.root + "\\Log", "DatabaseFileName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\Log", "DatabaseFileName", value);
+				CrawlerStatic.databaseLogFileName = value;
+			}
 		}
 
 		/// <summary>
@@ -169,16 +177,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\Comments", "VideosFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Videos.xml") as string)
-						? value
-						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Videos.xml";
-				}
-				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Videos.xml"; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\Comments", "VideosFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Videos.xml");
 			}
-			set { Registry.SetValue(this.root + "\\Comments", "VideosFileName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\Comments", "VideosFileName", value);
+				CrawlerStatic.commentsVideosFileName = value;
+			}
 		}
 
 		/// <summary>
@@ -188,16 +193,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\Comments", "UsersFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Users.xml") as string)
-						? value
-						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Users.xml";
-				}
-				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Users.xml"; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\Comments", "UsersFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Users.xml");
 			}
-			set { Registry.SetValue(this.root + "\\Comments", "UsersFileName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\Comments", "UsersFileName", value);
+				CrawlerStatic.commentsUsersFileName = value;
+			}
 		}
 
 		/// <summary>
@@ -207,16 +209,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\Comments", "PlaylistsFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Playlists.xml") as string)
-						? value
-						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Playlists.xml";
-				}
-				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Playlists.xml"; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\Comments", "PlaylistsFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\Comments\\Playlists.xml");
 			}
-			set { Registry.SetValue(this.root + "\\Comments", "PlaylistsFileName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\Comments", "PlaylistsFileName", value);
+				CrawlerStatic.commentsPlaylistsFileName = value;
+			}
 		}
 
 		/// <summary>
@@ -226,14 +225,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					object value = Registry.GetValue(this.root + "\\Console", "MessageCloseDelay", 1000);	
-					return TimeSpan.FromMilliseconds((int)(null != value ? value : 1000));
-				}
-				catch { return TimeSpan.FromMilliseconds(1000); }
+				return DotNetApi.Windows.Registry.GetTimeSpan(this.root + "\\Console", "MessageCloseDelay", TimeSpan.FromMilliseconds(1000));
 			}
-			set { Registry.SetValue(this.root + "\\Console", "MessageCloseDelay", value, RegistryValueKind.DWord); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetTimeSpan(this.root + "\\Console", "MessageCloseDelay", value);
+				CrawlerStatic.consoleMessageCloseDelay = value;
+			}
 		}
 
 		/// <summary>
@@ -243,12 +241,30 @@ namespace YtCrawler
 		{
 			get
 			{
-				try { return (int)Registry.GetValue(this.root + "\\Console", "SideMenuVisibleItems", 4); }
-				catch { return 4; }
+				return DotNetApi.Windows.Registry.GetInteger(this.root + "\\Console", "SideMenuVisibleItems", 4);
 			}
-			set { Registry.SetValue(this.root + "\\Console", "SideMenuVisibleItems", value, RegistryValueKind.DWord); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetInteger(this.root + "\\Console", "SideMenuVisibleItems", value);
+				CrawlerStatic.consoleSideMenuVisibleItems = value;
+			}
 		}
 
+		/// <summary>
+		/// Gets or sets the number of side menu selected item.
+		/// </summary>
+		public int ConsoleSideMenuSelectedItem
+		{
+			get
+			{
+				return DotNetApi.Windows.Registry.GetInteger(this.root + "\\Console", "SideMenuSelectedItem", 0);
+			}
+			set
+			{
+				DotNetApi.Windows.Registry.SetInteger(this.root + "\\Console", "SideMenuSelectedItem", value);
+				CrawlerStatic.consoleSideMenuSelectedItem = value;
+			}
+		}
 		/// <summary>
 		/// Gets or sets the PlanetLab account name.
 		/// </summary>
@@ -256,14 +272,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\PlanetLab", "UserName", string.Empty) as string) ? value : string.Empty;
-				}
-				catch (Exception) { return string.Empty; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\PlanetLab", "UserName", string.Empty);
 			}
-			set { Registry.SetValue(this.root + "\\PlanetLab", "UserName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\PlanetLab", "UserName", value);
+				CrawlerStatic.planetLabUserName = value;
+			}
 		}
 
 		/// <summary>
@@ -273,14 +288,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					SecureString value;
-					return null != (value = (Registry.GetValue(this.root + "\\PlanetLab", "Password", null) as byte[]).DecryptString()) ? value : SecureStringExtensions.Empty;
-				}
-				catch (Exception) { return SecureStringExtensions.Empty; }
+				return DotNetApi.Windows.Registry.GetSecureString(this.root + "\\PlanetLab", "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			}
-			set { Registry.SetValue(this.root + "\\PlanetLab", "Password", value.EncryptString(), RegistryValueKind.Binary); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetSecureString(this.root + "\\PlanetLab", "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				CrawlerStatic.planetLabPassword = value;
+			}
 		}
 
 		/// <summary>
@@ -290,16 +304,13 @@ namespace YtCrawler
 		{
 			get
 			{
-				try
-				{
-					string value;
-					return null != (value = Registry.GetValue(this.root + "\\PlanetLab", "SitesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml") as string)
-						? value
-						: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml";
-				}
-				catch (Exception) { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml"; }
+				return DotNetApi.Windows.Registry.GetString(this.root + "\\PlanetLab", "SitesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml");
 			}
-			set { Registry.SetValue(this.root + "\\PlanetLab", "SitesFileName", value, RegistryValueKind.String); }
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + "\\PlanetLab", "SitesFileName", value);
+				CrawlerStatic.planetLabSitesFileName = value;
+			}
 		}
 
 		/// <summary>

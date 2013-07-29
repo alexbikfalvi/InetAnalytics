@@ -110,7 +110,6 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.request.Begin(
 					this.crawler.Config.PlanetLabUserName,
 					this.crawler.Config.PlanetLabPassword,
-					string.Empty,
 					this.OnCallback);
 			}
 			catch (Exception exception)
@@ -121,7 +120,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					"PlanetLab Error",
 					string.Format("An error occured while refreshing the PlanetLab nodes. {0}", exception.Message),
 					false,
-					(int)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds,
+					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
 			}
 		}
@@ -158,9 +157,9 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeWarning_48,
 						"PlanetLab Error",
-						string.Format("Refreshing the PlanetLab nodes has completed failed (RPC code {0} {1})", rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
+						string.Format("Refreshing the PlanetLab nodes has failed (RPC code {0} {1})", rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
 						false,
-						(int)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
 				}
 				else
@@ -174,7 +173,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						"PlanetLab Success",
 						"Refreshing the PlanetLab nodes has completed successfuly.",
 						false,
-						(int)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
 
 					// Update the list of sites.
@@ -188,7 +187,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					Resources.GlobeError_48,
 					"PlanetLab Error",
 					string.Format("An error occured while refreshing the PlanetLab nodes. {0}",
-					exception.Message), false, (int)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds,
+					exception.Message), false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
 			}
 		}

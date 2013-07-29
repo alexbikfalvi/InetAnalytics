@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
-using Microsoft.Win32;
+using DotNetApi.Windows;
 using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
@@ -319,7 +319,7 @@ namespace YtCrawler.Database
 			// If the table is read-only, do nothing.
 			if (this.readOnly) return;
 			// Read the table registry value.
-			byte[] value = Registry.GetValue(key, this.localName, null) as byte[];
+			byte[] value = Registry.GetBytes(key, this.localName, null);
 			// If the value is null, do nothing.
 			if (null == value) return;
 
@@ -394,7 +394,7 @@ namespace YtCrawler.Database
 			// Create a new XML document for this table.
 			XDocument document = new XDocument(element);
 			// Write the document to registry.
-			Registry.SetValue(key, this.localName, Encoding.UTF8.GetBytes(document.ToString()), RegistryValueKind.Binary);
+			Registry.SetBytes(key, this.localName, Encoding.UTF8.GetBytes(document.ToString()));
 			// Raise the table changed event.
 			if (this.TableChanged != null) this.TableChanged(this);
 		}

@@ -29,9 +29,6 @@ namespace YtAnalytics.Forms.Comments
 	/// </summary>
 	public partial class FormAddComment : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		private Comment.CommentType type;
 
 		/// <summary>
@@ -42,7 +39,7 @@ namespace YtAnalytics.Forms.Comments
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>

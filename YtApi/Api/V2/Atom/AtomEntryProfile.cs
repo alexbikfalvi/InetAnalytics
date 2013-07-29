@@ -17,10 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
@@ -30,7 +28,48 @@ namespace YtApi.Api.V2.Atom
 	[Serializable]
 	public sealed class AtomEntryProfile : AtomEntry
 	{
-		private AtomEntryProfile() { }
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomEntryProfile(XElement element)
+			: base(element)
+		{
+			try
+			{
+				this.Published = AtomPublished.ParseChild(element, false);
+				this.Updated = AtomUpdated.ParseChild(element, true);
+				this.Categories = AtomCategoryList.ParseChildren(element);
+				this.Title = AtomTitle.ParseChild(element, true);
+				this.Content = AtomContent.ParseChild(element, false);
+				this.Author = AtomAuthor.ParseChild(element, false);
+				this.YtAboutMe = AtomYtAboutMe.ParseChild(element, false);
+				this.YtAge = AtomYtAge.ParseChild(element, false);
+				this.YtBooks = AtomYtBooks.ParseChild(element, false);
+				this.YtCompany = AtomYtCompany.ParseChild(element, false);
+				this.YtFirstName = AtomYtFirstName.ParseChild(element, false);
+				this.YtGender = AtomYtGender.ParseChild(element, false);
+				this.YtHobbies = AtomYtHobbies.ParseChild(element, false);
+				this.YtHometown = AtomYtHometown.ParseChild(element, false);
+				this.YtLastName = AtomYtLastName.ParseChild(element, false);
+				this.YtLocation = AtomYtLocation.ParseChild(element, false);
+				this.YtMaxUploadDuration = AtomYtMaxUploadDuration.ParseChild(element, false);
+				this.YtMovies = AtomYtMovies.ParseChild(element, false);
+				this.YtMusic = AtomYtMusic.ParseChild(element, false);
+				this.YtOccupation = AtomYtOccupation.ParseChild(element, false);
+				this.YtSchool = AtomYtSchool.ParseChild(element, false);
+				this.YtUserId = AtomYtUserId.ParseChild(element, false);
+				this.YtUserName = AtomYtUsername.ParseChild(element, false);
+				this.YtStatistics = AtomYtStatistics.ParseChild(element, false);
+				this.Summary = AtomSummary.ParseChild(element, false);
+				this.MediaThumbnail = AtomMediaThumbnail.ParseChild(element, false);
+				this.GdFeedLinks = AtomGdFeedLinkList.ParseChildren(element);
+			}
+			catch (Exception exception)
+			{
+				throw new AtomException("Cannot parse user entry.", element, exception);
+			}
+		}
 
 		/// <summary>
 		/// Parses an XML string into a user entry atom.
@@ -39,90 +78,81 @@ namespace YtApi.Api.V2.Atom
 		/// <returns>The user entry atom.</returns>
 		public static AtomEntryProfile Parse(string data)
 		{
-			return AtomEntryProfile.Parse(XDocument.Parse(data).Root);
+			return AtomEntryProfile.Parse(XDocument.Parse(data).Root, true);
 		}
 
 		/// <summary>
-		/// Parses an XML entry element into a user entry atom.
+		/// Parses the XML element into a new atom instance.
 		/// </summary>
 		/// <param name="element">The XML element.</param>
-		/// <returns>The user entry atom.</returns>
-		public static AtomEntryProfile Parse(XElement element, XmlNamespace top = null)
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomEntryProfile Parse(XElement element, bool mandatory)
 		{
-			AtomEntryProfile atom = new AtomEntryProfile();
-			XmlNamespace ns = new XmlNamespace(element, top);
-			XElement el;
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomEntryProfile(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomEntryProfile ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
 
 			try
 			{
-				AtomEntry.Parse(element, atom, ns);
-
-				atom.Published = (el = element.Element(XName.Get("published", ns["xmlns"]))) != null ? AtomPublished.Parse(el) : null;
-				atom.Updated = AtomUpdated.Parse(element.Element(XName.Get("updated", ns["xmlns"])));
-				atom.Category = new List<AtomCategory>();
-				foreach (XElement child in element.Elements(XName.Get("category", ns["xmlns"])))
-					atom.Category.Add(AtomCategory.Parse(child));
-				atom.Title = AtomTitle.Parse(element.Element(XName.Get("title", ns["xmlns"])));
-				atom.Content = (el = element.Element(XName.Get("content", ns["xmlns"]))) != null ? AtomContent.Parse(el) : null;
-				atom.Author = (el = element.Element(XName.Get("author", ns["xmlns"]))) != null ? AtomAuthor.Parse(el, ns) : null;
-				atom.YtAboutMe = (el = element.Element(XName.Get("aboutMe", ns["yt"]))) != null ? AtomYtAboutMe.Parse(el) : null;
-				atom.YtAge = (el = element.Element(XName.Get("age", ns["yt"]))) != null ? AtomYtAge.Parse(el) : null;
-				atom.YtBooks = (el = element.Element(XName.Get("books", ns["yt"]))) != null ? AtomYtBooks.Parse(el) : null;
-				atom.YtCompany = (el = element.Element(XName.Get("company", ns["yt"]))) != null ? AtomYtCompany.Parse(el) : null;
-				atom.YtFirstName = (el = element.Element(XName.Get("firstName", ns["yt"]))) != null ? AtomYtFirstName.Parse(el) : null;
-				atom.YtGender = (el = element.Element(XName.Get("gender", ns["yt"]))) != null ? AtomYtGender.Parse(el) : null;
-				atom.YtHobbies = (el = element.Element(XName.Get("hobbies", ns["yt"]))) != null ? AtomYtHobbies.Parse(el) : null;
-				atom.YtHometown = (el = element.Element(XName.Get("hometown", ns["yt"]))) != null ? AtomYtHometown.Parse(el) : null;
-				atom.YtLastName = (el = element.Element(XName.Get("lastName", ns["yt"]))) != null ? AtomYtLastName.Parse(el) : null;
-				atom.YtLocation = (el = element.Element(XName.Get("location", ns["yt"]))) != null ? AtomYtLocation.Parse(el) : null;
-				atom.YtMaxUploadDuration = (el = element.Element(XName.Get("maxUploadDuration", ns["yt"]))) != null ? AtomYtMaxUploadDuration.Parse(el) : null;
-				atom.YtMovies = (el = element.Element(XName.Get("movies", ns["yt"]))) != null ? AtomYtMovies.Parse(el) : null;
-				atom.YtMusic = (el = element.Element(XName.Get("music", ns["yt"]))) != null ? AtomYtMusic.Parse(el) : null;
-				atom.YtOccupation = (el = element.Element(XName.Get("occupation", ns["yt"]))) != null ? AtomYtOccupation.Parse(el) : null;
-				atom.YtSchool = (el = element.Element(XName.Get("school", ns["yt"]))) != null ? AtomYtSchool.Parse(el) : null;
-				atom.YtUserId = (el = element.Element(XName.Get("userId", ns["yt"]))) != null ? AtomYtUserId.Parse(el) : null;
-				atom.YtUserName = (el = element.Element(XName.Get("username", ns["yt"]))) != null ? AtomYtUsername.Parse(el) : null;
-				atom.YtStatistics = (el = element.Element(XName.Get("statistics", ns["yt"]))) != null ? AtomYtStatistics.Parse(el) : null;
-				atom.Summary = (el = element.Element(XName.Get("summary", ns["xmlns"]))) != null ? AtomSummary.Parse(el) : null;
-				atom.MediaThumbnail = (el = element.Element(XName.Get("thumbnail", ns["media"]))) != null ? AtomMediaThumbnail.Parse(el, ns) : null;
-				atom.GdFeedLink = new List<AtomGdFeedLink>();
-				foreach (XElement child in element.Elements(XName.Get("feedLink", ns["gd"])))
-					atom.GdFeedLink.Add(AtomGdFeedLink.Parse(child));
+				// Parse the children for the first element.
+				return AtomEntryProfile.Parse(element.Element(AtomEntryProfile.xmlPrefix, AtomEntryProfile.xmlName), mandatory);
 			}
 			catch (Exception exception)
 			{
-				throw new AtomException("Cannot parse user entry.", element, ns, exception);
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
 			}
-
-			return atom;
 		}
 
-		public AtomPublished Published { get; set; }
-		public AtomUpdated Updated { get; set; }
-		public List<AtomCategory> Category { get; set; }
-		public AtomTitle Title { get; set; }
-		public AtomContent Content { get; set; }
-		public AtomAuthor Author { get; set; }
-		public AtomYtAboutMe YtAboutMe { get; set; }
-		public AtomYtAge YtAge { get; set; }
-		public AtomYtBooks YtBooks { get; set; }
-		public AtomYtCompany YtCompany { get; set; }
-		public AtomYtFirstName YtFirstName { get; set; }
-		public AtomYtGender YtGender { get; set; }
-		public AtomYtHobbies YtHobbies { get; set; }
-		public AtomYtHometown YtHometown { get; set; }
-		public AtomYtLastName YtLastName { get; set; }
-		public AtomYtLocation YtLocation { get; set; }
-		public AtomYtMaxUploadDuration YtMaxUploadDuration { get; set; }
-		public AtomYtMovies YtMovies { get; set; }
-		public AtomYtMusic YtMusic { get; set; }
-		public AtomYtOccupation YtOccupation { get; set; }
-		public AtomYtSchool YtSchool { get; set; }
-		public AtomYtUserId YtUserId { get; set; }
-		public AtomYtUsername YtUserName { get; set; }
-		public AtomYtStatistics YtStatistics { get; set; }
-		public AtomSummary Summary { get; set; }
-		public AtomMediaThumbnail MediaThumbnail { get; set; }
-		public List<AtomGdFeedLink> GdFeedLink { get; set; }
+		// Properties.
+
+		// Elements.
+		public AtomPublished Published { get; private set; }
+		public AtomUpdated Updated { get; private set; }
+		public AtomCategoryList Categories { get; private set; }
+		public AtomTitle Title { get; private set; }
+		public AtomContent Content { get; private set; }
+		public AtomAuthor Author { get; private set; }
+		public AtomYtAboutMe YtAboutMe { get; private set; }
+		public AtomYtAge YtAge { get; private set; }
+		public AtomYtBooks YtBooks { get; private set; }
+		public AtomYtCompany YtCompany { get; private set; }
+		public AtomYtFirstName YtFirstName { get; private set; }
+		public AtomYtGender YtGender { get; private set; }
+		public AtomYtHobbies YtHobbies { get; private set; }
+		public AtomYtHometown YtHometown { get; private set; }
+		public AtomYtLastName YtLastName { get; private set; }
+		public AtomYtLocation YtLocation { get; private set; }
+		public AtomYtMaxUploadDuration YtMaxUploadDuration { get; private set; }
+		public AtomYtMovies YtMovies { get; private set; }
+		public AtomYtMusic YtMusic { get; private set; }
+		public AtomYtOccupation YtOccupation { get; private set; }
+		public AtomYtSchool YtSchool { get; private set; }
+		public AtomYtUserId YtUserId { get; private set; }
+		public AtomYtUsername YtUserName { get; private set; }
+		public AtomYtStatistics YtStatistics { get; private set; }
+		public AtomSummary Summary { get; private set; }
+		public AtomMediaThumbnail MediaThumbnail { get; private set; }
+		public AtomGdFeedLinkList GdFeedLinks { get; private set; }
 	}
 }

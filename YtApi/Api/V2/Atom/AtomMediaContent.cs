@@ -17,47 +17,94 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a media:content atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomMediaContent : Atom
 	{
-		private AtomMediaContent() { }
+		internal const string xmlPrefix = "media";
+		internal const string xmlName = "content";
 
-		public static AtomMediaContent Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomMediaContent(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomMediaContent atom = new AtomMediaContent();
 			XAttribute attr;
-			XmlNamespace ns = new XmlNamespace(element, top);
 
 			// Mandatory attributes
-			atom.Url = new Uri(element.Attribute(XName.Get("url")).Value);
-			atom.YtFormat = element.Attribute(XName.Get("format", ns["yt"])).Value;
+			this.Url = element.Attribute("url").Value.ToUri();
+			this.YtFormat = element.Attribute("yt", "format").Value;
 
 			// Optional attributes
-			atom.Type = (attr = element.Attribute(XName.Get("type"))) != null ? attr.Value : null;
-			atom.Duration = (attr = element.Attribute(XName.Get("duration"))) != null ? (int?)int.Parse(attr.Value) : null;
-			atom.IsDefault = (attr = element.Attribute(XName.Get("isDefault"))) != null ? (bool?)bool.Parse(attr.Value) : null;
-			atom.YtName = (attr = element.Attribute(XName.Get("name", ns["yt"]))) != null ? attr.Value : null;
+			this.Type = (attr = element.Attribute("type")) != null ? attr.Value : null;
+			this.Duration = (attr = element.Attribute("duration")) != null ? attr.Value.ToInt() as int? : null;
+			this.IsDefault = (attr = element.Attribute("isDefault")) != null ? attr.Value.ToBoolean() as bool? : null;
+			this.YtName = (attr = element.Attribute("yt", "name")) != null ? attr.Value : null;
+		}
 
-			return atom;
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaContent Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomMediaContent(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaContent ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomMediaContent.Parse(element.Element(AtomMediaContent.xmlPrefix, AtomMediaContent.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
 		}
 
 		// Mandatory attributes
-		public Uri Url { get; set; }
-		public string Type { get; set; }
-		public string Expression { get; set; }
-		public int? Duration { get; set; }
-		public string YtFormat { get; set; }
-		public string YtName { get; set; }
+		public Uri Url { get; private set; }
+		public string Type { get; private set; }
+		public string Expression { get; private set; }
+		public int? Duration { get; private set; }
+		public string YtFormat { get; private set; }
+		public string YtName { get; private set; }
 
 		// Optional attributes
-		public bool? IsDefault { get; set; }
+		public bool? IsDefault { get; private set; }
 	}
 }

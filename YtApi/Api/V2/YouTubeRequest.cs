@@ -17,12 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
+using DotNetApi.Security;
 using DotNetApi.Web;
 
 namespace YtApi.Api.V2
@@ -74,7 +71,7 @@ namespace YtApi.Api.V2
 			AsyncWebResult asyncState = AsyncWebRequest.Create(uri, callback, state);
 
 			// Set the request headers.
-			if(null != this.settings) asyncState.Request.Headers.Add("X-GData-Key", "key=" + this.settings.Key);
+			if(null != this.settings) asyncState.Request.Headers.Add("X-GData-Key", string.Format("key={0}", this.settings.Key.ConvertToUnsecureString()));
 
 			// Begin the request.
 			return this.Begin(asyncState);

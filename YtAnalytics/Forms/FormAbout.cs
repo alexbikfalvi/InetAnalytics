@@ -34,15 +34,12 @@ namespace YtAnalytics.Forms
 	/// </summary>
 	public partial class FormAbout : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		public FormAbout()
 		{
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 	}
 }

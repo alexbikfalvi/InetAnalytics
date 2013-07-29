@@ -17,36 +17,87 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing an xmlns:category atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomCategory : Atom
 	{
-		private AtomCategory() { }
+		internal const string xmlPrefix = null;
+		internal const string xmlName = "category";
 
-		public static AtomCategory Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomCategory(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomCategory atom = new AtomCategory();
 			XAttribute attr;
 
 			// Mandatory attributes
-			atom.Scheme = new Uri(element.Attribute(XName.Get("scheme")).Value);
-			atom.Term = element.Attribute(XName.Get("term")).Value;
+			this.Scheme = element.Attribute("scheme").Value.ToUri();
+			this.Term = element.Attribute("term").Value;
 
 			// Optional attributes
-			atom.Label = (attr = element.Attribute(XName.Get("label"))) != null ? attr.Value : null;
-
-			return atom;
+			this.Label = (attr = element.Attribute("label")) != null ? attr.Value : null;
 		}
 
-		public Uri Scheme { get; set; }
-		public string Term { get; set; }
-		public string Label { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomCategory Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomCategory(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomCategory ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomCategory.Parse(element.Element(AtomCategory.xmlPrefix, AtomCategory.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public Uri Scheme { get; private set; }
+		public string Term { get; private set; }
+		public string Label { get; private set; }
 	}
 }

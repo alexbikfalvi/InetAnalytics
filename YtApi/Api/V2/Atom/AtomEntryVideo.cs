@@ -17,11 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
@@ -31,7 +28,44 @@ namespace YtApi.Api.V2.Atom
 	[Serializable]
 	public sealed class AtomEntryVideo : AtomEntry
 	{
-		private AtomEntryVideo() { }
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomEntryVideo(XElement element)
+			: base(element)
+		{
+			try
+			{
+				this.Published = AtomPublished.ParseChild(element, false);
+				this.Updated = AtomUpdated.ParseChild(element, true);
+				this.Categories = AtomCategoryList.ParseChildren(element);
+				this.Title = AtomTitle.ParseChild(element, true);
+				this.Content = AtomContent.ParseChild(element, false);
+				this.Author = AtomAuthor.ParseChild(element, false);
+				this.MediaGroup = AtomMediaGroup.ParseChild(element, false);
+				this.YtStatistics = AtomYtStatistics.ParseChild(element, false);
+				this.GdComments = AtomGdComments.ParseChild(element, false);
+				this.GdRating = AtomGdRating.ParseChild(element, false);
+				this.YtRating = AtomYtRating.ParseChild(element, false);
+				this.YtLocation = AtomYtLocation.ParseChild(element, false);
+				this.YtRecorded = AtomYtRecorded.ParseChild(element, false);
+				this.YtAccessControlList = AtomYtAccessControlList.ParseChildren(element);
+				this.YtAvailability = AtomYtAvailability.ParseChild(element, false);
+				this.YtEpisode = AtomYtEpisode.ParseChild(element, false);
+				this.YtFavoriteId = AtomYtFavoriteId.ParseChild(element, false);
+				this.YtFirstReleased = AtomYtFirstReleased.ParseChild(element, false);
+				this.YtMaterials = AtomYtMaterialList.ParseChildren(element);
+				this.GeoRssWhere = AtomGeoRssWhere.ParseChild(element, false);
+				this.AppControl = AtomAppControl.ParseChild(element, false);
+			}
+			catch (Exception exception)
+			{
+				throw new AtomException("Cannot parse video entry.", element, exception);
+			}
+		}
+
+		// Public methods.
 
 		/// <summary>
 		/// Parses an XML string into a video entry atom.
@@ -40,80 +74,75 @@ namespace YtApi.Api.V2.Atom
 		/// <returns>The video entry atom.</returns>
 		public static AtomEntryVideo Parse(string data)
 		{
-			return AtomEntryVideo.Parse(XDocument.Parse(data).Root);
+			return AtomEntryVideo.Parse(XDocument.Parse(data).Root, true);
 		}
 
 		/// <summary>
-		/// Parses an XML entry element into a video entry atom.
+		/// Parses the XML element into a new atom instance.
 		/// </summary>
 		/// <param name="element">The XML element.</param>
-		/// <returns>The video entry atom.</returns>
-		public static AtomEntryVideo Parse(XElement element, XmlNamespace top = null)
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomEntryVideo Parse(XElement element, bool mandatory)
 		{
-			AtomEntryVideo atom = new AtomEntryVideo();
-			XmlNamespace ns = new XmlNamespace(element, top);
-			XElement el;
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomEntryVideo(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomEntryVideo ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
 
 			try
 			{
-				AtomEntry.Parse(element, atom, ns);
-
-				atom.Published = (el = element.Element(XName.Get("published", ns["xmlns"]))) != null ? AtomPublished.Parse(el) : null;
-				atom.Updated = AtomUpdated.Parse(element.Element(XName.Get("updated", ns["xmlns"])));
-				atom.Category = new List<AtomCategory>();
-				foreach (XElement child in element.Elements(XName.Get("category", ns["xmlns"])))
-					atom.Category.Add(AtomCategory.Parse(child));
-				atom.Title = AtomTitle.Parse(element.Element(XName.Get("title", ns["xmlns"])));
-				atom.Content = (el = element.Element(XName.Get("content", ns["xmlns"]))) != null ? AtomContent.Parse(el) : null;
-				atom.Author = (el = element.Element(XName.Get("author", ns["xmlns"]))) != null ? AtomAuthor.Parse(el, ns) : null;
-				atom.MediaGroup = (el = element.Element(XName.Get("group", ns["media"]))) != null ? AtomMediaGroup.Parse(el, ns) : null;
-				atom.YtStatistics = (el = element.Element(XName.Get("statistics", ns["yt"]))) != null ? AtomYtStatistics.Parse(el) : null;
-				atom.GdComments = (el = element.Element(XName.Get("comments", ns["gd"]))) != null ? AtomGdComments.Parse(el, ns) : null;
-				atom.GdRating = (el = element.Element(XName.Get("rating", ns["gd"]))) != null ? AtomGdRating.Parse(el) : null;
-				atom.YtRating = (el = element.Element(XName.Get("rating", ns["yt"]))) != null ? AtomYtRating.Parse(el) : null;
-				atom.YtLocation = (el = element.Element(XName.Get("location", ns["yt"]))) != null ? AtomYtLocation.Parse(el) : null;
-				atom.YtRecorded = (el = element.Element(XName.Get("recorded", ns["yt"]))) != null ? AtomYtRecorded.Parse(el) : null;
-				atom.YtAccessControl = new List<AtomYtAccessControl>();
-				foreach (XElement child in element.Elements(XName.Get("accessControl", ns["yt"])))
-					atom.YtAccessControl.Add(AtomYtAccessControl.Parse(child));
-				atom.YtAvailability = (el = element.Element(XName.Get("availability", ns["yt"]))) != null ? AtomYtAvailability.Parse(el) : null;
-				atom.YtEpisode = (el = element.Element(XName.Get("episode", ns["yt"]))) != null ? AtomYtEpisode.Parse(el) : null;
-				atom.YtFavoriteId = (el = element.Element(XName.Get("favoriteId", ns["yt"]))) != null ? AtomYtFavoriteId.Parse(el) : null;
-				atom.YtFirstReleased = (el = element.Element(XName.Get("firstReleased", ns["yt"]))) != null ? AtomYtFirstReleased.Parse(el) : null;
-				atom.YtMaterial = new List<AtomYtMaterial>();
-				foreach (XElement child in element.Elements(XName.Get("material", ns["yt"])))
-					atom.YtMaterial.Add(AtomYtMaterial.Parse(child));
-				atom.GeoRssWhere = (el = element.Element(XName.Get("where", ns["geoRss"]))) != null ? AtomGeoRssWhere.Parse(el, ns) : null;
-				atom.AppControl = (el = element.Element(XName.Get("control", ns["app"]))) != null ? AtomAppControl.Parse(el, ns) : null;
+				// Parse the children for the first element.
+				return AtomEntryVideo.Parse(element.Element(AtomEntryVideo.xmlPrefix, AtomEntryVideo.xmlName), mandatory);
 			}
 			catch (Exception exception)
 			{
-				throw new AtomException("Cannot parse video entry.", element, ns, exception);
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
 			}
-
-			return atom;
 		}
 
-		public AtomPublished Published { get; set; }
-		public AtomUpdated Updated { get; set; }
-		public List<AtomCategory> Category { get; set; }
-		public AtomTitle Title { get; set; }
-		public AtomContent Content { get; set; }
-		public AtomAuthor Author { get; set; }
-		public AtomMediaGroup MediaGroup { get; set; }
-		public AtomYtStatistics YtStatistics { get; set; }
-		public AtomGdComments GdComments { get; set; }
-		public AtomGdRating GdRating { get; set; }
-		public AtomYtRating YtRating { get; set; }
-		public AtomYtLocation YtLocation { get; set; }
-		public AtomYtRecorded YtRecorded { get; set; }
-		public List<AtomYtAccessControl> YtAccessControl { get; set; }
-		public AtomYtAvailability YtAvailability { get; set; }
-		public AtomYtEpisode YtEpisode { get; set; }
-		public AtomYtFavoriteId YtFavoriteId { get; set; }
-		public AtomYtFirstReleased YtFirstReleased { get; set; }
-		public List<AtomYtMaterial> YtMaterial { get; set; }
-		public AtomGeoRssWhere GeoRssWhere { get; set; }
-		public AtomAppControl AppControl { get; set; }
+		// Properties.
+
+		// Elements.
+		public AtomPublished Published { get; private set; }
+		public AtomUpdated Updated { get; private set; }
+		public AtomCategoryList Categories { get; private set; }
+		public AtomTitle Title { get; private set; }
+		public AtomContent Content { get; private set; }
+		public AtomAuthor Author { get; private set; }
+		public AtomMediaGroup MediaGroup { get; private set; }
+		public AtomYtStatistics YtStatistics { get; private set; }
+		public AtomGdComments GdComments { get; private set; }
+		public AtomGdRating GdRating { get; private set; }
+		public AtomYtRating YtRating { get; private set; }
+		public AtomYtLocation YtLocation { get; private set; }
+		public AtomYtRecorded YtRecorded { get; private set; }
+		public AtomYtAccessControlList YtAccessControlList { get; private set; }
+		public AtomYtAvailability YtAvailability { get; private set; }
+		public AtomYtEpisode YtEpisode { get; private set; }
+		public AtomYtFavoriteId YtFavoriteId { get; private set; }
+		public AtomYtFirstReleased YtFirstReleased { get; private set; }
+		public AtomYtMaterialList YtMaterials { get; private set; }
+		public AtomGeoRssWhere GeoRssWhere { get; private set; }
+		public AtomAppControl AppControl { get; private set; }
 	}
 }

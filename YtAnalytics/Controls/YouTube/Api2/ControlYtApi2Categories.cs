@@ -140,7 +140,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							// Set the asynchronous result to null.
 							this.asyncResult = null;
 							// Delay the closing of the user message.
-							Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+							Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 							// Hide the progress message.
 							this.HideMessage(() =>
 							{
@@ -163,7 +163,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				ThreadPool.QueueUserWorkItem((object state) =>
 					{
 						// Delay the closing of the user message.
-						Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 						// Hide the progress message.
 						this.HideMessage(() =>
 						{

@@ -196,7 +196,7 @@ namespace YtAnalytics.Controls.Log
 			}
 			finally
 			{
-				Thread.Sleep(this.config.ConsoleMessageCloseDelay);
+				Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 			}
 
 			// If the state is not canceled.

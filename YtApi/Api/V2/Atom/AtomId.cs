@@ -17,28 +17,79 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing an xmlns:id atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomId : Atom
 	{
-		private AtomId() { }
+		internal const string xmlPrefix = null;
+		internal const string xmlName = "id";
 
-		public static AtomId Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomId(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomId atom = new AtomId();
-
-			atom.Value = element.Value;
-
-			return atom;
+			// Set the value.
+			this.Value = element.Value;
 		}
 
-		public string Value { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomId Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomId(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomId ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomId.Parse(element.Element(AtomId.xmlPrefix, AtomId.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Value.
+		public string Value { get; private set; }
 	}
 }

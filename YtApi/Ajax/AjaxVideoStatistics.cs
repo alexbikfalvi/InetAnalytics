@@ -23,10 +23,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
+//using System.Threading.Tasks;
+//using System.Xml;
 using System.Xml.Linq;
 using HtmlAgilityPack;
+using DotNetApi.Xml;
 
 namespace YtApi.Ajax
 {
@@ -68,47 +69,47 @@ namespace YtApi.Ajax
 		/// <summary>
 		/// The return code corresponding to the AJAX request.
 		/// </summary>
-		public int ReturnCode { get; set; }
+		public int ReturnCode { get; private set; }
 		/// <summary>
 		/// The views count.
 		/// </summary>
-		public int? ViewsCount { get; set; }
+		public int? ViewsCount { get; private set; }
 		/// <summary>
 		/// The comments count.
 		/// </summary>
-		public int? CommentsCount { get; set; }
+		public int? CommentsCount { get; private set; }
 		/// <summary>
 		/// The favorites count.
 		/// </summary>
-		public int? FavoritesCount { get; set; }
+		public int? FavoritesCount { get; private set; }
 		/// <summary>
 		/// The likes count.
 		/// </summary>
-		public int? LikesCount { get; set; }
+		public int? LikesCount { get; private set; }
 		/// <summary>
 		/// The dislikes count.
 		/// </summary>
-		public int? DislikesCount { get; set; }
+		public int? DislikesCount { get; private set; }
 		/// <summary>
 		/// The view history.
 		/// </summary>
-		public AjaxViewsHistory ViewsHistory { get; set; }
+		public AjaxViewsHistory ViewsHistory { get; private set; }
 		/// <summary>
 		/// The comments history.
 		/// </summary>
-		public AjaxHistory CommentsHistory { get; set; }
+		public AjaxHistory CommentsHistory { get; private set; }
 		/// <summary>
 		/// The favorites history.
 		/// </summary>
-		public AjaxHistory FavoritesHistory { get; set; }
+		public AjaxHistory FavoritesHistory { get; private set; }
 		/// <summary>
 		/// The likes history.
 		/// </summary>
-		public AjaxHistory LikesHistory { get; set; }
+		public AjaxHistory LikesHistory { get; private set; }
 		/// <summary>
 		/// The dislikes history.
 		/// </summary>
-		public AjaxHistory DislikesHistory { get; set; }
+		public AjaxHistory DislikesHistory { get; private set; }
 
 
 		private void ParseRoot(XDocument xml)
@@ -161,7 +162,7 @@ namespace YtApi.Ajax
 
 		private void ParseReturnCode(XElement element)
 		{
-			this.ReturnCode = int.Parse(element.Value);
+			this.ReturnCode = element.Value.ToInt();
 		}
 
 		/// <summary>
@@ -204,14 +205,14 @@ namespace YtApi.Ajax
 			// Search all DD child elements.
 			IEnumerable<XElement> dds = element.Descendants(XName.Get("dd"));
 
-			if (dts.Count<XElement>() != dds.Count<XElement>())
+			if (dts.Count() != dds.Count())
 				throw new AjaxParsingException(string.Format("Cannot parse discovery events statistics: different number of \"dt\" ({0}) and \"dd\" ({1}) elements in the HTML response.", dts.Count<XElement>(), dds.Count<XElement>()), element.ToString());
 
 			// For all elements in the list.
-			for (int index = 0; index < dts.Count<XElement>(); index++)
+			for (int index = 0; index < dts.Count(); index++)
 			{
-				XElement dt = dts.ElementAt<XElement>(index);
-				XElement dd = dds.ElementAt<XElement>(index);
+				XElement dt = dts.ElementAt(index);
+				XElement dd = dds.ElementAt(index);
 
 				// Check the DT element.
 				if (dt.Attribute(XName.Get("class")).Value != "stats-label")
@@ -233,9 +234,9 @@ namespace YtApi.Ajax
 				foreach (XElement p in dd.Elements(XName.Get("p")))
 				{
 					// If the P element has no attributes.
-					if (p.Attributes().Count<XAttribute>() == 0)
+					if (p.Attributes().Count() == 0)
 					{
-						if (p.Elements(XName.Get("span")).Count<XElement>() == 0)
+						if (p.Elements(XName.Get("span")).Count() == 0)
 						{
 							try
 							{
@@ -261,7 +262,7 @@ namespace YtApi.Ajax
 							foreach (XElement span in p.Elements(XName.Get("span")))
 							{
 								// If the SPAN element has no attributes.
-								if (span.Attributes().Count<XAttribute>() == 0)
+								if (span.Attributes().Count() == 0)
 								{
 									description = span.Value;
 								}

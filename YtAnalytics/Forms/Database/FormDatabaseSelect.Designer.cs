@@ -33,7 +33,6 @@
 			// 
 			// control
 			// 
-			this.control.ConsoleMessageCloseDelay = System.TimeSpan.Parse("00:00:01");
 			this.control.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.control.Location = new System.Drawing.Point(0, 0);
 			this.control.Name = "control";

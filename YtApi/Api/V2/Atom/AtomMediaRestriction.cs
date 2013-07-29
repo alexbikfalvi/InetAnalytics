@@ -17,38 +17,87 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a media:restriction atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomMediaRestriction : Atom
 	{
-		private AtomMediaRestriction() { }
+		internal const string xmlPrefix = "media";
+		internal const string xmlName = "restriction";
 
-		public static AtomMediaRestriction Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomMediaRestriction(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomMediaRestriction atom = new AtomMediaRestriction();
-
-			// Attributes
-			atom.Type = element.Attribute(XName.Get("type")).Value;
-			atom.Relationship = element.Attribute(XName.Get("relationship")).Value;
-
-			// Value
-			atom.Value = element.Value;
-
-			return atom;
+			// Set the attributes.
+			this.Type = element.Attribute("type").Value;
+			this.Relationship = element.Attribute("relationship").Value;
+	
+			// Set the value;
+			this.Value = element.Value;
 		}
 
-		// Attributes
-		public string Type { get; set; }
-		public string Relationship { get; set; }
+		// Public methods.
 
-		// Value
-		public string Value { get; set; }
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaRestriction Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomMediaRestriction(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaRestriction ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+ 				return AtomMediaRestriction.Parse(element.Element(AtomMediaRestriction.xmlPrefix, AtomMediaRestriction.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public string Type { get; private set; }
+		public string Relationship { get; private set; }
+
+		// Value.
+		public string Value { get; private set; }
 	}
 }

@@ -39,9 +39,6 @@ namespace YtAnalytics.Controls.Database
 	{
 		private static string logSource = "Database";
 
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		private Crawler crawler;
 		private DbServer server;
 
@@ -74,7 +71,7 @@ namespace YtAnalytics.Controls.Database
 			this.Dock = DockStyle.Fill;
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>

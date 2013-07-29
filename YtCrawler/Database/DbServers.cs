@@ -67,7 +67,7 @@ namespace YtCrawler.Database
 			this.config = config;
 
 			// Get the ID of the primary database server.
-			string primaryId = Registry.GetValue(this.config.DatabaseConfig.Key.Name, "Primary", null) as string;
+			string primaryId = DotNetApi.Windows.Registry.GetString(this.config.DatabaseConfig.Key.Name, "Primary", null);
 
 			// Create the servers list.
 			foreach (string id in this.config.DatabaseConfig.Servers)
@@ -82,7 +82,7 @@ namespace YtCrawler.Database
 					// If the registry key could not be opened, continue to the next server.
 					if (null == key) continue;
 					// Get the database server type.
-					DbServerType type = (DbServerType)(Registry.GetValue(key.Name, "Type", 0));
+					DbServerType type = (DbServerType)DotNetApi.Windows.Registry.GetInteger(key.Name, "Type", 0);
 					// Create a server instance for the specified configuration.
 					DbServer server;
 					switch (type)

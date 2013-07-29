@@ -28,9 +28,6 @@ namespace YtAnalytics.Forms.Database
 	/// </summary>
 	public partial class FormTableProperties : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		private bool canClose = true;
 
 		/// <summary>
@@ -41,7 +38,7 @@ namespace YtAnalytics.Forms.Database
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>

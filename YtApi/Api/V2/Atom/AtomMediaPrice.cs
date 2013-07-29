@@ -17,35 +17,85 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a media:price atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomMediaPrice : Atom
 	{
-		private AtomMediaPrice() { }
+		internal const string xmlPrefix = "media";
+		internal const string xmlName = "price";
 
-		public static AtomMediaPrice Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomMediaPrice(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomMediaPrice atom = new AtomMediaPrice();
-			XmlNamespace ns = new XmlNamespace(element, top);
-
-			atom.Type = element.Attribute(XName.Get("type")).Value;
-			atom.Price = decimal.Parse(element.Attribute(XName.Get("price")).Value);
-			atom.Currency = element.Attribute(XName.Get("currency")).Value;
-			atom.YtDuration = TimeSpan.Parse(element.Attribute(XName.Get("duration",ns["yt"])).Value);
-
-			return atom;
+			// Set the attributes.
+			this.Type = element.Attribute("type").Value;
+			this.Price = element.Attribute("price").Value.ToDecimal();
+			this.Currency = element.Attribute("currency").Value;
+			this.YtDuration = element.Attribute("yt", "duration").Value.ToTimeSpan();
 		}
 
-		public string Type { get; set; }
-		public decimal Price { get; set; }
-		public string Currency { get; set; }
-		public TimeSpan YtDuration { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaPrice Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomMediaPrice(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaPrice ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomMediaPrice.Parse(element.Element(AtomMediaPrice.xmlPrefix, AtomMediaPrice.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes
+		public string Type { get; private set; }
+		public decimal Price { get; private set; }
+		public string Currency { get; private set; }
+		public TimeSpan YtDuration { get; private set; }
 	}
 }

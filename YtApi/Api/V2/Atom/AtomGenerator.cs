@@ -17,36 +17,87 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing an xmlns:generator atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomGenerator : Atom
 	{
-		private AtomGenerator() { }
+		internal const string xmlPrefix = null;
+		internal const string xmlName = "generator";
 
-		public static AtomGenerator Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomGenerator(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomGenerator atom = new AtomGenerator();
+			// Set the attributes.
+			this.Version = element.Attribute("version").Value;
+			this.Uri = element.Attribute("uri").Value.ToUri();
 
-			// Attributes
-			atom.Version = element.Attribute(XName.Get("version")).Value;
-			atom.Uri = new Uri(element.Attribute(XName.Get("uri")).Value);
-
-			// Value
-			atom.Value = element.Value;
-
-			return atom;
+			// Set the value.
+			this.Value = element.Value;
 		}
 
-		public string Version { get; set; }
-		public Uri Uri { get; set; }
+		// Public methods.
 
-		public string Value { get; set; }
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomGenerator Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomGenerator(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomGenerator ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomGenerator.Parse(element.Element(AtomGenerator.xmlPrefix, AtomGenerator.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public string Version { get; private set; }
+		public Uri Uri { get; private set; }
+
+		// Value.
+		public string Value { get; private set; }
 	}
 }

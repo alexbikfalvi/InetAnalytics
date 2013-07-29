@@ -33,9 +33,6 @@ namespace YtAnalytics.Forms.Database
 	/// </summary>
 	public partial class FormChangePassword : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		private SecureString oldPassword;
 		private object state;
 
@@ -47,7 +44,7 @@ namespace YtAnalytics.Forms.Database
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		// Public events.

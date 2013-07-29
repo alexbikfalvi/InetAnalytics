@@ -17,42 +17,93 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a yt:statistics atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomYtStatistics : Atom
 	{
-		private AtomYtStatistics() { }
+		internal const string xmlPrefix = "yt";
+		internal const string xmlName = "statistics";
 
-		public static AtomYtStatistics Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomYtStatistics(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomYtStatistics atom = new AtomYtStatistics();
 			XAttribute attr;
 
-			// Mandatory attributes
-			atom.ViewCount = int.Parse(element.Attribute(XName.Get("viewCount")).Value);
+			// Set the mandatory attributes
+			this.ViewCount = element.Attribute("viewCount").Value.ToInt();
 
-			// Optional attributes
-			atom.VideoWatchCount = (attr = element.Attribute(XName.Get("videoWatchCount"))) != null ? (int?)int.Parse(attr.Value) : null;
-			atom.SubscriberCount = (attr = element.Attribute(XName.Get("subscriberCount"))) != null ? (int?)int.Parse(attr.Value) : null;
-			atom.LastWebAccess = (attr = element.Attribute(XName.Get("lastWebAccess"))) != null ? (DateTime?)DateTime.Parse(attr.Value) : null;
-			atom.FavoriteCount = (attr = element.Attribute(XName.Get("favoriteCount"))) != null ? (int?)int.Parse(attr.Value) : null;
-			atom.TotalUploadViews = (attr = element.Attribute(XName.Get("totalUploadViews"))) != null ? (Int64?)Int64.Parse(attr.Value) : null;
-
-			return atom;
+			// Set the  optional attributes
+			this.VideoWatchCount = (attr = element.Attribute("videoWatchCount")) != null ? attr.Value.ToInt() as int? : null;
+			this.SubscriberCount = (attr = element.Attribute("subscriberCount")) != null ? attr.Value.ToInt() as int? : null;
+			this.LastWebAccess = (attr = element.Attribute("lastWebAccess")) != null ? attr.Value.ToDateTime() as DateTime? : null;
+			this.FavoriteCount = (attr = element.Attribute("favoriteCount")) != null ? attr.Value.ToInt() as int? : null;
+			this.TotalUploadViews = (attr = element.Attribute("totalUploadViews")) != null ? attr.Value.ToInt64() as Int64? : null;
 		}
 
-		public int ViewCount { get; set; }
-		public int? VideoWatchCount { get; set; }
-		public int? SubscriberCount { get; set; }
-		public DateTime? LastWebAccess { get; set; }
-		public int? FavoriteCount { get; set; }
-		public Int64? TotalUploadViews { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtStatistics Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomYtStatistics(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtStatistics ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomYtStatistics.Parse(element.Element(AtomYtStatistics.xmlPrefix, AtomYtStatistics.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public int ViewCount { get; private set; }
+		public int? VideoWatchCount { get; private set; }
+		public int? SubscriberCount { get; private set; }
+		public DateTime? LastWebAccess { get; private set; }
+		public int? FavoriteCount { get; private set; }
+		public Int64? TotalUploadViews { get; private set; }
 	}
 }

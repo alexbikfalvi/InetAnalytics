@@ -17,10 +17,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security;
 
 namespace YtApi.Api.V2
 {
@@ -29,13 +26,13 @@ namespace YtApi.Api.V2
 	/// </summary>
 	public class YouTubeSettings
 	{
-		private string key;
+		private SecureString key;
 
 		/// <summary>
 		/// Settings to make requests to the YouTube API.
 		/// </summary>
 		/// <param name="key">The developer key.</param>
-		public YouTubeSettings(string key)
+		public YouTubeSettings(SecureString key)
 		{
 			this.key = key;
 		}
@@ -43,6 +40,6 @@ namespace YtApi.Api.V2
 		/// <summary>
 		/// Returns the developer key.
 		/// </summary>
-		public string Key { get { return this.key; } }
+		public SecureString Key { get { return this.key; } }
 	}
 }

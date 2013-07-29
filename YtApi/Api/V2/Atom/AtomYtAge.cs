@@ -17,37 +17,79 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// A class representing a user's age.
+	/// A class representing a yt:age atom.
 	/// </summary>
 	[Serializable]
-	public sealed class AtomYtAge
+	public sealed class AtomYtAge : Atom
 	{
-		private AtomYtAge() { }
+		internal const string xmlPrefix = "yt";
+		internal const string xmlName = "age";
 
-		public static AtomYtAge Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomYtAge(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomYtAge atom = new AtomYtAge();
+			// Set the value.
+			this.Value = element.Value.ToInt(-1);
+		}
+
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtAge Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomYtAge(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtAge ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
 
 			try
 			{
-				atom.Value = int.Parse(element.Value);
+				// Parse the children for the first element.
+ 				return AtomYtAge.Parse(element.Element(AtomYtAge.xmlPrefix, AtomYtAge.xmlName), mandatory);
 			}
-			catch (FormatException)
+			catch (Exception exception)
 			{
-				atom.Value = -1;
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
 			}
-
-			return atom;
 		}
 
-		public int Value { get; set; }
+		// Properties.
+
+		// Value.
+		public int Value { get; private set; }
 	}
 }

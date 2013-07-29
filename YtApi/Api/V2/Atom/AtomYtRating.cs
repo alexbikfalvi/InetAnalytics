@@ -17,30 +17,81 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a yt:rating atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomYtRating : Atom
 	{
-		private AtomYtRating() { }
+		internal const string xmlPrefix = "yt";
+		internal const string xmlName = "rating";
 
-		public static AtomYtRating Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomYtRating(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomYtRating atom = new AtomYtRating();
-
-			atom.NumDislikes = int.Parse(element.Attribute(XName.Get("numDislikes")).Value); ;
-			atom.NumLikes = int.Parse(element.Attribute(XName.Get("numLikes")).Value);
-
-			return atom;
+			// Set the attributes.
+			this.NumDislikes = element.Attribute("numDislikes").Value.ToInt(); ;
+			this.NumLikes = element.Attribute("numLikes").Value.ToInt();
 		}
 
-		public int NumDislikes { get; set; }
-		public int NumLikes { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtRating Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomYtRating(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtRating ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomYtRating.Parse(element.Element(AtomYtRating.xmlPrefix, AtomYtRating.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Public properties.
+
+		// Attributes.
+		public int NumDislikes { get; private set; }
+		public int NumLikes { get; private set; }
 	}
 }

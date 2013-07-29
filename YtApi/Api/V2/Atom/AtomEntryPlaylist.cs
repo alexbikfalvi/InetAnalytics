@@ -17,20 +17,41 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// A class representing a playlist entry.
+	/// A class representing a playlist entry atom.
 	/// </summary>
 	[Serializable]
 	public class AtomEntryPlaylist : AtomEntry
 	{
-		private AtomEntryPlaylist() { }
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomEntryPlaylist(XElement element)
+			: base(element)
+		{
+			try
+			{
+				this.Published = AtomPublished.ParseChild(element, false);
+				this.Updated = AtomUpdated.ParseChild(element, true);
+				this.Categories = AtomCategoryList.ParseChildren(element);
+				this.Title = AtomTitle.ParseChild(element, true);
+				this.Content = AtomContent.ParseChild(element, false);
+				this.Author = AtomAuthor.ParseChild(element, false);
+				this.Summary = AtomSummary.ParseChild(element, false);
+				this.YtPlaylistId = AtomYtPlaylistId.ParseChild(element, true);
+				this.YtCountHint = AtomYtCountHint.ParseChild(element, true);
+			}
+			catch (Exception exception)
+			{
+				throw new AtomException("Cannot parse playlist entry.", element, exception);
+			}
+		}
 
 		/// <summary>
 		/// Parses an XML string into a comment entry atom.
@@ -39,52 +60,63 @@ namespace YtApi.Api.V2.Atom
 		/// <returns>The comment entry atom.</returns>
 		public static AtomEntryPlaylist Parse(string data)
 		{
-			return AtomEntryPlaylist.Parse(XDocument.Parse(data).Root);
+			return AtomEntryPlaylist.Parse(XDocument.Parse(data).Root, true);
 		}
 
 		/// <summary>
-		/// Parses an XML entry element into a comment entry atom.
+		/// Parses the XML element into a new atom instance.
 		/// </summary>
 		/// <param name="element">The XML element.</param>
-		/// <returns>The comment entry atom.</returns>
-		public static AtomEntryPlaylist Parse(XElement element, XmlNamespace top = null)
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomEntryPlaylist Parse(XElement element, bool mandatory)
 		{
-			AtomEntryPlaylist atom = new AtomEntryPlaylist();
-			XmlNamespace ns = new XmlNamespace(element, top);
-			XElement el;
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomEntryPlaylist(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomEntryPlaylist ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
 
 			try
 			{
-				AtomEntry.Parse(element, atom, ns);
-
-				atom.Published = (el = element.Element(XName.Get("published", ns["xmlns"]))) != null ? AtomPublished.Parse(el) : null;
-				atom.Updated = AtomUpdated.Parse(element.Element(XName.Get("updated", ns["xmlns"])));
-				atom.Category = new List<AtomCategory>();
-				foreach (XElement child in element.Elements(XName.Get("category", ns["xmlns"])))
-					atom.Category.Add(AtomCategory.Parse(child));
-				atom.Title = AtomTitle.Parse(element.Element(XName.Get("title", ns["xmlns"])));
-				atom.Content = (el = element.Element(XName.Get("content", ns["xmlns"]))) != null ? AtomContent.Parse(el) : null;
-				atom.Author = (el = element.Element(XName.Get("author", ns["xmlns"]))) != null ? AtomAuthor.Parse(el, ns) : null;
-				atom.Summary = (el = element.Element(XName.Get("summary", ns["xmlns"]))) != null ? AtomSummary.Parse(el) : null;
-				atom.YtPlaylistId = AtomYtPlaylistId.Parse(element.Element(XName.Get("playlistId", ns["yt"])));
-				atom.YtCountHint = AtomYtCountHint.Parse(element.Element(XName.Get("countHint", ns["yt"])));
+				// Parse the children for the first element.
+				return AtomEntryPlaylist.Parse(element.Element(AtomEntryPlaylist.xmlPrefix, AtomEntryPlaylist.xmlName), mandatory);
 			}
 			catch (Exception exception)
 			{
-				throw new AtomException("Cannot parse playlist entry.", element, ns, exception);
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
 			}
-
-			return atom;
 		}
 
-		public AtomPublished Published { get; set; }
-		public AtomUpdated Updated { get; set; }
-		public List<AtomCategory> Category { get; set; }
-		public AtomTitle Title { get; set; }
-		public AtomContent Content { get; set; }
-		public AtomAuthor Author { get; set; }
-		public AtomSummary Summary { get; set; }
-		public AtomYtPlaylistId YtPlaylistId { get; set; }
-		public AtomYtCountHint YtCountHint { get; set; }
+		// Properties.
+
+		// Elements.
+		public AtomPublished Published { get; private set; }
+		public AtomUpdated Updated { get; private set; }
+		public AtomCategoryList Categories { get; private set; }
+		public AtomTitle Title { get; private set; }
+		public AtomContent Content { get; private set; }
+		public AtomAuthor Author { get; private set; }
+		public AtomSummary Summary { get; private set; }
+		public AtomYtPlaylistId YtPlaylistId { get; private set; }
+		public AtomYtCountHint YtCountHint { get; private set; }
 	}
 }

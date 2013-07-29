@@ -17,30 +17,79 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// A class representing a user's favorite music.
+	/// A class representing a yt:music atom.
 	/// </summary>
 	[Serializable]
-	public sealed class AtomYtMusic
+	public sealed class AtomYtMusic : Atom
 	{
-		private AtomYtMusic() { }
+		internal const string xmlPrefix = "yt";
+		internal const string xmlName = "music";
 
-		public static AtomYtMusic Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomYtMusic(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomYtMusic atom = new AtomYtMusic();
-
-			atom.Value = element.Value;
-
-			return atom;
+			// Set the value.
+			this.Value = element.Value;
 		}
 
-		public string Value { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtMusic Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomYtMusic(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtMusic ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomYtMusic.Parse(element.Element(AtomYtMusic.xmlPrefix, AtomYtMusic.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Value.
+		public string Value { get; private set; }
 	}
 }

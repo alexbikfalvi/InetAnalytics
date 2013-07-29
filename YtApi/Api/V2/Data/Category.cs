@@ -17,11 +17,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -62,32 +57,4 @@ namespace YtApi.Api.V2.Data
 		public string Term { get { return this.term; } }
 		public string Label { get { return this.label; } }
 	}
-
-    /// <summary>
-    /// A YouTube category list.
-    /// </summary>
-    public class CategoryList : List<Category>
-    {
-        /// <summary>
-        /// Creates a new category list based on a collection of atom objects.
-        /// </summary>
-        /// <param name="atoms">The collection of atom objects.</param>
-        public CategoryList(ICollection<AtomCategory> atoms)
-            : base(atoms.Count)
-        {
-            foreach (AtomCategory atom in atoms)
-                this.Add(new Category(atom));
-        }
-
-        /// <summary>
-        /// Creates a new category list based on a collection of atom objects.
-        /// </summary>
-        /// <param name="atoms">The collection of atom objects.</param>
-        public CategoryList(ICollection<AtomMediaCategory> atoms)
-            : base(atoms.Count)
-        {
-            foreach (AtomMediaCategory atom in atoms)
-                this.Add(new Category(atom));
-        }
-    }
 }

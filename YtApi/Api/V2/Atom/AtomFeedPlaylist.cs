@@ -18,10 +18,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
@@ -31,7 +29,34 @@ namespace YtApi.Api.V2.Atom
 	[Serializable]
 	public sealed class AtomFeedPlaylist : AtomFeed
 	{
-		private AtomFeedPlaylist() { }
+		/// <summary>
+		/// Creates a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomFeedPlaylist(XElement element)
+			: base(element)
+		{
+			try
+			{
+				foreach (XElement child in element.Elements(AtomEntry.xmlPrefix, AtomEntry.xmlName))
+				{
+					try
+					{
+						// Add the playlist atom to the entries list, when parsed successfully.
+						this.Entries.Add(AtomEntryPlaylist.Parse(child, true));
+					}
+					catch (AtomException exception)
+					{
+						// Otherwise, add the exception to entry failure list.
+						this.Failures.Add(exception);
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+				throw new AtomException("Cannot parse the playlist feed.", element, exception);
+			}
+		}
 
 		/// <summary>
 		/// Parse an XML string into an playlist feed atom.
@@ -40,37 +65,7 @@ namespace YtApi.Api.V2.Atom
 		/// <returns>The playlist feed atom.</returns>
 		public static AtomFeedPlaylist Parse(string data)
 		{
-			XElement element = XDocument.Parse(data).Root;
-			XmlNamespace ns = new XmlNamespace(element);
-
-			AtomFeedPlaylist atom = new AtomFeedPlaylist();
-
-			try
-			{
-				AtomFeed.Parse(element, atom, ns);
-
-				atom.Entry = new List<AtomEntry>();
-				atom.EntryFailure = new List<AtomException>();
-				foreach (XElement child in element.Elements(XName.Get("entry", ns["xmlns"])))
-				{
-					try
-					{
-						// Add the playlist atom to the entries list, when parsed successfully.
-						atom.Entry.Add(AtomEntryPlaylist.Parse(child, ns));
-					}
-					catch (AtomException exception)
-					{
-						// Otherwise, add the exception to entry failure list.
-						atom.EntryFailure.Add(exception);
-					}
-				}
-			}
-			catch (Exception exception)
-			{
-				throw new AtomException("Cannot parse the playlist feed.", element, ns, exception);
-			}
-
-			return atom;
+			return new AtomFeedPlaylist(XDocument.Parse(data).Root);
 		}
 	}
 }

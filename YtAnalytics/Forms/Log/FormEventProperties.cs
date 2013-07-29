@@ -28,9 +28,6 @@ namespace YtAnalytics.Forms.Log
 	/// </summary>
 	public partial class FormEventProperties : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
@@ -39,7 +36,7 @@ namespace YtAnalytics.Forms.Log
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>

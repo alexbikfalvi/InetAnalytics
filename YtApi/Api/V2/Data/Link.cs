@@ -17,10 +17,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -47,40 +43,4 @@ namespace YtApi.Api.V2.Data
 		public Uri Href { get { return this.atom.Href; } }
 		public bool? HasEntries { get { return this.atom.YtHasEntries; } }
 	}
-
-    /// <summary>
-    /// A YouYube data link list.
-    /// </summary>
-    public class LinkList : List<Link>
-    {
-		private Uri previous = null;
-		private Uri next = null;
-
-        /// <summary>
-        /// Creates a link list based on a collection of atom objects.
-        /// </summary>
-        /// <param name="atoms"></param>
-        public LinkList(ICollection<AtomLink> atoms)
-            : base(atoms.Count)
-        {
-			foreach (AtomLink atom in atoms)
-			{
-				this.Add(new Link(atom));
-				switch (atom.Rel.ToLower())
-				{
-					case "previous": this.previous = atom.Href; break;
-					case "next": this.next = atom.Href; break;
-				}	
-			}
-        }
-
-		/// <summary>
-		/// Returns the previous link.
-		/// </summary>
-		public Uri Previous { get { return this.previous; } }
-		/// <summary>
-		/// Returns the next link.
-		/// </summary>
-		public Uri Next { get { return this.next; } }
-    }
 }

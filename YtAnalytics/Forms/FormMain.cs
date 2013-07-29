@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,19 +47,6 @@ namespace YtAnalytics.Forms
 		// Crawler.
 		private Crawler crawler;
 
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
-		//// Side menu items.
-		//private SideMenuItem sideMenuBrowse;
-		//private SideMenuItem sideMenuDatabase;
-		//private SideMenuItem sideMenuSpiders;
-		//private SideMenuItem sideMenuPlanetLab;
-		//private SideMenuItem sideMenuConfiguration;
-		//private SideMenuItem sideMenuLog;
-		//private SideMenuItem sideMenuComments;
-		//private SideMenuItem sideMenuTesting;
-
 		// Tree view nodes.
 		private TreeNode treeNodeBrowserApi2;
 		private TreeNode treeNodeBrowserApi2VideosFeedsInfo;
@@ -100,11 +87,8 @@ namespace YtAnalytics.Forms
 		private TreeNode treeNodeCommentsUsers;
 		private TreeNode treeNodeCommentsPlaylists;
 
-		// Side control.
-		private Control controlSideSelected = null;
-
 		// Panel control.
-		private Control controlPanelSelected = null;
+		private Control controlPanel = null;
 
 		// Panel controls.
 		private ControlYtApi2Info controlYtApi2 = new ControlYtApi2Info();
@@ -153,7 +137,8 @@ namespace YtAnalytics.Forms
 		/// </summary>
 		public FormMain(Crawler crawler)
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Initialize the crawler
 			this.crawler = crawler;
@@ -368,86 +353,25 @@ namespace YtAnalytics.Forms
 			this.treeNodeTestingWebRequest.Tag = this.controlTestingWebRequest;
 
 			this.treeNodeSettings.Tag = this.controlSettings;
-			this.controlPanelLog.Tag = this.controlLog;
+			this.controlSideLog.Tag = this.controlLog;
 			this.treeNodeComments.Tag = this.controlCommentsInfo;
 			this.treeNodeCommentsVideos.Tag = this.controlCommentsVideos;
 			this.treeNodeCommentsUsers.Tag = this.controlCommentsUsers;
 			this.treeNodeCommentsPlaylists.Tag = this.controlCommentsPlaylists;
 
 			// Add the tree nodes to the side panel tree views.
-			this.controlPanelBrowser.AddRange(
+			this.controlSideBrowser.Nodes.AddRange(
 				new TreeNode[] {
 					this.treeNodeBrowserApi2,
 					this.treeNodeBrowserApi3,
 					this.treeNodeBrowserWeb
 				});
-			this.controlPanelDatabase.Add(this.treeNodeDatabaseServers);
-			this.controlPanelSpiders.Add(this.treeNodeSpidersLocal);
-			this.controlPanelPlanetLab.Add(this.treeNodePlanetLab);
-			this.controlPanelTesting.Add(this.treeNodeTestingWebRequest);
-			this.controlPanelConfiguration.Add(this.treeNodeSettings);
-			this.controlPanelComments.Add(this.treeNodeComments);
-
-			//// Create the side menu items
-			//this.sideMenuBrowse = this.sideMenu.AddItem(
-			//	"Browser",
-			//	Resources.ServersBrowse_16,
-			//	Resources.ServersBrowse_32,
-			//	this.OnSideMenuSelect,
-			//	this.controlPanelBrowser
-			//	);
-			//this.sideMenuDatabase = this.sideMenu.AddItem(
-			//	"Database",
-			//	Resources.ServersDatabase_16,
-			//	Resources.ServersDatabase_32,
-			//	this.OnSideMenuSelect,
-			//	this.controlPanelDatabase
-			//	);
-			//this.sideMenuSpiders = this.sideMenu.AddItem(
-			//	"Spiders",
-			//	Resources.ServersCube_16,
-			//	Resources.ServersCube_32,
-			//	this.OnSideMenuSelect,
-			//	this.controlPanelSpiders
-			//	);
-			//this.sideMenuPlanetLab = this.sideMenu.AddItem(
-			//	"Planet Lab",
-			//	Resources.GlobeLab_16,
-			//	Resources.GlobeLab_32,
-			//	this.OnSideMenuSelect,
-			//	this.controlPanelPlanetLab
-			//	);
-			//this.sideMenuTesting = this.sideMenu.AddItem(
-			//	"Testing",
-			//	Resources.TestsLarge_16,
-			//	Resources.TestsLarge_32,
-			//	this.OnSideMenuSelect,
-			//	this.controlPanelTesting
-			//	);
-			//this.sideMenuConfiguration = this.sideMenu.AddItem(
-			//	"Configuration",
-			//	Resources.ConfigurationSettings_16,
-			//	Resources.ConfigurationSettings_32,
-			//	this.OnSideMenuSelect,
-			//	this.controlPanelConfiguration
-			//	);
-			//this.sideMenuLog = this.sideMenu.AddItem(
-			//	"Log",
-			//	Resources.Log_16,
-			//	Resources.Log_32,
-			//	this.OnSideMenuSelectLog,
-			//	this.controlPanelLog
-			//	);
-			//this.sideMenuComments = this.sideMenu.AddItem(
-			//	"Comments",
-			//	Resources.Comments_16,
-			//	Resources.Comments_32,
-			//	this.OnSideMenuSelect,
-			//	this.controlPanelComments
-			//	);
-
-			this.sideMenu.VisibleItems = this.crawler.Config.ConsoleSideMenuVisibleItems;
-			this.sideMenu.ItemVisibilityChanged += this.OnSideMenuItemVisibilityChanged;
+			this.controlSideDatabase.Nodes.Add(this.treeNodeDatabaseServers);
+			this.controlSideSpiders.Nodes.Add(this.treeNodeSpidersLocal);
+			this.controlSidePlanetLab.Nodes.Add(this.treeNodePlanetLab);
+			this.controlSideTesting.Nodes.Add(this.treeNodeTestingWebRequest);
+			this.controlSideConfiguration.Nodes.Add(this.treeNodeSettings);
+			this.controlSideComments.Nodes.Add(this.treeNodeComments);
 
 			// Initialize the controls.
 			this.controlYtApi2Video.Initialize(this.crawler);
@@ -569,43 +493,43 @@ namespace YtAnalytics.Forms
 			this.controlCommentsInfo.ClickUsers += this.BrowserCommentsUsersClick;
 			this.controlCommentsInfo.ClickPlaylists += this.BrowserCommentsPlaylistsClick;
 
-			// Selected control
-			this.controlPanelSelected = this.labelNotAvailable;
+			// Set the selected control.
+			this.controlPanel = this.labelNotAvailable;
+
+			// Initialize the side controls.
+			this.controlSideBrowser.Initialize();
+			this.controlSideDatabase.Initialize();
+			this.controlSideSpiders.Initialize();
+			this.controlSidePlanetLab.Initialize();
+			this.controlSideTesting.Initialize();
+			this.controlSideLog.Initialize();
+			this.controlSideConfiguration.Initialize();
+			this.controlSideComments.Initialize();
+
+			// Configure the side menu with the last saved configuration.
+			this.sideMenu.VisibleItems = this.crawler.Config.ConsoleSideMenuVisibleItems;
+			this.sideMenu.SelectedIndex = this.crawler.Config.ConsoleSideMenuSelectedItem;
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
+
+		// Protected methods.
 
 		/// <summary>
-		/// An event handler called when the selected side menu item has changed.
+		/// An event handler called when the form is being closed.
 		/// </summary>
-		/// <param name="item">The side menu item.</param>
-		private void OnSideMenuSelect(SideMenuItem item)
+		/// <param name="e">The event arguments.</param>
+		protected override void OnClosing(CancelEventArgs e)
 		{
-			// If the tag of the menu item is not null.
-			if (null != item.Tag)
-			{
-				// Convert the tag to a control.
-				ControlSide control = item.Tag as ControlSide;
-
-				// If the selected control is different from the new control.
-				if (control != this.controlSideSelected)
-				{
-					// If the current selected side control is not null.
-					if (null != this.controlSideSelected)
-					{
-						// Hide that control.
-						this.controlSideSelected.Hide();
-					}
-					// Show the control.
-					control.Show();
-					// Focus on the control.
-					control.Select();
-					// Set the selected side control.
-					this.controlSideSelected = control;
-				}
-			}
+			// Save the configuration.
+			this.crawler.Config.ConsoleSideMenuVisibleItems = this.sideMenu.VisibleItems;
+			this.crawler.Config.ConsoleSideMenuSelectedItem = this.sideMenu.SelectedIndex ?? 0;
+			// Call the base class event handler.
+			base.OnClosing(e);
 		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the selected side menu log has changed.
@@ -614,271 +538,260 @@ namespace YtAnalytics.Forms
 		private void OnSideMenuSelectLog(SideMenuItem item)
 		{
 			// Select the side menu item.
-			this.OnSideMenuSelect(item);
+			//this.OnSideMenuSelect(item);
 			// Refresh the log.
-			this.controlLog.DateChanged(this, new DateRangeEventArgs(this.controlPanelLog.Calendar.SelectionStart, this.controlPanelLog.Calendar.SelectionEnd));
-		}
-
-		/// <summary>
-		/// An event handler called when the visibility of a side menu item has changed.
-		/// </summary>
-		/// <param name="sideMenu">The side menu.</param>
-		private void OnSideMenuItemVisibilityChanged(SideMenu sideMenu)
-		{
-			// Update the confguration.
-			this.crawler.Config.ConsoleSideMenuVisibleItems = this.sideMenu.VisibleItems;
+			this.controlLog.DateChanged(this, new DateRangeEventArgs(this.controlSideLog.Calendar.SelectionStart, this.controlSideLog.Calendar.SelectionEnd));
 		}
 
 		/// <summary>
 		/// An event handler called when the right panel control selection has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnControlChanged(object sender, ControlEventArgs e)
+		private void OnControlChanged(Control sender, Control control)
 		{
 			// If the selected control has not changed, do nothing.
-			if (e.Control == this.controlPanelSelected) return;
+			if (control == this.controlPanel) return;
 
 			// Hide the current selected control.
-			if (null != this.controlPanelSelected)
+			if (null != this.controlPanel)
 			{
-				this.controlPanelSelected.Hide();
+				this.controlPanel.Hide();
 			}
 
-			// If the tree node tag is not null.
-			if (null != e.Control)
+			// If the control is not null.
+			if (null != control)
 			{
 				// Show the control.
-				e.Control.Show();
+				control.Show();
 				// Set the selected control.
-				this.controlPanelSelected = e.Control;
+				this.controlPanel = control;
 			}
 			else
 			{
 				// Display the default message.
 				this.labelNotAvailable.Show();
 				// Set the selected control.
-				this.controlPanelSelected = this.labelNotAvailable;
+				this.controlPanel = this.labelNotAvailable;
 			}
+
 		}
 
 		private void BrowserApi2VideosGlobalClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2VideosFeedsInfo;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideosFeedsInfo;
 		}
 
 		private void BrowserApi2VideosUserClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2UserFeedsInfo;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UserFeedsInfo;
 		}
 
 		private void BrowserApi2CategoriesClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2VideoCategories;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoCategories;
 		}
 
 		private void BrowserApi2VideoClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
 		}
 
 		private void BrowserApi2VideoCommentsClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
 		}
 
 		private void BrowserApi2SearchFeedClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2SearchFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2SearchFeed;
 		}
 
 		private void BrowserApi2StandardFeedClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2StandardFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2StandardFeed;
 		}
 
 		private void BrowserApi2RelatedVideosFeedClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
 		}
 
 		private void BrowserApi2ResponseVideosFeedClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
 		}
 
 		private void BrowserApi2UserClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2User;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2User;
 		}
 
 		private void BrowserApi2UserUploadsClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
 		}
 
 		private void BrowserApi2UserFavoritesClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
 		}
 
 		private void BrowserApi2UserPlaylistsClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
 		}
 
 		private void BrowserApi2PlaylistVideosClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
 		}
 
 		private void BrowserWebVideosClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
 		}
 
 		private void BrowserSpiderStandardFeedsClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuSpiders;
-			this.controlPanelSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
+			this.sideMenu.SelectedItem = this.sideMenuItemSpiders;
+			this.controlSideSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
 		}
 
 		private void PlanetLabSitesClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuPlanetLab;
-			this.controlPanelPlanetLab.SelectedNode = this.treeNodePlanetLabSites;
+			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
+			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSites;
 		}
 
 		private void BrowserCommentsVideosClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuComments;
-			this.controlPanelComments.SelectedNode = this.treeNodeCommentsVideos;
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
 		}
 
 		private void BrowserCommentsUsersClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuComments;
-			this.controlPanelComments.SelectedNode = this.treeNodeCommentsUsers;
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
 		}
 
 		private void BrowserCommentsPlaylistsClick(object sender, EventArgs e)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuComments;
-			this.controlPanelComments.SelectedNode = this.treeNodeCommentsPlaylists;
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
 		}
 
 		private void ViewVideoInApiV2(Video video)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
 			this.controlYtApi2Video.View(video);
 		}
 
 		private void ViewVideoCommentsInApiV2(string video)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
 			this.controlYtApi2CommentsFeed.View(video);
 		}
 
 		private void ViewRelatedVideosInApiV2(Video video)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
 			this.controlYtApi2RelatedFeed.View(video.Id);
 		}
 
 		private void ViewResponseVideosInApiV2(Video video)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
 			this.controlYtApi2ResponseFeed.View(video.Id);
 		}
 
 		private void ViewApiV2User(string user)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2User;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2User;
 			this.controlYtApi2Profile.View(user);
 		}
 
 		private void ViewApiV2UploadedVideos(Profile profile)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
 			this.controlYtApi2UploadsFeed.View(profile.Id);
 		}
 
 		private void ViewApiV2FavoritedVideos(Profile profile)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
 			this.controlYtApi2FavoritesFeed.View(profile.Id);
 		}
 
 		private void ViewApiV2Playlists(Profile profile)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
 			this.controlYtApi2PlaylistsFeed.View(profile.Id);
 		}
 
 		private void ViewApiV2Playlist(string playlist)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
 			this.controlYtApi2PlaylistFeed.View(playlist);
 		}
 
 		private void ViewVideoInWeb(Video video)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuBrowse;
-			this.controlPanelBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
+			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
+			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
 			this.controlWebStatistics.View(video.Id);
 		}
 
 		private void CommentVideo(string video)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuComments;
-			this.controlPanelComments.SelectedNode = this.treeNodeCommentsVideos;
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
 			this.controlCommentsVideos.AddComment(video);
 		}
 
 		private void CommentUser(string user)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuComments;
-			this.controlPanelComments.SelectedNode = this.treeNodeCommentsUsers;
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
 			this.controlCommentsUsers.AddComment(user);
 		}
 
 		private void CommentPlaylist(string playlist)
 		{
-			this.sideMenu.SelectedItem = this.sideMenuComments;
-			this.controlPanelComments.SelectedNode = this.treeNodeCommentsPlaylists;
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
 			this.controlCommentsPlaylists.AddComment(playlist);
 		}
 
 		/// <summary>
-		/// An event handler called when the user closes the current window and the application.
+		/// An event handler called when the user selects the exit menu item.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnClose(object sender, EventArgs e)
+		private void OnExit(object sender, EventArgs e)
 		{
 			this.Close();
 		}
@@ -914,159 +827,5 @@ namespace YtAnalytics.Forms
 			// Refresh the log.
 			this.controlLog.DateRefresh(sender, e);
 		}
-
-		// private void TestApi(object sender, EventArgs e)
-	   // {
-	   //	 ytService.Key = FormMain.apiKey;
-	   //	 this.videosResource = new VideosResource(this.ytService, new NullAuthenticator());
-	   //	 this.list = this.videosResource.List("MlMj3VEYBMA", "snippet");
-
-	   //	 try
-	   //	 {
-	   //		 IAsyncResult result = this.list.BeginFetch(new AsyncCallback(this.CallbackApi), this);
-	   //	 }
-	   //	 catch (GoogleApiRequestException exception)
-	   //	 {
-	   //		 this.textBoxResults.AppendText(exception.Message);
-	   //	 }
-	   // }
-
-	   // private void CallbackApi(IAsyncResult result)
-	   // {
-	   //	 if (this.InvokeRequired)
-	   //	 {
-	   //		 this.Invoke(new AsyncCallback(this.CallbackApi), new object[] { result });
-	   //	 }
-	   //	 else
-	   //	 {
-	   //		 try
-	   //		 {
-	   //			 VideoListResponse response = this.list.EndFetch(result);
-
-	   //			 foreach (Google.Apis.Youtube.v3.Data.Video video in response.Items)
-	   //			 {
-	   //				 this.textBoxResults.AppendText("ID: " + video.Id + "\r\n");
-	   //				 this.textBoxResults.AppendText("Etag: " + video.ETag + "\r\n");
-	   //				 this.textBoxResults.AppendText("Title: " + video.Snippet.Title + "\r\n");
-	   //			 }
-	   //		 }
-	   //		 catch (GoogleApiRequestException exception)
-	   //		 {
-	   //			 this.textBoxResults.AppendText(exception.Message);
-	   //		 }
-	   //	 }
-	   //}
-
-	   // private void TestAjax(object sender, EventArgs e)
-	   // {
-	   //	 try
-	   //	 {
-	   //		 IAsyncResult result = this.ajaxRequest.Begin("MlMj3VEYBMA", this.CallbackAjax);
-	   //	 }
-	   //	 catch (Exception exception)
-	   //	 {
-	   //		 this.textBoxResults.AppendText(exception.Message);
-	   //	 }
-	   // }
-
-	   // private void CallbackAjax(IAsyncResult result)
-	   // {
-	   //	 if (this.InvokeRequired)
-	   //	 {
-	   //		 this.Invoke(new AsyncCallback(this.CallbackAjax), new object[] { result });
-	   //	 }
-	   //	 else
-	   //	 {
-	   //		 try
-	   //		 {
-	   //			 YtApi.Ajax.AjaxVideoStatistics statistics = this.ajaxRequest.End(result);
-
-	   //			 // Serialize the statistics object
-	   //			 BinaryFormatter formatter = new BinaryFormatter();
-	   //			 MemoryStream streamWrite = new MemoryStream();
-	   //			 formatter.Serialize(streamWrite, statistics);
-
-	   //			 string data = Convert.ToBase64String(streamWrite.ToArray());
-
-	   //			 MemoryStream streamRead = new MemoryStream();
-	   //			 byte[] bytes = Convert.FromBase64String(data);
-	   //			 streamRead.Write(bytes, 0, bytes.Length);
-
-	   //			 streamRead.Seek(0, SeekOrigin.Begin);
-
-	   //			 YtApi.Ajax.AjaxVideoStatistics stat = (YtApi.Ajax.AjaxVideoStatistics)formatter.Deserialize(streamRead);
-
-	   //			 this.textBoxResults.AppendText(data);
-	   //		 }
-	   //		 catch (Exception exception)
-	   //		 {
-	   //			 this.textBoxResults.AppendText(exception.GetType().ToString() + " " + exception.Message);
-	   //		 }
-	   //	 }
-	   // }
-
-	   // private void TestCrawl(object sender, EventArgs e)
-	   // {
-	   //	 try
-	   //	 {
-	   //		 IAsyncResult result = this.ytRequest.Begin(new Uri("https://gdata.youtube.com/feeds/api/standardfeeds/most_popular"), this.CallbackCrawl);
-	   //	 }
-	   //	 catch (Exception exception)
-	   //	 {
-	   //		 this.textBoxResults.AppendText(exception.Message);
-	   //	 }
-	   // }
-
-	   // private void CallbackCrawl(IAsyncResult result)
-	   // {
-	   //	 if (this.InvokeRequired)
-	   //	 {
-	   //		 this.Invoke(new AsyncCallback(this.CallbackCrawl), new object[] { result });
-	   //	 }
-	   //	 else
-	   //	 {
-	   //		 try
-	   //		 {
-	   //			 Feed<YtApi.Api.V2.Data.Video> feed = this.ytRequest.EndFeedVideo(result);
-	   //		 }
-	   //		 catch (Exception exception)
-	   //		 {
-	   //			 this.textBoxResults.AppendText(exception.GetType().ToString() + " " + exception.Message);
-	   //		 }
-	   //	 }
-	   // }
-
-	   // private void TestCategories(object sender, EventArgs e)
-	   // {
-	   //	 try
-	   //	 {
-	   //		 this.textBoxResults.AppendText("Categories refresh started...\r\n");
-	   //		 IAsyncResult result = this.ytCategories.BeginRefresh(this.CallbackCategories, null);
-	   //	 }
-	   //	 catch (YouTubeException exception)
-	   //	 {
-	   //		 this.textBoxResults.AppendText(exception.GetType().ToString() + " " + exception.Message);
-	   //	 }
-	   // }
-
-	   // private void CallbackCategories(IAsyncResult result)
-	   // {
-	   //	 if (this.InvokeRequired)
-	   //	 {
-	   //		 this.Invoke(new AsyncCallback(this.CallbackCategories), new object[] { result });
-	   //	 }
-	   //	 else
-	   //	 {
-	   //		 try
-	   //		 {
-	   //			 this.ytCategories.EndRefresh(result);
-	   //			 this.textBoxResults.AppendText("Categories refresh completed.\r\n");
-	   //		 }
-	   //		 catch (Exception exception)
-	   //		 {
-	   //			 this.textBoxResults.AppendText(exception.GetType().ToString() + " " + exception.Message);
-	   //		 }
-	   //	 }
-	   // }
 	}
 }

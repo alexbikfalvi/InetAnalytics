@@ -17,9 +17,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using YtAnalytics.Forms;
@@ -27,8 +25,13 @@ using YtCrawler;
 
 namespace YtAnalytics
 {
+	/// <summary>
+	/// A class representing the YouTube Analytics program.
+	/// </summary>
 	static class Program
 	{
+		private static bool showCrash = true;
+
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -37,9 +40,10 @@ namespace YtAnalytics
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			Application.ThreadException += Program.OnThreadException;
 			try
 			{
-				using (Crawler crawler = new Crawler(Registry.CurrentUser, "Software\\Alex Bikfalvi\\YtAnalytics"))
+				using (Crawler crawler = new Crawler(Registry.CurrentUser, Resources.ConfigRootPath))
 				{
 					Application.Run(new FormMain(crawler));
 				}
@@ -48,6 +52,21 @@ namespace YtAnalytics
 			{
 				Application.Run(new FormCrash(exception));
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when an exception occurs during the execution of the application.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private static void OnThreadException(object sender, ThreadExceptionEventArgs e)
+		{
+			// If cannot show the crash form, do nothing.
+			if (!Program.showCrash) return;
+			// Set the show crash flag to false.
+			Program.showCrash = false;
+			// Show the crash form.
+			Application.Run(new FormCrash(e.Exception));
 		}
 	}
 }

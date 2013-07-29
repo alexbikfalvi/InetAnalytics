@@ -64,6 +64,9 @@
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -148,12 +151,6 @@
     <Compile Include="Controls\ControlSettings.Designer.cs">
       <DependentUpon>ControlSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlSide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ControlSide.Designer.cs">
-      <DependentUpon>ControlSide.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ControlSideCalendar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -171,12 +168,6 @@
     </Compile>
     <Compile Include="Controls\Log\ControlLogList.Designer.cs">
       <DependentUpon>ControlLogList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ControlSideTree.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ControlSideTree.Designer.cs">
-      <DependentUpon>ControlSideTree.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoProperties.cs">
       <SubType>UserControl</SubType>
@@ -606,9 +597,6 @@
     <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlSideTree.resx">
-      <DependentUpon>ControlSideTree.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlVideoProperties.resx">
       <DependentUpon>ControlVideoProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -844,6 +832,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ObjectSmallId_48.png" />
+    <None Include="Resources\ObjectSmallId_32.png" />
+    <None Include="Resources\ObjectSmallId_24.png" />
+    <None Include="Resources\ObjectSmallId_16.png" />
+    <None Include="Resources\Busy_48.png" />
+    <None Include="Resources\Busy_32.png" />
+    <None Include="Resources\Busy_24.png" />
+    <None Include="Resources\Busy_16.png" />
     <None Include="Resources\SchemaView_48.png" />
     <None Include="Resources\SchemaView_32.png" />
     <None Include="Resources\SchemaView_24.png" />

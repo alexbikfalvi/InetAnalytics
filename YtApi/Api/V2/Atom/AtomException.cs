@@ -17,13 +17,10 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
@@ -33,21 +30,48 @@ namespace YtApi.Api.V2.Atom
 	[Serializable]
 	public sealed class AtomException : Exception, ISerializable
 	{
-		private string xml;
- 		private XmlNamespace ns;
+		private string xml = null;
+		private string elementPrefixName = null;
+		private string elementLocalName = null;
+
+		/// <summary>
+		/// Creates a new atom exception instance..
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// <param name="elementPrefixName">The XML element prefix name.</param>
+		/// <param name="elementLocalName">The XML element local name.</param>
+		public AtomException(string message, string elementPrefixName, string elementLocalName)
+			: base(message)
+		{
+			this.elementPrefixName = elementPrefixName;
+			this.elementLocalName = elementLocalName;
+		}
+
+		/// <summary>
+		/// Creates a new atom exception instance.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// <param name="xml">The XML element that generated the exception.</param>
+		public AtomException(string message, XElement xml)
+			: base(message)
+		{
+			this.elementPrefixName = xml.GetPrefixOfNamespace(xml.Name.Namespace);
+			this.elementLocalName = xml.Name.LocalName;
+			this.xml = xml.ToString(SaveOptions.None);
+		}
 
 		/// <summary>
 		/// Creates a new atom exception instance.
 		/// </summary>
 		/// <param name="message">The exception message.</param>
 		/// <param name="xml">The XML element that cannot be parsed.</param>
-		/// <param name="ns">The XML namespace.</param>
 		/// <param name="innerException">The inner exception.</param>
-		public AtomException(string message, XElement xml, XmlNamespace ns, Exception innerException)
+		public AtomException(string message, XElement xml, Exception innerException)
 			: base(message, innerException)
 		{
+			this.elementPrefixName = xml.GetPrefixOfNamespace(xml.Name.NamespaceName);
+			this.elementLocalName = xml.Name.LocalName;
 			this.xml = xml.ToString(SaveOptions.None);
-			this.ns = ns;
 		}
 
 		/// <summary>
@@ -58,8 +82,9 @@ namespace YtApi.Api.V2.Atom
 		private AtomException(SerializationInfo info, StreamingContext ctx)
 			: base(info, ctx)
 		{
+			this.elementPrefixName = info.GetValue("elementPrefixName", typeof(string)) as string;
+			this.elementLocalName = info.GetValue("elementLocalName", typeof(string)) as string;
 			this.xml = info.GetValue("xml", typeof(string)) as string;
-			this.ns = info.GetValue("ns", typeof(XmlNamespace)) as XmlNamespace;
 		}
 
 		/// <summary>
@@ -70,19 +95,25 @@ namespace YtApi.Api.V2.Atom
 		[SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
+			info.AddValue("elementPrefixName", this.elementPrefixName);
+			info.AddValue("elementLocalName", this.elementLocalName);
 			info.AddValue("xml", this.xml);
-			info.AddValue("ns", this.ns);
 			base.GetObjectData(info, context);
 		}
+
+		/// <summary>
+		/// Gets the XML element prefix name.
+		/// </summary>
+		public string ElementPrefixName { get { return this.elementPrefixName; } }
+
+		/// <summary>
+		/// Gets the XML element local name.
+		/// </summary>
+		public string ElementLocalName { get { return this.elementLocalName; } }
 
 		/// <summary>
 		/// Gets the XML string that generated the exception.
 		/// </summary>
 		public string Xml { get { return this.xml; } }
-
-		/// <summary>
-		/// Gets the XML namespace.
-		/// </summary>
-		public XmlNamespace Namespace { get { return this.ns; } }
 	}
 }

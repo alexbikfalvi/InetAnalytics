@@ -17,28 +17,79 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a media:player atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomMediaPlayer : Atom
 	{
-		private AtomMediaPlayer() { }
+		internal const string xmlPrefix = "media";
+		internal const string xmlName = "player";
 
-		public static AtomMediaPlayer Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomMediaPlayer(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomMediaPlayer atom = new AtomMediaPlayer();
-
-			atom.Url = new Uri(element.Attribute(XName.Get("url")).Value);
-
-			return atom;
+			// Set the attribute.
+			this.Url = element.Attribute("url").Value.ToUri();
 		}
 
-		public Uri Url { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaPlayer Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomMediaPlayer(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaPlayer ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomMediaPlayer.Parse(element.Element(AtomMediaPlayer.xmlPrefix, AtomMediaPlayer.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public Uri Url { get; private set; }
 	}
 }

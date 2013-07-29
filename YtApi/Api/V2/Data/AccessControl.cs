@@ -17,10 +17,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -85,22 +81,4 @@ namespace YtApi.Api.V2.Data
         public AccessControlAction Action { get { return this.action; } }
         public AccessControlPermission Permission { get { return this.permission; } } 
 	}
-
-	/// <summary>
-	/// A class that represents an access control list.
-	/// </summary>
-	[Serializable]
-    public sealed class AccessControlList : List<AccessControlEntry>
-    {
-        /// <summary>
-        /// Creates a new access control list, based on a collection of atom objects.
-        /// </summary>
-        /// <param name="atoms">The collection of atom objects.</param>
-        public AccessControlList(ICollection<AtomYtAccessControl> atoms)
-            : base(atoms.Count)
-        {
-            foreach (AtomYtAccessControl atom in atoms)
-                this.Add(new AccessControlEntry(atom));
-        }
-    }
 }

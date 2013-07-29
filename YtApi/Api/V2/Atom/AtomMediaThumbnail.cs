@@ -17,41 +17,91 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a media:thumbnail atom
+	/// </summary>
 	[Serializable]
 	public sealed class AtomMediaThumbnail : Atom
 	{
-		private AtomMediaThumbnail() { }
+		internal const string xmlPrefix = "media";
+		internal const string xmlName = "thumbnail";
 
-		public static AtomMediaThumbnail Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomMediaThumbnail(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomMediaThumbnail atom = new AtomMediaThumbnail();
-			XmlNamespace ns = new XmlNamespace(element, top);
 			XAttribute attr;
 
-			// Mandatory attributes
-			atom.Url = new Uri(element.Attribute(XName.Get("url")).Value);
+			// Set the mandatory attributes.
+			this.Url = element.Attribute("url").Value.ToUri();
 
-			// Optional attributes
-			atom.Height = (attr = element.Attribute(XName.Get("height"))) != null ? int.Parse(attr.Value) as int? : null;
-			atom.Width = (attr = element.Attribute(XName.Get("width"))) != null ? int.Parse(attr.Value) as int? : null;
-			atom.Time = (attr = element.Attribute(XName.Get("time"))) != null ? TimeSpan.Parse(attr.Value) as TimeSpan? : null;
-			atom.YtName = (attr = element.Attribute(XName.Get("name", ns["yt"]))) != null ? attr.Value : null;
-
-			return atom;
+			// Set the optional attributes.
+			this.Height = (attr = element.Attribute("height")) != null ? attr.Value.ToInt() as int? : null;
+			this.Width = (attr = element.Attribute("width")) != null ? attr.Value.ToInt() as int? : null;
+			this.Time = (attr = element.Attribute("time")) != null ? attr.Value.ToTimeSpan() as TimeSpan? : null;
+			this.YtName = (attr = element.Attribute("yt", "name")) != null ? attr.Value : null;
 		}
 
-		public Uri Url { get; set; }
-		public int? Height { get; set; }
-		public int? Width { get; set; }
-		public TimeSpan? Time { get; set; }
-		public string YtName { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaThumbnail Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomMediaThumbnail(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaThumbnail ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomMediaThumbnail.Parse(element.Element(AtomMediaThumbnail.xmlPrefix, AtomMediaThumbnail.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public Uri Url { get; private set; }
+		public int? Height { get; private set; }
+		public int? Width { get; private set; }
+		public TimeSpan? Time { get; private set; }
+		public string YtName { get; private set; }
 	}
 }

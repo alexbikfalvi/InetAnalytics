@@ -18,14 +18,8 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Security;
 using DotNetApi.Windows.Controls;
 using YtCrawler;
 
@@ -69,6 +63,7 @@ namespace YtAnalytics.Controls
 			this.numericMessageCloseDelay.Value = (decimal)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds;
 			this.textBoxYtUserName.Text = this.crawler.Config.YouTubeUserName;
 			this.textBoxYtPassword.SecureText = this.crawler.Config.YouTubePassword;
+			this.textBoxYt2Key.SecureText = this.crawler.Config.YouTubeV2ApiKey;
 			this.textBoxLogFile.Text = this.crawler.Config.LogFileName;
 			this.textBoxVideoCommentsFile.Text = this.crawler.Config.CommentsVideosFileName;
 			this.textBoxUserCommentsFile.Text = this.crawler.Config.CommentsUsersFileName;
@@ -83,6 +78,7 @@ namespace YtAnalytics.Controls
 			this.crawler.Config.ConsoleMessageCloseDelay = TimeSpan.FromMilliseconds((double)this.numericMessageCloseDelay.Value);
 			this.crawler.Config.YouTubeUserName = this.textBoxYtUserName.Text;
 			this.crawler.Config.YouTubePassword = this.textBoxYtPassword.SecureText;
+			this.crawler.Config.YouTubeV2ApiKey = this.textBoxYt2Key.SecureText;
 			this.crawler.Config.LogFileName = this.textBoxLogFile.Text;
 			this.crawler.Config.CommentsVideosFileName = this.textBoxVideoCommentsFile.Text;
 			this.crawler.Config.CommentsUsersFileName = this.textBoxUserCommentsFile.Text;

@@ -46,6 +46,7 @@
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\CommentsList.cs" />
     <Compile Include="CrawlerException.cs" />
+    <Compile Include="CrawlerStatic.cs" />
     <Compile Include="Database\Data\DbObject.cs" />
     <Compile Include="Database\Data\DbObjectColumn.cs" />
     <Compile Include="Database\Data\DbObjectDatabase.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="PlanetLab\PlanetLab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CrawlerConfig.cs" />
-    <Compile Include="CrawlerCrypto.cs" />
     <Compile Include="Crawler.cs" />
     <Compile Include="Database\Data\DbObjectStandardFeed.cs" />
     <Compile Include="Spider\Spider.cs" />

@@ -18,26 +18,31 @@
 
 using System;
 using System.Drawing;
+using System.Security;
 using System.Windows.Forms;
+using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using PlanetLab;
 using PlanetLab.Api;
+using PlanetLab.Requests;
 
 namespace YtAnalytics.Controls.PlanetLab
 {
 	/// <summary>
 	/// A control that displays the information of a PlanetLab site.
 	/// </summary>
-	public partial class ControlPlanetLabSiteProperties : ThreadSafeControl
+	public partial class ControlPlanetLabSiteProperties : ControlPlanetLab
 	{
-		private PlSite site = null;
-		private GeoMarkerCircle marker = new GeoMarkerCircle(new PointF());
-
 		private static string notAvailable = "(not available)";
 
 		private static Color colorMarkerLine = Color.FromArgb(153, 51, 51);
 		private static Color colorMarkerFill = Color.FromArgb(255, 51, 51);
+
+		private PlSite site = null;
+		private GeoMarkerCircle marker = new GeoMarkerCircle(new PointF());
+
+		private PlRequestGetSites request = new PlRequestGetSites();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -72,7 +77,66 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 		}
 
+		// Public methods.
+
+		/// <summary>
+		/// Updates the PlanetLab site information with the specified site identifier.
+		/// </summary>
+		/// <param name="username">The PlanetLab username.</param>
+		/// <param name="password">The PlanetLab password.</param>
+		/// <param name="id">The site identifier.</param>
+		public void UpdateSite(string username, SecureString password, int id)
+		{
+			// Hide the current information.
+			this.pictureBox.Image = Resources.GlobeClock_32;
+			this.labelTitle.Text = "Updating site information...";
+			this.tabControl.Visible = false;
+
+			try
+			{
+				// Begin a new sites request for the specified site.
+				this.BeginRequest(this.request, username, password, id);
+			}
+			catch
+			{
+				// Catch all exceptions.
+				this.pictureBox.Image = Resources.GlobeError_32;
+				this.labelTitle.Text = "Site information not found";
+			}
+		}
+
 		// Protected methods.
+
+		/// <summary>
+		/// An event handler called when the request ends.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnEndRequest(XmlRpcResponse response)
+		{
+			// Call the base class method.
+			base.OnEndRequest(response);
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Create a PlanetLab sites list for the given response.
+				PlSites sites = PlSites.Create(response.Value as XmlRpcArray);
+				// If the sites count is greater than zero.
+				if (sites.Count > 0)
+				{
+					// Display the information for the first site.
+					this.PlanetLabSite = sites[0];
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the request completes.
+		/// </summary>
+		protected override void OnCompleteRequest()
+		{
+			// Call the base class method.
+			base.OnCompleteRequest();
+		}
 
 		/// <summary>
 		/// An event handler called when a new site has been set.
@@ -91,29 +155,36 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 			else
 			{
+				// General.
+
 				this.labelTitle.Text = newSite.Name;
+				this.pictureBox.Image = Resources.GlobeSchema_32;
 
 				this.textBoxName.Text = newSite.Name;
 				this.textBoxAbbreviatedName.Text = newSite.AbbreviatedName;
 				this.textBoxUrl.Text = newSite.Url;
 				this.textBoxLoginBase.Text = newSite.LoginBase;
 
+				this.textBoxDateCreated.Text = newSite.DateCreated.HasValue ? newSite.DateCreated.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
+				this.textBoxLastUpdated.Text = newSite.LastUpdated.HasValue ? newSite.LastUpdated.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
+
+				this.textBoxMaxSlices.Text = newSite.MaxSlices.HasValue ? newSite.MaxSlices.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
+				this.textBoxMaxSlivers.Text = newSite.MaxSlivers.HasValue ? newSite.MaxSlivers.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
+
+				this.checkBoxIsEnabled.CheckState = newSite.IsEnabled.HasValue ? newSite.IsEnabled.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate;
+				this.checkBoxIsPublic.CheckState = newSite.IsPublic.HasValue ? newSite.IsPublic.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate;
+
+				// Identifiers.
+
 				this.textBoxSiteId.Text = newSite.SiteId.HasValue ? newSite.SiteId.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
 				this.textBoxPeerId.Text = newSite.PeerId.HasValue ? newSite.PeerId.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
 				this.textBoxExtConsortiumId.Text = newSite.ExtConsortiumId.HasValue ? newSite.ExtConsortiumId.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
 				this.textBoxPeerSiteId.Text = newSite.PeerSiteId.HasValue ? newSite.PeerSiteId.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
 
-				this.textBoxDateCreated.Text = newSite.DateCreated.HasValue ? newSite.DateCreated.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
-				this.textBoxLastUpdated.Text = newSite.LastUpdated.HasValue ? newSite.LastUpdated.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
+				// Location.
 
 				this.textBoxLatitude.Text = newSite.Latitude.HasValue ? PlUtil.LatitudeToString(newSite.Latitude.Value) : ControlPlanetLabSiteProperties.notAvailable;
 				this.textBoxLongitude.Text = newSite.Longitude.HasValue ? PlUtil.LongitudeToString(newSite.Longitude.Value) : ControlPlanetLabSiteProperties.notAvailable;
-
-				this.textBoxMaxSlices.Text = newSite.MaxSlices.HasValue ? newSite.MaxSlices.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
-				this.textBoxMaxSlivers.Text = newSite.MaxSlivers.HasValue ? newSite.MaxSlivers.Value.ToString() : ControlPlanetLabSiteProperties.notAvailable;
-
-				this.checkBoxIsEnabled.CheckState = newSite.IsEnabled.HasValue ? newSite.IsEnabled.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate ;
-				this.checkBoxIsPublic.CheckState = newSite.IsPublic.HasValue ? newSite.IsPublic.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate;
 
 				if (newSite.Latitude.HasValue && newSite.Longitude.HasValue)
 				{
@@ -121,6 +192,68 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.worldMap.ShowMarkers = true;
 				}
 				else this.worldMap.ShowMarkers = false;
+
+				// Nodes.
+				this.listViewNodes.Items.Clear();
+				foreach (int node in newSite.NodeIds)
+				{
+					ListViewItem item = new ListViewItem(node.ToString(), 0);
+					item.Tag = node;
+					this.listViewNodes.Items.Add(item);
+				}
+
+				// PCUs.
+				this.listViewPcus.Items.Clear();
+				foreach (int pcu in newSite.PcuIds)
+				{
+					ListViewItem item = new ListViewItem(pcu.ToString(), 0);
+					item.Tag = pcu;
+					this.listViewPcus.Items.Add(item);
+				}
+
+				// Persons.
+				this.listViewPersons.Items.Clear();
+				foreach (int person in newSite.PersonIds)
+				{
+					ListViewItem item = new ListViewItem(person.ToString(), 0);
+					item.Tag = person;
+					this.listViewPersons.Items.Add(item);
+				}
+
+				// Slices.
+				this.listViewSlices.Items.Clear();
+				foreach (int slice in newSite.SliceIds)
+				{
+					ListViewItem item = new ListViewItem(slice.ToString(), 0);
+					item.Tag = slice;
+					this.listViewSlices.Items.Add(item);
+				}
+
+				// Addresses.
+				this.listViewAddresses.Items.Clear();
+				foreach (int address in newSite.AddressIds)
+				{
+					ListViewItem item = new ListViewItem(address.ToString(), 0);
+					item.Tag = address;
+					this.listViewAddresses.Items.Add(item);
+				}
+
+				// Tags.
+				this.listViewTags.Items.Clear();
+				foreach (int tag in newSite.SiteTagIds)
+				{
+					ListViewItem item = new ListViewItem(tag.ToString(), 0);
+					item.Tag = tag;
+					this.listViewTags.Items.Add(item);
+				}
+
+				// Disable the buttons.
+				this.buttonNode.Enabled = false;
+				this.buttonPcu.Enabled = false;
+				this.buttonPerson.Enabled = false;
+				this.buttonSlice.Enabled = false;
+				this.buttonAddress.Enabled = false;
+				this.buttonTag.Enabled = false;
 
 				this.tabControl.Visible = true;
 			}
@@ -132,6 +265,126 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.textBoxName.SelectionStart = 0;
 				this.textBoxName.SelectionLength = 0;
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the node selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonNode.Enabled = this.listViewNodes.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the PCU selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPcuSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonPcu.Enabled = this.listViewPcus.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the person selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPersonSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonPerson.Enabled = this.listViewPersons.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the slice selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSliceSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonSlice.Enabled = this.listViewSlices.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the address selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddressSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonAddress.Enabled = this.listViewAddresses.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the tag selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments,</param>
+		private void OnTagSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonTag.Enabled = this.listViewTags.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properies of a node.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a PCU.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPcuProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a person.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPersonProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSliceProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of an address.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddressProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a tag.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTagProperties(object sender, EventArgs e)
+		{
+			// TO DO
 		}
 	}
 }

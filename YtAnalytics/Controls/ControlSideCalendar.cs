@@ -17,21 +17,15 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls
 {
 	/// <summary>
 	/// A control that displays a calendar along with a tree view.
 	/// </summary>
-	public partial class ControlSideCalendar : ControlSide
+	public partial class ControlSideCalendar : UserControl, ISideControl
 	{
 		/// <summary>
 		/// Creates a new control instance.
@@ -42,6 +36,8 @@ namespace YtAnalytics.Controls
 			InitializeComponent();
 		}
 
+		// Public events.
+
 		/// <summary>
 		/// An event raised when the date has changed.
 		/// </summary>
@@ -51,32 +47,53 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		public event DateRangeEventHandler DateRefresh;
 		/// <summary>
-		/// An event raised when the control selection has changed.
+		/// An event raised when the selected control has changed.
 		/// </summary>
-		public event ControlEventHandler ControlChanged;
+		public event SideTreeViewControlChangedEventHandler ControlChanged;
+
+		// Public properties.
 
 		/// <summary>
 		/// Gets the calendar.
 		/// </summary>
-		public MonthCalendar Calendar
+		public MonthCalendar Calendar { get { return this.calendar; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Initializes the current side control.
+		/// </summary>
+		public void Initialize()
 		{
-			get { return this.calendar; }
+			this.calendar.SelectionStart = DateTime.Today;
+			this.calendar.SelectionEnd = this.calendar.SelectionStart.AddSeconds(86399);
 		}
 
 		/// <summary>
-		/// Shows the control.
+		/// Shows the current side control and activates the control content.
 		/// </summary>
-		public override void Show()
+		public void ShowSideControl()
 		{
 			// Get the current tag as a control.
 			Control control = this.Tag as Control;
 			// Call the base class method.
 			base.Show();
 			// Call the event handler.
-			if (null != this.ControlChanged) this.ControlChanged(this, new ControlEventArgs(control));
+			if (null != this.ControlChanged) this.ControlChanged(this, control);
 			// Refresh the log.
 			this.OnRefresh(this, null);
 		}
+
+		/// <summary>
+		/// Hides the current side control and deactivates the control content.
+		/// </summary>
+		public void HideSideControl()
+		{
+			// Call the base class method.7
+			base.Hide();
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the date has changed.

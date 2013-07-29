@@ -17,48 +17,97 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a media:credit atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomMediaCredit : Atom
 	{
-		private AtomMediaCredit() { }
+		internal const string xmlPrefix = "media";
+		internal const string xmlName = "credit";
 
-		public static AtomMediaCredit Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomMediaCredit(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomMediaCredit atom = new AtomMediaCredit();
 			XAttribute attr;
-			XmlNamespace ns = new XmlNamespace(element, top);
 
-			// Mandatory attributes
-			atom.Role = element.Attribute(XName.Get("role")).Value;
-			atom.Scheme = element.Attribute(XName.Get("scheme")).Value;
+			// Set the mandatory attributes.
+			this.Role = element.Attribute("role").Value;
+			this.Scheme = element.Attribute("scheme").Value;
 
-			// Optional attributes
-			atom.YtDisplay = (attr = element.Attribute(XName.Get("display", ns["yt"]))) != null ? attr.Value : null;
-			atom.YtType = (attr = element.Attribute(XName.Get("type", ns["yt"]))) != null ? attr.Value : null;
+			// Set the optional attributes.
+			this.YtDisplay = (attr = element.Attribute("yt", "display")) != null ? attr.Value : null;
+			this.YtType = (attr = element.Attribute("yt", "type")) != null ? attr.Value : null;
 
-			// Value
-			atom.Value = element.Value;
-
-			return atom;
+			// Set the value.
+			this.Value = element.Value;
 		}
 
-		// Mandatory attributes
-		public string Role { get; set; }
-		public string Scheme { get; set; }
-		public string YtDisplay { get; set; }
+		// Public methods.
 
-		// Optional attributes
-		public string YtType { get; set; }
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaCredit Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
 
-		// Value
-		public string Value { get; set; }
+			// Return a new atom instance.
+			return new AtomMediaCredit(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaCredit ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomMediaCredit.Parse(element.Element(AtomMediaCredit.xmlPrefix, AtomMediaCredit.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Mandatory attributes.
+		public string Role { get; private set; }
+		public string Scheme { get; private set; }
+		public string YtDisplay { get; private set; }
+
+		// Optional attributes.
+		public string YtType { get; private set; }
+
+		// Value.
+		public string Value { get; private set; }
 	}
 }

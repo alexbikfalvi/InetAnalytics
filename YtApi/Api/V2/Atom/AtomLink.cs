@@ -17,39 +17,88 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing an xmlns:link atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomLink : Atom
 	{
-		private AtomLink() { }
+		internal const string xmlPrefix = null;
+		internal const string xmlName = "link";
 
-		public static AtomLink Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomLink(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomLink atom = new AtomLink();
 			XAttribute attr;
-			XmlNamespace ns = new XmlNamespace(element, top);
 
 			// Mandatory attributes
-			atom.Rel = element.Attribute(XName.Get("rel")).Value;
-			atom.Href = new Uri(element.Attribute(XName.Get("href")).Value);
+			this.Rel = element.Attribute("rel").Value;
+			this.Href = element.Attribute("href").Value.ToUri();
 
 			// Optional attributes
-			atom.Type = (attr = element.Attribute(XName.Get("type"))) != null ? attr.Value : null;
-			atom.YtHasEntries = (attr = element.Attribute(XName.Get("hasEntries", ns["yt"]))) != null ? (bool?)bool.Parse(attr.Value) : null;
-
-			return atom;
+			this.Type = (attr = element.Attribute("type")) != null ? attr.Value : null;
+			this.YtHasEntries = (attr = element.Attribute("yt", "hasEntries")) != null ? attr.Value.ToBoolean() as bool? : null;
 		}
 
-		public string Rel { get; set; }
-		public string Type { get; set; }
-		public Uri Href { get; set; }
-		public bool? YtHasEntries { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomLink Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomLink(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomLink ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomLink.Parse(element.Element(AtomLink.xmlPrefix, AtomLink.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		public string Rel { get; private set; }
+		public string Type { get; private set; }
+		public Uri Href { get; private set; }
+		public bool? YtHasEntries { get; private set; }
 	}
 }

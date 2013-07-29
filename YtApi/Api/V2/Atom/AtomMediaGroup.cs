@@ -17,76 +17,115 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a media:group atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomMediaGroup : Atom
 	{
-		private AtomMediaGroup() { }
+		internal const string xmlPrefix = "media";
+		internal const string xmlName = "group";
 
-		public static AtomMediaGroup Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomMediaGroup(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomMediaGroup atom = new AtomMediaGroup();
-			XmlNamespace ns = new XmlNamespace(element, top);
-			XElement el;
-
-			atom.MediaContent = new List<AtomMediaContent>();
-			atom.MediaCredit = new List<AtomMediaCredit>();
-			atom.MediaPrice = new List<AtomMediaPrice>();
-			atom.MediaThumbnail = new List<AtomMediaThumbnail>();
-
-			atom.MediaTitle = (el = element.Element(XName.Get("title", ns["media"]))) != null ? AtomMediaTitle.Parse(el) : null;
-			atom.MediaDescription = (el = element.Element(XName.Get("description", ns["media"]))) != null ? AtomMediaDescription.Parse(el) : null;
-			atom.MediaKeywords = (el = element.Element(XName.Get("keywords", ns["media"]))) != null ? AtomMediaKeywords.Parse(el) : null;
-			atom.MediaCategory = AtomMediaCategory.Parse(element.Element(XName.Get("category", ns["media"])));
-			foreach (XElement child in element.Elements(XName.Get("content", ns["media"])))
-				atom.MediaContent.Add(AtomMediaContent.Parse(child, ns));
-			foreach (XElement child in element.Elements(XName.Get("credit", ns["media"])))
-				atom.MediaCredit.Add(AtomMediaCredit.Parse(child, ns));
-			atom.MediaPlayer = (el = element.Element(XName.Get("player", ns["media"]))) != null ? AtomMediaPlayer.Parse(el) : null;
-			foreach (XElement child in element.Elements(XName.Get("price", ns["media"])))
-				atom.MediaPrice.Add(AtomMediaPrice.Parse(child, ns));
-			atom.MediaRating = (el = element.Element(XName.Get("rating", ns["media"]))) != null ? AtomMediaRating.Parse(el) : null;
-			atom.MediaRestriction = (el = element.Element(XName.Get("restriction", ns["media"]))) != null ? AtomMediaRestriction.Parse(el) : null;
-			foreach (XElement child in element.Elements(XName.Get("thumbnail", ns["media"])))
-				atom.MediaThumbnail.Add(AtomMediaThumbnail.Parse(child, ns));
-			atom.YtAspectRatio = (el = element.Element(XName.Get("aspectratio", ns["yt"]))) != null ? AtomYtAspectRatio.Parse(el) : null;
-			atom.YtAudioTracks = (el = element.Element(XName.Get("audioTracks", ns["yt"]))) != null ? AtomYtAudioTracks.Parse(el) : null;
-			atom.YtCaptionTracks = (el = element.Element(XName.Get("captionTracks", ns["yt"]))) != null ? AtomYtCaptionTracks.Parse(el) : null;
-			atom.YtDuration = (el = element.Element(XName.Get("duration", ns["yt"]))) != null ? AtomYtDuration.Parse(el) : null;
-			atom.YtPrivate = (el = element.Element(XName.Get("private", ns["yt"]))) != null ? true : false;
-			atom.YtUploaded = (el = element.Element(XName.Get("uploaded", ns["yt"]))) != null ? AtomYtUploaded.Parse(el) : null;
-			atom.YtUploaderId = (el = element.Element(XName.Get("uploaderId", ns["yt"]))) != null ? AtomYtUploaderId.Parse(el) : null;
-			atom.YtVideoId = (el = element.Element(XName.Get("videoid", ns["yt"]))) != null ? AtomYtVideoId.Parse(el) : null;
-
-			return atom;
+			// Set the elements.
+			this.MediaTitle = AtomMediaTitle.ParseChild(element, false);
+			this.MediaDescription = AtomMediaDescription.ParseChild(element, false);
+			this.MediaKeywords = AtomMediaKeywords.ParseChild(element, false);
+			this.MediaCategory = AtomMediaCategory.ParseChild(element, false);
+			this.MediaContents = AtomMediaContentList.ParseChildren(element);
+			this.MediaCredits = AtomMediaCreditList.ParseChildren(element);
+			this.MediaPlayer = AtomMediaPlayer.ParseChild(element, false);
+			this.MediaPrices = AtomMediaPriceList.ParseChildren(element);
+			this.MediaRating = AtomMediaRating.ParseChild(element, false);
+			this.MediaRestriction = AtomMediaRestriction.ParseChild(element, false);
+			this.MediaThumbnails = AtomMediaThumbnailList.ParseChildren(element);
+			this.YtAspectRatio = AtomYtAspectRatio.ParseChild(element, false);
+			this.YtAudioTracks = AtomYtAudioTracks.ParseChild(element, false);
+			this.YtCaptionTracks = AtomYtCaptionTracks.ParseChild(element, false);
+			this.YtDuration = AtomYtDuration.ParseChild(element, false);
+			this.YtPrivate = element.Element("yt", "private") != null ? true : false;
+			this.YtUploaded = AtomYtUploaded.ParseChild(element, false);
+			this.YtUploaderId = AtomYtUploaderId.ParseChild(element, false);
+			this.YtVideoId = AtomYtVideoId.ParseChild(element, false);
 		}
 
-		// Elements
-		public AtomMediaTitle MediaTitle { get; set; }
-		public AtomMediaDescription MediaDescription { get; set; }
-		public AtomMediaKeywords MediaKeywords { get; set; }
-		public AtomMediaCategory MediaCategory { get; set; }
-		public List<AtomMediaContent> MediaContent { get; set; }
-		public List<AtomMediaCredit> MediaCredit { get; set; }
-		public AtomMediaPlayer MediaPlayer { get; set; }
-		public List<AtomMediaPrice> MediaPrice { get; set; }
-		public AtomMediaRating MediaRating { get; set; }
-		public AtomMediaRestriction MediaRestriction { get; set; }
-		public List<AtomMediaThumbnail> MediaThumbnail { get; set; }
-		public AtomYtAspectRatio YtAspectRatio { get; set; }
-		public AtomYtAudioTracks YtAudioTracks { get; set; }
-		public AtomYtCaptionTracks YtCaptionTracks { get; set; }
-		public AtomYtDuration YtDuration { get; set; }
-		public bool YtPrivate { get; set; }
-		public AtomYtUploaded YtUploaded { get; set; }
-		public AtomYtUploaderId YtUploaderId { get; set; }
-		public AtomYtVideoId YtVideoId { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaGroup Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomMediaGroup(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomMediaGroup ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomMediaGroup.Parse(element.Element(AtomMediaGroup.xmlPrefix, AtomMediaGroup.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Elements.
+		public AtomMediaTitle MediaTitle { get; private set; }
+		public AtomMediaDescription MediaDescription { get; private set; }
+		public AtomMediaKeywords MediaKeywords { get; private set; }
+		public AtomMediaCategory MediaCategory { get; private set; }
+		public AtomMediaContentList MediaContents { get; private set; }
+		public AtomMediaCreditList MediaCredits { get; private set; }
+		public AtomMediaPlayer MediaPlayer { get; private set; }
+		public AtomMediaPriceList MediaPrices { get; private set; }
+		public AtomMediaRating MediaRating { get; private set; }
+		public AtomMediaRestriction MediaRestriction { get; private set; }
+		public AtomMediaThumbnailList MediaThumbnails { get; private set; }
+		public AtomYtAspectRatio YtAspectRatio { get; private set; }
+		public AtomYtAudioTracks YtAudioTracks { get; private set; }
+		public AtomYtCaptionTracks YtCaptionTracks { get; private set; }
+		public AtomYtDuration YtDuration { get; private set; }
+		public bool YtPrivate { get; private set; }
+		public AtomYtUploaded YtUploaded { get; private set; }
+		public AtomYtUploaderId YtUploaderId { get; private set; }
+		public AtomYtVideoId YtVideoId { get; private set; }
 	}
 }

@@ -18,62 +18,64 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a feed this.
+	/// </summary>
 	[Serializable]
 	public abstract class AtomFeed : Atom
 	{
-		protected AtomFeed() { }
+		internal const string xmlPrefix = null;
+		internal const string xmlName = "feed";
 
-		protected static void Parse(XElement element, AtomFeed atom, XmlNamespace top)
+		/// <summary>
+		/// Creates a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		protected AtomFeed(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			XElement el;
-			XmlNamespace ns = new XmlNamespace(element, top);
-
-			atom.Id = AtomId.Parse(element.Element(XName.Get("id", ns["xmlns"])));
-			atom.Updated = AtomUpdated.Parse(element.Element(XName.Get("updated", ns["xmlns"])));
-			atom.Category = new List<AtomCategory>();
-			foreach (XElement child in element.Elements(XName.Get("category", ns["xmlns"])))
-				atom.Category.Add(AtomCategory.Parse(child));
-			atom.Title = (el = element.Element(XName.Get("title", ns["xmlns"]))) != null ? AtomTitle.Parse(el) : null;
-			atom.Subtitle = (el = element.Element(XName.Get("subtitle", ns["xmlns"]))) != null ? AtomSubtitle.Parse(el) : null;
-			atom.Logo = (el = element.Element(XName.Get("logo", ns["xmlns"]))) != null ? AtomLogo.Parse(el) : null;
-			atom.Link = new List<AtomLink>();
-			foreach (XElement child in element.Elements(XName.Get("link", ns["xmlns"])))
-				atom.Link.Add(AtomLink.Parse(child, ns));
-			atom.Author = (el = element.Element(XName.Get("author", ns["xmlns"]))) != null ? AtomAuthor.Parse(el, ns) : null;
-			atom.Generator = (el = element.Element(XName.Get("generator", ns["xmlns"]))) != null ? AtomGenerator.Parse(el) : null;
-			atom.OpenSearchItemsPerPage = (el = element.Element(XName.Get("itemsPerPage", ns["openSearch"]))) != null ? AtomOpenSearchItemsPerPage.Parse(el) : null;
-			atom.OpenSearchStartIndex = (el = element.Element(XName.Get("startIndex", ns["openSearch"]))) != null ? AtomOpenSearchStartIndex.Parse(el) : null;
-			atom.OpenSearchTotalResults = (el = element.Element(XName.Get("totalResults", ns["openSearch"]))) != null ? AtomOpenSearchTotalResults.Parse(el) : null;
-			atom.MediaGroup = (el = element.Element(XName.Get("group", ns["openSearch"]))) != null ? AtomMediaGroup.Parse(el, ns) : null;
-			atom.YtMaterial = new List<AtomYtMaterial>();
-			foreach (XElement child in element.Elements(XName.Get("material", ns["openSearch"])))
-				atom.YtMaterial.Add(AtomYtMaterial.Parse(child));
-			atom.BatchOperation = (el = element.Element(XName.Get("operation", ns["openSearch"]))) != null ? AtomBatchOperation.Parse(el) : null;
+			this.Id = AtomId.ParseChild(element, true);
+			this.Updated = AtomUpdated.ParseChild(element, true);
+			this.Categories = AtomCategoryList.ParseChildren(element);
+			this.Title = AtomTitle.ParseChild(element, true);
+			this.Subtitle = AtomSubtitle.ParseChild(element, false);
+			this.Logo = AtomLogo.ParseChild(element, false);
+			this.Links = AtomLinkList.ParseChildren(element);
+			this.Author = AtomAuthor.ParseChild(element, false);
+			this.Generator = AtomGenerator.ParseChild(element, false);
+			this.OpenSearchItemsPerPage = AtomOpenSearchItemsPerPage.ParseChild(element, false);
+			this.OpenSearchStartIndex = AtomOpenSearchStartIndex.ParseChild(element, false);
+			this.OpenSearchTotalResults = AtomOpenSearchTotalResults.ParseChild(element, false);
+			this.MediaGroup = AtomMediaGroup.ParseChild(element, false);
+			this.YtMaterials = AtomYtMaterialList.ParseChildren(element);
+			this.BatchOperation = AtomBatchOperation.ParseChild(element, false);
+			this.Entries = new AtomEntryList();
+			this.Failures = new AtomExceptionList();
 		}
 
-		public AtomId Id { get; set; }
-		public AtomUpdated Updated { get; set; }
-		public List<AtomCategory> Category { get; set; }
-		public AtomTitle Title { get; set; }
-		public AtomSubtitle Subtitle { get; set; }
-		public AtomLogo Logo { get; set; }
-		public List<AtomLink> Link { get; set; }
-		public AtomAuthor Author { get; set; }
-		public AtomGenerator Generator { get; set; }
-		public AtomOpenSearchItemsPerPage OpenSearchItemsPerPage { get; set; }
-		public AtomOpenSearchStartIndex OpenSearchStartIndex { get; set; }
-		public AtomOpenSearchTotalResults OpenSearchTotalResults { get; set; }
-		public AtomMediaGroup MediaGroup { get; set; }
-		public List<AtomYtMaterial> YtMaterial { get; set; }
-		public AtomBatchOperation BatchOperation { get; set; }
-		public List<AtomEntry> Entry { get; set; }
-		public List<AtomException> EntryFailure { get; set; }
+		// Properties.
+
+		public AtomId Id { get; private set; }
+		public AtomUpdated Updated { get; private set; }
+		public AtomCategoryList Categories { get; private set; }
+		public AtomTitle Title { get; private set; }
+		public AtomSubtitle Subtitle { get; private set; }
+		public AtomLogo Logo { get; private set; }
+		public AtomLinkList Links { get; private set; }
+		public AtomAuthor Author { get; private set; }
+		public AtomGenerator Generator { get; private set; }
+		public AtomOpenSearchItemsPerPage OpenSearchItemsPerPage { get; private set; }
+		public AtomOpenSearchStartIndex OpenSearchStartIndex { get; private set; }
+		public AtomOpenSearchTotalResults OpenSearchTotalResults { get; private set; }
+		public AtomMediaGroup MediaGroup { get; private set; }
+		public AtomYtMaterialList YtMaterials { get; private set; }
+		public AtomBatchOperation BatchOperation { get; private set; }
+		public AtomEntryList Entries { get; private set; }
+		public AtomExceptionList Failures { get; private set; }
 	}
 }

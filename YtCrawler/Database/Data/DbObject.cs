@@ -20,7 +20,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
-using Microsoft.Win32;
+using DotNetApi.Windows;
 
 namespace YtCrawler.Database.Data
 {
@@ -109,7 +109,7 @@ namespace YtCrawler.Database.Data
 			try
 			{
 				// Read the data from the registry to a buffer.
-				byte[] buffer = Registry.GetValue(key, value, null) as byte[];
+				byte[] buffer = Registry.GetBytes(key, value, null);
 				// If the buffer is null, return null.
 				if (null == buffer) return null;
 				// Create a memory stream from where to deserialize the object.
@@ -146,7 +146,7 @@ namespace YtCrawler.Database.Data
 					// Serialize the current object to the file.
 					serializer.Serialize(stream, obj);
 					// Write the stream buffer to the registry.
-					Registry.SetValue(key, value, stream.ToArray(), RegistryValueKind.Binary);
+					Registry.SetBytes(key, value, stream.ToArray());
 				}
 			}
 			catch (Exception exception)

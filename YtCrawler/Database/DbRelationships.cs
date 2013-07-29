@@ -89,7 +89,7 @@ namespace YtCrawler.Database
 		public void LoadConfiguration()
 		{
 			// Read the table registry value.
-			byte[] value = Registry.GetValue(this.key, DbRelationships.keyName, null) as byte[];
+			byte[] value = DotNetApi.Windows.Registry.GetBytes(this.key, DbRelationships.keyName, null);
 			// If the value is null, do nothing.
 			if (null == value) return;
 

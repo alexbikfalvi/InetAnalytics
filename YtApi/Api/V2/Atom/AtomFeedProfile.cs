@@ -17,11 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
@@ -31,7 +28,34 @@ namespace YtApi.Api.V2.Atom
 	[Serializable]
 	public sealed class AtomFeedProfile : AtomFeed
 	{
-		private AtomFeedProfile() { }
+		/// <summary>
+		/// Creates a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomFeedProfile(XElement element)
+			: base(element)
+		{
+			try
+			{
+				foreach (XElement child in element.Elements(AtomEntry.xmlPrefix, AtomEntry.xmlName))
+				{
+					try
+					{
+						// Add the profile atom to the entries list, when parsed successfully.
+						this.Entries.Add(AtomEntryProfile.Parse(child, true));
+					}
+					catch (AtomException exception)
+					{
+						// Otherwise, add the exception to entry failure list.
+						this.Failures.Add(exception);
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+				throw new AtomException("Cannot parse the profile feed.", element, exception);
+			}
+		}
 
 		/// <summary>
 		/// Parse an XML string into an profile feed atom.
@@ -40,37 +64,7 @@ namespace YtApi.Api.V2.Atom
 		/// <returns>The profile feed atom.</returns>
 		public static AtomFeedProfile Parse(string data)
 		{
-			XElement element = XDocument.Parse(data).Root;
-			XmlNamespace ns = new XmlNamespace(element);
-
-			AtomFeedProfile atom = new AtomFeedProfile();
-
-			try
-			{
-				AtomFeed.Parse(element, atom, ns);
-
-				atom.Entry = new List<AtomEntry>();
-				atom.EntryFailure = new List<AtomException>();
-				foreach (XElement child in element.Elements(XName.Get("entry", ns["xmlns"])))
-				{
-					try
-					{
-						// Add the profile atom to the entries list, when parsed successfully.
-						atom.Entry.Add(AtomEntryProfile.Parse(child, ns));
-					}
-					catch (AtomException exception)
-					{
-						// Otherwise, add the exception to entry failure list.
-						atom.EntryFailure.Add(exception);
-					}
-				}
-			}
-			catch (Exception exception)
-			{
-				throw new AtomException("Cannot parse the profile feed.", element, ns, exception);
-			}
-
-			return atom;
+			return new AtomFeedProfile(XDocument.Parse(data).Root);
 		}
 	}
 }

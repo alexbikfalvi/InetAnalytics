@@ -49,13 +49,15 @@
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel.Controls.Add(this.panel, 0, 1);
 			this.tableLayoutPanel.Controls.Add(this.calendar, 1, 0);
 			this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
-			this.tableLayoutPanel.RowCount = 1;
+			this.tableLayoutPanel.RowCount = 2;
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel.Size = new System.Drawing.Size(283, 180);
+			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel.Size = new System.Drawing.Size(283, 266);
 			this.tableLayoutPanel.TabIndex = 1;
 			// 
 			// calendar
@@ -68,16 +70,17 @@
 			// 
 			// panel
 			// 
+			this.tableLayoutPanel.SetColumnSpan(this.panel, 3);
 			this.panel.Controls.Add(this.buttonRefresh);
 			this.panel.Controls.Add(this.labelEnd);
 			this.panel.Controls.Add(this.labelStart);
 			this.panel.Controls.Add(this.labelStartText);
 			this.panel.Controls.Add(this.labelEndText);
 			this.panel.Controls.Add(this.pictureBox);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 180);
+			this.panel.Location = new System.Drawing.Point(3, 183);
+			this.panel.MinimumSize = new System.Drawing.Size(0, 80);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(283, 184);
+			this.panel.Size = new System.Drawing.Size(260, 80);
 			this.panel.TabIndex = 2;
 			// 
 			// buttonRefresh
@@ -138,8 +141,7 @@
 			// 
 			// ControlSideCalendar
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.Controls.Add(this.panel);
+			this.AutoScroll = true;
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Name = "ControlSideCalendar";
 			this.Size = new System.Drawing.Size(283, 364);

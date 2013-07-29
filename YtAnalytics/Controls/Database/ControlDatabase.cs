@@ -22,6 +22,7 @@ using System.Security;
 using System.Threading;
 using System.Windows.Forms;
 using YtAnalytics.Forms.Database;
+using YtCrawler;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
 using YtCrawler.Log;
@@ -48,8 +49,6 @@ namespace YtAnalytics.Controls.Database
 		private ResultObjectEventHandler delegateQuerySuccessObject;
 		private ExceptionEventHandler delegateQueryFail;
 
-		private TimeSpan consoleMessageCloseDelay;
-
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -63,22 +62,8 @@ namespace YtAnalytics.Controls.Database
 			this.delegateQuerySuccessObject = new ResultObjectEventHandler(this.DatabaseQuerySuccess);
 			this.delegateQueryFail = new ExceptionEventHandler(this.DatabaseQueryFail);
 
-			// Configuration.
-			this.consoleMessageCloseDelay = TimeSpan.FromMilliseconds(1000);
-
 			// Add the event handler to the change password form.
 			this.formChangePassword.PasswordChanged += this.OnPasswordChanged;
-		}
-
-		// Public properties.
-
-		/// <summary>
-		/// Gets or sets the console messahe close delay.
-		/// </summary>
-		public TimeSpan ConsoleMessageCloseDelay
-		{
-			get { return this.consoleMessageCloseDelay; }
-			set { this.consoleMessageCloseDelay = value; }
 		}
 
 		// Protected methods.
@@ -266,7 +251,7 @@ namespace YtAnalytics.Controls.Database
 									// Show a success message.
 									this.ShowMessage(Resources.DatabaseSuccess_48, "Database", query.MessageFinishSuccess, false);
 									// Wait.
-									Thread.Sleep(this.consoleMessageCloseDelay);
+									Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 									// Hide the message.
 									this.HideMessage();
 									// Call the completion method, depending on the type of data.
@@ -289,7 +274,7 @@ namespace YtAnalytics.Controls.Database
 										new object[] { server.Name, exception.Message },
 										exception);
 									// Wait.
-									Thread.Sleep(this.consoleMessageCloseDelay);
+									Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 									// Hide the message.
 									this.HideMessage();
 									// Call the completion method.
@@ -311,7 +296,7 @@ namespace YtAnalytics.Controls.Database
 							new object[] { server.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(this.consoleMessageCloseDelay);
+						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.
@@ -333,7 +318,7 @@ namespace YtAnalytics.Controls.Database
 					new object[] { server.Name, exception.Message },
 					exception);
 				// Wait.
-				Thread.Sleep(this.consoleMessageCloseDelay);
+				Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 				// Hide the message.
 				this.HideMessage();
 				// Call the completion method.
@@ -449,7 +434,7 @@ namespace YtAnalytics.Controls.Database
 					if (asyncState.AsyncState != null)
 					{
 						// If the user state is a database query.
-						if (asyncState.AsyncState.GetType() == typeof(DbQuery))
+						if (asyncState.AsyncState is DbQuery)
 						{
 							// Execute the database query.
 							this.DatabaseQuery(asyncState.Server, asyncState.AsyncState as DbQuery);

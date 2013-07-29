@@ -17,34 +17,85 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a yt:material atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomYtMaterial : Atom
 	{
-		private AtomYtMaterial() { }
+		internal const string xmlPrefix = "yt";
+		internal const string xmlName = "material";
 
-		public static AtomYtMaterial Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomYtMaterial(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomYtMaterial atom = new AtomYtMaterial();
-
-			atom.Description = element.Attribute(XName.Get("description")).Value;
-			atom.Name = element.Attribute(XName.Get("name")).Value;
-			atom.Type = element.Attribute(XName.Get("type")).Value;
-			atom.Url = element.Attribute(XName.Get("url")).Value;
-
-			return atom;
+			// Set the attributes.
+			this.Description = element.Attribute("description").Value;
+			this.Name = element.Attribute("name").Value;
+			this.Type = element.Attribute("type").Value;
+			this.Url = element.Attribute("url").Value;
 		}
 
-		public string Description { get; set; }
-		public string Name { get; set; }
-		public string Type { get; set; }
-		public string Url { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtMaterial Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomYtMaterial(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtMaterial ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomYtMaterial.Parse(element.Element(AtomYtMaterial.xmlPrefix, AtomYtMaterial.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public string Description { get; private set; }
+		public string Name { get; private set; }
+		public string Type { get; private set; }
+		public string Url { get; private set; }
 	}
 }

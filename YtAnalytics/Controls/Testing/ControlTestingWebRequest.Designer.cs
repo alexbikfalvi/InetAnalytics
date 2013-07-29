@@ -35,7 +35,9 @@
 			this.buttonExport = new System.Windows.Forms.Button();
 			this.buttonImport = new System.Windows.Forms.Button();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
-			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelMessage = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelSpring = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelData = new System.Windows.Forms.ToolStripStatusLabel();
 			this.buttonUndo = new System.Windows.Forms.Button();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
@@ -77,9 +79,9 @@
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.labelUrl = new System.Windows.Forms.Label();
+			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -157,7 +159,9 @@
 			// statusStrip
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
+            this.statusLabelMessage,
+            this.statusLabelSpring,
+            this.statusLabelData});
 			this.statusStrip.Location = new System.Drawing.Point(0, 201);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Size = new System.Drawing.Size(598, 22);
@@ -165,13 +169,25 @@
 			this.statusStrip.TabIndex = 22;
 			this.statusStrip.Text = "statusStrip1";
 			// 
-			// statusLabel
+			// statusLabelMessage
 			// 
-			this.statusLabel.Image = global::YtAnalytics.Resources.Information_16;
-			this.statusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.statusLabel.Name = "statusLabel";
-			this.statusLabel.Size = new System.Drawing.Size(55, 17);
-			this.statusLabel.Text = "Ready";
+			this.statusLabelMessage.Image = global::YtAnalytics.Resources.Information_16;
+			this.statusLabelMessage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.statusLabelMessage.Name = "statusLabelMessage";
+			this.statusLabelMessage.Size = new System.Drawing.Size(55, 17);
+			this.statusLabelMessage.Text = "Ready";
+			// 
+			// statusLabelSpring
+			// 
+			this.statusLabelSpring.Name = "statusLabelSpring";
+			this.statusLabelSpring.Size = new System.Drawing.Size(528, 17);
+			this.statusLabelSpring.Spring = true;
+			// 
+			// statusLabelData
+			// 
+			this.statusLabelData.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.statusLabelData.Name = "statusLabelData";
+			this.statusLabelData.Size = new System.Drawing.Size(0, 17);
 			// 
 			// buttonUndo
 			// 
@@ -233,6 +249,7 @@
 			this.dateTimePicker.Name = "dateTimePicker";
 			this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
 			this.dateTimePicker.TabIndex = 22;
+			this.dateTimePicker.ValueChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// checkBoxUserAgent
 			// 
@@ -251,7 +268,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUserAgent.Location = new System.Drawing.Point(110, 167);
 			this.textBoxUserAgent.Name = "textBoxUserAgent";
-			this.textBoxUserAgent.Size = new System.Drawing.Size(282, 20);
+			this.textBoxUserAgent.Size = new System.Drawing.Size(248, 20);
 			this.textBoxUserAgent.TabIndex = 20;
 			this.textBoxUserAgent.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -272,7 +289,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxReferer.Location = new System.Drawing.Point(110, 141);
 			this.textBoxReferer.Name = "textBoxReferer";
-			this.textBoxReferer.Size = new System.Drawing.Size(282, 20);
+			this.textBoxReferer.Size = new System.Drawing.Size(248, 20);
 			this.textBoxReferer.TabIndex = 18;
 			this.textBoxReferer.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -304,7 +321,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxExpect.Location = new System.Drawing.Point(110, 115);
 			this.textBoxExpect.Name = "textBoxExpect";
-			this.textBoxExpect.Size = new System.Drawing.Size(282, 20);
+			this.textBoxExpect.Size = new System.Drawing.Size(248, 20);
 			this.textBoxExpect.TabIndex = 14;
 			this.textBoxExpect.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -314,7 +331,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxContentType.Location = new System.Drawing.Point(110, 63);
 			this.textBoxContentType.Name = "textBoxContentType";
-			this.textBoxContentType.Size = new System.Drawing.Size(282, 20);
+			this.textBoxContentType.Size = new System.Drawing.Size(248, 20);
 			this.textBoxContentType.TabIndex = 13;
 			this.textBoxContentType.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -335,7 +352,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAccept.Location = new System.Drawing.Point(110, 37);
 			this.textBoxAccept.Name = "textBoxAccept";
-			this.textBoxAccept.Size = new System.Drawing.Size(282, 20);
+			this.textBoxAccept.Size = new System.Drawing.Size(248, 20);
 			this.textBoxAccept.TabIndex = 9;
 			this.textBoxAccept.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -656,6 +673,14 @@
 			this.labelUrl.TabIndex = 5;
 			this.labelUrl.Text = "&URL:";
 			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.TabIndex = 0;
+			// 
 			// saveFileDialog
 			// 
 			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
@@ -665,14 +690,6 @@
 			// 
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
-			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
-			this.log.TabIndex = 0;
 			// 
 			// ControlTestingWebRequest
 			// 
@@ -743,7 +760,7 @@
 		private System.Windows.Forms.TextBox textBoxUserAgent;
 		private System.Windows.Forms.DateTimePicker dateTimePicker;
 		private System.Windows.Forms.StatusStrip statusStrip;
-		private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelMessage;
 		private System.Windows.Forms.ComboBox comboBoxEncoding;
 		private System.Windows.Forms.Label labelEncoding;
 		private System.Windows.Forms.Button buttonExport;
@@ -755,6 +772,8 @@
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.Button buttonViewHeader;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelData;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelSpring;
 
 	}
 }

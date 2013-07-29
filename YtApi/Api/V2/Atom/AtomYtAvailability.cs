@@ -17,31 +17,83 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a yt:availability atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomYtAvailability : Atom
 	{
-		private AtomYtAvailability() { }
+		internal const string xmlPrefix = "yt";
+		internal const string xmlName = "availability";
 
-		public static AtomYtAvailability Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomYtAvailability(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomYtAvailability atom = new AtomYtAvailability();
 			XAttribute attr;
 
-			atom.Start = DateTime.Parse(element.Attribute(XName.Get("start")).Value);
-			atom.End = (attr = element.Attribute(XName.Get("end"))) != null ? (DateTime?)DateTime.Parse(attr.Value) : null;
-
-			return atom;
+			// Set the attributes.
+			this.Start = element.Attribute("start").Value.ToDateTime();
+			this.End = (attr = element.Attribute("end")) != null ? attr.Value.ToDateTime() as DateTime? : null;
 		}
 
-		public DateTime Start { get; set; }
-		public DateTime? End { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtAvailability Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomYtAvailability(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomYtAvailability ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomYtAvailability.Parse(element.Element(AtomYtAvailability.xmlPrefix, AtomYtAvailability.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public DateTime Start { get; private set; }
+		public DateTime? End { get; private set; }
 	}
 }

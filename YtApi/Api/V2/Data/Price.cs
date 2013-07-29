@@ -17,11 +17,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -70,21 +65,4 @@ namespace YtApi.Api.V2.Data
 		public string Currency { get { return this.atom.Currency; } }
 		public TimeSpan Duration { get { return this.atom.YtDuration; } }
 	}
-
-    /// <summary>
-    /// A YouTube media price list.
-    /// </summary>
-    public class PriceList : List<Price>
-    {
-        /// <summary>
-        /// Creates a new price list, based on a collection of atom objects.
-        /// </summary>
-        /// <param name="atoms">The collection of thumbnail atoms.</param>
-        public PriceList(ICollection<AtomMediaPrice> atoms)
-            : base(atoms.Count)
-        {
-            foreach (AtomMediaPrice atom in atoms)
-                this.Add(new Price(atom));
-        }
-    }
 }

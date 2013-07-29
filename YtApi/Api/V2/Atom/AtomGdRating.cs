@@ -17,34 +17,85 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class representing a gd:rating atom.
+	/// </summary>
 	[Serializable]
-	public sealed class AtomGdRating
+	public sealed class AtomGdRating : Atom
 	{
-		private AtomGdRating() { }
+		internal const string xmlPrefix = "gd";
+		internal const string xmlName = "rating";
 
-		public static AtomGdRating Parse(XElement element)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomGdRating(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomGdRating atom = new AtomGdRating();
-
-			atom.Min = int.Parse(element.Attribute(XName.Get("min")).Value);
-			atom.Max = int.Parse(element.Attribute(XName.Get("max")).Value);
-			atom.NumRaters = int.Parse(element.Attribute(XName.Get("numRaters")).Value);
-			atom.Average = double.Parse(element.Attribute(XName.Get("average")).Value);
-
-			return atom;
+			// Set the attributes.
+			this.Min = element.Attribute("min").Value.ToInt();
+			this.Max = element.Attribute("max").Value.ToInt();
+			this.NumRaters = element.Attribute("numRaters").Value.ToInt();
+			this.Average = element.Attribute("average").Value.ToDouble();
 		}
 
-		public int Min { get; set; }
-		public int Max { get; set; }
-		public int NumRaters { get; set; }
-		public double Average { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomGdRating Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomGdRating(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomGdRating ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomGdRating.Parse(element.Element(AtomGdRating.xmlPrefix, AtomGdRating.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Public properties.
+
+		// Elements.
+		public int Min { get; private set; }
+		public int Max { get; private set; }
+		public int NumRaters { get; private set; }
+		public double Average { get; private set; }
 	}
 }

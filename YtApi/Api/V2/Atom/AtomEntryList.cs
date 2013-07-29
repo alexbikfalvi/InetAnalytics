@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2012 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,47 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DotNetApi.Windows.Controls;
 
-namespace YtAnalytics.Controls
+namespace YtApi.Api.V2.Atom
 {
 	/// <summary>
-	/// A generic side control.
+	/// A class representing a list of entry atom objects.
 	/// </summary>
-	public partial class ControlSide : ThreadSafeControl
+	public class AtomEntryList : IEnumerable<AtomEntry>
 	{
+		private List<AtomEntry> list = new List<AtomEntry>();
+
+		public AtomEntryList() { }
+
+		// Public methods.
+
 		/// <summary>
-		/// Creates a new control instance.
+		/// Adds a new item to the list.
 		/// </summary>
-		public ControlSide()
+		/// <param name="item">The entry item.</param>
+		public void Add(AtomEntry item)
 		{
-			InitializeComponent();
+			this.list.Add(item);
 		}
 
 		/// <summary>
-		/// Shows the control.
+		/// Returns the enumerator for the list of entries.
 		/// </summary>
-		public new virtual void Show()
+		/// <returns>The enumerator.</returns>
+		IEnumerator IEnumerable.GetEnumerator()
 		{
-			base.Show();
+			return this.GetEnumerator();
+		}
+
+		/// <summary>
+		/// Returns the enumerator for the list of entries.
+		/// </summary>
+		/// <returns>The enumerator.</returns>
+		public IEnumerator<AtomEntry> GetEnumerator()
+		{
+			return this.list.GetEnumerator();
 		}
 	}
 }

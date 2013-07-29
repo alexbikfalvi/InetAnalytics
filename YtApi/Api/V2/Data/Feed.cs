@@ -18,9 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using YtApi.Api.V2.Atom;
 
@@ -33,8 +30,8 @@ namespace YtApi.Api.V2.Data
 		private CategoryList categories;
 		private LinkList links;
 		private List<T> entries;
-		private List<YouTubeAtomException> exceptionsEntry;
-		private List<AtomException> exceptionsEntryAtom;
+		private YouTubeAtomExceptionList exceptionsEntry;
+		private AtomExceptionList exceptionsEntryAtom;
 		private Author author;
 
 		/// <summary>
@@ -45,15 +42,15 @@ namespace YtApi.Api.V2.Data
 		{
 			this.atom = atom;
 
-			this.categories = new CategoryList(this.atom.Category);
+			this.categories = new CategoryList(this.atom.Categories);
 
-			this.links = new LinkList(this.atom.Link);
+			this.links = new LinkList(this.atom.Links);
 
             this.author = new Author(this.atom.Author);
 
-			this.entries = new List<T>(this.atom.Entry.Count);
-			this.exceptionsEntry = new List<YouTubeAtomException>();
-			foreach (AtomEntry entry in this.atom.Entry)
+			this.entries = new List<T>();
+			this.exceptionsEntry = new YouTubeAtomExceptionList();
+			foreach (AtomEntry entry in this.atom.Entries)
 			{
 				// Try to add a new feed entry.
 				try
@@ -69,7 +66,7 @@ namespace YtApi.Api.V2.Data
 					this.exceptionsEntry.Add(new YouTubeAtomException("Cannot parse the entry atom.", exception, entry));
 				}
 			}
-			this.exceptionsEntryAtom = this.atom.EntryFailure;
+			this.exceptionsEntryAtom = this.atom.Failures;
 		}
 
 		/// <summary>
@@ -136,11 +133,11 @@ namespace YtApi.Api.V2.Data
 		/// The collection of feed entries that could not be parsed from the corresponding atom.
 		/// In cannot be null, but the collection may be empty.
 		/// </summary>
-		public ICollection<YouTubeAtomException> FailuresEntry { get { return this.exceptionsEntry; } }
+		public YouTubeAtomExceptionList FailuresEntry { get { return this.exceptionsEntry; } }
 
 		/// <summary>
 		/// The collection of exceptions for 
 		/// </summary>
-		public ICollection<AtomException> FailuresAtom { get { return this.exceptionsEntryAtom; } }
+		public AtomExceptionList FailuresAtom { get { return this.exceptionsEntryAtom; } }
 	}
 }

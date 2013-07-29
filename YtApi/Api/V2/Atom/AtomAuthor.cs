@@ -17,37 +17,85 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
 {
+	/// <summary>
+	/// A class represnting an xmlns:author atom.
+	/// </summary>
 	[Serializable]
 	public sealed class AtomAuthor : Atom
 	{
-		private AtomAuthor() { }
+		internal const string xmlPrefix = null;
+		internal const string xmlName = "author";
 
-		public static AtomAuthor Parse(XElement element, XmlNamespace top)
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		private AtomAuthor(XElement element)
+			: base(xmlPrefix, xmlName, element)
 		{
-			AtomAuthor atom = new AtomAuthor();
-			XmlNamespace ns = new XmlNamespace(element, top);
-			XElement el;
-
 			// Mandatory elements
-			atom.Name = AtomName.Parse(element.Element(XName.Get("name", ns["xmlns"])));
+			this.Name = AtomName.ParseChild(element, true);
 
 			// Optional elements
-			atom.Uri = (el = element.Element(XName.Get("uri", ns["xmlns"]))) != null ? AtomUri.Parse(el) : null;
-			atom.YtUserId = (el = element.Element(XName.Get("userId", ns["yt"]))) != null ? AtomYtUserId.Parse(el) : null;
-
-			return atom;
+			this.Uri = AtomUri.ParseChild(element, false);
+			this.YtUserId = AtomYtUserId.ParseChild(element, false);
 		}
 
-		public AtomName Name { get; set; }
-		public AtomUri Uri { get; set; }
-		public AtomYtUserId YtUserId { get; set; }
+		// Public methods.
+
+		/// <summary>
+		/// Parses the XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomAuthor Parse(XElement element, bool mandatory)
+		{
+			// If the element is null.
+			if (null == element)
+			{
+				// If the element is mandatory, throw an exception.
+				if (mandatory) throw new ArgumentNullException("element");
+				else return null;
+			}
+
+			// Return a new atom instance.
+			return new AtomAuthor(element);
+		}
+
+		/// <summary>
+		/// Parses the first child XML element into a new atom instance.
+		/// </summary>
+		/// <param name="element">The parent XML element.</param>
+		/// <param name="mandatory">Specified whether this element is mandatory.</param>
+		/// <returns>The atom instance.</returns>
+		public static AtomAuthor ParseChild(XElement element, bool mandatory)
+		{
+			// If the element is null, throw an exception.
+			if (null == element) throw new ArgumentNullException("element");
+
+			try
+			{
+				// Parse the children for the first element.
+				return AtomAuthor.Parse(element.Element(AtomAuthor.xmlPrefix, AtomAuthor.xmlName), mandatory);
+			}
+			catch (Exception exception)
+			{
+				// Throw a new atom exception.
+				throw exception is AtomException ? exception : new AtomException("An error occurred while parsing the children of an XML element.", element, exception);
+			}
+		}
+
+		// Properties.
+
+		// Attributes.
+		public AtomName Name { get; private set; }
+		public AtomUri Uri { get; private set; }
+		public AtomYtUserId YtUserId { get; private set; }
 	}
 }

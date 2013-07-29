@@ -17,9 +17,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -65,24 +62,5 @@ namespace YtApi.Api.V2.Data
 		/// The thumbnail name. It can be null.
 		/// </summary>
 		public string Name { get { return this.atom.YtName; } }
-	}
-
-	/// <summary>
-	/// A class that represents a thumbnail list.
-	/// </summary>
-	public class ThumbnailList : List<Thumbnail>
-	{
-		/// <summary>
-		/// Creates a new thumbnail list based on a collection of atoms.
-		/// </summary>
-		/// <param name="atoms">A collection of thumbnail atoms.</param>
-		public ThumbnailList(ICollection<AtomMediaThumbnail> atoms)
-			: base(atoms.Count)
-		{
-			foreach (AtomMediaThumbnail atom in atoms)
-			{
-				this.Add(new Thumbnail(atom));
-			}
-		}
 	}
 }

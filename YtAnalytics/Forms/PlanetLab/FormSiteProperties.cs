@@ -21,6 +21,8 @@ using System.Windows.Forms;
 using PlanetLab.Api;
 using DotNetApi.Windows;
 
+using YtCrawler;
+
 namespace YtAnalytics.Forms.PlanetLab
 {
 	/// <summary>
@@ -28,9 +30,6 @@ namespace YtAnalytics.Forms.PlanetLab
 	/// </summary>
 	public partial class FormSiteProperties : Form
 	{
-		// UI formatter.
-		private Formatting formatting = new Formatting();
-
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
@@ -39,7 +38,7 @@ namespace YtAnalytics.Forms.PlanetLab
 			InitializeComponent();
 
 			// Set the font.
-			this.formatting.SetFont(this);
+			Formatting.SetFont(this);
 		}
 
 		/// <summary>
