@@ -32,6 +32,7 @@
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
+			this.textBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.textBoxDateModified = new System.Windows.Forms.TextBox();
 			this.textBoxDateCreated = new System.Windows.Forms.TextBox();
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
@@ -49,7 +50,6 @@
 			this.labelId = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.textBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -104,6 +104,18 @@
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
+			// 
+			// textBoxPassword
+			// 
+			this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPassword.Location = new System.Drawing.Point(102, 142);
+			this.textBoxPassword.Name = "textBoxPassword";
+			this.textBoxPassword.SecureText = secureString1;
+			this.textBoxPassword.Size = new System.Drawing.Size(256, 20);
+			this.textBoxPassword.TabIndex = 17;
+			this.textBoxPassword.UseSystemPasswordChar = true;
+			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
 			// textBoxDateModified
 			// 
@@ -266,17 +278,6 @@
 			this.pictureBox.Size = new System.Drawing.Size(32, 32);
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
-			// 
-			// textBoxPassword
-			// 
-			this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPassword.Location = new System.Drawing.Point(102, 142);
-			this.textBoxPassword.Name = "textBoxPassword";
-			this.textBoxPassword.SecureText = secureString1;
-			this.textBoxPassword.Size = new System.Drawing.Size(256, 20);
-			this.textBoxPassword.TabIndex = 17;
-			this.textBoxPassword.UseSystemPasswordChar = true;
 			// 
 			// ControlServerProperties
 			// 

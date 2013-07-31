@@ -50,7 +50,8 @@ namespace YtAnalytics
 			}
 			catch (Exception exception)
 			{
-				Application.Run(new FormCrash(exception));
+				FormCrash formCrash = new FormCrash(exception);
+				formCrash.ShowDialog();
 			}
 		}
 

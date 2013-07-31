@@ -3956,7 +3956,7 @@
 		<row><td>ID_STRING3</td><td>1033</td><td>Alex Bikfalvi</td><td>0</td><td/><td>1218532562</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>1981848044</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>alex@bikfalvi.com</td><td>0</td><td/><td>-1910484205</td></row>
-		<row><td>ID_STRING6</td><td>1033</td><td>http://dev.bikfalvi.com</td><td>0</td><td/><td>1218538706</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>http://alex.bikfalvi.com</td><td>0</td><td/><td>-207509175</td></row>
 		<row><td>ID_STRING7</td><td>1033</td><td>An analysis tool of content in YouTube.</td><td>0</td><td/><td>1084343255</td></row>
 		<row><td>ID_STRING8</td><td>1033</td><td>An analysis tool of content in YouTube.</td><td>0</td><td/><td>1084296183</td></row>
 		<row><td>ID_STRING9</td><td>1033</td><td>An analysis tool of content in YouTube.</td><td>0</td><td/><td>1084298231</td></row>

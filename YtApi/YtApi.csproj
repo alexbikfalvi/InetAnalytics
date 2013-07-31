@@ -191,6 +191,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="insight_ajax.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
       <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
       <Name>DotNetApi</Name>
@@ -200,10 +203,6 @@
       <Name>HtmlAgilityPack</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="insight_ajax.xml" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

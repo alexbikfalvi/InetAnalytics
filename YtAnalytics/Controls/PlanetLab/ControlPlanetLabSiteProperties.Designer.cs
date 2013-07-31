@@ -555,6 +555,7 @@
 			this.listViewNodes.TabIndex = 0;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
 			this.listViewNodes.View = System.Windows.Forms.View.Details;
+			this.listViewNodes.ItemActivate += new System.EventHandler(this.OnNodeProperties);
 			this.listViewNodes.SelectedIndexChanged += new System.EventHandler(this.OnNodeSelectionChanged);
 			// 
 			// columnHeaderNode
@@ -611,6 +612,7 @@
 			this.listViewPcus.TabIndex = 1;
 			this.listViewPcus.UseCompatibleStateImageBehavior = false;
 			this.listViewPcus.View = System.Windows.Forms.View.Details;
+			this.listViewPcus.ItemActivate += new System.EventHandler(this.OnPcuProperties);
 			this.listViewPcus.SelectedIndexChanged += new System.EventHandler(this.OnPcuSelectionChanged);
 			// 
 			// columnHeaderPcu
@@ -661,6 +663,7 @@
 			this.listViewPersons.TabIndex = 2;
 			this.listViewPersons.UseCompatibleStateImageBehavior = false;
 			this.listViewPersons.View = System.Windows.Forms.View.Details;
+			this.listViewPersons.ItemActivate += new System.EventHandler(this.OnPersonProperties);
 			this.listViewPersons.SelectedIndexChanged += new System.EventHandler(this.OnPersonSelectionChanged);
 			// 
 			// columnHeaderPerson
@@ -711,6 +714,7 @@
 			this.listViewSlices.TabIndex = 3;
 			this.listViewSlices.UseCompatibleStateImageBehavior = false;
 			this.listViewSlices.View = System.Windows.Forms.View.Details;
+			this.listViewSlices.ItemActivate += new System.EventHandler(this.OnSliceProperties);
 			this.listViewSlices.SelectedIndexChanged += new System.EventHandler(this.OnSliceSelectionChanged);
 			// 
 			// columnHeaderSlice
@@ -761,6 +765,7 @@
 			this.listViewAddresses.TabIndex = 4;
 			this.listViewAddresses.UseCompatibleStateImageBehavior = false;
 			this.listViewAddresses.View = System.Windows.Forms.View.Details;
+			this.listViewAddresses.ItemActivate += new System.EventHandler(this.OnAddressProperties);
 			this.listViewAddresses.SelectedIndexChanged += new System.EventHandler(this.OnAddressSelectionChanged);
 			// 
 			// columnHeaderAddress
@@ -811,6 +816,7 @@
 			this.listViewTags.TabIndex = 5;
 			this.listViewTags.UseCompatibleStateImageBehavior = false;
 			this.listViewTags.View = System.Windows.Forms.View.Details;
+			this.listViewTags.ItemActivate += new System.EventHandler(this.OnTagProperties);
 			this.listViewTags.SelectedIndexChanged += new System.EventHandler(this.OnTagSelectionChanged);
 			// 
 			// columnHeaderTag

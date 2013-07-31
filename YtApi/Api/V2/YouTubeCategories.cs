@@ -19,9 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Xml.Linq;
 using Microsoft.Win32;
 using DotNetApi.Web;
@@ -203,12 +201,19 @@ namespace YtApi.Api.V2
 		/// </summary>
 		public void ReadFromFile()
 		{
+			// Clear the categories list.
+			this.categories.Clear();
+			this.categoryLabels = null;
+
 			try
 			{
-				// Read the file, and create the XML document.
-				this.xml = XDocument.Load(this.fileName);
-				// Parse the document.
-				this.Parse();
+				if (File.Exists(this.fileName))
+				{
+					// Read the file, and create the XML document.
+					this.xml = XDocument.Load(this.fileName);
+					// Parse the document.
+					this.Parse();
+				}
 			}
 			catch (Exception)
 			{

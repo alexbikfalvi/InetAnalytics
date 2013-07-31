@@ -82,6 +82,7 @@
 			this.textBoxPassword.Size = new System.Drawing.Size(200, 20);
 			this.textBoxPassword.TabIndex = 5;
 			this.textBoxPassword.UseSystemPasswordChar = true;
+			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
 			// ControlPlanetLabSettings
 			// 

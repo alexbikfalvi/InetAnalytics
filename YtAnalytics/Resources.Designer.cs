@@ -1251,7 +1251,7 @@ namespace YtAnalytics {
         ///      &lt;h2&gt;Views and discovery&lt;/h2&gt;
         ///      &lt;div class=&quot;stats-box yt-uix-expander yt-uix-expander-collapsed&quot;&gt;
         ///          &lt;div class=&quot;stats-big-chart&quot;&gt;
-        ///            &lt;img class=&quot;stats-big-chart-collapsed&quot; src=&quot;http://chart.apis.google.com/chart?cht=lc:nda&amp;amp;ch [rest of string was truncated]&quot;;.
+        ///            &lt;img class=&quot;stats-big-chart-collapsed&quot; src=&quot;http://chart.apis.google.com/ch [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DemoOldInsightsAjax {
             get {
@@ -3375,6 +3375,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap GlobeLab_48 {
             get {
                 object obj = ResourceManager.GetObject("GlobeLab_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeNode_16 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeNode_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeNode_24 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeNode_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeNode_32 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeNode_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeNode_48 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeNode_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

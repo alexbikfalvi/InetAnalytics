@@ -91,6 +91,12 @@
     <Compile Include="Controls\PlanetLab\ControlPlanetLabSettings.Designer.cs">
       <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.Designer.cs">
+      <DependentUpon>ControlPlanetLabNodeProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -114,6 +120,12 @@
     </Compile>
     <Compile Include="Controls\Testing\ControlTestingWebRequest.Designer.cs">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingSsh.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingSsh.Designer.cs">
+      <DependentUpon>ControlTestingSsh.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCommentProperties.cs">
       <SubType>UserControl</SubType>
@@ -391,6 +403,12 @@
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormNodeProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormNodeProperties.Designer.cs">
+      <DependentUpon>FormNodeProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormSiteProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -558,6 +576,9 @@
     <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSettings.resx">
       <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.resx">
+      <DependentUpon>ControlPlanetLabNodeProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -569,6 +590,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Testing\ControlTestingWebRequest.resx">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Testing\ControlTestingSsh.resx">
+      <DependentUpon>ControlTestingSsh.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlCommentProperties.resx">
       <DependentUpon>ControlCommentProperties.cs</DependentUpon>
@@ -709,6 +733,9 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormNodeProperties.resx">
+      <DependentUpon>FormNodeProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormSiteProperties.resx">
       <DependentUpon>FormSiteProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -810,28 +837,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
-      <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
-      <Name>DotNetApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\PlanetLab\PlanetLab\PlanetLab.csproj">
-      <Project>{8d8a9a27-a8ca-4a27-95e5-c2246bdabc85}</Project>
-      <Name>PlanetLab</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YtApi\YtApi.csproj">
-      <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
-      <Name>YtApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YtCrawler\YtCrawler.csproj">
-      <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>
-      <Name>YtCrawler</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\GlobeNode_48.png" />
+    <None Include="Resources\GlobeNode_32.png" />
+    <None Include="Resources\GlobeNode_24.png" />
+    <None Include="Resources\GlobeNode_16.png" />
     <None Include="Resources\ObjectSmallId_48.png" />
     <None Include="Resources\ObjectSmallId_32.png" />
     <None Include="Resources\ObjectSmallId_24.png" />
@@ -1445,7 +1458,28 @@
     <None Include="Resources\Book_24.png" />
     <None Include="Resources\Book_16.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
+      <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
+      <Name>DotNetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PlanetLab\PlanetLab\PlanetLab.csproj">
+      <Project>{8d8a9a27-a8ca-4a27-95e5-c2246bdabc85}</Project>
+      <Name>PlanetLab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Renci.SshNet\Renci.SshNet.csproj">
+      <Project>{2f5f8c90-0bd1-424f-997c-7bc6280919d1}</Project>
+      <Name>Renci.SshNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YtApi\YtApi.csproj">
+      <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
+      <Name>YtApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YtCrawler\YtCrawler.csproj">
+      <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>
+      <Name>YtCrawler</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

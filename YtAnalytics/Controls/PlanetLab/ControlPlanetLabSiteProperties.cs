@@ -22,10 +22,11 @@ using System.Security;
 using System.Windows.Forms;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
-using YtAnalytics.Forms;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
+using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
 {
@@ -82,10 +83,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Updates the PlanetLab site information with the specified site identifier.
 		/// </summary>
-		/// <param name="username">The PlanetLab username.</param>
-		/// <param name="password">The PlanetLab password.</param>
 		/// <param name="id">The site identifier.</param>
-		public void UpdateSite(string username, SecureString password, int id)
+		public void UpdateSite(int id)
 		{
 			// Hide the current information.
 			this.pictureBox.Image = Resources.GlobeClock_32;
@@ -95,7 +94,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new sites request for the specified site.
-				this.BeginRequest(this.request, username, password, id);
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, id);
 			}
 			catch
 			{
@@ -334,7 +333,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected nodes, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
+			// Get the selected node ID.
+			int id = (int)this.listViewNodes.SelectedItems[0].Tag;
+			using (FormNodeProperties form = new FormNodeProperties())
+			{
+				form.ShowDialog(this, id);
+			}
 		}
 
 		/// <summary>

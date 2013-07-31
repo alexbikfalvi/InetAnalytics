@@ -64,6 +64,7 @@ namespace YtAnalytics.Controls
 			this.textBoxYtUserName.Text = this.crawler.Config.YouTubeUserName;
 			this.textBoxYtPassword.SecureText = this.crawler.Config.YouTubePassword;
 			this.textBoxYt2Key.SecureText = this.crawler.Config.YouTubeV2ApiKey;
+			this.textBoxYtCategories.Text = this.crawler.Config.YouTubeCategoriesFileName;
 			this.textBoxLogFile.Text = this.crawler.Config.LogFileName;
 			this.textBoxVideoCommentsFile.Text = this.crawler.Config.CommentsVideosFileName;
 			this.textBoxUserCommentsFile.Text = this.crawler.Config.CommentsUsersFileName;
@@ -79,6 +80,7 @@ namespace YtAnalytics.Controls
 			this.crawler.Config.YouTubeUserName = this.textBoxYtUserName.Text;
 			this.crawler.Config.YouTubePassword = this.textBoxYtPassword.SecureText;
 			this.crawler.Config.YouTubeV2ApiKey = this.textBoxYt2Key.SecureText;
+			this.crawler.Config.YouTubeCategoriesFileName = this.textBoxYtCategories.Text;
 			this.crawler.Config.LogFileName = this.textBoxLogFile.Text;
 			this.crawler.Config.CommentsVideosFileName = this.textBoxVideoCommentsFile.Text;
 			this.crawler.Config.CommentsUsersFileName = this.textBoxUserCommentsFile.Text;

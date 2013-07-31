@@ -171,6 +171,7 @@
 			this.textBoxPassword.Size = new System.Drawing.Size(270, 20);
 			this.textBoxPassword.TabIndex = 12;
 			this.textBoxPassword.UseSystemPasswordChar = true;
+			this.textBoxPassword.Validated += new System.EventHandler(this.OnInputChanged);
 			// 
 			// ControlAddServer
 			// 

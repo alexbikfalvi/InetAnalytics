@@ -58,7 +58,7 @@ namespace YtCrawler.Database.Data
 		/// <returns><b>True</b> if the two objects are equal, <b>false</b> otherwise.</returns>
 		public bool Equals(DbObjectDatabase obj)
 		{
-			return (this.Name == obj.Name) && (this.DatabaseId == obj.DatabaseId) && (this.CreateDate == obj.CreateDate);
+			return obj != null ? (this.Name == obj.Name) && (this.DatabaseId == obj.DatabaseId) && (this.CreateDate == obj.CreateDate) : false;
 		}
 	}
 }

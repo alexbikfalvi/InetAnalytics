@@ -99,7 +99,6 @@
     <Compile Include="Testing\Testing.cs" />
     <Compile Include="Testing\TestingWebRequest.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
       <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>

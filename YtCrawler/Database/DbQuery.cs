@@ -102,6 +102,15 @@ namespace YtCrawler.Database
 		// Public methods.
 
 		/// <summary>
+		/// Converts the current query to a string.
+		/// </summary>
+		/// <returns>The string representation of the query.</returns>
+		public override string ToString()
+		{
+			return this.query;
+		}
+
+		/// <summary>
 		/// Creates a database query for the specified query text.
 		/// </summary>
 		/// <param name="text">The query text.</param>

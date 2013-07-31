@@ -55,6 +55,8 @@
 			this.labelUserCommentsFile = new System.Windows.Forms.Label();
 			this.textBoxVideoCommentsFile = new System.Windows.Forms.TextBox();
 			this.labelVideoCommentsFile = new System.Windows.Forms.Label();
+			this.labelYtCategories = new System.Windows.Forms.Label();
+			this.textBoxYtCategories = new System.Windows.Forms.TextBox();
 			this.toolStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
@@ -152,6 +154,8 @@
 			// 
 			// tabPageYouTube
 			// 
+			this.tabPageYouTube.Controls.Add(this.textBoxYtCategories);
+			this.tabPageYouTube.Controls.Add(this.labelYtCategories);
 			this.tabPageYouTube.Controls.Add(this.groupBoxYt2);
 			this.tabPageYouTube.Controls.Add(this.textBoxYtPassword);
 			this.tabPageYouTube.Controls.Add(this.labelYtPassword);
@@ -299,7 +303,7 @@
 			this.textBoxPlaylistCommentsFile.Location = new System.Drawing.Point(150, 65);
 			this.textBoxPlaylistCommentsFile.Name = "textBoxPlaylistCommentsFile";
 			this.textBoxPlaylistCommentsFile.ReadOnly = true;
-			this.textBoxPlaylistCommentsFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxPlaylistCommentsFile.Size = new System.Drawing.Size(430, 20);
 			this.textBoxPlaylistCommentsFile.TabIndex = 8;
 			// 
 			// textBoxUserCommentsFile
@@ -309,7 +313,7 @@
 			this.textBoxUserCommentsFile.Location = new System.Drawing.Point(150, 39);
 			this.textBoxUserCommentsFile.Name = "textBoxUserCommentsFile";
 			this.textBoxUserCommentsFile.ReadOnly = true;
-			this.textBoxUserCommentsFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxUserCommentsFile.Size = new System.Drawing.Size(430, 20);
 			this.textBoxUserCommentsFile.TabIndex = 7;
 			// 
 			// labelUserCommentsFile
@@ -328,7 +332,7 @@
 			this.textBoxVideoCommentsFile.Location = new System.Drawing.Point(150, 13);
 			this.textBoxVideoCommentsFile.Name = "textBoxVideoCommentsFile";
 			this.textBoxVideoCommentsFile.ReadOnly = true;
-			this.textBoxVideoCommentsFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxVideoCommentsFile.Size = new System.Drawing.Size(430, 20);
 			this.textBoxVideoCommentsFile.TabIndex = 5;
 			this.textBoxVideoCommentsFile.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
@@ -340,6 +344,25 @@
 			this.labelVideoCommentsFile.Size = new System.Drawing.Size(104, 13);
 			this.labelVideoCommentsFile.TabIndex = 4;
 			this.labelVideoCommentsFile.Text = "&Video comments file:";
+			// 
+			// labelYtCategories
+			// 
+			this.labelYtCategories.AutoSize = true;
+			this.labelYtCategories.Location = new System.Drawing.Point(16, 127);
+			this.labelYtCategories.Name = "labelYtCategories";
+			this.labelYtCategories.Size = new System.Drawing.Size(76, 13);
+			this.labelYtCategories.TabIndex = 8;
+			this.labelYtCategories.Text = "&Categories file:";
+			// 
+			// textBoxYtCategories
+			// 
+			this.textBoxYtCategories.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxYtCategories.Location = new System.Drawing.Point(150, 124);
+			this.textBoxYtCategories.Name = "textBoxYtCategories";
+			this.textBoxYtCategories.ReadOnly = true;
+			this.textBoxYtCategories.Size = new System.Drawing.Size(424, 20);
+			this.textBoxYtCategories.TabIndex = 9;
 			// 
 			// ControlSettings
 			// 
@@ -396,5 +419,7 @@
 		private System.Windows.Forms.GroupBox groupBoxYt2;
 		private DotNetApi.Windows.Controls.SecureTextBox textBoxYt2Key;
 		private System.Windows.Forms.Label labelYt2Key;
+		private System.Windows.Forms.TextBox textBoxYtCategories;
+		private System.Windows.Forms.Label labelYtCategories;
 	}
 }

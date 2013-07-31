@@ -282,6 +282,26 @@ namespace YtAnalytics.Controls.Database
 								}
 							}, null);
 					}
+					catch (DbException exception)
+					{
+						// Dispose the command.
+						command.Dispose();
+						// Show an error message.
+						this.ShowMessage(Resources.DatabaseError_48, "Database", string.Format("{0} {1}", query.MessageFinishFail, exception.InnerException.Message), false);
+						// Log the event.
+						server.LogEvent(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							"Executing query on the database server \'{0}\' failed. {1}",
+							new object[] { server.Name, exception.Message },
+							exception);
+						// Wait.
+						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+						// Hide the message.
+						this.HideMessage();
+						// Call the completion method.
+						this.DatabaseQueryFail(server, query, exception);
+					}
 					catch (Exception exception)
 					{
 						// Dispose the command.

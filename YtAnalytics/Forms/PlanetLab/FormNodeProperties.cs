@@ -17,7 +17,6 @@
  */
 
 using System;
-using System.Security;
 using System.Windows.Forms;
 using PlanetLab.Api;
 using DotNetApi.Windows;
@@ -29,12 +28,12 @@ namespace YtAnalytics.Forms.PlanetLab
 	/// <summary>
 	/// A form dialog that displays the information of a PlanetLab site.
 	/// </summary>
-	public partial class FormSiteProperties : Form
+	public partial class FormNodeProperties : Form
 	{
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormSiteProperties()
+		public FormNodeProperties()
 		{
 			InitializeComponent();
 
@@ -50,31 +49,31 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// <returns>The dialog result.</returns>
 		public DialogResult ShowDialog(IWin32Window owner, int id)
 		{
-			// Set the PlanetLab site to null.
-			this.controlSite.PlanetLabSite = null;
-			// Set the PlanetLab site.
-			this.controlSite.UpdateSite(id);
+			// Set the PlanetLab node to null.
+			this.controlNode.PlanetLabNode = null;
+			// Updated the PlanetLab node.
+			this.controlNode.UpdateNode(id);
 			// Set the title.
-			this.Text = string.Format("Site {0} Properties", id);
+			this.Text = string.Format("Node {0} Properties", id);
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}
 
 		/// <summary>
-		/// Shows the form as a dialog with the specified PlanetLab site.
+		/// Shows the form as a dialog and the specified playlist.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="site">The PlanetLab site.</param>
+		/// <param name="node">The PlanetLab node.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, PlSite site)
+		public DialogResult ShowDialog(IWin32Window owner, PlNode node)
 		{
 			// If the site is null, do nothing.
-			if (null == site) return DialogResult.Abort;
+			if (null == node) return DialogResult.Abort;
 
 			// Set the PlanetLab site.
-			this.controlSite.PlanetLabSite = site;
+			this.controlNode.PlanetLabNode = node;
 			// Set the title.
-			this.Text = string.Format("Site {0} Properties", site.SiteId);
+			this.Text = string.Format("Node {0} Properties", node.NodeId);
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}
