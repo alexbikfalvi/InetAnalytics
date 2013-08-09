@@ -32,13 +32,13 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control that displays the information of a PlanetLab node.
 	/// </summary>
-	public partial class ControlPlanetLabNodeProperties : ControlPlanetLab
+	public partial class ControlPlanetLabNodeProperties : ControlPlanetLabProperties
 	{
 		private static string notAvailable = "(not available)";
 
 		private PlNode node = null;
 
-		private PlRequestGetNodes request = new PlRequestGetNodes();
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodes);
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -76,33 +76,33 @@ namespace YtAnalytics.Controls.PlanetLab
 		public void UpdateNode(int id)
 		{
 			// Hide the current information.
-			this.pictureBox.Image = Resources.GlobeClock_32;
-			this.labelTitle.Text = "Updating node information...";
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = "Updating node information...";
 			this.tabControl.Visible = false;
 
 			try
 			{
 				// Begin a new nodes request for the specified node.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, id);
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlNode.GetFilter(PlNode.Fields.NodeId, id));
 			}
 			catch
 			{
 				// Catch all exceptions.
-				this.pictureBox.Image = Resources.GlobeError_32;
-				this.labelTitle.Text = "Node information not found";
+				this.Icon = Resources.GlobeError_32;
+				this.Title = "Node information not found";
 			}
 		}
 
 		// Protected methods.
 
 		/// <summary>
-		/// An event handler called when the request ends.
+		/// An event handler called when the request completes.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnEndRequest(XmlRpcResponse response)
+		protected override void OnCompleteRequest(XmlRpcResponse response)
 		{
 			// Call the base class method.
-			base.OnEndRequest(response);
+			base.OnCompleteRequest(response);
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -114,16 +114,12 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Display the information for the first node.
 					this.PlanetLabNode = nodes[0];
 				}
+				else
+				{
+					// Set the node to null.
+					this.PlanetLabNode = null;
+				}
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request completes.
-		/// </summary>
-		protected override void OnCompleteRequest()
-		{
-			// Call the base class method.
-			base.OnCompleteRequest();
 		}
 
 		/// <summary>
@@ -133,20 +129,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="newNode">The new PlanetLab node.</param>
 		protected virtual void OnNodeSet(PlNode oldNode, PlNode newNode)
 		{
-			// If the old an new nodes are the same, do nothing.
-			if (oldNode == newNode) return;
 			// Change the display information for the new node.
 			if (null == newNode)
 			{
-				this.labelTitle.Text = "No node selected";
+				this.Title = "Node information not found";
+				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
 			else
 			{
 				// General.
 
-				this.labelTitle.Text = newNode.Hostname;
-				this.pictureBox.Image = Resources.GlobeNode_32;
+				this.Title = newNode.Hostname;
+				this.Icon = Resources.GlobeObject_32;
 
 				this.textBoxHostname.Text = newNode.Hostname;
 				this.textBoxVersion.Text = newNode.Version;
@@ -177,8 +172,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.textBoxLastPcuConfirmation.Text = newNode.LastPcuConfirmation.HasValue ? newNode.LastPcuConfirmation.Value.ToString() : ControlPlanetLabNodeProperties.notAvailable;
 				this.textBoxLastDownload.Text = newNode.LastDownload.HasValue ? newNode.LastDownload.Value.ToString() : ControlPlanetLabNodeProperties.notAvailable;
 
-				this.textBoxLastTimeSpentOnline.Text = newNode.LastTimeSpentOnline.HasValue ? newNode.LastTimeSpentOnline.Value.ToString() : ControlPlanetLabNodeProperties.notAvailable;
-				this.textBoxLastTimeSpentOffline.Text = newNode.LastTimeSpentOffline.HasValue ? newNode.LastTimeSpentOffline.Value.ToString() : ControlPlanetLabNodeProperties.notAvailable;
+				this.textBoxLastTimeSpentOnline.Text = newNode.LastTimeSpentOnline.HasValue ? newNode.LastTimeSpentOnline.Value.ToString("d' day(s) 'hh' hour(s) 'mm' minute(s)'") : ControlPlanetLabNodeProperties.notAvailable;
+				this.textBoxLastTimeSpentOffline.Text = newNode.LastTimeSpentOffline.HasValue ? newNode.LastTimeSpentOffline.Value.ToString("d' day(s) 'hh' hour(s) 'mm' minute(s)'") : ControlPlanetLabNodeProperties.notAvailable;
 
 				// Ports.
 				this.listBoxPorts.Items.Clear();
@@ -240,24 +235,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					item.Tag = id;
 					this.listViewSliceWhitelist.Items.Add(item);
 				}
-
-				//// Addresses.
-				//this.listViewAddresses.Items.Clear();
-				//foreach (int address in newNode.AddressIds)
-				//{
-				//	ListViewItem item = new ListViewItem(address.ToString(), 0);
-				//	item.Tag = address;
-				//	this.listViewAddresses.Items.Add(item);
-				//}
-
-				//// Tags.
-				//this.listViewTags.Items.Clear();
-				//foreach (int tag in newNode.NodeTagIds)
-				//{
-				//	ListViewItem item = new ListViewItem(tag.ToString(), 0);
-				//	item.Tag = tag;
-				//	this.listViewTags.Items.Add(item);
-				//}
 
 				// Disable the buttons.
 				this.buttonInterface.Enabled = false;

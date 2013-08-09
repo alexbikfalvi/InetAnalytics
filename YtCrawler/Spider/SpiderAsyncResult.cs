@@ -27,7 +27,7 @@ namespace YtCrawler.Spider
 	/// <summary>
 	/// Represents the result of a spider asynchronous operation.
 	/// </summary>
-	public class SpiderAsyncResult : AsyncResult
+	public sealed class SpiderAsyncResult : AsyncResult
 	{
 		private SpiderException exception = null;
 		private object result = null;

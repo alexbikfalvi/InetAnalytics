@@ -34,10 +34,6 @@
 			this.panel = new System.Windows.Forms.Panel();
 			this.buttonExport = new System.Windows.Forms.Button();
 			this.buttonImport = new System.Windows.Forms.Button();
-			this.statusStrip = new System.Windows.Forms.StatusStrip();
-			this.statusLabelMessage = new System.Windows.Forms.ToolStripStatusLabel();
-			this.statusLabelSpring = new System.Windows.Forms.ToolStripStatusLabel();
-			this.statusLabelData = new System.Windows.Forms.ToolStripStatusLabel();
 			this.buttonUndo = new System.Windows.Forms.Button();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
@@ -79,15 +75,14 @@
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.labelUrl = new System.Windows.Forms.Label();
-			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.panel.SuspendLayout();
-			this.statusStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageRequestHeaders.SuspendLayout();
@@ -120,7 +115,6 @@
 			// 
 			this.panel.Controls.Add(this.buttonExport);
 			this.panel.Controls.Add(this.buttonImport);
-			this.panel.Controls.Add(this.statusStrip);
 			this.panel.Controls.Add(this.buttonUndo);
 			this.panel.Controls.Add(this.tabControl);
 			this.panel.Controls.Add(this.buttonSave);
@@ -137,7 +131,7 @@
 			// buttonExport
 			// 
 			this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonExport.Location = new System.Drawing.Point(520, 146);
+			this.buttonExport.Location = new System.Drawing.Point(520, 169);
 			this.buttonExport.Name = "buttonExport";
 			this.buttonExport.Size = new System.Drawing.Size(75, 23);
 			this.buttonExport.TabIndex = 24;
@@ -148,46 +142,13 @@
 			// buttonImport
 			// 
 			this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonImport.Location = new System.Drawing.Point(520, 175);
+			this.buttonImport.Location = new System.Drawing.Point(520, 197);
 			this.buttonImport.Name = "buttonImport";
 			this.buttonImport.Size = new System.Drawing.Size(75, 23);
 			this.buttonImport.TabIndex = 23;
 			this.buttonImport.Text = "&Import";
 			this.buttonImport.UseVisualStyleBackColor = true;
 			this.buttonImport.Click += new System.EventHandler(this.OnImport);
-			// 
-			// statusStrip
-			// 
-			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabelMessage,
-            this.statusLabelSpring,
-            this.statusLabelData});
-			this.statusStrip.Location = new System.Drawing.Point(0, 201);
-			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(598, 22);
-			this.statusStrip.SizingGrip = false;
-			this.statusStrip.TabIndex = 22;
-			this.statusStrip.Text = "statusStrip1";
-			// 
-			// statusLabelMessage
-			// 
-			this.statusLabelMessage.Image = global::YtAnalytics.Resources.Information_16;
-			this.statusLabelMessage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.statusLabelMessage.Name = "statusLabelMessage";
-			this.statusLabelMessage.Size = new System.Drawing.Size(55, 17);
-			this.statusLabelMessage.Text = "Ready";
-			// 
-			// statusLabelSpring
-			// 
-			this.statusLabelSpring.Name = "statusLabelSpring";
-			this.statusLabelSpring.Size = new System.Drawing.Size(528, 17);
-			this.statusLabelSpring.Spring = true;
-			// 
-			// statusLabelData
-			// 
-			this.statusLabelData.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.statusLabelData.Name = "statusLabelData";
-			this.statusLabelData.Size = new System.Drawing.Size(0, 17);
 			// 
 			// buttonUndo
 			// 
@@ -215,7 +176,7 @@
 			this.tabControl.Location = new System.Drawing.Point(6, 30);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(508, 168);
+			this.tabControl.Size = new System.Drawing.Size(508, 190);
 			this.tabControl.TabIndex = 20;
 			// 
 			// tabPageGeneral
@@ -238,7 +199,7 @@
 			this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabPageGeneral.Name = "tabPageGeneral";
 			this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGeneral.Size = new System.Drawing.Size(500, 142);
+			this.tabPageGeneral.Size = new System.Drawing.Size(500, 164);
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -268,7 +229,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUserAgent.Location = new System.Drawing.Point(110, 167);
 			this.textBoxUserAgent.Name = "textBoxUserAgent";
-			this.textBoxUserAgent.Size = new System.Drawing.Size(248, 20);
+			this.textBoxUserAgent.Size = new System.Drawing.Size(231, 20);
 			this.textBoxUserAgent.TabIndex = 20;
 			this.textBoxUserAgent.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -289,7 +250,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxReferer.Location = new System.Drawing.Point(110, 141);
 			this.textBoxReferer.Name = "textBoxReferer";
-			this.textBoxReferer.Size = new System.Drawing.Size(248, 20);
+			this.textBoxReferer.Size = new System.Drawing.Size(231, 20);
 			this.textBoxReferer.TabIndex = 18;
 			this.textBoxReferer.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -321,7 +282,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxExpect.Location = new System.Drawing.Point(110, 115);
 			this.textBoxExpect.Name = "textBoxExpect";
-			this.textBoxExpect.Size = new System.Drawing.Size(248, 20);
+			this.textBoxExpect.Size = new System.Drawing.Size(231, 20);
 			this.textBoxExpect.TabIndex = 14;
 			this.textBoxExpect.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -331,7 +292,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxContentType.Location = new System.Drawing.Point(110, 63);
 			this.textBoxContentType.Name = "textBoxContentType";
-			this.textBoxContentType.Size = new System.Drawing.Size(248, 20);
+			this.textBoxContentType.Size = new System.Drawing.Size(231, 20);
 			this.textBoxContentType.TabIndex = 13;
 			this.textBoxContentType.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -352,7 +313,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAccept.Location = new System.Drawing.Point(110, 37);
 			this.textBoxAccept.Name = "textBoxAccept";
-			this.textBoxAccept.Size = new System.Drawing.Size(248, 20);
+			this.textBoxAccept.Size = new System.Drawing.Size(231, 20);
 			this.textBoxAccept.TabIndex = 9;
 			this.textBoxAccept.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -673,14 +634,6 @@
 			this.labelUrl.TabIndex = 5;
 			this.labelUrl.Text = "&URL:";
 			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
-			this.log.TabIndex = 0;
-			// 
 			// saveFileDialog
 			// 
 			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
@@ -690,6 +643,14 @@
 			// 
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
+			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.TabIndex = 0;
 			// 
 			// ControlTestingWebRequest
 			// 
@@ -705,8 +666,6 @@
 			this.splitContainer.ResumeLayout(false);
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();
-			this.statusStrip.ResumeLayout(false);
-			this.statusStrip.PerformLayout();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
@@ -759,8 +718,6 @@
 		private System.Windows.Forms.CheckBox checkBoxUserAgent;
 		private System.Windows.Forms.TextBox textBoxUserAgent;
 		private System.Windows.Forms.DateTimePicker dateTimePicker;
-		private System.Windows.Forms.StatusStrip statusStrip;
-		private System.Windows.Forms.ToolStripStatusLabel statusLabelMessage;
 		private System.Windows.Forms.ComboBox comboBoxEncoding;
 		private System.Windows.Forms.Label labelEncoding;
 		private System.Windows.Forms.Button buttonExport;
@@ -772,8 +729,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.Button buttonViewHeader;
-		private System.Windows.Forms.ToolStripStatusLabel statusLabelData;
-		private System.Windows.Forms.ToolStripStatusLabel statusLabelSpring;
 
 	}
 }

@@ -33,7 +33,7 @@ namespace YtCrawler.Spider
 	/// <summary>
 	/// A spider browsing through the YouTube API version 2 standard video feeds.
 	/// </summary>
-	public class SpiderStandardFeeds : Spider 
+	public sealed class SpiderStandardFeeds : Spider 
 	{
 		public delegate void CrawlStartedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
 		public delegate void CrawlFinishedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);

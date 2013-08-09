@@ -93,6 +93,33 @@ namespace YtAnalytics.Controls
 			base.Hide();
 		}
 
+		/// <summary>
+		/// Indicates whether the control has a selectable item.
+		/// </summary>
+		/// <returns><b>True</b> if the control has a selectable item, <b>false</b> otherwise.</returns>
+		public bool HasSelected()
+		{
+			return false;
+		}
+
+		/// <summary>
+		/// Returns the indices of the selected item.
+		/// </summary>
+		/// <returns>The indices.</returns>
+		public int[] GetSelected()
+		{
+			return null;
+		}
+
+		/// <summary>
+		/// Sets the selected item.
+		/// </summary>
+		/// <param name="index">The item indices.</param>
+		public void SetSelected(int[] indices)
+		{
+			// Do nothing.
+		}
+
 		// Private methods.
 
 		/// <summary>

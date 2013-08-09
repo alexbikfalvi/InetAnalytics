@@ -67,6 +67,9 @@
     <Compile Include="Controls\PlanetLab\ControlPlanetLab.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -96,6 +99,24 @@
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.Designer.cs">
       <DependentUpon>ControlPlanetLabNodeProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabPcuProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabPcuProperties.Designer.cs">
+      <DependentUpon>ControlPlanetLabPcuProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabPersonProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabPersonProperties.Designer.cs">
+      <DependentUpon>ControlPlanetLabPersonProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSliceProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSliceProperties.Designer.cs">
+      <DependentUpon>ControlPlanetLabSliceProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
@@ -403,6 +424,18 @@
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormPersonProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormPersonProperties.Designer.cs">
+      <DependentUpon>FormPersonProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormPcuProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormPcuProperties.Designer.cs">
+      <DependentUpon>FormPcuProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormNodeProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -563,6 +596,9 @@
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLab.resx">
+      <DependentUpon>ControlPlanetLab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.resx">
       <DependentUpon>ControlPlanetLabSiteProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -578,6 +614,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.resx">
       <DependentUpon>ControlPlanetLabNodeProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabPcuProperties.resx">
+      <DependentUpon>ControlPlanetLabPcuProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabPersonProperties.resx">
+      <DependentUpon>ControlPlanetLabPersonProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSliceProperties.resx">
+      <DependentUpon>ControlPlanetLabSliceProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
@@ -733,6 +778,12 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormPersonProperties.resx">
+      <DependentUpon>FormPersonProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormPcuProperties.resx">
+      <DependentUpon>FormPcuProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormNodeProperties.resx">
       <DependentUpon>FormNodeProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -841,6 +892,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ServersGlobe_48.png" />
+    <None Include="Resources\ServersGlobe_32.png" />
+    <None Include="Resources\ServersGlobe_24.png" />
+    <None Include="Resources\ServersGlobe_16.png" />
+    <None Include="Resources\FolderOpenGlobe_48.png" />
+    <None Include="Resources\FolderOpenGlobe_32.png" />
+    <None Include="Resources\FolderOpenGlobe_24.png" />
+    <None Include="Resources\FolderOpenGlobe_16.png" />
+    <None Include="Resources\FolderClosedGlobe_48.png" />
+    <None Include="Resources\FolderClosedGlobe_32.png" />
+    <None Include="Resources\FolderClosedGlobe_24.png" />
+    <None Include="Resources\FolderClosedGlobe_16.png" />
+    <None Include="Resources\GlobeObject_48.png" />
+    <None Include="Resources\GlobeObject_32.png" />
+    <None Include="Resources\GlobeObject_24.png" />
+    <None Include="Resources\GlobeObject_16.png" />
+    <None Include="Resources\GlobeUser_48.png" />
+    <None Include="Resources\GlobeUser_32.png" />
+    <None Include="Resources\GlobeUser_24.png" />
+    <None Include="Resources\GlobeUser_16.png" />
+    <None Include="Resources\GlobePower_48.png" />
+    <None Include="Resources\GlobePower_32.png" />
+    <None Include="Resources\GlobePower_24.png" />
+    <None Include="Resources\GlobePower_16.png" />
     <None Include="Resources\GlobeNode_48.png" />
     <None Include="Resources\GlobeNode_32.png" />
     <None Include="Resources\GlobeNode_24.png" />

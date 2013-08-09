@@ -30,10 +30,8 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPlanetLabNodeProperties));
-			this.labelTitle = new System.Windows.Forms.Label();
 			this.textBoxHostname = new System.Windows.Forms.TextBox();
 			this.labelHostname = new System.Windows.Forms.Label();
-			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
 			this.checkBoxVerified = new System.Windows.Forms.CheckBox();
@@ -107,8 +105,7 @@
 			this.tabPageConfigurationFiles = new System.Windows.Forms.TabPage();
 			this.buttonConfigurationFile = new System.Windows.Forms.Button();
 			this.listViewConfigurationFiles = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+			this.columnHeaderConfigurationFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageIdentifiers.SuspendLayout();
@@ -121,16 +118,6 @@
 			this.tabPageSliceWhitelist.SuspendLayout();
 			this.tabPageConfigurationFiles.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// labelTitle
-			// 
-			this.labelTitle.AutoSize = true;
-			this.labelTitle.Location = new System.Drawing.Point(59, 29);
-			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(91, 13);
-			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "No node selected";
-			this.labelTitle.UseMnemonic = false;
 			// 
 			// textBoxHostname
 			// 
@@ -150,15 +137,6 @@
 			this.labelHostname.Size = new System.Drawing.Size(58, 13);
 			this.labelHostname.TabIndex = 0;
 			this.labelHostname.Text = "&Hostname:";
-			// 
-			// pictureBox
-			// 
-			this.pictureBox.Image = global::YtAnalytics.Resources.GlobeNode_32;
-			this.pictureBox.Location = new System.Drawing.Point(20, 20);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(32, 32);
-			this.pictureBox.TabIndex = 2;
-			this.pictureBox.TabStop = false;
 			// 
 			// tabControl
 			// 
@@ -302,7 +280,7 @@
 			// labelLastUpdated
 			// 
 			this.labelLastUpdated.AutoSize = true;
-			this.labelLastUpdated.Location = new System.Drawing.Point(7, 125);
+			this.labelLastUpdated.Location = new System.Drawing.Point(6, 125);
 			this.labelLastUpdated.Name = "labelLastUpdated";
 			this.labelLastUpdated.Size = new System.Drawing.Size(72, 13);
 			this.labelLastUpdated.TabIndex = 8;
@@ -986,7 +964,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.listViewConfigurationFiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
+            this.columnHeaderConfigurationFile});
 			this.listViewConfigurationFiles.FullRowSelect = true;
 			this.listViewConfigurationFiles.GridLines = true;
 			this.listViewConfigurationFiles.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -1001,24 +979,19 @@
 			this.listViewConfigurationFiles.View = System.Windows.Forms.View.Details;
 			this.listViewConfigurationFiles.ItemActivate += new System.EventHandler(this.OnConfigurationFileProperties);
 			// 
-			// columnHeader1
+			// columnHeaderConfigurationFile
 			// 
-			this.columnHeader1.Text = "Slice ID";
-			this.columnHeader1.Width = 240;
+			this.columnHeaderConfigurationFile.Text = "File ID";
+			this.columnHeaderConfigurationFile.Width = 240;
 			// 
 			// ControlPlanetLabNodeProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl);
-			this.Controls.Add(this.labelTitle);
-			this.Controls.Add(this.pictureBox);
 			this.Name = "ControlPlanetLabNodeProperties";
 			this.Size = new System.Drawing.Size(350, 400);
-			this.Controls.SetChildIndex(this.pictureBox, 0);
-			this.Controls.SetChildIndex(this.labelTitle, 0);
 			this.Controls.SetChildIndex(this.tabControl, 0);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
@@ -1034,14 +1007,11 @@
 			this.tabPageSliceWhitelist.ResumeLayout(false);
 			this.tabPageConfigurationFiles.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Label labelTitle;
-		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.TextBox textBoxHostname;
 		private System.Windows.Forms.Label labelHostname;
 		private System.Windows.Forms.TabControl tabControl;
@@ -1116,7 +1086,7 @@
 		private System.Windows.Forms.ListBox listBoxPorts;
 		private System.Windows.Forms.TabPage tabPageConfigurationFiles;
 		private System.Windows.Forms.ListView listViewConfigurationFiles;
-		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeaderConfigurationFile;
 		private System.Windows.Forms.Button buttonConfigurationFile;
 	}
 }

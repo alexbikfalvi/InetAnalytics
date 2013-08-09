@@ -26,6 +26,7 @@ using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms.Net;
 using YtCrawler;
 using YtCrawler.Log;
+using YtCrawler.Status;
 
 namespace YtAnalytics.Controls.Testing
 {
@@ -39,6 +40,8 @@ namespace YtAnalytics.Controls.Testing
 		// Private variables.
 
 		private Crawler crawler = null;
+		private StatusHandler status = null;
+
 		private Uri uri = null;
 		private AsyncWebRequest request = new AsyncWebRequest();
 		private IAsyncResult result = null;
@@ -83,6 +86,10 @@ namespace YtAnalytics.Controls.Testing
 			// Set the crawler.
 			this.crawler = crawler;
 
+			// Get the crawler status.
+			this.status = this.crawler.Status.GetHandler(this);
+			this.status.Send("Ready.", Resources.Information_16);
+
 			// Enable the control.
 			this.Enabled = true;
 
@@ -109,9 +116,7 @@ namespace YtAnalytics.Controls.Testing
 			// Clear the response data.
 			this.textBoxResponseData.Text = string.Empty;
 			// Clear the status bar.
-			this.statusLabelMessage.Text = "Executing the HTTP request...";
-			this.statusLabelMessage.Image = Resources.Busy_16;
-			this.statusLabelData.Text = string.Empty;
+			this.status.Send("Executing the HTTP request...", Resources.Busy_16);
 
 			// Log
 			this.log.Add(this.crawler.Log.Add(
@@ -169,8 +174,7 @@ namespace YtAnalytics.Controls.Testing
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.statusLabelMessage.Text = string.Format("The HTTP request for web URL failed. {0}", exception.Message);
-				this.statusLabelMessage.Image = Resources.Error_16;
+				this.status.Send(string.Format("The HTTP request for web URL failed. {0}", exception.Message), Resources.Error_16);
 				// Log the result.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
@@ -225,9 +229,10 @@ namespace YtAnalytics.Controls.Testing
 					}
 
 					// Update the status label.
-					this.statusLabelMessage.Text = "The HTTP request for the web URL completed successfully.";
-					this.statusLabelMessage.Image = Resources.Success_16;
-					this.statusLabelData.Text = string.Format("{0} bytes of data received", asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0);
+					this.status.Send(
+						"The HTTP request for the web URL completed successfully.",
+						string.Format("{0} bytes of data received", asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
+						Resources.Success_16); 
 					// Log the result.
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Verbose,
@@ -241,8 +246,7 @@ namespace YtAnalytics.Controls.Testing
 					if (exception.Status == WebExceptionStatus.RequestCanceled)
 					{
 						// Update the status label.
-						this.statusLabelMessage.Text = "The HTTP request for the web URL has been canceled.";
-						this.statusLabelMessage.Image = Resources.Canceled_16;
+						this.status.Send("The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
@@ -254,8 +258,7 @@ namespace YtAnalytics.Controls.Testing
 					else
 					{
 						// Update the status label.
-						this.statusLabelMessage.Text = string.Format("The HTTP request for the web URL failed. {0}", exception.Message);
-						this.statusLabelMessage.Image = Resources.Error_16;
+						this.status.Send(string.Format("The HTTP request for the web URL failed. {0}", exception.Message), Resources.Error_16);
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
@@ -269,8 +272,7 @@ namespace YtAnalytics.Controls.Testing
 				catch (Exception exception)
 				{
 					// Update the status label.
-					this.statusLabelMessage.Text = string.Format("The HTTP request for the web URL \'{0}\' failed. {1}", this.textBoxUrl.Text, exception.Message);
-					this.statusLabelMessage.Image = Resources.Error_16;
+					this.status.Send(string.Format("The HTTP request for the web URL \'{0}\' failed. {1}", this.textBoxUrl.Text, exception.Message), Resources.Error_16);
 					// Log the result.
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,

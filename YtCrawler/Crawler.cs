@@ -21,17 +21,22 @@ using YtApi.Api.V2;
 using YtCrawler.Database;
 using YtCrawler.Log;
 using YtCrawler.Spider;
+using YtCrawler.Status;
 using YtCrawler.Testing;
 using Microsoft.Win32;
 
 namespace YtCrawler
 {
-	public class Crawler : IDisposable
+	/// <summary>
+	/// A class representing the YouTube crawler.
+	/// </summary>
+	public sealed class Crawler : IDisposable
 	{
 		private CrawlerConfig config;
 		private YouTubeSettings settings;
 		private YouTubeCategories categories;
 		private Logger log;
+		private Status.Status status;
 		private Comments.Comments comments;
 		private DbServers servers;
 		private Spiders spiders;
@@ -56,6 +61,9 @@ namespace YtCrawler
 
 			// Create the logger.
 			this.log = new Logger(this.Config.LogFileName);
+
+			// Create the status.
+			this.status = new Status.Status();
 
 			// Create the comments.
 			this.comments = new Comments.Comments(this.config);
@@ -109,6 +117,11 @@ namespace YtCrawler
 		/// Returns the crawler log.
 		/// </summary>
 		public Logger Log { get { return this.log; } }
+
+		/// <summary>
+		/// Returns the crawler status.
+		/// </summary>
+		public Status.Status Status { get { return this.status; } }
 
 		/// <summary>
 		/// Returns the crawler comments.

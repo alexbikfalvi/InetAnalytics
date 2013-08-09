@@ -42,10 +42,10 @@ namespace YtAnalytics.Forms.PlanetLab
 		}
 
 		/// <summary>
-		/// Shows the form as a dialog with the specified PlanetLab site.
+		/// Shows the form as a dialog with the specified PlanetLab node.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="site">The PlanetLab site.</param>
+		/// <param name="id">The PlanetLab node ID.</param>
 		/// <returns>The dialog result.</returns>
 		public DialogResult ShowDialog(IWin32Window owner, int id)
 		{
@@ -60,7 +60,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		}
 
 		/// <summary>
-		/// Shows the form as a dialog and the specified playlist.
+		/// Shows the form as a dialog and the specified PlanetLab node.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="node">The PlanetLab node.</param>

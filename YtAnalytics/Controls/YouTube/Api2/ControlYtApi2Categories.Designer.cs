@@ -31,6 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2Categories));
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
+			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.splitContainerUp = new System.Windows.Forms.SplitContainer();
@@ -40,9 +41,8 @@
 			this.columnHeaderAssignable = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderDeprecated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
-			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.controlCategory = new YtAnalytics.Controls.YouTube.ControlCategoryProperties();
+			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -63,6 +63,15 @@
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(800, 25);
 			this.toolStrip.TabIndex = 0;
+			// 
+			// buttonRefresh
+			// 
+			this.buttonRefresh.Image = global::YtAnalytics.Resources.Refresh_16;
+			this.buttonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRefresh.Name = "buttonRefresh";
+			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
+			this.buttonRefresh.Text = "&Refresh";
+			this.buttonRefresh.Click += new System.EventHandler(this.OnRefresh);
 			// 
 			// buttonCancel
 			// 
@@ -161,23 +170,6 @@
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.imageList.Images.SetKeyName(0, "Category");
 			// 
-			// buttonRefresh
-			// 
-			this.buttonRefresh.Image = global::YtAnalytics.Resources.Refresh_16;
-			this.buttonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonRefresh.Name = "buttonRefresh";
-			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
-			this.buttonRefresh.Text = "&Refresh";
-			this.buttonRefresh.Click += new System.EventHandler(this.OnRefresh);
-			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(798, 169);
-			this.log.TabIndex = 0;
-			// 
 			// controlCategory
 			// 
 			this.controlCategory.Catergory = null;
@@ -187,6 +179,14 @@
 			this.controlCategory.Size = new System.Drawing.Size(344, 398);
 			this.controlCategory.TabIndex = 0;
 			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(798, 169);
+			this.log.TabIndex = 0;
+			// 
 			// ControlYtApi2Categories
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,6 +194,7 @@
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlYtApi2Categories";
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);

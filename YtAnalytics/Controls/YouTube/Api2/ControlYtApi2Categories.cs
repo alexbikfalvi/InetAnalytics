@@ -106,10 +106,10 @@ namespace YtAnalytics.Controls.YouTube.Api2
 								Resources.GlobeSuccess_48,
 								"Video Categories",
 								"Refreshing the list of YouTube categories completed successfully.",
-								false
+								false,
+								(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+								this.OnUpdateList
 								);
-							// Update the list of categories.
-							this.OnUpdateList();
 							// Log
 							this.log.Add(this.crawler.Log.Add(
 								LogEventLevel.Verbose,
@@ -142,7 +142,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							// Delay the closing of the user message.
 							Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 							// Hide the progress message.
-							this.HideMessage(() =>
+							this.HideMessage((object[] parameters) =>
 							{
 								this.buttonRefresh.Enabled = true;
 								this.buttonCancel.Enabled = false;
@@ -165,7 +165,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 						// Delay the closing of the user message.
 						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 						// Hide the progress message.
-						this.HideMessage(() =>
+						this.HideMessage((object[] parameters) =>
 						{
 							this.buttonRefresh.Enabled = true;
 							this.buttonCancel.Enabled = false;
@@ -192,15 +192,9 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when updating the list of video categories.
 		/// </summary>
-		private void OnUpdateList()
+		/// <param name="parameters">The task parameters.</param>
+		private void OnUpdateList(object[] parameters = null)
 		{
-			// Execute the method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(new NotificationTaskEventHandler(this.OnUpdateList));
-				return;
-			}
-
 			// Clear the list view.
 			this.listView.Items.Clear();
 			// Add the categories to the list view.

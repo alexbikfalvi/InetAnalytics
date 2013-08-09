@@ -24,7 +24,7 @@ namespace YtCrawler.Testing
 	/// <summary>
 	/// A class that represents the crawler testing parameters.
 	/// </summary>
-	public class Testing
+	public sealed class Testing
 	{
 		private TestingWebRequest testingWebRequest;
 

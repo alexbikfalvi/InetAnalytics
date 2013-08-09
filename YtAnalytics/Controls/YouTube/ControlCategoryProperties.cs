@@ -53,6 +53,7 @@ namespace YtAnalytics.Controls.YouTube
 				// Set the new category.
 				this.category = value;
 				// Call the event handler.
+				this.OnSetCategory(old, value);
 			}
 		}
 
@@ -63,7 +64,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// </summary>
 		/// <param name="oldCategory">The old category.</param>
 		/// <param name="newCategory">The new category.</param>
-		protected virtual void OnCategorySet(YouTubeCategory oldCategory, YouTubeCategory newCategory)
+		protected virtual void OnSetCategory(YouTubeCategory oldCategory, YouTubeCategory newCategory)
 		{
 			// If the new and old category are equal, do nothing.
 			if (oldCategory == newCategory) return;

@@ -40,6 +40,7 @@
 			this.labelLabel = new System.Windows.Forms.Label();
 			this.labelTerm = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -91,6 +92,8 @@
 			this.listViewBrowsable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.listViewBrowsable.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader});
 			this.listViewBrowsable.Location = new System.Drawing.Point(102, 87);
 			this.listViewBrowsable.Name = "listViewBrowsable";
 			this.listViewBrowsable.Size = new System.Drawing.Size(256, 170);
@@ -177,6 +180,11 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
+			// columnHeader
+			// 
+			this.columnHeader.Text = "Country";
+			this.columnHeader.Width = 30;
+			// 
 			// ControlCategoryProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -209,5 +217,6 @@
 		private System.Windows.Forms.Label labelTerm;
 		private System.Windows.Forms.CheckBox checkBoxDeprecated;
 		private System.Windows.Forms.ListView listViewBrowsable;
+		private System.Windows.Forms.ColumnHeader columnHeader;
 	}
 }

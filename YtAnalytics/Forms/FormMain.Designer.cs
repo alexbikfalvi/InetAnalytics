@@ -33,7 +33,24 @@
 			this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
+			this.controlSideLog = new YtAnalytics.Controls.ControlSideCalendar();
+			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideBrowser = new DotNetApi.Windows.Controls.SideTreeView();
+			this.sideMenuItemBrowser = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,34 +65,21 @@
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
-			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideBrowser = new DotNetApi.Windows.Controls.SideTreeView();
-			this.sideMenuItemBrowser = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.controlSideLog = new YtAnalytics.Controls.ControlSideCalendar();
-			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.statusLabelLeft = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelMiddle = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer.SuspendLayout();
+			this.statusStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.sideMenu.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.menuViewVideo.SuspendLayout();
-			this.sideMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStripContainer
@@ -102,6 +106,10 @@
 			// statusStrip
 			// 
 			this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabelLeft,
+            this.statusLabelMiddle,
+            this.statusLabelRight});
 			this.statusStrip.Location = new System.Drawing.Point(0, 0);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Size = new System.Drawing.Size(1008, 22);
@@ -126,164 +134,6 @@
 			this.splitContainer.Size = new System.Drawing.Size(1008, 528);
 			this.splitContainer.SplitterDistance = 246;
 			this.splitContainer.TabIndex = 0;
-			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "ServerBrowse");
-			this.imageList.Images.SetKeyName(1, "ServerDatabase");
-			this.imageList.Images.SetKeyName(2, "ServersDatabase");
-			this.imageList.Images.SetKeyName(3, "ServerCube");
-			this.imageList.Images.SetKeyName(4, "ServersCube");
-			this.imageList.Images.SetKeyName(5, "FolderClosed");
-			this.imageList.Images.SetKeyName(6, "FolderClosedXml");
-			this.imageList.Images.SetKeyName(7, "FolderClosedVideo");
-			this.imageList.Images.SetKeyName(8, "FolderClosedUser");
-			this.imageList.Images.SetKeyName(9, "FolderClosedComment");
-			this.imageList.Images.SetKeyName(10, "FolderClosedPlay");
-			this.imageList.Images.SetKeyName(11, "FolderOpen");
-			this.imageList.Images.SetKeyName(12, "FolderOpenXml");
-			this.imageList.Images.SetKeyName(13, "FolderOpenVideo");
-			this.imageList.Images.SetKeyName(14, "FolderOpenUser");
-			this.imageList.Images.SetKeyName(15, "FolderOpenComment");
-			this.imageList.Images.SetKeyName(16, "FolderOpenPlay");
-			this.imageList.Images.SetKeyName(17, "File");
-			this.imageList.Images.SetKeyName(18, "FileXml");
-			this.imageList.Images.SetKeyName(19, "FileVideo");
-			this.imageList.Images.SetKeyName(20, "FileUser");
-			this.imageList.Images.SetKeyName(21, "FileComment");
-			this.imageList.Images.SetKeyName(22, "FileGraphLine");
-			this.imageList.Images.SetKeyName(23, "GlobeBrowse");
-			this.imageList.Images.SetKeyName(24, "Categories");
-			this.imageList.Images.SetKeyName(25, "Comments");
-			this.imageList.Images.SetKeyName(26, "CommentVideo");
-			this.imageList.Images.SetKeyName(27, "CommentUser");
-			this.imageList.Images.SetKeyName(28, "CommentPlay");
-			this.imageList.Images.SetKeyName(29, "Settings");
-			this.imageList.Images.SetKeyName(30, "ServerDown");
-			this.imageList.Images.SetKeyName(31, "ServerUp");
-			this.imageList.Images.SetKeyName(32, "ServerWarning");
-			this.imageList.Images.SetKeyName(33, "ServerBusy");
-			this.imageList.Images.SetKeyName(34, "Log");
-			this.imageList.Images.SetKeyName(35, "QueryDatabase");
-			this.imageList.Images.SetKeyName(36, "Cube");
-			this.imageList.Images.SetKeyName(37, "Cubes");
-			this.imageList.Images.SetKeyName(38, "GlobeSettings");
-			this.imageList.Images.SetKeyName(39, "GlobeSchema");
-			this.imageList.Images.SetKeyName(40, "TestGlobeGoto");
-			// 
-			// labelNotAvailable
-			// 
-			this.labelNotAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labelNotAvailable.Location = new System.Drawing.Point(4, 4);
-			this.labelNotAvailable.Name = "labelNotAvailable";
-			this.labelNotAvailable.Size = new System.Drawing.Size(748, 518);
-			this.labelNotAvailable.TabIndex = 0;
-			this.labelNotAvailable.Text = "Feature not available";
-			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// menuStrip
-			// 
-			this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
-			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemFile,
-            this.menuItemHelp});
-			this.menuStrip.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip.Name = "menuStrip";
-			this.menuStrip.Size = new System.Drawing.Size(1008, 24);
-			this.menuStrip.TabIndex = 0;
-			// 
-			// menuItemFile
-			// 
-			this.menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemExit});
-			this.menuItemFile.Name = "menuItemFile";
-			this.menuItemFile.Size = new System.Drawing.Size(37, 20);
-			this.menuItemFile.Text = "&File";
-			// 
-			// menuItemExit
-			// 
-			this.menuItemExit.Name = "menuItemExit";
-			this.menuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-			this.menuItemExit.Size = new System.Drawing.Size(134, 22);
-			this.menuItemExit.Text = "E&xit";
-			this.menuItemExit.Click += new System.EventHandler(this.OnExit);
-			// 
-			// menuItemHelp
-			// 
-			this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAbout});
-			this.menuItemHelp.Name = "menuItemHelp";
-			this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
-			this.menuItemHelp.Text = "&Help";
-			// 
-			// menuItemAbout
-			// 
-			this.menuItemAbout.Name = "menuItemAbout";
-			this.menuItemAbout.Size = new System.Drawing.Size(116, 22);
-			this.menuItemAbout.Text = "&About...";
-			this.menuItemAbout.Click += new System.EventHandler(this.OpenAboutForm);
-			// 
-			// menuViewVideo
-			// 
-			this.menuViewVideo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemApi2,
-            this.menuItemApiV2Related,
-            this.menuItemApiV2Responses,
-            this.menuItemApi3,
-            this.menuItemWeb,
-            this.toolStripSeparator1,
-            this.menuItemYouTube});
-			this.menuViewVideo.Name = "viewMenu";
-			this.menuViewVideo.Size = new System.Drawing.Size(192, 142);
-			// 
-			// menuItemApi2
-			// 
-			this.menuItemApi2.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApi2.Name = "menuItemApi2";
-			this.menuItemApi2.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApi2.Text = "APIv2 information";
-			// 
-			// menuItemApiV2Related
-			// 
-			this.menuItemApiV2Related.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApiV2Related.Name = "menuItemApiV2Related";
-			this.menuItemApiV2Related.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApiV2Related.Text = "APIv2 related videos";
-			// 
-			// menuItemApiV2Responses
-			// 
-			this.menuItemApiV2Responses.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApiV2Responses.Name = "menuItemApiV2Responses";
-			this.menuItemApiV2Responses.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApiV2Responses.Text = "APIv2 response videos";
-			// 
-			// menuItemApi3
-			// 
-			this.menuItemApi3.Image = global::YtAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApi3.Name = "menuItemApi3";
-			this.menuItemApi3.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApi3.Text = "APIv3 information";
-			// 
-			// menuItemWeb
-			// 
-			this.menuItemWeb.Image = global::YtAnalytics.Resources.GlobeBrowse_16;
-			this.menuItemWeb.Name = "menuItemWeb";
-			this.menuItemWeb.Size = new System.Drawing.Size(191, 22);
-			this.menuItemWeb.Text = "Web statistics";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
-			// 
-			// menuItemYouTube
-			// 
-			this.menuItemYouTube.Image = global::YtAnalytics.Resources.Globe_16;
-			this.menuItemYouTube.Name = "menuItemYouTube";
-			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
-			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
 			// sideMenu
 			// 
@@ -317,6 +167,19 @@
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.VisibleItems = 8;
 			// 
+			// controlSideLog
+			// 
+			this.controlSideLog.AutoScroll = true;
+			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
+			this.controlSideLog.Name = "controlSideLog";
+			this.controlSideLog.Size = new System.Drawing.Size(244, 58);
+			this.controlSideLog.TabIndex = 2;
+			this.controlSideLog.Visible = false;
+			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
+			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			// 
 			// controlSideComments
 			// 
 			this.controlSideComments.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -335,6 +198,55 @@
 			this.controlSideComments.TabIndex = 3;
 			this.controlSideComments.Visible = false;
 			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "ServerBrowse");
+			this.imageList.Images.SetKeyName(1, "ServerDatabase");
+			this.imageList.Images.SetKeyName(2, "ServersDatabase");
+			this.imageList.Images.SetKeyName(3, "ServerCube");
+			this.imageList.Images.SetKeyName(4, "ServersCube");
+			this.imageList.Images.SetKeyName(5, "ServersGlobe");
+			this.imageList.Images.SetKeyName(6, "FolderClosed");
+			this.imageList.Images.SetKeyName(7, "FolderClosedXml");
+			this.imageList.Images.SetKeyName(8, "FolderClosedVideo");
+			this.imageList.Images.SetKeyName(9, "FolderClosedUser");
+			this.imageList.Images.SetKeyName(10, "FolderClosedComment");
+			this.imageList.Images.SetKeyName(11, "FolderClosedPlay");
+			this.imageList.Images.SetKeyName(12, "FolderClosedGlobe");
+			this.imageList.Images.SetKeyName(13, "FolderOpen");
+			this.imageList.Images.SetKeyName(14, "FolderOpenXml");
+			this.imageList.Images.SetKeyName(15, "FolderOpenVideo");
+			this.imageList.Images.SetKeyName(16, "FolderOpenUser");
+			this.imageList.Images.SetKeyName(17, "FolderOpenComment");
+			this.imageList.Images.SetKeyName(18, "FolderOpenPlay");
+			this.imageList.Images.SetKeyName(19, "FolderOpenGlobe");
+			this.imageList.Images.SetKeyName(20, "File");
+			this.imageList.Images.SetKeyName(21, "FileXml");
+			this.imageList.Images.SetKeyName(22, "FileVideo");
+			this.imageList.Images.SetKeyName(23, "FileUser");
+			this.imageList.Images.SetKeyName(24, "FileComment");
+			this.imageList.Images.SetKeyName(25, "FileGraphLine");
+			this.imageList.Images.SetKeyName(26, "GlobeBrowse");
+			this.imageList.Images.SetKeyName(27, "Categories");
+			this.imageList.Images.SetKeyName(28, "Comments");
+			this.imageList.Images.SetKeyName(29, "CommentVideo");
+			this.imageList.Images.SetKeyName(30, "CommentUser");
+			this.imageList.Images.SetKeyName(31, "CommentPlay");
+			this.imageList.Images.SetKeyName(32, "Settings");
+			this.imageList.Images.SetKeyName(33, "ServerDown");
+			this.imageList.Images.SetKeyName(34, "ServerUp");
+			this.imageList.Images.SetKeyName(35, "ServerWarning");
+			this.imageList.Images.SetKeyName(36, "ServerBusy");
+			this.imageList.Images.SetKeyName(37, "Log");
+			this.imageList.Images.SetKeyName(38, "QueryDatabase");
+			this.imageList.Images.SetKeyName(39, "Cube");
+			this.imageList.Images.SetKeyName(40, "Cubes");
+			this.imageList.Images.SetKeyName(41, "GlobeSettings");
+			this.imageList.Images.SetKeyName(42, "GlobeSchema");
+			this.imageList.Images.SetKeyName(43, "TestGlobeGoto");
 			// 
 			// controlSideConfiguration
 			// 
@@ -480,7 +392,7 @@
 			this.sideMenuItemPlanetLab.ImageLarge = global::YtAnalytics.Resources.GlobeLab_32;
 			this.sideMenuItemPlanetLab.ImageSmall = global::YtAnalytics.Resources.GlobeLab_16;
 			this.sideMenuItemPlanetLab.Index = -1;
-			this.sideMenuItemPlanetLab.Text = "Planet Lab";
+			this.sideMenuItemPlanetLab.Text = "PlanetLab";
 			// 
 			// sideMenuItemTesting
 			// 
@@ -498,6 +410,14 @@
 			this.sideMenuItemConfiguration.Index = -1;
 			this.sideMenuItemConfiguration.Text = "Configuration";
 			// 
+			// sideMenuItemLog
+			// 
+			this.sideMenuItemLog.Control = this.controlSideLog;
+			this.sideMenuItemLog.ImageLarge = global::YtAnalytics.Resources.Log_32;
+			this.sideMenuItemLog.ImageSmall = global::YtAnalytics.Resources.Log_16;
+			this.sideMenuItemLog.Index = -1;
+			this.sideMenuItemLog.Text = "Log";
+			// 
 			// sideMenuItemComments
 			// 
 			this.sideMenuItemComments.Control = this.controlSideComments;
@@ -506,25 +426,137 @@
 			this.sideMenuItemComments.Index = -1;
 			this.sideMenuItemComments.Text = "Comments";
 			// 
-			// controlSideLog
+			// labelNotAvailable
 			// 
-			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
-			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(244, 58);
-			this.controlSideLog.TabIndex = 2;
-			this.controlSideLog.Visible = false;
-			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.labelNotAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labelNotAvailable.Location = new System.Drawing.Point(4, 4);
+			this.labelNotAvailable.Name = "labelNotAvailable";
+			this.labelNotAvailable.Size = new System.Drawing.Size(748, 518);
+			this.labelNotAvailable.TabIndex = 0;
+			this.labelNotAvailable.Text = "Feature not available";
+			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// sideMenuItemLog
+			// menuStrip
 			// 
-			this.sideMenuItemLog.Control = this.controlSideLog;
-			this.sideMenuItemLog.ImageLarge = global::YtAnalytics.Resources.Log_32;
-			this.sideMenuItemLog.ImageSmall = global::YtAnalytics.Resources.Log_16;
-			this.sideMenuItemLog.Index = -1;
-			this.sideMenuItemLog.Text = "Log";
+			this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemFile,
+            this.menuItemHelp});
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(1008, 24);
+			this.menuStrip.TabIndex = 0;
+			// 
+			// menuItemFile
+			// 
+			this.menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemExit});
+			this.menuItemFile.Name = "menuItemFile";
+			this.menuItemFile.Size = new System.Drawing.Size(37, 20);
+			this.menuItemFile.Text = "&File";
+			// 
+			// menuItemExit
+			// 
+			this.menuItemExit.Name = "menuItemExit";
+			this.menuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+			this.menuItemExit.Size = new System.Drawing.Size(134, 22);
+			this.menuItemExit.Text = "E&xit";
+			this.menuItemExit.Click += new System.EventHandler(this.OnExit);
+			// 
+			// menuItemHelp
+			// 
+			this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAbout});
+			this.menuItemHelp.Name = "menuItemHelp";
+			this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
+			this.menuItemHelp.Text = "&Help";
+			// 
+			// menuItemAbout
+			// 
+			this.menuItemAbout.Name = "menuItemAbout";
+			this.menuItemAbout.Size = new System.Drawing.Size(116, 22);
+			this.menuItemAbout.Text = "&About...";
+			this.menuItemAbout.Click += new System.EventHandler(this.OpenAboutForm);
+			// 
+			// menuViewVideo
+			// 
+			this.menuViewVideo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemApi2,
+            this.menuItemApiV2Related,
+            this.menuItemApiV2Responses,
+            this.menuItemApi3,
+            this.menuItemWeb,
+            this.toolStripSeparator1,
+            this.menuItemYouTube});
+			this.menuViewVideo.Name = "viewMenu";
+			this.menuViewVideo.Size = new System.Drawing.Size(192, 142);
+			// 
+			// menuItemApi2
+			// 
+			this.menuItemApi2.Image = global::YtAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApi2.Name = "menuItemApi2";
+			this.menuItemApi2.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApi2.Text = "APIv2 information";
+			// 
+			// menuItemApiV2Related
+			// 
+			this.menuItemApiV2Related.Image = global::YtAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApiV2Related.Name = "menuItemApiV2Related";
+			this.menuItemApiV2Related.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApiV2Related.Text = "APIv2 related videos";
+			// 
+			// menuItemApiV2Responses
+			// 
+			this.menuItemApiV2Responses.Image = global::YtAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApiV2Responses.Name = "menuItemApiV2Responses";
+			this.menuItemApiV2Responses.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApiV2Responses.Text = "APIv2 response videos";
+			// 
+			// menuItemApi3
+			// 
+			this.menuItemApi3.Image = global::YtAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApi3.Name = "menuItemApi3";
+			this.menuItemApi3.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApi3.Text = "APIv3 information";
+			// 
+			// menuItemWeb
+			// 
+			this.menuItemWeb.Image = global::YtAnalytics.Resources.GlobeBrowse_16;
+			this.menuItemWeb.Name = "menuItemWeb";
+			this.menuItemWeb.Size = new System.Drawing.Size(191, 22);
+			this.menuItemWeb.Text = "Web statistics";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
+			// 
+			// menuItemYouTube
+			// 
+			this.menuItemYouTube.Image = global::YtAnalytics.Resources.Globe_16;
+			this.menuItemYouTube.Name = "menuItemYouTube";
+			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
+			this.menuItemYouTube.Text = "Open in YouTube";
+			// 
+			// statusLabelLeft
+			// 
+			this.statusLabelLeft.Image = global::YtAnalytics.Resources.Information_16;
+			this.statusLabelLeft.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.statusLabelLeft.Name = "statusLabelLeft";
+			this.statusLabelLeft.Size = new System.Drawing.Size(55, 17);
+			this.statusLabelLeft.Text = "Ready";
+			// 
+			// statusLabelMiddle
+			// 
+			this.statusLabelMiddle.Name = "statusLabelMiddle";
+			this.statusLabelMiddle.Size = new System.Drawing.Size(907, 17);
+			this.statusLabelMiddle.Spring = true;
+			// 
+			// statusLabelRight
+			// 
+			this.statusLabelRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.statusLabelRight.Name = "statusLabelRight";
+			this.statusLabelRight.Size = new System.Drawing.Size(0, 17);
 			// 
 			// FormMain
 			// 
@@ -544,14 +576,16 @@
 			this.toolStripContainer.TopToolStripPanel.PerformLayout();
 			this.toolStripContainer.ResumeLayout(false);
 			this.toolStripContainer.PerformLayout();
+			this.statusStrip.ResumeLayout(false);
+			this.statusStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.sideMenu.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
 			this.menuViewVideo.ResumeLayout(false);
-			this.sideMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -593,6 +627,9 @@
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemConfiguration;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemLog;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemComments;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelLeft;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelMiddle;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelRight;
 	}
 }
 

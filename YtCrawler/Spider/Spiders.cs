@@ -23,7 +23,7 @@ namespace YtCrawler.Spider
 	/// <summary>
 	/// The collection of spiders for the YouTube analytics program.
 	/// </summary>
-	public class Spiders : IDisposable
+	public sealed class Spiders : IDisposable
 	{
 		private Crawler crawler;
 

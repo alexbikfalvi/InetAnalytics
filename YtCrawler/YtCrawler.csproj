@@ -46,6 +46,7 @@
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\CommentsList.cs" />
     <Compile Include="CrawlerException.cs" />
+    <Compile Include="Status\Status.cs" />
     <Compile Include="CrawlerStatic.cs" />
     <Compile Include="Database\Data\DbObject.cs" />
     <Compile Include="Database\Data\DbObjectColumn.cs" />
@@ -96,6 +97,8 @@
     <Compile Include="Spider\SpiderException.cs" />
     <Compile Include="Spider\Spiders.cs" />
     <Compile Include="Spider\SpiderStandardFeeds.cs" />
+    <Compile Include="Status\StatusHandler.cs" />
+    <Compile Include="Status\StatusMessage.cs" />
     <Compile Include="Testing\Testing.cs" />
     <Compile Include="Testing\TestingWebRequest.cs" />
   </ItemGroup>

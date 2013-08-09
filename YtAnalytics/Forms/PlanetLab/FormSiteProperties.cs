@@ -46,7 +46,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// Shows the form as a dialog with the specified PlanetLab site.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="site">The PlanetLab site.</param>
+		/// <param name="id">The PlanetLab site ID.</param>
 		/// <returns>The dialog result.</returns>
 		public DialogResult ShowDialog(IWin32Window owner, int id)
 		{

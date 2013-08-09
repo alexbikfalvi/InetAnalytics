@@ -28,6 +28,7 @@ using PlanetLab.Api;
 using PlanetLab.Requests;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
+using YtCrawler.Status;
 
 namespace YtAnalytics.Controls.PlanetLab
 {
@@ -43,8 +44,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		// Private variables.
 
 		private Crawler crawler = null;
-		private PlRequestGetSites request = new PlRequestGetSites();
+		private StatusHandler status = null;
+
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
 		private GeoMarker marker = null;
+		private string filter = string.Empty;
 
 		private static Color colorSelectedMarkerLine = Color.FromArgb(153, 51, 51);
 		private static Color colorSelectedMarkerFill = Color.FromArgb(255, 51, 51);
@@ -81,6 +85,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Save the parameters.
 			this.crawler = crawler;
+
+			// Get the status handler.
+			this.status = this.crawler.Status.GetHandler(this);
 		
 			// Enable the control.
 			this.Enabled = true;
@@ -195,7 +202,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when the request has completed.
 		/// </summary>
-		private void OnComplete()
+		/// <param name="parameters">The task parameters.</param>
+		private void OnComplete(object[] parameters)
 		{
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = true;
@@ -219,9 +227,25 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Clear the map markers.
 			this.worldMap.Markers.Clear();
 
+			// Update the filter.
+			this.filter = this.textBoxFilter.Text;
+			// The number of displayed sites.
+			int count = 0;
+
 			// Add the list view items.
 			foreach (PlSite site in this.crawler.PlanetLab.Sites)
 			{
+				// If the filter is not null.
+				if (null != this.filter)
+				{
+					// If the site name does not match the filter, continue.
+					if (site.Name == null) continue;
+					if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
+				}
+
+				// Increment the number of displayed sites.
+				count++;
+
 				// Create a new geo marker for this site.
 				GeoMarker marker = null;
 				// If the site has coordinates.
@@ -242,15 +266,15 @@ namespace YtAnalytics.Controls.PlanetLab
 					site.Url,
 					site.DateCreated.ToString(),
 					site.LastUpdated.ToString(),
-					site.Latitude.HasValue ? PlUtil.LatitudeToString(site.Latitude.Value) : string.Empty,
-					site.Longitude.HasValue ? PlUtil.LongitudeToString(site.Longitude.Value) : string.Empty
+					site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
+					site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
 				}, 0);
 				item.Tag = new KeyValuePair<PlSite, GeoMarker>(site, marker);
 				this.listViewSites.Items.Add(item);
 			}
 
 			// Update the label.
-			this.labelSites.Text = string.Format("{0} sites available", this.crawler.PlanetLab.Sites.Count);
+			this.status.Send(string.Format("Showing {0} of {1} PlanetLab sites.", count, this.crawler.PlanetLab.Sites.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
@@ -306,6 +330,33 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Show the site properties.
 			this.formSiteProperties.ShowDialog(this, tag.Key);
+		}
+
+		/// <summary>
+		/// An event handler called when the filter text has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFilterTextChanged(object sender, EventArgs e)
+		{
+			// If the filter has changed.
+			if (this.filter != this.textBoxFilter.Text)
+			{
+				// Update the clear button state.
+				this.buttonClear.Enabled = this.textBoxFilter.Text != string.Empty;
+				// Update the sites.
+				this.OnUpdateSites();
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the filter is cleared.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFilterClear(object sender, EventArgs e)
+		{
+			this.textBoxFilter.Text = string.Empty;
 		}
 	}
 }

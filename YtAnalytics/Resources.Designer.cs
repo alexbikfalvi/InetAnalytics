@@ -2782,6 +2782,46 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedGlobe_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedGlobe_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedGlobe_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedGlobe_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedGlobe_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedGlobe_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedGlobe_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedGlobe_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FolderClosedPlay_16 {
             get {
                 object obj = ResourceManager.GetObject("FolderClosedPlay_16", resourceCulture);
@@ -3015,6 +3055,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap FolderOpenComment_48 {
             get {
                 object obj = ResourceManager.GetObject("FolderOpenComment_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenGlobe_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenGlobe_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenGlobe_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenGlobe_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenGlobe_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenGlobe_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenGlobe_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenGlobe_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3382,9 +3462,9 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap GlobeNode_16 {
+        internal static System.Drawing.Bitmap GlobeObject_16 {
             get {
-                object obj = ResourceManager.GetObject("GlobeNode_16", resourceCulture);
+                object obj = ResourceManager.GetObject("GlobeObject_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3392,9 +3472,9 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap GlobeNode_24 {
+        internal static System.Drawing.Bitmap GlobeObject_24 {
             get {
-                object obj = ResourceManager.GetObject("GlobeNode_24", resourceCulture);
+                object obj = ResourceManager.GetObject("GlobeObject_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3402,9 +3482,9 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap GlobeNode_32 {
+        internal static System.Drawing.Bitmap GlobeObject_32 {
             get {
-                object obj = ResourceManager.GetObject("GlobeNode_32", resourceCulture);
+                object obj = ResourceManager.GetObject("GlobeObject_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3412,9 +3492,49 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap GlobeNode_48 {
+        internal static System.Drawing.Bitmap GlobeObject_48 {
             get {
-                object obj = ResourceManager.GetObject("GlobeNode_48", resourceCulture);
+                object obj = ResourceManager.GetObject("GlobeObject_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobePower_16 {
+            get {
+                object obj = ResourceManager.GetObject("GlobePower_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobePower_24 {
+            get {
+                object obj = ResourceManager.GetObject("GlobePower_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobePower_32 {
+            get {
+                object obj = ResourceManager.GetObject("GlobePower_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobePower_48 {
+            get {
+                object obj = ResourceManager.GetObject("GlobePower_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3535,6 +3655,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap GlobeSuccess_48 {
             get {
                 object obj = ResourceManager.GetObject("GlobeSuccess_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeUser_16 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeUser_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeUser_24 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeUser_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeUser_32 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeUser_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeUser_48 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeUser_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5455,6 +5615,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap ServersDatabase_48 {
             get {
                 object obj = ResourceManager.GetObject("ServersDatabase_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServersGlobe_16 {
+            get {
+                object obj = ResourceManager.GetObject("ServersGlobe_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServersGlobe_24 {
+            get {
+                object obj = ResourceManager.GetObject("ServersGlobe_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServersGlobe_32 {
+            get {
+                object obj = ResourceManager.GetObject("ServersGlobe_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServersGlobe_48 {
+            get {
+                object obj = ResourceManager.GetObject("ServersGlobe_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

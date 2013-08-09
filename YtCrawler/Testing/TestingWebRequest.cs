@@ -28,7 +28,7 @@ namespace YtCrawler.Testing
 	/// <summary>
 	/// A class that stores the testing web request parameters.
 	/// </summary>
-	public class TestingWebRequest
+	public sealed class TestingWebRequest
 	{
 		private string key;
 		private Dictionary<string, string> headers = new Dictionary<string, string>();
@@ -415,14 +415,14 @@ namespace YtCrawler.Testing
 			}
 		}
 
-		// Protected methods.
+		// Private methods.
 
 		/// <summary>
 		/// Encodes the specified string as a Base64 string.
 		/// </summary>
 		/// <param name="data">The string to encode.</param>
 		/// <returns>The Base64 encoded string.</returns>
-		protected string EncodeToBase64(string data)
+		private string EncodeToBase64(string data)
 		{
 			return Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
 		}
@@ -432,7 +432,7 @@ namespace YtCrawler.Testing
 		/// </summary>
 		/// <param name="data">The Base64 string to decode.</param>
 		/// <returns>The decoded string.</returns>
-		protected string DecodeFromBase64(string data)
+		private string DecodeFromBase64(string data)
 		{
 			return Encoding.UTF8.GetString(Convert.FromBase64String(data));
 		}

@@ -39,6 +39,7 @@ using YtAnalytics.Controls.YouTube.Web;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
 using YtCrawler;
+using YtCrawler.Status;
 
 namespace YtAnalytics.Forms
 {
@@ -254,11 +255,11 @@ namespace YtAnalytics.Forms
 				});
 
 			this.treeNodePlanetLabSites = new TreeNode("Sites",
-				this.imageList.Images.IndexOfKey("GlobeSchema"),
-				this.imageList.Images.IndexOfKey("GlobeSchema"));
-			this.treeNodePlanetLab = new TreeNode("Planet Lab",
-				this.imageList.Images.IndexOfKey("GlobeSettings"),
-				this.imageList.Images.IndexOfKey("GlobeSettings"),
+				this.imageList.Images.IndexOfKey("FolderClosedGlobe"),
+				this.imageList.Images.IndexOfKey("FolderOpenGlobe"));
+			this.treeNodePlanetLab = new TreeNode("PlanetLab",
+				this.imageList.Images.IndexOfKey("ServersGlobe"),
+				this.imageList.Images.IndexOfKey("ServersGlobe"),
 				new TreeNode[] {
 					this.treeNodePlanetLabSites
 				});
@@ -399,6 +400,8 @@ namespace YtAnalytics.Forms
 			this.controlCommentsPlaylists.Initialize(this.crawler.Comments.Playlists, YtCrawler.Comments.Comment.CommentType.Playlist);
 
 			// Set the control events.
+			this.crawler.Status.Message += this.OnStatusMessage;
+
 			this.controlYtApi2.VideosGlobalClick += this.BrowserApi2VideosGlobalClick;
 			this.controlYtApi2.VideosUserClick += this.BrowserApi2VideosUserClick;
 			this.controlYtApi2.CategoriesClick += this.BrowserApi2CategoriesClick;
@@ -509,6 +512,10 @@ namespace YtAnalytics.Forms
 			// Configure the side menu with the last saved configuration.
 			this.sideMenu.VisibleItems = this.crawler.Config.ConsoleSideMenuVisibleItems;
 			this.sideMenu.SelectedIndex = this.crawler.Config.ConsoleSideMenuSelectedItem;
+			if (this.sideMenu.SelectedItem.Control.HasSelected())
+			{
+				this.sideMenu.SelectedItem.Control.SetSelected(this.crawler.Config.ConsoleSideMenuSelectedNode);
+			}
 
 			// Set the font.
 			Formatting.SetFont(this);
@@ -525,6 +532,7 @@ namespace YtAnalytics.Forms
 			// Save the configuration.
 			this.crawler.Config.ConsoleSideMenuVisibleItems = this.sideMenu.VisibleItems;
 			this.crawler.Config.ConsoleSideMenuSelectedItem = this.sideMenu.SelectedIndex ?? 0;
+			this.crawler.Config.ConsoleSideMenuSelectedNode = this.sideMenu.SelectedItem.Control.GetSelected();
 			// Call the base class event handler.
 			base.OnClosing(e);
 		}
@@ -537,8 +545,6 @@ namespace YtAnalytics.Forms
 		/// <param name="item"></param>
 		private void OnSideMenuSelectLog(SideMenuItem item)
 		{
-			// Select the side menu item.
-			//this.OnSideMenuSelect(item);
 			// Refresh the log.
 			this.controlLog.DateChanged(this, new DateRangeEventArgs(this.controlSideLog.Calendar.SelectionStart, this.controlSideLog.Calendar.SelectionEnd));
 		}
@@ -551,9 +557,10 @@ namespace YtAnalytics.Forms
 			// If the selected control has not changed, do nothing.
 			if (control == this.controlPanel) return;
 
-			// Hide the current selected control.
+			// If there exists a current control.
 			if (null != this.controlPanel)
 			{
+				// Hide the current control.
 				this.controlPanel.Hide();
 			}
 
@@ -562,6 +569,8 @@ namespace YtAnalytics.Forms
 			{
 				// Show the control.
 				control.Show();
+				// Activate the control status.
+				this.crawler.Status.Activate(control);
 				// Set the selected control.
 				this.controlPanel = control;
 			}
@@ -572,7 +581,28 @@ namespace YtAnalytics.Forms
 				// Set the selected control.
 				this.controlPanel = this.labelNotAvailable;
 			}
+		}
 
+		/// <summary>
+		/// An event handler called when changing the status message.
+		/// </summary>
+		/// <param name="message">The status message.</param>
+		private void OnStatusMessage(StatusMessage? message)
+		{
+			if (message.HasValue)
+			{
+				this.statusLabelLeft.Image = message.Value.LeftImage;
+				this.statusLabelLeft.Text = message.Value.LeftText;
+				this.statusLabelRight.Image = message.Value.RightImage;
+				this.statusLabelRight.Text = message.Value.RightText;
+			}
+			else
+			{
+				this.statusLabelLeft.Image = null;
+				this.statusLabelLeft.Text = null;
+				this.statusLabelRight.Image = null;
+				this.statusLabelRight.Text = null;
+			}
 		}
 
 		private void BrowserApi2VideosGlobalClick(object sender, EventArgs e)

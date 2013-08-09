@@ -33,10 +33,13 @@
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.worldMap = new DotNetApi.Windows.Controls.GeoWorldMap();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
-			this.labelSites = new System.Windows.Forms.ToolStripLabel();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
+			this.labelFilter = new System.Windows.Forms.ToolStripLabel();
+			this.textBoxFilter = new System.Windows.Forms.ToolStripTextBox();
 			this.listViewSites = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -50,8 +53,7 @@
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
+			this.buttonClear = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -95,23 +97,19 @@
 			// toolStrip
 			// 
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.labelSites,
-            this.separator1,
             this.buttonRefresh,
             this.buttonCancel,
+            this.separator1,
+            this.buttonProperties,
             this.separator2,
-            this.buttonProperties});
+            this.labelFilter,
+            this.textBoxFilter,
+            this.buttonClear});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
-			// 
-			// labelSites
-			// 
-			this.labelSites.Name = "labelSites";
-			this.labelSites.Size = new System.Drawing.Size(88, 22);
-			this.labelSites.Text = "0 sites available";
 			// 
 			// separator1
 			// 
@@ -137,6 +135,33 @@
 			this.buttonCancel.Size = new System.Drawing.Size(47, 22);
 			this.buttonCancel.Text = "&Cancel";
 			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
+			// 
+			// separator2
+			// 
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonProperties
+			// 
+			this.buttonProperties.Enabled = false;
+			this.buttonProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.buttonProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonProperties.Name = "buttonProperties";
+			this.buttonProperties.Size = new System.Drawing.Size(80, 22);
+			this.buttonProperties.Text = "&Properties";
+			this.buttonProperties.Click += new System.EventHandler(this.OnProperties);
+			// 
+			// labelFilter
+			// 
+			this.labelFilter.Name = "labelFilter";
+			this.labelFilter.Size = new System.Drawing.Size(36, 22);
+			this.labelFilter.Text = "Filter:";
+			// 
+			// textBoxFilter
+			// 
+			this.textBoxFilter.Name = "textBoxFilter";
+			this.textBoxFilter.Size = new System.Drawing.Size(100, 25);
+			this.textBoxFilter.TextChanged += new System.EventHandler(this.OnFilterTextChanged);
 			// 
 			// listViewSites
 			// 
@@ -224,20 +249,15 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
-			// separator2
+			// buttonClear
 			// 
-			this.separator2.Name = "separator2";
-			this.separator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// buttonProperties
-			// 
-			this.buttonProperties.Enabled = false;
-			this.buttonProperties.Image = global::YtAnalytics.Resources.Properties_16;
-			this.buttonProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonProperties.Name = "buttonProperties";
-			this.buttonProperties.Size = new System.Drawing.Size(80, 22);
-			this.buttonProperties.Text = "Properties";
-			this.buttonProperties.Click += new System.EventHandler(this.OnProperties);
+			this.buttonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.buttonClear.Enabled = false;
+			this.buttonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonClear.Name = "buttonClear";
+			this.buttonClear.Size = new System.Drawing.Size(38, 22);
+			this.buttonClear.Text = "C&lear";
+			this.buttonClear.Click += new System.EventHandler(this.OnFilterClear);
 			// 
 			// ControlPlanetLabSites
 			// 
@@ -280,8 +300,10 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderLongitude;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripSeparator separator1;
-		private System.Windows.Forms.ToolStripLabel labelSites;
 		private System.Windows.Forms.ToolStripSeparator separator2;
 		private System.Windows.Forms.ToolStripButton buttonProperties;
+		private System.Windows.Forms.ToolStripLabel labelFilter;
+		private System.Windows.Forms.ToolStripTextBox textBoxFilter;
+		private System.Windows.Forms.ToolStripButton buttonClear;
 	}
 }

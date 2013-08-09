@@ -33,7 +33,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control that displays the information of a PlanetLab site.
 	/// </summary>
-	public partial class ControlPlanetLabSiteProperties : ControlPlanetLab
+	public partial class ControlPlanetLabSiteProperties : ControlPlanetLabProperties
 	{
 		private static string notAvailable = "(not available)";
 
@@ -43,7 +43,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private PlSite site = null;
 		private GeoMarkerCircle marker = new GeoMarkerCircle(new PointF());
 
-		private PlRequestGetSites request = new PlRequestGetSites();
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -87,33 +87,33 @@ namespace YtAnalytics.Controls.PlanetLab
 		public void UpdateSite(int id)
 		{
 			// Hide the current information.
-			this.pictureBox.Image = Resources.GlobeClock_32;
-			this.labelTitle.Text = "Updating site information...";
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = "Updating site information...";
 			this.tabControl.Visible = false;
 
 			try
 			{
 				// Begin a new sites request for the specified site.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, id);
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSite.GetFilter(PlSite.Fields.SiteId, id));
 			}
 			catch
 			{
 				// Catch all exceptions.
-				this.pictureBox.Image = Resources.GlobeError_32;
-				this.labelTitle.Text = "Site information not found";
+				this.Icon = Resources.GlobeError_32;
+				this.Title = "Site information not found";
 			}
 		}
 
 		// Protected methods.
 
 		/// <summary>
-		/// An event handler called when the request ends.
+		/// An event handler called when the request completes.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnEndRequest(XmlRpcResponse response)
+		protected override void OnCompleteRequest(XmlRpcResponse response)
 		{
 			// Call the base class method.
-			base.OnEndRequest(response);
+			base.OnCompleteRequest(response);
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -125,16 +125,12 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Display the information for the first site.
 					this.PlanetLabSite = sites[0];
 				}
+				else
+				{
+					// Set the site to null.
+					this.PlanetLabSite = null;
+				}
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request completes.
-		/// </summary>
-		protected override void OnCompleteRequest()
-		{
-			// Call the base class method.
-			base.OnCompleteRequest();
 		}
 
 		/// <summary>
@@ -144,20 +140,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="newSite">The new PlanetLab site.</param>
 		protected virtual void OnSiteSet(PlSite oldSite, PlSite newSite)
 		{
-			// If the old an new sites are the same, do nothing.
-			if (oldSite == newSite) return;
 			// Change the display information for the new site.
 			if (null == newSite)
 			{
-				this.labelTitle.Text = "No site selected";
+				this.Title = "Site information not found";
+				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
 			else
 			{
 				// General.
 
-				this.labelTitle.Text = newSite.Name;
-				this.pictureBox.Image = Resources.GlobeSchema_32;
+				this.Title = newSite.Name;
+				this.Icon = Resources.GlobeSchema_32;
 
 				this.textBoxName.Text = newSite.Name;
 				this.textBoxAbbreviatedName.Text = newSite.AbbreviatedName;
@@ -182,8 +177,8 @@ namespace YtAnalytics.Controls.PlanetLab
 
 				// Location.
 
-				this.textBoxLatitude.Text = newSite.Latitude.HasValue ? PlUtil.LatitudeToString(newSite.Latitude.Value) : ControlPlanetLabSiteProperties.notAvailable;
-				this.textBoxLongitude.Text = newSite.Longitude.HasValue ? PlUtil.LongitudeToString(newSite.Longitude.Value) : ControlPlanetLabSiteProperties.notAvailable;
+				this.textBoxLatitude.Text = newSite.Latitude.HasValue ? newSite.Latitude.Value.LatitudeToString() : ControlPlanetLabSiteProperties.notAvailable;
+				this.textBoxLongitude.Text = newSite.Longitude.HasValue ? newSite.Longitude.Value.LongitudeToString() : ControlPlanetLabSiteProperties.notAvailable;
 
 				if (newSite.Latitude.HasValue && newSite.Longitude.HasValue)
 				{
@@ -350,7 +345,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnPcuProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected PCUs, do nothing.
+			if (this.listViewPcus.SelectedItems.Count == 0) return;
+			// Get the selected PCU ID.
+			int id = (int)this.listViewPcus.SelectedItems[0].Tag;
+			using (FormPcuProperties form = new FormPcuProperties())
+			{
+				form.ShowDialog(this, id);
+			}
 		}
 
 		/// <summary>
@@ -360,7 +362,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnPersonProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected persons, do nothing.
+			if (this.listViewPersons.SelectedItems.Count == 0) return;
+			// Get the selected person ID.
+			int id = (int)this.listViewPersons.SelectedItems[0].Tag;
+			using (FormPersonProperties form = new FormPersonProperties())
+			{
+				form.ShowDialog(this, id);
+			}
 		}
 
 		/// <summary>

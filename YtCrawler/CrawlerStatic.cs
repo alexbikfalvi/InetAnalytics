@@ -26,50 +26,36 @@ namespace YtCrawler
 	/// </summary>
 	public static class CrawlerStatic
 	{
-		internal static string youTubeUserName;
-		internal static SecureString youTubePassword;
-		internal static string youTubeCategoriesFileName ;
-		internal static SecureString youTubeV2ApiKey;
-		internal static string logFileName;
-		internal static string databaseLogFileName;
-		internal static string commentsVideosFileName;
-		internal static string commentsUsersFileName;
-		internal static string commentsPlaylistsFileName;
-		internal static TimeSpan consoleMessageCloseDelay;
-		internal static int consoleSideMenuVisibleItems;
-		internal static int consoleSideMenuSelectedItem;
-		internal static string planetLabUserName;
-		internal static SecureString planetLabPassword;
-		internal static string planetLabSitesFileName;
+		public static string YouTubeUserName { get; internal set; }
 
-		public static string YouTubeUserName { get { return CrawlerStatic.youTubeUserName; } }
+		public static SecureString YouTubePassword { get; internal set; }
 
-		public static SecureString YouTubePassword { get { return CrawlerStatic.youTubePassword; } }
+		public static string YouTubeCategoriesFileName { get; internal set; }
 
-		public static string YouTubeCategoriesFileName { get { return CrawlerStatic.youTubeCategoriesFileName; } }
+		public static SecureString YouTubeV2ApiKey { get; internal set; }
 
-		public static SecureString YouTubeV2ApiKey { get { return CrawlerStatic.youTubeV2ApiKey; } }
+		public static string LogFileName { get; internal set; }
 
-		public static string LogFileName { get { return CrawlerStatic.logFileName; } }
+		public static string DatabaseLogFileName { get; internal set; }
 
-		public static string DatabaseLogFileName { get { return CrawlerStatic.databaseLogFileName; } }
+		public static string CommentsVideosFileName { get; internal set; }
 
-		public static string CommentsVideosFileName { get { return CrawlerStatic.commentsVideosFileName; } }
+		public static string CommentsUsersFileName { get; internal set; }
 
-		public static string CommentsUsersFileName { get { return CrawlerStatic.commentsUsersFileName; } }
+		public static string CommentsPlaylistsFileName { get; internal set; }
 
-		public static string CommentsPlaylistsFileName { get { return CrawlerStatic.commentsPlaylistsFileName; } }
+		public static TimeSpan ConsoleMessageCloseDelay { get; internal set; }
 
-		public static TimeSpan ConsoleMessageCloseDelay { get { return CrawlerStatic.consoleMessageCloseDelay; } }
+		public static int ConsoleSideMenuVisibleItems { get; internal set; }
 
-		public static int ConsoleSideMenuVisibleItems { get { return CrawlerStatic.consoleSideMenuVisibleItems; } }
+		public static int ConsoleSideMenuSelectedItem { get; internal set; }
 
-		public static int ConsoleSideMenuSelectedItem { get { return CrawlerStatic.consoleSideMenuSelectedItem; } }
+		public static int[] ConsoleSideMenuSelectedNode { get; internal set; }
 
-		public static string PlanetLabUserName { get { return CrawlerStatic.planetLabUserName; } }
+		public static string PlanetLabUserName { get; internal set; }
 
-		public static SecureString PlanetLabPassword { get { return CrawlerStatic.planetLabPassword; } }
+		public static SecureString PlanetLabPassword { get; internal set; }
 
-		public static string PlanetLabSitesFileName { get { return CrawlerStatic.planetLabSitesFileName; } }
+		public static string PlanetLabSitesFileName { get; internal set; }
 	}
 }

@@ -32,8 +32,16 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public class ControlPlanetLab : NotificationControl
 	{
-		private delegate void RequestEndedEventHandler(XmlRpcResponse response);
-		private delegate void RequestCompletedEventHandler();
+		protected enum MessageStatus
+		{
+			Success = 0,
+			Warning = 1,
+			Error = 2,
+			Busy = 3
+		}
+
+		private delegate void RequestCompletedEventHandler(XmlRpcResponse response);
+		private delegate void RequestEndedEventHandler();
 
 		private PlRequest request = null;
 		private IAsyncResult result = null;
@@ -41,10 +49,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		private PlRequest pendingRequest = null;
 		private string pendingUsername = null;
 		private SecureString pendingPassword = null;
-		private int? pendingId = null;
+		private object pendingParameter = null;
 
-		private RequestEndedEventHandler delegateRequestEnded;
-		private RequestCompletedEventHandler delegateRequestCompleted;
+		private RequestCompletedEventHandler delegateCompleteRequest;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -52,8 +59,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		public ControlPlanetLab()
 		{
 			// Create the delegates.
-			this.delegateRequestEnded = new RequestEndedEventHandler(this.OnEndRequestUi);
-			this.delegateRequestCompleted = new RequestCompletedEventHandler(this.OnCompleteRequestUi);
+			this.delegateCompleteRequest = new RequestCompletedEventHandler(this.OnCompleteRequestUi);
 		}
 
 		/// <summary>
@@ -79,14 +85,14 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (null == this.pendingRequest) return;
 			if (null == this.pendingUsername) return;
 			if (null == this.pendingPassword) return;
-			if (null == this.pendingId) return;
+			if (null == this.pendingParameter) return;
 
 			// Begin a normal requets using the pending values.
 			this.BeginRequest(
 				this.pendingRequest,
 				this.pendingUsername,
 				this.pendingPassword,
-				this.pendingId.Value);
+				this.pendingParameter);
 		}
 
 		/// <summary>
@@ -95,15 +101,15 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="request">The PlanetLab request.</param>
 		/// <param name="username">The username.</param>
 		/// <param name="password">The password.</param>
-		/// <param name="id">The identifier of the object being requested.</param>
+		/// <param name="parameter">The request parameter.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		protected void BeginRequest(PlRequest request, string username, SecureString password, int id)
+		protected void BeginRequest(PlRequest request, string username, SecureString password, object parameter)
 		{
 			// Set the pending values to null.
 			this.pendingRequest = null;
 			this.pendingUsername = null;
 			this.pendingPassword = null;
-			this.pendingId = null;
+			this.pendingParameter = null;
 
 			// If a request is already in progress.
 			if (null != this.request)
@@ -112,7 +118,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.pendingRequest = request;
 				this.pendingUsername = username;
 				this.pendingPassword = password;
-				this.pendingId = id;
+				this.pendingParameter = parameter;
 				// Cancel the current request
 				this.request.Cancel(this.result);
 				// Return.
@@ -123,17 +129,22 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.request = request;
 			try
 			{
+
 				// Show the notification box.
 				this.ShowMessage(
 					Resources.GlobeClock_48,
 					"PlanetLab Update",
-					"Refreshing the PlanetLab information...");
+					"Refreshing the PlanetLab information...",
+					true,
+					-1,
+					this.OnBeginRequest,
+					new object[] { MessageStatus.Busy, "Please wait..." });
 
 				// Begin the request.
 				this.result = request.Begin(
 					username,
 					password,
-					id,
+					parameter,
 					this.OnCallback
 					);
 			}
@@ -147,7 +158,11 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Update",
-					string.Format("Refreshing the PlanetLab information failed. {0}", exception.Message));
+					string.Format("Refreshing the PlanetLab information failed. {0}", exception.Message),
+					false,
+					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					this.OnEndRequest,
+					new object[] { MessageStatus.Error, string.Format("Refreshing the PlanetLab information failed.\r\n\r\n{0}", exception.Message) });
 
 				// Rethrow the exception.
 				throw exception;
@@ -155,18 +170,28 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
+		/// An event handler called when the current request begins, and the notification box is displayed.
 		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		protected virtual void OnEndRequest(XmlRpcResponse response)
+		/// <param name="parameters">The task parameters.</param>
+		protected virtual void OnBeginRequest(object[] parameters = null)
 		{
 			// Do nothing.
 		}
 
 		/// <summary>
-		/// An event handler called when the current request is completed, and the notification box is hidden.
+		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
 		/// </summary>
-		protected virtual void OnCompleteRequest()
+		/// <param name="response">The XML-RPC response.</param>
+		protected virtual void OnCompleteRequest(XmlRpcResponse response)
+		{
+			// Do nothing.
+		}
+
+		/// <summary>
+		/// An event handler called when the current request ends, and the notification box is hidden.
+		/// </summary>
+		/// <param name="parameters">The task parameters.</param>
+		protected virtual void OnEndRequest(object[] parameters = null)
 		{
 			// Do nothing.
 		}
@@ -199,7 +224,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						"Refreshing the PlanetLab information completed successfully.",
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnCompleteRequest);
+						this.OnEndRequest);
 				}
 				else
 				{
@@ -207,14 +232,15 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeWarning_48,
 						"PlanetLab Error",
-						string.Format("Refreshing the PlanetLab nodes has failed (RPC code {0} {1})", response.Fault.FaultCode, response.Fault.FaultString),
+						string.Format("Refreshing the PlanetLab information has failed (RPC code {0} {1})", response.Fault.FaultCode, response.Fault.FaultString),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnCompleteRequest);
+						this.OnEndRequest,
+						new object[] { MessageStatus.Warning, string.Format("Refreshing the PlanetLab information has failed.\r\n\r\nRPC code: {0}\r\n\r\n{1})", response.Fault.FaultCode, response.Fault.FaultString) });
 				}
 
 				// Call the event handler.
-				this.OnEndRequestUi(response);
+				this.OnCompleteRequestUi(response);
 				// Set the current request to null.
 				this.request = null;
 				this.result = null;
@@ -228,7 +254,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				if (exception.Status == WebExceptionStatus.RequestCanceled)
 				{
 					// Hide the notification message.
-					this.HideMessage();
+					this.HideMessage(this.OnEndRequest);
 					// Begin a pending request, if any.
 					this.BeginRequest();
 				}
@@ -238,10 +264,11 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeError_48,
 						"PlanetLab Update",
-						string.Format("Refreshing the PlanetLab information failed. {0}", exception.Message),
+						string.Format("Refreshing the PlanetLab information has failed. {0}", exception.Message),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnCompleteRequest);
+						this.OnEndRequest,
+						new object[] { MessageStatus.Error, string.Format("Refreshing the PlanetLab information has failed.\r\n\r\n{0})", exception.Message) });
 				}
 			}
 			catch (Exception exception)
@@ -249,36 +276,28 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Set the current request to null.
 				this.request = null;
 				this.result = null;
+
 				// Display an error notification message.
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Update",
-					string.Format("Refreshing the PlanetLab information failed. {0}", exception.Message),
+					string.Format("Refreshing the PlanetLab information has failed. {0}", exception.Message),
 					false,
 					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-					this.OnCompleteRequest);
+					this.OnEndRequest,
+					new object[] { MessageStatus.Error, string.Format("Refreshing the PlanetLab information has failed.\r\n\r\n{0})", exception.Message) });
 			}
-		}
-
-		/// <summary>
-		/// Ends the current request. The method is UI thread-safe.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		private void OnEndRequestUi(XmlRpcResponse response)
-		{
-			// Execute the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(this.delegateRequestEnded, new object[] { response });
-			else this.OnEndRequest(response);
 		}
 
 		/// <summary>
 		/// Completes the current request. The method is UI thread-safe.
 		/// </summary>
-		private void OnCompleteRequestUi()
+		/// <param name="response">The XML-RPC response.</param>
+		private void OnCompleteRequestUi(XmlRpcResponse response)
 		{
 			// Execute the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(this.delegateRequestCompleted);
-			else this.OnCompleteRequest();
+			if (this.InvokeRequired) this.Invoke(this.delegateCompleteRequest, new object[] { response });
+			else this.OnCompleteRequest(response);
 		}
 	}
 }

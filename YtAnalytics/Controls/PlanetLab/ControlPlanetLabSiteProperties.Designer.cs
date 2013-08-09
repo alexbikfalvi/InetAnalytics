@@ -30,10 +30,8 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPlanetLabSiteProperties));
-			this.labelTitle = new System.Windows.Forms.Label();
 			this.textBoxName = new System.Windows.Forms.TextBox();
 			this.labelName = new System.Windows.Forms.Label();
-			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
 			this.checkBoxIsEnabled = new System.Windows.Forms.CheckBox();
@@ -92,7 +90,6 @@
 			this.buttonTag = new System.Windows.Forms.Button();
 			this.listViewTags = new System.Windows.Forms.ListView();
 			this.columnHeaderTag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageIdentifiers.SuspendLayout();
@@ -104,16 +101,6 @@
 			this.tabPageAddresses.SuspendLayout();
 			this.tabPageTags.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// labelTitle
-			// 
-			this.labelTitle.AutoSize = true;
-			this.labelTitle.Location = new System.Drawing.Point(59, 29);
-			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(83, 13);
-			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "No site selected";
-			this.labelTitle.UseMnemonic = false;
 			// 
 			// textBoxName
 			// 
@@ -133,15 +120,6 @@
 			this.labelName.Size = new System.Drawing.Size(38, 13);
 			this.labelName.TabIndex = 0;
 			this.labelName.Text = "&Name:";
-			// 
-			// pictureBox
-			// 
-			this.pictureBox.Image = global::YtAnalytics.Resources.GlobeSchema_32;
-			this.pictureBox.Location = new System.Drawing.Point(20, 20);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(32, 32);
-			this.pictureBox.TabIndex = 2;
-			this.pictureBox.TabStop = false;
 			// 
 			// tabControl
 			// 
@@ -829,14 +807,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl);
-			this.Controls.Add(this.labelTitle);
-			this.Controls.Add(this.pictureBox);
 			this.Name = "ControlPlanetLabSiteProperties";
 			this.Size = new System.Drawing.Size(350, 400);
-			this.Controls.SetChildIndex(this.pictureBox, 0);
-			this.Controls.SetChildIndex(this.labelTitle, 0);
 			this.Controls.SetChildIndex(this.tabControl, 0);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
@@ -851,14 +824,11 @@
 			this.tabPageAddresses.ResumeLayout(false);
 			this.tabPageTags.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Label labelTitle;
-		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.TextBox textBoxName;
 		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.TabControl tabControl;

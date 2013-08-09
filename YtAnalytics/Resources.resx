@@ -2193,16 +2193,76 @@ Female, 45-54 years
   <data name="ObjectSmallId_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ObjectSmallId_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GlobeNode_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\GlobeNode_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GlobePower_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePower_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GlobeNode_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\GlobeNode_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GlobePower_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePower_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GlobeNode_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\GlobeNode_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GlobePower_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePower_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GlobeNode_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\GlobeNode_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GlobePower_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePower_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeUser_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeUser_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeUser_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeUser_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeUser_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeUser_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeUser_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeUser_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeObject_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeObject_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeObject_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeObject_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeObject_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeObject_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeObject_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeObject_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedGlobe_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedGlobe_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedGlobe_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedGlobe_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedGlobe_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedGlobe_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedGlobe_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedGlobe_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenGlobe_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenGlobe_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenGlobe_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenGlobe_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenGlobe_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenGlobe_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenGlobe_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenGlobe_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServersGlobe_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersGlobe_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServersGlobe_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersGlobe_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServersGlobe_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersGlobe_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServersGlobe_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersGlobe_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

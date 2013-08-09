@@ -81,7 +81,7 @@
 			this.labelTitle.Name = "labelTitle";
 			this.labelTitle.Size = new System.Drawing.Size(95, 20);
 			this.labelTitle.TabIndex = 1;
-			this.labelTitle.Text = "Planet Lab";
+			this.labelTitle.Text = "PlanetLab";
 			// 
 			// tableLayoutPanel
 			// 
