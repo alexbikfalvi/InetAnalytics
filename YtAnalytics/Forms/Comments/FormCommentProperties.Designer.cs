@@ -49,9 +49,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.control.Comment = null;
-			this.control.Location = new System.Drawing.Point(12, 0);
+			this.control.Location = new System.Drawing.Point(6, 0);
 			this.control.Name = "control";
-			this.control.Size = new System.Drawing.Size(360, 371);
+			this.control.Size = new System.Drawing.Size(372, 371);
 			this.control.TabIndex = 2;
 			// 
 			// FormCommentProperties

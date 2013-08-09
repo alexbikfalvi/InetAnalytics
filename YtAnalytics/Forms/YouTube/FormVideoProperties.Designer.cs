@@ -45,9 +45,9 @@
 			// 
 			// video
 			// 
-			this.video.Location = new System.Drawing.Point(7, 2);
+			this.video.Location = new System.Drawing.Point(6, 2);
 			this.video.Name = "video";
-			this.video.Size = new System.Drawing.Size(504, 369);
+			this.video.Size = new System.Drawing.Size(506, 369);
 			this.video.TabIndex = 2;
 			this.video.Video = null;
 			this.video.ViewProfile += new YtAnalytics.Controls.YouTube.Api2.ViewIdEventHandler(this.OnViewProfile);

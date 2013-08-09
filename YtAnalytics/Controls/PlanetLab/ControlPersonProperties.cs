@@ -1,0 +1,308 @@
+﻿/* 
+ * Copyright (C) 2012-2013 Alex Bikfalvi
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
+using System;
+using System.Drawing;
+using System.Security;
+using System.Windows.Forms;
+using DotNetApi.Web.XmlRpc;
+using DotNetApi.Windows.Controls;
+using PlanetLab;
+using PlanetLab.Api;
+using PlanetLab.Requests;
+using YtCrawler;
+
+namespace YtAnalytics.Controls.PlanetLab
+{
+	/// <summary>
+	/// A control that displays the information of a PlanetLab person.
+	/// </summary>
+	public partial class ControlPersonProperties : ControlObjectProperties
+	{
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetPersons);
+
+		/// <summary>
+		/// Creates a new control instance.
+		/// </summary>
+		public ControlPersonProperties()
+		{
+			InitializeComponent();
+		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// An event handler called when a new PlanetLab object is set.
+		/// </summary>
+		/// <param name="obj"></param>
+		protected override void OnObjectSet(PlObject obj)
+		{
+			this.OnPersonSet(obj as PlPerson);
+		}
+
+		/// <summary>
+		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		protected override void OnUpdate(int id)
+		{
+			// Hide the current information.
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = string.Format("Updating information for person {0}...", id);
+			this.tabControl.Visible = false;
+
+			try
+			{
+				// Begin a new nodes request for the specified person.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlPerson.GetFilter(PlPerson.Fields.PersonId, id));
+			}
+			catch
+			{
+				// Catch all exceptions.
+				this.Icon = Resources.GlobeError_32;
+				this.Title = "Person information not found";
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the request completes.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response)
+		{
+			// Call the base class method.
+			base.OnCompleteRequest(response);
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Create a PlanetLab nodes list for the given response.
+				PlList<PlPerson> persons = PlList<PlPerson>.Create(response.Value as XmlRpcArray);
+				// If the nodes count is greater than zero.
+				if (persons.Count > 0)
+				{
+					// Display the information for the first person.
+					this.Object = persons[0];
+				}
+				else
+				{
+					// Set the person to null.
+					this.Object = null;
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a new person has been set.
+		/// </summary>
+		/// <param name="newNode">The new PlanetLab person.</param>
+		protected virtual void OnPersonSet(PlPerson person)
+		{
+			// Change the display information for the new person.
+			if (null == person)
+			{
+				this.Title = "Person information not found";
+				this.Icon = Resources.GlobeWarning_32;
+				this.tabControl.Visible = false;
+			}
+			else
+			{
+				// General.
+
+				this.Title = string.Format("{0} {1}", person.FirstName, person.LastName);
+				this.Icon = Resources.GlobeUser_32;
+
+				this.textBoxFirstName.Text = person.FirstName;
+				this.textBoxLastName.Text = person.LastName;
+				this.textBoxTitle.Text = person.Title;
+				this.textBoxPhone.Text = person.Phone;
+				this.textBoxEmail.Text = person.Email;
+				this.textBoxUrl.Text = person.Url;
+				this.textBoxBio.Text = person.Bio;
+
+				this.checkBoxEnabled.CheckState = person.IsEnabled.HasValue ? person.IsEnabled.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate;
+
+				// Identifiers.
+
+				this.textBoxPersonId.Text = person.PersonId.HasValue ? person.PersonId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxPeerId.Text = person.PeerId.HasValue ? person.PeerId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxPeerPersonId.Text = person.PeerPersonId.HasValue ? person.PeerPersonId.Value.ToString() : ControlObjectProperties.notAvailable;
+
+				// Roles.
+				this.listViewRoles.Items.Clear();
+				for (int index = 0; (index < person.RoleIds.Length) && (index < person.Roles.Length); index++)
+				{
+					ListViewItem item = new ListViewItem(new string[] { person.RoleIds[index].ToString(), person.Roles[index] }, 0);
+					item.Tag = person.RoleIds[index];
+					this.listViewRoles.Items.Add(item);
+				}
+
+				// Keys.
+				this.listViewKeys.Items.Clear();
+				foreach (int id in person.KeyIds)
+				{
+					ListViewItem item = new ListViewItem(id.ToString(), 0);
+					item.Tag = id;
+					this.listViewKeys.Items.Add(item);
+				}
+
+				// Slices.
+				this.listViewSlices.Items.Clear();
+				foreach (int id in person.SliceIds)
+				{
+					ListViewItem item = new ListViewItem(id.ToString(), 0);
+					item.Tag = id;
+					this.listViewSlices.Items.Add(item);
+				}
+
+				// Sites.
+				this.listViewSites.Items.Clear();
+				foreach (int id in person.SiteIds)
+				{
+					ListViewItem item = new ListViewItem(id.ToString(), 0);
+					item.Tag = id;
+					this.listViewSites.Items.Add(item);
+				}
+
+				// Tags.
+				this.listViewTags.Items.Clear();
+				foreach (int id in person.PersonTagIds)
+				{
+					ListViewItem item = new ListViewItem(id.ToString(), 0);
+					item.Tag = id;
+					this.listViewTags.Items.Add(item);
+				}
+
+				// Disable the buttons.
+				this.buttonRole.Enabled = false;
+				this.buttonKey.Enabled = false;
+				this.buttonSite.Enabled = false;
+				this.buttonTag.Enabled = false;
+
+				this.tabControl.Visible = true;
+			}
+
+			this.tabControl.SelectedTab = this.tabPageGeneral;
+			if (this.Focused)
+			{
+				this.textBoxFirstName.Select();
+				this.textBoxFirstName.SelectionStart = 0;
+				this.textBoxFirstName.SelectionLength = 0;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the role selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRoleSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonRole.Enabled = this.listViewRoles.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the key selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnKeySelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonKey.Enabled = this.listViewKeys.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the slice selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSliceSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonSlice.Enabled = this.listViewSlices.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the site selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSiteSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonSite.Enabled = this.listViewSites.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the person tag selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTagSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonTag.Enabled = this.listViewTags.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a role.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRoleProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properies of a key.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnKeyProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSliceProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a site.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSiteProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the properties of a person tag.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTagProperties(object sender, EventArgs e)
+		{
+			// TO DO
+		}
+	}
+}

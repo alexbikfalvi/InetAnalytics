@@ -3382,6 +3382,46 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GlobeEnvelope_16 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeEnvelope_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeEnvelope_24 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeEnvelope_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeEnvelope_32 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeEnvelope_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeEnvelope_48 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeEnvelope_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GlobeError_16 {
             get {
                 object obj = ResourceManager.GetObject("GlobeError_16", resourceCulture);
@@ -3655,6 +3695,46 @@ namespace YtAnalytics {
         internal static System.Drawing.Bitmap GlobeSuccess_48 {
             get {
                 object obj = ResourceManager.GetObject("GlobeSuccess_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeTag_16 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeTag_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeTag_24 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeTag_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeTag_32 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeTag_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeTag_48 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeTag_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

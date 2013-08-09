@@ -64,23 +64,23 @@
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLab.cs">
+    <Compile Include="Controls\PlanetLab\ControlRequest.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabProperties.cs">
+    <Compile Include="Controls\PlanetLab\ControlObjectProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.cs">
+    <Compile Include="Controls\PlanetLab\ControlSiteProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.Designer.cs">
-      <DependentUpon>ControlPlanetLabSiteProperties.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlSiteProperties.Designer.cs">
+      <DependentUpon>ControlSiteProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabSites.cs">
+    <Compile Include="Controls\PlanetLab\ControlSites.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabSites.Designer.cs">
-      <DependentUpon>ControlPlanetLabSites.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlSites.Designer.cs">
+      <DependentUpon>ControlSites.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabInfo.cs">
       <SubType>UserControl</SubType>
@@ -94,29 +94,65 @@
     <Compile Include="Controls\PlanetLab\ControlPlanetLabSettings.Designer.cs">
       <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.cs">
+    <Compile Include="Controls\PlanetLab\ControlNodeProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.Designer.cs">
-      <DependentUpon>ControlPlanetLabNodeProperties.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlNodeProperties.Designer.cs">
+      <DependentUpon>ControlNodeProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabPcuProperties.cs">
+    <Compile Include="Controls\PlanetLab\ControlPcuProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabPcuProperties.Designer.cs">
-      <DependentUpon>ControlPlanetLabPcuProperties.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlPcuProperties.Designer.cs">
+      <DependentUpon>ControlPcuProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabPersonProperties.cs">
+    <Compile Include="Controls\PlanetLab\ControlPersonProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabPersonProperties.Designer.cs">
-      <DependentUpon>ControlPlanetLabPersonProperties.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlPersonProperties.Designer.cs">
+      <DependentUpon>ControlPersonProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabSliceProperties.cs">
+    <Compile Include="Controls\PlanetLab\ControlSliceProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlPlanetLabSliceProperties.Designer.cs">
-      <DependentUpon>ControlPlanetLabSliceProperties.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlSliceProperties.Designer.cs">
+      <DependentUpon>ControlSliceProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressProperties.Designer.cs">
+      <DependentUpon>ControlAddressProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceTagProperties.Designer.cs">
+      <DependentUpon>ControlInterfaceTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeTagProperties.Designer.cs">
+      <DependentUpon>ControlNodeTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPersonTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPersonTagProperties.Designer.cs">
+      <DependentUpon>ControlPersonTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSiteTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSiteTagProperties.Designer.cs">
+      <DependentUpon>ControlSiteTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceTagProperties.Designer.cs">
+      <DependentUpon>ControlSliceTagProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
@@ -424,29 +460,11 @@
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PlanetLab\FormPersonProperties.cs">
+    <Compile Include="Forms\PlanetLab\FormObjectProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PlanetLab\FormPersonProperties.Designer.cs">
-      <DependentUpon>FormPersonProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\PlanetLab\FormPcuProperties.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PlanetLab\FormPcuProperties.Designer.cs">
-      <DependentUpon>FormPcuProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\PlanetLab\FormNodeProperties.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PlanetLab\FormNodeProperties.Designer.cs">
-      <DependentUpon>FormNodeProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\PlanetLab\FormSiteProperties.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PlanetLab\FormSiteProperties.Designer.cs">
-      <DependentUpon>FormSiteProperties.cs</DependentUpon>
+    <Compile Include="Forms\PlanetLab\FormObjectProperties.Designer.cs">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Net\FormHttpHeaderProperties.cs">
       <SubType>Form</SubType>
@@ -596,14 +614,14 @@
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLab.resx">
-      <DependentUpon>ControlPlanetLab.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlRequest.resx">
+      <DependentUpon>ControlRequest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSiteProperties.resx">
-      <DependentUpon>ControlPlanetLabSiteProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSiteProperties.resx">
+      <DependentUpon>ControlSiteProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSites.resx">
-      <DependentUpon>ControlPlanetLabSites.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSites.resx">
+      <DependentUpon>ControlSites.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabInfo.resx">
@@ -612,17 +630,35 @@
     <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSettings.resx">
       <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabNodeProperties.resx">
-      <DependentUpon>ControlPlanetLabNodeProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodeProperties.resx">
+      <DependentUpon>ControlNodeProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabPcuProperties.resx">
-      <DependentUpon>ControlPlanetLabPcuProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPcuProperties.resx">
+      <DependentUpon>ControlPcuProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabPersonProperties.resx">
-      <DependentUpon>ControlPlanetLabPersonProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPersonProperties.resx">
+      <DependentUpon>ControlPersonProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSliceProperties.resx">
-      <DependentUpon>ControlPlanetLabSliceProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSliceProperties.resx">
+      <DependentUpon>ControlSliceProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddressProperties.resx">
+      <DependentUpon>ControlAddressProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlInterfaceTagProperties.resx">
+      <DependentUpon>ControlInterfaceTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodeTagProperties.resx">
+      <DependentUpon>ControlNodeTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPersonTagProperties.resx">
+      <DependentUpon>ControlPersonTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSiteTagProperties.resx">
+      <DependentUpon>ControlSiteTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSliceTagProperties.resx">
+      <DependentUpon>ControlSliceTagProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
@@ -778,17 +814,8 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PlanetLab\FormPersonProperties.resx">
-      <DependentUpon>FormPersonProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PlanetLab\FormPcuProperties.resx">
-      <DependentUpon>FormPcuProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PlanetLab\FormNodeProperties.resx">
-      <DependentUpon>FormNodeProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PlanetLab\FormSiteProperties.resx">
-      <DependentUpon>FormSiteProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlanetLab\FormObjectProperties.resx">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Net\FormHttpHeaderProperties.resx">
       <DependentUpon>FormHttpHeaderProperties.cs</DependentUpon>
@@ -892,6 +919,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\GlobeTag_48.png" />
+    <None Include="Resources\GlobeTag_32.png" />
+    <None Include="Resources\GlobeTag_24.png" />
+    <None Include="Resources\GlobeTag_16.png" />
+    <None Include="Resources\GlobeEnvelope_48.png" />
+    <None Include="Resources\GlobeEnvelope_32.png" />
+    <None Include="Resources\GlobeEnvelope_24.png" />
+    <None Include="Resources\GlobeEnvelope_16.png" />
     <None Include="Resources\ServersGlobe_48.png" />
     <None Include="Resources\ServersGlobe_32.png" />
     <None Include="Resources\ServersGlobe_24.png" />

@@ -2265,4 +2265,28 @@ Female, 45-54 years
   <data name="ServersGlobe_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ServersGlobe_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GlobeEnvelope_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeEnvelope_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeEnvelope_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeEnvelope_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeEnvelope_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeEnvelope_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeEnvelope_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeEnvelope_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeTag_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTag_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeTag_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTag_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeTag_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTag_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeTag_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTag_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

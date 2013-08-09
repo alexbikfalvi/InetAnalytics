@@ -39,9 +39,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.control.Database = null;
 			this.control.IsSelected = false;
-			this.control.Location = new System.Drawing.Point(12, 0);
+			this.control.Location = new System.Drawing.Point(6, 0);
 			this.control.Name = "control";
-			this.control.Size = new System.Drawing.Size(360, 371);
+			this.control.Size = new System.Drawing.Size(372, 371);
 			this.control.TabIndex = 2;
 			// 
 			// buttonClose

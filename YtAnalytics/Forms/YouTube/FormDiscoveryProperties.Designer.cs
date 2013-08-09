@@ -46,9 +46,9 @@
 			// controlHistoryDiscoveryEvent
 			// 
 			this.controlHistoryDiscoveryEvent.Event = null;
-			this.controlHistoryDiscoveryEvent.Location = new System.Drawing.Point(12, 0);
+			this.controlHistoryDiscoveryEvent.Location = new System.Drawing.Point(6, 0);
 			this.controlHistoryDiscoveryEvent.Name = "controlHistoryDiscoveryEvent";
-			this.controlHistoryDiscoveryEvent.Size = new System.Drawing.Size(360, 371);
+			this.controlHistoryDiscoveryEvent.Size = new System.Drawing.Size(372, 371);
 			this.controlHistoryDiscoveryEvent.TabIndex = 2;
 			// 
 			// FormDiscoveryProperties

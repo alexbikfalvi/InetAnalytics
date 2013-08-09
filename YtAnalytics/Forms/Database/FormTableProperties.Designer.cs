@@ -75,16 +75,16 @@
 			this.control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.control.Location = new System.Drawing.Point(12, 0);
+			this.control.Location = new System.Drawing.Point(6, 0);
 			this.control.Name = "control";
-			this.control.Size = new System.Drawing.Size(360, 370);
+			this.control.Size = new System.Drawing.Size(372, 370);
 			this.control.TabIndex = 0;
 			this.control.ConfigurationChanged += new System.EventHandler(this.OnConfigurationChanged);
 			this.control.ConfigurationSaved += new System.EventHandler(this.OnConfigurationSaved);
 			this.control.DatabaseOperationStarted += new System.EventHandler(this.OnDatabaseOperationStarted);
 			this.control.DatabaseOperationFinished += new System.EventHandler(this.OnDatabaseOperationFinished);
 			// 
-			// FormTable
+			// FormTableProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -96,7 +96,7 @@
 			this.Controls.Add(this.buttonApply);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "FormTable";
+			this.Name = "FormTableProperties";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "Table Properties";

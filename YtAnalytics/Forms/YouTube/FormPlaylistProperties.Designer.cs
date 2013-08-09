@@ -49,10 +49,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.controlPlaylist.AutoScroll = true;
-			this.controlPlaylist.Location = new System.Drawing.Point(12, 0);
+			this.controlPlaylist.Location = new System.Drawing.Point(6, 0);
 			this.controlPlaylist.Name = "controlPlaylist";
 			this.controlPlaylist.Playlist = null;
-			this.controlPlaylist.Size = new System.Drawing.Size(360, 371);
+			this.controlPlaylist.Size = new System.Drawing.Size(372, 371);
 			this.controlPlaylist.TabIndex = 2;
 			// 
 			// FormPlaylistProperties

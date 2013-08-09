@@ -49,9 +49,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.exception.Exception = null;
-			this.exception.Location = new System.Drawing.Point(12, 0);
+			this.exception.Location = new System.Drawing.Point(6, 0);
 			this.exception.Name = "exception";
-			this.exception.Size = new System.Drawing.Size(360, 371);
+			this.exception.Size = new System.Drawing.Size(372, 371);
 			this.exception.TabIndex = 2;
 			// 
 			// FormExceptionProperties

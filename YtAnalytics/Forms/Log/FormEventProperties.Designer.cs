@@ -49,9 +49,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.logEvent.Event = null;
-			this.logEvent.Location = new System.Drawing.Point(12, 0);
+			this.logEvent.Location = new System.Drawing.Point(6, 0);
 			this.logEvent.Name = "logEvent";
-			this.logEvent.Size = new System.Drawing.Size(360, 368);
+			this.logEvent.Size = new System.Drawing.Size(372, 368);
 			this.logEvent.TabIndex = 0;
 			// 
 			// FormEventProperties

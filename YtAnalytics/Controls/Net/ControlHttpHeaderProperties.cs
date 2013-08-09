@@ -67,8 +67,8 @@ namespace YtAnalytics.Controls.Net
 			// If the old and new headers are equal, do nothing.
 			if (oldHeader == newHeader) return;
 
-			this.labelHeader.Text = this.header.Name;
-			this.textBoxValue.Text = this.header.Value;
+			this.labelHeader.Text = newHeader != null ? newHeader.Name : null;
+			this.textBoxValue.Text = newHeader != null ? newHeader.Value : null;
 
 			this.tabControl.SelectedTab = this.tabPageValue;
 			if (this.Focused)

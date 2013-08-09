@@ -28,7 +28,7 @@ namespace YtCrawler.PlanetLab
 	{
 		private CrawlerConfig config;
 
-		private PlSites sites = new PlSites();
+		private PlList<PlSite> sites = new PlList<PlSite>();
 
 		/// <summary>
 		/// Creates anew PlanetLab configuration with the specified configuration.
@@ -52,7 +52,7 @@ namespace YtCrawler.PlanetLab
 		/// <summary>
 		/// Gets the collection of Planet-Lab sites.
 		/// </summary>
-		public PlSites Sites { get { return this.sites; } }
+		public PlList<PlSite> Sites { get { return this.sites; } }
 
 		// Public methods.
 

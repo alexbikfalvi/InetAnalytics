@@ -117,7 +117,7 @@ namespace YtAnalytics.Forms
 		private ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
 
 		private ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
-		private ControlPlanetLabSites controlPlanetLabSites = new ControlPlanetLabSites();
+		private ControlSites controlPlanetLabSites = new ControlSites();
 
 		private ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
 
