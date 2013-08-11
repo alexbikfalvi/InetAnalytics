@@ -49,10 +49,61 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnAddressSet(obj as PlAddress);
+			// Get the address.
+			PlAddress address = obj as PlAddress;
+
+			// Change the display information for the new address.
+			if (null == address)
+			{
+				this.Title = "Node information not found";
+				this.Icon = Resources.GlobeWarning_32;
+				this.tabControl.Visible = false;
+			}
+			else
+			{
+				// General.
+
+				this.Title = string.Format("Address {0}", address.AddressId);
+				this.Icon = Resources.GlobeEnvelope_32;
+
+				this.textBoxAddress.Text = string.Format("{0}{1}{2}{3}{4}",
+					address.Line1, Environment.NewLine, address.Line2, Environment.NewLine, address.Line3);
+				this.textBoxPostalCode.Text = address.PostalCode;
+				this.textBoxCity.Text = address.City;
+				this.textBoxState.Text = address.State;
+				this.textBoxCountry.Text = address.Country;
+
+				// Identifiers.
+
+				this.textBoxAddressId.Text = address.AddressId.HasValue ? address.AddressId.Value.ToString() : ControlObjectProperties.notAvailable;
+
+				// Types.
+				this.listViewTypes.Items.Clear();
+				for (int index = 0; (index < address.AddressTypeIds.Length) && (index < address.AddressTypes.Length); index++)
+				{
+					ListViewItem item = new ListViewItem(new string[] {
+						address.AddressTypeIds[index].ToString(),
+						address.AddressTypes[index] }, 0);
+					item.Tag = address.AddressTypeIds[index];
+					this.listViewTypes.Items.Add(item);
+				}
+
+				// Disable the buttons.
+				this.buttonType.Enabled = false;
+
+				this.tabControl.Visible = true;
+			}
+
+			this.tabControl.SelectedTab = this.tabPageGeneral;
+			if (this.Focused)
+			{
+				this.textBoxAddress.Select();
+				this.textBoxAddress.SelectionStart = 0;
+				this.textBoxAddress.SelectionLength = 0;
+			}
 		}
 
 		/// <summary>
@@ -105,64 +156,6 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 			}
 		}
-
-		/// <summary>
-		/// An event handler called when a new address has been set.
-		/// </summary>
-		/// <param name="address">The new PlanetLab address.</param>
-		protected virtual void OnAddressSet(PlAddress address)
-		{
-			// Change the display information for the new address.
-			if (null == address)
-			{
-				this.Title = "Node information not found";
-				this.Icon = Resources.GlobeWarning_32;
-				this.tabControl.Visible = false;
-			}
-			else
-			{
-				// General.
-
-				this.Title = string.Format("Address {0}", address.AddressId);
-				this.Icon = Resources.GlobeEnvelope_32;
-
-				this.textBoxAddress.Text = string.Format("{0}{1}{2}{3}{4}",
-					address.Line1, Environment.NewLine, address.Line2, Environment.NewLine, address.Line3);
-				this.textBoxPostalCode.Text = address.PostalCode;
-				this.textBoxCity.Text = address.City;
-				this.textBoxState.Text = address.State;
-				this.textBoxCountry.Text = address.Country;
-
-				// Identifiers.
-
-				this.textBoxAddressId.Text = address.AddressId.HasValue ? address.AddressId.Value.ToString() : ControlObjectProperties.notAvailable;
-
-				// Types.
-				this.listViewTypes.Items.Clear();
-				for (int index = 0; (index < address.AddressTypeIds.Length) && (index < address.AddressTypes.Length); index++)
-				{
-					ListViewItem item = new ListViewItem(new string[] {
-						address.AddressTypeIds[index].ToString(),
-						address.AddressTypes[index] }, 0);
-					item.Tag = address.AddressTypeIds[index];
-					this.listViewTypes.Items.Add(item);
-				}
-
-				// Disable the buttons.
-				this.buttonType.Enabled = false;
-
-				this.tabControl.Visible = true;
-			}
-
-			this.tabControl.SelectedTab = this.tabPageGeneral;
-			if (this.Focused)
-			{
-				this.textBoxAddress.Select();
-				this.textBoxAddress.SelectionStart = 0;
-				this.textBoxAddress.SelectionLength = 0;
-			}
-		}
-
 
 		/// <summary>
 		/// An event handler called when the address type selection has changed.

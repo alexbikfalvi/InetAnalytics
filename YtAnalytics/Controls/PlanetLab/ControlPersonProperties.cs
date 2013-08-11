@@ -49,69 +49,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnPersonSet(obj as PlPerson);
-		}
+			// Get the person.
+			PlPerson person = obj as PlPerson;
 
-		/// <summary>
-		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
-		/// </summary>
-		/// <param name="id">The identifier.</param>
-		protected override void OnUpdate(int id)
-		{
-			// Hide the current information.
-			this.Icon = Resources.GlobeClock_32;
-			this.Title = string.Format("Updating information for person {0}...", id);
-			this.tabControl.Visible = false;
-
-			try
-			{
-				// Begin a new nodes request for the specified person.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlPerson.GetFilter(PlPerson.Fields.PersonId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.Icon = Resources.GlobeError_32;
-				this.Title = "Person information not found";
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request completes.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
-		{
-			// Call the base class method.
-			base.OnCompleteRequest(response);
-			// If the request has not failed.
-			if ((null == response.Fault) && (null != response.Value))
-			{
-				// Create a PlanetLab nodes list for the given response.
-				PlList<PlPerson> persons = PlList<PlPerson>.Create(response.Value as XmlRpcArray);
-				// If the nodes count is greater than zero.
-				if (persons.Count > 0)
-				{
-					// Display the information for the first person.
-					this.Object = persons[0];
-				}
-				else
-				{
-					// Set the person to null.
-					this.Object = null;
-				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a new person has been set.
-		/// </summary>
-		/// <param name="newNode">The new PlanetLab person.</param>
-		protected virtual void OnPersonSet(PlPerson person)
-		{
 			// Change the display information for the new person.
 			if (null == person)
 			{
@@ -202,6 +145,57 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.textBoxFirstName.Select();
 				this.textBoxFirstName.SelectionStart = 0;
 				this.textBoxFirstName.SelectionLength = 0;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		protected override void OnUpdate(int id)
+		{
+			// Hide the current information.
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = string.Format("Updating information for person {0}...", id);
+			this.tabControl.Visible = false;
+
+			try
+			{
+				// Begin a new nodes request for the specified person.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlPerson.GetFilter(PlPerson.Fields.PersonId, id));
+			}
+			catch
+			{
+				// Catch all exceptions.
+				this.Icon = Resources.GlobeError_32;
+				this.Title = "Person information not found";
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the request completes.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response)
+		{
+			// Call the base class method.
+			base.OnCompleteRequest(response);
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Create a PlanetLab nodes list for the given response.
+				PlList<PlPerson> persons = PlList<PlPerson>.Create(response.Value as XmlRpcArray);
+				// If the nodes count is greater than zero.
+				if (persons.Count > 0)
+				{
+					// Display the information for the first person.
+					this.Object = persons[0];
+				}
+				else
+				{
+					// Set the person to null.
+					this.Object = null;
+				}
 			}
 		}
 

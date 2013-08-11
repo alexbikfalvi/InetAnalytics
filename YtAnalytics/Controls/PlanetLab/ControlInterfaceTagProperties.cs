@@ -49,10 +49,49 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnTagSet(obj as PlInterfaceTag);
+			// Get the tag.
+			PlInterfaceTag tag = obj as PlInterfaceTag;
+			
+			// Change the display information for the new tag.
+			if (null == tag)
+			{
+				this.Title = "Tag information not found";
+				this.Icon = Resources.GlobeWarning_32;
+				this.tabControl.Visible = false;
+			}
+			else
+			{
+				// General.
+
+				this.Title = tag.TagName;
+				this.Icon = Resources.GlobeTag_32;
+
+				this.textBoxTagName.Text = tag.TagName;
+				this.textBoxDescription.Text = tag.Description;
+				this.textBoxCategory.Text = tag.Category;
+				this.textBoxValue.Text = tag.Value;
+
+				this.textBoxIp.Text = tag.Ip;
+
+				// Identifiers.
+
+				this.textBoxTagId.Text = tag.InterfaceTagId.HasValue ? tag.InterfaceTagId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxInterfaceId.Text = tag.InterfaceId.HasValue ? tag.InterfaceId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxTypeId.Text = tag.TagTypeId.HasValue ? tag.TagTypeId.Value.ToString() : ControlObjectProperties.notAvailable;
+
+				this.tabControl.Visible = true;
+			}
+
+			this.tabControl.SelectedTab = this.tabPageGeneral;
+			if (this.Focused)
+			{
+				this.textBoxTagName.Select();
+				this.textBoxTagName.SelectionStart = 0;
+				this.textBoxTagName.SelectionLength = 0;
+			}
 		}
 
 		/// <summary>
@@ -103,51 +142,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Set the tag to null.
 					this.Object = null;
 				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a new tag has been set.
-		/// </summary>
-		/// <param name="tag">The new PlanetLab tag.</param>
-		protected virtual void OnTagSet(PlInterfaceTag tag)
-		{
-			// Change the display information for the new tag.
-			if (null == tag)
-			{
-				this.Title = "Tag information not found";
-				this.Icon = Resources.GlobeWarning_32;
-				this.tabControl.Visible = false;
-			}
-			else
-			{
-				// General.
-
-				this.Title = tag.TagName;
-				this.Icon = Resources.GlobeTag_32;
-
-				this.textBoxTagName.Text = tag.TagName;
-				this.textBoxDescription.Text = tag.Description;
-				this.textBoxCategory.Text = tag.Category;
-				this.textBoxValue.Text = tag.Value;
-
-				this.textBoxIp.Text = tag.Ip;
-
-				// Identifiers.
-
-				this.textBoxTagId.Text = tag.InterfaceTagId.HasValue ? tag.InterfaceTagId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxInterfaceId.Text = tag.InterfaceId.HasValue ? tag.InterfaceId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxTypeId.Text = tag.TagTypeId.HasValue ? tag.TagTypeId.Value.ToString() : ControlObjectProperties.notAvailable;
-
-				this.tabControl.Visible = true;
-			}
-
-			this.tabControl.SelectedTab = this.tabPageGeneral;
-			if (this.Focused)
-			{
-				this.textBoxTagName.Select();
-				this.textBoxTagName.SelectionStart = 0;
-				this.textBoxTagName.SelectionLength = 0;
 			}
 		}
 	}

@@ -50,69 +50,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnSliceSet(obj as PlSlice);
-		}
+			// Get the slice.
+			PlSlice slice = obj as PlSlice;
 
-		/// <summary>
-		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
-		/// </summary>
-		/// <param name="id">The identifier.</param>
-		protected override void OnUpdate(int id)
-		{
-			// Hide the current information.
-			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating slice information...";
-			this.tabControl.Visible = false;
-
-			try
-			{
-				// Begin a new nodes request for the specified slice.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSlice.GetFilter(PlSlice.Fields.SliceId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.Icon = Resources.GlobeError_32;
-				this.Title = "Slice information not found";
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request completes.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
-		{
-			// Call the base class method.
-			base.OnCompleteRequest(response);
-			// If the request has not failed.
-			if ((null == response.Fault) && (null != response.Value))
-			{
-				// Create a PlanetLab nodes list for the given response.
-				PlList<PlSlice> slices = PlList<PlSlice>.Create(response.Value as XmlRpcArray);
-				// If the nodes count is greater than zero.
-				if (slices.Count > 0)
-				{
-					// Display the information for the first slice.
-					this.Object = slices[0];
-				}
-				else
-				{
-					// Set the slice to null.
-					this.Object = null;
-				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a new slice has been set.
-		/// </summary>
-		/// <param name="slice">The new PlanetLab slice.</param>
-		protected virtual void OnSliceSet(PlSlice slice)
-		{
 			// Change the display information for the new slice.
 			if (null == slice)
 			{
@@ -176,6 +119,57 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.textBoxName.Select();
 				this.textBoxName.SelectionStart = 0;
 				this.textBoxName.SelectionLength = 0;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		protected override void OnUpdate(int id)
+		{
+			// Hide the current information.
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = "Updating slice information...";
+			this.tabControl.Visible = false;
+
+			try
+			{
+				// Begin a new nodes request for the specified slice.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSlice.GetFilter(PlSlice.Fields.SliceId, id));
+			}
+			catch
+			{
+				// Catch all exceptions.
+				this.Icon = Resources.GlobeError_32;
+				this.Title = "Slice information not found";
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the request completes.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response)
+		{
+			// Call the base class method.
+			base.OnCompleteRequest(response);
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Create a PlanetLab nodes list for the given response.
+				PlList<PlSlice> slices = PlList<PlSlice>.Create(response.Value as XmlRpcArray);
+				// If the nodes count is greater than zero.
+				if (slices.Count > 0)
+				{
+					// Display the information for the first slice.
+					this.Object = slices[0];
+				}
+				else
+				{
+					// Set the slice to null.
+					this.Object = null;
+				}
 			}
 		}
 

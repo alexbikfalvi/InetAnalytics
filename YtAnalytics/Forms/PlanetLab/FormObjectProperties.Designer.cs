@@ -36,7 +36,7 @@
 			// 
 			this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonClose.Location = new System.Drawing.Point(297, 377);
+			this.buttonClose.Location = new System.Drawing.Point(297, 397);
 			this.buttonClose.Name = "buttonClose";
 			this.buttonClose.Size = new System.Drawing.Size(75, 23);
 			this.buttonClose.TabIndex = 1;
@@ -51,7 +51,7 @@
 			this.controlPlanetLab.Location = new System.Drawing.Point(6, 0);
 			this.controlPlanetLab.Name = "controlPlanetLab";
 			this.controlPlanetLab.Object = null;
-			this.controlPlanetLab.Size = new System.Drawing.Size(372, 371);
+			this.controlPlanetLab.Size = new System.Drawing.Size(372, 391);
 			this.controlPlanetLab.TabIndex = 2;
 			// 
 			// FormObjectProperties
@@ -59,7 +59,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.buttonClose;
-			this.ClientSize = new System.Drawing.Size(384, 412);
+			this.ClientSize = new System.Drawing.Size(384, 432);
 			this.Controls.Add(this.controlPlanetLab);
 			this.Controls.Add(this.buttonClose);
 			this.MaximizeBox = false;

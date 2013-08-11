@@ -26,7 +26,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A class representing a properties PlanetLab control.
 	/// </summary>
-	public abstract class ControlObjectProperties : ControlRequest
+	public class ControlObjectProperties : ControlRequest
 	{
 		protected static string notAvailable = "(not available)";
 
@@ -87,7 +87,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Updates the control using the object with the specified identifies
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">The object identifier.</param>
 		public void Update(int id)
 		{
 			// Call the event handler.
@@ -141,14 +141,18 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
-		protected abstract void OnObjectSet(PlObject obj);
+		/// <param name="obj">The PlanetLab object.</param>
+		protected virtual void OnObjectSet(PlObject obj)
+		{
+		}
 
 		/// <summary>
 		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
 		/// </summary>
 		/// <param name="id">The identifier.</param>
-		protected abstract void OnUpdate(int id);
+		protected virtual void OnUpdate(int id)
+		{
+		}
 
 		// Private methods.
 

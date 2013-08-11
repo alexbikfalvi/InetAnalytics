@@ -49,69 +49,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnPcuSet(obj as PlPcu);
-		}
+			// Get the PCU.
+			PlPcu pcu = obj as PlPcu;
 
-		/// <summary>
-		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
-		/// </summary>
-		/// <param name="id">The identifier.</param>
-		protected override void OnUpdate(int id)
-		{
-			// Hide the current information.
-			this.pictureBox.Image = Resources.GlobeClock_32;
-			this.labelTitle.Text = "Updating PCU information...";
-			this.tabControl.Visible = false;
-
-			try
-			{
-				// Begin a new pcus request for the specified pcu.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlPcu.GetFilter(PlPcu.Fields.PcuId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.pictureBox.Image = Resources.GlobeError_32;
-				this.labelTitle.Text = "PCU information not found";
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request completes.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
-		{
-			// Call the base class method.
-			base.OnCompleteRequest(response);
-			// If the request has not failed.
-			if ((null == response.Fault) && (null != response.Value))
-			{
-				// Create a PlanetLab PCUs list for the given response.
-				PlList<PlPcu> pcus = PlList<PlPcu>.Create(response.Value as XmlRpcArray);
-				// If the PCUs count is greater than zero.
-				if (pcus.Count > 0)
-				{
-					// Display the information for the first PCU.
-					this.Object = pcus[0];
-				}
-				else
-				{
-					// Set the PCU to null.
-					this.Object = null;
-				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a new PCU has been set.
-		/// </summary>
-		/// <param name="pcu">The new PlanetLab PCU.</param>
-		protected virtual void OnPcuSet(PlPcu pcu)
-		{
 			// Change the display information for the new PCU.
 			if (null == pcu)
 			{
@@ -172,6 +115,57 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.textBoxHostname.Select();
 				this.textBoxHostname.SelectionStart = 0;
 				this.textBoxHostname.SelectionLength = 0;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		protected override void OnUpdate(int id)
+		{
+			// Hide the current information.
+			this.pictureBox.Image = Resources.GlobeClock_32;
+			this.labelTitle.Text = "Updating PCU information...";
+			this.tabControl.Visible = false;
+
+			try
+			{
+				// Begin a new pcus request for the specified pcu.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlPcu.GetFilter(PlPcu.Fields.PcuId, id));
+			}
+			catch
+			{
+				// Catch all exceptions.
+				this.pictureBox.Image = Resources.GlobeError_32;
+				this.labelTitle.Text = "PCU information not found";
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the request completes.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response)
+		{
+			// Call the base class method.
+			base.OnCompleteRequest(response);
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Create a PlanetLab PCUs list for the given response.
+				PlList<PlPcu> pcus = PlList<PlPcu>.Create(response.Value as XmlRpcArray);
+				// If the PCUs count is greater than zero.
+				if (pcus.Count > 0)
+				{
+					// Display the information for the first PCU.
+					this.Object = pcus[0];
+				}
+				else
+				{
+					// Set the PCU to null.
+					this.Object = null;
+				}
 			}
 		}
 

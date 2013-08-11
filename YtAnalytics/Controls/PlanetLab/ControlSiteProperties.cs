@@ -61,69 +61,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnSiteSet(obj as PlSite);
-		}
+			// Get the site.
+			PlSite site = obj as PlSite;
 
-		/// <summary>
-		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
-		/// </summary>
-		/// <param name="id">The identifier.</param>
-		protected override void OnUpdate(int id)
-		{
-			// Hide the current information.
-			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating site information...";
-			this.tabControl.Visible = false;
-
-			try
-			{
-				// Begin a new sites request for the specified site.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSite.GetFilter(PlSite.Fields.SiteId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.Icon = Resources.GlobeError_32;
-				this.Title = "Site information not found";
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request completes.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
-		{
-			// Call the base class method.
-			base.OnCompleteRequest(response);
-			// If the request has not failed.
-			if ((null == response.Fault) && (null != response.Value))
-			{
-				// Create a PlanetLab sites list for the given response.
-				PlList<PlSite> sites = PlList<PlSite>.Create(response.Value as XmlRpcArray);
-				// If the sites count is greater than zero.
-				if (sites.Count > 0)
-				{
-					// Display the information for the first site.
-					this.Object = sites[0];
-				}
-				else
-				{
-					// Set the site to null.
-					this.Object = null;
-				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a new site has been set.
-		/// </summary>
-		/// <param name="site">The new PlanetLab site.</param>
-		protected virtual void OnSiteSet(PlSite site)
-		{
 			// Change the display information for the new site.
 			if (null == site)
 			{
@@ -242,6 +185,57 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.textBoxName.Select();
 				this.textBoxName.SelectionStart = 0;
 				this.textBoxName.SelectionLength = 0;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		protected override void OnUpdate(int id)
+		{
+			// Hide the current information.
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = "Updating site information...";
+			this.tabControl.Visible = false;
+
+			try
+			{
+				// Begin a new sites request for the specified site.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSite.GetFilter(PlSite.Fields.SiteId, id));
+			}
+			catch
+			{
+				// Catch all exceptions.
+				this.Icon = Resources.GlobeError_32;
+				this.Title = "Site information not found";
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the request completes.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response)
+		{
+			// Call the base class method.
+			base.OnCompleteRequest(response);
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Create a PlanetLab sites list for the given response.
+				PlList<PlSite> sites = PlList<PlSite>.Create(response.Value as XmlRpcArray);
+				// If the sites count is greater than zero.
+				if (sites.Count > 0)
+				{
+					// Display the information for the first site.
+					this.Object = sites[0];
+				}
+				else
+				{
+					// Set the site to null.
+					this.Object = null;
+				}
 			}
 		}
 
@@ -397,7 +391,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnTagProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected tag, do nothing.
+			if (this.listViewTags.SelectedItems.Count == 0) return;
+			// Get the selected address ID.
+			int id = (int)this.listViewTags.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlSiteTagProperties> form = new FormObjectProperties<ControlSiteTagProperties>())
+			{
+				form.ShowDialog(this, "Site Tag", id);
+			}
 		}
 	}
 }

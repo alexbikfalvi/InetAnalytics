@@ -673,6 +673,7 @@
 			this.listViewPcus.TabIndex = 1;
 			this.listViewPcus.UseCompatibleStateImageBehavior = false;
 			this.listViewPcus.View = System.Windows.Forms.View.Details;
+			this.listViewPcus.ItemActivate += new System.EventHandler(this.OnPcuProperties);
 			this.listViewPcus.SelectedIndexChanged += new System.EventHandler(this.OnPcuSelectionChanged);
 			// 
 			// columnHeaderPcu
@@ -729,7 +730,8 @@
 			this.listViewInterfaces.TabIndex = 0;
 			this.listViewInterfaces.UseCompatibleStateImageBehavior = false;
 			this.listViewInterfaces.View = System.Windows.Forms.View.Details;
-			this.listViewInterfaces.SelectedIndexChanged += new System.EventHandler(this.OnNodeSelectionChanged);
+			this.listViewInterfaces.ItemActivate += new System.EventHandler(this.OnInterfaceProperties);
+			this.listViewInterfaces.SelectedIndexChanged += new System.EventHandler(this.OnInterfaceSelectionChanged);
 			// 
 			// columnHeaderInterface
 			// 
@@ -779,6 +781,7 @@
 			this.listViewSlices.TabIndex = 3;
 			this.listViewSlices.UseCompatibleStateImageBehavior = false;
 			this.listViewSlices.View = System.Windows.Forms.View.Details;
+			this.listViewSlices.ItemActivate += new System.EventHandler(this.OnSliceProperties);
 			this.listViewSlices.SelectedIndexChanged += new System.EventHandler(this.OnSliceSelectionChanged);
 			// 
 			// columnHeaderSlice
@@ -829,7 +832,8 @@
 			this.listViewNodeTags.TabIndex = 2;
 			this.listViewNodeTags.UseCompatibleStateImageBehavior = false;
 			this.listViewNodeTags.View = System.Windows.Forms.View.Details;
-			this.listViewNodeTags.SelectedIndexChanged += new System.EventHandler(this.OnPersonSelectionChanged);
+			this.listViewNodeTags.ItemActivate += new System.EventHandler(this.OnNodeTagProperties);
+			this.listViewNodeTags.SelectedIndexChanged += new System.EventHandler(this.OnNodeTagSelectionChanged);
 			// 
 			// columnHeaderNodeTag
 			// 
@@ -879,7 +883,8 @@
 			this.listViewNodeGroups.TabIndex = 4;
 			this.listViewNodeGroups.UseCompatibleStateImageBehavior = false;
 			this.listViewNodeGroups.View = System.Windows.Forms.View.Details;
-			this.listViewNodeGroups.SelectedIndexChanged += new System.EventHandler(this.OnAddressSelectionChanged);
+			this.listViewNodeGroups.ItemActivate += new System.EventHandler(this.OnNodeGroupProperties);
+			this.listViewNodeGroups.SelectedIndexChanged += new System.EventHandler(this.OnNodeGroupSelectionChanged);
 			// 
 			// columnHeaderNodeGroup
 			// 
@@ -929,7 +934,8 @@
 			this.listViewSliceWhitelist.TabIndex = 5;
 			this.listViewSliceWhitelist.UseCompatibleStateImageBehavior = false;
 			this.listViewSliceWhitelist.View = System.Windows.Forms.View.Details;
-			this.listViewSliceWhitelist.SelectedIndexChanged += new System.EventHandler(this.OnTagSelectionChanged);
+			this.listViewSliceWhitelist.ItemActivate += new System.EventHandler(this.OnSliceWhitelistProperties);
+			this.listViewSliceWhitelist.SelectedIndexChanged += new System.EventHandler(this.OnSliceWhitelistSelectionChanged);
 			// 
 			// columnHeaderSliceWhitelist
 			// 
@@ -980,18 +986,19 @@
 			this.listViewConfigurationFiles.UseCompatibleStateImageBehavior = false;
 			this.listViewConfigurationFiles.View = System.Windows.Forms.View.Details;
 			this.listViewConfigurationFiles.ItemActivate += new System.EventHandler(this.OnConfigurationFileProperties);
+			this.listViewConfigurationFiles.SelectedIndexChanged += new System.EventHandler(this.OnConfigurationFileSelectionChanged);
 			// 
 			// columnHeaderConfigurationFile
 			// 
 			this.columnHeaderConfigurationFile.Text = "File ID";
 			this.columnHeaderConfigurationFile.Width = 240;
 			// 
-			// ControlPlanetLabNodeProperties
+			// ControlNodeProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl);
-			this.Name = "ControlPlanetLabNodeProperties";
+			this.Name = "ControlNodeProperties";
 			this.Controls.SetChildIndex(this.tabControl, 0);
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);

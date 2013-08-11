@@ -49,10 +49,52 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">Tha PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnTagSet(obj as PlSliceTag);
+			// The PlanetLab object.
+			PlSliceTag tag = obj as PlSliceTag;
+
+			// Change the display information for the new tag.
+			if (null == tag)
+			{
+				this.Title = "Tag information not found";
+				this.Icon = Resources.GlobeWarning_32;
+				this.tabControl.Visible = false;
+			}
+			else
+			{
+				// General.
+
+				this.Title = tag.TagName;
+				this.Icon = Resources.GlobeTag_32;
+
+				this.textBoxTagName.Text = tag.TagName;
+				this.textBoxDescription.Text = tag.Description;
+				this.textBoxCategory.Text = tag.Category;
+				this.textBoxValue.Text = tag.Value;
+
+				this.textBoxSliceName.Text = tag.Name;
+
+				// Identifiers.
+
+				this.textBoxTagId.Text = tag.SliceTagId.HasValue ? tag.SliceTagId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxSliceId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxTypeId.Text = tag.TagTypeId.HasValue ? tag.TagTypeId.Value.ToString() : ControlObjectProperties.notAvailable;
+
+				this.textBoxNodeId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxNodeGroupId.Text = tag.NodeGroupId.HasValue ? tag.NodeGroupId.Value.ToString() : ControlObjectProperties.notAvailable;
+
+				this.tabControl.Visible = true;
+			}
+
+			this.tabControl.SelectedTab = this.tabPageGeneral;
+			if (this.Focused)
+			{
+				this.textBoxTagName.Select();
+				this.textBoxTagName.SelectionStart = 0;
+				this.textBoxTagName.SelectionLength = 0;
+			}
 		}
 
 		/// <summary>
@@ -103,54 +145,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Set the tag to null.
 					this.Object = null;
 				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a new tag has been set.
-		/// </summary>
-		/// <param name="tag">The new PlanetLab tag.</param>
-		protected virtual void OnTagSet(PlSliceTag tag)
-		{
-			// Change the display information for the new tag.
-			if (null == tag)
-			{
-				this.Title = "Tag information not found";
-				this.Icon = Resources.GlobeWarning_32;
-				this.tabControl.Visible = false;
-			}
-			else
-			{
-				// General.
-
-				this.Title = tag.TagName;
-				this.Icon = Resources.GlobeTag_32;
-
-				this.textBoxTagName.Text = tag.TagName;
-				this.textBoxDescription.Text = tag.Description;
-				this.textBoxCategory.Text = tag.Category;
-				this.textBoxValue.Text = tag.Value;
-
-				this.textBoxSliceName.Text = tag.Name;
-
-				// Identifiers.
-
-				this.textBoxTagId.Text = tag.SliceTagId.HasValue ? tag.SliceTagId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxSliceId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxTypeId.Text = tag.TagTypeId.HasValue ? tag.TagTypeId.Value.ToString() : ControlObjectProperties.notAvailable;
-
-				this.textBoxNodeId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxNodeGroupId.Text = tag.NodeGroupId.HasValue ? tag.NodeGroupId.Value.ToString() : ControlObjectProperties.notAvailable;
-
-				this.tabControl.Visible = true;
-			}
-
-			this.tabControl.SelectedTab = this.tabPageGeneral;
-			if (this.Focused)
-			{
-				this.textBoxTagName.Select();
-				this.textBoxTagName.SelectionStart = 0;
-				this.textBoxTagName.SelectionLength = 0;
 			}
 		}
 	}

@@ -25,6 +25,7 @@ using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -49,69 +50,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			this.OnNodeSet(obj as PlNode);
-		}
+			// Get the node.
+			PlNode node = obj as PlNode;
 
-		/// <summary>
-		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
-		/// </summary>
-		/// <param name="id">The identifier.</param>
-		protected override void OnUpdate(int id)
-		{
-			// Hide the current information.
-			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating node information...";
-			this.tabControl.Visible = false;
-
-			try
-			{
-				// Begin a new nodes request for the specified node.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlNode.GetFilter(PlNode.Fields.NodeId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.Icon = Resources.GlobeError_32;
-				this.Title = "Node information not found";
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request completes.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
-		{
-			// Call the base class method.
-			base.OnCompleteRequest(response);
-			// If the request has not failed.
-			if ((null == response.Fault) && (null != response.Value))
-			{
-				// Create a PlanetLab nodes list for the given response.
-				PlList<PlNode> nodes = PlList<PlNode>.Create(response.Value as XmlRpcArray);
-				// If the nodes count is greater than zero.
-				if (nodes.Count > 0)
-				{
-					// Display the information for the first node.
-					this.Object = nodes[0];
-				}
-				else
-				{
-					// Set the node to null.
-					this.Object = null;
-				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a new node has been set.
-		/// </summary>
-		/// <param name="node">The new PlanetLab node.</param>
-		protected virtual void OnNodeSet(PlNode node)
-		{
 			// Change the display information for the new node.
 			if (null == node)
 			{
@@ -240,13 +184,54 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the node selection has changed.
+		/// An event handler called when updating the control with a PlanetLab object of the specified identifier.
 		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnNodeSelectionChanged(object sender, EventArgs e)
+		/// <param name="id">The identifier.</param>
+		protected override void OnUpdate(int id)
 		{
-			this.buttonInterface.Enabled = this.listViewInterfaces.SelectedItems.Count > 0;
+			// Hide the current information.
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = "Updating node information...";
+			this.tabControl.Visible = false;
+
+			try
+			{
+				// Begin a new nodes request for the specified node.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlNode.GetFilter(PlNode.Fields.NodeId, id));
+			}
+			catch
+			{
+				// Catch all exceptions.
+				this.Icon = Resources.GlobeError_32;
+				this.Title = "Node information not found";
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the request completes.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response)
+		{
+			// Call the base class method.
+			base.OnCompleteRequest(response);
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Create a PlanetLab nodes list for the given response.
+				PlList<PlNode> nodes = PlList<PlNode>.Create(response.Value as XmlRpcArray);
+				// If the nodes count is greater than zero.
+				if (nodes.Count > 0)
+				{
+					// Display the information for the first node.
+					this.Object = nodes[0];
+				}
+				else
+				{
+					// Set the node to null.
+					this.Object = null;
+				}
+			}
 		}
 
 		/// <summary>
@@ -260,13 +245,33 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the person selection has changed.
+		/// An event handler called when the interface selection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnPersonSelectionChanged(object sender, EventArgs e)
+		private void OnInterfaceSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonInterface.Enabled = this.listViewInterfaces.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the node tag selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeTagSelectionChanged(object sender, EventArgs e)
 		{
 			this.buttonNodeTag.Enabled = this.listViewNodeTags.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the node group selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeGroupSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonNodeGroup.Enabled = this.listViewNodeGroups.SelectedItems.Count > 0;
 		}
 
 		/// <summary>
@@ -280,23 +285,23 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the address selection has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnAddressSelectionChanged(object sender, EventArgs e)
-		{
-			this.buttonNodeGroup.Enabled = this.listViewNodeGroups.SelectedItems.Count > 0;
-		}
-
-		/// <summary>
-		/// An event handler called when the tag selection has changed.
+		/// An event handler called when the slice whitelist selection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments,</param>
-		private void OnTagSelectionChanged(object sender, EventArgs e)
+		private void OnSliceWhitelistSelectionChanged(object sender, EventArgs e)
 		{
 			this.buttonSliceWhitelist.Enabled = this.listViewSliceWhitelist.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the configuration file selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnConfigurationFileSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonConfigurationFile.Enabled = this.listViewConfigurationFiles.SelectedItems.Count > 0;
 		}
 
 		/// <summary>
@@ -306,7 +311,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnPcuProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected PCUs, do nothing.
+			if (this.listViewPcus.SelectedItems.Count == 0) return;
+			// Get the selected PCU ID.
+			int id = (int)this.listViewPcus.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlPcuProperties> form = new FormObjectProperties<ControlPcuProperties>())
+			{
+				form.ShowDialog(this, "PCU", id);
+			}
 		}
 
 		/// <summary>
@@ -326,7 +338,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSliceProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected slices, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+			// Get the selected slice ID.
+			int id = (int)this.listViewSlices.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlSliceProperties> form = new FormObjectProperties<ControlSliceProperties>())
+			{
+				form.ShowDialog(this, "Slice", id);
+			}
 		}
 
 		/// <summary>
@@ -336,7 +355,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeTagProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected tag, do nothing.
+			if (this.listViewNodeTags.SelectedItems.Count == 0) return;
+			// Get the selected address ID.
+			int id = (int)this.listViewNodeTags.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlNodeTagProperties> form = new FormObjectProperties<ControlNodeTagProperties>())
+			{
+				form.ShowDialog(this, "Node Tag", id);
+			}
 		}
 
 		/// <summary>
@@ -356,7 +382,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSliceWhitelistProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected slices, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+			// Get the selected slice ID.
+			int id = (int)this.listViewSlices.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlSliceProperties> form = new FormObjectProperties<ControlSliceProperties>())
+			{
+				form.ShowDialog(this, "Whitelisted Slice", id);
+			}
 		}
 
 		/// <summary>
