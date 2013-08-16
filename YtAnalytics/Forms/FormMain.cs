@@ -518,7 +518,7 @@ namespace YtAnalytics.Forms
 			}
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		// Protected methods.

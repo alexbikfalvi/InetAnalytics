@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DotNetApi;
 using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
@@ -131,13 +132,13 @@ namespace YtCrawler.Database
 		public static DbQuery CreateSelectAll(ITable table, DbObjectDatabase database, object userState = null)
 		{
 			// If the table is not configured, throw an exception.
-			if (!table.IsConfigured) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table is not configured.", table.LocalName));
+			if (!table.IsConfigured) throw new DbException("Cannot create a database query for the table \'{0}\'. The table is not configured.".FormatWith(table.LocalName));
 			// If the table  requires a database, check that a database is configured for this server.
-			if (table.DefaultDatabase && (database == null)) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.", table.LocalName));
+			if (table.DefaultDatabase && (database == null)) throw new DbException("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.".FormatWith(table.LocalName));
 			// Get the table name.
 			string tableName = DbQuery.GetTableName(table, database);
 			// Create and return the query.
-			return new DbQuery(string.Format("SELECT {0} FROM {1}",
+			return new DbQuery("SELECT {0} FROM {1}".FormatWith(
 				DbQuery.GetFieldNames(table, tableName),
 				tableName), table, userState);
 		}
@@ -153,13 +154,13 @@ namespace YtCrawler.Database
 		public static DbQuery CreateSelectField(ITable table, string nameSelect, DbObjectDatabase database, object userState = null)
 		{
 			// If the table is not configured, throw an exception.
-			if (!table.IsConfigured) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table is not configured.", table.LocalName));
+			if (!table.IsConfigured) throw new DbException("Cannot create a database query for the table \'{0}\'. The table is not configured.".FormatWith(table.LocalName));
 			// If the table  requires a database, check that a database is configured for this server.
-			if (table.DefaultDatabase && (database == null)) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.", table.LocalName));
+			if (table.DefaultDatabase && (database == null)) throw new DbException("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.".FormatWith(table.LocalName));
 			// Get the field.
 			DbField field = table[nameSelect];
 			// Create and return the query.
-			return new DbQuery(string.Format("SELECT {0} FROM {1}",
+			return new DbQuery("SELECT {0} FROM {1}".FormatWith(
 				field.DatabaseName,
 				DbQuery.GetTableName(table, database)), table, userState);
 		}
@@ -176,15 +177,15 @@ namespace YtCrawler.Database
 		public static DbQuery CreateSelectAllOn(ITable table, string fieldOn, object valueOn, DbObjectDatabase database, object userState = null)
 		{
 			// If the table is not configured, throw an exception.
-			if (!table.IsConfigured) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table is not configured.", table.LocalName));
+			if (!table.IsConfigured) throw new DbException("Cannot create a database query for the table \'{0}\'. The table is not configured.".FormatWith(table.LocalName));
 			// If the table  requires a database, check that a database is configured for this server.
-			if (table.DefaultDatabase && (database == null)) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.", table.LocalName));
+			if (table.DefaultDatabase && (database == null)) throw new DbException("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.".FormatWith(table.LocalName));
 			// Get the field.
 			DbField field = table[fieldOn];
 			// Get the table name.
 			string tableName = DbQuery.GetTableName(table, database);
 			// Create the query.
-			DbQuery query = new DbQuery(string.Format("SELECT {0} FROM {1} WHERE {2} = {3}",
+			DbQuery query = new DbQuery("SELECT {0} FROM {1} WHERE {2} = {3}".FormatWith(
 				DbQuery.GetFieldNames(table, tableName),
 				tableName,
 				field.DatabaseName,
@@ -209,9 +210,9 @@ namespace YtCrawler.Database
 		public static DbQuery CreateSelectAllOn(ITable table, ITable tableOn, string fieldOn, object valueOn, DbObjectDatabase database, object userState = null)
 		{
 			// If the table is not configured, throw an exception.
-			if (!table.IsConfigured) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table is not configured.", table.LocalName));
+			if (!table.IsConfigured) throw new DbException("Cannot create a database query for the table \'{0}\'. The table is not configured.".FormatWith(table.LocalName));
 			// If the table  requires a database, check that a database is configured for this server.
-			if (table.DefaultDatabase && (database == null)) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.", table.LocalName));
+			if (table.DefaultDatabase && (database == null)) throw new DbException("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.".FormatWith(table.LocalName));
 			
 			// Get the relationships between the current table and the right table.
 			List<IRelationship> relationships = new List<IRelationship>();
@@ -223,24 +224,24 @@ namespace YtCrawler.Database
 				}
 			}
 			// If there are no relationships between tables, throw an exception.
-			if (relationships.Count == 0) throw new DbException(string.Format("Cannot create a database query for table \'{0}\' based on a match in the table \'{1}\', because there is no relationship between the two tables.", table.LocalName, tableOn.LocalName));
+			if (relationships.Count == 0) throw new DbException("Cannot create a database query for table \'{0}\' based on a match in the table \'{1}\', because there is no relationship between the two tables.".FormatWith(table.LocalName, tableOn.LocalName));
 
 			// Get the on field.
 			DbField fieldRight = tableOn[fieldOn];
 			// Check the on field exists.
-			if(null == fieldRight) throw new DbException(string.Format("Cannot create a database query on matching field \'{0}\' for the table \'{1}\', because the field does not exist.", fieldOn, tableOn.LocalName));
+			if(null == fieldRight) throw new DbException("Cannot create a database query on matching field \'{0}\' for the table \'{1}\', because the field does not exist.".FormatWith(fieldOn, tableOn.LocalName));
 			// Get the table names.
 			string tableNameLeft = DbQuery.GetTableName(table, database);
 			string tableNameRight = DbQuery.GetTableName(tableOn, database);
 			// Create the query.
 			DbQuery query = new DbQuery(
-				string.Format("SELECT {0} FROM {1} INNER JOIN {2} ON ({3} = {4}){5}",
-				DbQuery.GetFieldNames(table, tableNameLeft),
-				tableNameLeft,
-				tableNameRight,
-				DbQuery.GetFieldName(fieldRight, tableNameRight),
-				"{0}",
-				DbQuery.GetRelationshipsMatch(relationships, database)
+				"SELECT {0} FROM {1} INNER JOIN {2} ON ({3} = {4}){5}".FormatWith(
+					DbQuery.GetFieldNames(table, tableNameLeft),
+					tableNameLeft,
+					tableNameRight,
+					DbQuery.GetFieldName(fieldRight, tableNameRight),
+					"{0}",
+					DbQuery.GetRelationshipsMatch(relationships, database)
 				),
 				table, userState);
 			// Add the parameters.
@@ -263,11 +264,11 @@ namespace YtCrawler.Database
 		public static DbQuery CreateSelectAllOn(ITable table, ITable tableOn, string[] fieldsOn, object[] valuesOn, DbObjectDatabase database, object userState = null)
 		{
 			// If the table is not configured, throw an exception.
-			if (!table.IsConfigured) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table is not configured.", table.LocalName));
+			if (!table.IsConfigured) throw new DbException("Cannot create a database query for the table \'{0}\'. The table is not configured.".FormatWith(table.LocalName));
 			// If the table  requires a database, check that a database is configured for this server.
-			if (table.DefaultDatabase && (database == null)) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.", table.LocalName));
+			if (table.DefaultDatabase && (database == null)) throw new DbException("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.".FormatWith(table.LocalName));
 			// Check the number of field names and values matches.
-			if (fieldsOn.Length != valuesOn.Length) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The number of field names (\'{1}\') and field values (\'{2}\') must be equal.", table.LocalName, fieldsOn.Length, valuesOn.Length));
+			if (fieldsOn.Length != valuesOn.Length) throw new DbException("Cannot create a database query for the table \'{0}\'. The number of field names (\'{1}\') and field values (\'{2}\') must be equal.".FormatWith(table.LocalName, fieldsOn.Length, valuesOn.Length));
 
 			// Get the relationships between the current table and the right table.
 			List<IRelationship> relationships = new List<IRelationship>();
@@ -279,7 +280,7 @@ namespace YtCrawler.Database
 				}
 			}
 			// If there are no relationships between tables, throw an exception.
-			if (relationships.Count == 0) throw new DbException(string.Format("Cannot create a database query for table \'{0}\' based on a match in the table \'{1}\', because there is no relationship between the two tables.", table.LocalName, tableOn.LocalName));
+			if (relationships.Count == 0) throw new DbException("Cannot create a database query for table \'{0}\' based on a match in the table \'{1}\', because there is no relationship between the two tables.".FormatWith(table.LocalName, tableOn.LocalName));
 
 			// The field index.
 			int fieldIndex = 0;
@@ -288,12 +289,12 @@ namespace YtCrawler.Database
 			string tableNameRight = DbQuery.GetTableName(tableOn, database);
 			// Create the query.
 			DbQuery query = new DbQuery(
-				string.Format("SELECT {0} FROM {1} INNER JOIN {2} ON {3}{4}",
-				DbQuery.GetFieldNames(table, tableNameLeft),
-				tableNameLeft,
-				tableNameRight,
-				DbQuery.GetFieldsMatch(tableOn, fieldsOn, database, ref fieldIndex),
-				DbQuery.GetRelationshipsMatch(relationships, database)
+				"SELECT {0} FROM {1} INNER JOIN {2} ON {3}{4}".FormatWith(
+					DbQuery.GetFieldNames(table, tableNameLeft),
+					tableNameLeft,
+					tableNameRight,
+					DbQuery.GetFieldsMatch(tableOn, fieldsOn, database, ref fieldIndex),
+					DbQuery.GetRelationshipsMatch(relationships, database)
 				),
 				table, userState);
 			// Add the parameters.
@@ -308,18 +309,18 @@ namespace YtCrawler.Database
 		public static DbQuery CreateInsertAll(ITable table, DbObject value, DbObjectDatabase database, object userState = null)
 		{
 			// If the table is not configured, throw an exception.
-			if (!table.IsConfigured) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table is not configured.", table.LocalName));
+			if (!table.IsConfigured) throw new DbException("Cannot create a database query for the table \'{0}\'. The table is not configured.".FormatWith(table.LocalName));
 			// If the table  requires a database, check that a database is configured for this server.
-			if (table.DefaultDatabase && (database == null)) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.", table.LocalName));
+			if (table.DefaultDatabase && (database == null)) throw new DbException("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.".FormatWith(table.LocalName));
 			// Check the table type matches the database object type.
-			if (table.Type != value.GetType()) throw new DbException(string.Format("Cannot create a database insert query for table \'{0}\', because object type \'{1}\' does not match the table type \'{2}\'.", table.LocalName, table.Type.Name, value.GetType().Name));
+			if (table.Type != value.GetType()) throw new DbException("Cannot create a database insert query for table \'{0}\', because object type \'{1}\' does not match the table type \'{2}\'.".FormatWith(table.LocalName, table.Type.Name, value.GetType().Name));
 			// Get the table name.
 			string tableName = DbQuery.GetTableName(table, database);
 			// Create the query.
 			DbQuery query = new DbQuery(
-				string.Format("INSERT INTO {0} ({1}) VALUES ({2})",
-				DbQuery.GetFieldNames(table, tableName),
-				DbQuery.GetFieldIndices(table, 0)
+				"INSERT INTO {0} ({1}) VALUES ({2})".FormatWith(
+					DbQuery.GetFieldNames(table, tableName),
+					DbQuery.GetFieldIndices(table, 0)
 				),
 				table, userState);
 			// Add the parameters.
@@ -334,11 +335,11 @@ namespace YtCrawler.Database
 		public static DbQuery CreateUpdateAllOn(ITable table, DbObject value, string fieldOn, object valueOn, DbObjectDatabase database, object userState = null)
 		{
 			// If the table is not configured, throw an exception.
-			if (!table.IsConfigured) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table is not configured.", table.LocalName));
+			if (!table.IsConfigured) throw new DbException("Cannot create a database query for the table \'{0}\'. The table is not configured.".FormatWith(table.LocalName));
 			// If the table  requires a database, check that a database is configured for this server.
-			if (table.DefaultDatabase && (database == null)) throw new DbException(string.Format("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.", table.LocalName));
+			if (table.DefaultDatabase && (database == null)) throw new DbException("Cannot create a database query for the table \'{0}\'. The table requires a database but the server does not have a database configured.".FormatWith(table.LocalName));
 			// Check the table type matches the database object type.
-			if (table.Type != value.GetType()) throw new DbException(string.Format("Cannot create a database update query for table \'{0}\', because object type \'{1}\' does not match the table type \'{2}\'.", table.LocalName, table.Type.Name, value.GetType().Name));
+			if (table.Type != value.GetType()) throw new DbException("Cannot create a database update query for table \'{0}\', because object type \'{1}\' does not match the table type \'{2}\'.".FormatWith(table.LocalName, table.Type.Name, value.GetType().Name));
 
 			// Get the table name.
 			string tableName = DbQuery.GetTableName(table, database);
@@ -346,7 +347,7 @@ namespace YtCrawler.Database
 			// Get the on field.
 			DbField field = table[fieldOn];
 			// Check the on field exists.
-			if(null == field) throw new DbException(string.Format("Cannot create a database query on matching field \'{0}\' for the table \'{1}\', because the field does not exist.", fieldOn, table.LocalName));
+			if(null == field) throw new DbException("Cannot create a database query on matching field \'{0}\' for the table \'{1}\', because the field does not exist.".FormatWith(fieldOn, table.LocalName));
 
 			// Get the fields to update, excluding the on field.
 			int fieldIndex = 0;
@@ -354,11 +355,11 @@ namespace YtCrawler.Database
 
 			// Create the query.
 			DbQuery query = new DbQuery(
-				string.Format("UPDATE {0} SET {1} WHERE {2}={{{3}}}",
-				tableName,
-				fields,
-				field.DatabaseName,
-				fieldIndex++
+				"UPDATE {0} SET {1} WHERE {2}={{{3}}}".FormatWith(
+					tableName,
+					fields,
+					field.DatabaseName,
+					fieldIndex++
 				),
 				table,
 				userState);
@@ -377,7 +378,7 @@ namespace YtCrawler.Database
 		private static string GetTableName(ITable table, DbObjectDatabase database)
 		{
 			// Return the table name made of the database name, schema name, and table name.
-			return string.Format("[{0}].[{1}].[{2}]",
+			return "[{0}].[{1}].[{2}]".FormatWith(
 				table.DefaultDatabase ? database.Name : table.Database,
 				table.Schema,
 				table.DatabaseName
@@ -393,7 +394,7 @@ namespace YtCrawler.Database
 		private static string GetFieldName(DbField field, string tableName)
 		{
 			// Return the field name made of the database name, schema name, table name, and field name.
-			return string.Format("{0}.[{1}]", tableName, field.DatabaseName);
+			return "{0}.[{1}]".FormatWith(tableName, field.DatabaseName);
 		}
 
 		/// <summary>
@@ -522,7 +523,7 @@ namespace YtCrawler.Database
 				// Get the on field.
 				DbField field = table[fieldName];
 				// Check the on field exists.
-				if (null == field) throw new DbException(string.Format("Cannot create a database query on matching field \'{0}\' for the table \'{1}\', because the field does not exist.", fieldName, table.LocalName));
+				if (null == field) throw new DbException("Cannot create a database query on matching field \'{0}\' for the table \'{1}\', because the field does not exist.".FormatWith(fieldName, table.LocalName));
 				// Add the field match to the query.
 				stringBuilder.AppendFormat(" {0} ({1} = {{{2}}})",
 					fieldIndex != startIndex ? "AND" : string.Empty,

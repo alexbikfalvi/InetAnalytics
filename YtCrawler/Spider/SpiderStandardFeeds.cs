@@ -25,6 +25,7 @@ using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
+using DotNetApi;
 using DotNetApi.Async;
 using DotNetApi.Web;
 
@@ -271,7 +272,7 @@ namespace YtCrawler.Spider
 		/// <returns>The feed key.</returns>
 		public string EncodeFeedKey(YouTubeStandardFeed feedId, YouTubeTimeId timeId, string category, string regionId)
 		{
-			return string.Format("{0}.{1}.{2}.{3}",
+			return "{0}.{1}.{2}.{3}".FormatWith(
 				(int)feedId,
 				(int)timeId,
 				category != null ? category : string.Empty,

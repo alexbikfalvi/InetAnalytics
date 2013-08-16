@@ -28,6 +28,7 @@ using YtCrawler.Database.Data;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
 using YtAnalytics.Forms.Database;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Controls.Database
@@ -71,7 +72,7 @@ namespace YtAnalytics.Controls.Database
 			this.Dock = DockStyle.Fill;
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -211,7 +212,7 @@ namespace YtAnalytics.Controls.Database
 			// Update the current database.
 			if (newDatabase != null)
 			{
-				this.textBoxDatabase.Text = string.Format("{0} (ID {1} created on {2})", this.server.Database.Name, this.server.Database.DatabaseId, this.server.Database.CreateDate);
+				this.textBoxDatabase.Text = "{0} (ID {1} created on {2})".FormatWith(this.server.Database.Name, this.server.Database.DatabaseId, this.server.Database.CreateDate);
 				this.buttonDatabaseProperties.Enabled = this.server.Database != null;
 			}
 			else
@@ -429,9 +430,9 @@ namespace YtAnalytics.Controls.Database
 			// Create a select all query for fields in the database table.
 			DbQuery query = DbQuery.CreateSelectAll(this.server.TableDatabase, null);
 			
-			query.MessageStart = string.Format("Refreshing the list of databases for the database server \'{0}\'...", this.server.Name);
-			query.MessageFinishSuccess = string.Format("Refreshing the list of databases for the database server \'{0}\' completed successfully.", this.server.Name);
-			query.MessageFinishFail = string.Format("Refreshing the list of databases for the database server \'{0}\' failed.", this.server.Name);
+			query.MessageStart = "Refreshing the list of databases for the database server \'{0}\'...".FormatWith(this.server.Name);
+			query.MessageFinishSuccess = "Refreshing the list of databases for the database server \'{0}\' completed successfully.".FormatWith(this.server.Name);
+			query.MessageFinishFail = "Refreshing the list of databases for the database server \'{0}\' failed.".FormatWith(this.server.Name);
 
 			// Execute the query.
 			this.DatabaseQuery(this.server, query);
@@ -479,7 +480,7 @@ namespace YtAnalytics.Controls.Database
 			{
 				MessageBox.Show(
 					this,
-					string.Format("Cannot set the database \'{0}\' as primary. {1}", db.Name, exception.Message),
+					"Cannot set the database \'{0}\' as primary. {1}".FormatWith(db.Name, exception.Message),
 					"Select Primary Database Failed",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);

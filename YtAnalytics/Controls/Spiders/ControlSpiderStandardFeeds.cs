@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Database;
 using YtApi.Api.V2;
@@ -151,7 +152,7 @@ namespace YtAnalytics.Controls.Spiders
 				// Catch all exceptions.
 				MessageBox.Show(
 					this,
-					string.Format("An error occurred while crawling the standard feeds. {0}", exception.Message),
+					"An error occurred while crawling the standard feeds. {0}".FormatWith(exception.Message),
 					"Spider Crawl Error",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
@@ -241,7 +242,7 @@ namespace YtAnalytics.Controls.Spiders
 			}
 			// Set the progress bar.
 			//this.progressBar.Maximum = feeds.Count;
-			//this.labelProgress.Text = string.Format("Crawling {0} standard feeds.", feeds.Count);
+			//this.labelProgress.Text = "Crawling {0} standard feeds.".FormatWith(feeds.Count);
 			// Suspend the list box progress events.
 			this.progressListBox.SuspendProgressEvents();
 			// Reset the progress items count.
@@ -274,7 +275,7 @@ namespace YtAnalytics.Controls.Spiders
 			}
 			// Set the progress bar.
 			//this.progressBar.Value = feeds.Count;
-			//this.labelProgress.Text = string.Format("Crawling {0} standard feeds finished.", feeds.Count);
+			//this.labelProgress.Text = "Crawling {0} standard feeds finished.".FormatWith(feeds.Count);
 		}
 
 		/// <summary>
@@ -294,7 +295,7 @@ namespace YtAnalytics.Controls.Spiders
 			}
 
 			// Update the progress label.
-			//this.labelProgress.Text = string.Format("Crawling feed {0} of {1} started.", index, count);			
+			//this.labelProgress.Text = "Crawling feed {0} of {1} started.".FormatWith(index, count);			
 		}
 
 		/// <summary>

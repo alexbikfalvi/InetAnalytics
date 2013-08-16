@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using DotNetApi;
 
 namespace YtCrawler.Database
 {
@@ -84,8 +85,8 @@ namespace YtCrawler.Database
 			if (null == tableLeft) throw new DbException("Cannot create a database relationship: the left table does not exist.");
 			if (null == tableRight) throw new DbException("Cannot create a database relationship: the right table does not exist.");
 			// Check the table fields exist.
-			if (null == tableLeft[fieldLeft]) throw new DbException(string.Format("Cannot create a database relationship: the left field \'{0}\' does not exist in table \'{1}\'.", fieldLeft, tableLeft.LocalName));
-			if (null == tableRight[fieldRight]) throw new DbException(string.Format("Cannot create a datbase relationship: the right field \'{0}\' does not exist in table \'{1}\'.", fieldRight, tableRight.LocalName));
+			if (null == tableLeft[fieldLeft]) throw new DbException("Cannot create a database relationship: the left field \'{0}\' does not exist in table \'{1}\'.".FormatWith(fieldLeft, tableLeft.LocalName));
+			if (null == tableRight[fieldRight]) throw new DbException("Cannot create a datbase relationship: the right field \'{0}\' does not exist in table \'{1}\'.".FormatWith(fieldRight, tableRight.LocalName));
 			// Set the relationship members.
 			this.tableLeft = tableLeft;
 			this.tableRight = tableRight;
@@ -144,15 +145,15 @@ namespace YtCrawler.Database
 		public static DbRelationship Create(XElement element, DbTables tables)
 		{
 			// Verify the name of the XML element.
-			if (element.Name != DbRelationship.xmlRelationship) throw new DbException(string.Format("Cannot create a database relationship because the name of XML element is \'{0}\'", element.Name));
+			if (element.Name != DbRelationship.xmlRelationship) throw new DbException("Cannot create a database relationship because the name of XML element is \'{0}\'".FormatWith(element.Name));
 			// Get the names of the tables and fields.
 			string tableLeft = element.Attribute(DbRelationship.xmlLeftTable).Value;
 			string tableRight = element.Attribute(DbRelationship.xmlRightTable).Value;
 			string fieldLeft = element.Attribute(DbRelationship.xmlLeftField).Value;
 			string fieldRight = element.Attribute(DbRelationship.xmlRightField).Value;
 			// Check the tables exist.
-			if (null == tables[tableLeft]) throw new DbException(string.Format("Cannot create a database relationship: the left table \'{0}\' does not exist.", tableLeft));
-			if (null == tables[tableRight]) throw new DbException(string.Format("Cannot create a database relationship: the right table \'{0}\' does not exist.", tableRight));
+			if (null == tables[tableLeft]) throw new DbException("Cannot create a database relationship: the left table \'{0}\' does not exist.".FormatWith(tableLeft));
+			if (null == tables[tableRight]) throw new DbException("Cannot create a database relationship: the right table \'{0}\' does not exist.".FormatWith(tableRight));
 			// Create a new database relationship object, which is not read-only.
 			DbRelationship relationship = new DbRelationship(tables[tableLeft], tables[tableRight], fieldLeft, fieldRight, false);
 			// Set the XML element.

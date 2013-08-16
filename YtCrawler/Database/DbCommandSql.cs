@@ -20,6 +20,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
+using DotNetApi;
 
 namespace YtCrawler.Database
 {
@@ -51,10 +52,10 @@ namespace YtCrawler.Database
 				parameterNames = new string[query.Parameters.Count];
 				for (int index = 0; index < query.Parameters.Count; index++)
 				{
-					parameterNames[index] = string.Format("@param{0}", index);
+					parameterNames[index] = "@param{0}".FormatWith(index);
 				}
 				// Create the query.
-				queryServer = string.Format(query.Query, parameterNames);
+				queryServer = query.Query.FormatWith(parameterNames);
 			}
 			else
 			{
@@ -104,12 +105,12 @@ namespace YtCrawler.Database
 					catch (SqlException exception)
 					{
 						// If an exception occurs, set the exception.
-						asyncResult.Exception = new DbException(string.Format("The execution of the SQL query \'{0}\' failed. {1}", this.Query, exception.Message), exception);
+						asyncResult.Exception = new DbException("The execution of the SQL query \'{0}\' failed. {1}".FormatWith(this.Query, exception.Message), exception);
 					}
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the exception.
-						asyncResult.Exception = new DbException(string.Format("The execution of the SQL query \'{0}\' failed.", this.Query), exception); 
+						asyncResult.Exception = new DbException("The execution of the SQL query \'{0}\' failed.".FormatWith(this.Query), exception); 
 					}
 					// Complete the asynchronous operation.
 					asyncResult.Complete();
@@ -146,7 +147,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the exception.
-						asyncResult.Exception = new DbException(string.Format("The execution of the SQL statement \'{0}\' failed.", this.Query), exception);
+						asyncResult.Exception = new DbException("The execution of the SQL statement \'{0}\' failed.".FormatWith(this.Query), exception);
 					}
 					// Complete the asynchronous operation.
 					asyncResult.Complete();

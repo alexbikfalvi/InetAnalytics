@@ -17,14 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtApi.Ajax;
@@ -82,10 +76,10 @@ namespace YtAnalytics.Controls.YouTube
 			}
 			else
 			{
-				this.labelTitle.Text = string.Format("{0} at {1}", newEvent.Name, newEvent.Marker.Value.Time.ToString());
+				this.labelTitle.Text = "{0} at {1}".FormatWith(newEvent.Name, newEvent.Marker.Value.Time.ToString());
 				this.textBoxName.Text = newEvent.Name;
 				this.textBoxTime.Text = newEvent.Marker.Value.Time.ToString();
-				this.textBoxType.Text = string.Format("[{0}] {1}", ((int)newEvent.Type).ToString(), newEvent.Type.ToString());
+				this.textBoxType.Text = "[{0}] {1}".FormatWith(((int)newEvent.Type).ToString(), newEvent.Type.ToString());
 				this.textBoxDescription.Text = AjaxViewsHistoryDiscoveryEvent.GetTypeDescription(newEvent.Type);
 				this.textBoxData.Text = newEvent.Extra;
 				this.tabControl.Visible = true;

@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtCrawler.Database;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Database
@@ -36,7 +37,7 @@ namespace YtAnalytics.Forms.Database
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -55,7 +56,7 @@ namespace YtAnalytics.Forms.Database
 			this.control.Server = server;
 			this.control.IsPrimary = isPrimary;
 			// Set the title.
-			this.Text = string.Format("{0} Server Properties", server.Name);
+			this.Text = "{0} Server Properties".FormatWith(server.Name);
 			// Disable the apply button.
 			this.buttonApply.Enabled = false;
 			// Set an event handler for the server state.

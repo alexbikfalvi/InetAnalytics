@@ -23,14 +23,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-//using System.Threading.Tasks;
-//using System.Xml;
 using System.Xml.Linq;
 using HtmlAgilityPack;
+using DotNetApi;
 using DotNetApi.Xml;
 
 namespace YtApi.Ajax
 {
+	/// <summary>
+	/// A class representing YouTube Ajax video statistics.
+	/// </summary>
 	[Serializable]
 	public class AjaxVideoStatistics
 	{
@@ -121,7 +123,7 @@ namespace YtApi.Ajax
 				{
 					case "html_content": this.ParseHtmlContent(element); break;
 					case "return_code": this.ParseReturnCode(element); break;
-					default: throw new AjaxParsingException(string.Format("Invalid XML element \"{0}\" while parsing the data string.", element.Name.ToString()), element.ToString());
+					default: throw new AjaxParsingException("Invalid XML element \"{0}\" while parsing the data string.".FormatWith(element.Name.ToString()), element.ToString());
 				}
 			}
 		}
@@ -206,7 +208,7 @@ namespace YtApi.Ajax
 			IEnumerable<XElement> dds = element.Descendants(XName.Get("dd"));
 
 			if (dts.Count() != dds.Count())
-				throw new AjaxParsingException(string.Format("Cannot parse discovery events statistics: different number of \"dt\" ({0}) and \"dd\" ({1}) elements in the HTML response.", dts.Count<XElement>(), dds.Count<XElement>()), element.ToString());
+				throw new AjaxParsingException("Cannot parse discovery events statistics: different number of \"dt\" ({0}) and \"dd\" ({1}) elements in the HTML response.".FormatWith(dts.Count(), dds.Count()), element.ToString());
 
 			// For all elements in the list.
 			for (int index = 0; index < dts.Count(); index++)
@@ -216,10 +218,10 @@ namespace YtApi.Ajax
 
 				// Check the DT element.
 				if (dt.Attribute(XName.Get("class")).Value != "stats-label")
-					throw new AjaxParsingException(string.Format("Cannot parse discovery events statistics: the value of the \"dt\" element \"class\" attribute must be \"stats-label\", but is \"{0}\".", dt.Attribute(XName.Get("class")).Value), element.ToString());
+					throw new AjaxParsingException("Cannot parse discovery events statistics: the value of the \"dt\" element \"class\" attribute must be \"stats-label\", but is \"{0}\".".FormatWith(dt.Attribute(XName.Get("class")).Value), element.ToString());
 				// Check the DD element.
 				if (dd.Attribute(XName.Get("class")).Value != "event")
-					throw new AjaxParsingException(string.Format("Cannot parse discovery events statistics: the value of the \"dd\" element \"class\" attrobute must be \"event\", but is \"{0}\".", dd.Attribute(XName.Get("class")).Value), element.ToString());
+					throw new AjaxParsingException("Cannot parse discovery events statistics: the value of the \"dd\" element \"class\" attrobute must be \"event\", but is \"{0}\".".FormatWith(dd.Attribute(XName.Get("class")).Value), element.ToString());
 
 				// Parse the discovery event.
 				this.ParseHtmlStatsDiscoveryEvent(dt.Value, dd);
@@ -297,7 +299,7 @@ namespace YtApi.Ajax
 			}
 			catch (Exception exception)
 			{
-				throw new AjaxParsingException(string.Format("Cannot parse discovery events statistics: an exception occurred while parsing XML string \"{0}\".", dd.ToString()), exception, dd.ToString());
+				throw new AjaxParsingException("Cannot parse discovery events statistics: an exception occurred while parsing XML string \"{0}\".".FormatWith(dd.ToString()), exception, dd.ToString());
 			}
 		}
 

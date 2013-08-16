@@ -20,6 +20,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Reflection;
+using DotNetApi;
 
 namespace YtCrawler.Database
 {
@@ -75,8 +76,8 @@ namespace YtCrawler.Database
 		{
 			get
 			{
-				if (this.databaseName == null) throw new DbFieldException(string.Format("The property \'{0}\' is not mapped to a database field name.", this.property.Name), this.property.Name);
-				if (this.databaseName == string.Empty) throw new DbFieldException(string.Format("The property \'{0}\' is not mapped to a database field name.", this.property.Name), this.property.Name);
+				if (this.databaseName == null) throw new DbFieldException("The property \'{0}\' is not mapped to a database field name.".FormatWith(this.property.Name), this.property.Name);
+				if (this.databaseName == string.Empty) throw new DbFieldException("The property \'{0}\' is not mapped to a database field name.".FormatWith(this.property.Name), this.property.Name);
 				return this.databaseName;
 			}
 			set
@@ -120,7 +121,7 @@ namespace YtCrawler.Database
 			{
 				Type type = this.Property.PropertyType;
 				if (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(Nullable<>)))
-					return string.Format("*{0}", type.GetGenericArguments()[0].Name);
+					return "*{0}".FormatWith(type.GetGenericArguments()[0].Name);
 				else
 					return type.Name;
 			}

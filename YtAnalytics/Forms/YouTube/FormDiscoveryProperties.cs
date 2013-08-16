@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtApi.Ajax;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.YouTube
@@ -36,7 +37,7 @@ namespace YtAnalytics.Forms.YouTube
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -53,7 +54,7 @@ namespace YtAnalytics.Forms.YouTube
 			// Set the event.
 			this.controlHistoryDiscoveryEvent.Event = evt;
 			// Set the title.
-			this.Text = string.Format("Event {0} at {1} Properties", evt.Name, evt.Marker.Value.Time.ToString());
+			this.Text = "Event {0} at {1} Properties".FormatWith(evt.Name, evt.Marker.Value.Time.ToString());
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}

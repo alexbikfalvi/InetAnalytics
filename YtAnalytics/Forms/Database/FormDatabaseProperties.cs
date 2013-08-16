@@ -20,6 +20,7 @@ using System;
 using System.Windows.Forms;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Database
@@ -37,7 +38,7 @@ namespace YtAnalytics.Forms.Database
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -56,7 +57,7 @@ namespace YtAnalytics.Forms.Database
 			this.control.Database = database;
 			this.control.IsSelected = isSelected;
 			// Set the title.
-			this.Text = string.Format("{0} Database Properties", database.Name);
+			this.Text = "{0} Database Properties".FormatWith(database.Name);
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}

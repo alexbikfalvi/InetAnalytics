@@ -17,10 +17,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DotNetApi;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -32,20 +29,6 @@ namespace YtApi.Api.V2.Data
 	public sealed class Video : Entry
 	{
 		private AtomEntryVideo atom;
-
-		private Author author;
-		private Category category;
-		private Restriction restriction;
-		private PriceList prices;
-		private ContentRating contentRating;
-		private Statistics statistics;
-		private UserRatingStar userRatingStar;
-		private UserRatingLike userRatingLike;
-        private AccessControlList accessControl;
-		private Availability availability;
-		private GeoLocation location;
-		private PublishingState state;
-		private ThumbnailList thumbnails;
 
 		/// <summary>
 		/// Creates a new video entry from an atom instance.
@@ -70,25 +53,25 @@ namespace YtApi.Api.V2.Data
 		{
 			this.atom = atom;
 
-			if (null == this.atom.MediaGroup) throw new YouTubeException(string.Format("Cannot parse video atom object with ID {0}: the media group is missing.", this.AtomId));
-			if (null == this.atom.MediaGroup.YtVideoId) throw new YouTubeException(string.Format("Cannot parse video atom object with ID {0}: the media group video ID is missing.", this.AtomId));
-			if (null == this.atom.MediaGroup.MediaCategory) throw new YouTubeException(string.Format("Cannot parse video atom object with ID {0}: the media group category is missing.", this.AtomId));
-			if (null == this.atom.Updated) throw new YouTubeException(string.Format("Cannot parse video atom object with ID {0}: the updated date/time is missing.", this.AtomId));
-			if (null == this.atom.Title) throw new YouTubeException(string.Format("Cannot parse video atom object with ID {0}: the title is missing.", this.AtomId));
+			if (null == this.atom.MediaGroup) throw new YouTubeException("Cannot parse video atom object with ID {0}: the media group is missing.".FormatWith(this.AtomId));
+			if (null == this.atom.MediaGroup.YtVideoId) throw new YouTubeException("Cannot parse video atom object with ID {0}: the media group video ID is missing.".FormatWith(this.AtomId));
+			if (null == this.atom.MediaGroup.MediaCategory) throw new YouTubeException("Cannot parse video atom object with ID {0}: the media group category is missing.".FormatWith(this.AtomId));
+			if (null == this.atom.Updated) throw new YouTubeException("Cannot parse video atom object with ID {0}: the updated date/time is missing.".FormatWith(this.AtomId));
+			if (null == this.atom.Title) throw new YouTubeException("Cannot parse video atom object with ID {0}: the title is missing.".FormatWith(this.AtomId));
 
-			this.author = this.atom.Author != null ? new Author(this.atom.Author) : null;
-			this.category = new Category(this.atom.MediaGroup.MediaCategory);
-            this.prices = new PriceList(this.atom.MediaGroup.MediaPrices);
-			this.contentRating = this.atom.MediaGroup.MediaRating != null ? new ContentRating(this.atom.MediaGroup.MediaRating) : null;
-			this.restriction = this.atom.MediaGroup.MediaRestriction != null ? new Restriction(this.atom.MediaGroup.MediaRestriction) : null;
-			this.statistics = this.atom.YtStatistics != null ? new Statistics(this.atom.YtStatistics) : null;
-			this.userRatingStar = this.atom.GdRating != null ? new UserRatingStar(this.atom.GdRating) : null;
-            this.userRatingLike = this.atom.YtRating != null ? new UserRatingLike(this.atom.YtRating) : null;
-            this.accessControl = new AccessControlList(this.atom.YtAccessControlList);
-			this.availability = this.atom.YtAvailability != null ? new Availability(this.atom.YtAvailability) : null;
-			this.location = this.atom.GeoRssWhere != null ? new GeoLocation(this.atom.GeoRssWhere) : null;
-			this.state = this.atom.AppControl != null ? new PublishingState(this.atom.AppControl) : null;
-			this.thumbnails = new ThumbnailList(this.atom.MediaGroup.MediaThumbnails);
+			this.Author = this.atom.Author != null ? new Author(this.atom.Author) : null;
+			this.Category = new Category(this.atom.MediaGroup.MediaCategory);
+            this.Prices = new PriceList(this.atom.MediaGroup.MediaPrices);
+			this.ContentRating = this.atom.MediaGroup.MediaRating != null ? new ContentRating(this.atom.MediaGroup.MediaRating) : null;
+			this.Restriction = this.atom.MediaGroup.MediaRestriction != null ? new Restriction(this.atom.MediaGroup.MediaRestriction) : null;
+			this.Statistics = this.atom.YtStatistics != null ? new Statistics(this.atom.YtStatistics) : null;
+			this.UserRatingStar = this.atom.GdRating != null ? new UserRatingStar(this.atom.GdRating) : null;
+            this.UserRatingLike = this.atom.YtRating != null ? new UserRatingLike(this.atom.YtRating) : null;
+            this.AccessControl = new AccessControlList(this.atom.YtAccessControlList);
+			this.Availability = this.atom.YtAvailability != null ? new Availability(this.atom.YtAvailability) : null;
+			this.GeoLocation = this.atom.GeoRssWhere != null ? new GeoLocation(this.atom.GeoRssWhere) : null;
+			this.State = this.atom.AppControl != null ? new PublishingState(this.atom.AppControl) : null;
+			this.Thumbnails = new ThumbnailList(this.atom.MediaGroup.MediaThumbnails);
 		}
 
 		/// <summary>
@@ -145,27 +128,27 @@ namespace YtApi.Api.V2.Data
 		/// <summary>
 		/// The video author. It can be null.
 		/// </summary>
-		public Author Author { get { return this.author; } }
+		public Author Author { get; private set; }
 
 		/// <summary>
 		/// The video category. It cannot be null.
 		/// </summary>
-		public Category Category { get { return this.category; } }
+		public Category Category { get; private set; }
 
 		/// <summary>
 		/// The video prices, if any. It cannot be null, however it may have zero elements.
 		/// </summary>
-		public PriceList Prices { get { return this.prices; } }
+		public PriceList Prices { get; private set; }
 
 		/// <summary>
 		/// The content rating, if any. It can be null.
 		/// </summary>
-		public ContentRating ContentRating { get { return this.contentRating; } }
+		public ContentRating ContentRating { get; private set; }
 
 		/// <summary>
 		/// The media restriction, if any. It can be null.
 		/// </summary>
-		public Restriction Restriction { get { return this.restriction; } }
+		public Restriction Restriction { get; private set; }
 
 		/// <summary>
 		/// Indicates the video has a widescreen format.
@@ -205,7 +188,7 @@ namespace YtApi.Api.V2.Data
 		/// <summary>
 		/// The statistics for this video. It can be null.
 		/// </summary>
-		public Statistics Statistics { get { return this.statistics; } }
+		public Statistics Statistics { get; private set; }
 
 		/// <summary>
 		/// The comments count. It can be null.
@@ -215,12 +198,12 @@ namespace YtApi.Api.V2.Data
 		/// <summary>
 		/// The user rating based on star ratings (for old views). It can be null.
 		/// </summary>
-		public UserRatingStar UserRatingStar { get { return this.userRatingStar; } }
+		public UserRatingStar UserRatingStar { get; private set; }
 
 		/// <summary>
 		/// The user rating based on likes ratings (for new views). It can be null.
 		/// </summary>
-		public UserRatingLike UserRatingLike { get { return this.userRatingLike; } }
+		public UserRatingLike UserRatingLike { get; private set; }
 
 		/// <summary>
 		/// The location at which the video was taken. It can be null.
@@ -235,12 +218,12 @@ namespace YtApi.Api.V2.Data
         /// <summary>
         /// The access control list for the video. It cannot be null.
         /// </summary>
-        public AccessControlList AccessControl { get { return this.accessControl; } }
+		public AccessControlList AccessControl { get; private set; }
 
 		/// <summary>
 		/// The availability period for a video, if specified. It can be null.
 		/// </summary>
-		public Availability Availability { get { return this.availability; } }
+		public Availability Availability { get; private set; }
 
 		/// <summary>
 		/// The video episode number, if the video is part of a TV show. It can be null.
@@ -260,16 +243,16 @@ namespace YtApi.Api.V2.Data
 		/// <summary>
 		/// The geographical location associated with the video. It can be null.
 		/// </summary>
-		public GeoLocation GeoLocation { get { return this.location; } }
+		public GeoLocation GeoLocation { get; private set; }
 
 		/// <summary>
 		/// The publishing state of the video. It can be null.
 		/// </summary>
-		public PublishingState State { get { return this.state; } }
+		public PublishingState State { get; private set; }
 
 		/// <summary>
 		/// The list of thumbnails for this video. It cannot be null.
 		/// </summary>
-		public ThumbnailList Thumbnails { get { return this.thumbnails; } }
+		public ThumbnailList Thumbnails { get; private set; }
 	}
 }

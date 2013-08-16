@@ -35,6 +35,7 @@ using YtCrawler.Database;
 using YtCrawler.Log;
 using YtAnalytics.Controls.Log;
 using YtAnalytics.Forms.Database;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls.Database
@@ -514,7 +515,7 @@ namespace YtAnalytics.Controls.Database
 					this.ShowMessage(
 						Resources.ServerRemove_48,
 						"Database",
-						string.Format("Removing the database server with ID \'{0}\'.\r\nThe server will be removed only after the current connection to the server is closed.", server.Id)
+						"Removing the database server with ID \'{0}\'.{1}The server will be removed only after the current connection to the server is closed.".FormatWith(server.Id, Environment.NewLine)
 						);
 					// Begin an asynchronous remove of the database server.
 					this.crawler.Servers.RemoveAsync(server, this.OnRemoveComplete);

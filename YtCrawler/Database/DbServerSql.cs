@@ -24,6 +24,7 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using Microsoft.Win32;
+using DotNetApi;
 using DotNetApi.Security;
 using YtCrawler.Log;
 using YtCrawler.Database.Data;
@@ -286,7 +287,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the callback exception.
-						asyncState.Exception = new DbException(string.Format("Opening the connection to the database server \'{0}\' failed.", this.Name), exception);
+						asyncState.Exception = new DbException("Opening the connection to the database server \'{0}\' failed.".FormatWith(this.Name), exception);
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();
@@ -379,7 +380,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the callback exception.
-						asyncState.Exception = new DbException(string.Format("Reopening the connection to the database server \'{0}\' failed.", this.Name), exception);
+						asyncState.Exception = new DbException("Reopening the connection to the database server \'{0}\' failed.".FormatWith(this.Name), exception);
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();
@@ -466,7 +467,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// If an exception occurs, set the callback exception.
-						asyncState.Exception = new DbException(string.Format("Closing the connection to the database server \'{0}\' failed.", this.Name), exception); ;
+						asyncState.Exception = new DbException("Closing the connection to the database server \'{0}\' failed.".FormatWith(this.Name), exception); ;
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();
@@ -499,7 +500,7 @@ namespace YtCrawler.Database
 				catch (Exception exception)
 				{
 					// If an exception occurs, set the callback exception.
-					asyncState.Exception = new DbException(string.Format("Changing the password for the database server \'{0}\' failed.", this.Name), exception); ;
+					asyncState.Exception = new DbException("Changing the password for the database server \'{0}\' failed.".FormatWith(this.Name), exception); ;
 				}
 				// Complete the asynchronous operation.
 				asyncState.Complete();

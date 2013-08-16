@@ -17,14 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Xml;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
@@ -115,7 +110,7 @@ namespace YtAnalytics.Controls.Log
 
 			if (newEvent.Parent != null)
 			{
-				this.linkLabel.Text = string.Format("Event at {0}", newEvent.Parent.Timestamp.ToString());
+				this.linkLabel.Text = "Event at {0}".FormatWith(newEvent.Parent.Timestamp.ToString());
 				this.linkLabel.ImageIndex = (int)newEvent.Parent.Type + 1;
 				this.linkLabel.Enabled = true;
 			}
@@ -151,17 +146,21 @@ namespace YtAnalytics.Controls.Log
 			// Exception serialization error
 			if (newEvent.ExceptionSerializationExceptionType != null)
 			{
-				this.labelError.Text += string.Format("Could not serialize the event exception while saving to the log file. An exception of type \'{0}\' occurred. {1}\r\n\r\n",
+				this.labelError.Text += "Could not serialize the event exception while saving to the log file. An exception of type \'{0}\' occurred. {1}{2}{3}".FormatWith(
 					newEvent.ExceptionSerializationExceptionType,
-					newEvent.ExceptionSerializationExceptionMessage);
+					newEvent.ExceptionSerializationExceptionMessage,
+					Environment.NewLine,
+					Environment.NewLine);
 			}
 
 			// Exception deserialization error
 			if (newEvent.ExceptionDeserializationException != null)
 			{
-				this.labelError.Text += string.Format("Could not deserialize the event exception while reading from the log file. An exception of type \'{0}\' occurred. {1}\r\n\r\n",
+				this.labelError.Text += "Could not deserialize the event exception while reading from the log file. An exception of type \'{0}\' occurred. {1}{2}{3}".FormatWith(
 					newEvent.ExceptionDeserializationException.GetType().ToString(),
-					newEvent.ExceptionDeserializationException.Message);
+					newEvent.ExceptionDeserializationException.Message,
+					Environment.NewLine,
+					Environment.NewLine);
 			}
 
 			if (this.labelError.Text != string.Empty)

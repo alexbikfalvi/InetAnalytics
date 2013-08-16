@@ -17,10 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using DotNetApi;
 
 namespace YtApi.Api.V2
 {
@@ -261,7 +259,7 @@ namespace YtApi.Api.V2
 			string id
 			)
 		{
-			return new Uri(string.Format(YouTubeUri.uriVideoEntryPattern, id));
+			return new Uri(YouTubeUri.uriVideoEntryPattern.FormatWith(id));
 		}
 
 		/// <summary>
@@ -292,7 +290,7 @@ namespace YtApi.Api.V2
 			// Category
 			string uriCategory = null == category ? string.Empty : "_" + category;
 
-			StringBuilder builder = new StringBuilder(string.Format(uriStandardVideoFeedPattern, uriRegionId, uriFeedId, uriCategory));
+			StringBuilder builder = new StringBuilder(uriStandardVideoFeedPattern.FormatWith(uriRegionId, uriFeedId, uriCategory));
 
 			if (timeId != null)
 			{
@@ -323,7 +321,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(uriVideosFeedPattern, query));
+			StringBuilder builder = new StringBuilder(uriVideosFeedPattern.FormatWith(query));
 
 			if (startIndex != null)
 			{
@@ -350,7 +348,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(uriRelatedVideosFeedPattern, video));
+			StringBuilder builder = new StringBuilder(uriRelatedVideosFeedPattern.FormatWith(video));
 
 			if (startIndex != null)
 			{
@@ -377,7 +375,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(uriResponseVideosFeedPattern, video));
+			StringBuilder builder = new StringBuilder(uriResponseVideosFeedPattern.FormatWith(video));
 
 			if (startIndex != null)
 			{
@@ -404,7 +402,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriCommentsFeedPattern, video));
+			StringBuilder builder = new StringBuilder(YouTubeUri.uriCommentsFeedPattern.FormatWith(video));
 
 			if (startIndex != null)
 			{
@@ -431,7 +429,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriUserUploadsFeed, user));
+			StringBuilder builder = new StringBuilder(YouTubeUri.uriUserUploadsFeed.FormatWith(user));
 
 			if (startIndex != null)
 			{
@@ -458,7 +456,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriUserPlaylistsFeed, user));
+			StringBuilder builder = new StringBuilder(YouTubeUri.uriUserPlaylistsFeed.FormatWith(user));
 
 			if (startIndex != null)
 			{
@@ -485,7 +483,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriUserFavoritesFeed, user));
+			StringBuilder builder = new StringBuilder(YouTubeUri.uriUserFavoritesFeed.FormatWith(user));
 
 			if (startIndex != null)
 			{
@@ -512,7 +510,7 @@ namespace YtApi.Api.V2
 			int? maxResults
 			)
 		{
-			StringBuilder builder = new StringBuilder(string.Format(YouTubeUri.uriPlaylistFeed, playlist));
+			StringBuilder builder = new StringBuilder(YouTubeUri.uriPlaylistFeed.FormatWith(playlist));
 
 			if (startIndex != null)
 			{
@@ -563,7 +561,7 @@ namespace YtApi.Api.V2
 		/// <returns>The YouTube link.</returns>
 		public static string GetYouTubeVideoLink(string id)
 		{
-			return string.Format(YouTubeUri.uriVideoYouTubePattern, id);
+			return YouTubeUri.uriVideoYouTubePattern.FormatWith(id);
 		}
 
 		/// <summary>
@@ -573,7 +571,7 @@ namespace YtApi.Api.V2
 		/// <returns>The YouTube link.</returns>
 		public static string GetYouTubeUserLink(string user)
 		{
-			return string.Format(YouTubeUri.uriUserYouTubePattern, user);
+			return YouTubeUri.uriUserYouTubePattern.FormatWith(user);
 		}
 
 		/// <summary>
@@ -583,7 +581,7 @@ namespace YtApi.Api.V2
 		/// <returns>The YouTube link.</returns>
 		public static string GetYouTubePlaylistLink(string playlist)
 		{
-			return string.Format(YouTubeUri.uriPlaylistYouTubePattern, playlist);
+			return YouTubeUri.uriPlaylistYouTubePattern.FormatWith(playlist);
 		}
 
 		/// <summary>
@@ -595,7 +593,7 @@ namespace YtApi.Api.V2
 			string id
 			)
 		{
-			return new Uri(string.Format(YouTubeUri.uriProfileEntryPattern, id));
+			return new Uri(YouTubeUri.uriProfileEntryPattern.FormatWith(id));
 		}
 	}
 }

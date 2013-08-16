@@ -1,12 +1,25 @@
-﻿using System;
+﻿/* 
+ * Copyright (C) 2012-2013 Alex Bikfalvi
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms.Comments;
 using YtCrawler;
@@ -112,7 +125,7 @@ namespace YtAnalytics.Controls.Comments
 			catch (Exception exception)
 			{
 				MessageBox.Show(
-					string.Format("Cannot remove the comment. {0}", exception.Message),
+					"Cannot remove the comment. {0}".FormatWith(exception.Message),
 					"Cannot Remove Comment",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
@@ -141,7 +154,7 @@ namespace YtAnalytics.Controls.Comments
 			catch (Exception exception)
 			{
 				MessageBox.Show(
-					string.Format("Cannot add the comment. {0}", exception.Message),
+					"Cannot add the comment. {0}".FormatWith(exception.Message),
 					"Cannot Add Comment",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
@@ -232,7 +245,7 @@ namespace YtAnalytics.Controls.Comments
 					}
 					// Show a message.
 					MessageBox.Show(
-						string.Format("Import complete. {0} comments added, {1} comments ignored.", countAdded, countIgnored),
+						"Import complete. {0} comments added, {1} comments ignored.".FormatWith(countAdded, countIgnored),
 						"Import Complete",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Information);
@@ -241,7 +254,7 @@ namespace YtAnalytics.Controls.Comments
 				{
 					// Show a message.
 					MessageBox.Show(
-						string.Format("Import failed. {0}", exception.Message),
+						"Import failed. {0}".FormatWith(exception.Message),
 						"Import Failed",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error);

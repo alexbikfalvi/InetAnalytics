@@ -17,6 +17,7 @@
  */
 
 using System;
+using DotNetApi;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -40,7 +41,6 @@ namespace YtApi.Api.V2.Data
 	public sealed class Price
 	{
 		private AtomMediaPrice atom;
-		private PriceType type;
 
 		/// <summary>
 		/// Creates a price object based on an atom instance.
@@ -51,15 +51,15 @@ namespace YtApi.Api.V2.Data
 			this.atom = atom;
 			switch (atom.Type.ToLower())
 			{
-				case "package": this.type = PriceType.Package; break;
-				case "purchase": this.type = PriceType.Purchase; break;
-				case "rent": this.type = PriceType.Rent; break;
-				case "subscription": this.type = PriceType.Subscription; break;
-				default: throw new YouTubeException(string.Format("Cannot create a price object: unknown type \"{0}\".", atom.Type));
+				case "package": this.Type = PriceType.Package; break;
+				case "purchase": this.Type = PriceType.Purchase; break;
+				case "rent": this.Type = PriceType.Rent; break;
+				case "subscription": this.Type = PriceType.Subscription; break;
+				default: throw new YouTubeException("Cannot create a price object: unknown type \"{0}\".".FormatWith(atom.Type));
 			}
 		}
 
-		public PriceType Type { get { return this.type; } }
+		public PriceType Type { get; private set; }
 		public string TypeAsString { get { return this.atom.Type; } }
 		public decimal Value { get { return this.atom.Price; } }
 		public string Currency { get { return this.atom.Currency; } }

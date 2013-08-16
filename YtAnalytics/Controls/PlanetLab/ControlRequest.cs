@@ -19,6 +19,7 @@
 using System;
 using System.Net;
 using System.Security;
+using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
@@ -158,11 +159,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Update",
-					string.Format("Refreshing the PlanetLab information failed. {0}", exception.Message),
+					"Refreshing the PlanetLab information failed. {0}".FormatWith(exception.Message),
 					false,
 					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnEndRequest,
-					new object[] { MessageStatus.Error, string.Format("Refreshing the PlanetLab information failed.\r\n\r\n{0}", exception.Message) });
+					new object[] { MessageStatus.Error, "Refreshing the PlanetLab information failed.{0}{1}{2}".FormatWith(
+						Environment.NewLine,
+						Environment.NewLine,
+						exception.Message) });
 
 				// Rethrow the exception.
 				throw exception;
@@ -232,11 +236,17 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeWarning_48,
 						"PlanetLab Error",
-						string.Format("Refreshing the PlanetLab information has failed (RPC code {0} {1})", response.Fault.FaultCode, response.Fault.FaultString),
+						"Refreshing the PlanetLab information has failed (RPC code {0} {1})".FormatWith(response.Fault.FaultCode, response.Fault.FaultString),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnEndRequest,
-						new object[] { MessageStatus.Warning, string.Format("Refreshing the PlanetLab information has failed.\r\n\r\nRPC code: {0}\r\n\r\n{1})", response.Fault.FaultCode, response.Fault.FaultString) });
+						new object[] { MessageStatus.Warning, "Refreshing the PlanetLab information has failed.{0}{1}RPC code: {2}{3}{4}{5})".FormatWith(
+							Environment.NewLine,
+							Environment.NewLine,
+							response.Fault.FaultCode,
+							Environment.NewLine,
+							Environment.NewLine,
+							response.Fault.FaultString) });
 				}
 
 				// Call the event handler.
@@ -264,11 +274,14 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeError_48,
 						"PlanetLab Update",
-						string.Format("Refreshing the PlanetLab information has failed. {0}", exception.Message),
+						"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnEndRequest,
-						new object[] { MessageStatus.Error, string.Format("Refreshing the PlanetLab information has failed.\r\n\r\n{0})", exception.Message) });
+						new object[] { MessageStatus.Error, "Refreshing the PlanetLab information has failed.{0}{1}{2})".FormatWith(
+							Environment.NewLine,
+							Environment.NewLine,
+							exception.Message) });
 				}
 			}
 			catch (Exception exception)
@@ -281,11 +294,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Update",
-					string.Format("Refreshing the PlanetLab information has failed. {0}", exception.Message),
+					"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 					false,
 					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnEndRequest,
-					new object[] { MessageStatus.Error, string.Format("Refreshing the PlanetLab information has failed.\r\n\r\n{0})", exception.Message) });
+					new object[] { MessageStatus.Error, "Refreshing the PlanetLab information has failed.{0}{1}{2})".FormatWith(
+						Environment.NewLine,
+						Environment.NewLine,
+						exception.Message) });
 			}
 		}
 

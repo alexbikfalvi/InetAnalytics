@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms.Net;
@@ -70,7 +71,7 @@ namespace YtAnalytics.Controls.Testing
 			this.encodings = Encoding.GetEncodings();
 			for (int index = 0; index < this.encodings.Length; index++)
 			{
-				this.comboBoxEncoding.Items.Add(string.Format("({0}) {1}", this.encodings[index].CodePage, this.encodings[index].DisplayName));
+				this.comboBoxEncoding.Items.Add("({0}) {1}".FormatWith(this.encodings[index].CodePage, this.encodings[index].DisplayName));
 				this.encodingPages.Add(this.encodings[index].CodePage, index);
 			}
 		}
@@ -174,7 +175,7 @@ namespace YtAnalytics.Controls.Testing
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(string.Format("The HTTP request for web URL failed. {0}", exception.Message), Resources.Error_16);
+				this.status.Send("The HTTP request for web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Log the result.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
@@ -231,7 +232,7 @@ namespace YtAnalytics.Controls.Testing
 					// Update the status label.
 					this.status.Send(
 						"The HTTP request for the web URL completed successfully.",
-						string.Format("{0} bytes of data received", asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
+						"{0} bytes of data received".FormatWith(asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
 						Resources.Success_16); 
 					// Log the result.
 					this.log.Add(this.crawler.Log.Add(
@@ -258,7 +259,7 @@ namespace YtAnalytics.Controls.Testing
 					else
 					{
 						// Update the status label.
-						this.status.Send(string.Format("The HTTP request for the web URL failed. {0}", exception.Message), Resources.Error_16);
+						this.status.Send("The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
@@ -272,7 +273,7 @@ namespace YtAnalytics.Controls.Testing
 				catch (Exception exception)
 				{
 					// Update the status label.
-					this.status.Send(string.Format("The HTTP request for the web URL \'{0}\' failed. {1}", this.textBoxUrl.Text, exception.Message), Resources.Error_16);
+					this.status.Send("The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
 					// Log the result.
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Important,
@@ -339,7 +340,7 @@ namespace YtAnalytics.Controls.Testing
 						// Show a warning message.
 						MessageBox.Show(
 							this,
-							string.Format("The header \'{0}\' is restricted for the HTTP request.", this.formAddHttpRequestHeader.Header),
+							"The header \'{0}\' is restricted for the HTTP request.".FormatWith(this.formAddHttpRequestHeader.Header),
 							"HTTP Header Restricted",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Warning);
@@ -350,7 +351,7 @@ namespace YtAnalytics.Controls.Testing
 					// Show a warning message.
 					MessageBox.Show(
 						this,
-						string.Format("The header \'{0}\' already exists in the headers list.", this.formAddHttpRequestHeader.Header),
+						"The header \'{0}\' already exists in the headers list.".FormatWith(this.formAddHttpRequestHeader.Header),
 						"HTTP Header Already Exists",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning);
@@ -412,7 +413,7 @@ namespace YtAnalytics.Controls.Testing
 						// Show a warning message.
 						MessageBox.Show(
 							this,
-							string.Format("The header \'{0}\' is restricted for the HTTP request.", this.formAddHttpRequestHeader.Header),
+							"The header \'{0}\' is restricted for the HTTP request.".FormatWith(this.formAddHttpRequestHeader.Header),
 							"HTTP Header Restricted",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Warning);
@@ -423,7 +424,7 @@ namespace YtAnalytics.Controls.Testing
 					// Show a warning message.
 					MessageBox.Show(
 						this,
-						string.Format("The header \'{0}\' does not exist in the headers list.", this.formAddHttpRequestHeader.Header),
+						"The header \'{0}\' does not exist in the headers list.".FormatWith(this.formAddHttpRequestHeader.Header),
 						"HTTP Header Does not Exists",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning);
@@ -601,7 +602,7 @@ namespace YtAnalytics.Controls.Testing
 				catch (Exception exception)
 				{
 					// Show an error dialog.
-					MessageBox.Show(this, string.Format("The export failed. {0}", exception.Message), "Export Settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(this, "The export failed. {0}".FormatWith(exception.Message), "Export Settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 		}
@@ -626,7 +627,7 @@ namespace YtAnalytics.Controls.Testing
 				catch (Exception exception)
 				{
 					// Show an error dialog.
-					MessageBox.Show(this, string.Format("The import failed. {0}", exception.Message), "Import Settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(this, "The import failed. {0}".FormatWith(exception.Message), "Import Settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 
 				//  Load the new configuration.

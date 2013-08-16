@@ -17,14 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,6 +27,7 @@ using YtApi.Api.V2.Data;
 using YtCrawler;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
+using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 
@@ -123,7 +118,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							this.ShowMessage(
 								Resources.GlobeError_48,
 								"Video Categories",
-								string.Format("Refreshing the list of YouTube categories failed.\r\n{0}", exception.Message),
+								"Refreshing the list of YouTube categories failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 								false
 								);
 							// Log
@@ -156,7 +151,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"Video Categories",
-					string.Format("Refreshing the list of YouTube categories failed.\r\n{0}", exception.Message),
+					"Refreshing the list of YouTube categories failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 					false
 					);
 				// Wait on the thread pool to finish the refresh operation.

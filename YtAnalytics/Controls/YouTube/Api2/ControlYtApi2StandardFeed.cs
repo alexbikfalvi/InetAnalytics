@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
@@ -223,7 +224,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"Video Categories",
-					string.Format("Refreshing the list of YouTube categories failed.\r\n{0}", exception.Message),
+					"Refreshing the list of YouTube categories failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 					false
 					);
 			}
@@ -288,7 +289,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 						{
 							MessageBox.Show(
 								this,
-								string.Format("The region ID \'{0}\' is unknown an it will be ignored.", id),
+								"The region ID \'{0}\' is unknown an it will be ignored.".FormatWith(id),
 								"Unknown Region ID",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Warning);

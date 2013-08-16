@@ -18,16 +18,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
 using YtApi;
@@ -195,7 +189,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				this.logSource,
-				string.Format("Started request for the {0} of the {1} \'{{0}}\'.", this.feedName, this.objectName),
+				"Started request for the {0} of the {1} \'{{0}}\'.".FormatWith(this.feedName, this.objectName),
 				new object[] { this.textBoxId.Text, this.linkLabel.Text }));
 
 			// Clear the list view.
@@ -212,7 +206,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 					LogEventLevel.Important,
 					LogEventType.Error,
 					this.logSource,
-					string.Format("The request for the {0} of the {1} \'{{0}}\' failed. {{1}}", this.feedName, this.objectName),
+					"The request for the {0} of the {1} \'{{0}}\' failed. {{1}}".FormatWith(this.feedName, this.objectName),
 					new object[] { this.textBoxId.Text, exception.Message, this.linkLabel.Text },
 					exception));
 			}
@@ -265,8 +259,8 @@ namespace YtAnalytics.Controls.YouTube.Api2
 					LogEventType eventType = (this.feed.FailuresAtom.Count == 0) && (this.feed.FailuresEntry.Count == 0) ?
 						LogEventType.Success : LogEventType.SuccessWarning;
 					string eventMessage = eventType == LogEventType.Success ?
-						string.Format("The request for the {0} of the {1} \'{{0}}\' completed successfully.", this.feedName, this.objectName) :
-						string.Format("The request for the {0} of the {1} \'{{0}}\' completed partially successfully. However, some errors have occurred.", this.feedName, this.objectName);
+						"The request for the {0} of the {1} \'{{0}}\' completed successfully.".FormatWith(this.feedName, this.objectName) :
+						"The request for the {0} of the {1} \'{{0}}\' completed partially successfully. However, some errors have occurred.".FormatWith(this.feedName, this.objectName);
 
 					// If there are failures, create a new subevent list.
 					List<LogEvent> subevents = null;
@@ -314,14 +308,14 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							LogEventLevel.Verbose,
 							LogEventType.Canceled,
 							this.logSource,
-							string.Format("The request for the {0} of the {1} \'{{0}}\' has been canceled.", this.feedName, this.objectName),
+							"The request for the {0} of the {1} \'{{0}}\' has been canceled.".FormatWith(this.feedName, this.objectName),
 							new object[] { this.textBoxId.Text, this.linkLabel.Text }));
 					else
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
 							this.logSource,
-							string.Format("The request for the {0} of the {1} \'{{0}}\' failed. {{1}}", this.feedName, this.objectName),
+							"The request for the {0} of the {1} \'{{0}}\' failed. {{1}}".FormatWith(this.feedName, this.objectName),
 							new object[] { this.textBoxId.Text, exception.Message, this.linkLabel.Text },
 							exception));
 				}
@@ -331,7 +325,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 						LogEventLevel.Important,
 						LogEventType.Error,
 						this.logSource,
-						string.Format("The request for the {0} of the {1} \'{{0}}\' failed. {{1}}", this.feedName, this.objectName),
+						"The request for the {0} of the {1} \'{{0}}\' failed. {{1}}".FormatWith(this.feedName, this.objectName),
 						new object[] { this.textBoxId.Text, exception.Message, this.linkLabel.Text },
 						exception));
 				}

@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtCrawler.Database.Data;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Database
@@ -36,7 +37,7 @@ namespace YtAnalytics.Forms.Database
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -50,7 +51,7 @@ namespace YtAnalytics.Forms.Database
 			// Select the server an table.
 			this.control.Object = obj;
 			// Set the dialog name.
-			this.Text = string.Format("{0} Object Properties", obj.GetName());
+			this.Text = "{0} Object Properties".FormatWith(obj.GetName());
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}

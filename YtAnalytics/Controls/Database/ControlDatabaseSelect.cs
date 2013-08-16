@@ -22,6 +22,7 @@ using YtAnalytics.Forms.Database;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
 using YtCrawler.Log;
+using DotNetApi;
 
 namespace YtAnalytics.Controls.Database
 {
@@ -80,9 +81,9 @@ namespace YtAnalytics.Controls.Database
 			// Create a select all query for all field in the current table.
 			DbQuery query = DbQuery.CreateSelectAll(table, server.Database);
 
-			query.MessageStart = string.Format("Refreshing the data for table \'{0}\' on the database server \'{1}\'...", table.LocalName, server.Name);
-			query.MessageFinishSuccess = string.Format("Refreshing the data for table \'{0}\' on the database server \'{1}\' completed successfully.", table.LocalName, server.Name);
-			query.MessageFinishFail = string.Format("Refreshing the data for table \'{0}\' on the database server \'{1}\' failed.", table.LocalName, server.Name);
+			query.MessageStart = "Refreshing the data for table \'{0}\' on the database server \'{1}\'...".FormatWith(table.LocalName, server.Name);
+			query.MessageFinishSuccess = "Refreshing the data for table \'{0}\' on the database server \'{1}\' completed successfully.".FormatWith(table.LocalName, server.Name);
+			query.MessageFinishFail = "Refreshing the data for table \'{0}\' on the database server \'{1}\' failed.".FormatWith(table.LocalName, server.Name);
 
 			// Use the generic select methods.
 			this.Select(server, query, result);
@@ -97,7 +98,7 @@ namespace YtAnalytics.Controls.Database
 		public void Select(DbServer server, DbQuery query, DbDataObject result)
 		{
 			// Check the database table is configured.
-			if (!query.Table.IsConfigured) throw new DbException(string.Format("Cannot select the list of database objects for table \'{0}\', because the table is not configured.", query.Table.LocalName));
+			if (!query.Table.IsConfigured) throw new DbException("Cannot select the list of database objects for table \'{0}\', because the table is not configured.".FormatWith(query.Table.LocalName));
 			// Check the results, if different from null, are for the current table and if not, ignore them.
 			if (result != null)
 			{
@@ -239,7 +240,7 @@ namespace YtAnalytics.Controls.Database
 			this.buttonCancel.Enabled = false;
 			this.buttonClose.Enabled = true;
 			// Update the status box.
-			this.labelStatus.Text = string.Format("{0} {1} fetched.", result.RowCount, result.RowCount == 1 ? "object" : "objects");
+			this.labelStatus.Text = "{0} {1} fetched.".FormatWith(result.RowCount, result.RowCount == 1 ? "object" : "objects");
 			// Raise the database operation finished event.
 			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
 		}
@@ -258,7 +259,7 @@ namespace YtAnalytics.Controls.Database
 			this.buttonClose.Enabled = true;
 
 			// Update the status box.
-			this.labelStatus.Text = string.Format("Query failed. {0}", exception.Message);
+			this.labelStatus.Text = "Query failed. {0}".FormatWith(exception.Message);
 
 			// Raise the database operation finished event.
 			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);

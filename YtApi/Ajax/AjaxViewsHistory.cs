@@ -21,10 +21,9 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi;
 
 namespace YtApi.Ajax
 {
@@ -75,13 +74,13 @@ namespace YtApi.Ajax
 		public void AddViewsDiscoveryEvent(AjaxViewsHistoryDiscoveryEvent evt)
 		{
 			// Check if the history already contains the event name.
-			if (this.events.ContainsKey(evt.Name)) throw new AjaxException(string.Format("Cannot add a new discovery event: an event with the name \"{0}\" already exists.", evt.Name));
+			if (this.events.ContainsKey(evt.Name)) throw new AjaxException("Cannot add a new discovery event: an event with the name \"{0}\" already exists.".FormatWith(evt.Name));
 
 			// Set the event marker.
 			evt.Marker = this.Markers.First(marker => marker.Name == evt.Name);
 
 			// Check that the marker is not null.
-			if (evt.Marker == null) throw new AjaxException(string.Format("Cannot add a new discovery event: the event with the name \"{0}\" does not have an associated marker.", evt.Name));
+			if (evt.Marker == null) throw new AjaxException("Cannot add a new discovery event: the event with the name \"{0}\" does not have an associated marker.".FormatWith(evt.Name));
 
 			// Add the event.
 			this.events.Add(evt.Name, evt);
@@ -161,7 +160,7 @@ namespace YtApi.Ajax
 				return new AjaxViewsHistoryDiscoveryEvent(name, AjaxViewsHistoryDiscoveryType.FirstReferralFromSubscriberModule);
 			if (Regex.IsMatch(description.ToLower(), "first.+view.+mobile.+device"))
 				return new AjaxViewsHistoryDiscoveryEvent(name, AjaxViewsHistoryDiscoveryType.FirstViewFromMobileDevice);
-			throw new AjaxException(string.Format("Cannot create a views history discovery event: unknown description \"{0}\".", description));
+			throw new AjaxException("Cannot create a views history discovery event: unknown description \"{0}\".".FormatWith(description));
 		}
 
 		/// <summary>
@@ -179,7 +178,7 @@ namespace YtApi.Ajax
 				return new AjaxViewsHistoryDiscoveryEvent(name, AjaxViewsHistoryDiscoveryType.FirstReferralFromYouTubeSearch, extra.Element(XName.Get("a")).Attribute(XName.Get("href")).Value);
 			if (Regex.IsMatch(description.ToLower(), "first.+referral.+related.+video:"))
 				return new AjaxViewsHistoryDiscoveryEvent(name, AjaxViewsHistoryDiscoveryType.FirstReferralFromRelatedVideo, extra.Element(XName.Get("a")).Attribute(XName.Get("href")).Value);
-			throw new AjaxException(string.Format("Cannot create a views history discovery event: unknown description \"{0}\".", description));
+			throw new AjaxException("Cannot create a views history discovery event: unknown description \"{0}\".".FormatWith(description));
 		}
 
 		/// <summary>

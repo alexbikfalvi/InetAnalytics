@@ -20,6 +20,7 @@ using System;
 using System.Data.SqlClient;
 using System.Threading;
 using YtCrawler.Database.Data;
+using DotNetApi;
 
 namespace YtCrawler.Database
 {
@@ -146,7 +147,7 @@ namespace YtCrawler.Database
 					catch (SqlException exception)
 					{
 						// If an exception occurs, set the exception.
-						asyncResult.Exception = new DbException(string.Format("An SQL error occurred while reading the query results from the database. {0}", exception.Message), exception);
+						asyncResult.Exception = new DbException("An SQL error occurred while reading the query results from the database. {0}".FormatWith(exception.Message), exception);
 					}
 					catch (Exception exception)
 					{
@@ -192,7 +193,7 @@ namespace YtCrawler.Database
 				catch (SqlException exception)
 				{
 					// If an exception occurs, set the exception.
-					asyncResult.Exception = new DbException(string.Format("An SQL error occurred while reading the query results from the database. {0}", exception.Message), exception);
+					asyncResult.Exception = new DbException("An SQL error occurred while reading the query results from the database. {0}".FormatWith(exception.Message), exception);
 				}
 				catch (Exception exception)
 				{
@@ -239,7 +240,7 @@ namespace YtCrawler.Database
 				catch (SqlException exception)
 				{
 					// If an exception occurs, set the exception.
-					asyncResult.Exception = new DbException(string.Format("An SQL error occurred while reading the query results from the database. {0}", exception.Message), exception);
+					asyncResult.Exception = new DbException("An SQL error occurred while reading the query results from the database. {0}".FormatWith(exception.Message), exception);
 				}
 				catch (Exception exception)
 				{

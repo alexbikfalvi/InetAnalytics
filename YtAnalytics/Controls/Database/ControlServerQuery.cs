@@ -17,18 +17,11 @@
  */
 
 using System;
-//using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
 using System.Data.SqlClient;
-//using System.Diagnostics;
-//using System.Drawing;
-//using System.Linq;
 using System.Net;
 using System.Security;
 using System.Text;
 using System.Threading;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
@@ -37,6 +30,7 @@ using YtCrawler.Database;
 using YtCrawler.Log;
 using YtAnalytics.Controls;
 using YtAnalytics.Forms.Database;
+using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
 
@@ -71,7 +65,7 @@ namespace YtAnalytics.Controls.Database
 			this.Dock = DockStyle.Fill;
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -124,7 +118,7 @@ namespace YtAnalytics.Controls.Database
 			// Disable the tool strip.
 			this.toolStrip.Enabled = false;
 			// Show a connecting message.
-			this.ShowMessage(Resources.Connect_48, "Database Server", string.Format("Connecting to the database server \'{0}\'...", this.server.Name)); 
+			this.ShowMessage(Resources.Connect_48, "Database Server", "Connecting to the database server \'{0}\'...".FormatWith(this.server.Name)); 
 			try
 			{
 				// Connect asynchronously to the database server.
@@ -139,7 +133,7 @@ namespace YtAnalytics.Controls.Database
 				// Display an error message box to the user.
 				MessageBox.Show(
 					this,
-					string.Format("Connecting to the database server \'{0}\' failed. {1}", this.server.Name, exception.Message),
+					"Connecting to the database server \'{0}\' failed. {1}".FormatWith(this.server.Name, exception.Message),
 					"Connecting to Database Failed",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
@@ -173,7 +167,7 @@ namespace YtAnalytics.Controls.Database
 							case DbException.Type.LoginPasswordExpired:
 								if (DialogResult.Yes == MessageBox.Show(
 									this,
-									string.Format("The login password for the database server \'{0}\' has expired. Do you wish to change the password now?", asyncState.Server.Name),
+									"The login password for the database server \'{0}\' has expired. Do you wish to change the password now?".FormatWith(asyncState.Server.Name),
 									"Login Password Expired",
 									MessageBoxButtons.YesNo,
 									MessageBoxIcon.Question,
@@ -187,7 +181,7 @@ namespace YtAnalytics.Controls.Database
 							case DbException.Type.LoginPasswordMustChange:
 								if (DialogResult.Yes == MessageBox.Show(
 									this,
-									string.Format("To connect to the database server \'{0}\' you must change the password before the first login. Do you wish to change the password now?", asyncState.Server.Name),
+									"To connect to the database server \'{0}\' you must change the password before the first login. Do you wish to change the password now?".FormatWith(asyncState.Server.Name),
 									"Must Change Password",
 									MessageBoxButtons.YesNo,
 									MessageBoxIcon.Question,
@@ -202,7 +196,7 @@ namespace YtAnalytics.Controls.Database
 								// Display an error message.
 								MessageBox.Show(
 									this,
-									string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
+									"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
 									"Connecting to Database Failed",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Error
@@ -215,7 +209,7 @@ namespace YtAnalytics.Controls.Database
 						// Display an error message.
 						MessageBox.Show(
 							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
+							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
 							"Connecting to Database Failed",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error
@@ -249,7 +243,7 @@ namespace YtAnalytics.Controls.Database
 		private void OnDisconnect(object sender, EventArgs e)
 		{
 			// Show a connecting message.
-			this.ShowMessage(Resources.Disconnect_48, "Database Server", string.Format("Disconnecting from the database server \'{0}\'...", this.server.Name));
+			this.ShowMessage(Resources.Disconnect_48, "Database Server", "Disconnecting from the database server \'{0}\'...".FormatWith(this.server.Name));
 			try
 			{
 				// Connect asynchronously to the database server.
@@ -262,7 +256,7 @@ namespace YtAnalytics.Controls.Database
 				// Display an error message box to the user.
 				MessageBox.Show(
 					this,
-					string.Format("Disconnecting from the database server \'{0}\' failed. {1}", this.server.Name, exception.Message),
+					"Disconnecting from the database server \'{0}\' failed. {1}".FormatWith(this.server.Name, exception.Message),
 					"Disconnecting from Database Failed",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
@@ -291,7 +285,7 @@ namespace YtAnalytics.Controls.Database
 						// Display a database error message.
 						MessageBox.Show(
 							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
+							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
 							"Connecting to Database Failed",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error
@@ -302,7 +296,7 @@ namespace YtAnalytics.Controls.Database
 						// Display a generic error message.
 						MessageBox.Show(
 							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
+							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
 							"Connecting to Database Failed",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error
@@ -335,7 +329,7 @@ namespace YtAnalytics.Controls.Database
 			// Get the server.
 			DbServer server = state as DbServer;
 			// Show a password changing message.
-			this.ShowMessage(Resources.Connect_48, "Database", string.Format("Changing the password for the database server \'{0}\'...", server.Name));
+			this.ShowMessage(Resources.Connect_48, "Database", "Changing the password for the database server \'{0}\'...".FormatWith(server.Name));
 			try
 			{
 				// Change the password asynchronously of the database server.
@@ -348,7 +342,7 @@ namespace YtAnalytics.Controls.Database
 				// Display an error message box to the user.
 				MessageBox.Show(
 					this,
-					string.Format("Connecting to the database server \'{0}\' failed. {1}", server.Name, exception.Message),
+					"Connecting to the database server \'{0}\' failed. {1}".FormatWith(server.Name, exception.Message),
 					"Connecting to Database Failed",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error
@@ -377,7 +371,7 @@ namespace YtAnalytics.Controls.Database
 						// Display a database error message.
 						MessageBox.Show(
 							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.DbMessage),
+							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
 							"Connecting to Database Failed",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error
@@ -388,7 +382,7 @@ namespace YtAnalytics.Controls.Database
 						// Display a generic error message.
 						MessageBox.Show(
 							this,
-							string.Format("Connecting to the database server \'{0}\' failed. {1}", asyncState.Server.Name, asyncState.Exception.Message),
+							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
 							"Connecting to Database Failed",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error
@@ -437,7 +431,7 @@ namespace YtAnalytics.Controls.Database
 			if (this.server.State != DbServer.ServerState.Connected)
 			{
 				// Show a connecting message.
-				this.ShowMessage(Resources.Connect_48, "Database", string.Format("Connecting to the database server \'{0}\'...", this.server.Name));
+				this.ShowMessage(Resources.Connect_48, "Database", "Connecting to the database server \'{0}\'...".FormatWith(this.server.Name));
 				try
 				{
 					// Connect asynchronously to the database server, and add this method as a handler.
@@ -450,7 +444,7 @@ namespace YtAnalytics.Controls.Database
 					// Display an error message box to the user.
 					MessageBox.Show(
 						this,
-						string.Format("Connecting to the database server \'{0}\' failed. {1}", this.server.Name, exception.Message),
+						"Connecting to the database server \'{0}\' failed. {1}".FormatWith(this.server.Name, exception.Message),
 						"Connecting to Database Failed",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error
@@ -476,7 +470,7 @@ namespace YtAnalytics.Controls.Database
 				// Set the command to null.
 				this.command = null;
 				// Show a connecting message.
-				this.ShowMessage(Resources.DatabaseBusy_48, "Database", string.Format("Executing query on the database server \'{0}\'...", this.server.Name));
+				this.ShowMessage(Resources.DatabaseBusy_48, "Database", "Executing query on the database server \'{0}\'...".FormatWith(this.server.Name));
 				// Create the command.
 				this.command = this.server.CreateCommand(DbQuery.Create(this.codeBox.Text));
 				// Execute the command.
@@ -505,7 +499,7 @@ namespace YtAnalytics.Controls.Database
 								this.command.Dispose();
 								this.command = null;
 								// Show a success message.
-								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", string.Format("Executing query on the database server \'{0}\' completed successfully.", this.server.Name), false);
+								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", "Executing query on the database server \'{0}\' completed successfully.".FormatWith(this.server.Name), false);
 								// Wait.
 								Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
 								// Hide the message.
@@ -519,7 +513,7 @@ namespace YtAnalytics.Controls.Database
 								this.command.Dispose();
 								this.command = null;
 								// Show an error message.
-								this.ShowMessage(Resources.DatabaseError_48, "Database", string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+								this.ShowMessage(Resources.DatabaseError_48, "Database", "Executing query on the database server \'{0}\' failed.".FormatWith(this.server.Name), false);
 								// Log the event.
 								this.server.LogEvent(
 									LogEventLevel.Important,
@@ -542,7 +536,7 @@ namespace YtAnalytics.Controls.Database
 						this.command.Dispose();
 						this.command = null;
 						// Show an error message.
-						this.ShowMessage(Resources.DatabaseError_48, "Database", string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+						this.ShowMessage(Resources.DatabaseError_48, "Database", "Executing query on the database server \'{0}\' failed.".FormatWith(this.server.Name), false);
 						// Log the event.
 						this.server.LogEvent(
 							LogEventLevel.Important,
@@ -565,7 +559,7 @@ namespace YtAnalytics.Controls.Database
 				this.command.Dispose();
 				this.command = null;
 				// Show an error message.
-				this.ShowMessage(Resources.DatabaseError_48, "Database", string.Format("Executing query on the database server \'{0}\' failed.", this.server.Name), false);
+				this.ShowMessage(Resources.DatabaseError_48, "Database", "Executing query on the database server \'{0}\' failed.".FormatWith(this.server.Name), false);
 				// Log the event.
 				this.server.LogEvent(
 					LogEventLevel.Important,
@@ -616,11 +610,11 @@ namespace YtAnalytics.Controls.Database
 					}
 
 					// Update the status box.
-					this.statusLabel.Text = string.Format("Query completed successfully: {0} {1} of data fetched.", table.RowCount.ToString(), table.RowCount == 1 ? "row" : "rows");
+					this.statusLabel.Text = "Query completed successfully: {0} {1} of data fetched.".FormatWith(table.RowCount.ToString(), table.RowCount == 1 ? "row" : "rows");
 				}
 				else
 				{
-					if (recordsAffected >= 0) this.statusLabel.Text = string.Format("Query completed successfully: {0} data records changed.", recordsAffected);
+					if (recordsAffected >= 0) this.statusLabel.Text = "Query completed successfully: {0} data records changed.".FormatWith(recordsAffected);
 					else this.statusLabel.Text = "Query completed successfully.";
 				}
 				this.statusLabel.Image = Resources.Success_16;
@@ -644,7 +638,7 @@ namespace YtAnalytics.Controls.Database
 				// Disable the query code box.
 				this.codeBox.Enabled = true;
 				// Update the status box.
-				this.statusLabel.Text = string.Format("Query failed. {0}", exception.Message);
+				this.statusLabel.Text = "Query failed. {0}".FormatWith(exception.Message);
 				this.statusLabel.Image = Resources.Error_16;
 			}
 		}

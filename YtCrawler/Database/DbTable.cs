@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
+using DotNetApi;
 using DotNetApi.Windows;
 using YtCrawler.Database.Data;
 
@@ -474,7 +475,7 @@ namespace YtCrawler.Database
 		public object[] GetValues(DbObject obj)
 		{
 			// Check that the type of the object matches the type of the table.
-			if (obj.GetType() != this.type) throw new DbException(string.Format("Cannot get the object property values because the object type \'{0}\' does not match the table type \'{1}\'.", obj.GetType(), this.type));
+			if (obj.GetType() != this.type) throw new DbException("Cannot get the object property values because the object type \'{0}\' does not match the table type \'{1}\'.".FormatWith(obj.GetType(), this.type));
 			// Create an array for the object values.
 			object[] values = new object[this.FieldCount];
 			// Copy the object properties to the values array.

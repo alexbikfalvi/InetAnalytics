@@ -18,6 +18,7 @@
 
 using System;
 using System.Xml.Linq;
+using DotNetApi;
 using DotNetApi.Xml;
 
 namespace YtApi.Api.V2.Atom
@@ -40,7 +41,7 @@ namespace YtApi.Api.V2.Atom
 			if (!element.HasName(xmlPrefix, xmlName))
 			{
 				bool b = element.HasName(xmlPrefix, xmlName);
-				throw new AtomException(string.Format("XML element name mismatch. Current name is \'{0}:{1}\'. Expected name is \'{2}:{3}\'",
+				throw new AtomException("XML element name mismatch. Current name is \'{0}:{1}\'. Expected name is \'{2}:{3}\'".FormatWith(
 					element.GetPrefixOfNamespace(element.Name.Namespace), element.Name.LocalName, xmlPrefix, xmlName), element);
 			}
 		}

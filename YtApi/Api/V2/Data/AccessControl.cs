@@ -17,6 +17,7 @@
  */
 
 using System;
+using DotNetApi;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -48,9 +49,6 @@ namespace YtApi.Api.V2.Data
 	[Serializable]
 	public sealed class AccessControlEntry
 	{
-		private AccessControlAction action;
-		private AccessControlPermission permission;
-
         /// <summary>
         /// Creates an access control object based on an atom instance.
         /// </summary>
@@ -59,26 +57,32 @@ namespace YtApi.Api.V2.Data
 		{
 			switch (atom.Action.ToLower())
 			{
-				case "rate": this.action = AccessControlAction.Rate; break;
-				case "comment": this.action = AccessControlAction.Comment; break;
-				case "commentvote": this.action = AccessControlAction.CommentVote; break;
-                case "videorespond": this.action = AccessControlAction.VideoRespond; break;
-                case "embed": this.action = AccessControlAction.Embed; break;
-                case "syndicate": this.action = AccessControlAction.Syndicate; break;
-                case "list": this.action = AccessControlAction.List; break;
-				case "autoplay": this.action = AccessControlAction.AutoPlay; break;
-                default: throw new YouTubeException(string.Format("Cannot create access control entry: unknown action \"{0}\".", atom.Action));
+				case "rate": this.Action = AccessControlAction.Rate; break;
+				case "comment": this.Action = AccessControlAction.Comment; break;
+				case "commentvote": this.Action = AccessControlAction.CommentVote; break;
+                case "videorespond": this.Action = AccessControlAction.VideoRespond; break;
+                case "embed": this.Action = AccessControlAction.Embed; break;
+                case "syndicate": this.Action = AccessControlAction.Syndicate; break;
+                case "list": this.Action = AccessControlAction.List; break;
+				case "autoplay": this.Action = AccessControlAction.AutoPlay; break;
+                default: throw new YouTubeException("Cannot create access control entry: unknown action \"{0}\".".FormatWith(atom.Action));
 			}
             switch (atom.Permission.ToLower())
             {
-                case "allowed": this.permission = AccessControlPermission.Allowed; break;
-                case "denied": this.permission = AccessControlPermission.Denied; break;
-                case "moderated": this.permission = AccessControlPermission.Moderated; break;
-                default: throw new YouTubeException(string.Format("Cannot create access control entry: unknown permission \"{0}\".", atom.Permission));
+                case "allowed": this.Permission = AccessControlPermission.Allowed; break;
+                case "denied": this.Permission = AccessControlPermission.Denied; break;
+                case "moderated": this.Permission = AccessControlPermission.Moderated; break;
+                default: throw new YouTubeException("Cannot create access control entry: unknown permission \"{0}\".".FormatWith(atom.Permission));
             }
 		}
 
-        public AccessControlAction Action { get { return this.action; } }
-        public AccessControlPermission Permission { get { return this.permission; } } 
+		/// <summary>
+		/// Gets the access control action.
+		/// </summary>
+		public AccessControlAction Action { get; private set; }
+		/// <summary>
+		/// Gets the access control permission.
+		/// </summary>
+		public AccessControlPermission Permission { get; private set; } 
 	}
 }

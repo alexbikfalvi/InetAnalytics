@@ -23,6 +23,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.YouTube.Api2;
 using YtAnalytics.Forms;
@@ -336,7 +337,7 @@ namespace YtAnalytics.Controls.YouTube
 
 					for (int index = 0; (index < video.Thumbnails.Count) && (index < this.thumbnails.Count); index++)
 					{
-						this.imageListBoxThumbnails.AddItem(string.Format("{0} ({1})", video.Thumbnails[index].Name, video.Thumbnails[index].Url.ToString()), this.thumbnails[index]);
+						this.imageListBoxThumbnails.AddItem("{0} ({1})".FormatWith(video.Thumbnails[index].Name, video.Thumbnails[index].Url.ToString()), this.thumbnails[index]);
 					}
 				}
 				else

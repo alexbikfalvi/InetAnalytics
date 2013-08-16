@@ -18,6 +18,7 @@
 
 using System;
 using Microsoft.Win32;
+using DotNetApi;
 
 namespace YtCrawler.Testing
 {
@@ -35,7 +36,7 @@ namespace YtCrawler.Testing
 		/// <param name="rootPath">The root registry path.</param>
 		public Testing(RegistryKey rootKey, string rootPath)
 		{
-			this.testingWebRequest = new TestingWebRequest(string.Format("{0}\\{1}\\Testing\\WebRequest", rootKey.Name, rootPath));
+			this.testingWebRequest = new TestingWebRequest("{0}\\{1}\\Testing\\WebRequest".FormatWith(rootKey.Name, rootPath));
 		}
 
 		// Public properties.

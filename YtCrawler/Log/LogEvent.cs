@@ -27,6 +27,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi;
 
 namespace YtCrawler.Log
 {
@@ -132,7 +133,7 @@ namespace YtCrawler.Log
 		public LogEvent(XElement element, LogEvent parent = null)
 		{
 			// Check the element name.
-			if (element.Name != "event") throw new LogException(string.Format("Cannot parse the XML element to create a new log event, the element name is \"{0}\".", element.Name));
+			if (element.Name != "event") throw new LogException("Cannot parse the XML element to create a new log event, the element name is \"{0}\".".FormatWith(element.Name));
 
 			// Add the event data.
 			try
@@ -229,7 +230,7 @@ namespace YtCrawler.Log
 		/// <summary>
 		/// Returns the log event message, with the parameters included.
 		/// </summary>
-		public string Message { get { return this.parameters != null ? string.Format(this.message, this.parameters) : this.message; } }
+		public string Message { get { return this.parameters != null ? this.message.FormatWith(this.parameters) : this.message; } }
 		/// <summary>
 		/// Returns the raw log event message, without any parameters.
 		/// </summary>

@@ -17,14 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Forms;
 using YtCrawler.Comments;
@@ -93,22 +87,22 @@ namespace YtAnalytics.Controls.Comments
 				switch (newComment.Type)
 				{
 					case Comment.CommentType.Video:
-						this.labelTitle.Text = string.Format("Comment for video {0}", newComment.Item);
+						this.labelTitle.Text = "Comment for video {0}".FormatWith(newComment.Item);
 						this.labelObject.Text = "&Video:";
 						this.pictureBox.Image = Resources.CommentVideo_32;
 						break;
 					case Comment.CommentType.User:
-						this.labelTitle.Text = string.Format("Comment for user {0}", newComment.Item);
+						this.labelTitle.Text = "Comment for user {0}".FormatWith(newComment.Item);
 						this.labelObject.Text = "&User:";
 						this.pictureBox.Image = Resources.CommentUser_32;
 						break;
 					case Comment.CommentType.Playlist:
-						this.labelTitle.Text = string.Format("Comment for playlist {0}", newComment.Item);
+						this.labelTitle.Text = "Comment for playlist {0}".FormatWith(newComment.Item);
 						this.labelObject.Text = "&Playlist:";
 						this.pictureBox.Image = Resources.CommentPlay_32;
 						break;
 					default:
-						this.labelTitle.Text = string.Format("Comment for item {0}", newComment.Item);
+						this.labelTitle.Text = "Comment for item {0}".FormatWith(newComment.Item);
 						this.labelObject.Text = "&Item:";
 						this.pictureBox.Image = Resources.Comment_32;
 						break;

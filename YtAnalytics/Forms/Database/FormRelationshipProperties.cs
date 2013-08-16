@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtCrawler.Database;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Database
@@ -36,7 +37,7 @@ namespace YtAnalytics.Forms.Database
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -53,7 +54,7 @@ namespace YtAnalytics.Forms.Database
 			// Set the control relationsip.
 			this.control.Relationship = relationship;
 			// Set the form title.
-			this.Text = string.Format("{0} Relationship Properties", this.control.Title);
+			this.Text = "{0} Relationship Properties".FormatWith(this.control.Title);
 			// Disable the apply button.
 			this.buttonApply.Enabled = false;
 			// Open the dialog.

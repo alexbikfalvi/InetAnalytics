@@ -17,14 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.YouTube.Api2;
 using YtAnalytics.Forms;
@@ -66,7 +60,7 @@ namespace YtAnalytics.Controls.YouTube
 			this.pageEnd = (this.countStart != null) && (this.countPerPage != null) ? this.PageEnd(this.countStart ?? -1, this.countPerPage ?? -1).ToString() : "?";
 			this.pageTotal = this.countTotal != null ? this.countTotal.ToString() : "?";
 
-			this.labelPage.Text = string.Format("{0} - {1} of {2}", this.pageBegin, this.pageEnd, this.pageTotal);
+			this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
 
 			this.formVideo.ViewProfile += OnViewProfile;
 		}
@@ -105,7 +99,7 @@ namespace YtAnalytics.Controls.YouTube
 				this.pageBegin = this.countStart != null ? this.countStart.ToString() : "?";
 				this.pageEnd = (this.countStart != null) && (this.countPerPage != null) ? this.PageEnd(this.countStart ?? -1, this.countPerPage ?? -1).ToString() : "?";
 
-				this.labelPage.Text = string.Format("{0} - {1} of {2}", this.pageBegin, this.pageEnd, this.pageTotal);
+				this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
 			}
 		}
 
@@ -122,7 +116,7 @@ namespace YtAnalytics.Controls.YouTube
 				this.pageBegin = this.countStart != null ? this.countStart.ToString() : "?";
 				this.pageEnd = (this.countStart != null) && (this.countPerPage != null) ? this.PageEnd(this.countStart ?? -1, this.countPerPage ?? -1).ToString() : "?";
 
-				this.labelPage.Text = string.Format("{0} - {1} of {2}", this.pageBegin, this.pageEnd, this.pageTotal);
+				this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
 			}
 		}
 
@@ -138,7 +132,7 @@ namespace YtAnalytics.Controls.YouTube
 
 				this.pageTotal = this.countTotal != null ? this.countTotal.ToString() : "?";
 
-				this.labelPage.Text = string.Format("{0} - {1} of {2}", this.pageBegin, this.pageEnd, this.pageTotal);
+				this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
 			}
 		}
 

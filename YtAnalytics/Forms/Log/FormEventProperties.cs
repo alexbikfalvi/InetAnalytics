@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtCrawler.Log;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Log
@@ -36,7 +37,7 @@ namespace YtAnalytics.Forms.Log
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -53,7 +54,7 @@ namespace YtAnalytics.Forms.Log
 			// Set the event.
 			this.logEvent.Event = evt;
 			// Set the title.
-			this.Text = string.Format("{0} Event at {1} Properties", LogEvent.GetDescription(evt.Type), evt.Timestamp.ToString());
+			this.Text = "{0} Event at {1} Properties".FormatWith(LogEvent.GetDescription(evt.Type), evt.Timestamp.ToString());
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}

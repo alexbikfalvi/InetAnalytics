@@ -17,15 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtCrawler.Database;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls.Database
@@ -93,7 +87,7 @@ namespace YtAnalytics.Controls.Database
 				this.textBoxFieldLeft.Text = newRelationship.FieldLeft;
 				this.textBoxFieldRight.Text = newRelationship.FieldRight;
 				this.checkBoxReadOnly.Checked = newRelationship.ReadOnly;
-				this.labelTitle.Text = string.Format("{0}\\{1} ← {2}\\{3}",
+				this.labelTitle.Text = "{0}\\{1} ← {2}\\{3}".FormatWith(
 					newRelationship.TableLeft.LocalName,
 					newRelationship.FieldLeft,
 					newRelationship.TableRight.LocalName,

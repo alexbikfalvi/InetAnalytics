@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtCrawler.Comments;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Comments
@@ -36,7 +37,7 @@ namespace YtAnalytics.Forms.Comments
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -56,16 +57,16 @@ namespace YtAnalytics.Forms.Comments
 			switch (comment.Type)
 			{
 				case Comment.CommentType.Video:
-					this.Text = string.Format("Comment for Video {0} Properties", comment.Item);
+					this.Text = "Comment for Video {0} Properties".FormatWith(comment.Item);
 					break;
 				case Comment.CommentType.User:
-					this.Text = string.Format("Comment for User {0} Properties", comment.Item);
+					this.Text = "Comment for User {0} Properties".FormatWith(comment.Item);
 					break;
 				case Comment.CommentType.Playlist:
-					this.Text = string.Format("Comment for Playlist {0} Properties", comment.Item);
+					this.Text = "Comment for Playlist {0} Properties".FormatWith(comment.Item);
 					break;
 				default:
-					this.Text = string.Format("Comment for Item {0} Properties", comment.Item);
+					this.Text = "Comment for Item {0} Properties".FormatWith(comment.Item);
 					break;
 			}
 			// Open the dialog.

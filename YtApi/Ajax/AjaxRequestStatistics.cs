@@ -17,11 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DotNetApi;
 using DotNetApi.Web;
 
 namespace YtApi.Ajax
@@ -68,7 +65,7 @@ namespace YtApi.Ajax
 				AjaxRequestStatistics.uriHost,
 				AjaxRequestStatistics.uriPort,
 				AjaxRequestStatistics.uriPath,
-				String.Format(AjaxRequestStatistics.uriFragment, id)
+				AjaxRequestStatistics.uriFragment.FormatWith(id)
 				);
 
 			// Create the state of the asynchronous request

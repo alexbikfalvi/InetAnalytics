@@ -39,7 +39,7 @@ namespace YtAnalytics.Forms.Comments
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>

@@ -17,6 +17,7 @@
  */
 
 using System;
+using DotNetApi;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -61,84 +62,79 @@ namespace YtApi.Api.V2.Data
 	[Serializable]
 	public sealed class PublishingState
 	{
-		bool draft;
-
-		PublishingStateName? name;
-		PublishingStateReason? reason;
-
 		/// <summary>
 		/// Creates a new publishing state object based on an atom instance.
 		/// </summary>
 		/// <param name="atom">The atom instance.</param>
 		public PublishingState(AtomAppControl atom)
 		{
-			this.draft = atom.AppDraft != null;
+			this.IsDraft = atom.AppDraft != null;
 
 			if (null != atom.YtState)
 			{
 				switch (atom.YtState.Name.ToLower())
 				{
-					case "processing": this.name = PublishingStateName.Processing; this.reason = PublishingStateReason.Unspecified; break;
+					case "processing": this.Name = PublishingStateName.Processing; this.Reason = PublishingStateReason.Unspecified; break;
 					case "restricted":
-						this.name = PublishingStateName.Restricted;
+						this.Name = PublishingStateName.Restricted;
 						switch (atom.YtState.ReasonCode.ToLower())
 						{
-							case "requesterregion": this.reason = PublishingStateReason.RestrictedRequesterRegion; break;
-							case "limitedsyndication": this.reason = PublishingStateReason.RestrictedLimitedSyndication; break;
-							case "private": this.reason = PublishingStateReason.RestrictedPrivate; break;
-							default: throw new YouTubeException(string.Format("Cannot create the publishing state: invalid reason code \"{0}\"for state name \"{1}\".", atom.YtState.ReasonCode, atom.YtState.Name));
+							case "requesterregion": this.Reason = PublishingStateReason.RestrictedRequesterRegion; break;
+							case "limitedsyndication": this.Reason = PublishingStateReason.RestrictedLimitedSyndication; break;
+							case "private": this.Reason = PublishingStateReason.RestrictedPrivate; break;
+							default: throw new YouTubeException("Cannot create the publishing state: invalid reason code \"{0}\"for state name \"{1}\".".FormatWith(atom.YtState.ReasonCode, atom.YtState.Name));
 						}
 						break;
-					case "deleted": this.name = PublishingStateName.Deleted; this.reason = PublishingStateReason.Unspecified; break;
+					case "deleted": this.Name = PublishingStateName.Deleted; this.Reason = PublishingStateReason.Unspecified; break;
 					case "rejected":
-						this.name = PublishingStateName.Rejected;
+						this.Name = PublishingStateName.Rejected;
 						switch (atom.YtState.ReasonCode.ToLower())
 						{
-							case "copyright": this.reason = PublishingStateReason.RejectedCopyright; break;
-							case "inappropriate": this.reason = PublishingStateReason.RejectedInappropriate; break;
-							case "duplicate": this.reason = PublishingStateReason.RejectedDuplicate; break;
-							case "termsofuse": this.reason = PublishingStateReason.RejectedTermsOfUse; break;
-							case "suspended": this.reason = PublishingStateReason.RejectedSuspended; break;
-							case "toolong": this.reason = PublishingStateReason.RejectedTooLong; break;
-							case "blocked": this.reason = PublishingStateReason.RejectedBlocked; break;
-							default: throw new YouTubeException(string.Format("Cannot create the publishing state: invalid reason code \"{0}\"for state name \"{1}\".", atom.YtState.ReasonCode, atom.YtState.Name));
+							case "copyright": this.Reason = PublishingStateReason.RejectedCopyright; break;
+							case "inappropriate": this.Reason = PublishingStateReason.RejectedInappropriate; break;
+							case "duplicate": this.Reason = PublishingStateReason.RejectedDuplicate; break;
+							case "termsofuse": this.Reason = PublishingStateReason.RejectedTermsOfUse; break;
+							case "suspended": this.Reason = PublishingStateReason.RejectedSuspended; break;
+							case "toolong": this.Reason = PublishingStateReason.RejectedTooLong; break;
+							case "blocked": this.Reason = PublishingStateReason.RejectedBlocked; break;
+							default: throw new YouTubeException("Cannot create the publishing state: invalid reason code \"{0}\"for state name \"{1}\".".FormatWith(atom.YtState.ReasonCode, atom.YtState.Name));
 						}
 						break;
 					case "failed":
-						this.name = PublishingStateName.Failed;
+						this.Name = PublishingStateName.Failed;
 						switch (atom.YtState.ReasonCode.ToLower())
 						{
-							case "cantprocess": this.reason = PublishingStateReason.FailedCantProcess; break;
-							case "invalidformat": this.reason = PublishingStateReason.FailedInvalidFormat; break;
-							case "unsupportedcodec": this.reason = PublishingStateReason.FailedUnsupportedCodec; break;
-							case "empty": this.reason = PublishingStateReason.FailedEmpty; break;
-							case "toosmall": this.reason = PublishingStateReason.FailedTooSmall; break;
-							default: throw new YouTubeException(string.Format("Cannot create the publishing state: invalid reason code \"{0}\"for state name \"{1}\".", atom.YtState.ReasonCode, atom.YtState.Name));
+							case "cantprocess": this.Reason = PublishingStateReason.FailedCantProcess; break;
+							case "invalidformat": this.Reason = PublishingStateReason.FailedInvalidFormat; break;
+							case "unsupportedcodec": this.Reason = PublishingStateReason.FailedUnsupportedCodec; break;
+							case "empty": this.Reason = PublishingStateReason.FailedEmpty; break;
+							case "toosmall": this.Reason = PublishingStateReason.FailedTooSmall; break;
+							default: throw new YouTubeException("Cannot create the publishing state: invalid reason code \"{0}\"for state name \"{1}\".".FormatWith(atom.YtState.ReasonCode, atom.YtState.Name));
 						}
 						break;
-					default: throw new YouTubeException(string.Format("Cannot create the publishing state: unknwon state name \"{0}\".", atom.YtState.Name));
+					default: throw new YouTubeException("Cannot create the publishing state: unknwon state name \"{0}\".".FormatWith(atom.YtState.Name));
 				}
 			}
 			else
 			{
-				this.name = null;
-				this.reason = null;
+				this.Name = null;
+				this.Reason = null;
 			}
 		}
 
 		/// <summary>
 		/// Indicates whether the video is a draft.
 		/// </summary>
-		public bool IsDraft { get { return this.draft; } }
+		public bool IsDraft { get; private set; }
 
 		/// <summary>
 		/// The state name.
 		/// </summary>
-		public PublishingStateName? Name { get { return this.name; } }
+		public PublishingStateName? Name { get; private set; }
 
 		/// <summary>
 		/// The state reason.
 		/// </summary>
-		public PublishingStateReason? Reason { get { return this.reason; } }
+		public PublishingStateReason? Reason { get; private set; }
 	}
 }

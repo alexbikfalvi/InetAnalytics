@@ -17,15 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtApi.Api.V2.Data;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.YouTube
@@ -43,7 +37,7 @@ namespace YtAnalytics.Forms.YouTube
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -60,7 +54,7 @@ namespace YtAnalytics.Forms.YouTube
 			// Set the playlist.
 			this.controlPlaylist.Playlist = playlist;
 			// Set the title.
-			this.Text = string.Format("Playlist {0} Properties", playlist.Id);
+			this.Text = "Playlist {0} Properties".FormatWith(playlist.Id);
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}

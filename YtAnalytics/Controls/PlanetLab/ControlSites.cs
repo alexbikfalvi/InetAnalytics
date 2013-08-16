@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
@@ -125,7 +126,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Error",
-					string.Format("An error occured while refreshing the PlanetLab nodes. {0}", exception.Message),
+					"An error occured while refreshing the PlanetLab nodes. {0}".FormatWith(exception.Message),
 					false,
 					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
@@ -164,7 +165,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeWarning_48,
 						"PlanetLab Error",
-						string.Format("Refreshing the PlanetLab nodes has failed (RPC code {0} {1})", rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
+						"Refreshing the PlanetLab nodes has failed (RPC code {0} {1})".FormatWith(rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
@@ -193,8 +194,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Error",
-					string.Format("An error occured while refreshing the PlanetLab nodes. {0}",
-					exception.Message), false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					"An error occured while refreshing the PlanetLab nodes. {0}".FormatWith(exception.Message),
+					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
 			}
 		}
@@ -274,7 +275,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 
 			// Update the label.
-			this.status.Send(string.Format("Showing {0} of {1} PlanetLab sites.", count, this.crawler.PlanetLab.Sites.Count), Resources.GlobeLab_16);
+			this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.crawler.PlanetLab.Sites.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>

@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtCrawler.Database.Data
@@ -68,7 +69,7 @@ namespace YtCrawler.Database.Data
 			}
 			catch(Exception exception)
 			{
-				throw new DbException(string.Format("Cannot create a database object of type \'{0}\' from the XML file \'{1}\'.", typeof(T), fileName), exception);
+				throw new DbException("Cannot create a database object of type \'{0}\' from the XML file \'{1}\'.".FormatWith(typeof(T), fileName), exception);
 			}
 		}
 
@@ -93,7 +94,7 @@ namespace YtCrawler.Database.Data
 			}
 			catch (Exception exception)
 			{
-				throw new DbException(string.Format("Cannot save the database object of type \'{0}\' to the XML file \'{1}\'.", typeof(T), fileName), exception);
+				throw new DbException("Cannot save the database object of type \'{0}\' to the XML file \'{1}\'.".FormatWith(typeof(T), fileName), exception);
 			}
 		}
 
@@ -123,7 +124,7 @@ namespace YtCrawler.Database.Data
 			}
 			catch (Exception exception)
 			{
-				throw new DbException(string.Format("Cannot create a database object of type \'{0}\' from the registry key \'{1}\' value \'{2}\'.", typeof(T), key, value), exception);
+				throw new DbException("Cannot create a database object of type \'{0}\' from the registry key \'{1}\' value \'{2}\'.".FormatWith(typeof(T), key, value), exception);
 			}
 		}
 
@@ -151,7 +152,7 @@ namespace YtCrawler.Database.Data
 			}
 			catch (Exception exception)
 			{
-				throw new DbException(string.Format("Cannot save the database object of type \'{0}\' to the registry key \'{1}\' value \'{2}\'.", typeof(T), key, value), exception);
+				throw new DbException("Cannot save the database object of type \'{0}\' to the registry key \'{1}\' value \'{2}\'.".FormatWith(typeof(T), key, value), exception);
 			}
 		}
 	}

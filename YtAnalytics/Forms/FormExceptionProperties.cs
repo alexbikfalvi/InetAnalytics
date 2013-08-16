@@ -43,7 +43,7 @@ namespace YtAnalytics.Forms
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>

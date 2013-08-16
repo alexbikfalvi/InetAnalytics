@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using PlanetLab;
@@ -66,7 +67,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = string.Format("{0} {1}", person.FirstName, person.LastName);
+				this.Title = "{0} {1}".FormatWith(person.FirstName, person.LastName);
 				this.Icon = Resources.GlobeUser_32;
 
 				this.textBoxFirstName.Text = person.FirstName;
@@ -156,7 +157,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = string.Format("Updating information for person {0}...", id);
+			this.Title = "Updating information for person {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
 			try

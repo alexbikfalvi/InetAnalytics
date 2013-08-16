@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using YtAnalytics.Forms.Log;
 using YtCrawler;
 using YtCrawler.Log;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls.Log
@@ -177,7 +178,7 @@ namespace YtAnalytics.Controls.Log
 					this.ShowMessage(
 						Resources.LogSuccess_48,
 						"Log",
-						string.Format("Refreshing the log for dates {0} to {1} completed successfully.", state.Range.Start.ToShortDateString(), state.Range.End.ToShortDateString()),
+						"Refreshing the log for dates {0} to {1} completed successfully.".FormatWith(state.Range.Start.ToShortDateString(), state.Range.End.ToShortDateString()),
 						false);
 				}
 			}
@@ -190,7 +191,7 @@ namespace YtAnalytics.Controls.Log
 					this.ShowMessage(
 						Resources.Error_48,
 						"Log",
-						string.Format("Refreshing the log failed. {0}", exception.Message),
+						"Refreshing the log failed. {0}".FormatWith(exception.Message),
 						false);
 				}
 			}

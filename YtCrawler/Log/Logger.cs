@@ -19,11 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotNetApi;
 
 namespace YtCrawler.Log
 {
@@ -75,7 +73,7 @@ namespace YtCrawler.Log
 						// Get the XML date.
 						DateTime date = DateTime.Parse(xml.Root.Attribute(XName.Get("date")).Value);
 						// Set the file name.
-						fileName = string.Format(this.filePattern, date.Year, date.Month, date.Day);
+						fileName = this.filePattern.FormatWith(date.Year, date.Month, date.Day);
 						// Save the XML file.
 						xml.Save(fileName);
 					}

@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using PlanetLab;
@@ -69,8 +70,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.Title = string.Format("Address {0}", address.AddressId);
 				this.Icon = Resources.GlobeEnvelope_32;
 
-				this.textBoxAddress.Text = string.Format("{0}{1}{2}{3}{4}",
-					address.Line1, Environment.NewLine, address.Line2, Environment.NewLine, address.Line3);
+				this.textBoxAddress.Text = "{0}{1}{2}{3}{4}".FormatWith(address.Line1, Environment.NewLine, address.Line2, Environment.NewLine, address.Line3);
 				this.textBoxPostalCode.Text = address.PostalCode;
 				this.textBoxCity.Text = address.City;
 				this.textBoxState.Text = address.State;

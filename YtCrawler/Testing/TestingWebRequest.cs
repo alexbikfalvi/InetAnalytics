@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtCrawler.Testing
@@ -255,7 +256,7 @@ namespace YtCrawler.Testing
 			int index = 0;
 			foreach (KeyValuePair<string, string> header in this.headers)
 			{
-				list[index++] = string.Format("{0}:{1}", header.Key, header.Value);
+				list[index++] = "{0}:{1}".FormatWith(header.Key, header.Value);
 			}
 			// Write the headers string builder to the registry.
 			Registry.SetMultiString(this.key, "Headers", list);

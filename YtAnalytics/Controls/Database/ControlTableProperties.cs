@@ -17,17 +17,11 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtAnalytics.Forms.Database;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls.Database
@@ -344,9 +338,9 @@ namespace YtAnalytics.Controls.Database
 					this.changes = true;
 					// Create a new query to obtain the schema of the selected table.
 					DbQuery query = DbQuery.CreateSelectAllOn(this.server.TableSchema, this.server.TableTables, "Name", this.resultTable.Name, this.server.Database, this.delegateQueryTableSchema);
-					query.MessageStart = string.Format("Updating the database schema for the table \'{0}\'.", this.resultTable.Name);
-					query.MessageFinishSuccess = string.Format("Updating the database schema for the table \'{0}\' completed successfully.", this.resultTable.Name);
-					query.MessageFinishFail = string.Format("Updating the database schema for the table \'{0}\' failed", this.resultTable.Name);
+					query.MessageStart = "Updating the database schema for the table \'{0}\'.".FormatWith(this.resultTable.Name);
+					query.MessageFinishSuccess = "Updating the database schema for the table \'{0}\' completed successfully.".FormatWith(this.resultTable.Name);
+					query.MessageFinishFail = "Updating the database schema for the table \'{0}\' failed".FormatWith(this.resultTable.Name);
 					// Get the table schema.
 					this.DatabaseQuery(this.server, query);
 				}
@@ -355,7 +349,7 @@ namespace YtAnalytics.Controls.Database
 			{
 				// If an error occurs, show an error message.
 				MessageBox.Show(this,
-					string.Format("Changing the table database name failed. {0}", exception.Message),
+					"Changing the table database name failed. {0}".FormatWith(exception.Message),
 					"Error",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
@@ -379,7 +373,7 @@ namespace YtAnalytics.Controls.Database
 					this.resultDatabase = this.formDatabaseSelect.SelectedResult as DbObjectDatabase;
 					this.resultColumns = null;
 					// Set the name.
-					this.textBoxDatabase.Text = string.Format("{0} (custom)", this.resultDatabase.Name);
+					this.textBoxDatabase.Text = "{0} (custom)".FormatWith(this.resultDatabase.Name);
 					// Uncheck and enable the uses default database check box.
 					this.checkBoxDefaultDatabase.Checked = false;
 					this.checkBoxDefaultDatabase.Enabled = true;
@@ -393,7 +387,7 @@ namespace YtAnalytics.Controls.Database
 			{
 				// If an error occurs, show an error message.
 				MessageBox.Show(this,
-					string.Format("Changing the table database failed. {0}", exception.Message),
+					"Changing the table database failed. {0}".FormatWith(exception.Message),
 					"Error",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
@@ -448,9 +442,9 @@ namespace YtAnalytics.Controls.Database
 			{
 				// Create a new query to obtain the columns of the selected table.
 				DbQuery queryColumn = DbQuery.CreateSelectAllOn(this.server.TableColumns, this.server.TableTables, "Name", this.table.DatabaseName, this.server.Database);
-				queryColumn.MessageStart = string.Format("Updating the fields list for the table \'{0}\'.", this.table.DatabaseName);
-				queryColumn.MessageFinishSuccess = string.Format("Updating the fields list for the table \'{0}\' completed successfully.", this.table.DatabaseName);
-				queryColumn.MessageFinishFail = string.Format("Updating the fields list for the table \'{0}\' failed", this.table.DatabaseName);
+				queryColumn.MessageStart = "Updating the fields list for the table \'{0}\'.".FormatWith(this.table.DatabaseName);
+				queryColumn.MessageFinishSuccess = "Updating the fields list for the table \'{0}\' completed successfully.".FormatWith(this.table.DatabaseName);
+				queryColumn.MessageFinishFail = "Updating the fields list for the table \'{0}\' failed".FormatWith(this.table.DatabaseName);
 				
 				// Open a new database select window that selects all database columns for the given server and table.
 				if (this.formDatabaseSelect.ShowDialog(this, this.server, queryColumn, this.resultColumns) == DialogResult.OK)
@@ -461,9 +455,9 @@ namespace YtAnalytics.Controls.Database
 					
 					// Create a new query to obtain the type of the selected column.
 					DbQuery queryType = DbQuery.CreateSelectAllOn(this.server.TableTypes, this.server.TableColumns, new string[] {"ObjectId", "ColumnId"}, new object[] {this.resultColumn.ObjectId, this.resultColumn.ColumnId}, this.server.Database, this.delegateQueryColumnType);
-					queryType.MessageStart = string.Format("Updating the type for the table field \'{0}\'.", this.resultColumn.Name);
-					queryType.MessageFinishSuccess = string.Format("Updating the type for the table field \'{0}\' completed successfully.", this.resultColumn.Name);
-					queryType.MessageFinishFail = string.Format("Updating the type for the table field \'{0}\' failed", this.resultColumn.Name);
+					queryType.MessageStart = "Updating the type for the table field \'{0}\'.".FormatWith(this.resultColumn.Name);
+					queryType.MessageFinishSuccess = "Updating the type for the table field \'{0}\' completed successfully.".FormatWith(this.resultColumn.Name);
+					queryType.MessageFinishFail = "Updating the type for the table field \'{0}\' failed".FormatWith(this.resultColumn.Name);
 					// Get the column type.
 					this.DatabaseQuery(this.server, queryType);
 				}
@@ -472,7 +466,7 @@ namespace YtAnalytics.Controls.Database
 			{
 				// If an error occurs, show an error message.
 				MessageBox.Show(this,
-					string.Format("Changing the table field failed. {0}", exception.Message),
+					"Changing the table field failed. {0}".FormatWith(exception.Message),
 					"Error",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
@@ -490,7 +484,7 @@ namespace YtAnalytics.Controls.Database
 			if (result.RowCount == 0)
 			{
 				MessageBox.Show(this,
-					string.Format("A query for the schema of table \'{0}\' did not return any database schema.", this.textBoxNameDatabase.Text),
+					"A query for the schema of table \'{0}\' did not return any database schema.".FormatWith(this.textBoxNameDatabase.Text),
 					"Table Schema Not Found",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Warning);
@@ -507,9 +501,9 @@ namespace YtAnalytics.Controls.Database
 					// Create a new query to obtain the schema of the selected table.
 					DbQuery query = DbQuery.CreateSelectAllOn(this.server.TableSchema, this.server.TableTables, "Name", this.resultTable.Name, this.server.Database, this.delegateQueryTableSchema);
 
-					query.MessageStart = string.Format("Updating the database schema for the table \'{0}\'.", this.resultTable.Name);
-					query.MessageFinishSuccess = string.Format("Updating the database schema for the table \'{0}\' completed successfully.", this.resultTable.Name);
-					query.MessageFinishFail = string.Format("Updating the database schema for the table \'{0}\' failed", this.resultTable.Name);
+					query.MessageStart = "Updating the database schema for the table \'{0}\'.".FormatWith(this.resultTable.Name);
+					query.MessageFinishSuccess = "Updating the database schema for the table \'{0}\' completed successfully.".FormatWith(this.resultTable.Name);
+					query.MessageFinishFail = "Updating the database schema for the table \'{0}\' failed".FormatWith(this.resultTable.Name);
 
 					// Repeat until the user selects a schema.
 					do
@@ -524,7 +518,7 @@ namespace YtAnalytics.Controls.Database
 						if (this.resultSchema == null)
 						{
 							MessageBox.Show(this,
-								string.Format("A query for the schema of table \'{0}\' returned multiple database schemas. You must select a schema before continuing.", this.textBoxNameDatabase.Text),
+								"A query for the schema of table \'{0}\' returned multiple database schemas. You must select a schema before continuing.".FormatWith(this.textBoxNameDatabase.Text),
 								"Multiple Table Schemas Found",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Warning);
@@ -536,7 +530,7 @@ namespace YtAnalytics.Controls.Database
 				{
 					// If an error occurs, show an error message.
 					MessageBox.Show(this,
-						string.Format("Changing the table schema failed. {0}", exception.Message),
+						"Changing the table schema failed. {0}".FormatWith(exception.Message),
 						"Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error);
@@ -568,7 +562,7 @@ namespace YtAnalytics.Controls.Database
 			if (result.RowCount == 0)
 			{
 				MessageBox.Show(this,
-					string.Format("A query for the type of the table field \'{0}\' did not return any database type.", this.resultColumn.Name),
+					"A query for the type of the table field \'{0}\' did not return any database type.".FormatWith(this.resultColumn.Name),
 					"Column Type Not Found",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Warning);
@@ -579,7 +573,7 @@ namespace YtAnalytics.Controls.Database
 			else if (result.RowCount > 1)
 			{
 				MessageBox.Show(this,
-					string.Format("A query for the type of the table field \'{0}\' returned multiple database types.", this.resultColumn.Name),
+					"A query for the type of the table field \'{0}\' returned multiple database types.".FormatWith(this.resultColumn.Name),
 					"Multiple Column Types Found",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Warning);
@@ -664,7 +658,7 @@ namespace YtAnalytics.Controls.Database
 			// If the default database is not selected, do nothing.
 			if (!this.checkBoxDefaultDatabase.Checked) return;
 			// Else, set the default database.
-			this.textBoxDatabase.Text = string.Format("{0} (default)", this.server.Database.Name);
+			this.textBoxDatabase.Text = "{0} (default)".FormatWith(this.server.Database.Name);
 			// Disable the checkbox.
 			this.checkBoxDefaultDatabase.Enabled = false;
 			// Raise a configuration changed event.

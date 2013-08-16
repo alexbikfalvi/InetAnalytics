@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using PlanetLab.Api;
+using DotNetApi;
 using DotNetApi.Windows;
 using YtAnalytics.Controls.PlanetLab;
 using YtCrawler;
@@ -38,7 +39,7 @@ namespace YtAnalytics.Forms.PlanetLab
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -55,7 +56,7 @@ namespace YtAnalytics.Forms.PlanetLab
 			// Updated the PlanetLab object.
 			this.controlPlanetLab.Update(id);
 			// Set the title.
-			this.Text = string.Format("{0} {1} Properties", title, id);
+			this.Text = "{0} {1} Properties".FormatWith(title, id);
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}
@@ -75,7 +76,7 @@ namespace YtAnalytics.Forms.PlanetLab
 			// Set the PlanetLab site.
 			this.controlPlanetLab.Object = obj;
 			// Set the title.
-			this.Text = string.Format("{0} {1} Properties", title, obj.Id.HasValue ? obj.Id.Value.ToString() : "(unknown)");
+			this.Text = "{0} {1} Properties".FormatWith(title, obj.Id.HasValue ? obj.Id.Value.ToString() : "(unknown)");
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}

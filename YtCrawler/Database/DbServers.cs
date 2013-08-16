@@ -19,11 +19,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Security;
 using System.Threading;
 using Microsoft.Win32;
+using DotNetApi;
 using YtCrawler.Database.Data;
 using YtCrawler.Log;
 
@@ -73,7 +73,7 @@ namespace YtCrawler.Database
 			foreach (string id in this.config.DatabaseConfig.Servers)
 			{
 				// Compute the database server log file.
-				string logFile = string.Format(this.config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
+				string logFile = this.config.DatabaseLogFileName.FormatWith(id, "{0}", "{1}", "{2}");
 				// Try to create the database server.
 				try
 				{
@@ -242,7 +242,7 @@ namespace YtCrawler.Database
 			// Generate the server ID.
 			string id = Guid.NewGuid().ToString();
 			// Check the server ID does not exist. Otherwise, throw an exception.
-			if (this.servers.ContainsKey(id)) throw new CrawlerException(string.Format("Cannot add a new database server. The server ID \'{0}\' already exists.", id));
+			if (this.servers.ContainsKey(id)) throw new CrawlerException("Cannot add a new database server. The server ID \'{0}\' already exists.".FormatWith(id));
 			// Create the registry key for this server.
 			RegistryKey key = this.config.DatabaseConfig.Key.CreateSubKey(id);
 			// Compute the database server log file.
@@ -256,7 +256,7 @@ namespace YtCrawler.Database
 					case DbServerType.MsSql:
 						server = new DbServerSql(key, id, name, dataSource, username, password, logFile, DateTime.Now, DateTime.Now);
 						break;
-					default: throw new CrawlerException(string.Format("Cannot add a new database server. Unknown database server type \'{0}\'.", type));
+					default: throw new CrawlerException("Cannot add a new database server. Unknown database server type \'{0}\'.".FormatWith(type));
 				}
 				// Add the server to the servers list.
 				this.Add(server);
@@ -295,7 +295,7 @@ namespace YtCrawler.Database
 		{
 			string id = server.Id;
 			// Check that the server ID exists.
-			if(!this.servers.ContainsKey(id)) throw new CrawlerException(string.Format("Cannot remove the database server. The server with ID \'{0}\' does not exist.", id));
+			if(!this.servers.ContainsKey(id)) throw new CrawlerException("Cannot remove the database server. The server with ID \'{0}\' does not exist.".FormatWith(id));
 			// If there are more than one server, and this is the primary server, the user must select a different primary server first.
 			if ((this.servers.Count > 1) && (this.primary == server)) throw new CrawlerException("Cannot remove the database server. First, select a different primary server.");
 			// If this is the primary server, set the primary server to null.
@@ -324,7 +324,7 @@ namespace YtCrawler.Database
 		{
 			string id = server.Id;
 			// Check that the server ID exists.
-			if (!this.servers.ContainsKey(id)) throw new CrawlerException(string.Format("Cannot remove the database server. The server with ID \'{0}\' does not exist.", id));
+			if (!this.servers.ContainsKey(id)) throw new CrawlerException("Cannot remove the database server. The server with ID \'{0}\' does not exist.".FormatWith(id));
 			// If there are more than one server, and this is the primary server, the user must select a different primary server first.
 			if ((this.servers.Count > 1) && (this.primary == server)) throw new CrawlerException("Cannot remove the database server. First, select a different primary server.");
 			// If this is the primary server, set the primary server to null.
@@ -352,7 +352,7 @@ namespace YtCrawler.Database
 					catch (Exception exception)
 					{
 						// Set the exception in the asynchronous state.
-						asyncState.Exception = new DbException(string.Format("Removing the database server \'{0}\' failed.", server.Name), exception); ;
+						asyncState.Exception = new DbException("Removing the database server \'{0}\' failed.".FormatWith(server.Name), exception); ;
 					}
 					// Complete the asynchronous operation.
 					asyncState.Complete();

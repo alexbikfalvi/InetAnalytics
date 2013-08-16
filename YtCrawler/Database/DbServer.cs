@@ -22,6 +22,7 @@ using System.Data;
 using System.Security;
 using System.Threading;
 using Microsoft.Win32;
+using DotNetApi;
 using YtCrawler.Database.Data;
 using YtCrawler.Log;
 
@@ -85,7 +86,7 @@ namespace YtCrawler.Database
 			// Create the logger for this server.
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
-			this.logSource = string.Format("Database\\{0}", this.id);
+			this.logSource = "Database\\{0}".FormatWith(this.id);
 
 			// Create the database tables and relationships.
 			this.tables = new DbTables(this.key);
@@ -135,7 +136,7 @@ namespace YtCrawler.Database
 			// Create the logger for this server.
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
-			this.logSource = string.Format("Database\\{0}", this.id);
+			this.logSource = "Database\\{0}".FormatWith(this.id);
 
 			// Create the database tables and relationships.
 			this.tables = new DbTables(this.key);

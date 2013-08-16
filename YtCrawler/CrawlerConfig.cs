@@ -19,6 +19,7 @@
 using System;
 using System.Security;
 using Microsoft.Win32;
+using DotNetApi;
 using DotNetApi.Security;
 using YtCrawler.Database;
 
@@ -46,7 +47,7 @@ namespace YtCrawler
 		{
 			this.rootKey = rootKey;
 			this.rootPath = rootPath;
-			this.root = string.Format("{0}\\{1}", this.rootKey.Name, this.rootPath);
+			this.root = "{0}\\{1}".FormatWith(this.rootKey.Name, this.rootPath);
 
 			RegistryKey dbKey;
 			if(null == (dbKey = this.rootKey.OpenSubKey(this.rootPath + "\\Database", RegistryKeyPermissionCheck.ReadWriteSubTree)))

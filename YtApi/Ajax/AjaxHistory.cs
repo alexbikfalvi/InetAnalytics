@@ -18,11 +18,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using DotNetApi;
 
 namespace YtApi.Ajax
 {
@@ -148,8 +145,8 @@ namespace YtApi.Ajax
 					value = Regex.Replace(option, AjaxHistory.regChartType, string.Empty, RegexOptions.IgnoreCase).ToLower();
 					switch (this.chartType)
 					{
-						case ChartType.Lc: if (!Regex.IsMatch(value, "^lc")) throw new AjaxException(string.Format("Invalid series chart type \"{0}\".", value)); break;
-						case ChartType.Ls: if (!Regex.IsMatch(value, "^ls")) throw new AjaxException(string.Format("Invalid series chart type \"{0}\".", value)); break;
+						case ChartType.Lc: if (!Regex.IsMatch(value, "^lc")) throw new AjaxException("Invalid series chart type \"{0}\".".FormatWith(value)); break;
+						case ChartType.Ls: if (!Regex.IsMatch(value, "^ls")) throw new AjaxException("Invalid series chart type \"{0}\".".FormatWith(value)); break;
 					}
 					
 				}
@@ -191,7 +188,7 @@ namespace YtApi.Ajax
 			if (null == parseRange) throw new AjaxException("Cannot parse chart: axis range not found while parsing a history series.");
 			if (null == parseData) throw new AjaxException("Cannot parse chart: axis data not found while parsing a history series.");
 			if (parseLabels.Length != parseLabelPositions.Length) throw new AjaxException("Cannot parse chart: axis labels and label positions must have the same length.");
-			if (parseRange.Length != 2) throw new AjaxException(string.Format("Cannot parse chart range: chart has range for {0} axes.", parseRange.Length));
+			if (parseRange.Length != 2) throw new AjaxException("Cannot parse chart range: chart has range for {0} axes.".FormatWith(parseRange.Length));
 
 			// Process history data
 			this.series = new AjaxHistoryPoint[parseData.Length];
@@ -219,7 +216,7 @@ namespace YtApi.Ajax
 			MatchCollection matches = Regex.Matches(value, "^[0-9]:");
 			
 			if (!Regex.IsMatch(value, "^1:")) throw new AjaxException("Cannot parse chart axis labels: only the X axis should have labels.");
-			if (matches.Count != 1) throw new AjaxException(string.Format("Cannot parse chart axis labels: only the X axis should have labels, however {0} label sets were found.", matches.Count));
+			if (matches.Count != 1) throw new AjaxException("Cannot parse chart axis labels: only the X axis should have labels, however {0} label sets were found.".FormatWith(matches.Count));
 
 			// Get the labels
 			string[] labelsString = value.Substring(matches[0].Length).Split(AjaxHistory.pipeSplit, StringSplitOptions.RemoveEmptyEntries);
@@ -265,10 +262,10 @@ namespace YtApi.Ajax
 				string[] rangeValues = rangeAxes[index].Split(AjaxHistory.commaSplit, StringSplitOptions.RemoveEmptyEntries);
 
 				// The set of each range must have 3 or 4 values
-				if ((rangeValues.Length != 3) && (rangeValues.Length != 4)) throw new AjaxException(string.Format("Cannot parse chart axis range: range must have 3 or 4 values but it has {0}.", rangeValues.Length));
+				if ((rangeValues.Length != 3) && (rangeValues.Length != 4)) throw new AjaxException("Cannot parse chart axis range: range must have 3 or 4 values but it has {0}.".FormatWith(rangeValues.Length));
 
 				// Check the axis index
-				if (index != uint.Parse(rangeValues[0])) throw new AjaxException(string.Format("Cannot parse chart axis range: axis index should be {0} but it is {1}.", index, rangeValues[0]));
+				if (index != uint.Parse(rangeValues[0])) throw new AjaxException("Cannot parse chart axis range: axis index should be {0} but it is {1}.".FormatWith(index, rangeValues[0]));
 
 				// Convert the range values to the Range type
 				range[index].Start = double.Parse(rangeValues[1]);
@@ -316,7 +313,7 @@ namespace YtApi.Ajax
 					string[] valuesString = markerString.Split(AjaxHistory.commaSplit, StringSplitOptions.RemoveEmptyEntries);
 
 					// Check that the marker has at least 4 values
-					if (markerString.Length < 4) throw new AjaxException(string.Format("Cannot parse chart axis marker: marker string {0} has only {1} values.", markerString, valuesString.Length));
+					if (markerString.Length < 4) throw new AjaxException("Cannot parse chart axis marker: marker string {0} has only {1} values.".FormatWith(markerString, valuesString.Length));
 
 					// Create a new marker object
 					Marker marker = new Marker();

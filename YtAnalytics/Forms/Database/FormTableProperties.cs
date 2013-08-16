@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtCrawler.Database;
+using DotNetApi;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Database
@@ -38,7 +39,7 @@ namespace YtAnalytics.Forms.Database
 			InitializeComponent();
 
 			// Set the font.
-			Formatting.SetFont(this);
+			Window.SetFont(this);
 		}
 
 		/// <summary>
@@ -56,7 +57,7 @@ namespace YtAnalytics.Forms.Database
 			// Select the server an table.
 			this.control.Select(server, table);
 			// Set the title.
-			this.Text = string.Format("{0} Table Properties", table.LocalName);
+			this.Text = "{0} Table Properties".FormatWith(table.LocalName);
 			// Disable the apply button.
 			this.buttonApply.Enabled = false;
 			// Open the dialog.

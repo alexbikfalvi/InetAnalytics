@@ -17,6 +17,7 @@
  */
 
 using System;
+using DotNetApi;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -41,8 +42,6 @@ namespace YtApi.Api.V2.Data
 	public sealed class Restriction
 	{
 		private AtomMediaRestriction atom;
-		private RestrictionType type;
-		private RestrictionRelationship relationship;
 
 		/// <summary>
 		/// Creates a restriction object based on an atom instance.
@@ -53,20 +52,20 @@ namespace YtApi.Api.V2.Data
 			this.atom = atom;
 			switch (this.atom.Type.ToLower())
 			{
-				case "country": this.type = RestrictionType.Country; break;
-				default: throw new YouTubeException(string.Format("Cannot create the restriction object: unknown type \"{0}\".", this.atom.Type));
+				case "country": this.Type = RestrictionType.Country; break;
+				default: throw new YouTubeException("Cannot create the restriction object: unknown type \"{0}\".".FormatWith(this.atom.Type));
 			}
 			switch (this.atom.Relationship.ToLower())
 			{
-				case "allow": this.relationship = RestrictionRelationship.Allow; break;
-				case "deny": this.relationship = RestrictionRelationship.Deny; break;
-				default: throw new YouTubeException(string.Format("Cannot create the restriction object: unknown relationship \"{0}\".", this.atom.Relationship));
+				case "allow": this.Relationship = RestrictionRelationship.Allow; break;
+				case "deny": this.Relationship = RestrictionRelationship.Deny; break;
+				default: throw new YouTubeException("Cannot create the restriction object: unknown relationship \"{0}\".".FormatWith(this.atom.Relationship));
 			}
 		}
 
-		public RestrictionType Type { get { return this.type; } }
+		public RestrictionType Type { get; private set; }
 		public string TypeAsString { get { return this.atom.Type; } }
-		public RestrictionRelationship Relationship { get { return this.relationship; } }
+		public RestrictionRelationship Relationship { get; private set; }
 		public string RelationshipAsString { get { return this.atom.Relationship; } }
 		public string Countries { get { return this.atom.Value; } }
 	}
