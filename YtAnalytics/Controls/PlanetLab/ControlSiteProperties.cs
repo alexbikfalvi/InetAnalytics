@@ -22,6 +22,7 @@ using System.Security;
 using System.Windows.Forms;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
+using MapApi;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
@@ -38,7 +39,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private static Color colorMarkerLine = Color.FromArgb(153, 51, 51);
 		private static Color colorMarkerFill = Color.FromArgb(255, 51, 51);
 
-		private GeoMarkerCircle marker = new GeoMarkerCircle(new PointF());
+		private MapBulletMarker marker = new MapBulletMarker();
 
 		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
 
@@ -53,7 +54,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.marker.ColorLine = ControlSiteProperties.colorMarkerLine;
 			this.marker.ColorFill = ControlSiteProperties.colorMarkerFill;
 			// Add the marker to the world map.
-			this.worldMap.Markers.Add(this.marker);
+			this.mapControl.Markers.Add(this.marker);
 		}
 
 		// Protected methods.
@@ -109,10 +110,10 @@ namespace YtAnalytics.Controls.PlanetLab
 
 				if (site.Latitude.HasValue && site.Longitude.HasValue)
 				{
-					this.marker.Coordinates = new PointF((float)site.Longitude.Value, (float)site.Latitude.Value);
-					this.worldMap.ShowMarkers = true;
+					this.marker.Location = new MapPoint((float)site.Longitude.Value, (float)site.Latitude.Value);
+					this.mapControl.ShowMarkers = true;
 				}
-				else this.worldMap.ShowMarkers = false;
+				else this.mapControl.ShowMarkers = false;
 
 				// Nodes.
 				this.listViewNodes.Items.Clear();

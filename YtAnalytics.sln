@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetLab", "..\PlanetLab\P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renci.SshNet", "..\Renci.SshNet\Renci.SshNet.csproj", "{2F5F8C90-0BD1-424F-997C-7BC6280919D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapApi", "..\DotNetApi\MapApi\MapApi.csproj", "{C5C1839C-4971-4781-B8FA-FF743E257A7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		ASP|Any CPU = ASP|Any CPU
@@ -198,6 +200,18 @@ Global
 		{2F5F8C90-0BD1-424F-997C-7BC6280919D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F5F8C90-0BD1-424F-997C-7BC6280919D1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{2F5F8C90-0BD1-424F-997C-7BC6280919D1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.ASP|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.ASP|Any CPU.Build.0 = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C1839C-4971-4781-B8FA-FF743E257A7E}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

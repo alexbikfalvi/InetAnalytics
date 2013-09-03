@@ -31,15 +31,15 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSites));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.worldMap = new DotNetApi.Windows.Controls.GeoWorldMap();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
-			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
-			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.labelFilter = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxFilter = new System.Windows.Forms.ToolStripTextBox();
+			this.buttonClear = new System.Windows.Forms.ToolStripButton();
 			this.listViewSites = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -53,7 +53,7 @@
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.buttonClear = new System.Windows.Forms.ToolStripButton();
+			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -71,7 +71,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.worldMap);
+			this.splitContainer.Panel1.Controls.Add(this.mapControl);
 			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
 			// 
 			// splitContainer.Panel2
@@ -80,19 +80,6 @@
 			this.splitContainer.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.SplitterDistance = 275;
 			this.splitContainer.TabIndex = 2;
-			// 
-			// worldMap
-			// 
-			this.worldMap.ColorGridMajor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.worldMap.ColorGridMinor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.worldMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.worldMap.GridMajor = true;
-			this.worldMap.GridMinor = true;
-			this.worldMap.Location = new System.Drawing.Point(0, 25);
-			this.worldMap.Name = "worldMap";
-			this.worldMap.ShowMarkers = true;
-			this.worldMap.Size = new System.Drawing.Size(598, 248);
-			this.worldMap.TabIndex = 10;
 			// 
 			// toolStrip
 			// 
@@ -110,11 +97,6 @@
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
-			// 
-			// separator1
-			// 
-			this.separator1.Name = "separator1";
-			this.separator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// buttonRefresh
 			// 
@@ -136,10 +118,10 @@
 			this.buttonCancel.Text = "&Cancel";
 			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
 			// 
-			// separator2
+			// separator1
 			// 
-			this.separator2.Name = "separator2";
-			this.separator2.Size = new System.Drawing.Size(6, 25);
+			this.separator1.Name = "separator1";
+			this.separator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// buttonProperties
 			// 
@@ -150,6 +132,11 @@
 			this.buttonProperties.Size = new System.Drawing.Size(80, 22);
 			this.buttonProperties.Text = "&Properties";
 			this.buttonProperties.Click += new System.EventHandler(this.OnProperties);
+			// 
+			// separator2
+			// 
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// labelFilter
 			// 
@@ -162,6 +149,16 @@
 			this.textBoxFilter.Name = "textBoxFilter";
 			this.textBoxFilter.Size = new System.Drawing.Size(100, 25);
 			this.textBoxFilter.TextChanged += new System.EventHandler(this.OnFilterTextChanged);
+			// 
+			// buttonClear
+			// 
+			this.buttonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.buttonClear.Enabled = false;
+			this.buttonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonClear.Name = "buttonClear";
+			this.buttonClear.Size = new System.Drawing.Size(38, 22);
+			this.buttonClear.Text = "C&lear";
+			this.buttonClear.Click += new System.EventHandler(this.OnFilterClear);
 			// 
 			// listViewSites
 			// 
@@ -249,23 +246,22 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
-			// buttonClear
+			// mapControl
 			// 
-			this.buttonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.buttonClear.Enabled = false;
-			this.buttonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonClear.Name = "buttonClear";
-			this.buttonClear.Size = new System.Drawing.Size(38, 22);
-			this.buttonClear.Text = "C&lear";
-			this.buttonClear.Click += new System.EventHandler(this.OnFilterClear);
+			this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.mapControl.Location = new System.Drawing.Point(0, 25);
+			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
+			this.mapControl.Name = "mapControl";
+			this.mapControl.Size = new System.Drawing.Size(598, 248);
+			this.mapControl.TabIndex = 10;
 			// 
-			// ControlPlanetLabSites
+			// ControlSites
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
-			this.Name = "ControlPlanetLabSites";
+			this.Name = "ControlSites";
 			this.Size = new System.Drawing.Size(600, 400);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
@@ -287,7 +283,6 @@
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemFail;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemWarning;
 		private System.Windows.Forms.ToolStrip toolStrip;
-		private DotNetApi.Windows.Controls.GeoWorldMap worldMap;
 		private System.Windows.Forms.ToolStripButton buttonRefresh;
 		private System.Windows.Forms.ToolStripButton buttonCancel;
 		private System.Windows.Forms.ListView listViewSites;
@@ -305,5 +300,6 @@
 		private System.Windows.Forms.ToolStripLabel labelFilter;
 		private System.Windows.Forms.ToolStripTextBox textBoxFilter;
 		private System.Windows.Forms.ToolStripButton buttonClear;
+		private DotNetApi.Windows.Controls.MapControl mapControl;
 	}
 }

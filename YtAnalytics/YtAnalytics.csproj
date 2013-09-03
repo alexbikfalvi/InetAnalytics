@@ -56,16 +56,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\Database\ControlDatabase.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlServerProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlRequest.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlObjectProperties.cs">
       <SubType>UserControl</SubType>
@@ -83,7 +83,7 @@
       <DependentUpon>ControlSites.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabInfo.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPlanetLabInfo.Designer.cs">
       <DependentUpon>ControlPlanetLabInfo.cs</DependentUpon>
@@ -95,127 +95,127 @@
       <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlNodeProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlNodeProperties.Designer.cs">
       <DependentUpon>ControlNodeProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPcuProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPcuProperties.Designer.cs">
       <DependentUpon>ControlPcuProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPersonProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPersonProperties.Designer.cs">
       <DependentUpon>ControlPersonProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSliceProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSliceProperties.Designer.cs">
       <DependentUpon>ControlSliceProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlAddressProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlAddressProperties.Designer.cs">
       <DependentUpon>ControlAddressProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlInterfaceTagProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlInterfaceTagProperties.Designer.cs">
       <DependentUpon>ControlInterfaceTagProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlNodeTagProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlNodeTagProperties.Designer.cs">
       <DependentUpon>ControlNodeTagProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPersonTagProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPersonTagProperties.Designer.cs">
       <DependentUpon>ControlPersonTagProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSiteTagProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSiteTagProperties.Designer.cs">
       <DependentUpon>ControlSiteTagProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSliceTagProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSliceTagProperties.Designer.cs">
       <DependentUpon>ControlSliceTagProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.Designer.cs">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Net\ControlHttpAddRequestHeader.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Net\ControlHttpAddRequestHeader.Designer.cs">
       <DependentUpon>ControlHttpAddRequestHeader.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Net\ControlHttpHeaderProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Net\ControlHttpHeaderProperties.Designer.cs">
       <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Testing\ControlTestingWebRequest.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Testing\ControlTestingWebRequest.Designer.cs">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Testing\ControlTestingSsh.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Testing\ControlTestingSsh.Designer.cs">
       <DependentUpon>ControlTestingSsh.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCommentProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCommentProperties.Designer.cs">
       <DependentUpon>ControlCommentProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Comments\ControlComments.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Comments\ControlComments.Designer.cs">
       <DependentUpon>ControlComments.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Comments\ControlAddComment.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Comments\ControlAddComment.Designer.cs">
       <DependentUpon>ControlAddComment.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlExceptionProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ControlExceptionProperties.Designer.cs">
       <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Log\ControlLog.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Log\ControlLog.Designer.cs">
       <DependentUpon>ControlLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlSettings.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ControlSettings.Designer.cs">
       <DependentUpon>ControlSettings.cs</DependentUpon>
@@ -227,235 +227,235 @@
       <DependentUpon>ControlSideCalendar.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Log\ControlLogEventProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Log\ControlLogEventProperties.Designer.cs">
       <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Log\ControlLogList.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Log\ControlLogList.Designer.cs">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoProperties.Designer.cs">
       <DependentUpon>ControlVideoProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoList.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoList.Designer.cs">
       <DependentUpon>ControlVideoList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Web\ControlWebStatistics.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Web\ControlWebStatistics.Designer.cs">
       <DependentUpon>ControlWebStatistics.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.Designer.cs">
       <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.Designer.cs">
       <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Video.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Video.Designer.cs">
       <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2VideosFeedsInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api3\ControlYtApi3Info.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api3\ControlYtApi3Info.Designer.cs">
       <DependentUpon>ControlYtApi3Info.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Search.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Search.Designer.cs">
       <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.Designer.cs">
       <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlDiscoveryProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlDiscoveryProperties.Designer.cs">
       <DependentUpon>ControlDiscoveryProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Comments\ControlCommentProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Comments\ControlCommentProperties.Designer.cs">
       <DependentUpon>ControlCommentProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Web\ControlWeb.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Web\ControlWeb.Designer.cs">
       <DependentUpon>ControlWeb.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Comments\ControlCommentsInfo.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Comments\ControlCommentsInfo.Designer.cs">
       <DependentUpon>ControlCommentsInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlProfileProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlProfileProperties.Designer.cs">
       <DependentUpon>ControlProfileProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Profile.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Profile.Designer.cs">
       <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCommentList.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCommentList.Designer.cs">
       <DependentUpon>ControlCommentList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlPlaylistProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlPlaylistProperties.Designer.cs">
       <DependentUpon>ControlPlaylistProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlPlaylistList.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlPlaylistList.Designer.cs">
       <DependentUpon>ControlPlaylistList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.Designer.cs">
       <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlServers.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlServers.Designer.cs">
       <DependentUpon>ControlServers.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlAddServer.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlAddServer.Designer.cs">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlChangePassword.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlChangePassword.Designer.cs">
       <DependentUpon>ControlChangePassword.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlServer.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlServer.Designer.cs">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlDatabaseProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlDatabaseProperties.Designer.cs">
       <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlServerQuery.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlServerQuery.Designer.cs">
       <DependentUpon>ControlServerQuery.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.Designer.cs">
       <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCategoryProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCategoryProperties.Designer.cs">
       <DependentUpon>ControlCategoryProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlTableProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlTableProperties.Designer.cs">
       <DependentUpon>ControlTableProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlObjectProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlObjectProperties.Designer.cs">
       <DependentUpon>ControlObjectProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlRelationshipProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlRelationshipProperties.Designer.cs">
       <DependentUpon>ControlRelationshipProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlFieldProperties.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlFieldProperties.Designer.cs">
       <DependentUpon>ControlFieldProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlCompareFields.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Database\ControlCompareFields.Designer.cs">
       <DependentUpon>ControlCompareFields.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
@@ -1572,6 +1572,10 @@
     <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
       <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
       <Name>DotNetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DotNetApi\MapApi\MapApi.csproj">
+      <Project>{c5c1839c-4971-4781-b8fa-ff743e257a7e}</Project>
+      <Name>MapApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\PlanetLab\PlanetLab\PlanetLab.csproj">
       <Project>{8d8a9a27-a8ca-4a27-95e5-c2246bdabc85}</Project>

@@ -24,6 +24,7 @@ using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
+using MapApi;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
@@ -48,7 +49,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private StatusHandler status = null;
 
 		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
-		private GeoMarker marker = null;
+		private MapMarker marker = null;
 		private string filter = string.Empty;
 
 		private static Color colorSelectedMarkerLine = Color.FromArgb(153, 51, 51);
@@ -226,7 +227,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Clear the list view.
 			this.listViewSites.Items.Clear();
 			// Clear the map markers.
-			this.worldMap.Markers.Clear();
+			//this.worldMap.Markers.Clear();
 
 			// Update the filter.
 			this.filter = this.textBoxFilter.Text;
@@ -248,16 +249,16 @@ namespace YtAnalytics.Controls.PlanetLab
 				count++;
 
 				// Create a new geo marker for this site.
-				GeoMarker marker = null;
+				MapMarker marker = null;
 				// If the site has coordinates.
 				if(site.Latitude.HasValue && site.Longitude.HasValue)
 				{
 					// Create a circular marker.
-					marker = new GeoMarkerCircle(new PointF((float)site.Longitude.Value, (float)site.Latitude.Value));
+					marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
 					marker.ColorLine = ControlSites.colorMarkerLine;
 					marker.ColorFill = ControlSites.colorMarkerFill;
 					// Add the marker to the map.
-					this.worldMap.Markers.Add(marker);
+					//this.worldMap.Markers.Add(marker);
 				}
 				
 				// Create the list view item.
@@ -270,7 +271,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
 					site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
 				}, 0);
-				item.Tag = new KeyValuePair<PlSite, GeoMarker>(site, marker);
+				item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
 				this.listViewSites.Items.Add(item);
 			}
 
@@ -304,7 +305,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Change the properties button enabled state.
 				this.buttonProperties.Enabled = true;
 				// Get the site-marker for this item.
-				KeyValuePair<PlSite, GeoMarker> tag = (KeyValuePair<PlSite, GeoMarker>)this.listViewSites.SelectedItems[0].Tag;
+				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 				// If the marker is not null, emphasize the marker.
 				if (tag.Value != null)
 				{
@@ -327,7 +328,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if(this.listViewSites.SelectedItems.Count == 0) return;
 	
 			// Get the site-marker for this item.
-			KeyValuePair<PlSite, GeoMarker> tag = (KeyValuePair<PlSite, GeoMarker>)this.listViewSites.SelectedItems[0].Tag;
+			KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 
 			// Show the site properties.
 			this.formSiteProperties.ShowDialog(this, "Site", tag.Key);
