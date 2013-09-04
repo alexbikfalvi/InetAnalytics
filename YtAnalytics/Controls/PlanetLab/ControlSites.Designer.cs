@@ -31,6 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSites));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
@@ -53,7 +54,6 @@
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -80,6 +80,17 @@
 			this.splitContainer.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.SplitterDistance = 275;
 			this.splitContainer.TabIndex = 2;
+			// 
+			// mapControl
+			// 
+			this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.mapControl.Location = new System.Drawing.Point(0, 25);
+			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
+			this.mapControl.Name = "mapControl";
+			this.mapControl.Size = new System.Drawing.Size(598, 248);
+			this.mapControl.TabIndex = 10;
+			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
+			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
 			// 
 			// toolStrip
 			// 
@@ -245,15 +256,6 @@
 			// 
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
-			// 
-			// mapControl
-			// 
-			this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.mapControl.Location = new System.Drawing.Point(0, 25);
-			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
-			this.mapControl.Name = "mapControl";
-			this.mapControl.Size = new System.Drawing.Size(598, 248);
-			this.mapControl.TabIndex = 10;
 			// 
 			// ControlSites
 			// 

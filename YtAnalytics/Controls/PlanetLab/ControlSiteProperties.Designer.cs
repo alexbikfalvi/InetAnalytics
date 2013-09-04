@@ -60,6 +60,7 @@
 			this.labelSiteId = new System.Windows.Forms.Label();
 			this.textBoxSiteId = new System.Windows.Forms.TextBox();
 			this.tabPageLocation = new System.Windows.Forms.TabPage();
+			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.labelLongitude = new System.Windows.Forms.Label();
 			this.textBoxLongitude = new System.Windows.Forms.TextBox();
 			this.labelLatitude = new System.Windows.Forms.Label();
@@ -89,7 +90,6 @@
 			this.buttonTag = new System.Windows.Forms.Button();
 			this.listViewTags = new System.Windows.Forms.ListView();
 			this.columnHeaderTag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageIdentifiers.SuspendLayout();
@@ -437,6 +437,20 @@
 			this.tabPageLocation.TabIndex = 2;
 			this.tabPageLocation.Text = "Location";
 			this.tabPageLocation.UseVisualStyleBackColor = true;
+			// 
+			// mapControl
+			// 
+			this.mapControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.mapControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.mapControl.Location = new System.Drawing.Point(9, 58);
+			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
+			this.mapControl.Name = "mapControl";
+			this.mapControl.ShowBorders = false;
+			this.mapControl.ShowMarkers = true;
+			this.mapControl.Size = new System.Drawing.Size(318, 159);
+			this.mapControl.TabIndex = 4;
 			// 
 			// labelLongitude
 			// 
@@ -787,18 +801,6 @@
 			// 
 			this.columnHeaderTag.Text = "Tag ID";
 			this.columnHeaderTag.Width = 240;
-			// 
-			// mapControl
-			// 
-			this.mapControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.mapControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.mapControl.Location = new System.Drawing.Point(9, 58);
-			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
-			this.mapControl.Name = "mapControl";
-			this.mapControl.Size = new System.Drawing.Size(318, 159);
-			this.mapControl.TabIndex = 4;
 			// 
 			// ControlSiteProperties
 			// 

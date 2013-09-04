@@ -36,9 +36,6 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlSiteProperties : ControlObjectProperties
 	{
-		private static Color colorMarkerLine = Color.FromArgb(153, 51, 51);
-		private static Color colorMarkerFill = Color.FromArgb(255, 51, 51);
-
 		private MapBulletMarker marker = new MapBulletMarker();
 
 		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
@@ -50,9 +47,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			InitializeComponent();
 
-			// Set the marker colors.
-			this.marker.ColorLine = ControlSiteProperties.colorMarkerLine;
-			this.marker.ColorFill = ControlSiteProperties.colorMarkerFill;
+			// Load the map.
+			this.mapControl.LoadMap("Ne110mAdmin0Countries");
 			// Add the marker to the world map.
 			this.mapControl.Markers.Add(this.marker);
 		}
@@ -111,6 +107,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				if (site.Latitude.HasValue && site.Longitude.HasValue)
 				{
 					this.marker.Location = new MapPoint((float)site.Longitude.Value, (float)site.Latitude.Value);
+					this.marker.Name = site.Name;
+					this.marker.Emphasized = true;
 					this.mapControl.ShowMarkers = true;
 				}
 				else this.mapControl.ShowMarkers = false;

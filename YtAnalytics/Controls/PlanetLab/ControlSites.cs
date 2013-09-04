@@ -52,11 +52,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		private MapMarker marker = null;
 		private string filter = string.Empty;
 
-		private static Color colorSelectedMarkerLine = Color.FromArgb(153, 51, 51);
-		private static Color colorSelectedMarkerFill = Color.FromArgb(255, 51, 51);
-		private static Color colorMarkerLine = Color.FromArgb(255, 153, 0);
-		private static Color colorMarkerFill = Color.FromArgb(248, 224, 124);
-
 		private UpdateSitesEventHandler delegateUpdateSites = null;
 
 		private FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
@@ -74,6 +69,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
+
+			// Load the map.
+			this.mapControl.LoadMap("Ne110mAdmin0Countries");
 
 			// Initialize the delegates.
 			this.delegateUpdateSites = new UpdateSitesEventHandler(this.OnUpdateSites);
@@ -227,7 +225,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Clear the list view.
 			this.listViewSites.Items.Clear();
 			// Clear the map markers.
-			//this.worldMap.Markers.Clear();
+			this.mapControl.Markers.Clear();
 
 			// Update the filter.
 			this.filter = this.textBoxFilter.Text;
@@ -255,10 +253,9 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Create a circular marker.
 					marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-					marker.ColorLine = ControlSites.colorMarkerLine;
-					marker.ColorFill = ControlSites.colorMarkerFill;
+					marker.Name = site.Name;
 					// Add the marker to the map.
-					//this.worldMap.Markers.Add(marker);
+					this.mapControl.Markers.Add(marker);
 				}
 				
 				// Create the list view item.
@@ -273,6 +270,11 @@ namespace YtAnalytics.Controls.PlanetLab
 				}, 0);
 				item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
 				this.listViewSites.Items.Add(item);
+
+				if (null != marker)
+				{
+					marker.Tag = item;
+				}
 			}
 
 			// Update the label.
@@ -289,9 +291,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If there exists an emphasized marker, de-emphasize it.
 			if (this.marker != null)
 			{
-				this.marker.ColorLine = ControlSites.colorMarkerLine;
-				this.marker.ColorFill = ControlSites.colorMarkerFill;
-				this.marker.Emphasis = false;
+				this.marker.Emphasized = false;
 				this.marker = null;
 			}
 			// If no site is selected.
@@ -310,9 +310,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				if (tag.Value != null)
 				{
 					this.marker = tag.Value;
-					this.marker.ColorLine = ControlSites.colorSelectedMarkerLine;
-					this.marker.ColorFill = ControlSites.colorSelectedMarkerFill;
-					this.marker.Emphasis = true;
+					this.marker.Emphasized = true;
 				}
 			}
 		}
@@ -359,6 +357,39 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnFilterClear(object sender, EventArgs e)
 		{
 			this.textBoxFilter.Text = string.Empty;
+		}
+
+		/// <summary>
+		/// An event handler called when a map marker is clicked.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMapMarkerClick(object sender, EventArgs e)
+		{
+			// If the highlighted map marker is null, do nothing.
+			if (null == this.mapControl.HighlightedMarker) return;
+			// Get the marker tag as a list view item.
+			ListViewItem item = this.mapControl.HighlightedMarker.Tag as ListViewItem;
+			// If the list view item is null, do nothing.
+			if (null == item) return;
+			// Clear the current selection.
+			this.listViewSites.SelectedItems.Clear();
+			// Select the corresponding item.
+			item.Selected = true;
+			item.EnsureVisible();
+		}
+
+		/// <summary>
+		/// An event handler called when a map marker is double-clicked.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMapMarkerDoubleClick(object sender, EventArgs e)
+		{
+			// Call the click event handler.
+			this.OnMapMarkerClick(sender, e);
+			// Call the properties event handler.
+			this.OnProperties(sender, e);
 		}
 	}
 }
