@@ -154,6 +154,36 @@
     <Compile Include="Controls\PlanetLab\ControlSliceTagProperties.Designer.cs">
       <DependentUpon>ControlSliceTagProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceProperties.Designer.cs">
+      <DependentUpon>ControlInterfaceProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeGroupProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeGroupProperties.Designer.cs">
+      <DependentUpon>ControlNodeGroupProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlConfigurationFileProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlConfigurationFileProperties.Designer.cs">
+      <DependentUpon>ControlConfigurationFileProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlKeyProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlKeyProperties.Designer.cs">
+      <DependentUpon>ControlKeyProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressTypeProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressTypeProperties.Designer.cs">
+      <DependentUpon>ControlAddressTypeProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -659,6 +689,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlSliceTagProperties.resx">
       <DependentUpon>ControlSliceTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlInterfaceProperties.resx">
+      <DependentUpon>ControlInterfaceProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodeGroupProperties.resx">
+      <DependentUpon>ControlNodeGroupProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlConfigurationFileProperties.resx">
+      <DependentUpon>ControlConfigurationFileProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlKeyProperties.resx">
+      <DependentUpon>ControlKeyProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddressTypeProperties.resx">
+      <DependentUpon>ControlAddressTypeProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>

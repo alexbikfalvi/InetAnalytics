@@ -20,10 +20,10 @@ using System;
 using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using MapApi;
-using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
 using YtAnalytics.Forms.PlanetLab;
@@ -67,7 +67,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new site.
 			if (null == site)
 			{
-				this.Title = "Site information not found";
+				this.Title = "Site information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -207,7 +207,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Site information not found";
+				this.Title = "Site information not available";
 			}
 		}
 
@@ -392,7 +392,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// If there are no selected tag, do nothing.
 			if (this.listViewTags.SelectedItems.Count == 0) return;
-			// Get the selected address ID.
+			// Get the selected tag ID.
 			int id = (int)this.listViewTags.SelectedItems[0].Tag;
 			using (FormObjectProperties<ControlSiteTagProperties> form = new FormObjectProperties<ControlSiteTagProperties>())
 			{

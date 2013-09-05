@@ -26,6 +26,7 @@ using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -59,7 +60,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new address.
 			if (null == address)
 			{
-				this.Title = "Node information not found";
+				this.Title = "Node information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -126,7 +127,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Address information not found";
+				this.Title = "Address information not available";
 			}
 		}
 
@@ -174,7 +175,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnTypeProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected types, do nothing.
+			if (this.listViewTypes.SelectedItems.Count == 0) return;
+			// Get the selected type ID.
+			int id = (int)this.listViewTypes.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlAddressTypeProperties> form = new FormObjectProperties<ControlAddressTypeProperties>())
+			{
+				form.ShowDialog(this, "Address Type", id);
+			}
 		}
 	}
 }

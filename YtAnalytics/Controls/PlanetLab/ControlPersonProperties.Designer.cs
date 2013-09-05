@@ -55,7 +55,6 @@
 			this.labelPersonId = new System.Windows.Forms.Label();
 			this.textBoxPersonId = new System.Windows.Forms.TextBox();
 			this.tabPageRoles = new System.Windows.Forms.TabPage();
-			this.buttonRole = new System.Windows.Forms.Button();
 			this.listViewRoles = new System.Windows.Forms.ListView();
 			this.columnHeaderRoleId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderRoleName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -357,7 +356,6 @@
 			// 
 			// tabPageRoles
 			// 
-			this.tabPageRoles.Controls.Add(this.buttonRole);
 			this.tabPageRoles.Controls.Add(this.listViewRoles);
 			this.tabPageRoles.Location = new System.Drawing.Point(4, 22);
 			this.tabPageRoles.Name = "tabPageRoles";
@@ -366,18 +364,6 @@
 			this.tabPageRoles.TabIndex = 4;
 			this.tabPageRoles.Text = "Roles";
 			this.tabPageRoles.UseVisualStyleBackColor = true;
-			// 
-			// buttonRole
-			// 
-			this.buttonRole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonRole.Enabled = false;
-			this.buttonRole.Location = new System.Drawing.Point(6, 284);
-			this.buttonRole.Name = "buttonRole";
-			this.buttonRole.Size = new System.Drawing.Size(85, 23);
-			this.buttonRole.TabIndex = 2;
-			this.buttonRole.Text = "Properties...";
-			this.buttonRole.UseVisualStyleBackColor = true;
-			this.buttonRole.Click += new System.EventHandler(this.OnRoleProperties);
 			// 
 			// listViewRoles
 			// 
@@ -394,13 +380,11 @@
 			this.listViewRoles.Location = new System.Drawing.Point(6, 6);
 			this.listViewRoles.MultiSelect = false;
 			this.listViewRoles.Name = "listViewRoles";
-			this.listViewRoles.Size = new System.Drawing.Size(321, 272);
+			this.listViewRoles.Size = new System.Drawing.Size(321, 301);
 			this.listViewRoles.SmallImageList = this.imageList;
 			this.listViewRoles.TabIndex = 1;
 			this.listViewRoles.UseCompatibleStateImageBehavior = false;
 			this.listViewRoles.View = System.Windows.Forms.View.Details;
-			this.listViewRoles.ItemActivate += new System.EventHandler(this.OnRoleProperties);
-			this.listViewRoles.SelectedIndexChanged += new System.EventHandler(this.OnRoleSelectionChanged);
 			// 
 			// columnHeaderRoleId
 			// 
@@ -622,12 +606,12 @@
 			this.columnHeaderTag.Text = "Tag ID";
 			this.columnHeaderTag.Width = 240;
 			// 
-			// ControlPlanetLabPersonProperties
+			// ControlPersonProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl);
-			this.Name = "ControlPlanetLabPersonProperties";
+			this.Name = "ControlPersonProperties";
 			this.Controls.SetChildIndex(this.tabControl, 0);
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
@@ -678,7 +662,6 @@
 		private System.Windows.Forms.TabPage tabPageSites;
 		private System.Windows.Forms.ListView listViewRoles;
 		private System.Windows.Forms.ColumnHeader columnHeaderRoleId;
-		private System.Windows.Forms.Button buttonRole;
 		private System.Windows.Forms.Button buttonTag;
 		private System.Windows.Forms.ListView listViewTags;
 		private System.Windows.Forms.ColumnHeader columnHeaderTag;

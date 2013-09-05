@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using PlanetLab;
@@ -31,16 +32,16 @@ using YtCrawler;
 namespace YtAnalytics.Controls.PlanetLab
 {
 	/// <summary>
-	/// A control that displays the information of a PlanetLab slice.
+	/// A control that displays the information of a PlanetLab configuration file.
 	/// </summary>
-	public partial class ControlSliceProperties : ControlObjectProperties
+	public partial class ControlConfigurationFileProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetConfigurationFiles);
 
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlSliceProperties()
+		public ControlConfigurationFileProperties()
 		{
 			InitializeComponent();
 		}
@@ -53,13 +54,13 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			// Get the slice.
-			PlSlice slice = obj as PlSlice;
+			// Get the node.
+			PlConfigurationFile file = obj as PlConfigurationFile;
 
-			// Change the display information for the new slice.
-			if (null == slice)
+			// Change the display information for the new node.
+			if (null == file)
 			{
-				this.Title = "Slice information not available";
+				this.Title = "Configuration file information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -67,48 +68,51 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = slice.Name;
+				this.Title = "Configuration file {0}".FormatWith(file.Id);
 				this.Icon = Resources.GlobeObject_32;
 
-				this.textBoxName.Text = slice.Name;
-				this.textBoxDescription.Text = slice.Description;
-				this.textBoxInstantiation.Text = slice.Instantiation;
-				this.textBoxUrl.Text = slice.Url;
+				this.textBoxSource.Text = file.Source;
+				this.textBoxDestination.Text = file.Destination;
 
-				this.textBoxCreated.Text = slice.Created.HasValue ? slice.Created.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxExpires.Text = slice.Expires.HasValue ? slice.Expires.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxPermissions.Text = file.FilePermissions;
+				this.textBoxGroup.Text = file.FileGroup;
+				this.textBoxOwner.Text = file.FileOwner;
 
-				this.textBoxMaxNodes.Text = slice.MaxNodes.HasValue ? slice.MaxNodes.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.checkBoxEnabled.CheckState = file.Enabled.HasValue ? file.Enabled.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate;
+				this.checkBoxAlwaysUpdate.CheckState = file.AlwaysUpdate.HasValue ? file.AlwaysUpdate.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate;
+				this.checkBoxIgnoreCommandErrors.CheckState = file.IgnoreCommandErrors.HasValue ? file.IgnoreCommandErrors.Value ? CheckState.Checked : CheckState.Unchecked : CheckState.Indeterminate;
 
 				// Identifiers.
 
-				this.textBoxSliceId.Text = slice.SliceId.HasValue ? slice.SliceId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxSiteId.Text = slice.SiteId.HasValue ? slice.SiteId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxPeerId.Text = slice.PeerId.HasValue ? slice.PeerId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxPeerSliceId.Text = slice.PeerSliceId.HasValue ? slice.PeerSliceId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxCreatorPersonId.Text = slice.CreatorPersonId.HasValue ? slice.CreatorPersonId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxConfigurationFileId.Text = file.ConfigurationFileId.HasValue ? file.ConfigurationFileId.Value.ToString() : ControlObjectProperties.notAvailable;
+
+				// Commands.
+
+				this.textBoxPreinstall.Text = file.PreinstallCommand;
+				this.textBoxPostinstall.Text = file.PostinstallCommand;
+				this.textBoxError.Text = file.ErrorCommand;
 
 				// Nodes.
 				this.listViewNodes.Items.Clear();
-				foreach (int id in slice.NodeIds)
+				foreach (int id in file.NodeIds)
 				{
 					ListViewItem item = new ListViewItem(id.ToString(), 0);
 					item.Tag = id;
 					this.listViewNodes.Items.Add(item);
 				}
 
-				// Persons.
-				this.listViewPersons.Items.Clear();
-				foreach (int id in slice.PersonIds)
+				// Node groups.
+				this.listViewNodeGroups.Items.Clear();
+				foreach (int id in file.NodeGroupIds)
 				{
 					ListViewItem item = new ListViewItem(id.ToString(), 0);
 					item.Tag = id;
-					this.listViewPersons.Items.Add(item);
+					this.listViewNodeGroups.Items.Add(item);
 				}
 
 				// Disable the buttons.
 				this.buttonNode.Enabled = false;
-				this.buttonPerson.Enabled = false;
+				this.buttonNodeGroup.Enabled = false;
 
 				this.tabControl.Visible = true;
 			}
@@ -116,9 +120,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.tabControl.SelectedTab = this.tabPageGeneral;
 			if (this.Focused)
 			{
-				this.textBoxName.Select();
-				this.textBoxName.SelectionStart = 0;
-				this.textBoxName.SelectionLength = 0;
+				this.textBoxSource.Select();
+				this.textBoxSource.SelectionStart = 0;
+				this.textBoxSource.SelectionLength = 0;
 			}
 		}
 
@@ -130,19 +134,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating slice information...";
+			this.Title = "Updating configuration file information...";
 			this.tabControl.Visible = false;
 
 			try
 			{
-				// Begin a new nodes request for the specified slice.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSlice.GetFilter(PlSlice.Fields.SliceId, id));
+				// Begin a new nodes request for the specified node.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlConfigurationFile.GetFilter(PlConfigurationFile.Fields.ConfigurationFileId, id));
 			}
 			catch
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Slice information not available";
+				this.Title = "Configuration file information not available";
 			}
 		}
 
@@ -157,17 +161,17 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Create a PlanetLab nodes list for the given response.
-				PlList<PlSlice> slices = PlList<PlSlice>.Create(response.Value as XmlRpcArray);
-				// If the nodes count is greater than zero.
-				if (slices.Count > 0)
+				// Create a PlanetLab files list for the given response.
+				PlList<PlConfigurationFile> files = PlList<PlConfigurationFile>.Create(response.Value as XmlRpcArray);
+				// If the files count is greater than zero.
+				if (files.Count > 0)
 				{
-					// Display the information for the first slice.
-					this.Object = slices[0];
+					// Display the information for the first configuration file.
+					this.Object = files[0];
 				}
 				else
 				{
-					// Set the slice to null.
+					// Set the node to null.
 					this.Object = null;
 				}
 			}
@@ -184,46 +188,45 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the person selection has changed.
+		/// An event handler called when the node group selection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnPersonSelectionChanged(object sender, EventArgs e)
+		private void OnNodeGroupSelectionChanged(object sender, EventArgs e)
 		{
-			this.buttonPerson.Enabled = this.listViewPersons.SelectedItems.Count > 0;
+			this.buttonNodeGroup.Enabled = this.listViewNodeGroups.SelectedItems.Count > 0;
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the properties of a node.
+		/// An event handler called when the user selects the properties of a PCU.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeProperties(object sender, EventArgs e)
 		{
-			// If there are no selected nodes, do nothing.
+			// If there are no selected PCUs, do nothing.
 			if (this.listViewNodes.SelectedItems.Count == 0) return;
-			// Get the selected node ID.
+			// Get the selected PCU ID.
 			int id = (int)this.listViewNodes.SelectedItems[0].Tag;
 			using (FormObjectProperties<ControlNodeProperties> form = new FormObjectProperties<ControlNodeProperties>())
 			{
 				form.ShowDialog(this, "Node", id);
 			}
 		}
-
 		/// <summary>
-		/// An event handler called when the user selects the properies of a person.
+		/// An event handler called when the user selects the properties of a node group.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnPersonProperties(object sender, EventArgs e)
+		private void OnNodeGroupProperties(object sender, EventArgs e)
 		{
-			// If there are no selected persons, do nothing.
-			if (this.listViewPersons.SelectedItems.Count == 0) return;
-			// Get the selected person ID.
-			int id = (int)this.listViewPersons.SelectedItems[0].Tag;
-			using (FormObjectProperties<ControlPersonProperties> form = new FormObjectProperties<ControlPersonProperties>())
+			// If there are no selected node group, do nothing.
+			if (this.listViewNodeGroups.SelectedItems.Count == 0) return;
+			// Get the selected node group.
+			int id = (int)this.listViewNodeGroups.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlNodeGroupProperties> form = new FormObjectProperties<ControlNodeGroupProperties>())
 			{
-				form.ShowDialog(this, "Person", id);
+				form.ShowDialog(this, "Node Group", id);
 			}
 		}
 	}

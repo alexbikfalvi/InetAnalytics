@@ -26,6 +26,7 @@ using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -59,7 +60,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new person.
 			if (null == person)
 			{
-				this.Title = "Person information not found";
+				this.Title = "Person information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -132,7 +133,6 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 
 				// Disable the buttons.
-				this.buttonRole.Enabled = false;
 				this.buttonKey.Enabled = false;
 				this.buttonSite.Enabled = false;
 				this.buttonTag.Enabled = false;
@@ -169,7 +169,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Person information not found";
+				this.Title = "Person information not available";
 			}
 		}
 
@@ -198,16 +198,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.Object = null;
 				}
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when the role selection has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnRoleSelectionChanged(object sender, EventArgs e)
-		{
-			this.buttonRole.Enabled = this.listViewRoles.SelectedItems.Count > 0;
 		}
 
 		/// <summary>
@@ -251,23 +241,20 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the properties of a role.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnRoleProperties(object sender, EventArgs e)
-		{
-			// TO DO
-		}
-
-		/// <summary>
 		/// An event handler called when the user selects the properies of a key.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnKeyProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected keys, do nothing.
+			if (this.listViewKeys.SelectedItems.Count == 0) return;
+			// Get the selected key ID.
+			int id = (int)this.listViewKeys.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlKeyProperties> form = new FormObjectProperties<ControlKeyProperties>())
+			{
+				form.ShowDialog(this, "Key", id);
+			}
 		}
 
 		/// <summary>
@@ -277,7 +264,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSliceProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected slices, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+			// Get the selected slice ID.
+			int id = (int)this.listViewSlices.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlSliceProperties> form = new FormObjectProperties<ControlSliceProperties>())
+			{
+				form.ShowDialog(this, "Slice", id);
+			}
 		}
 
 		/// <summary>
@@ -287,7 +281,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSiteProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected sites, do nothing.
+			if (this.listViewSites.SelectedItems.Count == 0) return;
+			// Get the selected site ID.
+			int id = (int)this.listViewSites.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlSiteProperties> form = new FormObjectProperties<ControlSiteProperties>())
+			{
+				form.ShowDialog(this, "Site", id);
+			}
 		}
 
 		/// <summary>
@@ -297,7 +298,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnTagProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected tag, do nothing.
+			if (this.listViewTags.SelectedItems.Count == 0) return;
+			// Get the selected tag ID.
+			int id = (int)this.listViewTags.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlPersonTagProperties> form = new FormObjectProperties<ControlPersonTagProperties>())
+			{
+				form.ShowDialog(this, "Person Tag", id);
+			}
 		}
 	}
 }

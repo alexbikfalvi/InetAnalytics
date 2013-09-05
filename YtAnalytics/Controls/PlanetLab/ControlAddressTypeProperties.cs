@@ -25,21 +25,22 @@ using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
 {
 	/// <summary>
-	/// A control that displays the information of a PlanetLab tag.
+	/// A control that displays the information of a PlanetLab address type.
 	/// </summary>
-	public partial class ControlSliceTagProperties : ControlObjectProperties
+	public partial class ControlAddressTypeProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSliceTags);
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetAddressTypes);
 
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlSliceTagProperties()
+		public ControlAddressTypeProperties()
 		{
 			InitializeComponent();
 		}
@@ -49,16 +50,16 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj">Tha PlanetLab object.</param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			// The PlanetLab object.
-			PlSliceTag tag = obj as PlSliceTag;
+			// Get the address type.
+			PlAddressType type = obj as PlAddressType;
 
-			// Change the display information for the new tag.
-			if (null == tag)
+			// Change the display information for the new address type.
+			if (null == type)
 			{
-				this.Title = "Tag information not available";
+				this.Title = "Address type information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -66,34 +67,24 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = tag.TagName;
-				this.Icon = Resources.GlobeTag_32;
+				this.Title = type.Name;
+				this.Icon = Resources.GlobeObject_32;
 
-				this.textBoxTagName.Text = tag.TagName;
-				this.textBoxDescription.Text = tag.Description;
-				this.textBoxCategory.Text = tag.Category;
-				this.textBoxValue.Text = tag.Value;
-
-				this.textBoxSliceName.Text = tag.Name;
+				this.textBoxName.Text = type.Name;
+				this.textBoxDescription.Text = type.Description;
 
 				// Identifiers.
 
-				this.textBoxTagId.Text = tag.SliceTagId.HasValue ? tag.SliceTagId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxSliceId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxTypeId.Text = tag.TagTypeId.HasValue ? tag.TagTypeId.Value.ToString() : ControlObjectProperties.notAvailable;
-
-				this.textBoxNodeId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxNodeGroupId.Text = tag.NodeGroupId.HasValue ? tag.NodeGroupId.Value.ToString() : ControlObjectProperties.notAvailable;
-
+				this.textBoxAddressTypeId.Text = type.AddressTypeId.HasValue ? type.AddressTypeId.Value.ToString() : ControlObjectProperties.notAvailable;
 				this.tabControl.Visible = true;
 			}
 
 			this.tabControl.SelectedTab = this.tabPageGeneral;
 			if (this.Focused)
 			{
-				this.textBoxTagName.Select();
-				this.textBoxTagName.SelectionStart = 0;
-				this.textBoxTagName.SelectionLength = 0;
+				this.textBoxName.Select();
+				this.textBoxName.SelectionStart = 0;
+				this.textBoxName.SelectionLength = 0;
 			}
 		}
 
@@ -105,19 +96,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating tag information...";
+			this.Title = "Updating address type information...";
 			this.tabControl.Visible = false;
 
 			try
 			{
-				// Begin a new tags request for the specified tag.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSliceTag.GetFilter(PlSliceTag.Fields.SliceTagId, id));
+				// Begin a new nodes request for the specified node.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlAddressType.GetFilter(PlAddressType.Fields.AddressTypeId, id));
 			}
 			catch
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Tag information not available";
+				this.Title = "Address type information not available";
 			}
 		}
 
@@ -132,17 +123,17 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Create a PlanetLab tags list for the given response.
-				PlList<PlSliceTag> tags = PlList<PlSliceTag>.Create(response.Value as XmlRpcArray);
-				// If the tags count is greater than zero.
-				if (tags.Count > 0)
+				// Create a PlanetLab address types list for the given response.
+				PlList<PlAddressType> types = PlList<PlAddressType>.Create(response.Value as XmlRpcArray);
+				// If the types count is greater than zero.
+				if (types.Count > 0)
 				{
-					// Display the information for the first tag.
-					this.Object = tags[0];
+					// Display the information for the first type.
+					this.Object = types[0];
 				}
 				else
 				{
-					// Set the tag to null.
+					// Set the node to null.
 					this.Object = null;
 				}
 			}

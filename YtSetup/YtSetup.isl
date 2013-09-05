@@ -345,23 +345,21 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>GoogleApis.Authentication.OAuth2.Primary_output</td><td>{69E58F04-0C26-46F0-8C89-2F725753EC8A}</td><td>INSTALLDIR</td><td>2</td><td/><td>googleapis.authentication.oa</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>GoogleApis.Primary_output</td><td>{248AAF8A-D665-4535-A7E8-10344003698C}</td><td>INSTALLDIR</td><td>2</td><td/><td>googleapis.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>GoogleApis.Services.Primary_output</td><td>{D6B3F028-AE46-468F-983D-F58B02A8156E}</td><td>INSTALLDIR</td><td>2</td><td/><td>googleapis.services.primary_</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>GoogleApis.Tools.CodeGen.Primary_output</td><td>{144A93FE-C8A4-4F49-8D5E-7A90FB609064}</td><td>INSTALLDIR</td><td>2</td><td/><td>googleapis.tools.codegen.pri</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>GoogleApis.Tools.ServiceGenerator.Primary_output</td><td>{B3AF2170-6D14-4082-A461-64E187C1073D}</td><td>INSTALLDIR</td><td>2</td><td/><td>googleapis.tools.servicegene</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>HtmlAgilityPack.Primary_output</td><td>{145355AD-7491-4EFA-9965-E5F10FEE8682}</td><td>INSTALLDIR</td><td>2</td><td/><td>htmlagilitypack.primary_outp</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>DotNetApi.Primary_output</td><td>{59639192-61CB-443E-98DF-9E4CD37D23BE}</td><td>INSTALLDIR</td><td>2</td><td/><td>dotnetapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>HtmlAgilityPack.Primary_output</td><td>{9BC38A3C-A1CA-4DBA-9969-9E7E8DB9DDE4}</td><td>INSTALLDIR</td><td>2</td><td/><td>htmlagilitypack.primary_outp</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{0F56A50F-9259-4B09-A12C-32D10DC4E2AC}</td><td>ALEX_BIKFALVI1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{0192082A-F082-4133-9A9D-FB4A13C39EC3}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{16EAE61E-2CE1-4DED-95DC-79CBBEBB4D3E}</td><td>YOUTUBE_ANALYTICS1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{E49F7429-2B5D-4B6A-A21E-BB1AD076114D}</td><td>LOG</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{6B1F5BDA-3898-4513-AC89-1353494A18C7}</td><td>COMMENTS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>MapApi.Primary_output</td><td>{272FDA5A-F243-4E14-9F28-D6474E65413B}</td><td>INSTALLDIR</td><td>2</td><td/><td>mapapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlanetLab.Primary_output</td><td>{0419693F-2984-4156-AD0D-BA4ED4AE0576}</td><td>INSTALLDIR</td><td>2</td><td/><td>planetlab.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Renci.SshNet.Primary_output</td><td>{0520892B-5DF9-4FF1-9AF2-03209E624843}</td><td>INSTALLDIR</td><td>2</td><td/><td>renci.sshnet.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>YtAnalytics.Primary_output</td><td>{ADF17835-49D3-4234-8240-6EDA86007C6E}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytanalytics.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>YtAnalytics.Primary_output1</td><td>{B863AACD-9A2A-4DF1-8F0A-618B8220C6D0}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytanalytics.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>YtAnalytics.Primary_output1</td><td>{58D3F8C1-88F3-4639-A02A-0719A1F890BA}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytanalytics.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>YtApi.Primary_output</td><td>{44C9F505-32BB-48FD-A023-D88D2C9205A6}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>YtApi.Primary_output1</td><td>{5358887F-91C0-433E-87C0-66679E5983A4}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>YtCrawler.Primary_output</td><td>{D1FDA755-1CA2-4F57-9202-6042981766BA}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytcrawler.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>YtUi.Primary_output</td><td>{0AF0137C-3597-4572-B763-5FF45B3D278A}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytui.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>YtApi.Primary_output1</td><td>{CC114514-FFE2-4868-826A-2D36C8B46DED}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>YtCrawler.Primary_output</td><td>{52AF054A-FBF1-4880-AA46-D5EF3889F6A7}</td><td>INSTALLDIR</td><td>2</td><td/><td>ytcrawler.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1893,23 +1891,21 @@
 	<table name="FeatureComponents">
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
-		<row><td>AlwaysInstall</td><td>GoogleApis.Authentication.OAuth2.Primary_output</td></row>
-		<row><td>AlwaysInstall</td><td>GoogleApis.Primary_output</td></row>
-		<row><td>AlwaysInstall</td><td>GoogleApis.Services.Primary_output</td></row>
-		<row><td>AlwaysInstall</td><td>GoogleApis.Tools.CodeGen.Primary_output</td></row>
-		<row><td>AlwaysInstall</td><td>GoogleApis.Tools.ServiceGenerator.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>DotNetApi.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>HtmlAgilityPack.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
+		<row><td>AlwaysInstall</td><td>MapApi.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>PlanetLab.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>Renci.SshNet.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>YtAnalytics.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>YtAnalytics.Primary_output1</td></row>
 		<row><td>AlwaysInstall</td><td>YtApi.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>YtApi.Primary_output1</td></row>
 		<row><td>AlwaysInstall</td><td>YtCrawler.Primary_output</td></row>
-		<row><td>AlwaysInstall</td><td>YtUi.Primary_output</td></row>
 	</table>
 
 	<table name="File">
@@ -1924,16 +1920,14 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>googleapis.authentication.oa</td><td>GoogleApis.Authentication.OAuth2.Primary_output</td><td>GoogleApis.Authentication.OAuth2.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;GoogleApis.Authentication.OAuth2&gt;|Built</td><td>3</td><td/></row>
-		<row><td>googleapis.primary_output</td><td>GoogleApis.Primary_output</td><td>GoogleApis.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;GoogleApis&gt;|Built</td><td>3</td><td/></row>
-		<row><td>googleapis.services.primary_</td><td>GoogleApis.Services.Primary_output</td><td>GoogleApis.Services.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;GoogleApis.Services&gt;|Built</td><td>3</td><td/></row>
-		<row><td>googleapis.tools.codegen.pri</td><td>GoogleApis.Tools.CodeGen.Primary_output</td><td>GoogleApis.Tools.CodeGen.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;GoogleApis.Tools.CodeGen&gt;|Built</td><td>3</td><td/></row>
-		<row><td>googleapis.tools.servicegene</td><td>GoogleApis.Tools.ServiceGenerator.Primary_output</td><td>GoogleApis.Tools.ServiceGenerator.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;GoogleApis.Tools.ServiceGenerator&gt;|Built</td><td>3</td><td/></row>
-		<row><td>htmlagilitypack.primary_outp</td><td>HtmlAgilityPack.Primary_output</td><td>HtmlAgilityPack.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;HtmlAgilityPack&gt;|Built</td><td>3</td><td/></row>
+		<row><td>dotnetapi.primary_output</td><td>DotNetApi.Primary_output</td><td>DotNetApi.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;DotNetApi&gt;|Built</td><td>3</td><td/></row>
+		<row><td>htmlagilitypack.primary_outp</td><td>HtmlAgilityPack.Primary_output</td><td>HtmlAgilityPack.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;HtmlAgilityPack1&gt;|Built</td><td>3</td><td/></row>
+		<row><td>mapapi.primary_output</td><td>MapApi.Primary_output</td><td>MapApi.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MapApi&gt;|Built</td><td>3</td><td/></row>
+		<row><td>planetlab.primary_output</td><td>PlanetLab.Primary_output</td><td>PlanetLab.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlanetLab&gt;|Built</td><td>3</td><td/></row>
+		<row><td>renci.sshnet.primary_output</td><td>Renci.SshNet.Primary_output</td><td>Renci.SshNet.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Renci.SshNet&gt;|Built</td><td>3</td><td/></row>
 		<row><td>ytanalytics.primary_output</td><td>YtAnalytics.Primary_output1</td><td>YtAnalytics.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;YtAnalytics&gt;|Built</td><td>3</td><td/></row>
 		<row><td>ytapi.primary_output</td><td>YtApi.Primary_output1</td><td>YtApi.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;YtApi&gt;|Built</td><td>3</td><td/></row>
 		<row><td>ytcrawler.primary_output</td><td>YtCrawler.Primary_output</td><td>YtCrawler.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;YtCrawler&gt;|Built</td><td>3</td><td/></row>
-		<row><td>ytui.primary_output</td><td>YtUi.Primary_output</td><td>YtUi.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;YtUi&gt;|Built</td><td>3</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2191,23 +2185,21 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>GoogleApis.Authentication.OAuth2.Primary_output</td><td/><td/><td>_996384B9_F8C1_4553_9A21_A4A70C792095_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>GoogleApis.Primary_output</td><td/><td/><td>_25F533AF_9DF1_4205_BEEC_8A10F246600D_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>GoogleApis.Services.Primary_output</td><td/><td/><td>_0D1D757F_1006_44FC_95BE_702047C333EA_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>GoogleApis.Tools.CodeGen.Primary_output</td><td/><td/><td>_56F55F49_3869_49A3_97BD_EDD2FF9F1584_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>GoogleApis.Tools.ServiceGenerator.Primary_output</td><td/><td/><td>_E72D641C_9831_42EC_97C2_035A097AE835_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>HtmlAgilityPack.Primary_output</td><td/><td/><td>_2A5C1849_8EA8_4D53_B972_B5D1C0CB8305_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>DotNetApi.Primary_output</td><td/><td/><td>_9DA35453_0751_4F21_A757_50FE168C62A9_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>HtmlAgilityPack.Primary_output</td><td/><td/><td>_D4750E3B_FC9C_4D48_8697_E0138129AB3F_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_1DC50AF6_19D2_4BDD_9B51_890A088296DA_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_99C8F97D_6EBB_429F_A9A1_860CCD15F2C7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_2DA2D47B_C8D9_4EFB_8CAF_70473ABE567E_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_5769D4A7_240E_4C26_A35A_7B49F9E132AB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_E797B05F_6FA6_407D_84C1_A5AE6B755465_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>MapApi.Primary_output</td><td/><td/><td>_99675D80_C835_4BFD_9169_6904ADE26239_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlanetLab.Primary_output</td><td/><td/><td>_A4ACB76D_2460_406E_A174_20B6566317F6_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Renci.SshNet.Primary_output</td><td/><td/><td>_DFA9113B_6EE5_470B_9C79_BAE0B9EF227A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>YtAnalytics.Primary_output</td><td/><td/><td>_CCC6A2EB_19D8_4172_B562_26EAEA84BED0_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>YtAnalytics.Primary_output1</td><td/><td/><td>_4E314AF9_C887_47F5_AFB1_A0D5265AC841_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>YtAnalytics.Primary_output1</td><td/><td/><td>_9F672701_862B_4F22_9699_6CAC6B79D6D8_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>YtApi.Primary_output</td><td/><td/><td>_30CF78B9_3101_4BFD_86AA_C41D4B552346_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>YtApi.Primary_output1</td><td/><td/><td>_17399F68_9688_487C_BF59_EACDFEC18727_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>YtCrawler.Primary_output</td><td/><td/><td>_0997B0DF_C993_4D74_A697_59C03E3FC979_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>YtUi.Primary_output</td><td/><td/><td>_AE579DF5_2853_4E1F_8817_122C4A8D86C8_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>YtApi.Primary_output1</td><td/><td/><td>_4CB9C6DD_F0BC_4FC2_A259_9BC9FB7A30CB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>YtCrawler.Primary_output</td><td/><td/><td>_49EF8FBD_4EA1_46BB_9178_EB7381616AD5_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -2520,17 +2512,27 @@
 		<col def="S255">TestValue</col>
 		<col def="i4">Type</col>
 		<row><td>CommonFilesFolder</td><td/><td/><td>1</td></row>
+		<row><td>DotNetApi</td><td>..\DotNetApi\DotNetApi\DotNetApi.csproj</td><td/><td>2</td></row>
 		<row><td>GoogleApis</td><td>..\Google\Src\GoogleApis\GoogleApis.csproj</td><td/><td>2</td></row>
 		<row><td>GoogleApis.Authentication.OAuth2</td><td>..\Google\Src\GoogleApis.Authentication.OAuth2\GoogleApis.Authentication.OAuth2.csproj</td><td/><td>2</td></row>
+		<row><td>GoogleApis.Authentication.OAuth21</td><td>..\GoogleApi\Src\GoogleApis.Authentication.OAuth2\GoogleApis.Authentication.OAuth2.csproj</td><td/><td>2</td></row>
 		<row><td>GoogleApis.Services</td><td>..\Google\Src\GoogleApis.Services\GoogleApis.Services.csproj</td><td/><td>2</td></row>
+		<row><td>GoogleApis.Services1</td><td>..\GoogleApi\Src\GoogleApis.Services\GoogleApis.Services.csproj</td><td/><td>2</td></row>
 		<row><td>GoogleApis.Tools.CodeGen</td><td>..\Google\Src\GoogleApis.Tools.CodeGen\GoogleApis.Tools.CodeGen.csproj</td><td/><td>2</td></row>
+		<row><td>GoogleApis.Tools.CodeGen1</td><td>..\GoogleApi\Src\GoogleApis.Tools.CodeGen\GoogleApis.Tools.CodeGen.csproj</td><td/><td>2</td></row>
 		<row><td>GoogleApis.Tools.ServiceGenerator</td><td>..\Google\Src\GoogleApis.Tools.ServiceGenerator\GoogleApis.Tools.ServiceGenerator.csproj</td><td/><td>2</td></row>
+		<row><td>GoogleApis.Tools.ServiceGenerator1</td><td>..\GoogleApi\Src\GoogleApis.Tools.ServiceGenerator\GoogleApis.Tools.ServiceGenerator.csproj</td><td/><td>2</td></row>
+		<row><td>GoogleApis1</td><td>..\GoogleApi\Src\GoogleApis\GoogleApis.csproj</td><td/><td>2</td></row>
 		<row><td>HtmlAgilityPack</td><td>..\Hap\1_4_0\HtmlAgilityPack\HtmlAgilityPack.csproj</td><td/><td>2</td></row>
+		<row><td>HtmlAgilityPack1</td><td>..\HtmlAgilityPack\HtmlAgilityPack\HtmlAgilityPack.csproj</td><td/><td>2</td></row>
 		<row><td>ISPROJECTDIR</td><td/><td/><td>1</td></row>
 		<row><td>ISProductFolder</td><td/><td/><td>1</td></row>
 		<row><td>ISProjectDataFolder</td><td/><td/><td>1</td></row>
 		<row><td>ISProjectFolder</td><td/><td/><td>1</td></row>
+		<row><td>MapApi</td><td>..\DotNetApi\MapApi\MapApi.csproj</td><td/><td>2</td></row>
+		<row><td>PlanetLab</td><td>..\PlanetLab\PlanetLab\PlanetLab.csproj</td><td/><td>2</td></row>
 		<row><td>ProgramFilesFolder</td><td/><td/><td>1</td></row>
+		<row><td>Renci.SshNet</td><td>..\Renci.SshNet\Renci.SshNet.csproj</td><td/><td>2</td></row>
 		<row><td>SystemFolder</td><td/><td/><td>1</td></row>
 		<row><td>WindowsFolder</td><td/><td/><td>1</td></row>
 		<row><td>YtAnalytics</td><td>YtAnalytics\YtAnalytics.csproj</td><td/><td>2</td></row>
@@ -3943,7 +3945,7 @@
 		<row><td>IDS__IsVerifyRemoveAllDlg_Remove</td><td>1033</td><td>&amp;Remove</td><td>0</td><td/><td>1981868268</td></row>
 		<row><td>IDS__IsVerifyRemoveAllDlg_RemoveProgram</td><td>1033</td><td>{&amp;MSSansBold8}Remove the Program</td><td>0</td><td/><td>1981868268</td></row>
 		<row><td>IDS__IsWelcomeDlg_InstallProductName</td><td>1033</td><td>The InstallShield(R) Wizard will install [ProductName] on your computer. To continue, click Next.</td><td>0</td><td/><td>1981868268</td></row>
-		<row><td>IDS__IsWelcomeDlg_WarningCopyright</td><td>1033</td><td>WARNING: This program is protected by copyright law and international treaties.</td><td>0</td><td/><td>1981868268</td></row>
+		<row><td>IDS__IsWelcomeDlg_WarningCopyright</td><td>1033</td><td/><td>0</td><td/><td>748775279</td></row>
 		<row><td>IDS__IsWelcomeDlg_WelcomeProductName</td><td>1033</td><td>{&amp;TahomaBold10}Welcome to the InstallShield Wizard for [ProductName]</td><td>0</td><td/><td>1981868268</td></row>
 		<row><td>IDS__TargetReq_DESC_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>1981868268</td></row>
 		<row><td>IDS__TargetReq_DESC_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>1981868268</td></row>
@@ -4069,8 +4071,8 @@
 		<col def="I2">ISIconIndex</col>
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\Icon.ico</td><td>0</td></row>
 		<row><td>NewShortcut1_57C3D3A479D7411AA24A399CCEFB6D65.exe</td><td/><td>&lt;SystemFolder&gt;\imageres.dll</td><td>82</td></row>
-		<row><td>_Built1_CC28D6E254C647E7BE71848B61DE6493.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\GraphBarColor.ico</td><td>0</td></row>
-		<row><td>_Built_E12F097AD55649E0AB8A5E266CCAC9F0.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\GraphBarColor.ico</td><td>0</td></row>
+		<row><td>_Built1_73B5A9CEF3B640369531C4670CCC4C3E.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\Icon.ico</td><td>0</td></row>
+		<row><td>_Built_00FE7BAB04404041BADCE083D866C8D9.exe</td><td/><td>C:\Users\Alex\Projects\YtAnalytics\YtAnalytics\Icon.ico</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -4657,14 +4659,38 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S0">Value</col>
 		<col def="s72">Component_</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>Registry1</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Log</td><td>FileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Log\YtLog-{0}-{1}-{2}.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry2</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Console</td><td>MessageCloseDelay</td><td>#1000</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry3</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td>VideosFileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Comments\Videos.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry4</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube\V2</td><td>UserName</td><td>ytcrawlerapp</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry6</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube\V2</td><td>Password</td><td>#x4054eebcab82a252b4d096c4dd633f4ae008684bdda614b87f122872d3dc31da</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>_530E54FFC53C471F930C7B909B961AC2</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube</td><td>Password</td><td>#x4054eebcab82a252b4d096c4dd633f4ae008684bdda614b87f122872d3dc31da</td><td>ISX_DEFAULTCOMPONENT1</td><td/></row>
-		<row><td>_A383C00B12C66951B68D01404B0ABB04</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube\V2</td><td>ApiKey</td><td>AI39si6SSC_ly53671QQw4cG5xhkCD0ZudSdgBajdnzKv5ne97jWjN_lU1C0qUj3rNC6rxIQJ5HGVRAmVF1CGwEGI1ku7hFB0w</td><td>ISX_DEFAULTCOMPONENT1</td><td/></row>
-		<row><td>_B018BA77F9BBCD272F5D91576671BDCF</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube</td><td>UserName</td><td>ytcrawlerapp</td><td>ISX_DEFAULTCOMPONENT1</td><td/></row>
+		<row><td>Registry1</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry112</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry115</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube\V2</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry117</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry118</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Console</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry121</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Log</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry122</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\PlanetLab</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry123</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry124</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Testing\WebRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry125</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube\V2</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry51</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry52</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td>VideosFileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Comments\Videos.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry53</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td>UsersFileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Comments\Users.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry54</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td>PlaylistsFileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Comments\Playlists.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry55</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Console</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry56</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Console</td><td>SideMenuVisibleItems</td><td>#4</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry59</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Database</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry79</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Log</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry80</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Log</td><td>FileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Log\YtLog-{0}-{1}-{2}.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry81</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\PlanetLab</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry84</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry85</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry86</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>TopRated</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry87</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>TopFavories</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry88</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>MostShared</td><td>#0</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry89</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>MostPopular</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry90</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>MostRecent</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry91</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>MostDiscussed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry92</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>RecentlyFeatured</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry93</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td>MostResponsed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry94</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Testing</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry95</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Testing\WebRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 	</table>
 
 	<table name="RemoveFile">
@@ -4763,8 +4789,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
 		<row><td>NewShortcut1</td><td>youtub_1_youtube_analytics</td><td>##ID_STRING10##</td><td>ISX_DEFAULTCOMPONENT1</td><td>[SystemFolder]MsiExec.exe</td><td>/x [ProductCode]</td><td/><td/><td>NewShortcut1_57C3D3A479D7411AA24A399CCEFB6D65.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built</td><td>youtub_1_youtube_analytics</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>YtAnalytics.Primary_output</td><td>AlwaysInstall</td><td/><td>##ID_STRING8##</td><td/><td>_Built_E12F097AD55649E0AB8A5E266CCAC9F0.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>YtAnalytics.Primary_output</td><td>AlwaysInstall</td><td/><td>##ID_STRING9##</td><td/><td>_Built1_CC28D6E254C647E7BE71848B61DE6493.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built</td><td>youtub_1_youtube_analytics</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>YtAnalytics.Primary_output</td><td>AlwaysInstall</td><td/><td>##ID_STRING8##</td><td/><td>_Built_00FE7BAB04404041BADCE083D866C8D9.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>YtAnalytics.Primary_output</td><td>AlwaysInstall</td><td/><td>##ID_STRING9##</td><td/><td>_Built1_73B5A9CEF3B640369531C4670CCC4C3E.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

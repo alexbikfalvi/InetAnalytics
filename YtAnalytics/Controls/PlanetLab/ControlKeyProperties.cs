@@ -20,26 +20,30 @@ using System;
 using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
-using PlanetLab;
+using MapApi;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
 {
 	/// <summary>
-	/// A control that displays the information of a PlanetLab tag.
+	/// A control that displays the information of a PlanetLab key.
 	/// </summary>
-	public partial class ControlSliceTagProperties : ControlObjectProperties
+	public partial class ControlKeyProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSliceTags);
+		private MapBulletMarker marker = new MapBulletMarker();
+
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetKeys);
 
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlSliceTagProperties()
+		public ControlKeyProperties()
 		{
 			InitializeComponent();
 		}
@@ -49,16 +53,16 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when a new PlanetLab object is set.
 		/// </summary>
-		/// <param name="obj">Tha PlanetLab object.</param>
+		/// <param name="obj">The PlanetLab object.</param>
 		protected override void OnObjectSet(PlObject obj)
 		{
-			// The PlanetLab object.
-			PlSliceTag tag = obj as PlSliceTag;
+			// Get the site.
+			PlKey key = obj as PlKey;
 
-			// Change the display information for the new tag.
-			if (null == tag)
+			// Change the display information for the new site.
+			if (null == key)
 			{
-				this.Title = "Tag information not available";
+				this.Title = "Key information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -66,24 +70,18 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = tag.TagName;
-				this.Icon = Resources.GlobeTag_32;
+				this.Title = "Key {0}".FormatWith(key.Id);
+				this.Icon = Resources.GlobeObject_32;
 
-				this.textBoxTagName.Text = tag.TagName;
-				this.textBoxDescription.Text = tag.Description;
-				this.textBoxCategory.Text = tag.Category;
-				this.textBoxValue.Text = tag.Value;
-
-				this.textBoxSliceName.Text = tag.Name;
+				this.textBoxKey.Text = key.Key;
+				this.textBoxKeyType.Text = key.KeyType;
 
 				// Identifiers.
 
-				this.textBoxTagId.Text = tag.SliceTagId.HasValue ? tag.SliceTagId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxSliceId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxTypeId.Text = tag.TagTypeId.HasValue ? tag.TagTypeId.Value.ToString() : ControlObjectProperties.notAvailable;
-
-				this.textBoxNodeId.Text = tag.NodeId.HasValue ? tag.NodeId.Value.ToString() : ControlObjectProperties.notAvailable;
-				this.textBoxNodeGroupId.Text = tag.NodeGroupId.HasValue ? tag.NodeGroupId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxKeyId.Text = key.KeyId.HasValue ? key.KeyId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxPeerId.Text = key.PeerId.HasValue ? key.PeerId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxPersonId.Text = key.PersonId.HasValue ? key.PersonId.Value.ToString() : ControlObjectProperties.notAvailable;
+				this.textBoxPeerKeyId.Text = key.PeerKeyId.HasValue ? key.PeerKeyId.Value.ToString() : ControlObjectProperties.notAvailable;
 
 				this.tabControl.Visible = true;
 			}
@@ -91,9 +89,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.tabControl.SelectedTab = this.tabPageGeneral;
 			if (this.Focused)
 			{
-				this.textBoxTagName.Select();
-				this.textBoxTagName.SelectionStart = 0;
-				this.textBoxTagName.SelectionLength = 0;
+				this.textBoxKey.Select();
+				this.textBoxKey.SelectionStart = 0;
+				this.textBoxKey.SelectionLength = 0;
 			}
 		}
 
@@ -105,19 +103,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating tag information...";
+			this.Title = "Updating key information...";
 			this.tabControl.Visible = false;
 
 			try
 			{
-				// Begin a new tags request for the specified tag.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSliceTag.GetFilter(PlSliceTag.Fields.SliceTagId, id));
+				// Begin a new sites request for the specified site.
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlKey.GetFilter(PlKey.Fields.KeyId, id));
 			}
 			catch
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Tag information not available";
+				this.Title = "Key information not available";
 			}
 		}
 
@@ -132,17 +130,17 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Create a PlanetLab tags list for the given response.
-				PlList<PlSliceTag> tags = PlList<PlSliceTag>.Create(response.Value as XmlRpcArray);
-				// If the tags count is greater than zero.
-				if (tags.Count > 0)
+				// Create a PlanetLab keys list for the given response.
+				PlList<PlKey> keys = PlList<PlKey>.Create(response.Value as XmlRpcArray);
+				// If the keys count is greater than zero.
+				if (keys.Count > 0)
 				{
-					// Display the information for the first tag.
-					this.Object = tags[0];
+					// Display the information for the first key.
+					this.Object = keys[0];
 				}
 				else
 				{
-					// Set the tag to null.
+					// Set the site to null.
 					this.Object = null;
 				}
 			}

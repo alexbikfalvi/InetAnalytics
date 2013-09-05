@@ -58,7 +58,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new tag.
 			if (null == tag)
 			{
-				this.Title = "Tag information not found";
+				this.Title = "Tag information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -114,7 +114,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Tag information not found";
+				this.Title = "Tag information not available";
 			}
 		}
 

@@ -25,6 +25,7 @@ using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -58,7 +59,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new PCU.
 			if (null == pcu)
 			{
-				this.labelTitle.Text = "PCU information not found";
+				this.labelTitle.Text = "PCU information not available";
 				this.pictureBox.Image = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -138,7 +139,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Catch all exceptions.
 				this.pictureBox.Image = Resources.GlobeError_32;
-				this.labelTitle.Text = "PCU information not found";
+				this.labelTitle.Text = "PCU information not available";
 			}
 		}
 
@@ -187,7 +188,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected nodes, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
+			// Get the selected node ID.
+			int id = (int)this.listViewNodes.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlNodeProperties> form = new FormObjectProperties<ControlNodeProperties>())
+			{
+				form.ShowDialog(this, "Node", id);
+			}
 		}
 	}
 }

@@ -28,37 +28,9 @@
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2012SpringLimited\InstallShield.targets"/>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Google\Src\GoogleApis\GoogleApis.csproj">
-			<Name>GoogleApis</Name>
-			<Project>{CBB5E638-F8D5-48DB-93BE-5A7CDD7ED107}</Project>
-		</ProjectReference>
-		<ProjectReference Include="..\..\Google\Src\GoogleApis.Authentication.OAuth2\GoogleApis.Authentication.OAuth2.csproj">
-			<Name>GoogleApis.Authentication.OAuth2</Name>
-			<Project>{76106493-68EF-4E44-AF2E-971ABF29B300}</Project>
-		</ProjectReference>
-		<ProjectReference Include="..\..\Google\Src\GoogleApis.Services\GoogleApis.Services.csproj">
-			<Name>GoogleApis.Services</Name>
-			<Project>{4B26710F-41F0-460F-B3B6-C998B20C7E6E}</Project>
-		</ProjectReference>
-		<ProjectReference Include="..\..\Google\Src\GoogleApis.Tools.CodeGen\GoogleApis.Tools.CodeGen.csproj">
-			<Name>GoogleApis.Tools.CodeGen</Name>
-			<Project>{22F162B0-DC09-4F3B-935C-D1FAF2367032}</Project>
-		</ProjectReference>
-		<ProjectReference Include="..\..\Google\Src\GoogleApis.Tools.ServiceGenerator\GoogleApis.Tools.ServiceGenerator.csproj">
-			<Name>GoogleApis.Tools.ServiceGenerator</Name>
-			<Project>{FAD28B73-7185-4D31-8939-8AD91C3A8384}</Project>
-		</ProjectReference>
-		<ProjectReference Include="..\..\Hap\1_4_0\HtmlAgilityPack\HtmlAgilityPack.csproj">
-			<Name>HtmlAgilityPack</Name>
-			<Project>{193BB801-054F-4729-9D5D-FCE1E32594BF}</Project>
-		</ProjectReference>
 		<ProjectReference Include="..\YtCrawler\YtCrawler.csproj">
 			<Name>YtCrawler</Name>
 			<Project>{A9792D30-2043-4CF9-9578-991288B0FB9E}</Project>
-		</ProjectReference>
-		<ProjectReference Include="..\YtUi\YtUi.csproj">
-			<Name>YtUi</Name>
-			<Project>{B291D7E9-4FE6-42A0-B6AC-48BE031B36F9}</Project>
 		</ProjectReference>
 		<ProjectReference Include="..\YtAnalytics\YtAnalytics.csproj">
 			<Name>YtAnalytics</Name>
@@ -67,6 +39,26 @@
 		<ProjectReference Include="..\YtApi\YtApi.csproj">
 			<Name>YtApi</Name>
 			<Project>{6E2D7303-FFAB-4732-86F5-8BB0F7CD8276}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
+			<Name>DotNetApi</Name>
+			<Project>{475F767E-2288-4E56-9B90-179A10DCAB49}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\..\HtmlAgilityPack\HtmlAgilityPack\HtmlAgilityPack.csproj">
+			<Name>HtmlAgilityPack1</Name>
+			<Project>{193BB801-054F-4729-9D5D-FCE1E32594BF}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\..\DotNetApi\MapApi\MapApi.csproj">
+			<Name>MapApi</Name>
+			<Project>{C5C1839C-4971-4781-B8FA-FF743E257A7E}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\..\PlanetLab\PlanetLab\PlanetLab.csproj">
+			<Name>PlanetLab</Name>
+			<Project>{8D8A9A27-A8CA-4A27-95E5-C2246BDABC85}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Renci.SshNet\Renci.SshNet.csproj">
+			<Name>Renci.SshNet</Name>
+			<Project>{2F5F8C90-0BD1-424F-997C-7BC6280919D1}</Project>
 		</ProjectReference>
 	</ItemGroup>
 </Project>

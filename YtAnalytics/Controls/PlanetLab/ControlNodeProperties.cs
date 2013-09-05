@@ -59,7 +59,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new node.
 			if (null == node)
 			{
-				this.Title = "Node information not found";
+				this.Title = "Node information not available";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -163,6 +163,15 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.listViewSliceWhitelist.Items.Add(item);
 				}
 
+				// Configuration files.
+				this.listViewConfigurationFiles.Items.Clear();
+				foreach (int id in node.ConfigurationFileIds)
+				{
+					ListViewItem item = new ListViewItem(id.ToString(), 0);
+					item.Tag = id;
+					this.listViewConfigurationFiles.Items.Add(item);
+				}
+
 				// Disable the buttons.
 				this.buttonInterface.Enabled = false;
 				this.buttonPcu.Enabled = false;
@@ -170,6 +179,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.buttonSlice.Enabled = false;
 				this.buttonNodeGroup.Enabled = false;
 				this.buttonSliceWhitelist.Enabled = false;
+				this.buttonConfigurationFile.Enabled = false;
 
 				this.tabControl.Visible = true;
 			}
@@ -203,7 +213,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Catch all exceptions.
 				this.Icon = Resources.GlobeError_32;
-				this.Title = "Node information not found";
+				this.Title = "Node information not available";
 			}
 		}
 
@@ -328,7 +338,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnInterfaceProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected interfaces, do nothing.
+			if (this.listViewInterfaces.SelectedItems.Count == 0) return;
+			// Get the selected interface ID.
+			int id = (int)this.listViewInterfaces.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlInterfaceProperties> form = new FormObjectProperties<ControlInterfaceProperties>())
+			{
+				form.ShowDialog(this, "Interface", id);
+			}
 		}
 
 		/// <summary>
@@ -357,7 +374,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// If there are no selected tag, do nothing.
 			if (this.listViewNodeTags.SelectedItems.Count == 0) return;
-			// Get the selected address ID.
+			// Get the selected tag.
 			int id = (int)this.listViewNodeTags.SelectedItems[0].Tag;
 			using (FormObjectProperties<ControlNodeTagProperties> form = new FormObjectProperties<ControlNodeTagProperties>())
 			{
@@ -372,7 +389,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeGroupProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected node group, do nothing.
+			if (this.listViewNodeGroups.SelectedItems.Count == 0) return;
+			// Get the selected node group.
+			int id = (int)this.listViewNodeGroups.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlNodeGroupProperties> form = new FormObjectProperties<ControlNodeGroupProperties>())
+			{
+				form.ShowDialog(this, "Node Group", id);
+			}
 		}
 
 		/// <summary>
@@ -399,7 +423,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnConfigurationFileProperties(object sender, EventArgs e)
 		{
-			// TO DO
+			// If there are no selected configuration files, do nothing.
+			if (this.listViewConfigurationFiles.SelectedItems.Count == 0) return;
+			// Get the selected configuration file ID.
+			int id = (int)this.listViewConfigurationFiles.SelectedItems[0].Tag;
+			using (FormObjectProperties<ControlConfigurationFileProperties> form = new FormObjectProperties<ControlConfigurationFileProperties>())
+			{
+				form.ShowDialog(this, "Configuration File", id);
+			}
 		}
 	}
 }
