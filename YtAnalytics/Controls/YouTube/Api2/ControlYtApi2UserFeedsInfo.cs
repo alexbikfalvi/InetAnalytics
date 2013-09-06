@@ -71,7 +71,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the video link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnUserClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -81,7 +81,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the uploads feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnUploadsFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -91,7 +91,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the favorites feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnFavoritesFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -101,7 +101,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the user playlists feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnPlaylistsFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -111,7 +111,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the playlist feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnPlaylistFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{

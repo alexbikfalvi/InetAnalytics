@@ -151,7 +151,7 @@ namespace YtAnalytics.Forms.Database
 		/// <summary>
 		/// An event handler called when the table configuration was saved.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnConfigurationSaved(object sender, EventArgs e)
 		{

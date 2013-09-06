@@ -414,7 +414,7 @@ namespace YtAnalytics.Controls.Log
 	/// <summary>
 	/// Represents the state of an update request.
 	/// </summary>
-	internal class ControlLogUpdateState
+	internal sealed class ControlLogUpdateState : IDisposable
 	{
 		private DateRangeEventArgs range;
 		private bool canceled = false;
@@ -487,6 +487,16 @@ namespace YtAnalytics.Controls.Log
 					this.mutex.ReleaseMutex();
 				}
 			}
+		}
+
+		// Public methods.
+
+		public void Dispose()
+		{
+			// Dispose the fields.
+			this.mutex.Dispose();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>

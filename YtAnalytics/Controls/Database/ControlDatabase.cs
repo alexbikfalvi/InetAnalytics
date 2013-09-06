@@ -21,6 +21,7 @@ using System.Drawing;
 using System.Security;
 using System.Threading;
 using System.Windows.Forms;
+using YtAnalytics.Events;
 using YtAnalytics.Forms.Database;
 using YtCrawler;
 using YtCrawler.Database;
@@ -560,19 +561,18 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the user changes the password for a database server.
 		/// </summary>
-		/// <param name="oldPassword">The old password.</param>
-		/// <param name="newPassword">The new password.</param>
-		/// <param name="state">The user state.</param>
-		private void OnPasswordChanged(SecureString oldPassword, SecureString newPassword, object state)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPasswordChanged(object sender, PasswordChangedEventArgs e)
 		{
 			// Get the database server.
-			DbServer server = state as DbServer;
+			DbServer server = e.State as DbServer;
 			// Show a password changing message.
 			this.ShowMessage(Resources.Connect_48, "Database", "Changing the password for the database server \'{0}\'...".FormatWith(server.Name));
 			try
 			{
 				// Change the password asynchronously of the database server.
-				server.ChangePassword(newPassword, this.OnPasswordChangeCompleted);
+				server.ChangePassword(e.NewPassword, this.OnPasswordChangeCompleted);
 			}
 			catch (Exception exception)
 			{

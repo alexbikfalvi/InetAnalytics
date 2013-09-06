@@ -67,12 +67,18 @@ namespace YtCrawler.Database
 		// Protected methods.
 
 		/// <summary>
-		/// An event handler called when the current object is disposed.
+		/// Disposes the current object.
 		/// </summary>
-		protected override void OnDispose()
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
 		{
-			// Dispose the current transaction.
-			this.transaction.Dispose();
+			if (disposing)
+			{
+				// Dispose the current transaction.
+				this.transaction.Dispose();
+			}
+			// Call the base class method.
+			base.Dispose(disposing);
 		}
 	}
 }

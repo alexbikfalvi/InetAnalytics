@@ -490,6 +490,12 @@
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CommentEventArgs.cs" />
+    <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
+    <Compile Include="Events\PasswordChangedEventArgs.cs" />
+    <Compile Include="Events\ProfileEventArgs.cs" />
+    <Compile Include="Events\StringEventArgs.cs" />
+    <Compile Include="Events\VideoEventArgs.cs" />
     <Compile Include="Forms\PlanetLab\FormObjectProperties.cs">
       <SubType>Form</SubType>
     </Compile>

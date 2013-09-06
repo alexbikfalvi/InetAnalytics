@@ -182,12 +182,16 @@ namespace YtCrawler.Database
 		}
 
 		/// <summary>
-		/// A method called when the object is being disposed.
+		/// Disposes the current object.
 		/// </summary>
-		protected override void OnDisposed()
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
 		{
-			// Dispose the current command.
-			this.command.Dispose();
+			if (disposing)
+			{
+				// Dispose the current command.
+				this.command.Dispose();
+			}
 		}
 	}
 }

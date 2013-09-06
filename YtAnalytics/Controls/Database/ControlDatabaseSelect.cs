@@ -18,6 +18,7 @@
 
 using System;
 using System.Windows.Forms;
+using YtAnalytics.Events;
 using YtAnalytics.Forms.Database;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
@@ -26,8 +27,6 @@ using DotNetApi;
 
 namespace YtAnalytics.Controls.Database
 {
-	public delegate void DatabaseObjectSelectedEventHandler(DbObject selectedResult, DbDataObject allResults);
-
 	/// <summary>
 	/// A control that selects items from a database, based on a query selected by the user.
 	/// </summary>
@@ -309,7 +308,7 @@ namespace YtAnalytics.Controls.Database
 			// Else, get the database object corresponding to the first selected item.
 			DbObject selectedResult = this.dataGrid.SelectedRows[0].Tag as DbObject;
 			// Raise the event.
-			if (this.Selected != null) this.Selected(selectedResult, this.result);
+			if (this.Selected != null) this.Selected(this, new DatabaseObjectSelectedEventArgs(selectedResult, this.result));
 		}
 
 		/// <summary>
@@ -346,7 +345,7 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the user cancel a current database command.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnCancel(object sender, EventArgs e)
 		{

@@ -36,6 +36,7 @@ using YtAnalytics.Controls.YouTube;
 using YtAnalytics.Controls.YouTube.Api2;
 using YtAnalytics.Controls.YouTube.Api3;
 using YtAnalytics.Controls.YouTube.Web;
+using YtAnalytics.Events;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
 using YtCrawler;
@@ -120,6 +121,7 @@ namespace YtAnalytics.Forms
 		private ControlSites controlPlanetLabSites = new ControlSites();
 
 		private ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
+		private ControlTestingSsh controlTestingSsh = new ControlTestingSsh();
 
 		private ControlSettings controlSettings = new ControlSettings();
 		
@@ -542,7 +544,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event handler called when the selected side menu log has changed.
 		/// </summary>
-		/// <param name="item"></param>
+		/// <param name="item">The side menu item.</param>
 		private void OnSideMenuSelectLog(SideMenuItem item)
 		{
 			// Refresh the log.
@@ -552,10 +554,12 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event handler called when the right panel control selection has changed.
 		/// </summary>
-		private void OnControlChanged(Control sender, Control control)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnControlChanged(object sender, ControlChangedEventArgs e)
 		{
 			// If the selected control has not changed, do nothing.
-			if (control == this.controlPanel) return;
+			if (e.Control == this.controlPanel) return;
 
 			// If there exists a current control.
 			if (null != this.controlPanel)
@@ -565,14 +569,14 @@ namespace YtAnalytics.Forms
 			}
 
 			// If the control is not null.
-			if (null != control)
+			if (null != e.Control)
 			{
 				// Show the control.
-				control.Show();
+				e.Control.Show();
 				// Activate the control status.
-				this.crawler.Status.Activate(control);
+				this.crawler.Status.Activate(e.Control);
 				// Set the selected control.
-				this.controlPanel = control;
+				this.controlPanel = e.Control;
 			}
 			else
 			{
@@ -586,15 +590,16 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event handler called when changing the status message.
 		/// </summary>
-		/// <param name="message">The status message.</param>
-		private void OnStatusMessage(StatusMessage? message)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStatusMessage(object sender, StatusMessageEventArgs e)
 		{
-			if (message.HasValue)
+			if (e.Message.HasValue)
 			{
-				this.statusLabelLeft.Image = message.Value.LeftImage;
-				this.statusLabelLeft.Text = message.Value.LeftText;
-				this.statusLabelRight.Image = message.Value.RightImage;
-				this.statusLabelRight.Text = message.Value.RightText;
+				this.statusLabelLeft.Image = e.Message.Value.LeftImage;
+				this.statusLabelLeft.Text = e.Message.Value.LeftText;
+				this.statusLabelRight.Image = e.Message.Value.RightImage;
+				this.statusLabelRight.Text = e.Message.Value.RightText;
 			}
 			else
 			{
@@ -725,95 +730,95 @@ namespace YtAnalytics.Forms
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
 		}
 
-		private void ViewVideoInApiV2(Video video)
+		private void ViewVideoInApiV2(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
-			this.controlYtApi2Video.View(video);
+			this.controlYtApi2Video.View(e.Video);
 		}
 
-		private void ViewVideoCommentsInApiV2(string video)
+		private void ViewVideoCommentsInApiV2(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
-			this.controlYtApi2CommentsFeed.View(video);
+			this.controlYtApi2CommentsFeed.View(e.Value);
 		}
 
-		private void ViewRelatedVideosInApiV2(Video video)
+		private void ViewRelatedVideosInApiV2(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
-			this.controlYtApi2RelatedFeed.View(video.Id);
+			this.controlYtApi2RelatedFeed.View(e.Video.Id);
 		}
 
-		private void ViewResponseVideosInApiV2(Video video)
+		private void ViewResponseVideosInApiV2(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
-			this.controlYtApi2ResponseFeed.View(video.Id);
+			this.controlYtApi2ResponseFeed.View(e.Video.Id);
 		}
 
-		private void ViewApiV2User(string user)
+		private void ViewApiV2User(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2User;
-			this.controlYtApi2Profile.View(user);
+			this.controlYtApi2Profile.View(e.Value);
 		}
 
-		private void ViewApiV2UploadedVideos(Profile profile)
+		private void ViewApiV2UploadedVideos(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
-			this.controlYtApi2UploadsFeed.View(profile.Id);
+			this.controlYtApi2UploadsFeed.View(e.Profile.Id);
 		}
 
-		private void ViewApiV2FavoritedVideos(Profile profile)
+		private void ViewApiV2FavoritedVideos(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
-			this.controlYtApi2FavoritesFeed.View(profile.Id);
+			this.controlYtApi2FavoritesFeed.View(e.Profile.Id);
 		}
 
-		private void ViewApiV2Playlists(Profile profile)
+		private void ViewApiV2Playlists(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
-			this.controlYtApi2PlaylistsFeed.View(profile.Id);
+			this.controlYtApi2PlaylistsFeed.View(e.Profile.Id);
 		}
 
-		private void ViewApiV2Playlist(string playlist)
+		private void ViewApiV2Playlist(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
-			this.controlYtApi2PlaylistFeed.View(playlist);
+			this.controlYtApi2PlaylistFeed.View(e.Value);
 		}
 
-		private void ViewVideoInWeb(Video video)
+		private void ViewVideoInWeb(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
-			this.controlWebStatistics.View(video.Id);
+			this.controlWebStatistics.View(e.Video.Id);
 		}
 
-		private void CommentVideo(string video)
+		private void CommentVideo(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
-			this.controlCommentsVideos.AddComment(video);
+			this.controlCommentsVideos.AddComment(e.Value);
 		}
 
-		private void CommentUser(string user)
+		private void CommentUser(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
-			this.controlCommentsUsers.AddComment(user);
+			this.controlCommentsUsers.AddComment(e.Value);
 		}
 
-		private void CommentPlaylist(string playlist)
+		private void CommentPlaylist(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
-			this.controlCommentsPlaylists.AddComment(playlist);
+			this.controlCommentsPlaylists.AddComment(e.Value);
 		}
 
 		/// <summary>
@@ -829,7 +834,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// Opens the about form.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OpenAboutForm(object sender, EventArgs e)
 		{
@@ -839,7 +844,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event handler called when the log date has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnLogDateChanged(object sender, DateRangeEventArgs e)
 		{
@@ -850,7 +855,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event handler called when the log is refreshed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnLogDateRefresh(object sender, DateRangeEventArgs e)
 		{

@@ -45,14 +45,20 @@ namespace YtCrawler.Database
 		/// </summary>
 		public void Dispose()
 		{
-			this.OnDispose();
+			// Call the dispose event handler.
+			this.Dispose(true);
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		// Protected methods.
 
 		/// <summary>
-		/// An event handler called when the current object is disposed.
+		/// Disposes the current object.
 		/// </summary>
-		protected abstract void OnDispose();
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected virtual void Dispose(bool disposing)
+		{
+		}
 	}
 }

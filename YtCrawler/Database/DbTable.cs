@@ -27,8 +27,6 @@ using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
 {
-	public delegate void DbTableChangedEventHandler(ITable table);
-
 	/// <summary>
 	/// An interface for a database table.
 	/// </summary>
@@ -96,7 +94,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when the configuration of the table has changed.
 		/// </summary>
-		event DbTableChangedEventHandler TableChanged;
+		event DbTableEventHandler TableChanged;
 
 		// Public methods.
 
@@ -307,7 +305,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when the configuration of the table has changed.
 		/// </summary>
-		public event DbTableChangedEventHandler TableChanged;
+		public event DbTableEventHandler TableChanged;
 
 		// Public methods.
 
@@ -356,7 +354,7 @@ namespace YtCrawler.Database
 					// If the field does not exist, ignore the XML and move to the next entry.
 					if (null == field) continue;
 					// Otherwise, set the field database name.
-					field.DatabaseName = databaseName;
+					field.SetDatabaseName(databaseName);
 				}
 			}
 			catch (Exception)
@@ -388,7 +386,7 @@ namespace YtCrawler.Database
 			{
 				element.Add(new XElement(DbTable<T>.xmlField,
 					new XAttribute(DbTable<T>.xmlFieldLocalName, field.Property.Name),
-					new XAttribute(DbTable<T>.xmlFieldDatabaseName, field.HasName ? field.DatabaseName : string.Empty)
+					new XAttribute(DbTable<T>.xmlFieldDatabaseName, field.HasName ? field.GetDatabaseName() : string.Empty)
 					));
 			}
 
@@ -397,7 +395,7 @@ namespace YtCrawler.Database
 			// Write the document to registry.
 			Registry.SetBytes(key, this.localName, Encoding.UTF8.GetBytes(document.ToString()));
 			// Raise the table changed event.
-			if (this.TableChanged != null) this.TableChanged(this);
+			if (this.TableChanged != null) this.TableChanged(this, new DbTableEventArgs(this));
 		}
 
 		/// <summary>
@@ -414,7 +412,7 @@ namespace YtCrawler.Database
 			{
 				// Get the value of the corresponding column from the reader,
 				// and set the value to the object property.
-				object value = reader[field.DatabaseName];
+				object value = reader[field.GetDatabaseName()];
 
 				// If the type is nullable, and the data value is null.
 				if (field.Attribute.IsNullable && Convert.IsDBNull(value))
@@ -449,7 +447,7 @@ namespace YtCrawler.Database
 			{
 				// Get the value of the corresponding column from the reader,
 				// and set the value to the object property.
-				object value = data[field.DatabaseName, row];
+				object value = data[field.GetDatabaseName(), row];
 
 				// If the type is nullable, and the data value is null.
 				if (field.Attribute.IsNullable && Convert.IsDBNull(value))

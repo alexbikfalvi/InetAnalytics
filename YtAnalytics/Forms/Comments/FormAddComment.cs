@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using YtAnalytics.Controls.Comments;
+using YtAnalytics.Events;
 using YtCrawler.Comments;
 using DotNetApi.Windows;
 
@@ -64,7 +65,7 @@ namespace YtAnalytics.Forms.Comments
 		/// <summary>
 		/// An event raised when a new comment was added.
 		/// </summary>
-		public event AddCommentEventHandler CommentAdded;
+		public event CommentEventHandler CommentAdded;
 
 		/// <summary>
 		/// Shows the add comment dialog, for the specified object ID and user.
@@ -90,9 +91,8 @@ namespace YtAnalytics.Forms.Comments
 		private void OnAddClick(object sender, EventArgs e)
 		{
 			// Raise the add event.
-			if (this.CommentAdded != null) this.CommentAdded(
-				new Comment(this.CommentType, DateTime.Now, this.control.Item, this.control.User, this.control.Text)
-				);
+			if (this.CommentAdded != null) this.CommentAdded(this, new CommentEventArgs(
+				new Comment(this.CommentType, DateTime.Now, this.control.Item, this.control.User, this.control.Text)));
 			// Close the dialog.
 			this.Close();
 		}

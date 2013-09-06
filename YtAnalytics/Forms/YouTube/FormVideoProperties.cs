@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YtAnalytics.Controls.YouTube.Api2;
+using YtAnalytics.Events;
 using YtApi.Api.V2.Data;
 using DotNetApi.Windows;
 
@@ -50,7 +51,7 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event raised to view the user profile.
 		/// </summary>
-		public event ViewIdEventHandler ViewProfile;
+		public event StringEventHandler ViewProfile;
 
 		/// <summary>
 		/// Shows the form as a dialog and the specified video.
@@ -74,15 +75,16 @@ namespace YtAnalytics.Forms
 		/// <summary>
 		/// An event handler called to view the user profile.
 		/// </summary>
-		/// <param name="id">The profile ID.</param>
-		private void OnViewProfile(string id)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewProfile(object sender, StringEventArgs e)
 		{
 			if (this.ViewProfile != null)
 			{
 				// Close the dialog.
 				this.Close();
 				// Raise the event.
-				this.ViewProfile(id);
+				if (null != this.ViewProfile) this.ViewProfile(sender, e);
 			}
 		}
 	}

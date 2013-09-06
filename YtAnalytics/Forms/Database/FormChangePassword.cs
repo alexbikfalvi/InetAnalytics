@@ -20,14 +20,13 @@ using System;
 using System.Security;
 using System.Windows.Forms;
 using YtAnalytics.Controls;
+using YtAnalytics.Events;
 using YtCrawler.Database;
 using DotNetApi.Security;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Database
 {
-	public delegate void PasswordChangedEventHandler(SecureString oldPassword, SecureString newPassword, object state);
-
 	/// <summary>
 	/// A form dialog displaying a dialog allowing the user to change the database password.
 	/// </summary>
@@ -111,7 +110,7 @@ namespace YtAnalytics.Forms.Database
 				return;
 			}
 			// Raise the add event.
-			if (this.PasswordChanged != null) this.PasswordChanged(this.control.Old, this.control.New, this.state);
+			if (this.PasswordChanged != null) this.PasswordChanged(this, new PasswordChangedEventArgs(this.control.Old, this.control.New, this.state));
 			// Close the dialog.
 			this.Close();
 		}

@@ -21,15 +21,13 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
+using YtAnalytics.Events;
 using YtAnalytics.Forms.Comments;
 using YtCrawler;
 using YtCrawler.Comments;
 
 namespace YtAnalytics.Controls.Comments
 {
-	public delegate void AddCommentItemEventHandler(string item);
-	public delegate void AddCommentEventHandler(Comment comment);
-
 	/// <summary>
 	/// A control displaying a list of comments.
 	/// </summary>
@@ -49,7 +47,7 @@ namespace YtAnalytics.Controls.Comments
 			// Default settings.
 			this.Dock = DockStyle.Fill;
 			this.Visible = false;
-			this.formAdd.CommentAdded += new AddCommentEventHandler(this.OnCommentAdded);
+			this.formAdd.CommentAdded += new CommentEventHandler(this.OnCommentAdded);
 		}
 
 		/// <summary>
@@ -136,17 +134,18 @@ namespace YtAnalytics.Controls.Comments
 		/// <summary>
 		/// An event handler called when after new comment has been added.
 		/// </summary>
-		/// <param name="comment">The comment object.</param>
-		private void OnCommentAdded(Comment comment)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommentAdded(object sender, CommentEventArgs e)
 		{
 			try
 			{
 				// Add the comment to the comments list.
-				this.comments.AddComment(comment);
+				this.comments.AddComment(e.Comment);
 
 				// Add a new list view item.
-				ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Item, comment.User, comment.Text }, 0);
-				item.Tag = comment;
+				ListViewItem item = new ListViewItem(new string[] { e.Comment.Time.ToString(), e.Comment.Item, e.Comment.User, e.Comment.Text }, 0);
+				item.Tag = e.Comment;
 				this.listView.Items.Add(item);
 
 				this.buttonExport.Enabled = true;
@@ -185,7 +184,7 @@ namespace YtAnalytics.Controls.Comments
 		/// <summary>
 		/// An event handler called when the user mouse clicks the control.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnMouseClick(object sender, MouseEventArgs e)
 		{
@@ -204,7 +203,7 @@ namespace YtAnalytics.Controls.Comments
 		/// <summary>
 		/// An event handler called when the user opens a comment.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewComment(object sender, EventArgs e)
 		{

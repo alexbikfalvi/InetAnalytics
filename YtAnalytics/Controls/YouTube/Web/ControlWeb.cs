@@ -54,7 +54,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		/// <summary>
 		/// An event handler called when the user selects the video feeds link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoStatisticsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{

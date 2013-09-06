@@ -70,22 +70,6 @@ namespace YtCrawler.Database
 			get { return this.displayNameAttribute != null ? this.displayNameAttribute.DisplayName : this.property.Name; }
 		}
 		/// <summary>
-		/// Gets or sets the name of the field, or throws an exception if the name is undefined.
-		/// </summary>
-		public string DatabaseName
-		{
-			get
-			{
-				if (this.databaseName == null) throw new DbFieldException("The property \'{0}\' is not mapped to a database field name.".FormatWith(this.property.Name), this.property.Name);
-				if (this.databaseName == string.Empty) throw new DbFieldException("The property \'{0}\' is not mapped to a database field name.".FormatWith(this.property.Name), this.property.Name);
-				return this.databaseName;
-			}
-			set
-			{
-				this.databaseName = value;
-			}
-		}
-		/// <summary>
 		/// Gets the description of the current field.
 		/// </summary>
 		public string Description
@@ -134,5 +118,25 @@ namespace YtCrawler.Database
 		/// Gets whether the field is nullable.
 		/// </summary>
 		public bool IsNullable { get { return this.databaseAttribute.IsNullable; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Gets the name of the field database, or throws an exception if the name is undefined.
+		/// </summary>
+		public string GetDatabaseName()
+		{
+			if (this.databaseName == null) throw new DbFieldException("The property \'{0}\' is not mapped to a database field name.".FormatWith(this.property.Name), this.property.Name);
+			if (this.databaseName == string.Empty) throw new DbFieldException("The property \'{0}\' is not mapped to a database field name.".FormatWith(this.property.Name), this.property.Name);
+			return this.databaseName;
+		}
+
+		/// <summary>
+		/// Sets the name of the field database, or throws an exception if the name is undefined.
+		/// </summary>
+		public void SetDatabaseName(string databaseName)
+		{
+			this.databaseName = databaseName;
+		}
 	}
 }

@@ -49,7 +49,7 @@ namespace YtAnalytics.Controls
 		/// <summary>
 		/// An event raised when the selected control has changed.
 		/// </summary>
-		public event SideTreeViewControlChangedEventHandler ControlChanged;
+		public event ControlChangedEventHandler ControlChanged;
 
 		// Public properties.
 
@@ -79,7 +79,7 @@ namespace YtAnalytics.Controls
 			// Call the base class method.
 			base.Show();
 			// Call the event handler.
-			if (null != this.ControlChanged) this.ControlChanged(this, control);
+			if (null != this.ControlChanged) this.ControlChanged(this, new ControlChangedEventArgs(control));
 			// Refresh the log.
 			this.OnRefresh(this, null);
 		}

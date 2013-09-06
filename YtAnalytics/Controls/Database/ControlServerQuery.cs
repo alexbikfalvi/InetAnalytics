@@ -81,7 +81,7 @@ namespace YtAnalytics.Controls.Database
 			this.server = server;
 
 			// Add the event handlers for the database server.
-			this.server.StateChanged += OnServerStateChanged;
+			this.server.StateChanged += this.OnServerStateChanged;
 
 			// Initialize the contols.
 			this.OnServerStateChanged(this.server, null);
@@ -93,12 +93,12 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the state of a server connection has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		/// <param name="e">The state change arguments.</param>
-		private void OnServerStateChanged(DbServer server, DbServerStateEventArgs e)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerStateChanged(object sender, DbServerStateEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { server, e });
+			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { sender, e });
 			else
 			{
 				this.buttonConnect.Enabled =

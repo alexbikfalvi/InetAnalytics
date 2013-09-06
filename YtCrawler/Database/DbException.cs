@@ -67,14 +67,15 @@ namespace YtCrawler.Database
 		/// Creates a new database exception instance during the deserialization.
 		/// </summary>
 		/// <param name="info">The serialization info.</param>
-		/// <param name="ctx">The streaming context.</param>
-		protected DbException(SerializationInfo info, StreamingContext ctx)
-			: base(info, ctx)
+		/// <param name="context">The streaming context.</param>
+		protected DbException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
 		{
 			this.isDb = info.GetBoolean("isDb");
 			this.dbMessage = info.GetString("dbMessage");
 			this.dbType = (Type)info.GetValue("dbType", typeof(Type));
 		}
+
 		/// <summary>
 		/// Creates a new exception instance.
 		/// </summary>

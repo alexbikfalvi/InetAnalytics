@@ -23,7 +23,6 @@ using DotNetApi.Async;
 namespace YtCrawler.Spider
 {
 	public delegate void SpiderCallback(Spider spider, SpiderAsyncResult asyncState);
-	public delegate void SpiderEventHandler(Spider spider);
 
 	/// <summary>
 	/// A class that represents a crawling spider, which is the basic unit of gathering YouTube data.
@@ -85,11 +84,26 @@ namespace YtCrawler.Spider
 		/// </summary>
 		public void Dispose()
 		{
-			// Call the disposing event handler.
-			this.OnDisposed();
+			// Call the dispose event handler.
+			this.Dispose(true);
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		// Protected methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected virtual void Dispose(bool disposing)
+		{
+			// Dispose the current objects.
+			if (disposing)
+			{
+				this.mutex.Dispose();
+			}
+		}
 
 		/// <summary>
 		/// An event handler called when the spider starts crawling.
@@ -105,8 +119,8 @@ namespace YtCrawler.Spider
 				// Change the spider state to running.
 				this.state = CrawlState.Running;
 				// Raise the events.
-				if (this.StateChanged != null) this.StateChanged(this);
-				if (this.CrawlStarted != null) this.CrawlStarted(this);
+				if (this.StateChanged != null) this.StateChanged(this, new SpiderEventArgs(this));
+				if (this.CrawlStarted != null) this.CrawlStarted(this, new SpiderEventArgs(this));
 			}
 			finally
 			{
@@ -129,8 +143,8 @@ namespace YtCrawler.Spider
 				// Change the spider state to running.
 				this.state = CrawlState.Stopped;
 				// Raise the event.
-				if (this.StateChanged != null) this.StateChanged(this);
-				if (this.CrawlFinished != null) this.CrawlFinished(this);
+				if (this.StateChanged != null) this.StateChanged(this, new SpiderEventArgs(this));
+				if (this.CrawlFinished != null) this.CrawlFinished(this, new SpiderEventArgs(this));
 			}
 			finally
 			{
@@ -153,20 +167,13 @@ namespace YtCrawler.Spider
 				// Change the spider state to canceling.
 				this.state = CrawlState.Canceling;
 				// Raise the event.
-				if (this.StateChanged != null) this.StateChanged(this);
+				if (this.StateChanged != null) this.StateChanged(this, new SpiderEventArgs(this));
 			}
 			finally
 			{
 				// Unlock the mutex.
 				this.mutex.ReleaseMutex();
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when the object is being disposed.
-		/// </summary>
-		protected virtual void OnDisposed()
-		{
 		}
 	}
 }

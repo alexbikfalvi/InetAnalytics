@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.YouTube.Api2;
+using YtAnalytics.Events;
 using YtAnalytics.Forms;
 using YtApi.Api.V2.Data;
 
@@ -62,7 +63,7 @@ namespace YtAnalytics.Controls.YouTube
 
 			this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
 
-			this.formVideo.ViewProfile += OnViewProfile;
+			this.formVideo.ViewProfile += this.OnViewProfile;
 		}
 
 		/// <summary>
@@ -84,7 +85,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event raised to view the user profile.
 		/// </summary>
-		public event ViewIdEventHandler ViewProfile;
+		public event StringEventHandler ViewProfile;
 
 		/// <summary>
 		/// Gets or sets the start video count. 
@@ -224,7 +225,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the user clicks on the previous button.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnPreviousClick(object sender, EventArgs e)
 		{
@@ -234,7 +235,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the user clicks on the next button.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNextClick(object sender, EventArgs e)
 		{
@@ -244,7 +245,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the item selection has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
 		{
@@ -254,7 +255,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the number of videos per page has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoPerPageChanged(object sender, EventArgs e)
 		{
@@ -264,7 +265,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when an item is activated.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnItemActivate(object sender, EventArgs e)
 		{
@@ -275,7 +276,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the user mouse clicks the control.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnMouseClick(object sender, MouseEventArgs e)
 		{
@@ -294,10 +295,11 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called to view the user profile.
 		/// </summary>
-		/// <param name="id">The profile ID.</param>
-		void OnViewProfile(string id)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		void OnViewProfile(object sender, StringEventArgs e)
 		{
-			if (this.ViewProfile != null) this.ViewProfile(id);
+			if (this.ViewProfile != null) this.ViewProfile(sender, e);
 		}
 	}
 }

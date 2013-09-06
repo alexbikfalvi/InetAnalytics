@@ -100,7 +100,7 @@
 			this.videoList.NextClick += new System.EventHandler(this.OnNavigateNext);
 			this.videoList.VideoSelectionChanged += new System.EventHandler(this.OnVideoSelectedChanged);
 			this.videoList.VideosPerPageChanged += new System.EventHandler(this.OnSearchChanged);
-			this.videoList.ViewProfile += new YtAnalytics.Controls.YouTube.Api2.ViewIdEventHandler(this.OnViewProfile);
+			this.videoList.ViewProfile += new YtAnalytics.Events.StringEventHandler(this.OnViewProfile);
 			// 
 			// viewMenu
 			// 

@@ -17,16 +17,14 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace YtApi.Api.V2
 {
 	/// <summary>
 	/// Represents an exception that occurs while parsing YouTube data.
 	/// </summary>
+	[Serializable]
 	public class YouTubeException : Exception
 	{
 		/// <summary>
@@ -45,6 +43,16 @@ namespace YtApi.Api.V2
 		/// <param name="innerException">The inner exception.</param>
 		public YouTubeException(string message, Exception innerException)
 			: base(message, innerException)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new exception instance from the serialization context.
+		/// </summary>
+		/// <param name="info">The serialization info.</param>
+		/// <param name="context">The serialization context.</param>
+		protected YouTubeException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
 		{
 		}
 	}

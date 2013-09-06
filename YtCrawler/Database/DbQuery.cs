@@ -161,7 +161,7 @@ namespace YtCrawler.Database
 			DbField field = table[nameSelect];
 			// Create and return the query.
 			return new DbQuery("SELECT {0} FROM {1}".FormatWith(
-				field.DatabaseName,
+				field.GetDatabaseName(),
 				DbQuery.GetTableName(table, database)), table, userState);
 		}
 
@@ -188,7 +188,7 @@ namespace YtCrawler.Database
 			DbQuery query = new DbQuery("SELECT {0} FROM {1} WHERE {2} = {3}".FormatWith(
 				DbQuery.GetFieldNames(table, tableName),
 				tableName,
-				field.DatabaseName,
+				field.GetDatabaseName(),
 				"{0}"), table, userState);
 			// Add the parameters.
 			query.parameters.Add(valueOn);
@@ -358,7 +358,7 @@ namespace YtCrawler.Database
 				"UPDATE {0} SET {1} WHERE {2}={{{3}}}".FormatWith(
 					tableName,
 					fields,
-					field.DatabaseName,
+					field.GetDatabaseName(),
 					fieldIndex++
 				),
 				table,
@@ -394,7 +394,7 @@ namespace YtCrawler.Database
 		private static string GetFieldName(DbField field, string tableName)
 		{
 			// Return the field name made of the database name, schema name, table name, and field name.
-			return "{0}.[{1}]".FormatWith(tableName, field.DatabaseName);
+			return "{0}.[{1}]".FormatWith(tableName, field.GetDatabaseName());
 		}
 
 		/// <summary>
@@ -421,9 +421,9 @@ namespace YtCrawler.Database
 						notLast = enumerator.MoveNext();
 
 						// If last element, append its name and a comma.
-						if (notLast) builderFields.AppendFormat("{0}.[{1}],", tableName, field.DatabaseName);
+						if (notLast) builderFields.AppendFormat("{0}.[{1}],", tableName, field.GetDatabaseName());
 						// Otherwise, append its name.
-						else builderFields.AppendFormat("{0}.[{1}]", tableName, field.DatabaseName);
+						else builderFields.AppendFormat("{0}.[{1}]", tableName, field.GetDatabaseName());
 					}
 					// Until the last field is reached.
 					while (notLast);
@@ -491,9 +491,9 @@ namespace YtCrawler.Database
 
 				builderConditions.AppendFormat(" AND ({0}.[{1}] = {2}.[{3}])",
 					DbQuery.GetTableName(tableLeft, database),
-					fieldLeft.DatabaseName,
+					fieldLeft.GetDatabaseName(),
 					DbQuery.GetTableName(tableRight, database),
-					fieldRight.DatabaseName
+					fieldRight.GetDatabaseName()
 					);
 			}
 			// Returns the conditions string.

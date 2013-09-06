@@ -143,7 +143,7 @@ namespace YtAnalytics.Controls.Database
 				// If the property type is nullable, replace it with the boxed type.
 				ListViewItem item = new ListViewItem(new string[] {
 							field.Property.Name,
-							field.HasName ? field.DatabaseName : string.Empty,
+							field.HasName ? field.GetDatabaseName() : string.Empty,
 							field.LocalType,
 							field.DatabaseType,
 							field.IsNullable ? "Yes" : "No"
@@ -194,7 +194,7 @@ namespace YtAnalytics.Controls.Database
 				// Get the table field.
 				DbField field = item.Tag as DbField;
 				// Set the field database name.
-				field.DatabaseName = item.SubItems[1].Text;
+				field.SetDatabaseName(item.SubItems[1].Text);
 			}
 			// Update the table image.
 			this.pictureBox.Image = table.IsConfigured ? Resources.TableSuccess_32 : Resources.TableWarning_32;
@@ -317,7 +317,7 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the user selects a new table.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSelectTable(object sender, EventArgs e)
 		{
@@ -359,7 +359,7 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the user selects a new database.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSelectDatabase(object sender, EventArgs e)
 		{

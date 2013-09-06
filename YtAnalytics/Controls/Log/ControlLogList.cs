@@ -77,7 +77,7 @@ namespace YtAnalytics.Controls.Log
 		/// <summary>
 		/// An event handler called when the maximum number of log items has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnMaximumItemsChanged(object sender, EventArgs e)
 		{
@@ -87,7 +87,7 @@ namespace YtAnalytics.Controls.Log
 		/// <summary>
 		/// An event handler called when the event log list is cleared.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnClear(object sender, EventArgs e)
 		{
@@ -98,7 +98,7 @@ namespace YtAnalytics.Controls.Log
 		/// <summary>
 		/// An event handler called when an item is activated.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnItemActivate(object sender, EventArgs e)
 		{

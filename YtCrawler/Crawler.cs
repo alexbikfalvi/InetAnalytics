@@ -86,16 +86,10 @@ namespace YtCrawler
 		/// </summary>
 		public void Dispose()
 		{
-			// Close the database servers.
-			this.servers.Dispose();
-			// Close the log.
-			this.log.Dispose();
-			// Close the comments.
-			this.comments.Dispose();
-			// Close the YouTube categories.
-			this.categories.Dispose();
-			// Close the PlanetLab.
-			this.planetLab.Dispose();
+			// Call the dispose event handler.
+			this.Dispose(true);
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
@@ -147,5 +141,33 @@ namespace YtCrawler
 		/// Returns the crawler testing configuration.
 		/// </summary>
 		public Testing.Testing Testing { get { return this.testing; } }
+
+		// Private methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		private void Dispose(bool disposing)
+		{
+			// Dispose the current objects.
+			if (disposing)
+			{
+				// Close the database servers.
+				this.servers.Dispose();
+				// Close the log.
+				this.log.Dispose();
+				// Close the status.
+				this.status.Dispose();
+				// Close the comments.
+				this.comments.Dispose();
+				// Close the YouTube categories.
+				this.categories.Dispose();
+				// Close the spiders.
+				this.spiders.Dispose();
+				// Close the PlanetLab.
+				this.planetLab.Dispose();
+			}
+		}
 	}
 }

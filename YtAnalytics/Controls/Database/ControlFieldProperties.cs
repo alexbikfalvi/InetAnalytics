@@ -85,7 +85,7 @@ namespace YtAnalytics.Controls.Database
 			{
 				this.labelTitle.Text = newField.DisplayName;
 				this.textBoxNameLocal.Text = newField.LocalName;
-				this.textBoxNameDatabase.Text = newField.HasName ? newField.DatabaseName : string.Empty;
+				this.textBoxNameDatabase.Text = newField.HasName ? newField.GetDatabaseName() : string.Empty;
 				this.textBoxNameDisplay.Text = newField.DisplayName;
 				this.textBoxTypeLocal.Text = newField.LocalType;
 				this.textBoxTypeDatabase.Text = newField.DatabaseType;

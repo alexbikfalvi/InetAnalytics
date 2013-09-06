@@ -17,16 +17,15 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using DotNetApi;
 
 namespace YtApi.Api.V2
 {
 	/// <summary>
 	/// Represents an exception that occurs while parsing YouTube data.
 	/// </summary>
+	[Serializable]
 	public class YouTubeAtomException : YouTubeException
 	{
 		private YtApi.Api.V2.Atom.Atom atom;
@@ -44,8 +43,41 @@ namespace YtApi.Api.V2
 		}
 
 		/// <summary>
+		/// Creates a new exception instance from the serialization context.
+		/// </summary>
+		/// <param name="info">The serialization info.</param>
+		/// <param name="context">The serialization context.</param>
+		protected YouTubeAtomException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+			// Validate the arguments.
+			info.ValidateNotNull("info");
+			// Set the fields.
+			this.atom = (YtApi.Api.V2.Atom.Atom)info.GetValue("atom", typeof(YtApi.Api.V2.Atom.Atom));
+		}
+
+		// Public properties.
+
+		/// <summary>
 		/// Gets the atom that generated the exception.
 		/// </summary>
 		public YtApi.Api.V2.Atom.Atom Atom { get { return this.atom; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Populates the serialization info with the data needed to serialize the target object.
+		/// </summary>
+		/// <param name="info">The serialization info.</param>
+		/// <param name="context">The serialization context.</param>
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			// Validate thea arguments.
+			info.ValidateNotNull("info");
+			// Call the base class method.
+			base.GetObjectData(info, context);
+			// Add the fields.
+			info.AddValue("atom", this.atom);
+		}
 	}
 }

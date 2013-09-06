@@ -28,7 +28,7 @@ namespace YtCrawler.Comments
 	/// <summary>
 	/// A class that stores all user comments.
 	/// </summary>
-	public class Comments : IDisposable
+	public sealed class Comments : IDisposable
 	{
 		private CrawlerConfig config;
 
@@ -60,9 +60,10 @@ namespace YtCrawler.Comments
 		/// </summary>
 		public void Dispose()
 		{
-			this.commentsVideos.Save(this.config.CommentsVideosFileName);
-			this.commentsUsers.Save(this.config.CommentsUsersFileName);
-			this.commentsPlaylists.Save(this.config.CommentsPlaylistsFileName);
+			// Call the dispose event handler.
+			this.Dispose(true);
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
@@ -79,5 +80,22 @@ namespace YtCrawler.Comments
 		/// Returns the playlist comments.
 		/// </summary>
 		public CommentsList Playlists { get { return this.commentsPlaylists; } }
+
+		// Private methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		private void Dispose(bool disposing)
+		{
+			// Dispose the current objects.
+			if (disposing)
+			{
+				this.commentsVideos.Save(this.config.CommentsVideosFileName);
+				this.commentsUsers.Save(this.config.CommentsUsersFileName);
+				this.commentsPlaylists.Save(this.config.CommentsPlaylistsFileName);
+			}
+		}
 	}
 }

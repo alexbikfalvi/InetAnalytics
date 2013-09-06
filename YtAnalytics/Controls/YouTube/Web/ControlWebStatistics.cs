@@ -25,6 +25,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
+using YtAnalytics.Events;
 using YtAnalytics.Forms.YouTube;
 using YtApi.Ajax;
 using YtCrawler;
@@ -63,7 +64,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentItemEventHandler Comment;
+		public event StringEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control.
@@ -748,7 +749,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		private void OnComment(object sender, EventArgs e)
 		{
 			if (null == this.statisticsVideo) return;
-			if (this.Comment != null) this.Comment(this.statisticsVideo);
+			if (this.Comment != null) this.Comment(this, new StringEventArgs(this.statisticsVideo));
 		}
 	}
 }

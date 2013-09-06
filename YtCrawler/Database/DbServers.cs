@@ -29,13 +29,6 @@ using YtCrawler.Log;
 
 namespace YtCrawler.Database
 {
-	public delegate void DbServerEventHandler(DbServer server);
-	public delegate void DbServerIdEventHandler(string id);
-	public delegate void DbServerStateEventHandler(DbServer server, DbServerStateEventArgs e);
-	public delegate void DbServerPrimaryChangedEventHandler(DbServer oldPrimary, DbServer newPrimary);
-	public delegate void DbServerDatabaseChangedEventHandler(DbServer server, DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase);
-	public delegate void DbServerTableChangedEventHandler(DbServer server, ITable table);
-
 	/// <summary>
 	/// A class representing the list of database servers.
 	/// </summary>
@@ -90,7 +83,7 @@ namespace YtCrawler.Database
 						case DbServerType.MsSql:
 							server = new DbServerSql(key, id, logFile);
 							break;
-						default: continue;
+						default: throw new CrawlerException("Cannot add a new database server. Unknown database server type \'{0}\'.".FormatWith(type));
 					}
 					// Add the database server to the servers list.
 					this.Add(server);
@@ -119,7 +112,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when a server was removed.
 		/// </summary>
-		public event DbServerIdEventHandler ServerRemoved;
+		public event DbIdEventHandler ServerRemoved;
 		/// <summary>
 		/// An event raised when the properties of a server have changed.
 		/// </summary>
@@ -131,7 +124,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when the primary server has changed.
 		/// </summary>
-		public event DbServerPrimaryChangedEventHandler ServerPrimaryChanged;
+		public event DbPrimaryServerChangedEventHandler ServerPrimaryChanged;
 		/// <summary>
 		/// An event raised when a database server logs an event.
 		/// </summary>
@@ -198,7 +191,7 @@ namespace YtCrawler.Database
 			// Update the registry key.
 			Registry.SetValue(this.config.DatabaseConfig.Key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
 			// Raise the primary server changed event.
-			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(oldPrimary, this.primary);
+			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(this, new DbPrimaryServerChangedEventArgs(oldPrimary, this.primary));
 		}
 
 		/// <summary>
@@ -283,7 +276,7 @@ namespace YtCrawler.Database
 			server.EventLogged += this.OnEventLogged;
 
 			// Raise the server add event.
-			if (null != this.ServerAdded) this.ServerAdded(server);
+			if (null != this.ServerAdded) this.ServerAdded(this, new DbServerEventArgs(server));
 		}
 
 		/// <summary>
@@ -309,7 +302,7 @@ namespace YtCrawler.Database
 			// Remove the object from the servers list.
 			this.Remove(id);
 			// Raise the server removed event.
-			if (this.ServerRemoved != null) this.ServerRemoved(id);
+			if (this.ServerRemoved != null) this.ServerRemoved(this, new DbIdEventArgs(id));
 		}
 
 		/// <summary>
@@ -347,7 +340,7 @@ namespace YtCrawler.Database
 						// Remove the server.
 						this.Remove(id);
 						// Raise the server remove event.
-						if (this.ServerRemoved != null) this.ServerRemoved(id);
+						if (this.ServerRemoved != null) this.ServerRemoved(this, new DbIdEventArgs(id));
 					}
 					catch (Exception exception)
 					{
@@ -374,6 +367,10 @@ namespace YtCrawler.Database
 			{
 				pair.Value.Dispose();
 			}
+			// Dispose the mutex.
+			this.mutex.Dispose();
+			// Supress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		// Private methods.
@@ -398,7 +395,7 @@ namespace YtCrawler.Database
 			}
 			// Add the server event handlers.
 			server.StateChanged += this.OnStateChanged;
-			server.ServerChanged += OnServerChanged;
+			server.ServerChanged += this.OnServerChanged;
 		}
 
 		/// <summary>
@@ -426,29 +423,31 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event handler called when the server connection state has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnStateChanged(DbServer server, DbServerStateEventArgs e)
+		private void OnStateChanged(object sender, DbServerStateEventArgs e)
 		{
-			if (this.ServerStateChanged != null) this.ServerStateChanged(server, e);
+			if (this.ServerStateChanged != null) this.ServerStateChanged(this, e);
 		}
 
 		/// <summary>
 		/// An event handler called when the server configuration has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		private void OnServerChanged(DbServer server)
+		/// <param name="server">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerChanged(object sender, DbServerEventArgs e)
 		{
-			if (this.ServerChanged != null) this.ServerChanged(server);
+			if (this.ServerChanged != null) this.ServerChanged(this, e);
 		}
 
 		/// <summary>
 		/// An event handler called when a database server logs an event.
 		/// </summary>
-		/// <param name="evt">The event.</param>
-		private void OnEventLogged(LogEvent evt)
+		/// <param name="server">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnEventLogged(object sender, LogEventArgs e)
 		{
-			if (this.EventLogged != null) this.EventLogged(evt);
+			if (this.EventLogged != null) this.EventLogged(this, e);
 		}
 	}
 }

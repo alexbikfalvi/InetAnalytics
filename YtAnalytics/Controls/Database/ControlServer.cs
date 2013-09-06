@@ -94,16 +94,16 @@ namespace YtAnalytics.Controls.Database
 			this.server.ServerChanged += this.OnServerChanged;
 			this.server.StateChanged += this.OnServerStateChanged;
 			this.server.DatabaseChanged += this.OnDatabaseChanged;
-			this.server.TableChanged += OnTableChanged;
+			this.server.TableChanged += this.OnTableChanged;
 			this.server.EventLogged += this.OnEventLogged;
 			this.crawler.Servers.ServerPrimaryChanged += this.OnPrimaryServerChanged;
 
 			// Initialize the contols.
-			this.OnServerChanged(this.server);
+			this.OnServerChanged(this, new DbServerEventArgs(this.server));
 			this.OnServerStateChanged(this.server, null);
 
 			// Initialize the server database.
-			this.OnDatabaseChanged(this.server, null, this.server.Database);
+			this.OnDatabaseChanged(this, new DbServerDatabaseChangedEventArgs(this.server, null, this.server.Database));
 
 			// Initialize the server database tables.
 			this.OnTablesChanged();
@@ -168,23 +168,24 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when a server configuration has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		private void OnServerChanged(DbServer server)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerChanged(object sender, DbServerEventArgs e)
 		{
 			// Update the server properties.
-			this.labelName.Text = server.Name;
-			this.labelPrimary.Text = this.crawler.Servers.IsPrimary(server) ? "Primary database server" : "Backup database server";
+			this.labelName.Text = e.Server.Name;
+			this.labelPrimary.Text = this.crawler.Servers.IsPrimary(e.Server) ? "Primary database server" : "Backup database server";
 		}
 
 		/// <summary>
 		/// An event handler called when the state of a server connection has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		/// <param name="e">The state change arguments.</param>
-		private void OnServerStateChanged(DbServer server, DbServerStateEventArgs e)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerStateChanged(object sender, DbServerStateEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { server, e });
+			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { sender, e });
 			else
 			{
 				this.buttonConnect.Enabled =
@@ -204,13 +205,12 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the server database has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		/// <param name="oldDatabase">The old database.</param>
-		/// <param name="newDatabase">The new database.</param>
-		private void OnDatabaseChanged(DbServer server, DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnDatabaseChanged(object sender, DbServerDatabaseChangedEventArgs e)
 		{
 			// Update the current database.
-			if (newDatabase != null)
+			if (e.NewDatabase != null)
 			{
 				this.textBoxDatabase.Text = "{0} (ID {1} created on {2})".FormatWith(this.server.Database.Name, this.server.Database.DatabaseId, this.server.Database.CreateDate);
 				this.buttonDatabaseProperties.Enabled = this.server.Database != null;
@@ -242,20 +242,20 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when a database table has changed.
 		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="table">The database table.</param>
-		private void OnTableChanged(DbServer server, ITable table)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableChanged(object sender, DbServerTableChangedEventArgs e)
 		{
 			// Update the corresponding list view item.
 			foreach (ListViewItem item in this.listViewTables.Items)
 			{
 				// If the item matches the database table.
-				if (table == item.Tag as ITable)
+				if (e.Table == item.Tag as ITable)
 				{
 					// Update the item.
-					item.SubItems[0].Text = table.LocalName;
-					item.SubItems[1].Text = table.FieldCount.ToString() + " field(s)";
-					item.ImageKey = table.IsConfigured ? "TableSuccess" : "TableWarning";
+					item.SubItems[0].Text = e.Table.LocalName;
+					item.SubItems[1].Text = e.Table.FieldCount.ToString() + " field(s)";
+					item.ImageKey = e.Table.IsConfigured ? "TableSuccess" : "TableWarning";
 				}
 			}
 		}
@@ -313,12 +313,12 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the primary server has changed.
 		/// </summary>
-		/// <param name="oldPrimary">The old primary server.</param>
-		/// <param name="newPrimary">The new primary server.</param>
-		private void OnPrimaryServerChanged(DbServer oldPrimary, DbServer newPrimary)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPrimaryServerChanged(object sender, DbPrimaryServerChangedEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerPrimaryChangedEventHandler(this.OnPrimaryServerChanged), new object[] { oldPrimary, newPrimary });
+			if (this.InvokeRequired) this.Invoke(new DbPrimaryServerChangedEventHandler(this.OnPrimaryServerChanged), new object[] { sender, e });
 			else
 			{
 				this.buttonPrimary.Enabled = !this.crawler.Servers.IsPrimary(this.server);
@@ -330,8 +330,8 @@ namespace YtAnalytics.Controls.Database
 					ControlServer.logSource,
 					"Primary database server has changed from \'{0}\' to \'{1}\'.",
 					new object[] {
-						oldPrimary != null ? oldPrimary.Id : string.Empty,
-						newPrimary != null ? newPrimary.Id : string.Empty
+						e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
+						e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
 					}));
 			}
 		}
@@ -391,15 +391,16 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the database server logs an event.
 		/// </summary>
-		/// <param name="evt">The event.</param>
-		private void OnEventLogged(LogEvent evt)
+		/// <param name="server">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnEventLogged(object sender, LogEventArgs e)
 		{
 			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { evt });
+			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { sender, e });
 			else
 			{
 				// Log the event.
-				this.log.Add(evt);
+				this.log.Add(e.Event);
 			}
 		}
 
@@ -515,7 +516,7 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when the user selects the properties of a database table.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnTableProperties(object sender, EventArgs e)
 		{

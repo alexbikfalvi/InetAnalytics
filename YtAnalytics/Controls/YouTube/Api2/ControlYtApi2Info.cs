@@ -55,7 +55,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user selects the global videos link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideosGlobalClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -65,7 +65,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user selects the playlists feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideosUserClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -75,7 +75,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user selects the categories link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnCategoriesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{

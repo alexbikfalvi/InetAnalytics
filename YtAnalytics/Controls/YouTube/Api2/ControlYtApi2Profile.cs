@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using YtAnalytics.Events;
 using YtAnalytics.Controls.Comments;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Data;
@@ -29,8 +30,6 @@ using YtCrawler.Log;
 
 namespace YtAnalytics.Controls.YouTube.Api2
 {
-	public delegate void ViewProfileEventHandler(Profile profile);
-
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
@@ -58,19 +57,19 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// View the user uploaded videos.
 		/// </summary>
-		public event ViewProfileEventHandler ViewUserUploadsInApiV2;
+		public event ProfileEventHandler ViewUserUploadsInApiV2;
 		/// <summary>
 		/// View the user favorited videos.
 		/// </summary>
-		public event ViewProfileEventHandler ViewUserFavoritesInApiV2;
+		public event ProfileEventHandler ViewUserFavoritesInApiV2;
 		/// <summary>
 		/// View the user playlists.
 		/// </summary>
-		public event ViewProfileEventHandler ViewUserPlaylistsInApiV2;
+		public event ProfileEventHandler ViewUserPlaylistsInApiV2;
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentItemEventHandler Comment;
+		public event StringEventHandler Comment;
 
 		/// <summary>
 		/// Initializes the control with a crawler instance.
@@ -113,7 +112,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Starts an asynchronous request for a video entry.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void Start(object sender, EventArgs e)
 		{
@@ -166,7 +165,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Cancels an asynchronous request for a video entry.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void Stop(object sender, EventArgs e)
 		{
@@ -246,7 +245,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for when the user input has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnInputChanged(object sender, EventArgs e)
 		{
@@ -256,35 +255,35 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user selects to open user uploads.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Uploads(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (this.ViewUserUploadsInApiV2 != null) this.ViewUserUploadsInApiV2(this.controlProfile.Profile);
+			if (this.ViewUserUploadsInApiV2 != null) this.ViewUserUploadsInApiV2(this, new ProfileEventArgs(this.controlProfile.Profile));
 		}
 
 		/// <summary>
 		/// An event handler called when the user selects to open user favorites.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Favorites(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (this.ViewUserFavoritesInApiV2 != null) this.ViewUserFavoritesInApiV2(this.controlProfile.Profile);
+			if (this.ViewUserFavoritesInApiV2 != null) this.ViewUserFavoritesInApiV2(this, new ProfileEventArgs(this.controlProfile.Profile));
 
 		}
 
 		/// <summary>
 		/// An event handler called when the user selects to open user playlists.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Playlists(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (this.ViewUserPlaylistsInApiV2 != null) this.ViewUserPlaylistsInApiV2(this.controlProfile.Profile);
+			if (this.ViewUserPlaylistsInApiV2 != null) this.ViewUserPlaylistsInApiV2(this, new ProfileEventArgs(this.controlProfile.Profile));
 		}
 
 		/// <summary>
@@ -308,7 +307,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private void OnCommentClick(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (null != this.Comment) this.Comment(this.controlProfile.Profile.Id);
+			if (null != this.Comment) this.Comment(this, new StringEventArgs(this.controlProfile.Profile.Id));
 		}
 	}
 }

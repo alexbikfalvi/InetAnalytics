@@ -36,10 +36,45 @@ namespace YtCrawler.Spider
 	/// </summary>
 	public sealed class SpiderStandardFeeds : Spider 
 	{
-		public delegate void CrawlStartedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
-		public delegate void CrawlFinishedEventHandler(Spider spider, IDictionary<string, DbObjectStandardFeed> feeds);
-		public delegate void FeedStartedEventHandler(Spider spider, DbObjectStandardFeed obj, int index, int count);
-		public delegate void FeedFinishedEventHandler(Spider spider, DbObjectStandardFeed obj, int index, int count, CrawlResult result);
+		public struct CrawlInfo
+		{
+			public CrawlInfo(IDictionary<string, DbObjectStandardFeed> feeds)
+			{
+				this.Feeds = feeds;
+			}
+
+			public IDictionary<string, DbObjectStandardFeed> Feeds;
+		}
+
+		public struct FeedStartedInfo
+		{
+			public FeedStartedInfo(DbObjectStandardFeed feed, int index, int count)
+			{
+				this.Feed = feed;
+				this.Index = index;
+				this.Count = count;
+			}
+
+			public DbObjectStandardFeed Feed;
+			public int Index;
+			public int Count;
+		}
+
+		public struct FeedFinishedInfo
+		{
+			public FeedFinishedInfo(DbObjectStandardFeed feed, int index, int count, CrawlResult result)
+			{
+				this.Feed = feed;
+				this.Index = index;
+				this.Count = count;
+				this.Result = result;
+			}
+
+			public DbObjectStandardFeed Feed;
+			public int Index;
+			public int Count;
+			public CrawlResult Result;
+		}
 
 		public enum CrawlResult
 		{
@@ -75,19 +110,19 @@ namespace YtCrawler.Spider
 		/// <summary>
 		/// An event raised when the spider began crawling the feeds.
 		/// </summary>
-		public event CrawlStartedEventHandler FeedsCrawlStarted;
+		public event SpiderInfoEventHandler<CrawlInfo> FeedsCrawlStarted;
 		/// <summary>
 		/// An event raised when the spider finished crawling the feeds.
 		/// </summary>
-		public event CrawlFinishedEventHandler FeedsCrawlFinished;
+		public event SpiderInfoEventHandler<CrawlInfo> FeedsCrawlFinished;
 		/// <summary>
 		/// An event raised when the spider began crawling a standard feed.
 		/// </summary>
-		public event FeedStartedEventHandler FeedCrawlStarted;
+		public event SpiderInfoEventHandler<FeedStartedInfo> FeedCrawlStarted;
 		/// <summary>
 		/// An event raised when the spider finished crawling a standard feed.
 		/// </summary>
-		public event FeedFinishedEventHandler FeedCrawlFinished;
+		public event SpiderInfoEventHandler<FeedFinishedInfo> FeedCrawlFinished;
 
 		// Public methods.
 
@@ -161,7 +196,7 @@ namespace YtCrawler.Spider
 				}
 
 				// Raise the crawl feeds started event.
-				if (this.FeedsCrawlStarted != null) this.FeedsCrawlStarted(this, feeds);
+				if (this.FeedsCrawlStarted != null) this.FeedsCrawlStarted(this, new SpiderInfoEventArgs<CrawlInfo>(this, new CrawlInfo(feeds)));
 
 				// Create a new spider asynchronous result.
 				SpiderAsyncResult asyncResult = new SpiderAsyncResult(userState);
@@ -190,7 +225,7 @@ namespace YtCrawler.Spider
 							DbObjectStandardFeed obj = feed.Value;
 
 							// Call the feed started event handler.
-							if (this.FeedCrawlStarted != null) this.FeedCrawlStarted(this, obj, index, feeds.Count);
+							if (this.FeedCrawlStarted != null) this.FeedCrawlStarted(this, new SpiderInfoEventArgs<FeedStartedInfo>(this, new FeedStartedInfo(obj, index, feeds.Count)));
 
 							// Crawl the feed.
 							CrawlResult result = this.CrawlFeed(
@@ -202,14 +237,14 @@ namespace YtCrawler.Spider
 								ref obj);
 
 							// Call the feed finished event handler.
-							if (this.FeedCrawlFinished != null) this.FeedCrawlFinished(this, obj, index, feeds.Count, result);
+							if (this.FeedCrawlFinished != null) this.FeedCrawlFinished(this, new SpiderInfoEventArgs<FeedFinishedInfo>(this, new FeedFinishedInfo(obj, index, feeds.Count, result)));
 						}
 
 						// Set the result.
 						asyncResult.Result = feeds;
 
 						// Raise the crawl feeds finished event.
-						if (this.FeedsCrawlFinished != null) this.FeedsCrawlFinished(this, feeds);
+						if (this.FeedsCrawlFinished != null) this.FeedsCrawlFinished(this, new SpiderInfoEventArgs<CrawlInfo>(this, new CrawlInfo(feeds)));
 
 						// Update the spider state.
 						base.OnFinished();
@@ -302,12 +337,13 @@ namespace YtCrawler.Spider
 		// Protected methods.
 
 		/// <summary>
-		/// An event handler called when the object is disposed.
+		/// Disposes the current object.
 		/// </summary>
-		protected override void OnDisposed()
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
 		{
 			// Call the base class dispose handler.
-			base.OnDisposed();
+			base.Dispose(disposing);
 		}
 
 		// Private methods.

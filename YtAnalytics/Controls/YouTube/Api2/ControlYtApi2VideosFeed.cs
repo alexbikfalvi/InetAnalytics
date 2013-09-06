@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
+using YtAnalytics.Events;
 using YtApi;
 using YtApi.Api.V2;
 using YtApi.Api.V2.Atom;
@@ -35,7 +36,6 @@ namespace YtAnalytics.Controls.YouTube.Api2
 {
 	public delegate Uri VideosFeedEventHandler(string video, int? startIndex, int? maxResults);
 
-	public delegate void ViewIdEventHandler(string id);
 
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
@@ -101,27 +101,27 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// View the video information using the version 2 API.
 		/// </summary>
-		public event ViewVideoEventHandler ViewVideoInApiV2;
+		public event VideoEventHandler ViewVideoInApiV2;
 		/// <summary>
 		/// View the author profile using the version 2 API.
 		/// </summary>
-		public event ViewIdEventHandler ViewAuthorInApiV2;
+		public event StringEventHandler ViewAuthorInApiV2;
 		/// <summary>
 		/// View the related videos using the version 2 API.
 		/// </summary>
-		public event ViewVideoEventHandler ViewRelatedVideosInApiV2;
+		public event VideoEventHandler ViewRelatedVideosInApiV2;
 		/// <summary>
 		/// View the response videos using the version 2 API.
 		/// </summary>
-		public event ViewVideoEventHandler ViewResponseVideosInApiV2;
+		public event VideoEventHandler ViewResponseVideosInApiV2;
 		/// <summary>
 		/// View the video statistics using the web.
 		/// </summary>
-		public event ViewVideoEventHandler ViewVideoInWeb;
+		public event VideoEventHandler ViewVideoInWeb;
 		/// <summary>
 		/// An event handler called when the user adds a new comment.
 		/// </summary>
-		public event AddCommentItemEventHandler Comment;
+		public event StringEventHandler Comment;
 
 		// Public methods.
 
@@ -141,7 +141,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler for when the search text has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchChanged(object sender, EventArgs e)
 		{
@@ -165,7 +165,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler raised when the user selects the current feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnOpenLink(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -175,7 +175,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Starts an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
@@ -215,7 +215,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Cancels an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStop(object sender, EventArgs e)
 		{
@@ -341,7 +341,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the selected video has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoSelectedChanged(object sender, EventArgs e)
 		{
@@ -356,7 +356,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler for the visualization of a video entry menu.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewVideo(object sender, EventArgs e)
 		{
@@ -367,7 +367,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the video entry menu was closed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
@@ -378,63 +378,63 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// An event handler called when the user selects the option to view the video entry
 		/// in the YouTube API version 2.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Video(object sender, EventArgs e)
 		{
-			if (this.ViewVideoInApiV2 != null) this.ViewVideoInApiV2(this.videoList.SelectedItem.Tag as Video);
+			if (this.ViewVideoInApiV2 != null) this.ViewVideoInApiV2(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
 		}
 
 		/// <summary>
 		/// An event handler called when the user selects the option to view the author entry
 		/// in the YouTube API version 2.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Author(object sender, EventArgs e)
 		{
 			Video video = this.videoList.SelectedItem.Tag as Video;
-			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(video.Author.UserId);
+			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(this, new StringEventArgs(video.Author.UserId));
 		}
 
 		/// <summary>
 		/// An event handler called when the user selects the option to view the related videos
 		/// in the YouTube API version 2.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Related(object sender, EventArgs e)
 		{
-			if (this.ViewRelatedVideosInApiV2 != null) this.ViewRelatedVideosInApiV2(this.videoList.SelectedItem.Tag as Video);
+			if (this.ViewRelatedVideosInApiV2 != null) this.ViewRelatedVideosInApiV2(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
 		}
 
 		/// <summary>
 		/// An event handler called when the user selects the option to view the response videos
 		/// in the YouTube API version 2.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Responses(object sender, EventArgs e)
 		{
-			if (this.ViewResponseVideosInApiV2 != null) this.ViewResponseVideosInApiV2(this.videoList.SelectedItem.Tag as Video);
+			if (this.ViewResponseVideosInApiV2 != null) this.ViewResponseVideosInApiV2(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
 		}
 
 		/// <summary>
 		/// An event handler called when the user selects the option to view the video statistics
 		/// in the YouTube web.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewWeb(object sender, EventArgs e)
 		{
-			if (this.ViewVideoInWeb != null) this.ViewVideoInWeb(this.videoList.SelectedItem.Tag as Video);
+			if (this.ViewVideoInWeb != null) this.ViewVideoInWeb(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
 		}
 
 		/// <summary>
 		/// An event handler called when the user selects the option to open the video in YouTube in
 		/// a browser.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnOpenYouTube(object sender, EventArgs e)
 		{
@@ -451,13 +451,13 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnComment(object sender, EventArgs e)
 		{
-			if (this.Comment != null) this.Comment((this.videoList.SelectedItem.Tag as Video).Id);
+			if (this.Comment != null) this.Comment(this, new StringEventArgs((this.videoList.SelectedItem.Tag as Video).Id));
 		}
 
 		/// <summary>
 		/// An event handler called when the user navigates to the previous page in the feed list.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigatePrevious(object sender, EventArgs e)
 		{
@@ -482,7 +482,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user navigates to the next page in the feed list.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigateNext(object sender, EventArgs e)
 		{
@@ -517,10 +517,11 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user selects the view profile.
 		/// </summary>
-		/// <param name="id">The profile ID.</param>
-		private void OnViewProfile(string id)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnViewProfile(object sender, StringEventArgs e)
 		{
-			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(id);
+			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(sender, e);
 		}
 	}
 }

@@ -25,12 +25,10 @@ using DotNetApi;
 
 namespace YtCrawler.Log
 {
-	public delegate void LogEventHandler(LogEvent evt);
-
 	/// <summary>
 	/// A class representing an event log.
 	/// </summary>
-	public class Logger : IDisposable
+	public sealed class Logger : IDisposable
 	{
 		private string filePattern;
 
@@ -85,6 +83,11 @@ namespace YtCrawler.Log
 				// Release the exclusive access to the log.
 				this.mutex.ReleaseMutex();
 			}
+
+			// Dispose the mutex.
+			this.mutex.Dispose();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
@@ -157,7 +160,7 @@ namespace YtCrawler.Log
 			}
 
 			// Raise the event for this log event.
-			if (this.EventLogged != null) this.EventLogged(evt);
+			if (this.EventLogged != null) this.EventLogged(this, new LogEventArgs(evt));
 
 			return evt;
 		}
@@ -241,12 +244,14 @@ namespace YtCrawler.Log
 			return list;
 		}
 
+		// Private methods.
+
 		/// <summary>
 		/// Appends the log events for the specified date to a given list.
 		/// </summary>
 		/// <param name="date">The date.</param>
 		/// <param name="events">The list.</param>
-		protected void Get(DateTime date, List<LogEvent> list)
+		private void Get(DateTime date, List<LogEvent> list)
 		{
 			// Wait for exclusive access to the log.
 			this.mutex.WaitOne();

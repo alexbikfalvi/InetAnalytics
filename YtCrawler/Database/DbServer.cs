@@ -93,10 +93,10 @@ namespace YtCrawler.Database
 			this.relationships = new DbRelationships(this.key, this.tables);
 
 			// Set the event handlers.
-			this.tables.TableChanged += OnTableChanged;
+			this.tables.TableChanged += this.OnTableChanged;
 
 			// Load the current configuration.
-			this.LoadConfiguration();
+			this.LoadInternalConfiguration();
 		}
 
 		/// <summary>
@@ -143,7 +143,7 @@ namespace YtCrawler.Database
 			this.relationships = new DbRelationships(this.key, this.tables);
 
 			// Save the configuration.
-			this.SaveConfiguration();
+			this.SaveInternalConfiguration();
 		}
 
 
@@ -280,69 +280,12 @@ namespace YtCrawler.Database
 		// Public methods.
 
 		/// <summary>
-		/// Saves the current server configuration to the registry.
-		/// </summary>
-		public virtual void SaveConfiguration()
-		{
-			// Update the modification date.
-			this.dateModified = DateTime.Now;
-
-			// Save basic configuration.
-			DotNetApi.Windows.Registry.SetString(this.key.Name, "Name", this.name);
-			DotNetApi.Windows.Registry.SetString(this.key.Name, "DataSource", this.dataSource);
-			DotNetApi.Windows.Registry.SetString(this.key.Name, "Username", this.username);
-			DotNetApi.Windows.Registry.SetSecureString(this.key.Name, "Password", this.password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateCreated", this.dateCreated);
-			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateModified", this.dateModified);
-
-			// Save tables and relationship configuration.
-			this.tables.SaveConfiguration();
-			this.relationships.SaveConfiguration();
-
-			// Log the event.
-			this.log.Add(
-				LogEventLevel.Normal,
-				LogEventType.Success,
-				this.logSource,
-				"Configuration for database server with ID \'{0}\' was saved to registry. Some changes will take effect the next time you connect.",
-				new object[] { this.Id }
-				);
-		}
-
-		/// <summary>
-		/// Loads the current server configuration from the registry.
-		/// </summary>
-		public virtual void LoadConfiguration()
-		{
-			// Load basic configuration.
-			this.name = DotNetApi.Windows.Registry.GetString(this.key.Name, "Name", null);
-			this.dataSource = DotNetApi.Windows.Registry.GetString(this.key.Name, "DataSource", null);
-			this.username = DotNetApi.Windows.Registry.GetString(this.key.Name, "Username", null);
-			this.password = DotNetApi.Windows.Registry.GetSecureString(this.key.Name, "Password", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-			this.dateCreated = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateCreated", DateTime.Now);
-			this.dateModified = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateModified", DateTime.Now);
-
-			// Load tables and relationships configuration.
-			this.tables.LoadConfiguration();
-			this.relationships.LoadConfiguration();
-
-			// Log the event.
-			this.log.Add(
-				LogEventLevel.Normal,
-				LogEventType.Success,
-				this.logSource,
-				"Configuration for database server with ID \'{0}\' was loaded from registry. The server name is \'{1}\'.",
-				new object[] { this.Id, this.Name }
-				);
-		}
-
-		/// <summary>
 		/// Disposes the server object by closing the connection.
 		/// </summary>
 		public void Dispose()
 		{
 			// Dispose the server.
-			this.OnDispose();
+			this.Dispose(true);
 			// Suppress the finalizer for this object.
 			GC.SuppressFinalize(this);
 		}
@@ -367,6 +310,22 @@ namespace YtCrawler.Database
 			)
 		{
 			this.log.Add(level, type, this.logSource, message, parameters, exception, subevents);
+		}
+
+		/// <summary>
+		/// Loads the server configuration.
+		/// </summary>
+		public virtual void LoadConfiguration()
+		{
+			this.LoadInternalConfiguration();
+		}
+
+		/// <summary>
+		/// Saves the server configuration.
+		/// </summary>
+		public virtual void SaveConfiguration()
+		{
+			this.SaveInternalConfiguration();
 		}
 
 		/// <summary>
@@ -442,16 +401,20 @@ namespace YtCrawler.Database
 		protected abstract void OnInitialized();
 
 		/// <summary>
-		/// A  method called when the server object is being disposed.
+		/// Disposes the current object.
 		/// </summary>
-		protected virtual void OnDispose()
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected virtual void Dispose(bool disposing)
 		{
-			// Dispose the log.
-			this.log.Dispose();
-			// Dispose the database tables.
-			this.tables.Dispose();
-			// Close the registry key.
-			this.key.Close();
+			if (disposing)
+			{
+				// Dispose the log.
+				this.log.Dispose();
+				// Dispose the database tables.
+				this.tables.Dispose();
+				// Close the registry key.
+				this.key.Close();
+			}
 		}
 
 		/// <summary>
@@ -460,7 +423,7 @@ namespace YtCrawler.Database
 		protected void OnServerChanged()
 		{
 			// Call the event.
-			if (this.ServerChanged != null) this.ServerChanged(this);
+			if (this.ServerChanged != null) this.ServerChanged(this, new DbServerEventArgs(this));
 		}
 
 		/// <summary>
@@ -475,7 +438,7 @@ namespace YtCrawler.Database
 			// Set the new state.
 			this.state = state;
 			// Call the event.
-			if(this.StateChanged != null) this.StateChanged(this, new DbServerStateEventArgs(oldState, this.state));
+			if(this.StateChanged != null) this.StateChanged(this, new DbServerStateEventArgs(this, oldState, this.state));
 		}
 
 		/// <summary>
@@ -486,7 +449,7 @@ namespace YtCrawler.Database
 		protected void OnDatabaseChanged(DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
 		{
 			// Call the event.
-			if (this.DatabaseChanged != null) this.DatabaseChanged(this, oldDatabase, newDatabase);
+			if (this.DatabaseChanged != null) this.DatabaseChanged(this, new DbServerDatabaseChangedEventArgs(this, oldDatabase, newDatabase));
 		}
 
 		/// <summary>
@@ -495,7 +458,7 @@ namespace YtCrawler.Database
 		protected void OnOpening()
 		{
 			// Call the event.
-			if (this.Opening != null) this.Opening(this);
+			if (this.Opening != null) this.Opening(this, new DbServerEventArgs(this));
 		}
 
 		/// <summary>
@@ -504,7 +467,7 @@ namespace YtCrawler.Database
 		protected void OnReopening()
 		{
 			// Call the event.
-			if (this.Reopening != null) this.Reopening(this);
+			if (this.Reopening != null) this.Reopening(this, new DbServerEventArgs(this));
 		}
 
 		/// <summary>
@@ -513,26 +476,88 @@ namespace YtCrawler.Database
 		protected void OnClosing()
 		{
 			// Call the event.
-			if (this.Closing != null) this.Closing(this);
+			if (this.Closing != null) this.Closing(this, new DbServerEventArgs(this));
 		}
 
 		/// <summary>
 		/// An event handler called when the server logs a new event.
 		/// </summary>
-		protected void OnLog(LogEvent evt)
+		/// <param name="server">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		protected void OnLog(object sender, LogEventArgs e)
 		{
 			// Call the event.
-			if (this.EventLogged != null) this.EventLogged(evt);
+			if (this.EventLogged != null) this.EventLogged(this, e);
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Saves the current server configuration to the registry.
+		/// </summary>
+		private void SaveInternalConfiguration()
+		{
+			// Update the modification date.
+			this.dateModified = DateTime.Now;
+
+			// Save basic configuration.
+			DotNetApi.Windows.Registry.SetString(this.key.Name, "Name", this.name);
+			DotNetApi.Windows.Registry.SetString(this.key.Name, "DataSource", this.dataSource);
+			DotNetApi.Windows.Registry.SetString(this.key.Name, "Username", this.username);
+			DotNetApi.Windows.Registry.SetSecureString(this.key.Name, "Password", this.password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateCreated", this.dateCreated);
+			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateModified", this.dateModified);
+
+			// Save tables and relationship configuration.
+			this.tables.SaveConfiguration();
+			this.relationships.SaveConfiguration();
+
+			// Log the event.
+			this.log.Add(
+				LogEventLevel.Normal,
+				LogEventType.Success,
+				this.logSource,
+				"Configuration for database server with ID \'{0}\' was saved to registry. Some changes will take effect the next time you connect.",
+				new object[] { this.Id }
+				);
+		}
+
+		/// <summary>
+		/// Loads the current server configuration from the registry.
+		/// </summary>
+		private void LoadInternalConfiguration()
+		{
+			// Load basic configuration.
+			this.name = DotNetApi.Windows.Registry.GetString(this.key.Name, "Name", null);
+			this.dataSource = DotNetApi.Windows.Registry.GetString(this.key.Name, "DataSource", null);
+			this.username = DotNetApi.Windows.Registry.GetString(this.key.Name, "Username", null);
+			this.password = DotNetApi.Windows.Registry.GetSecureString(this.key.Name, "Password", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			this.dateCreated = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateCreated", DateTime.Now);
+			this.dateModified = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateModified", DateTime.Now);
+
+			// Load tables and relationships configuration.
+			this.tables.LoadConfiguration();
+			this.relationships.LoadConfiguration();
+
+			// Log the event.
+			this.log.Add(
+				LogEventLevel.Normal,
+				LogEventType.Success,
+				this.logSource,
+				"Configuration for database server with ID \'{0}\' was loaded from registry. The server name is \'{1}\'.",
+				new object[] { this.Id, this.Name }
+				);
 		}
 
 		/// <summary>
 		/// An event handler called when a database table has changed.
 		/// </summary>
-		/// <param name="table">The database table.</param>
-		private void OnTableChanged(ITable table)
+		/// <param name="server">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableChanged(object sender, DbTableEventArgs e)
 		{
 			// Raise the server event.
-			if (this.TableChanged != null) this.TableChanged(this, table);
+			if (this.TableChanged != null) this.TableChanged(this, new DbServerTableChangedEventArgs(this, e.Table));
 		}
 	}
 }

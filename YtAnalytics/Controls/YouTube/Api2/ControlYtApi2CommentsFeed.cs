@@ -100,7 +100,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler for when the search text has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchChanged(object sender, EventArgs e)
 		{
@@ -124,7 +124,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler raised when the user selects the current feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnOpenLink(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -134,7 +134,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Starts an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
@@ -174,7 +174,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Cancels an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStop(object sender, EventArgs e)
 		{
@@ -300,7 +300,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user navigates to the previous page in the feed list.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigatePrevious(object sender, EventArgs e)
 		{
@@ -325,7 +325,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user navigates to the next page in the feed list.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigateNext(object sender, EventArgs e)
 		{

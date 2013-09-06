@@ -172,7 +172,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Cancels the current asynchronous operation.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnCancel(object sender, EventArgs e)
 		{
@@ -212,7 +212,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the selected category has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSelectedCategoryChanged(object sender, EventArgs e)
 		{

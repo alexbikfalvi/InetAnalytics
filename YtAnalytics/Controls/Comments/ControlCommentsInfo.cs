@@ -62,7 +62,7 @@ namespace YtAnalytics.Controls.Comments
 		/// <summary>
 		/// An event handler called when the user selects the videos link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideosClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -72,7 +72,7 @@ namespace YtAnalytics.Controls.Comments
 		/// <summary>
 		/// An event handler called when the user selects the users link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnUsersClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -82,7 +82,7 @@ namespace YtAnalytics.Controls.Comments
 		/// <summary>
 		/// An event handler called when the user selects the playlists link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnPlaylistsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{

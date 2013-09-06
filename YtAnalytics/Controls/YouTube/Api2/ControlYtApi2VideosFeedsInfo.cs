@@ -75,7 +75,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the video link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -85,7 +85,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the video comments link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoCommentsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -95,7 +95,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the search feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -105,7 +105,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the standard feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStandardFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -115,7 +115,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the related videos feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnRelatedVideosFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -125,7 +125,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// The event handler for the user selection of the response videos feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnResponseVideosFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{

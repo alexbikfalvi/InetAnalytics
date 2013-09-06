@@ -40,7 +40,7 @@
 			this.control.TabIndex = 0;
 			this.control.DatabaseOperationStarted += new System.EventHandler(this.OnDatabaseOperationStarted);
 			this.control.DatabaseOperationFinished += new System.EventHandler(this.OnDatabaseOperationFinished);
-			this.control.Selected += new YtAnalytics.Controls.Database.DatabaseObjectSelectedEventHandler(this.OnSelected);
+			this.control.Selected += new YtAnalytics.Events.DatabaseObjectSelectedEventHandler(this.OnSelected);
 			this.control.Closed += new System.EventHandler(this.OnClosed);
 			// 
 			// FormDatabaseSelect

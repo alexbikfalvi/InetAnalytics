@@ -21,32 +21,36 @@ using System;
 namespace YtCrawler.Database
 {
 	/// <summary>
+	/// A delegate representing the event handler for the database state.
+	/// </summary>
+	/// <param name="server">The sender object.</param>
+	/// <param name="e">The event arguments.</param>
+	public delegate void DbServerStateEventHandler(object sender, DbServerStateEventArgs e);
+
+	/// <summary>
 	/// A class representing the event arguments for the database state.
 	/// </summary>
-	public class DbServerStateEventArgs : EventArgs
+	public class DbServerStateEventArgs : DbServerEventArgs
 	{
-		private DbServer.ServerState oldState;
-		private DbServer.ServerState newState;
-
 		/// <summary>
 		/// Creates a new event arguments instance.
 		/// </summary>
 		/// <param name="oldState">The old state.</param>
 		/// <param name="newState">The new state.</param>
-		public DbServerStateEventArgs(DbServer.ServerState oldState, DbServer.ServerState newState)
+		public DbServerStateEventArgs(DbServer server, DbServer.ServerState oldState, DbServer.ServerState newState)
+			: base(server)
 		{
-			this.oldState = oldState;
-			this.newState = newState;
+			this.OldState = oldState;
+			this.NewState = newState;
 		}
 
 		/// <summary>
 		/// Gets the old state.
 		/// </summary>
-		public DbServer.ServerState OldState { get { return this.oldState; } }
-
+		public DbServer.ServerState OldState { get; private set; }
 		/// <summary>
 		/// Gets the new state.
 		/// </summary>
-		public DbServer.ServerState NewState { get { return this.newState; } }
+		public DbServer.ServerState NewState { get; private set; }
 	}
 }

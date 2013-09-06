@@ -13,10 +13,21 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			if (disposing)
 			{
-				components.Dispose();
+				if (null != this.components)
+				{
+					this.components.Dispose();
+				}
+				this.rowName.Dispose();
+				this.rowTypeLocal.Dispose();
+				this.rowTypeDatabase.Dispose();
+				this.rowLength.Dispose();
+				this.rowPrecision.Dispose();
+				this.rowScale.Dispose();
+				this.rowNullable.Dispose();
 			}
+			// Call the base class method.
 			base.Dispose(disposing);
 		}
 

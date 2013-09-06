@@ -195,7 +195,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the user clicks on the previous button.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnPreviousClick(object sender, EventArgs e)
 		{
@@ -205,7 +205,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the user clicks on the next button.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNextClick(object sender, EventArgs e)
 		{
@@ -215,7 +215,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the item selection has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
 		{
@@ -225,7 +225,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event handler called when the number of comments per page has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnCommentsPerPageChanged(object sender, EventArgs e)
 		{

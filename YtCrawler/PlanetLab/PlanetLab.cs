@@ -24,7 +24,7 @@ namespace YtCrawler.PlanetLab
 	/// <summary>
 	/// A class representing the PlanetLab configuration.
 	/// </summary>
-	public class PlanetLab : IDisposable
+	public sealed class PlanetLab : IDisposable
 	{
 		private CrawlerConfig config;
 
@@ -67,6 +67,8 @@ namespace YtCrawler.PlanetLab
 				this.Sites.SaveToFile(this.config.PlanetLabSitesFileName);
 			}
 			catch { }
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 	}
 }

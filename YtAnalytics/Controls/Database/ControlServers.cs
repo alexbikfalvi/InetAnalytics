@@ -50,7 +50,7 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// A class storing the UI controls associated with a database server.
 		/// </summary>
-		protected class ServerControls
+		protected sealed class ServerControls : IDisposable
 		{
 			private ListViewItem item;
 			private TreeNode node;
@@ -89,6 +89,18 @@ namespace YtAnalytics.Controls.Database
 			/// Gets the query control.
 			/// </summary>
 			public ControlServerQuery ControlQuery { get { return this.controlQuery; } }
+
+			// Public methods.
+
+			public void Dispose()
+			{
+				// Dispose the fields.
+				this.controlServer.Dispose();
+				this.controlLog.Dispose();
+				this.controlQuery.Dispose();
+				// Supress the finalizer for this object.
+				GC.SuppressFinalize(this);
+			}
 		};
 
 		private static string logSource = "Database";
@@ -263,15 +275,16 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when a new server was added.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		private void OnServerAdded(DbServer server)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerAdded(object sender, DbServerEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerAdded), new object[] { server });
+			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerAdded), new object[] { sender, e });
 			else
 			{
 				// Add the server.
-				this.AddServer(server);
+				this.AddServer(e.Server);
 
 				// Log the change.
 				this.log.Add(this.crawler.Log.Add(
@@ -279,7 +292,7 @@ namespace YtAnalytics.Controls.Database
 					LogEventType.Success,
 					ControlServers.logSource,
 					"Database server with ID \'{0}\' and name \'{1}\' added. The server is {2}.",
-					new object[] { server.Id, server.Name, this.crawler.Servers.IsPrimary(server) ? "primary" : "backup" }));
+					new object[] { e.Server.Id, e.Server.Name, this.crawler.Servers.IsPrimary(e.Server) ? "primary" : "backup" }));
 
 				// Hide the message.
 				this.HideMessage();
@@ -289,15 +302,16 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when a server was removed.
 		/// </summary>
-		/// <param name="id">The server ID.</param>
-		private void OnServerRemoved(string id)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerRemoved(object sender, DbIdEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerIdEventHandler(this.OnServerRemoved), new object[] { id });
+			if (this.InvokeRequired) this.Invoke(new DbIdEventHandler(this.OnServerRemoved), new object[] { sender, e });
 			else
 			{
 				// Remove the server.
-				this.RemoveServer(id);
+				this.RemoveServer(e.Id);
 
 				// Log the change.
 				this.log.Add(this.crawler.Log.Add(
@@ -305,96 +319,97 @@ namespace YtAnalytics.Controls.Database
 					LogEventType.Success,
 					ControlServers.logSource,
 					"Database server with ID \'{0}\' was removed.",
-					new object[] { id }));
+					new object[] { e.Id }));
 			}
 		}
 
 		/// <summary>
 		/// An event handler called when a server configuration has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		private void OnServerChanged(DbServer server)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerChanged(object sender, DbServerEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerChanged), new object[] { server });
+			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerChanged), new object[] { sender, e });
 			else
 			{
 				// Update the server information.
 
 				// Get the controls corresponding to this server.
-				ServerControls controls = this.items[server.Id];
+				ServerControls controls = this.items[e.Server.Id];
 				// Update the server information.
-				controls.Item.SubItems[0].Text = server.Name;
-				controls.Item.SubItems[2].Text = server.State.ToString();
-				controls.Item.SubItems[3].Text = server.Version;
-				controls.Node.Text = this.GetServerTreeName(server);
+				controls.Item.SubItems[0].Text = e.Server.Name;
+				controls.Item.SubItems[2].Text = e.Server.State.ToString();
+				controls.Item.SubItems[3].Text = e.Server.Version;
+				controls.Node.Text = this.GetServerTreeName(e.Server);
 
 				// Call the selected item change event to update the buttons.
-				this.OnServerSelectionChanged(this, null);
+				this.OnServerSelectionChanged(this, e);
 			}
 		}
 
 		/// <summary>
 		/// An event handler called when the state of a server connection has changed.
 		/// </summary>
-		/// <param name="server">The server.</param>
-		/// <param name="e">The state change arguments.</param>
-		void OnServerStateChanged(DbServer server, DbServerStateEventArgs e)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		void OnServerStateChanged(object sender, DbServerStateEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { server, e });
+			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { sender, e });
 			else
 			{
 				// If there are no controls for this server, ignore the event.
-				if (!this.items.ContainsKey(server.Id)) return;
+				if (!this.items.ContainsKey(e.Server.Id)) return;
 
 				// Get the controls corresponding to this server.
-				ServerControls controls = this.items[server.Id];
+				ServerControls controls = this.items[e.Server.Id];
 
 				// Update the list view item.
-				controls.Item.SubItems[2].Text = server.State.ToString();
-				controls.Item.SubItems[3].Text = server.Version;
-				controls.Item.ImageKey = this.imageKeys[(int)server.State];
+				controls.Item.SubItems[2].Text = e.Server.State.ToString();
+				controls.Item.SubItems[3].Text = e.Server.Version;
+				controls.Item.ImageKey = this.imageKeys[(int)e.Server.State];
 
 				// Update the tree node.
-				controls.Node.ImageKey = this.imageKeys[(int)server.State];
-				controls.Node.SelectedImageKey = this.imageKeys[(int)server.State];
+				controls.Node.ImageKey = this.imageKeys[(int)e.Server.State];
+				controls.Node.SelectedImageKey = this.imageKeys[(int)e.Server.State];
 
 				// Call the selected item change event to update the buttons.
-				this.OnServerSelectionChanged(this, null);
+				this.OnServerSelectionChanged(this, e);
 			}
 		}
 
 		/// <summary>
 		/// An event handler called when the primary server has changed.
 		/// </summary>
-		/// <param name="oldPrimary">The old primary server.</param>
-		/// <param name="newPrimary">The new primary server.</param>
-		private void OnPrimaryServerChanged(DbServer oldPrimary, DbServer newPrimary)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPrimaryServerChanged(object sender, DbPrimaryServerChangedEventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerPrimaryChangedEventHandler(this.OnPrimaryServerChanged), new object[] { oldPrimary, newPrimary });
+			if (this.InvokeRequired) this.Invoke(new DbPrimaryServerChangedEventHandler(this.OnPrimaryServerChanged), new object[] { sender, e });
 			else
 			{
 				// Update the old primary server, if not null.
-				if (null != oldPrimary)
+				if (null != e.OldPrimary)
 				{
-					if(this.items.ContainsKey(oldPrimary.Id))
+					if(this.items.ContainsKey(e.OldPrimary.Id))
 					{
-						ServerControls controls = this.items[oldPrimary.Id];
+						ServerControls controls = this.items[e.OldPrimary.Id];
 						controls.Item.SubItems[1].Text = "Backup";
-						controls.Node.Text = this.GetServerTreeName(oldPrimary);
+						controls.Node.Text = this.GetServerTreeName(e.OldPrimary);
 					}
 				}
 
 				// Update the new primary server, if not null.
-				if (null != newPrimary)
+				if (null != e.NewPrimary)
 				{
-					if(this.items.ContainsKey(newPrimary.Id))
+					if(this.items.ContainsKey(e.NewPrimary.Id))
 					{
-						ServerControls controls = this.items[newPrimary.Id];
+						ServerControls controls = this.items[e.NewPrimary.Id];
 						controls.Item.SubItems[1].Text = "Primary";
-						controls.Node.Text = this.GetServerTreeName(newPrimary);
+						controls.Node.Text = this.GetServerTreeName(e.NewPrimary);
 					}
 				}
 
@@ -408,8 +423,8 @@ namespace YtAnalytics.Controls.Database
 					ControlServers.logSource,
 					"Primary database server has changed from \'{0}\' to \'{1}\'.",
 					new object[] {
-						oldPrimary != null ? oldPrimary.Id : string.Empty,
-						newPrimary != null ? newPrimary.Id : string.Empty
+						e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
+						e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
 					}));
 			}
 		}
@@ -713,14 +728,15 @@ namespace YtAnalytics.Controls.Database
 		/// <summary>
 		/// An event handler called when a server raises a log event.
 		/// </summary>
-		/// <param name="evt">The log event.</param>
-		void OnEventLogged(LogEvent evt)
+		/// <param name="server">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		void OnEventLogged(object sender, LogEventArgs e)
 		{
 			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { evt });
+			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { sender, e });
 			else
 			{
-				this.log.Add(evt);
+				this.log.Add(e.Event);
 			}
 		}
 	}

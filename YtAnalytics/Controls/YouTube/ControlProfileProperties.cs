@@ -306,10 +306,10 @@ namespace YtAnalytics.Controls.YouTube
 		/// An event handler called when the user activates a thumbnail.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
-		/// <param name="item">The item.</param>
-		private void OnThumbnailActivate(object sender, DotNetApi.Windows.Controls.ImageListBoxItem item)
+		/// <param name="e">The event arguments.</param>
+		private void OnThumbnailActivate(object sender, ImageListBoxItemActivateEventArgs e)
 		{
-			this.formImage.Show(this, item.Text, item.Image);
+			this.formImage.Show(this, e.Item.Text, e.Item.Image);
 		}
 	}
 }

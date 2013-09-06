@@ -73,6 +73,9 @@ namespace YtCrawler.Database
 			this.Relationships.Add(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
 			this.Relationships.Add(this.tableTypes, this.tableColumns, "SystemTypeId", "SystemTypeId");
 			this.Relationships.Add(this.tableTypes, this.tableColumns, "UserTypeId", "UserTypeId");
+
+			// Load the current configuration.
+			this.LoadInternalConfiguration();
 		}
 
 		/// <summary>
@@ -113,6 +116,9 @@ namespace YtCrawler.Database
 			// Add relationships to the tables list.
 			this.Relationships.Add(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
 			this.Relationships.Add(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
+
+			// Save the configuration.
+			this.SaveInternalConfiguration();
 		}
 
 		// Public properties.
@@ -184,28 +190,27 @@ namespace YtCrawler.Database
 
 		// Public methods.
 
-		/// <summary>
-		/// Saves the current server configuration to the registry.
-		/// </summary>
-		public override void SaveConfiguration()
-		{
-			// Save the default databas
-			if (this.database != null) DbObject.SaveToRegistry<DbObjectSqlDatabase>(this.database as DbObjectSqlDatabase, this.key.Name, "Database");
-
-			// Call the base class method.
-			base.SaveConfiguration();
-		}
 
 		/// <summary>
-		/// Loads the current server configuration from the registry.
+		/// Loads the server configuration.
 		/// </summary>
 		public override void LoadConfiguration()
 		{
-			// Load the default database.
-			this.database = DbObject.CreateFromRegistry<DbObjectSqlDatabase>(this.key.Name, "Database");
-
-			// Call the base class method.
+			// Load the base configuration.
 			base.LoadConfiguration();
+			// Load the custom configuration.
+			this.LoadInternalConfiguration();
+		}
+
+		/// <summary>
+		/// Saves the server configuration.
+		/// </summary>
+		public override void SaveConfiguration()
+		{
+			// Save the base configuration.
+			base.SaveConfiguration();
+			// Save the custom configuration.
+			this.SaveInternalConfiguration();
 		}
 
 		/// <summary>
@@ -255,8 +260,8 @@ namespace YtCrawler.Database
 					new object[] { this.Id, exception.Message },
 					exception
 					);
-				// Rethrow the exception;
-				throw exception;
+				// Rethrow the exception.
+				throw;
 			}
 			finally
 			{
@@ -348,8 +353,8 @@ namespace YtCrawler.Database
 					new object[] { this.Id, exception.Message },
 					exception
 					);
-				// Rethrow the exception;
-				throw exception;
+				// Rethrow the exception.
+				throw;
 			}
 			finally
 			{
@@ -388,6 +393,26 @@ namespace YtCrawler.Database
 					if (callback != null) callback(asyncState);
 				});
 			return asyncState;
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Saves the current server configuration to the registry.
+		/// </summary>
+		private void SaveInternalConfiguration()
+		{
+			// Save the default databas
+			if (this.database != null) DbObject.SaveToRegistry<DbObjectSqlDatabase>(this.database as DbObjectSqlDatabase, this.key.Name, "Database");
+		}
+
+		/// <summary>
+		/// Loads the current server configuration from the registry.
+		/// </summary>
+		private void LoadInternalConfiguration()
+		{
+			// Load the default database.
+			this.database = DbObject.CreateFromRegistry<DbObjectSqlDatabase>(this.key.Name, "Database");
 		}
 
 		/// <summary>
@@ -435,8 +460,8 @@ namespace YtCrawler.Database
 					new object[] { this.Id, exception.Message },
 					exception
 					);
-				// Rethrow the exception;
-				throw exception;
+				// Rethrow the exception.
+				throw;
 			}
 			finally
 			{
@@ -544,18 +569,24 @@ namespace YtCrawler.Database
 		// Protected methods.
 
 		/// <summary>
-		/// A  method called when the server object is being disposed.
+		/// Disposes the current object.
 		/// </summary>
-		protected sealed override void OnDispose()
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
 		{
-			// If the server connection is not closed.
-			if (this.connection.State != ConnectionState.Closed)
+			if (disposing)
 			{
-				// Close the server connection synchronously.
-				this.Close();
+				// If the server connection is not closed.
+				if (this.connection.State != ConnectionState.Closed)
+				{
+					// Close the server connection synchronously.
+					this.Close();
+				}
+				// Dispose the mutex.
+				this.mutex.Dispose();
 			}
 			// Call the base class method.
-			base.OnDispose();
+			base.Dispose(disposing);
 		}
 
 		/// <summary>
@@ -613,7 +644,7 @@ namespace YtCrawler.Database
 					exception
 					);
 				// Rethrow the exception.
-				throw exception;
+				throw;
 			}
 			finally
 			{

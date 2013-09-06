@@ -17,6 +17,8 @@
  */
 
 using System;
+using System.Runtime.Serialization;
+using DotNetApi;
 
 namespace YtCrawler.Database
 {
@@ -39,10 +41,37 @@ namespace YtCrawler.Database
 			this.property = property;
 		}
 
+		/// <summary>
+		/// Creates a new database exception instance during the deserialization.
+		/// </summary>
+		/// <param name="info">The serialization info.</param>
+		/// <param name="context">The streaming context.</param>
+		protected DbFieldException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+			this.property = info.GetString("property");
+		}
 
 		/// <summary>
 		/// Gets the property name for which the mapping could not be solved.
 		/// </summary>
 		public string Property { get { return this.property; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Populates a serialization info with the data needed to serialize the target object.
+		/// </summary>
+		/// <param name="info">The serialization info.</param>
+		/// <param name="context">The serialization.</param>
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			// Validate the arguments.
+			info.ValidateNotNull("info");
+			// Call the base class method.
+			base.GetObjectData(info, context);
+			// Set the property.
+			info.AddValue("property", this.property);
+		}
 	}
 }

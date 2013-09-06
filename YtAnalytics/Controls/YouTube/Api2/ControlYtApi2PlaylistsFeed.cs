@@ -23,6 +23,7 @@ using System.Net;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.Comments;
+using YtAnalytics.Events;
 using YtAnalytics.Forms.YouTube;
 using YtApi;
 using YtApi.Api.V2;
@@ -70,15 +71,15 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// View the playlist author.
 		/// </summary>
-		public event ViewIdEventHandler ViewPlaylistAuthorInApiV2;
+		public event StringEventHandler ViewPlaylistAuthorInApiV2;
 		/// <summary>
 		/// View the playlist videos.
 		/// </summary>
-		public event ViewIdEventHandler ViewPlaylistVideosInApiV2;
+		public event StringEventHandler ViewPlaylistVideosInApiV2;
 		/// <summary>
 		/// An event handler called when the user adds a new comment for the current playlist.
 		/// </summary>
-		public event AddCommentItemEventHandler Comment;
+		public event StringEventHandler Comment;
 
 		// Public methods.
 
@@ -113,7 +114,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler for when the search text has changed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchChanged(object sender, EventArgs e)
 		{
@@ -137,7 +138,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler raised when the user selects the current feed link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnOpenLink(object sender, LinkLabelLinkClickedEventArgs e)
 		{
@@ -147,7 +148,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Starts an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
@@ -187,7 +188,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// Cancels an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStop(object sender, EventArgs e)
 		{
@@ -313,7 +314,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user navigates to the previous page in the feed list.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigatePrevious(object sender, EventArgs e)
 		{
@@ -338,7 +339,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the user navigates to the next page in the feed list.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigateNext(object sender, EventArgs e)
 		{
@@ -363,7 +364,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler for the visualization of a playlist entry menu.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewPlaylist(object sender, EventArgs e)
 		{
@@ -379,7 +380,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private void OnViewAuthor(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			if (this.ViewPlaylistAuthorInApiV2 != null) this.ViewPlaylistAuthorInApiV2(playlist.Author.UserId);
+			if (this.ViewPlaylistAuthorInApiV2 != null) this.ViewPlaylistAuthorInApiV2(this, new StringEventArgs(playlist.Author.UserId));
 		}
 
 		/// <summary>
@@ -390,7 +391,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private void OnViewVideos(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			if (this.ViewPlaylistVideosInApiV2 != null) this.ViewPlaylistVideosInApiV2(playlist.Id);
+			if (this.ViewPlaylistVideosInApiV2 != null) this.ViewPlaylistVideosInApiV2(this, new StringEventArgs(playlist.Id));
 		}
 
 		/// <summary>
@@ -413,7 +414,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private void OnAddComment(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			if (this.Comment != null) this.Comment(playlist.Id);
+			if (this.Comment != null) this.Comment(this, new StringEventArgs(playlist.Id));
 		}
 
 		/// <summary>
@@ -444,7 +445,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <summary>
 		/// An event handler called when the video entry menu was closed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnViewMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
 		{

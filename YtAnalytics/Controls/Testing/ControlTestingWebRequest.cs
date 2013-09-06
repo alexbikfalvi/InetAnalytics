@@ -103,7 +103,7 @@ namespace YtAnalytics.Controls.Testing
 		/// <summary>
 		/// Starts an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
@@ -190,7 +190,7 @@ namespace YtAnalytics.Controls.Testing
 		/// <summary>
 		/// Cancels an asynchronous request for the selected video feed.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStop(object sender, EventArgs e)
 		{

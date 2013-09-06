@@ -23,8 +23,6 @@ using System.Windows.Forms;
 
 namespace YtCrawler.Status
 {
-	public delegate void CrawlerStatusEventHandler(StatusMessage? message);
-
 	/// <summary>
 	/// A class allowing controls to send status messages.
 	/// </summary>
@@ -45,7 +43,7 @@ namespace YtCrawler.Status
 
 		// Public events.
 
-		public event CrawlerStatusEventHandler Message;
+		public event StatusMessageEventHandler Message;
 
 		// Public methods.
 
@@ -143,8 +141,8 @@ namespace YtCrawler.Status
 			if (null != this.Message)
 			{
 				// If the handler is not null.
-				if (null != this.handler) this.Message(this.handler.Message);
-				else this.Message(null);
+				if (null != this.handler) this.Message(this, new StatusMessageEventArgs(this.handler.Message));
+				else this.Message(this, new StatusMessageEventArgs(null));
 			}
 		}
 	}

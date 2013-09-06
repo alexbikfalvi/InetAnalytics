@@ -266,14 +266,18 @@ namespace YtCrawler.Database
 		// Protected methods.
 
 		/// <summary>
-		/// A method called when the object is being disposed.
+		/// Disposes the current object.
 		/// </summary>
-		protected override void OnDisposed()
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
 		{
-			// Close the reader if not closed.
-			if (!this.reader.IsClosed) this.reader.Close();
-			// Dispose the current reader.
-			this.reader.Dispose();
+			if (disposing)
+			{
+				// Close the reader if not closed.
+				if (!this.reader.IsClosed) this.reader.Close();
+				// Dispose the current reader.
+				this.reader.Dispose();
+			}
 		}
 	}
 }

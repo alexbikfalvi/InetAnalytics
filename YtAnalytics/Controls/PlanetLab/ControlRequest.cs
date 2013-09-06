@@ -169,7 +169,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						exception.Message) });
 
 				// Rethrow the exception.
-				throw exception;
+				throw;
 			}
 		}
 

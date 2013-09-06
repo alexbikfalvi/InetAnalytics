@@ -27,6 +27,8 @@ namespace YtApi.Api.V2.Data
 	[Serializable]
 	public abstract class Entry : IDisposable
 	{
+		// Public properties.
+
 		/// <summary>
 		/// Abstract method to create a feed entry based on an atom instance.
 		/// </summary>
@@ -41,9 +43,27 @@ namespace YtApi.Api.V2.Data
 		/// <returns>The atom feed.</returns>
 		public abstract AtomFeed CreateFeed(string data);
 
+		// Public methods.
+
 		/// <summary>
 		/// Disposes the entry.
 		/// </summary>
-		public void Dispose() { }
+		public void Dispose()
+		{
+			// Call the event handler.
+			this.Dispose(true);
+			// Supress the finalizer.
+			GC.SuppressFinalize(this);
+		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// An event handler called when the object is being disposed.
+		/// </summary>
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected virtual void Dispose(bool disposing)
+		{
+		}
 	}
 }

@@ -136,12 +136,12 @@ namespace YtAnalytics.Forms.Database
 		/// <summary>
 		/// An event handler called when the server state has changed.
 		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="e">The server state event arguments.</param>
-		private void OnServerStateChanged(DbServer server, DbServerStateEventArgs e)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnServerStateChanged(object sender, DbServerStateEventArgs e)
 		{
 			// Update the control state.
-			this.control.StateChanged(server);
+			this.control.StateChanged(e.Server);
 		}
 	}
 }

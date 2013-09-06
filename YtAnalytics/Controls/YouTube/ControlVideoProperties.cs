@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using YtAnalytics.Controls.YouTube.Api2;
+using YtAnalytics.Events;
 using YtAnalytics.Forms;
 using YtApi.Api.V2.Data;
 
@@ -65,7 +66,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <summary>
 		/// An event raised when the user selects the view profile.
 		/// </summary>
-		public event ViewIdEventHandler ViewProfile;
+		public event StringEventHandler ViewProfile;
 
 		/// <summary>
 		/// Gets or sets the current video object.
@@ -352,10 +353,10 @@ namespace YtAnalytics.Controls.YouTube
 		/// An event handler called when the user activates a thumbnail.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
-		/// <param name="item">The item.</param>
-		private void OnThumbnailActivate(object sender, DotNetApi.Windows.Controls.ImageListBoxItem item)
+		/// <param name="e">The event arguments.</param>
+		private void OnThumbnailActivate(object sender, ImageListBoxItemActivateEventArgs e)
 		{
-			this.formImage.Show(this, item.Text, item.Image);
+			this.formImage.Show(this, e.Item.Text, e.Item.Image);
 		}
 
 		/// <summary>
@@ -365,7 +366,7 @@ namespace YtAnalytics.Controls.YouTube
 		/// <param name="e">The item.</param>
 		private void OnViewProfile(object sender, EventArgs e)
 		{
-			if (this.ViewProfile != null) this.ViewProfile(this.video.Author.UserId);
+			if (this.ViewProfile != null) this.ViewProfile(this, new StringEventArgs(this.video.Author.UserId));
 		}
 	}
 }

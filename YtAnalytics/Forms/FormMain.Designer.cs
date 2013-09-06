@@ -178,7 +178,7 @@
 			this.controlSideLog.Visible = false;
 			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
 			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideComments
 			// 
@@ -197,7 +197,7 @@
 			this.controlSideComments.Size = new System.Drawing.Size(244, 58);
 			this.controlSideComments.TabIndex = 3;
 			this.controlSideComments.Visible = false;
-			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// imageList
 			// 
@@ -265,7 +265,7 @@
 			this.controlSideConfiguration.Size = new System.Drawing.Size(244, 58);
 			this.controlSideConfiguration.TabIndex = 1;
 			this.controlSideConfiguration.Visible = false;
-			this.controlSideConfiguration.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSideConfiguration.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideTesting
 			// 
@@ -284,7 +284,7 @@
 			this.controlSideTesting.Size = new System.Drawing.Size(244, 58);
 			this.controlSideTesting.TabIndex = 6;
 			this.controlSideTesting.Visible = false;
-			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSidePlanetLab
 			// 
@@ -303,7 +303,7 @@
 			this.controlSidePlanetLab.Size = new System.Drawing.Size(244, 58);
 			this.controlSidePlanetLab.TabIndex = 7;
 			this.controlSidePlanetLab.Visible = false;
-			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideSpiders
 			// 
@@ -322,7 +322,7 @@
 			this.controlSideSpiders.Size = new System.Drawing.Size(244, 58);
 			this.controlSideSpiders.TabIndex = 5;
 			this.controlSideSpiders.Visible = false;
-			this.controlSideSpiders.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSideSpiders.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideDatabase
 			// 
@@ -341,7 +341,7 @@
 			this.controlSideDatabase.Size = new System.Drawing.Size(244, 58);
 			this.controlSideDatabase.TabIndex = 4;
 			this.controlSideDatabase.Visible = false;
-			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideBrowser
 			// 
@@ -360,7 +360,7 @@
 			this.controlSideBrowser.Size = new System.Drawing.Size(244, 58);
 			this.controlSideBrowser.TabIndex = 0;
 			this.controlSideBrowser.Visible = false;
-			this.controlSideBrowser.ControlChanged += new DotNetApi.Windows.Controls.SideTreeViewControlChangedEventHandler(this.OnControlChanged);
+			this.controlSideBrowser.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// sideMenuItemBrowser
 			// 

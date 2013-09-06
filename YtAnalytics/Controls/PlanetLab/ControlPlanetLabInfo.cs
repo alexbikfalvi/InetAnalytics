@@ -62,7 +62,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when the user selects the nodes link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNodesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{

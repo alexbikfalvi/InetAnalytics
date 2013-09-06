@@ -18,6 +18,7 @@
 
 using System;
 using System.Windows.Forms;
+using YtAnalytics.Events;
 using YtCrawler.Database;
 using YtCrawler.Database.Data;
 using DotNetApi.Windows;
@@ -102,7 +103,7 @@ namespace YtAnalytics.Forms.Database
 		/// <summary>
 		/// An event handler called when starting to refresh the list of database objects.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnRefreshStarted(object sender, EventArgs e)
 		{
@@ -112,7 +113,7 @@ namespace YtAnalytics.Forms.Database
 		/// <summary>
 		/// An event handler called when finishing to refresh the list of database objects.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnRefreshFinished(object sender, EventArgs e)
 		{
@@ -122,13 +123,13 @@ namespace YtAnalytics.Forms.Database
 		/// <summary>
 		/// An event handler called when the user selects the database object.
 		/// </summary>
-		/// <param name="selectedResult">The selected result.</param>
-		/// <param name="allResults">All results.</param>
-		private void OnSelected(DbObject selectedResult, DbDataObject allResults)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelected(object sender, DatabaseObjectSelectedEventArgs e)
 		{
 			// Set the result.
-			this.selectedResult = selectedResult;
-			this.allResults = allResults;
+			this.selectedResult = e.SelectedResult;
+			this.allResults = e.AllResults;
 			// Set the dialog result.
 			this.DialogResult = DialogResult.OK;
 			// Close the form.

@@ -27,7 +27,7 @@ namespace YtCrawler.Database
 	/// <summary>
 	/// Represents the collection of database tables for a database server.
 	/// </summary>
-	public class DbTables : IDisposable, IEnumerable<KeyValuePair<string, ITable>>
+	public sealed class DbTables : IDisposable, IEnumerable<KeyValuePair<string, ITable>>
 	{
 		private static string keyName = "Tables";
 		private RegistryKey key;
@@ -68,7 +68,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event raised when a database table has changed.
 		/// </summary>
-		public event DbTableChangedEventHandler TableChanged;
+		public event DbTableEventHandler TableChanged;
 
 		// Public methods.
 
@@ -79,6 +79,8 @@ namespace YtCrawler.Database
 		{
 			// Close the registry key.
 			this.key.Close();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
@@ -141,11 +143,12 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// An event handler called when the configuration of a table has changed.
 		/// </summary>
-		/// <param name="table">The database table.</param>
-		private void OnTableChanged(ITable table)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableChanged(object sender, DbTableEventArgs e)
 		{
 			// Raise the event.
-			if (this.TableChanged != null) this.TableChanged(table);
+			if (this.TableChanged != null) this.TableChanged(sender, e);
 		}
 	}
 }

@@ -59,7 +59,7 @@ namespace YtAnalytics.Controls.Spiders
 		/// <summary>
 		/// The event handler for the user selection of the standard feeds spider link.
 		/// </summary>
-		/// <param name="sender">The sender control.</param>
+		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStandardFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
