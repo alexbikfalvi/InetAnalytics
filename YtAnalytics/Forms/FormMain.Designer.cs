@@ -32,6 +32,9 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
 			this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
+			this.statusLabelLeft = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelMiddle = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
 			this.controlSideLog = new YtAnalytics.Controls.ControlSideCalendar();
@@ -65,9 +68,6 @@
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusLabelLeft = new System.Windows.Forms.ToolStripStatusLabel();
-			this.statusLabelMiddle = new System.Windows.Forms.ToolStripStatusLabel();
-			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -114,6 +114,26 @@
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Size = new System.Drawing.Size(1008, 22);
 			this.statusStrip.TabIndex = 0;
+			// 
+			// statusLabelLeft
+			// 
+			this.statusLabelLeft.Image = global::YtAnalytics.Resources.Information_16;
+			this.statusLabelLeft.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.statusLabelLeft.Name = "statusLabelLeft";
+			this.statusLabelLeft.Size = new System.Drawing.Size(55, 17);
+			this.statusLabelLeft.Text = "Ready";
+			// 
+			// statusLabelMiddle
+			// 
+			this.statusLabelMiddle.Name = "statusLabelMiddle";
+			this.statusLabelMiddle.Size = new System.Drawing.Size(938, 17);
+			this.statusLabelMiddle.Spring = true;
+			// 
+			// statusLabelRight
+			// 
+			this.statusLabelRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.statusLabelRight.Name = "statusLabelRight";
+			this.statusLabelRight.Size = new System.Drawing.Size(0, 17);
 			// 
 			// splitContainer
 			// 
@@ -247,6 +267,7 @@
 			this.imageList.Images.SetKeyName(41, "GlobeSettings");
 			this.imageList.Images.SetKeyName(42, "GlobeSchema");
 			this.imageList.Images.SetKeyName(43, "TestGlobeGoto");
+			this.imageList.Images.SetKeyName(44, "TestConnectGoto");
 			// 
 			// controlSideConfiguration
 			// 
@@ -537,26 +558,6 @@
 			this.menuItemYouTube.Name = "menuItemYouTube";
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
-			// 
-			// statusLabelLeft
-			// 
-			this.statusLabelLeft.Image = global::YtAnalytics.Resources.Information_16;
-			this.statusLabelLeft.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.statusLabelLeft.Name = "statusLabelLeft";
-			this.statusLabelLeft.Size = new System.Drawing.Size(55, 17);
-			this.statusLabelLeft.Text = "Ready";
-			// 
-			// statusLabelMiddle
-			// 
-			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(907, 17);
-			this.statusLabelMiddle.Spring = true;
-			// 
-			// statusLabelRight
-			// 
-			this.statusLabelRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.statusLabelRight.Name = "statusLabelRight";
-			this.statusLabelRight.Size = new System.Drawing.Size(0, 17);
 			// 
 			// FormMain
 			// 

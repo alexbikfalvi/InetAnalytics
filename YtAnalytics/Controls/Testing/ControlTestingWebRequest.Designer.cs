@@ -75,9 +75,9 @@
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.labelUrl = new System.Windows.Forms.Label();
+			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -134,7 +134,7 @@
 			this.buttonExport.Location = new System.Drawing.Point(520, 169);
 			this.buttonExport.Name = "buttonExport";
 			this.buttonExport.Size = new System.Drawing.Size(75, 23);
-			this.buttonExport.TabIndex = 24;
+			this.buttonExport.TabIndex = 7;
 			this.buttonExport.Text = "&Export";
 			this.buttonExport.UseVisualStyleBackColor = true;
 			this.buttonExport.Click += new System.EventHandler(this.OnExport);
@@ -145,7 +145,7 @@
 			this.buttonImport.Location = new System.Drawing.Point(520, 197);
 			this.buttonImport.Name = "buttonImport";
 			this.buttonImport.Size = new System.Drawing.Size(75, 23);
-			this.buttonImport.TabIndex = 23;
+			this.buttonImport.TabIndex = 8;
 			this.buttonImport.Text = "&Import";
 			this.buttonImport.UseVisualStyleBackColor = true;
 			this.buttonImport.Click += new System.EventHandler(this.OnImport);
@@ -157,7 +157,7 @@
 			this.buttonUndo.Location = new System.Drawing.Point(520, 60);
 			this.buttonUndo.Name = "buttonUndo";
 			this.buttonUndo.Size = new System.Drawing.Size(75, 23);
-			this.buttonUndo.TabIndex = 21;
+			this.buttonUndo.TabIndex = 6;
 			this.buttonUndo.Text = "&Undo";
 			this.buttonUndo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonUndo.UseVisualStyleBackColor = true;
@@ -177,7 +177,7 @@
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(508, 190);
-			this.tabControl.TabIndex = 20;
+			this.tabControl.TabIndex = 4;
 			// 
 			// tabPageGeneral
 			// 
@@ -209,7 +209,7 @@
 			this.dateTimePicker.Location = new System.Drawing.Point(110, 89);
 			this.dateTimePicker.Name = "dateTimePicker";
 			this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
-			this.dateTimePicker.TabIndex = 22;
+			this.dateTimePicker.TabIndex = 7;
 			this.dateTimePicker.ValueChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// checkBoxUserAgent
@@ -218,7 +218,7 @@
 			this.checkBoxUserAgent.Location = new System.Drawing.Point(6, 169);
 			this.checkBoxUserAgent.Name = "checkBoxUserAgent";
 			this.checkBoxUserAgent.Size = new System.Drawing.Size(81, 17);
-			this.checkBoxUserAgent.TabIndex = 21;
+			this.checkBoxUserAgent.TabIndex = 12;
 			this.checkBoxUserAgent.Text = "User agent:";
 			this.checkBoxUserAgent.UseVisualStyleBackColor = true;
 			this.checkBoxUserAgent.CheckedChanged += new System.EventHandler(this.OnHeaderCheckedChanged);
@@ -229,8 +229,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUserAgent.Location = new System.Drawing.Point(110, 167);
 			this.textBoxUserAgent.Name = "textBoxUserAgent";
-			this.textBoxUserAgent.Size = new System.Drawing.Size(231, 20);
-			this.textBoxUserAgent.TabIndex = 20;
+			this.textBoxUserAgent.Size = new System.Drawing.Size(214, 20);
+			this.textBoxUserAgent.TabIndex = 13;
 			this.textBoxUserAgent.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// checkBoxReferer
@@ -239,7 +239,7 @@
 			this.checkBoxReferer.Location = new System.Drawing.Point(6, 143);
 			this.checkBoxReferer.Name = "checkBoxReferer";
 			this.checkBoxReferer.Size = new System.Drawing.Size(64, 17);
-			this.checkBoxReferer.TabIndex = 19;
+			this.checkBoxReferer.TabIndex = 10;
 			this.checkBoxReferer.Text = "Referer:";
 			this.checkBoxReferer.UseVisualStyleBackColor = true;
 			this.checkBoxReferer.CheckedChanged += new System.EventHandler(this.OnHeaderCheckedChanged);
@@ -250,8 +250,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxReferer.Location = new System.Drawing.Point(110, 141);
 			this.textBoxReferer.Name = "textBoxReferer";
-			this.textBoxReferer.Size = new System.Drawing.Size(231, 20);
-			this.textBoxReferer.TabIndex = 18;
+			this.textBoxReferer.Size = new System.Drawing.Size(214, 20);
+			this.textBoxReferer.TabIndex = 11;
 			this.textBoxReferer.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// checkBoxDate
@@ -260,7 +260,7 @@
 			this.checkBoxDate.Location = new System.Drawing.Point(6, 91);
 			this.checkBoxDate.Name = "checkBoxDate";
 			this.checkBoxDate.Size = new System.Drawing.Size(52, 17);
-			this.checkBoxDate.TabIndex = 17;
+			this.checkBoxDate.TabIndex = 6;
 			this.checkBoxDate.Text = "Date:";
 			this.checkBoxDate.UseVisualStyleBackColor = true;
 			this.checkBoxDate.CheckedChanged += new System.EventHandler(this.OnHeaderCheckedChanged);
@@ -271,7 +271,7 @@
 			this.checkBoxExpect.Location = new System.Drawing.Point(6, 117);
 			this.checkBoxExpect.Name = "checkBoxExpect";
 			this.checkBoxExpect.Size = new System.Drawing.Size(62, 17);
-			this.checkBoxExpect.TabIndex = 15;
+			this.checkBoxExpect.TabIndex = 8;
 			this.checkBoxExpect.Text = "Expect:";
 			this.checkBoxExpect.UseVisualStyleBackColor = true;
 			this.checkBoxExpect.CheckedChanged += new System.EventHandler(this.OnHeaderCheckedChanged);
@@ -282,8 +282,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxExpect.Location = new System.Drawing.Point(110, 115);
 			this.textBoxExpect.Name = "textBoxExpect";
-			this.textBoxExpect.Size = new System.Drawing.Size(231, 20);
-			this.textBoxExpect.TabIndex = 14;
+			this.textBoxExpect.Size = new System.Drawing.Size(214, 20);
+			this.textBoxExpect.TabIndex = 9;
 			this.textBoxExpect.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// textBoxContentType
@@ -292,8 +292,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxContentType.Location = new System.Drawing.Point(110, 63);
 			this.textBoxContentType.Name = "textBoxContentType";
-			this.textBoxContentType.Size = new System.Drawing.Size(231, 20);
-			this.textBoxContentType.TabIndex = 13;
+			this.textBoxContentType.Size = new System.Drawing.Size(214, 20);
+			this.textBoxContentType.TabIndex = 5;
 			this.textBoxContentType.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// checkBoxContentType
@@ -302,7 +302,7 @@
 			this.checkBoxContentType.Location = new System.Drawing.Point(6, 65);
 			this.checkBoxContentType.Name = "checkBoxContentType";
 			this.checkBoxContentType.Size = new System.Drawing.Size(89, 17);
-			this.checkBoxContentType.TabIndex = 12;
+			this.checkBoxContentType.TabIndex = 4;
 			this.checkBoxContentType.Text = "Content type:";
 			this.checkBoxContentType.UseVisualStyleBackColor = true;
 			this.checkBoxContentType.CheckedChanged += new System.EventHandler(this.OnHeaderCheckedChanged);
@@ -313,8 +313,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAccept.Location = new System.Drawing.Point(110, 37);
 			this.textBoxAccept.Name = "textBoxAccept";
-			this.textBoxAccept.Size = new System.Drawing.Size(231, 20);
-			this.textBoxAccept.TabIndex = 9;
+			this.textBoxAccept.Size = new System.Drawing.Size(214, 20);
+			this.textBoxAccept.TabIndex = 3;
 			this.textBoxAccept.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// checkBoxAccept
@@ -323,7 +323,7 @@
 			this.checkBoxAccept.Location = new System.Drawing.Point(6, 39);
 			this.checkBoxAccept.Name = "checkBoxAccept";
 			this.checkBoxAccept.Size = new System.Drawing.Size(63, 17);
-			this.checkBoxAccept.TabIndex = 8;
+			this.checkBoxAccept.TabIndex = 2;
 			this.checkBoxAccept.Text = "Accept:";
 			this.checkBoxAccept.UseVisualStyleBackColor = true;
 			this.checkBoxAccept.CheckedChanged += new System.EventHandler(this.OnHeaderCheckedChanged);
@@ -334,7 +334,7 @@
 			this.labelMethod.Location = new System.Drawing.Point(6, 13);
 			this.labelMethod.Name = "labelMethod";
 			this.labelMethod.Size = new System.Drawing.Size(46, 13);
-			this.labelMethod.TabIndex = 7;
+			this.labelMethod.TabIndex = 0;
 			this.labelMethod.Text = "&Method:";
 			// 
 			// comboBoxMethod
@@ -347,7 +347,7 @@
 			this.comboBoxMethod.Location = new System.Drawing.Point(110, 10);
 			this.comboBoxMethod.Name = "comboBoxMethod";
 			this.comboBoxMethod.Size = new System.Drawing.Size(150, 21);
-			this.comboBoxMethod.TabIndex = 6;
+			this.comboBoxMethod.TabIndex = 1;
 			this.comboBoxMethod.SelectedIndexChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// tabPageRequestHeaders
@@ -360,7 +360,7 @@
 			this.tabPageRequestHeaders.Location = new System.Drawing.Point(4, 22);
 			this.tabPageRequestHeaders.Name = "tabPageRequestHeaders";
 			this.tabPageRequestHeaders.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageRequestHeaders.Size = new System.Drawing.Size(500, 142);
+			this.tabPageRequestHeaders.Size = new System.Drawing.Size(500, 164);
 			this.tabPageRequestHeaders.TabIndex = 1;
 			this.tabPageRequestHeaders.Text = "Request headers";
 			this.tabPageRequestHeaders.UseVisualStyleBackColor = true;
@@ -380,9 +380,9 @@
 			this.listViewRequestHeaders.Location = new System.Drawing.Point(6, 6);
 			this.listViewRequestHeaders.MultiSelect = false;
 			this.listViewRequestHeaders.Name = "listViewRequestHeaders";
-			this.listViewRequestHeaders.Size = new System.Drawing.Size(407, 130);
+			this.listViewRequestHeaders.Size = new System.Drawing.Size(407, 152);
 			this.listViewRequestHeaders.SmallImageList = this.imageList;
-			this.listViewRequestHeaders.TabIndex = 14;
+			this.listViewRequestHeaders.TabIndex = 0;
 			this.listViewRequestHeaders.UseCompatibleStateImageBehavior = false;
 			this.listViewRequestHeaders.View = System.Windows.Forms.View.Details;
 			this.listViewRequestHeaders.ItemActivate += new System.EventHandler(this.OnChangeHeader);
@@ -411,7 +411,7 @@
 			this.buttonChangeHeader.Location = new System.Drawing.Point(419, 64);
 			this.buttonChangeHeader.Name = "buttonChangeHeader";
 			this.buttonChangeHeader.Size = new System.Drawing.Size(75, 23);
-			this.buttonChangeHeader.TabIndex = 19;
+			this.buttonChangeHeader.TabIndex = 3;
 			this.buttonChangeHeader.Text = "&Change";
 			this.buttonChangeHeader.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonChangeHeader.UseVisualStyleBackColor = true;
@@ -424,7 +424,7 @@
 			this.buttonAddHeader.Location = new System.Drawing.Point(419, 6);
 			this.buttonAddHeader.Name = "buttonAddHeader";
 			this.buttonAddHeader.Size = new System.Drawing.Size(75, 23);
-			this.buttonAddHeader.TabIndex = 16;
+			this.buttonAddHeader.TabIndex = 1;
 			this.buttonAddHeader.Text = "A&dd";
 			this.buttonAddHeader.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonAddHeader.UseVisualStyleBackColor = true;
@@ -438,7 +438,7 @@
 			this.buttonRemoveHeader.Location = new System.Drawing.Point(419, 35);
 			this.buttonRemoveHeader.Name = "buttonRemoveHeader";
 			this.buttonRemoveHeader.Size = new System.Drawing.Size(75, 23);
-			this.buttonRemoveHeader.TabIndex = 17;
+			this.buttonRemoveHeader.TabIndex = 2;
 			this.buttonRemoveHeader.Text = "&Remove";
 			this.buttonRemoveHeader.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonRemoveHeader.UseVisualStyleBackColor = true;
@@ -452,7 +452,7 @@
 			this.tabPageRequestData.Location = new System.Drawing.Point(4, 22);
 			this.tabPageRequestData.Name = "tabPageRequestData";
 			this.tabPageRequestData.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageRequestData.Size = new System.Drawing.Size(500, 142);
+			this.tabPageRequestData.Size = new System.Drawing.Size(500, 164);
 			this.tabPageRequestData.TabIndex = 2;
 			this.tabPageRequestData.Text = "Request data";
 			this.tabPageRequestData.UseVisualStyleBackColor = true;
@@ -466,7 +466,7 @@
 			this.comboBoxEncoding.Location = new System.Drawing.Point(64, 6);
 			this.comboBoxEncoding.Name = "comboBoxEncoding";
 			this.comboBoxEncoding.Size = new System.Drawing.Size(430, 21);
-			this.comboBoxEncoding.TabIndex = 15;
+			this.comboBoxEncoding.TabIndex = 1;
 			this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// labelEncoding
@@ -475,7 +475,7 @@
 			this.labelEncoding.Location = new System.Drawing.Point(3, 9);
 			this.labelEncoding.Name = "labelEncoding";
 			this.labelEncoding.Size = new System.Drawing.Size(55, 13);
-			this.labelEncoding.TabIndex = 14;
+			this.labelEncoding.TabIndex = 0;
 			this.labelEncoding.Text = "Encoding:";
 			// 
 			// textBoxRequestData
@@ -487,8 +487,8 @@
 			this.textBoxRequestData.Location = new System.Drawing.Point(6, 33);
 			this.textBoxRequestData.Multiline = true;
 			this.textBoxRequestData.Name = "textBoxRequestData";
-			this.textBoxRequestData.Size = new System.Drawing.Size(488, 103);
-			this.textBoxRequestData.TabIndex = 13;
+			this.textBoxRequestData.Size = new System.Drawing.Size(488, 125);
+			this.textBoxRequestData.TabIndex = 2;
 			this.textBoxRequestData.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// tabPageResponseHeaders
@@ -498,7 +498,7 @@
 			this.tabPageResponseHeaders.Location = new System.Drawing.Point(4, 22);
 			this.tabPageResponseHeaders.Name = "tabPageResponseHeaders";
 			this.tabPageResponseHeaders.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageResponseHeaders.Size = new System.Drawing.Size(500, 142);
+			this.tabPageResponseHeaders.Size = new System.Drawing.Size(500, 164);
 			this.tabPageResponseHeaders.TabIndex = 4;
 			this.tabPageResponseHeaders.Text = "Response headers";
 			this.tabPageResponseHeaders.UseVisualStyleBackColor = true;
@@ -510,7 +510,7 @@
 			this.buttonViewHeader.Location = new System.Drawing.Point(419, 6);
 			this.buttonViewHeader.Name = "buttonViewHeader";
 			this.buttonViewHeader.Size = new System.Drawing.Size(75, 23);
-			this.buttonViewHeader.TabIndex = 20;
+			this.buttonViewHeader.TabIndex = 1;
 			this.buttonViewHeader.Text = "&View";
 			this.buttonViewHeader.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonViewHeader.UseVisualStyleBackColor = true;
@@ -531,9 +531,9 @@
 			this.listViewResponseHeaders.Location = new System.Drawing.Point(6, 6);
 			this.listViewResponseHeaders.MultiSelect = false;
 			this.listViewResponseHeaders.Name = "listViewResponseHeaders";
-			this.listViewResponseHeaders.Size = new System.Drawing.Size(407, 130);
+			this.listViewResponseHeaders.Size = new System.Drawing.Size(407, 152);
 			this.listViewResponseHeaders.SmallImageList = this.imageList;
-			this.listViewResponseHeaders.TabIndex = 15;
+			this.listViewResponseHeaders.TabIndex = 0;
 			this.listViewResponseHeaders.UseCompatibleStateImageBehavior = false;
 			this.listViewResponseHeaders.View = System.Windows.Forms.View.Details;
 			this.listViewResponseHeaders.ItemActivate += new System.EventHandler(this.OnViewHeader);
@@ -555,7 +555,7 @@
 			this.tabPageResponseData.Location = new System.Drawing.Point(4, 22);
 			this.tabPageResponseData.Name = "tabPageResponseData";
 			this.tabPageResponseData.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageResponseData.Size = new System.Drawing.Size(500, 142);
+			this.tabPageResponseData.Size = new System.Drawing.Size(500, 164);
 			this.tabPageResponseData.TabIndex = 3;
 			this.tabPageResponseData.Text = "Response data";
 			this.tabPageResponseData.UseVisualStyleBackColor = true;
@@ -571,8 +571,8 @@
 			this.textBoxResponseData.Name = "textBoxResponseData";
 			this.textBoxResponseData.ReadOnly = true;
 			this.textBoxResponseData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.textBoxResponseData.Size = new System.Drawing.Size(488, 130);
-			this.textBoxResponseData.TabIndex = 2;
+			this.textBoxResponseData.Size = new System.Drawing.Size(488, 152);
+			this.textBoxResponseData.TabIndex = 0;
 			// 
 			// buttonSave
 			// 
@@ -581,7 +581,7 @@
 			this.buttonSave.Location = new System.Drawing.Point(520, 31);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(75, 23);
-			this.buttonSave.TabIndex = 18;
+			this.buttonSave.TabIndex = 5;
 			this.buttonSave.Text = "&Save";
 			this.buttonSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonSave.UseVisualStyleBackColor = true;
@@ -631,8 +631,16 @@
 			this.labelUrl.Location = new System.Drawing.Point(3, 7);
 			this.labelUrl.Name = "labelUrl";
 			this.labelUrl.Size = new System.Drawing.Size(32, 13);
-			this.labelUrl.TabIndex = 5;
+			this.labelUrl.TabIndex = 0;
 			this.labelUrl.Text = "&URL:";
+			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.TabIndex = 0;
 			// 
 			// saveFileDialog
 			// 
@@ -643,14 +651,6 @@
 			// 
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
-			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
-			this.log.TabIndex = 0;
 			// 
 			// ControlTestingWebRequest
 			// 

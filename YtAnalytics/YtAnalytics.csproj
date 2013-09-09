@@ -208,11 +208,11 @@
     <Compile Include="Controls\Testing\ControlTestingWebRequest.Designer.cs">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Testing\ControlTestingSsh.cs">
+    <Compile Include="Controls\Testing\ControlTestingSshRequest.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Testing\ControlTestingSsh.Designer.cs">
-      <DependentUpon>ControlTestingSsh.cs</DependentUpon>
+    <Compile Include="Controls\Testing\ControlTestingSshRequest.Designer.cs">
+      <DependentUpon>ControlTestingSshRequest.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlCommentProperties.cs">
       <SubType>UserControl</SubType>
@@ -723,8 +723,8 @@
     <EmbeddedResource Include="Controls\Testing\ControlTestingWebRequest.resx">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Testing\ControlTestingSsh.resx">
-      <DependentUpon>ControlTestingSsh.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Testing\ControlTestingSshRequest.resx">
+      <DependentUpon>ControlTestingSshRequest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlCommentProperties.resx">
       <DependentUpon>ControlCommentProperties.cs</DependentUpon>
@@ -970,6 +970,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\TestGlobeGoto_48.png" />
+    <None Include="Resources\TestGlobeGoto_32.png" />
+    <None Include="Resources\TestGlobeGoto_24.png" />
+    <None Include="Resources\TestGlobeGoto_16.png" />
+    <None Include="Resources\TestConnectGoto_48.png" />
+    <None Include="Resources\TestConnectGoto_32.png" />
+    <None Include="Resources\TestConnectGoto_24.png" />
+    <None Include="Resources\TestConnectGoto_16.png" />
     <None Include="Resources\GlobeTag_48.png" />
     <None Include="Resources\GlobeTag_32.png" />
     <None Include="Resources\GlobeTag_24.png" />
@@ -1042,10 +1050,6 @@
     <None Include="Resources\Header_32.png" />
     <None Include="Resources\Header_24.png" />
     <None Include="Resources\Header_16.png" />
-    <None Include="Resources\TestGlobeGoto_48.png" />
-    <None Include="Resources\TestGlobeGoto_32.png" />
-    <None Include="Resources\TestGlobeGoto_24.png" />
-    <None Include="Resources\TestGlobeGoto_16.png" />
     <None Include="Resources\TestsLarge_48.png" />
     <None Include="Resources\TestsLarge_32.png" />
     <None Include="Resources\TestsLarge_24.png" />

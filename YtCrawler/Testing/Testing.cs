@@ -27,8 +27,6 @@ namespace YtCrawler.Testing
 	/// </summary>
 	public sealed class Testing
 	{
-		private TestingWebRequest testingWebRequest;
-
 		/// <summary>
 		/// Creates a new testing instance.
 		/// </summary>
@@ -36,7 +34,8 @@ namespace YtCrawler.Testing
 		/// <param name="rootPath">The root registry path.</param>
 		public Testing(RegistryKey rootKey, string rootPath)
 		{
-			this.testingWebRequest = new TestingWebRequest("{0}\\{1}\\Testing\\WebRequest".FormatWith(rootKey.Name, rootPath));
+			this.WebRequest = new TestingWebRequest("{0}\\{1}\\Testing\\WebRequest".FormatWith(rootKey.Name, rootPath));
+			this.SshRequest = new TestingSshRequest("{0}\\{1}\\Testing\\SshRequest".FormatWith(rootKey.Name, rootPath));
 		}
 
 		// Public properties.
@@ -44,6 +43,10 @@ namespace YtCrawler.Testing
 		/// <summary>
 		/// Gets the testing web request configuration.
 		/// </summary>
-		public TestingWebRequest WebRequest { get { return this.testingWebRequest; } }
+		public TestingWebRequest WebRequest { get; private set; }
+		/// <summary>
+		/// Gets the testing SSH request configuration.
+		/// </summary>
+		public TestingSshRequest SshRequest { get; private set; }
 	}
 }

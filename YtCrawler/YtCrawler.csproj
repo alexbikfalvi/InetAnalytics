@@ -110,6 +110,7 @@
     <Compile Include="Status\StatusHandler.cs" />
     <Compile Include="Status\StatusMessage.cs" />
     <Compile Include="Testing\Testing.cs" />
+    <Compile Include="Testing\TestingSshRequest.cs" />
     <Compile Include="Testing\TestingWebRequest.cs" />
   </ItemGroup>
   <ItemGroup>

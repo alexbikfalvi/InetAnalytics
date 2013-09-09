@@ -6262,6 +6262,46 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TestConnectGoto_16 {
+            get {
+                object obj = ResourceManager.GetObject("TestConnectGoto_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestConnectGoto_24 {
+            get {
+                object obj = ResourceManager.GetObject("TestConnectGoto_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestConnectGoto_32 {
+            get {
+                object obj = ResourceManager.GetObject("TestConnectGoto_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestConnectGoto_48 {
+            get {
+                object obj = ResourceManager.GetObject("TestConnectGoto_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TestGlobeGoto_16 {
             get {
                 object obj = ResourceManager.GetObject("TestGlobeGoto_16", resourceCulture);
