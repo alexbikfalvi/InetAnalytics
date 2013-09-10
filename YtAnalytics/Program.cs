@@ -30,7 +30,7 @@ namespace YtAnalytics
 	/// </summary>
 	static class Program
 	{
-		private static bool showCrash = true;
+		private static FormCrash formCrash;
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -40,6 +40,7 @@ namespace YtAnalytics
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			Program.formCrash = new FormCrash();
 			Application.ThreadException += Program.OnThreadException;
 			try
 			{
@@ -50,8 +51,8 @@ namespace YtAnalytics
 			}
 			catch (Exception exception)
 			{
-				FormCrash formCrash = new FormCrash(exception);
-				formCrash.ShowDialog();
+				Program.formCrash.ShowDialog(exception);
+				Program.formCrash.Dispose();
 			}
 		}
 
@@ -62,12 +63,9 @@ namespace YtAnalytics
 		/// <param name="e">The event arguments.</param>
 		private static void OnThreadException(object sender, ThreadExceptionEventArgs e)
 		{
-			// If cannot show the crash form, do nothing.
-			if (!Program.showCrash) return;
-			// Set the show crash flag to false.
-			Program.showCrash = false;
 			// Show the crash form.
-			Application.Run(new FormCrash(e.Exception));
+			Program.formCrash.ShowDialog(e.Exception);
+			Program.formCrash.Dispose();
 		}
 	}
 }

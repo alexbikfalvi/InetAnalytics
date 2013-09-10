@@ -61,8 +61,8 @@
 			this.labelTitle.Size = new System.Drawing.Size(355, 64);
 			this.labelTitle.TabIndex = 1;
 			this.labelTitle.Text = "YouTube Analytics has crashed due to an unhandled exception.\r\n\r\nUnfortunately, yo" +
-    "ur work is lost, but you may report back to the developer with the information b" +
-    "elow to fix the problem.";
+    "ur work may be lost, but you can report back to the developer with the informati" +
+    "on below to fix the problem.";
 			// 
 			// labelType
 			// 

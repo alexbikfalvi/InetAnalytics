@@ -84,8 +84,10 @@ namespace YtCrawler.Log
 				this.mutex.ReleaseMutex();
 			}
 
-			// Dispose the mutex.
-			this.mutex.Dispose();
+			// Wait on the mutex.
+			this.mutex.WaitOne();
+			// Close the mutex.
+			this.mutex.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}

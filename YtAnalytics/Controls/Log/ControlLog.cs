@@ -493,8 +493,10 @@ namespace YtAnalytics.Controls.Log
 
 		public void Dispose()
 		{
+			// Wait on the mutex.
+			this.mutex.WaitOne();
 			// Dispose the fields.
-			this.mutex.Dispose();
+			this.mutex.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}

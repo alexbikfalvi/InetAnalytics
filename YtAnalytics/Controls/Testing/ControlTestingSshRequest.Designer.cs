@@ -13,10 +13,20 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			if (disposing)
 			{
-				components.Dispose();
+				// Dispose the components.
+				if (null != this.components)
+				{
+					this.components.Dispose();
+				}
+				// Dispose the SSH client.
+				if (null != this.sshClient)
+				{
+					this.sshClient.Dispose();
+				}
 			}
+			// Call the base class method.
 			base.Dispose(disposing);
 		}
 
@@ -29,13 +39,20 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingSshRequest));
 			System.Security.SecureString secureString2 = new System.Security.SecureString();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingSshRequest));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.panel = new System.Windows.Forms.Panel();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.tabControl = new System.Windows.Forms.TabControl();
+			this.tabPageAuthentication = new System.Windows.Forms.TabPage();
+			this.secureTextBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
+			this.textBoxKey = new System.Windows.Forms.TextBox();
+			this.labelKey = new System.Windows.Forms.Label();
+			this.radioKeyAuthentication = new System.Windows.Forms.RadioButton();
+			this.labelPassword = new System.Windows.Forms.Label();
+			this.textBoxUsername = new System.Windows.Forms.TextBox();
+			this.labelUsername = new System.Windows.Forms.Label();
+			this.radioPasswordAuthentication = new System.Windows.Forms.RadioButton();
 			this.buttonExport = new System.Windows.Forms.Button();
 			this.buttonImport = new System.Windows.Forms.Button();
 			this.buttonUndo = new System.Windows.Forms.Button();
@@ -44,16 +61,10 @@
 			this.buttonConnect = new System.Windows.Forms.Button();
 			this.buttonDisconnect = new System.Windows.Forms.Button();
 			this.labelServer = new System.Windows.Forms.Label();
-			this.tabControl = new System.Windows.Forms.TabControl();
-			this.tabPageAuthentication = new System.Windows.Forms.TabPage();
-			this.radioPasswordAuthentication = new System.Windows.Forms.RadioButton();
-			this.labelUsername = new System.Windows.Forms.Label();
-			this.textBoxUsername = new System.Windows.Forms.TextBox();
-			this.labelPassword = new System.Windows.Forms.Label();
-			this.radioKeyAuthentication = new System.Windows.Forms.RadioButton();
-			this.textBoxKey = new System.Windows.Forms.TextBox();
-			this.labelKey = new System.Windows.Forms.Label();
-			this.secureTextBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.buttonLoadKey = new System.Windows.Forms.Button();
 			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -101,21 +112,121 @@
 			this.panel.Size = new System.Drawing.Size(598, 223);
 			this.panel.TabIndex = 0;
 			// 
-			// imageList
+			// tabControl
 			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Header_16.png");
+			this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl.Controls.Add(this.tabPageAuthentication);
+			this.tabControl.Location = new System.Drawing.Point(6, 30);
+			this.tabControl.Name = "tabControl";
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.Size = new System.Drawing.Size(508, 190);
+			this.tabControl.TabIndex = 4;
 			// 
-			// saveFileDialog
+			// tabPageAuthentication
 			// 
-			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
-			this.saveFileDialog.Title = "Export Settings";
+			this.tabPageAuthentication.AutoScroll = true;
+			this.tabPageAuthentication.Controls.Add(this.buttonLoadKey);
+			this.tabPageAuthentication.Controls.Add(this.secureTextBoxPassword);
+			this.tabPageAuthentication.Controls.Add(this.textBoxKey);
+			this.tabPageAuthentication.Controls.Add(this.labelKey);
+			this.tabPageAuthentication.Controls.Add(this.radioKeyAuthentication);
+			this.tabPageAuthentication.Controls.Add(this.labelPassword);
+			this.tabPageAuthentication.Controls.Add(this.textBoxUsername);
+			this.tabPageAuthentication.Controls.Add(this.labelUsername);
+			this.tabPageAuthentication.Controls.Add(this.radioPasswordAuthentication);
+			this.tabPageAuthentication.Location = new System.Drawing.Point(4, 22);
+			this.tabPageAuthentication.Name = "tabPageAuthentication";
+			this.tabPageAuthentication.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageAuthentication.Size = new System.Drawing.Size(500, 164);
+			this.tabPageAuthentication.TabIndex = 0;
+			this.tabPageAuthentication.Text = "Authentication";
+			this.tabPageAuthentication.UseVisualStyleBackColor = true;
 			// 
-			// openFileDialog
+			// secureTextBoxPassword
 			// 
-			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
-			this.openFileDialog.Title = "Import Settings";
+			this.secureTextBoxPassword.Location = new System.Drawing.Point(110, 59);
+			this.secureTextBoxPassword.Name = "secureTextBoxPassword";
+			this.secureTextBoxPassword.SecureText = secureString2;
+			this.secureTextBoxPassword.Size = new System.Drawing.Size(214, 20);
+			this.secureTextBoxPassword.TabIndex = 17;
+			this.secureTextBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
+			// 
+			// textBoxKey
+			// 
+			this.textBoxKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxKey.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxKey.Location = new System.Drawing.Point(110, 108);
+			this.textBoxKey.Multiline = true;
+			this.textBoxKey.Name = "textBoxKey";
+			this.textBoxKey.ReadOnly = true;
+			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxKey.Size = new System.Drawing.Size(303, 50);
+			this.textBoxKey.TabIndex = 16;
+			this.textBoxKey.TextChanged += new System.EventHandler(this.OnChanged);
+			// 
+			// labelKey
+			// 
+			this.labelKey.AutoSize = true;
+			this.labelKey.Location = new System.Drawing.Point(6, 111);
+			this.labelKey.Name = "labelKey";
+			this.labelKey.Size = new System.Drawing.Size(28, 13);
+			this.labelKey.TabIndex = 15;
+			this.labelKey.Text = "K&ey:";
+			// 
+			// radioKeyAuthentication
+			// 
+			this.radioKeyAuthentication.AutoSize = true;
+			this.radioKeyAuthentication.Location = new System.Drawing.Point(6, 85);
+			this.radioKeyAuthentication.Name = "radioKeyAuthentication";
+			this.radioKeyAuthentication.Size = new System.Drawing.Size(113, 17);
+			this.radioKeyAuthentication.TabIndex = 14;
+			this.radioKeyAuthentication.TabStop = true;
+			this.radioKeyAuthentication.Text = "&Key authentication";
+			this.radioKeyAuthentication.UseVisualStyleBackColor = true;
+			// 
+			// labelPassword
+			// 
+			this.labelPassword.AutoSize = true;
+			this.labelPassword.Location = new System.Drawing.Point(6, 62);
+			this.labelPassword.Name = "labelPassword";
+			this.labelPassword.Size = new System.Drawing.Size(56, 13);
+			this.labelPassword.TabIndex = 12;
+			this.labelPassword.Text = "P&assword:";
+			// 
+			// textBoxUsername
+			// 
+			this.textBoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxUsername.Location = new System.Drawing.Point(110, 10);
+			this.textBoxUsername.Name = "textBoxUsername";
+			this.textBoxUsername.Size = new System.Drawing.Size(214, 20);
+			this.textBoxUsername.TabIndex = 11;
+			this.textBoxUsername.TextChanged += new System.EventHandler(this.OnChanged);
+			// 
+			// labelUsername
+			// 
+			this.labelUsername.AutoSize = true;
+			this.labelUsername.Location = new System.Drawing.Point(6, 13);
+			this.labelUsername.Name = "labelUsername";
+			this.labelUsername.Size = new System.Drawing.Size(61, 13);
+			this.labelUsername.TabIndex = 9;
+			this.labelUsername.Text = "&User name:";
+			// 
+			// radioPasswordAuthentication
+			// 
+			this.radioPasswordAuthentication.AutoSize = true;
+			this.radioPasswordAuthentication.Location = new System.Drawing.Point(6, 36);
+			this.radioPasswordAuthentication.Name = "radioPasswordAuthentication";
+			this.radioPasswordAuthentication.Size = new System.Drawing.Size(141, 17);
+			this.radioPasswordAuthentication.TabIndex = 0;
+			this.radioPasswordAuthentication.TabStop = true;
+			this.radioPasswordAuthentication.Text = "&Password authentication";
+			this.radioPasswordAuthentication.UseVisualStyleBackColor = true;
+			this.radioPasswordAuthentication.CheckedChanged += new System.EventHandler(this.OnAuthenticationChanged);
 			// 
 			// buttonExport
 			// 
@@ -211,119 +322,32 @@
 			this.labelServer.TabIndex = 0;
 			this.labelServer.Text = "&Server:";
 			// 
-			// tabControl
+			// imageList
 			// 
-			this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabControl.Controls.Add(this.tabPageAuthentication);
-			this.tabControl.Location = new System.Drawing.Point(6, 30);
-			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(508, 190);
-			this.tabControl.TabIndex = 4;
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "Header_16.png");
 			// 
-			// tabPageAuthentication
+			// saveFileDialog
 			// 
-			this.tabPageAuthentication.AutoScroll = true;
-			this.tabPageAuthentication.Controls.Add(this.secureTextBoxPassword);
-			this.tabPageAuthentication.Controls.Add(this.textBoxKey);
-			this.tabPageAuthentication.Controls.Add(this.labelKey);
-			this.tabPageAuthentication.Controls.Add(this.radioKeyAuthentication);
-			this.tabPageAuthentication.Controls.Add(this.labelPassword);
-			this.tabPageAuthentication.Controls.Add(this.textBoxUsername);
-			this.tabPageAuthentication.Controls.Add(this.labelUsername);
-			this.tabPageAuthentication.Controls.Add(this.radioPasswordAuthentication);
-			this.tabPageAuthentication.Location = new System.Drawing.Point(4, 22);
-			this.tabPageAuthentication.Name = "tabPageAuthentication";
-			this.tabPageAuthentication.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageAuthentication.Size = new System.Drawing.Size(500, 164);
-			this.tabPageAuthentication.TabIndex = 0;
-			this.tabPageAuthentication.Text = "Authentication";
-			this.tabPageAuthentication.UseVisualStyleBackColor = true;
+			this.saveFileDialog.Title = "Export Settings";
 			// 
-			// radioPasswordAuthentication
+			// openFileDialog
 			// 
-			this.radioPasswordAuthentication.AutoSize = true;
-			this.radioPasswordAuthentication.Location = new System.Drawing.Point(6, 36);
-			this.radioPasswordAuthentication.Name = "radioPasswordAuthentication";
-			this.radioPasswordAuthentication.Size = new System.Drawing.Size(141, 17);
-			this.radioPasswordAuthentication.TabIndex = 0;
-			this.radioPasswordAuthentication.TabStop = true;
-			this.radioPasswordAuthentication.Text = "&Password authentication";
-			this.radioPasswordAuthentication.UseVisualStyleBackColor = true;
-			this.radioPasswordAuthentication.CheckedChanged += new System.EventHandler(this.OnAuthenticationChanged);
+			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
+			this.openFileDialog.Title = "Import Settings";
 			// 
-			// labelUsername
+			// buttonLoadKey
 			// 
-			this.labelUsername.AutoSize = true;
-			this.labelUsername.Location = new System.Drawing.Point(6, 13);
-			this.labelUsername.Name = "labelUsername";
-			this.labelUsername.Size = new System.Drawing.Size(61, 13);
-			this.labelUsername.TabIndex = 9;
-			this.labelUsername.Text = "&User name:";
-			// 
-			// textBoxUsername
-			// 
-			this.textBoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxUsername.Location = new System.Drawing.Point(110, 10);
-			this.textBoxUsername.Name = "textBoxUsername";
-			this.textBoxUsername.Size = new System.Drawing.Size(214, 20);
-			this.textBoxUsername.TabIndex = 11;
-			this.textBoxUsername.TextChanged += new System.EventHandler(this.OnChanged);
-			// 
-			// labelPassword
-			// 
-			this.labelPassword.AutoSize = true;
-			this.labelPassword.Location = new System.Drawing.Point(6, 62);
-			this.labelPassword.Name = "labelPassword";
-			this.labelPassword.Size = new System.Drawing.Size(56, 13);
-			this.labelPassword.TabIndex = 12;
-			this.labelPassword.Text = "P&assword:";
-			// 
-			// radioKeyAuthentication
-			// 
-			this.radioKeyAuthentication.AutoSize = true;
-			this.radioKeyAuthentication.Location = new System.Drawing.Point(6, 85);
-			this.radioKeyAuthentication.Name = "radioKeyAuthentication";
-			this.radioKeyAuthentication.Size = new System.Drawing.Size(113, 17);
-			this.radioKeyAuthentication.TabIndex = 14;
-			this.radioKeyAuthentication.TabStop = true;
-			this.radioKeyAuthentication.Text = "&Key authentication";
-			this.radioKeyAuthentication.UseVisualStyleBackColor = true;
-			// 
-			// textBoxKey
-			// 
-			this.textBoxKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxKey.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxKey.Location = new System.Drawing.Point(110, 108);
-			this.textBoxKey.Multiline = true;
-			this.textBoxKey.Name = "textBoxKey";
-			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxKey.Size = new System.Drawing.Size(384, 50);
-			this.textBoxKey.TabIndex = 16;
-			this.textBoxKey.TextChanged += new System.EventHandler(this.OnChanged);
-			// 
-			// labelKey
-			// 
-			this.labelKey.AutoSize = true;
-			this.labelKey.Location = new System.Drawing.Point(6, 111);
-			this.labelKey.Name = "labelKey";
-			this.labelKey.Size = new System.Drawing.Size(28, 13);
-			this.labelKey.TabIndex = 15;
-			this.labelKey.Text = "K&ey:";
-			// 
-			// secureTextBoxPassword
-			// 
-			this.secureTextBoxPassword.Location = new System.Drawing.Point(110, 59);
-			this.secureTextBoxPassword.Name = "secureTextBoxPassword";
-			this.secureTextBoxPassword.SecureText = secureString2;
-			this.secureTextBoxPassword.Size = new System.Drawing.Size(214, 20);
-			this.secureTextBoxPassword.TabIndex = 17;
-			this.secureTextBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
+			this.buttonLoadKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonLoadKey.Enabled = false;
+			this.buttonLoadKey.Location = new System.Drawing.Point(419, 108);
+			this.buttonLoadKey.Name = "buttonLoadKey";
+			this.buttonLoadKey.Size = new System.Drawing.Size(75, 23);
+			this.buttonLoadKey.TabIndex = 18;
+			this.buttonLoadKey.Text = "&Load";
+			this.buttonLoadKey.UseVisualStyleBackColor = true;
+			this.buttonLoadKey.Click += new System.EventHandler(this.OnLoadKey);
 			// 
 			// log
 			// 
@@ -380,6 +404,7 @@
 		private System.Windows.Forms.TextBox textBoxKey;
 		private System.Windows.Forms.Label labelKey;
 		private DotNetApi.Windows.Controls.SecureTextBox secureTextBoxPassword;
+		private System.Windows.Forms.Button buttonLoadKey;
 
 	}
 }

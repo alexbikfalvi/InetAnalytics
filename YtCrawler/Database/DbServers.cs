@@ -367,8 +367,10 @@ namespace YtCrawler.Database
 			{
 				pair.Value.Dispose();
 			}
-			// Dispose the mutex.
-			this.mutex.Dispose();
+			// Wait on the mutex.
+			this.mutex.WaitOne();
+			// Close the mutex.
+			this.mutex.Close();
 			// Supress the finalizer.
 			GC.SuppressFinalize(this);
 		}

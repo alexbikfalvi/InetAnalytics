@@ -29,6 +29,15 @@ namespace YtCrawler.Testing
 	/// </summary>
 	public sealed class TestingSshRequest
 	{
+		/// <summary>
+		/// An enumeration representing the authentication types.
+		/// </summary>
+		public enum AuthenticationType
+		{
+			Password = 0,
+			Key = 1
+		}
+
 		private string key;
 
 		/// <summary>
@@ -53,21 +62,12 @@ namespace YtCrawler.Testing
 		}
 
 		/// <summary>
-		/// Gets or sets whether using password authentication.
+		/// Gets or sets the authentication type.
 		/// </summary>
-		public bool AuthenticationPassword
+		public AuthenticationType Authentication
 		{
-			get { return Registry.GetBoolean(this.key, "AuthenticationPassword", true); }
-			set { Registry.SetBoolean(this.key, "AuthenticationPassword", value); }
-		}
-
-		/// <summary>
-		/// Gets or sets whether using private key authentication.
-		/// </summary>
-		public bool AuthenticationKey
-		{
-			get { return Registry.GetBoolean(this.key, "AuthenticationKey", false); }
-			set { Registry.SetBoolean(this.key, "AuthenticationKey", value); }
+			get { return (AuthenticationType)Registry.GetInteger(this.key, "Authentication", 0); }
+			set { Registry.SetInteger(this.key, "Authentication", (int)value); }
 		}
 
 		/// <summary>
@@ -91,10 +91,10 @@ namespace YtCrawler.Testing
 		/// <summary>
 		/// Gets or sets the key.
 		/// </summary>
-		public SecureString Key
+		public byte[] Key
 		{
-			get { return Registry.GetSecureString(this.key, "Key", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
-			set { Registry.SetSecureString(this.key, "Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			get { return Registry.GetSecureByteArray(this.key, "Key", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			set { Registry.SetSecureByteArray(this.key, "Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
 		}
 	}
 }

@@ -582,8 +582,10 @@ namespace YtCrawler.Database
 					// Close the server connection synchronously.
 					this.Close();
 				}
-				// Dispose the mutex.
-				this.mutex.Dispose();
+				// Wait on the mutex.
+				this.mutex.WaitOne();
+				// Close the mutex.
+				this.mutex.Close();
 			}
 			// Call the base class method.
 			base.Dispose(disposing);

@@ -17,23 +17,59 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms
 {
-	public partial class FormCrash : Form
+	/// <summary>
+	/// A form showing an exception.
+	/// </summary>
+	public sealed partial class FormCrash : Form
 	{
-		public FormCrash(Exception exception)
-		{
-			InitializeComponent();
+		private Exception exception;
 
+		/// <summary>
+		/// Creates a new form instance.
+		/// </summary>
+		public FormCrash()
+		{
+			this.InitializeComponent();
+			Window.SetFont(this);
+		}
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets or sets the current exception.
+		/// </summary>
+		public Exception Exception
+		{
+			get { return this.exception; }
+			set { this.OnExceptionSet(value); }
+		}
+
+		// Public methods.
+
+		/// <summary>
+		/// Shows the crash form as a modal dialog.
+		/// </summary>
+		/// <param name="exception">The exception to display.</param>
+		public void ShowDialog(Exception exception)
+		{
+			this.Exception = exception;
+			base.ShowDialog();
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// An event handler called when setting a new exception for this form.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		private void OnExceptionSet(Exception exception)
+		{
+			this.exception = exception;
 			this.textBoxType.Text = exception.GetType().ToString();
 			this.textBoxMessage.Text = exception.Message;
 			this.textBoxSource.Text = exception.Source;

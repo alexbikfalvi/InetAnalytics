@@ -101,7 +101,10 @@ namespace YtCrawler.Spider
 			// Dispose the current objects.
 			if (disposing)
 			{
-				this.mutex.Dispose();
+				// Wait on the mutex.
+				this.mutex.WaitOne();
+				// Close the mutex.
+				this.mutex.Close();
 			}
 		}
 

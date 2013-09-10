@@ -19,7 +19,11 @@
 				{
 					components.Dispose();
 				}
+				// Wait on the mutex.
+				this.mutex.WaitOne();
+				// Close the mutex.
 				this.mutex.Dispose();
+				// Dispose the image form.
 				this.formImage.Dispose();
 			}
 			base.Dispose(disposing);
