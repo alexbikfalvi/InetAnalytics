@@ -174,7 +174,7 @@ namespace YtCrawler.Spider
 								obj.Id = this.EncodeFeedKey(feed, time, category.Label, null);
 								obj.FeedId = (int)feed;
 								obj.TimeId = (int)time;
-								obj.Category = category.Label;
+								obj.Category = category.Term;
 								obj.Region = null;
 								feeds.Add(obj.Id, obj);
 
@@ -408,12 +408,19 @@ namespace YtCrawler.Spider
 			}
 			catch (WebException exception)
 			{
-				// If the operation failed with a web exception, set the browsable to false.
-				obj.Browsable = false;
-				// Set the response HTTP code.
-				obj.HttpCode = (int)(exception.Response as HttpWebResponse).StatusCode;
-				// Return the result.
-				return CrawlResult.Fail;
+				if (exception.Status == WebExceptionStatus.RequestCanceled)
+				{
+					return CrawlResult.Canceled;
+				}
+				else
+				{
+					// If the operation failed with a web exception, set the browsable to false.
+					obj.Browsable = false;
+					// Set the response HTTP code.
+					obj.HttpCode = (int)(exception.Response as HttpWebResponse).StatusCode;
+					// Return the result.
+					return CrawlResult.Fail;
+				}
 			}
 			catch (Exception)
 			{
