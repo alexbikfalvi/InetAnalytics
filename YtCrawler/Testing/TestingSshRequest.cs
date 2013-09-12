@@ -29,6 +29,8 @@ namespace YtCrawler.Testing
 	/// </summary>
 	public sealed class TestingSshRequest
 	{
+		private static readonly byte[] defaultKey = new byte[0];
+
 		/// <summary>
 		/// An enumeration representing the authentication types.
 		/// </summary>
@@ -93,7 +95,7 @@ namespace YtCrawler.Testing
 		/// </summary>
 		public byte[] Key
 		{
-			get { return Registry.GetSecureByteArray(this.key, "Key", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			get { return Registry.GetSecureByteArray(this.key, "Key", TestingSshRequest.defaultKey, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
 			set { Registry.SetSecureByteArray(this.key, "Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
 		}
 	}

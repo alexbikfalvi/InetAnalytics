@@ -19,6 +19,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.IO;
@@ -34,7 +35,7 @@ namespace YtAnalytics.Controls.Testing
 	/// <summary>
 	/// A control class for testing secure shell.
 	/// </summary>
-	public partial class ControlTestingSshRequest : ThreadSafeControl
+	public partial class ControlTestingSshRequest : NotificationControl
 	{
 		private static string logSource = "Testing Secure Shell";
 
@@ -42,6 +43,7 @@ namespace YtAnalytics.Controls.Testing
 
 		private Crawler crawler = null;
 
+		private Mutex mutex = new Mutex();
 		private SshClient sshClient = null;
 		private ConnectionInfo sshConnectionInfo = null;
 		private byte[] sshKey = null;
@@ -97,7 +99,12 @@ namespace YtAnalytics.Controls.Testing
 			this.radioPasswordAuthentication.Checked = this.crawler.Testing.SshRequest.Authentication == TestingSshRequest.AuthenticationType.Password;
 			this.radioKeyAuthentication.Checked = this.crawler.Testing.SshRequest.Authentication == TestingSshRequest.AuthenticationType.Key;
 
+			// Initialize the authentication controls.
 			this.OnAuthenticationChanged(this, EventArgs.Empty);
+
+			// Disable the save and undo buttons.
+			this.buttonSave.Enabled = false;
+			this.buttonUndo.Enabled = false;
 		}
 
 		/// <summary>
@@ -206,10 +213,11 @@ namespace YtAnalytics.Controls.Testing
 							this.sshConnectionInfo = new PrivateKeyConnectionInfo(this.textBoxServer.Text, this.textBoxUsername.Text, keyFile);
 						}
 					}
-
 				}
 				else
 				{
+					// If no authentication type is selected, do nothing.
+					MessageBox.Show("You must select a method of authentication.", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
 			}
@@ -219,6 +227,14 @@ namespace YtAnalytics.Controls.Testing
 				MessageBox.Show("Cannot connect to the SSH server. {0}".FormatWith(exception.Message), "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
+			// Change the controls state to connecting.
+			this.buttonConnect.Enabled = false;
+			this.buttonDisconnect.Enabled = false;
+			this.tabControl.Enabled = false;
+
+			// Connect to the SSH server on the thread pool.
+			//Thre
 		}
 
 		/// <summary>
@@ -234,8 +250,8 @@ namespace YtAnalytics.Controls.Testing
 		/// <summary>
 		/// An event handler called when loading the data from a file.
 		/// </summary>
-		/// <param name="sender">The </param>
-		/// <param name="e"></param>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnLoadKey(object sender, EventArgs e)
 		{
 			// Set the dialog filer.

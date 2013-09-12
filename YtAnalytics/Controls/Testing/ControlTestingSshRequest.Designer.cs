@@ -25,6 +25,10 @@
 				{
 					this.sshClient.Dispose();
 				}
+				// Wait on the mutex.
+				this.mutex.WaitOne();
+				// Close the mutex.
+				this.mutex.Close();
 			}
 			// Call the base class method.
 			base.Dispose(disposing);
@@ -45,6 +49,7 @@
 			this.panel = new System.Windows.Forms.Panel();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageAuthentication = new System.Windows.Forms.TabPage();
+			this.buttonLoadKey = new System.Windows.Forms.Button();
 			this.secureTextBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
 			this.textBoxKey = new System.Windows.Forms.TextBox();
 			this.labelKey = new System.Windows.Forms.Label();
@@ -61,11 +66,10 @@
 			this.buttonConnect = new System.Windows.Forms.Button();
 			this.buttonDisconnect = new System.Windows.Forms.Button();
 			this.labelServer = new System.Windows.Forms.Label();
+			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.buttonLoadKey = new System.Windows.Forms.Button();
-			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -144,6 +148,18 @@
 			this.tabPageAuthentication.Text = "Authentication";
 			this.tabPageAuthentication.UseVisualStyleBackColor = true;
 			// 
+			// buttonLoadKey
+			// 
+			this.buttonLoadKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonLoadKey.Enabled = false;
+			this.buttonLoadKey.Location = new System.Drawing.Point(419, 108);
+			this.buttonLoadKey.Name = "buttonLoadKey";
+			this.buttonLoadKey.Size = new System.Drawing.Size(75, 23);
+			this.buttonLoadKey.TabIndex = 18;
+			this.buttonLoadKey.Text = "&Load";
+			this.buttonLoadKey.UseVisualStyleBackColor = true;
+			this.buttonLoadKey.Click += new System.EventHandler(this.OnLoadKey);
+			// 
 			// secureTextBoxPassword
 			// 
 			this.secureTextBoxPassword.Location = new System.Drawing.Point(110, 59);
@@ -166,6 +182,7 @@
 			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxKey.Size = new System.Drawing.Size(303, 50);
 			this.textBoxKey.TabIndex = 16;
+			this.textBoxKey.WordWrap = false;
 			this.textBoxKey.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
 			// labelKey
@@ -322,6 +339,14 @@
 			this.labelServer.TabIndex = 0;
 			this.labelServer.Text = "&Server:";
 			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.TabIndex = 0;
+			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
@@ -337,26 +362,6 @@
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
 			// 
-			// buttonLoadKey
-			// 
-			this.buttonLoadKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonLoadKey.Enabled = false;
-			this.buttonLoadKey.Location = new System.Drawing.Point(419, 108);
-			this.buttonLoadKey.Name = "buttonLoadKey";
-			this.buttonLoadKey.Size = new System.Drawing.Size(75, 23);
-			this.buttonLoadKey.TabIndex = 18;
-			this.buttonLoadKey.Text = "&Load";
-			this.buttonLoadKey.UseVisualStyleBackColor = true;
-			this.buttonLoadKey.Click += new System.EventHandler(this.OnLoadKey);
-			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
-			this.log.TabIndex = 0;
-			// 
 			// ControlTestingSshRequest
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -365,6 +370,7 @@
 			this.Enabled = false;
 			this.Name = "ControlTestingSshRequest";
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();

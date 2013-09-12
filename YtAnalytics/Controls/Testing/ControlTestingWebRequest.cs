@@ -53,6 +53,8 @@ namespace YtAnalytics.Controls.Testing
 		private EncodingInfo[] encodings;
 		private Dictionary<int, int> encodingPages = new Dictionary<int,int>();
 
+		private bool configurationChanged = false;
+
 		// Public declarations
 
 		/// <summary>
@@ -108,9 +110,10 @@ namespace YtAnalytics.Controls.Testing
 		private void OnStart(object sender, EventArgs e)
 		{
 			// Change the controls state.
+			this.OnDisableControls();
+			// Change the buttons state.
 			this.buttonStart.Enabled = false;
 			this.buttonStop.Enabled = true;
-			this.textBoxUrl.Enabled = false;
 
 			// Clear the response headers.
 			this.listViewResponseHeaders.Items.Clear();
@@ -184,6 +187,11 @@ namespace YtAnalytics.Controls.Testing
 					"The HTTP request for web URL \'{0}\' failed. {1}",
 					new object[] { this.textBoxUrl.Text, exception.Message },
 					exception));
+				// Change the controls state.
+				this.OnEnableControls();
+				// Change the buttons state.
+				this.buttonStart.Enabled = true;
+				this.buttonStop.Enabled = false;
 			}
 		}
 
@@ -285,11 +293,50 @@ namespace YtAnalytics.Controls.Testing
 				}
 				finally
 				{
+					// Change the controls state.
+					this.OnEnableControls();
+					// Change the buttons state.
 					this.buttonStart.Enabled = true;
 					this.buttonStop.Enabled = false;
-					this.textBoxUrl.Enabled = true;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Sets the controls, except the request control buttons, to the disabled state.
+		/// </summary>
+		private void OnDisableControls()
+		{
+			// Save the enabled state.
+			this.configurationChanged = this.buttonSave.Enabled;
+
+			// Disable the controls.
+			this.textBoxUrl.Enabled = false;
+
+			this.buttonImport.Enabled = false;
+			this.buttonExport.Enabled = false;
+
+			this.buttonSave.Enabled = false;
+			this.buttonUndo.Enabled = false;
+
+			this.tabControl.Enabled = false;
+		}
+
+		/// <summary>
+		/// Sets the controls, except the request control buttons, to the enabled state.
+		/// </summary>
+		private void OnEnableControls()
+		{
+			// Enable the controls.
+			this.textBoxUrl.Enabled = true;
+
+			this.buttonImport.Enabled = true;
+			this.buttonExport.Enabled = true;
+
+			this.buttonSave.Enabled = this.configurationChanged;
+			this.buttonUndo.Enabled = this.configurationChanged;
+
+			this.tabControl.Enabled = true;
 		}
 
 		/// <summary>
