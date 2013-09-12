@@ -20,15 +20,18 @@
 				{
 					this.components.Dispose();
 				}
-				// Dispose the SSH client.
-				if (null != this.sshClient)
+				// Disconnect and dispose the SSH client.
+				lock (this.sshSync)
 				{
-					this.sshClient.Dispose();
+					if (null != this.sshClient)
+					{
+						if (this.sshState != State.Disconnected)
+						{
+							this.sshClient.Disconnect();
+						}
+						this.sshClient.Dispose();
+					}
 				}
-				// Wait on the mutex.
-				this.mutex.WaitOne();
-				// Close the mutex.
-				this.mutex.Close();
 			}
 			// Call the base class method.
 			base.Dispose(disposing);
