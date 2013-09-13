@@ -249,7 +249,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Create a new geo marker for this site.
 				MapMarker marker = null;
 				// If the site has coordinates.
-				if(site.Latitude.HasValue && site.Longitude.HasValue)
+				if (site.Latitude.HasValue && site.Longitude.HasValue)
 				{
 					// Create a circular marker.
 					marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
@@ -323,7 +323,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnProperties(object sender, EventArgs e)
 		{
 			// If there is no selected site item, do nothing.
-			if(this.listViewSites.SelectedItems.Count == 0) return;
+			if (this.listViewSites.SelectedItems.Count == 0) return;
 	
 			// Get the site-marker for this item.
 			KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;

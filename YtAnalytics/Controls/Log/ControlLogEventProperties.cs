@@ -318,7 +318,7 @@ namespace YtAnalytics.Controls.Log
 			{
 				if (this.listViewParameters.FocusedItem != null)
 				{
-					if(this.listViewParameters.FocusedItem.Bounds.Contains(e.Location))
+					if (this.listViewParameters.FocusedItem.Bounds.Contains(e.Location))
 					{
 						this.contextMenu.Show(this.listViewParameters, e.Location);
 					}
@@ -333,7 +333,7 @@ namespace YtAnalytics.Controls.Log
 		/// <param name="e">The event arguments.</param>
 		private void OnCopyClick(object sender, EventArgs e)
 		{
-			if(this.listViewParameters.FocusedItem == null) return;
+			if (this.listViewParameters.FocusedItem == null) return;
 
 			Clipboard.SetText(this.listViewParameters.FocusedItem.SubItems[1].Text);
 		}

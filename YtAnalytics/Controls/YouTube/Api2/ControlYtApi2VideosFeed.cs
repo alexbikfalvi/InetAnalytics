@@ -360,8 +360,10 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewVideo(object sender, EventArgs e)
 		{
-			if(this.checkBoxView.Checked)
+			if (this.checkBoxView.Checked)
+			{
 				this.viewMenu.Show(this.checkBoxView, 0, this.checkBoxView.Height);
+			}
 		}
 
 		/// <summary>

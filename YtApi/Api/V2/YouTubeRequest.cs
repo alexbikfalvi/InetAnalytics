@@ -72,7 +72,7 @@ namespace YtApi.Api.V2
 			AsyncWebResult asyncState = AsyncWebRequest.Create(uri, callback, state);
 
 			// Set the request headers.
-			if(null != this.settings) asyncState.Request.Headers.Add("X-GData-Key", "key={0}".FormatWith(this.settings.Key.ConvertToUnsecureString()));
+			if (null != this.settings) asyncState.Request.Headers.Add("X-GData-Key", "key={0}".FormatWith(this.settings.Key.ConvertToUnsecureString()));
 
 			// Begin the request.
 			return this.Begin(asyncState);

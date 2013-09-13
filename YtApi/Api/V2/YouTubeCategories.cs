@@ -115,7 +115,7 @@ namespace YtApi.Api.V2
 		/// <returns>The asynchronous result.</returns>
 		public IAsyncResult BeginRefresh(AsyncWebRequestCallback callback, object state = null)
 		{
-			if(null == this.callback)
+			if (null == this.callback)
 			{
 				// Save the callback function and the user state.
 				this.callback = callback;

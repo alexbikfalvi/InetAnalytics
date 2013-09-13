@@ -23,6 +23,7 @@
 				// Disconnect and dispose the SSH client.
 				lock (this.sshSync)
 				{
+					// If there exists an SSH client.
 					if (null != this.sshClient)
 					{
 						if (this.sshState != State.Disconnected)
@@ -46,7 +47,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Security.SecureString secureString2 = new System.Security.SecureString();
+			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingSshRequest));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.panel = new System.Windows.Forms.Panel();
@@ -61,6 +62,12 @@
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
 			this.labelUsername = new System.Windows.Forms.Label();
 			this.radioPasswordAuthentication = new System.Windows.Forms.RadioButton();
+			this.tabPageConsole = new System.Windows.Forms.TabPage();
+			this.layoutConsole = new System.Windows.Forms.TableLayoutPanel();
+			this.textBoxConsole = new System.Windows.Forms.TextBox();
+			this.textAreaConsole = new System.Windows.Forms.RichTextBox();
+			this.labelConsole = new System.Windows.Forms.Label();
+			this.buttonCommand = new System.Windows.Forms.Button();
 			this.buttonExport = new System.Windows.Forms.Button();
 			this.buttonImport = new System.Windows.Forms.Button();
 			this.buttonUndo = new System.Windows.Forms.Button();
@@ -69,10 +76,10 @@
 			this.buttonConnect = new System.Windows.Forms.Button();
 			this.buttonDisconnect = new System.Windows.Forms.Button();
 			this.labelServer = new System.Windows.Forms.Label();
-			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -80,6 +87,8 @@
 			this.panel.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageAuthentication.SuspendLayout();
+			this.tabPageConsole.SuspendLayout();
+			this.layoutConsole.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -125,6 +134,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabPageAuthentication);
+			this.tabControl.Controls.Add(this.tabPageConsole);
 			this.tabControl.Location = new System.Drawing.Point(6, 30);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -158,7 +168,7 @@
 			this.buttonLoadKey.Location = new System.Drawing.Point(419, 108);
 			this.buttonLoadKey.Name = "buttonLoadKey";
 			this.buttonLoadKey.Size = new System.Drawing.Size(75, 23);
-			this.buttonLoadKey.TabIndex = 18;
+			this.buttonLoadKey.TabIndex = 8;
 			this.buttonLoadKey.Text = "&Load";
 			this.buttonLoadKey.UseVisualStyleBackColor = true;
 			this.buttonLoadKey.Click += new System.EventHandler(this.OnLoadKey);
@@ -167,9 +177,9 @@
 			// 
 			this.secureTextBoxPassword.Location = new System.Drawing.Point(110, 59);
 			this.secureTextBoxPassword.Name = "secureTextBoxPassword";
-			this.secureTextBoxPassword.SecureText = secureString2;
+			this.secureTextBoxPassword.SecureText = secureString1;
 			this.secureTextBoxPassword.Size = new System.Drawing.Size(214, 20);
-			this.secureTextBoxPassword.TabIndex = 17;
+			this.secureTextBoxPassword.TabIndex = 4;
 			this.secureTextBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
 			// textBoxKey
@@ -184,7 +194,7 @@
 			this.textBoxKey.ReadOnly = true;
 			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxKey.Size = new System.Drawing.Size(303, 50);
-			this.textBoxKey.TabIndex = 16;
+			this.textBoxKey.TabIndex = 7;
 			this.textBoxKey.WordWrap = false;
 			this.textBoxKey.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
@@ -194,7 +204,7 @@
 			this.labelKey.Location = new System.Drawing.Point(6, 111);
 			this.labelKey.Name = "labelKey";
 			this.labelKey.Size = new System.Drawing.Size(28, 13);
-			this.labelKey.TabIndex = 15;
+			this.labelKey.TabIndex = 6;
 			this.labelKey.Text = "K&ey:";
 			// 
 			// radioKeyAuthentication
@@ -203,8 +213,7 @@
 			this.radioKeyAuthentication.Location = new System.Drawing.Point(6, 85);
 			this.radioKeyAuthentication.Name = "radioKeyAuthentication";
 			this.radioKeyAuthentication.Size = new System.Drawing.Size(113, 17);
-			this.radioKeyAuthentication.TabIndex = 14;
-			this.radioKeyAuthentication.TabStop = true;
+			this.radioKeyAuthentication.TabIndex = 5;
 			this.radioKeyAuthentication.Text = "&Key authentication";
 			this.radioKeyAuthentication.UseVisualStyleBackColor = true;
 			// 
@@ -214,7 +223,7 @@
 			this.labelPassword.Location = new System.Drawing.Point(6, 62);
 			this.labelPassword.Name = "labelPassword";
 			this.labelPassword.Size = new System.Drawing.Size(56, 13);
-			this.labelPassword.TabIndex = 12;
+			this.labelPassword.TabIndex = 3;
 			this.labelPassword.Text = "P&assword:";
 			// 
 			// textBoxUsername
@@ -224,7 +233,7 @@
 			this.textBoxUsername.Location = new System.Drawing.Point(110, 10);
 			this.textBoxUsername.Name = "textBoxUsername";
 			this.textBoxUsername.Size = new System.Drawing.Size(214, 20);
-			this.textBoxUsername.TabIndex = 11;
+			this.textBoxUsername.TabIndex = 1;
 			this.textBoxUsername.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
 			// labelUsername
@@ -233,25 +242,110 @@
 			this.labelUsername.Location = new System.Drawing.Point(6, 13);
 			this.labelUsername.Name = "labelUsername";
 			this.labelUsername.Size = new System.Drawing.Size(61, 13);
-			this.labelUsername.TabIndex = 9;
+			this.labelUsername.TabIndex = 0;
 			this.labelUsername.Text = "&User name:";
 			// 
 			// radioPasswordAuthentication
 			// 
 			this.radioPasswordAuthentication.AutoSize = true;
+			this.radioPasswordAuthentication.Checked = true;
 			this.radioPasswordAuthentication.Location = new System.Drawing.Point(6, 36);
 			this.radioPasswordAuthentication.Name = "radioPasswordAuthentication";
 			this.radioPasswordAuthentication.Size = new System.Drawing.Size(141, 17);
-			this.radioPasswordAuthentication.TabIndex = 0;
+			this.radioPasswordAuthentication.TabIndex = 2;
 			this.radioPasswordAuthentication.TabStop = true;
 			this.radioPasswordAuthentication.Text = "&Password authentication";
 			this.radioPasswordAuthentication.UseVisualStyleBackColor = true;
 			this.radioPasswordAuthentication.CheckedChanged += new System.EventHandler(this.OnAuthenticationChanged);
 			// 
+			// tabPageConsole
+			// 
+			this.tabPageConsole.Controls.Add(this.layoutConsole);
+			this.tabPageConsole.Location = new System.Drawing.Point(4, 22);
+			this.tabPageConsole.Name = "tabPageConsole";
+			this.tabPageConsole.Size = new System.Drawing.Size(500, 164);
+			this.tabPageConsole.TabIndex = 1;
+			this.tabPageConsole.Text = "Console";
+			this.tabPageConsole.UseVisualStyleBackColor = true;
+			// 
+			// layoutConsole
+			// 
+			this.layoutConsole.ColumnCount = 3;
+			this.layoutConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.layoutConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.layoutConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.layoutConsole.Controls.Add(this.textBoxConsole, 1, 1);
+			this.layoutConsole.Controls.Add(this.textAreaConsole, 0, 0);
+			this.layoutConsole.Controls.Add(this.labelConsole, 0, 1);
+			this.layoutConsole.Controls.Add(this.buttonCommand, 2, 1);
+			this.layoutConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.layoutConsole.Location = new System.Drawing.Point(0, 0);
+			this.layoutConsole.Name = "layoutConsole";
+			this.layoutConsole.RowCount = 2;
+			this.layoutConsole.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.layoutConsole.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.layoutConsole.Size = new System.Drawing.Size(500, 164);
+			this.layoutConsole.TabIndex = 2;
+			// 
+			// textBoxConsole
+			// 
+			this.textBoxConsole.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.textBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxConsole.Enabled = false;
+			this.textBoxConsole.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxConsole.Location = new System.Drawing.Point(17, 146);
+			this.textBoxConsole.Name = "textBoxConsole";
+			this.textBoxConsole.Size = new System.Drawing.Size(461, 15);
+			this.textBoxConsole.TabIndex = 0;
+			this.textBoxConsole.TextChanged += new System.EventHandler(this.OnCommandChanged);
+			this.textBoxConsole.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterCommand);
+			// 
+			// textAreaConsole
+			// 
+			this.textAreaConsole.BackColor = System.Drawing.Color.Black;
+			this.textAreaConsole.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.layoutConsole.SetColumnSpan(this.textAreaConsole, 3);
+			this.textAreaConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textAreaConsole.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textAreaConsole.ForeColor = System.Drawing.Color.White;
+			this.textAreaConsole.Location = new System.Drawing.Point(0, 0);
+			this.textAreaConsole.Margin = new System.Windows.Forms.Padding(0);
+			this.textAreaConsole.Name = "textAreaConsole";
+			this.textAreaConsole.ReadOnly = true;
+			this.textAreaConsole.Size = new System.Drawing.Size(500, 143);
+			this.textAreaConsole.TabIndex = 1;
+			this.textAreaConsole.Text = "";
+			this.textAreaConsole.WordWrap = false;
+			// 
+			// labelConsole
+			// 
+			this.labelConsole.AutoSize = true;
+			this.labelConsole.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labelConsole.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelConsole.Location = new System.Drawing.Point(0, 143);
+			this.labelConsole.Margin = new System.Windows.Forms.Padding(0);
+			this.labelConsole.Name = "labelConsole";
+			this.labelConsole.Size = new System.Drawing.Size(14, 21);
+			this.labelConsole.TabIndex = 2;
+			this.labelConsole.Text = ">";
+			this.labelConsole.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// buttonCommand
+			// 
+			this.buttonCommand.Enabled = false;
+			this.buttonCommand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonCommand.Image = global::YtAnalytics.Resources.PlayStart_16;
+			this.buttonCommand.Location = new System.Drawing.Point(481, 144);
+			this.buttonCommand.Margin = new System.Windows.Forms.Padding(0, 1, 0, 0);
+			this.buttonCommand.Name = "buttonCommand";
+			this.buttonCommand.Size = new System.Drawing.Size(19, 19);
+			this.buttonCommand.TabIndex = 3;
+			this.buttonCommand.UseVisualStyleBackColor = true;
+			this.buttonCommand.Click += new System.EventHandler(this.OnExecuteCommand);
+			// 
 			// buttonExport
 			// 
 			this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonExport.Enabled = false;
 			this.buttonExport.Location = new System.Drawing.Point(520, 169);
 			this.buttonExport.Name = "buttonExport";
 			this.buttonExport.Size = new System.Drawing.Size(75, 23);
@@ -262,7 +356,6 @@
 			// buttonImport
 			// 
 			this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonImport.Enabled = false;
 			this.buttonImport.Location = new System.Drawing.Point(520, 197);
 			this.buttonImport.Name = "buttonImport";
 			this.buttonImport.Size = new System.Drawing.Size(75, 23);
@@ -342,14 +435,6 @@
 			this.labelServer.TabIndex = 0;
 			this.labelServer.Text = "&Server:";
 			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
-			this.log.TabIndex = 0;
-			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
@@ -364,6 +449,14 @@
 			// 
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
+			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.TabIndex = 0;
 			// 
 			// ControlTestingSshRequest
 			// 
@@ -383,6 +476,9 @@
 			this.tabControl.ResumeLayout(false);
 			this.tabPageAuthentication.ResumeLayout(false);
 			this.tabPageAuthentication.PerformLayout();
+			this.tabPageConsole.ResumeLayout(false);
+			this.layoutConsole.ResumeLayout(false);
+			this.layoutConsole.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -414,6 +510,12 @@
 		private System.Windows.Forms.Label labelKey;
 		private DotNetApi.Windows.Controls.SecureTextBox secureTextBoxPassword;
 		private System.Windows.Forms.Button buttonLoadKey;
+		private System.Windows.Forms.TabPage tabPageConsole;
+		private System.Windows.Forms.RichTextBox textAreaConsole;
+		private System.Windows.Forms.TextBox textBoxConsole;
+		private System.Windows.Forms.TableLayoutPanel layoutConsole;
+		private System.Windows.Forms.Label labelConsole;
+		private System.Windows.Forms.Button buttonCommand;
 
 	}
 }

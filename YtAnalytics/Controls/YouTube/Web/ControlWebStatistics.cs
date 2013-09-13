@@ -428,13 +428,13 @@ namespace YtAnalytics.Controls.YouTube.Web
 				AjaxHistoryPoint? point = history.GetPointAt(marker);
 
 				// If the point does not exist, continue.
-				if(null == point) continue;
+				if (null == point) continue;
 
 				// If the last marker and last annotation exist.
-				if((lastMarker != null) && (lastAnnotation != null))
+				if ((lastMarker != null) && (lastAnnotation != null))
 				{
 					// If the last marker has the same date with the current one, only update the annotation text.
-					if(lastMarker.Value.Time == marker.Time)
+					if (lastMarker.Value.Time == marker.Time)
 					{
 						lastAnnotation.Text += " " + marker.Name;
 						continue;
@@ -711,8 +711,12 @@ namespace YtAnalytics.Controls.YouTube.Web
 		{
 			if (this.menuItemPopularity.Checked) return;
 			foreach (var item in this.buttonChart.DropDown.Items)
-				if(item is ToolStripMenuItem)
+			{
+				if (item is ToolStripMenuItem)
+				{
 					(item as ToolStripMenuItem).Checked = false;
+				}
+			}
 			this.menuItemPopularity.Checked = true;
 			this.buttonChart.Text = this.menuItemPopularity.Text;
 			this.DisplayHistoryVariation(this.statistics.ViewsHistory, "Time", "Popularity [delta views per day]");

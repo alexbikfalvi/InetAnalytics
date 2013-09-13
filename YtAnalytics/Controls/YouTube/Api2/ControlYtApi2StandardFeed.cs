@@ -268,7 +268,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 			this.comboBoxRegion.Items.Add("(any)");
 
 			// Get the current category
-			if(this.comboBoxCategory.SelectedIndex == 0)
+			if (this.comboBoxCategory.SelectedIndex == 0)
 			{
 				this.comboBoxRegion.Items.AddRange(YouTubeUri.RegionNames);
 			}
@@ -508,8 +508,10 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewVideo(object sender, EventArgs e)
 		{
-			if(this.checkBoxView.Checked)
+			if (this.checkBoxView.Checked)
+			{
 				this.viewMenu.Show(this.checkBoxView, 0, this.checkBoxView.Height);
+			}
 		}
 
 		/// <summary>

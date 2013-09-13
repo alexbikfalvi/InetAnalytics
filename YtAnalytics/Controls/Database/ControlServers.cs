@@ -394,7 +394,7 @@ namespace YtAnalytics.Controls.Database
 				// Update the old primary server, if not null.
 				if (null != e.OldPrimary)
 				{
-					if(this.items.ContainsKey(e.OldPrimary.Id))
+					if (this.items.ContainsKey(e.OldPrimary.Id))
 					{
 						ServerControls controls = this.items[e.OldPrimary.Id];
 						controls.Item.SubItems[1].Text = "Backup";
@@ -405,7 +405,7 @@ namespace YtAnalytics.Controls.Database
 				// Update the new primary server, if not null.
 				if (null != e.NewPrimary)
 				{
-					if(this.items.ContainsKey(e.NewPrimary.Id))
+					if (this.items.ContainsKey(e.NewPrimary.Id))
 					{
 						ServerControls controls = this.items[e.NewPrimary.Id];
 						controls.Item.SubItems[1].Text = "Primary";
@@ -503,7 +503,7 @@ namespace YtAnalytics.Controls.Database
 			DbServer server = this.crawler.Servers[this.listView.SelectedItems[0].Tag as string];
 
 			// If there are more than one server, and the selected server is a primary server ask the user to change the primary.
-			if(this.crawler.Servers.IsPrimary(server) && (this.crawler.Servers.Count > 1))
+			if (this.crawler.Servers.IsPrimary(server) && (this.crawler.Servers.Count > 1))
 			{
 				MessageBox.Show(
 					this,
