@@ -27,7 +27,7 @@ namespace YtCrawler.Database
 	/// </summary>
 	public class DbDataRaw : DbData
 	{
-		private delegate void AddRowHandler(DbReader reader);
+		private delegate void AddRowAction(DbReader reader);
 
 		private int columnCount = 0;
 
@@ -35,7 +35,7 @@ namespace YtCrawler.Database
 		private string[] names = null;
 		private Dictionary<string, int> mapping = new Dictionary<string, int>();
 
-		private AddRowHandler handler;
+		private AddRowAction handler;
 
 		/// <summary>
 		/// Initializes a database table using data from the specified reader.
@@ -43,7 +43,7 @@ namespace YtCrawler.Database
 		public DbDataRaw()
 		{
 			// Initialize the handler.
-			this.handler = new AddRowHandler(this.AddFirstRow);
+			this.handler = new AddRowAction(this.AddFirstRow);
 		}
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace YtCrawler.Database
 				this.mapping.Add(this.names[index], index);
 			}
 			// Change the handler.
-			this.handler = new AddRowHandler(this.AddNextRow);
+			this.handler = new AddRowAction(this.AddNextRow);
 			// Add the first row to the table.
 			this.AddNextRow(reader);
 		}

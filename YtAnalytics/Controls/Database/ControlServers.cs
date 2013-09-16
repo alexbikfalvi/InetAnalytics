@@ -40,8 +40,6 @@ using DotNetApi.Windows.Controls;
 
 namespace YtAnalytics.Controls.Database
 {
-	public delegate void AddServerEventHandler(DbServer server);
-
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
@@ -171,8 +169,6 @@ namespace YtAnalytics.Controls.Database
 			// Reload the server configurations.
 			this.crawler.Servers.Reload();
 		}
-
-		// Protected methods.
 
 		// Private methods.
 		

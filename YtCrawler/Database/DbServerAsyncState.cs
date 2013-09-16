@@ -21,6 +21,10 @@ using System.Threading;
 
 namespace YtCrawler.Database
 {
+	/// <summary>
+	/// A delegate used when completing a server asynchronous operation.
+	/// </summary>
+	/// <param name="asyncState">The state of the asynchronous operation.</param>
 	public delegate void DbServerCallback(DbServerAsyncState asyncState);
 
 	/// <summary>

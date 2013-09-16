@@ -20,19 +20,6 @@
 				{
 					this.components.Dispose();
 				}
-				// Disconnect and dispose the SSH client.
-				lock (this.sshSync)
-				{
-					// If there exists an SSH client.
-					if (null != this.sshClient)
-					{
-						if (this.sshState != ClientState.Disconnected)
-						{
-							this.sshClient.Disconnect();
-						}
-						this.sshClient.Dispose();
-					}
-				}
 			}
 			// Call the base class method.
 			base.Dispose(disposing);

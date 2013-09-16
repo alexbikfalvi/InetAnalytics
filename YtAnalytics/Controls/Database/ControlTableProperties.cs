@@ -31,7 +31,7 @@ namespace YtAnalytics.Controls.Database
 	/// </summary>
 	public partial class ControlTableProperties : ControlDatabase
 	{
-		private delegate void QuerySuccessEventHandler(DbDataObject result, int recordsAffected);
+		private delegate void QuerySuccessAction(DbDataObject result, int recordsAffected);
 
 		private DbServer server;
 		private ITable table;
@@ -50,8 +50,8 @@ namespace YtAnalytics.Controls.Database
 		private DbObjectSchema resultSchema = null;
 		private DbObjectColumn resultColumn = null;
 
-		private QuerySuccessEventHandler delegateQueryTableSchema;
-		private QuerySuccessEventHandler delegateQueryColumnType;
+		private QuerySuccessAction delegateQueryTableSchema;
+		private QuerySuccessAction delegateQueryColumnType;
 
 		private bool changes = false;
 
@@ -63,8 +63,8 @@ namespace YtAnalytics.Controls.Database
 			InitializeComponent();
 
 			// Create the delegates.
-			this.delegateQueryTableSchema = new QuerySuccessEventHandler(this.OnQuerySuccessTableSchema);
-			this.delegateQueryColumnType = new QuerySuccessEventHandler(this.OnQuerySuccessColumnType);
+			this.delegateQueryTableSchema = new QuerySuccessAction(this.OnQuerySuccessTableSchema);
+			this.delegateQueryColumnType = new QuerySuccessAction(this.OnQuerySuccessColumnType);
 		}
 
 		// Public properties.
@@ -275,10 +275,10 @@ namespace YtAnalytics.Controls.Database
 			if (query.State != null)
 			{
 				// If the query state is a delegate.
-				if (query.State is QuerySuccessEventHandler)
+				if (query.State is QuerySuccessAction)
 				{
 					// Get the call the delegate.
-					QuerySuccessEventHandler handler = query.State as QuerySuccessEventHandler;
+					QuerySuccessAction handler = query.State as QuerySuccessAction;
 					handler(result, recordsAffected);
 				}
 			}

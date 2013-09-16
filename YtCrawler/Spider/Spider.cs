@@ -22,6 +22,11 @@ using DotNetApi.Async;
 
 namespace YtCrawler.Spider
 {
+	/// <summary>
+	/// A delegate used when completing a spider asynchronous operation.
+	/// </summary>
+	/// <param name="spider">The spider.</param>
+	/// <param name="asyncState">The state of the asynchronous operation.</param>
 	public delegate void SpiderCallback(Spider spider, SpiderAsyncResult asyncState);
 
 	/// <summary>

@@ -23,8 +23,6 @@ using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.Net
 {
-	public delegate void AddHttpHeaderEventHandler();
-
 	/// <summary>
 	/// A form dialog to add an HTTP header.
 	/// </summary>

@@ -41,8 +41,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			Busy = 3
 		}
 
-		private delegate void RequestCompletedEventHandler(XmlRpcResponse response);
-		private delegate void RequestEndedEventHandler();
+		private delegate void RequestCompletedAction(XmlRpcResponse response);
 
 		private PlRequest request = null;
 		private IAsyncResult result = null;
@@ -52,7 +51,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private SecureString pendingPassword = null;
 		private object pendingParameter = null;
 
-		private RequestCompletedEventHandler delegateCompleteRequest;
+		private RequestCompletedAction delegateCompleteRequest;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -60,7 +59,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		public ControlRequest()
 		{
 			// Create the delegates.
-			this.delegateCompleteRequest = new RequestCompletedEventHandler(this.OnCompleteRequestUi);
+			this.delegateCompleteRequest = new RequestCompletedAction(this.OnCompleteRequestUi);
 		}
 
 		/// <summary>

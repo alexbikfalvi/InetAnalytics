@@ -22,7 +22,7 @@ namespace YtAnalytics.Controls.Log
 		private static int[] maximumValues = { 10, 100, 1000, int.MaxValue };
 		private FormEventProperties formLogEvent = new FormEventProperties();
 
-		private delegate void AddEventHandler(LogEvent evt);
+		private delegate void AddEventAction(LogEvent evt);
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -45,7 +45,7 @@ namespace YtAnalytics.Controls.Log
 			// Invoke this method on the UI thread.
 			if (this.InvokeRequired)
 			{
-				this.Invoke(new AddEventHandler(this.Add), new object[] { evt });
+				this.Invoke(new AddEventAction(this.Add), new object[] { evt });
 				return;
 			}
 			// Create a new list view menu item.

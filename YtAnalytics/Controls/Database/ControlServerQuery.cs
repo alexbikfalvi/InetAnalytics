@@ -41,8 +41,8 @@ namespace YtAnalytics.Controls.Database
 	/// </summary>
 	public partial class ControlServerQuery : NotificationControl
 	{
-		private delegate void ResultEventHandler(DbDataRaw table, int recordsAffected);
-		private delegate void ExceptionEventHandler(Exception exception);
+		private delegate void ResultAction(DbDataRaw table, int recordsAffected);
+		private delegate void ExceptionAction(Exception exception);
 
 		private Crawler crawler;
 		private DbServer server;
@@ -584,7 +584,7 @@ namespace YtAnalytics.Controls.Database
 		private void OnQuerySuccess(DbDataRaw table, int recordsAffected)
 		{
 			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ResultEventHandler(this.OnQuerySuccess), new object[] { table, recordsAffected });
+			if (this.InvokeRequired) this.Invoke(new ResultAction(this.OnQuerySuccess), new object[] { table, recordsAffected });
 			else
 			{
 				// Enable the start button.
@@ -628,7 +628,7 @@ namespace YtAnalytics.Controls.Database
 		private void OnQueryFail(Exception exception)
 		{
 			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ExceptionEventHandler(this.OnQueryFail), new object[] { exception });
+			if (this.InvokeRequired) this.Invoke(new ExceptionAction(this.OnQueryFail), new object[] { exception });
 			else
 			{
 				// Enable the start button.

@@ -37,19 +37,19 @@ namespace YtAnalytics.Controls.Database
 	/// </summary>
 	public class ControlDatabase : NotificationControl
 	{
-		protected delegate void QueryEventHandler(DbServer server, DbQuery query);
-		protected delegate void ResultRawEventHandler(DbServer server, DbQuery query, DbDataRaw result, int recordsAffected);
-		protected delegate void ResultObjectEventHandler(DbServer server, DbQuery query, DbDataObject result, int recordsAffected);
-		protected delegate void ExceptionEventHandler(DbServer server, DbQuery query, Exception exception);
+		protected delegate void QueryAction(DbServer server, DbQuery query);
+		protected delegate void ResultRawAction(DbServer server, DbQuery query, DbDataRaw result, int recordsAffected);
+		protected delegate void ResultObjectAction(DbServer server, DbQuery query, DbDataObject result, int recordsAffected);
+		protected delegate void ExceptionAction(DbServer server, DbQuery query, Exception exception);
 
 		private FormChangePassword formChangePassword = new FormChangePassword();
 
 		private DbServerCallback delegateConnected;
 		private DbServerCallback delegateDisconnected;
-		private QueryEventHandler delegateQueryStart;
-		private ResultRawEventHandler delegateQuerySuccessRaw;
-		private ResultObjectEventHandler delegateQuerySuccessObject;
-		private ExceptionEventHandler delegateQueryFail;
+		private QueryAction delegateQueryStart;
+		private ResultRawAction delegateQuerySuccessRaw;
+		private ResultObjectAction delegateQuerySuccessObject;
+		private ExceptionAction delegateQueryFail;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -59,10 +59,10 @@ namespace YtAnalytics.Controls.Database
 			// Delegates.
 			this.delegateConnected = new DbServerCallback(this.DatabaseConnected);
 			this.delegateDisconnected = new DbServerCallback(this.DatabaseDisconnected);
-			this.delegateQueryStart = new QueryEventHandler(this.DatabaseQuery);
-			this.delegateQuerySuccessRaw = new ResultRawEventHandler(this.DatabaseQuerySuccess);
-			this.delegateQuerySuccessObject = new ResultObjectEventHandler(this.DatabaseQuerySuccess);
-			this.delegateQueryFail = new ExceptionEventHandler(this.DatabaseQueryFail);
+			this.delegateQueryStart = new QueryAction(this.DatabaseQuery);
+			this.delegateQuerySuccessRaw = new ResultRawAction(this.DatabaseQuerySuccess);
+			this.delegateQuerySuccessObject = new ResultObjectAction(this.DatabaseQuerySuccess);
+			this.delegateQueryFail = new ExceptionAction(this.DatabaseQueryFail);
 
 			// Add the event handler to the change password form.
 			this.formChangePassword.PasswordChanged += this.OnPasswordChanged;

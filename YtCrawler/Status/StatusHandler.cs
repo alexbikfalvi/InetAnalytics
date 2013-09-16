@@ -21,7 +21,11 @@ using System.Drawing;
 
 namespace YtCrawler.Status
 {
-	internal delegate void CrawlerStatusHandlerEventHandler(StatusHandler handle);
+	/// <summary>
+	/// A delegate used when performing an action on the status handler.
+	/// </summary>
+	/// <param name="handle">The status handler.</param>
+	internal delegate void CrawlerStatusHandlerAction(StatusHandler handler);
 
 	/// <summary>
 	/// A class allowing a single control to send status messages.
@@ -30,14 +34,14 @@ namespace YtCrawler.Status
 	{
 		private object owner;
 		private StatusMessage message;
-		private CrawlerStatusHandlerEventHandler status;
+		private CrawlerStatusHandlerAction status;
 
 		/// <summary>
 		/// Creates a new object instance for the specified ownwer.
 		/// </summary>
 		/// <param name="owner">The owner object.</param>
 		/// <param name="status">The status event handler.</param>
-		internal StatusHandler(object owner, CrawlerStatusHandlerEventHandler status)
+		internal StatusHandler(object owner, CrawlerStatusHandlerAction status)
 		{
 			this.owner = owner;
 			this.status = status;

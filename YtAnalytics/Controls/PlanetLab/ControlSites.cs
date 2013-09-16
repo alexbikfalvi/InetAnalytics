@@ -39,10 +39,6 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlSites : NotificationControl
 	{
-		// Private delegates.
-
-		private delegate void UpdateSitesEventHandler();
-		
 		// Private variables.
 
 		private Crawler crawler = null;
@@ -52,7 +48,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private MapMarker marker = null;
 		private string filter = string.Empty;
 
-		private UpdateSitesEventHandler delegateUpdateSites = null;
+		private Action delegateUpdateSites = null;
 
 		private FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 
@@ -74,7 +70,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.mapControl.LoadMap("Ne110mAdmin0Countries");
 
 			// Initialize the delegates.
-			this.delegateUpdateSites = new UpdateSitesEventHandler(this.OnUpdateSites);
+			this.delegateUpdateSites = new Action(this.OnUpdateSites);
 		}
 
 		/// <summary>

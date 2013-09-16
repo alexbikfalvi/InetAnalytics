@@ -19,7 +19,7 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Threading;
+using System.Linq;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.IO;
@@ -39,9 +39,6 @@ namespace YtAnalytics.Controls.Testing
 	/// </summary>
 	public sealed partial class ControlTestingSshRequest : ControlSsh
 	{
-		private delegate void CommandResultEventHandler(SshCommand command, string result);
-		private delegate void CommandCompleteEventHandler(SshCommand command);
-
 		private static string logSource = "Testing Secure Shell";
 
 		// Private variables.
@@ -52,9 +49,6 @@ namespace YtAnalytics.Controls.Testing
 		private byte[] sshKey = null;
 		
 		private bool configurationChanged = false;
-
-		private CommandResultEventHandler delegateCommandResult;
-		private CommandCompleteEventHandler delegateCommandComplete;
 
 		// Public declarations
 
@@ -69,10 +63,6 @@ namespace YtAnalytics.Controls.Testing
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Create the delegates.
-			this.delegateCommandResult = new CommandResultEventHandler(this.OnCommandResult);
-			this.delegateCommandComplete = new CommandCompleteEventHandler(this.OnCommandComplete);
 		}
 
 		// Public methods.
@@ -101,12 +91,32 @@ namespace YtAnalytics.Controls.Testing
 
 		protected override void OnConnecting()
 		{
-			base.OnConnecting();
+			// Change the controls enabled state.
+			this.OnDisableControls();
+			// Change the buttons enabled state.
+			this.buttonConnect.Enabled = false;
+			// Update the status bar.
+			this.status.Send("Connecting to the SSH server \'{0}\'".FormatWith(this.Info.Host), Resources.ServerBusy_16);
 		}
 
-		protected override void OnConnected()
+		protected override void OnConnectSucceeded()
 		{
-			base.OnConnected();
+			// Change the buttons enabled state.
+			this.buttonDisconnect.Enabled = true;
+			// Update the status bar.
+			this.status.Send("Connected to the SSH server \'{0}\'".FormatWith(this.Info.Host), Resources.ServerSuccess_16);
+			// Enable the console.
+			this.OnEnableConsole();
+		}
+
+		protected override void OnConnectFailed(Exception exception)
+		{
+			// Change the controls enabled state.
+			this.OnEnableControls();
+			// Change the buttons enabled state.
+			this.buttonConnect.Enabled = true;
+			// Update the status bar.
+			this.status.Send("Connecting to the SSH server \'{0}\' failed".FormatWith(this.Info.Host), Resources.ServerError_16);
 		}
 
 		/// <summary>
@@ -139,6 +149,75 @@ namespace YtAnalytics.Controls.Testing
 
 			// Disable the console.
 			this.OnDisableConsole();
+		}
+
+		/// <summary>
+		/// An event handler called when an error occurred on an SSH connection.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		protected override void OnErrorOccurred(Exception exception)
+		{
+		}
+
+		/// <summary>
+		/// An event handler called when receiving the key from the remote host on a given SSH connection.
+		/// </summary>
+		/// <param name="args">The arguuments.</param>
+		protected override void OnHostKeyReceived(HostKeyEventArgs args)
+		{
+		}
+
+		/// <summary>
+		/// An event handler called when the client begins executing a command.
+		/// </summary>
+		/// <param name="command">The command.</param>
+		protected override void OnCommandBegin(SshCommand command)
+		{
+			// Delete and disable the command text box.
+			this.textBoxConsole.Clear();
+			this.textBoxConsole.Enabled = false;
+			// Change the execute button image.
+			this.buttonCommand.Image = Resources.PlayStop_16;
+			this.buttonCommand.Enabled = true;
+			// Add the command to the text area.
+			this.textAreaConsole.AppendText("{0}@{1}> {2}{3}".FormatWith(this.Info.Username, this.Info.Host, command.CommandText, Environment.NewLine));
+		}
+
+		/// <summary>
+		/// An event handler called when the client receives data for an executing command.
+		/// </summary>
+		/// <param name="command">The command.</param>
+		/// <param name="data">The received data.</param>
+		protected override void OnCommandData(SshCommand command, string data)
+		{
+			// Set the exception message as a result argument.
+			this.textAreaConsole.AppendText(data);
+		}
+
+		/// <summary>
+		/// An event handler called when a client command completed successfully.
+		/// </summary>
+		/// <param name="command">The command.</param>
+		/// <param name="result">The result.</param>
+		protected override void OnCommandSucceeded(SshCommand command, string result)
+		{
+			// Set the exception message as a result argument.
+			this.textAreaConsole.AppendText("{0}{1}Command succeeded with code {2}.{3}".FormatWith(result, Environment.NewLine, command.ExitStatus, Environment.NewLine));
+			// Call the command complete event handler.
+			this.OnCommandComplete();
+		}
+
+		/// <summary>
+		/// An event handler called when a client command has failed.
+		/// </summary>
+		/// <param name="command">The command.</param>
+		/// <param name="exception">The exception.</param>
+		protected override void OnCommandFailed(SshCommand command, Exception exception)
+		{
+			// Set the exception message as a result argument.
+			this.textAreaConsole.AppendText("Command failed with code {0}. {1}{2}".FormatWith(command.ExitStatus, exception.Message, Environment.NewLine));
+			// Call the command complete event handler.
+			this.OnCommandComplete();
 		}
 
 		// Private methods.
@@ -256,11 +335,8 @@ namespace YtAnalytics.Controls.Testing
 				// Create a new connection info.
 				if (this.radioPasswordAuthentication.Checked)
 				{
-					lock (this.Sync)
-					{
-						// Create a password connection info.
-						connectionInfo = new PasswordConnectionInfo(this.textBoxServer.Text, this.textBoxUsername.Text, this.secureTextBoxPassword.SecureText.ConvertToUnsecureString());
-					}
+					// Create a password connection info.
+					connectionInfo = new PasswordConnectionInfo(this.textBoxServer.Text, this.textBoxUsername.Text, this.secureTextBoxPassword.SecureText.ConvertToUnsecureString());
 				}
 				else if (this.radioKeyAuthentication.Checked)
 				{
@@ -276,11 +352,8 @@ namespace YtAnalytics.Controls.Testing
 						// Create the private key file.
 						using (PrivateKeyFile keyFile = new PrivateKeyFile(memoryStream))
 						{
-							lock (this.Sync)
-							{
-								// Create a key connection info.
-								connectionInfo = new PrivateKeyConnectionInfo(this.textBoxServer.Text, this.textBoxUsername.Text, keyFile);
-							}
+							// Create a key connection info.
+							connectionInfo = new PrivateKeyConnectionInfo(this.textBoxServer.Text, this.textBoxUsername.Text, keyFile);
 						}
 					}
 				}
@@ -300,77 +373,15 @@ namespace YtAnalytics.Controls.Testing
 
 			try
 			{
+				// Connect to the SSH server.
+				this.Connect(connectionInfo);
 			}
 			catch (SshException exception)
 			{
+				// Show an error dialog if an exception is thrown.
+				MessageBox.Show("Cannot connect to the SSH server. {0}".FormatWith(exception.Message), "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
 			}
-
-			// Change the controls enabled state.
-			this.OnDisableControls();
-			// Change the buttons enabled state.
-			this.buttonConnect.Enabled = false;
-
-			// Show a connecting message.
-			this.ShowMessage(Resources.ServerBusy_32, "Connecting", "Connecting to the SSH server \'{0}\'".FormatWith(connectionInfo.Host));
-			// Update the status bar.
-			this.status.Send("Connecting to the SSH server \'{0}\'".FormatWith(connectionInfo.Host), Resources.ServerBusy_16);
-
-			// Connect to the SSH server on the thread pool.
-			ThreadPool.QueueUserWorkItem((object state) =>
-				{
-					try
-					{
-						lock (this.Sync)
-						{
-							// Change the client state to connecting.
-							this.State = ClientState.Connecting;
-						}
-
-						// Connect to the server.
-						this.sshClient.Connect();
-
-						lock (this.Sync)
-						{
-							// Change the client state to connected.
-							this.State = ClientState.Connected;
-
-							// Create the client stream.
-							//this.sshClient.CreateShellStream("Shell", 160, 160, 
-						}
-
-						// Show a success message.
-						this.ShowMessage(Resources.ServerSuccess_32, "Connecting Succeeded", "Connecting to the SSH sever \'{0}\' completed successfully.".FormatWith(connectionInfo.Host), false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds, (object[] parameters) =>
-							{
-								// Change the buttons enabled state.
-								this.buttonDisconnect.Enabled = true;
-								// Update the status bar.
-								this.status.Send("Connected to the SSH server \'{0}\'".FormatWith(connectionInfo.Host), Resources.ServerSuccess_16);
-								// Enable the console.
-								this.OnEnableConsole();
-							});
-					}
-					catch (Exception exception)
-					{
-						// Change the client state and dispose of the current client.
-						lock (this.Sync)
-						{
-							this.State = ClientState.Disconnected;
-
-							this.sshClient.Dispose();
-							this.sshClient = null;
-						}
-						// Show a success message.
-						this.ShowMessage(Resources.ServerError_32, "Connecting Failed", "Connecting to the SSH sever \'{0}\' failed. {1}".FormatWith(connectionInfo.Host, exception.Message), false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds, (object[] parameters) =>
-							{
-								// Change the controls enabled state.
-								this.OnEnableControls();
-								// Change the buttons enabled state.
-								this.buttonConnect.Enabled = true;
-								// Update the status bar.
-								this.status.Send("Connecting to the SSH server \'{0}\' failed".FormatWith(connectionInfo.Host), Resources.ServerError_16);
-							});
-					}
-				});
 		}
 
 		/// <summary>
@@ -380,26 +391,16 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="e">The event arguments.</param>
 		private void OnDisconnect(object sender, EventArgs e)
 		{
-			lock (this.Sync)
+			try
 			{
-				// If the client is not connected, show a message and return.
-				if (this.State != ClientState.Connected)
-				{
-					MessageBox.Show("Cannot disconnect from the SSH server because the client is not connected.", "Cannot Disconnect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return;
-				}
-
-				try
-				{
-					// Disconnect the current client.
-					this.sshClient.Disconnect();
-				}
-				catch (Exception)
-				{
-				}
-
-				// Call the disconnected event handler.
-				this.OnDisconnected();
+				// Disconnect from the SSH server.
+				this.Disconnect();
+			}
+			catch (SshException exception)
+			{
+				// Show an error dialog if an exception is thrown.
+				MessageBox.Show("An error occurred while disconnecting from the SSH server. {0}".FormatWith(exception.Message), "Disconnect Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
 			}
 		}
 
@@ -459,16 +460,8 @@ namespace YtAnalytics.Controls.Testing
 		/// </summary>
 		private void OnEnableConsole()
 		{
-			lock (this.Sync)
-			{
-				// If the current client is null, do nothing.
-				if (null == this.sshClient) return;
-				// If the current client is not connected, do nothing.
-				if (!this.sshClient.IsConnected) return;
-				// Else, set the console prompt.
-				this.labelConsole.Text = "{0}@{1}>".FormatWith(this.sshClient.ConnectionInfo.Username, this.sshClient.ConnectionInfo.Host);
-			}
-
+			// Set the prompt.
+			this.labelConsole.Text = "{0}@{1}>".FormatWith(this.Info.Username, this.Info.Host);
 			this.tabControl.SelectedTab = this.tabPageConsole;
 			this.textBoxConsole.Enabled = true;
 			this.textBoxConsole.Select();
@@ -550,20 +543,26 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="e">The event arguments.</param>
 		private void OnExecuteCommand(object sender, EventArgs e)
 		{
-			lock (this.Sync)
+			// Lock the list of commands.
+			this.Commands.Lock();
+			try
 			{
-				// If the current command is null.
-				if (null == this.sshCommand)
+				// If the number of executing commands is greater than zero.
+				if (this.Commands.Count > 0)
 				{
-					// Begin the command.
-					this.OnBeginCommand(sender, e);
-				}
-				else
-				{
-					// Stop the asynchronous command.
-					this.sshCommand.CancelAsync();
+					// Cancel the first command.
+					this.Commands.First().CancelAsync();
+					// Return.
+					return;
 				}
 			}
+			finally
+			{
+				this.Commands.Unlock();
+			}
+
+			// Else, begin a new command.
+			this.OnBeginCommand(sender, e);
 		}
 
 		/// <summary>
@@ -573,135 +572,34 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="e">The event arguments.</param>
 		private void OnBeginCommand(object sender, EventArgs e)
 		{
-			lock (this.Sync)
-			{
-				// If the current client is null, do nothing.
-				if (null == this.sshClient) return;
-				// If the current client is not connected, do nothing.
-				if (!this.sshClient.IsConnected) return;
-				// If the current command is not null, do nothing.
-				if (null != this.sshCommand) return;
-
-				// Create a new command for the current text.
-				SshCommand command = this.sshClient.CreateCommand(this.textBoxConsole.Text);
-				// Set the current command.
-				this.sshCommand = command;
-				// Delete and disable the command text box.
-				this.textBoxConsole.Clear();
-				this.textBoxConsole.Enabled = false;
-				// Change the execute button image.
-				this.buttonCommand.Image = Resources.PlayStop_16;
-				this.buttonCommand.Enabled = true;
-				// Add the command to the text area.
-				this.textAreaConsole.AppendText("{0}@{1}> {2}{3}".FormatWith(
-					this.sshClient.ConnectionInfo.Username,
-					this.sshClient.ConnectionInfo.Host,
-					command.CommandText,
-					Environment.NewLine));
-
-				try
-				{
-					// Execute the command asynchronously.
-					IAsyncResult asyncResult = command.BeginExecute(this.OnEndCommand, command);
-					// Get the command data.
-					ThreadPool.QueueUserWorkItem((object state) =>
-						{
-							// Create the result arguments.
-							object[] args = new object[] { command, null };
-							// Read the command data.
-							using (StreamReader reader = new StreamReader(command.OutputStream))
-							{
-								// While the command is not completed.
-								while (!asyncResult.IsCompleted)
-								{
-									// Read all current data in a string.
-									string result = reader.ReadToEnd();
-									// If the string null or empty, continue.
-									if (string.IsNullOrEmpty(result)) continue;
-									// Set the current result as a result argument.
-									args[1] = result;
-									// Invoke the command result event handler.
-									this.Invoke(this.delegateCommandResult, args);
-								}
-							}
-						});
-				}
-				catch (Exception exception)
-				{
-					// Show the error.
-					this.textAreaConsole.AppendText("{0}@{1}> {2}{3}Command failed.{4}".FormatWith(
-						this.sshClient.ConnectionInfo.Username,
-						this.sshClient.ConnectionInfo.Host,
-						command.CommandText,
-						Environment.NewLine,
-						exception.Message));
-				}
-			}
-		}
-
-		/// <summary>
-		/// An callback method called when completing an asynchronous SSH command.
-		/// </summary>
-		/// <param name="asyncResult">The asynchronous result.</param>
-		private void OnEndCommand(IAsyncResult asyncResult)
-		{
-			// Get the command.
-			SshCommand command = asyncResult.AsyncState as SshCommand;
-			// Create the result arguments.
-			object[] args = new object[] { command, null };
-
+			// Get the command text.
+			string text = this.textBoxConsole.Text;
 			try
 			{
-				// End the command execution.
-				string result = command.EndExecute(asyncResult);
-				// Set the current result as a result argument.
-				args[1] = result;
-				// Invoke the command result event handler.
-				this.Invoke(this.delegateCommandResult, args);
+				// Begin the command.
+				this.BeginCommand(text);
 			}
 			catch (Exception exception)
 			{
-				// Set the exception message as a result argument.
-				args[1] = "Command failed. {0}".FormatWith(exception.Message);
-				// Invoke the command result event handler.
-				this.Invoke(this.delegateCommandResult, args);
-			}
-			// Complete the command.
-			this.Invoke(this.delegateCommandComplete, new object[] { command });
-		}
-
-		/// <summary>
-		/// An event handler called when receving a new result for an SSH command.
-		/// </summary>
-		/// <param name="command">The command.</param>
-		/// <param name="result">The result.</param>
-		private void OnCommandResult(SshCommand command, string result)
-		{
-			// Add the command result.
-			lock(this.Sync)
-			{
-				this.textAreaConsole.AppendText(result);
+				// Show the error.
+				this.textAreaConsole.AppendText("{0}@{1}> {2}{3}Command failed.{4}".FormatWith(
+					this.Info.Username,
+					this.Info.Host,
+					text,
+					Environment.NewLine,
+					exception.Message));
 			}
 		}
 
 		/// <summary>
-		/// An event handler called when an SSH command completes successfully.
+		/// An event handler called when an SSH command completes.
 		/// </summary>
-		/// <param name="command">The command.</param>
-		private void OnCommandComplete(SshCommand command)
+		private void OnCommandComplete()
 		{
-			lock (this.Sync)
-			{
-				this.buttonCommand.Image = Resources.PlayStart_16;
-				this.buttonCommand.Enabled = false;
-				this.textBoxConsole.Enabled = true;
-				this.textBoxConsole.Select();
-
-				// Set the current SSH command to null.
-				this.sshCommand = null;
-				// Dispose the command.
-				command.Dispose();
-			}
+			this.buttonCommand.Image = Resources.PlayStart_16;
+			this.buttonCommand.Enabled = false;
+			this.textBoxConsole.Enabled = true;
+			this.textBoxConsole.Select();
 		}
 	}
 }

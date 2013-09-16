@@ -23,7 +23,17 @@ using System.Threading;
 
 namespace YtCrawler.Database
 {
+	/// <summary>
+	/// A delegate used when completing an asynchronous reader query.
+	/// </summary>
+	/// <param name="result">The asynchronous result.</param>
+	/// <param name="reader">The database reader.</param>
 	public delegate void DbCommandReaderCallback(DbAsyncResult result, DbReader reader);
+	/// <summary>
+	/// A delegate used when completing an asynchronous non query.
+	/// </summary>
+	/// <param name="result">The asynchronous result.</param>
+	/// <param name="count">The number of records affected.</param>
 	public delegate void DbCommandNonQueryCallback(DbAsyncResult result, int count);
 
 	/// <summary>

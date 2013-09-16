@@ -22,9 +22,30 @@ using YtCrawler.Database.Data;
 
 namespace YtCrawler.Database
 {
+	/// <summary>
+	/// A delegate used when completing an asynchronous data operation.
+	/// </summary>
+	/// <param name="asyncResult">The asynchronous result.</param>
+	/// <param name="table">The data table.</param>
 	public delegate void DbReaderCallback(DbAsyncResult asyncResult, DbData table);
+	/// <summary>
+	/// A delegate used when completing an asynchronous data operation.
+	/// </summary>
+	/// <param name="asyncResult">The asynchronous result.</param>
+	/// <param name="table">The raw data table.</param>
 	public delegate void DbReaderRawCallback(DbAsyncResult asyncResult, DbDataRaw table);
+	/// <summary>
+	/// A delegate used when completing an asynchronous data operation of a non-generic objetc type.
+	/// </summary>
+	/// <param name="asyncResult">The asynchronous result.</param>
+	/// <param name="table">The non-generic object data table.</param>
 	public delegate void DbReaderObjectCallback(DbAsyncResult asyncResult, DbDataObject table);
+	/// <summary>
+	/// A delegate used when completing an asynchronous data operation of a generic object type.
+	/// </summary>
+	/// <typeparam name="T">The object type.</typeparam>
+	/// <param name="asyncResult">The asynchronous result.</param>
+	/// <param name="table">The generic object data table.</param>
 	public delegate void DbReaderObjectCallback<T>(DbAsyncResult asyncResult, DbDataObject<T> table) where T : DbObject, new();
 
 	/// <summary>

@@ -29,7 +29,7 @@ namespace YtCrawler.Status
 	public sealed class Status : IDisposable
 	{
 		private Dictionary<object, StatusHandler> handlers = new Dictionary<object, StatusHandler>();
-		private CrawlerStatusHandlerEventHandler status;
+		private CrawlerStatusHandlerAction status;
 		private StatusHandler handler = null;
 		private bool disposed = false;
 
@@ -38,7 +38,7 @@ namespace YtCrawler.Status
 		/// </summary>
 		public Status()
 		{
-			this.status = new CrawlerStatusHandlerEventHandler(this.OnSend);
+			this.status = new CrawlerStatusHandlerAction(this.OnSend);
 		}
 
 		// Public events.
