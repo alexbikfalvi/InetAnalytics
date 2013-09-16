@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.IO;
 using DotNetApi.Security;
-using DotNetApi.Windows.Controls;
+using YtAnalytics.Controls.Net.Ssh;
 using YtCrawler;
 using YtCrawler.Log;
 using YtCrawler.Status;
@@ -37,34 +37,20 @@ namespace YtAnalytics.Controls.Testing
 	/// <summary>
 	/// A control class for testing secure shell.
 	/// </summary>
-	public partial class ControlTestingSshRequest : NotificationControl
+	public sealed partial class ControlTestingSshRequest : ControlSsh
 	{
 		private delegate void CommandResultEventHandler(SshCommand command, string result);
 		private delegate void CommandCompleteEventHandler(SshCommand command);
 
 		private static string logSource = "Testing Secure Shell";
 
-		// Connection state.
-		private enum State
-		{
-			Disconnected = 0,
-			Connecting = 1,
-			Connected = 2,
-			Disconnecting = 3
-		}
-
 		// Private variables.
 
 		private Crawler crawler = null;
 		private StatusHandler status = null;
 
-		private readonly object sshSync = new object();
 		private byte[] sshKey = null;
 		
-		private State sshState = State.Disconnected;
-		private SshClient sshClient = null;
-		private SshCommand sshCommand = null;
-
 		private bool configurationChanged = false;
 
 		private CommandResultEventHandler delegateCommandResult;
@@ -109,6 +95,50 @@ namespace YtAnalytics.Controls.Testing
 
 			// Load the settings.
 			this.OnLoad();
+		}
+
+		// Protected methods.
+
+		protected override void OnConnecting()
+		{
+			base.OnConnecting();
+		}
+
+		protected override void OnConnected()
+		{
+			base.OnConnected();
+		}
+
+		/// <summary>
+		/// An event handler called when disconnecting from an SSH server.
+		/// </summary>
+		protected override void OnDisconnecting()
+		{
+			// Call the base class method.
+			base.OnDisconnecting();
+
+			// Change the buttons enabled state.
+			this.buttonDisconnect.Enabled = false;
+		}
+
+		/// <summary>
+		/// An event handler called when disconnected from an SSH server.
+		/// </summary>
+		protected override void OnDisconnected()
+		{
+			// Call the base class method.
+			base.OnDisconnected();
+			
+			// Update the status bar.
+			this.status.Send("Disconnected.", Resources.Server_16);
+
+			// Change the controls enabled state.
+			this.OnEnableControls();
+			// Change the buttons enabled state.
+			this.buttonConnect.Enabled = true;
+
+			// Disable the console.
+			this.OnDisableConsole();
 		}
 
 		// Private methods.
@@ -218,16 +248,6 @@ namespace YtAnalytics.Controls.Testing
 				return;
 			}
 
-			// If the client is not disconnected, show a message and return.
-			lock (this.sshSync)
-			{
-				if (this.sshState != State.Disconnected)
-				{
-					MessageBox.Show("Cannot connect to the SSH server because the client is not disconnected.", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return;
-				}
-			}
-
 			// The connection info.
 			ConnectionInfo connectionInfo = null;
 
@@ -236,7 +256,7 @@ namespace YtAnalytics.Controls.Testing
 				// Create a new connection info.
 				if (this.radioPasswordAuthentication.Checked)
 				{
-					lock (this.sshSync)
+					lock (this.Sync)
 					{
 						// Create a password connection info.
 						connectionInfo = new PasswordConnectionInfo(this.textBoxServer.Text, this.textBoxUsername.Text, this.secureTextBoxPassword.SecureText.ConvertToUnsecureString());
@@ -256,7 +276,7 @@ namespace YtAnalytics.Controls.Testing
 						// Create the private key file.
 						using (PrivateKeyFile keyFile = new PrivateKeyFile(memoryStream))
 						{
-							lock (this.sshSync)
+							lock (this.Sync)
 							{
 								// Create a key connection info.
 								connectionInfo = new PrivateKeyConnectionInfo(this.textBoxServer.Text, this.textBoxUsername.Text, keyFile);
@@ -270,22 +290,19 @@ namespace YtAnalytics.Controls.Testing
 					MessageBox.Show("You must select a method of authentication.", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
-
-				lock (this.sshSync)
-				{
-					// Create the SSH client.
-					this.sshClient = new SshClient(connectionInfo);
-
-					// Set the client event handlers.
-					this.sshClient.ErrorOccurred += this.SshErrorOccurred;
-					this.sshClient.HostKeyReceived += this.SshHostKeyReceived;
-				}
 			}
 			catch (Exception exception)
 			{
 				// Show an error dialog if an exception is thrown.
 				MessageBox.Show("Cannot connect to the SSH server. {0}".FormatWith(exception.Message), "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
+			}
+
+			try
+			{
+			}
+			catch (SshException exception)
+			{
 			}
 
 			// Change the controls enabled state.
@@ -303,19 +320,19 @@ namespace YtAnalytics.Controls.Testing
 				{
 					try
 					{
-						lock (this.sshSync)
+						lock (this.Sync)
 						{
 							// Change the client state to connecting.
-							this.sshState = State.Connecting;
+							this.State = ClientState.Connecting;
 						}
 
 						// Connect to the server.
 						this.sshClient.Connect();
 
-						lock (this.sshSync)
+						lock (this.Sync)
 						{
 							// Change the client state to connected.
-							this.sshState = State.Connected;
+							this.State = ClientState.Connected;
 
 							// Create the client stream.
 							//this.sshClient.CreateShellStream("Shell", 160, 160, 
@@ -335,9 +352,9 @@ namespace YtAnalytics.Controls.Testing
 					catch (Exception exception)
 					{
 						// Change the client state and dispose of the current client.
-						lock (this.sshSync)
+						lock (this.Sync)
 						{
-							this.sshState = State.Disconnected;
+							this.State = ClientState.Disconnected;
 
 							this.sshClient.Dispose();
 							this.sshClient = null;
@@ -363,10 +380,10 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="e">The event arguments.</param>
 		private void OnDisconnect(object sender, EventArgs e)
 		{
-			lock (this.sshSync)
+			lock (this.Sync)
 			{
 				// If the client is not connected, show a message and return.
-				if (this.sshState != State.Connected)
+				if (this.State != ClientState.Connected)
 				{
 					MessageBox.Show("Cannot disconnect from the SSH server because the client is not connected.", "Cannot Disconnect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
@@ -384,33 +401,6 @@ namespace YtAnalytics.Controls.Testing
 				// Call the disconnected event handler.
 				this.OnDisconnected();
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when the SSH client has been disconnected.
-		/// </summary>
-		private void OnDisconnected()
-		{
-			lock (this.sshSync)
-			{
-				// Change the state.
-				this.sshState = State.Disconnected;
-				// Dispose the clinet.
-				this.sshClient.Dispose();
-				this.sshClient = null;
-
-				// Update the status bar.
-				this.status.Send("Disconnected.", Resources.Server_16);
-
-				// Change the controls enabled state.
-				this.OnEnableControls();
-				// Change the buttons enabled state.
-				this.buttonConnect.Enabled = true;
-				this.buttonDisconnect.Enabled = false;
-			}
-
-			// Disable the console.
-			this.OnDisableConsole();
 		}
 
 		/// <summary>
@@ -469,7 +459,7 @@ namespace YtAnalytics.Controls.Testing
 		/// </summary>
 		private void OnEnableConsole()
 		{
-			lock (this.sshSync)
+			lock (this.Sync)
 			{
 				// If the current client is null, do nothing.
 				if (null == this.sshClient) return;
@@ -528,39 +518,6 @@ namespace YtAnalytics.Controls.Testing
 		}
 
 		/// <summary>
-		/// An event handler called when an error occurred on the current SSH connection.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void SshErrorOccurred(object sender, ExceptionEventArgs e)
-		{
-			lock (this.sshSync)
-			{
-				// If there is no current SSH client, ignore the error.
-				if (null == this.sshClient) return;
-
-				// If the current state is disconnected or disconnecting, ignore the error.
-				if (State.Disconnected == this.sshState) return;
-
-				// If the client is no longer connected.
-				if (!this.sshClient.IsConnected)
-				{
-					// Call the disconnected event handler.
-					this.OnDisconnected();
-				}
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the host key was received for the current SSH connection.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void SshHostKeyReceived(object sender, HostKeyEventArgs e)
-		{
-		}
-
-		/// <summary>
 		/// An event handler called when the SSH command has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -593,7 +550,7 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="e">The event arguments.</param>
 		private void OnExecuteCommand(object sender, EventArgs e)
 		{
-			lock (this.sshSync)
+			lock (this.Sync)
 			{
 				// If the current command is null.
 				if (null == this.sshCommand)
@@ -616,7 +573,7 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="e">The event arguments.</param>
 		private void OnBeginCommand(object sender, EventArgs e)
 		{
-			lock (this.sshSync)
+			lock (this.Sync)
 			{
 				// If the current client is null, do nothing.
 				if (null == this.sshClient) return;
@@ -721,7 +678,7 @@ namespace YtAnalytics.Controls.Testing
 		private void OnCommandResult(SshCommand command, string result)
 		{
 			// Add the command result.
-			lock(this.sshSync)
+			lock(this.Sync)
 			{
 				this.textAreaConsole.AppendText(result);
 			}
@@ -733,7 +690,7 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="command">The command.</param>
 		private void OnCommandComplete(SshCommand command)
 		{
-			lock (this.sshSync)
+			lock (this.Sync)
 			{
 				this.buttonCommand.Image = Resources.PlayStart_16;
 				this.buttonCommand.Enabled = false;

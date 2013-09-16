@@ -26,7 +26,7 @@
 					// If there exists an SSH client.
 					if (null != this.sshClient)
 					{
-						if (this.sshState != State.Disconnected)
+						if (this.sshState != ClientState.Disconnected)
 						{
 							this.sshClient.Disconnect();
 						}
