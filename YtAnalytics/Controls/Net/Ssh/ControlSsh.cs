@@ -56,7 +56,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 		private Action<SshCommand> actionCommandBegin;
 		private Action<SshCommand, string> actionCommandData;
 		private Action<SshCommand, string> actionCommandSucceeded;
-		private Action<SshCommand, Exception> actionCommandFailed;
+		private Action<SshCommand, string> actionCommandFailed;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -69,7 +69,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 			this.actionCommandBegin = new Action<SshCommand>(this.OnCommandBeginInternal);
 			this.actionCommandData = new Action<SshCommand, string>(this.OnCommandDataInternal);
 			this.actionCommandSucceeded = new Action<SshCommand, string>(this.OnCommandSucceededInternal);
-			this.actionCommandFailed = new Action<SshCommand, Exception>(this.OnCommandFailedInternal);
+			this.actionCommandFailed = new Action<SshCommand, string>(this.OnCommandFailedInternal);
 		}
 
 		// Protected properties.
@@ -357,8 +357,8 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// An event handler called when a client command has failed.
 		/// </summary>
 		/// <param name="command">The command.</param>
-		/// <param name="exception">The exception.</param>
-		protected virtual void OnCommandFailed(SshCommand command, Exception exception)
+		/// <param name="error">The error.</param>
+		protected virtual void OnCommandFailed(SshCommand command, string error)
 		{
 		}
 
@@ -582,13 +582,22 @@ namespace YtAnalytics.Controls.Net.Ssh
 			{
 				// End the command execution.
 				string result = command.EndExecute(asyncResult);
-				// Call the event handler.
-				this.OnCommandSucceededInternal(command, result);
+
+				if (command.ExitStatus == 0)
+				{
+					// Call the event handler.
+					this.OnCommandSucceededInternal(command, result);
+				}
+				else
+				{
+					// Call the event handler.
+					this.OnCommandFailedInternal(command, command.Error);
+				}
 			}
 			catch (Exception exception)
 			{
 				// Call the event handler.
-				this.OnCommandFailedInternal(command, exception);
+				this.OnCommandFailedInternal(command, exception.Message);
 			}
 
 			
@@ -623,17 +632,17 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// An action called when a command failed.
 		/// </summary>
 		/// <param name="command">The command.</param>
-		/// <param name="exception">The exception.</param>
-		private void OnCommandFailedInternal(SshCommand command, Exception exception)
+		/// <param name="error">The error.</param>
+		private void OnCommandFailedInternal(SshCommand command, string error)
 		{
 			// Call the event handler on the UI thread.
 			if (this.InvokeRequired)
 			{
-				this.Invoke(this.actionCommandFailed, new object[] { command, exception });
+				this.Invoke(this.actionCommandFailed, new object[] { command, error });
 			}
 			else
 			{
-				this.OnCommandFailed(command, exception);
+				this.OnCommandFailed(command, error);
 			}
 		}
 	}

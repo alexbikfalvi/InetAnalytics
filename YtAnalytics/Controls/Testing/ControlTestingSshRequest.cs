@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Linq;
@@ -173,14 +174,8 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="command">The command.</param>
 		protected override void OnCommandBegin(SshCommand command)
 		{
-			// Delete and disable the command text box.
-			this.textBoxConsole.Clear();
-			this.textBoxConsole.Enabled = false;
-			// Change the execute button image.
-			this.buttonCommand.Image = Resources.PlayStop_16;
-			this.buttonCommand.Enabled = true;
-			// Add the command to the text area.
-			this.textAreaConsole.AppendText("{0}@{1}> {2}{3}".FormatWith(this.Info.Username, this.Info.Host, command.CommandText, Environment.NewLine));
+			// Begin the command.
+			this.console.BeginCommand(command.CommandText);
 		}
 
 		/// <summary>
@@ -191,7 +186,7 @@ namespace YtAnalytics.Controls.Testing
 		protected override void OnCommandData(SshCommand command, string data)
 		{
 			// Set the exception message as a result argument.
-			this.textAreaConsole.AppendText(data);
+			this.console.AppendText(data);
 		}
 
 		/// <summary>
@@ -202,22 +197,25 @@ namespace YtAnalytics.Controls.Testing
 		protected override void OnCommandSucceeded(SshCommand command, string result)
 		{
 			// Set the exception message as a result argument.
-			this.textAreaConsole.AppendText("{0}{1}Command succeeded with code {2}.{3}".FormatWith(result, Environment.NewLine, command.ExitStatus, Environment.NewLine));
+			this.console.AppendText("{0}{1}", result, Environment.NewLine);
+			this.console.AppendText("SUCCESS", Color.Lime);
+			this.console.AppendText(" Code: {0}.{1}", command.ExitStatus, Environment.NewLine);
 			// Call the command complete event handler.
-			this.OnCommandComplete();
+			this.console.EndCommand();
 		}
 
 		/// <summary>
 		/// An event handler called when a client command has failed.
 		/// </summary>
 		/// <param name="command">The command.</param>
-		/// <param name="exception">The exception.</param>
-		protected override void OnCommandFailed(SshCommand command, Exception exception)
+		/// <param name="error">The error.</param>
+		protected override void OnCommandFailed(SshCommand command, string error)
 		{
 			// Set the exception message as a result argument.
-			this.textAreaConsole.AppendText("Command failed with code {0}. {1}{2}".FormatWith(command.ExitStatus, exception.Message, Environment.NewLine));
+			this.console.AppendText("FAIL", Color.Red);
+			this.console.AppendText(" Code: {0}. Reason: {1}{2}", command.ExitStatus, error, Environment.NewLine);
 			// Call the command complete event handler.
-			this.OnCommandComplete();
+			this.console.EndCommand();
 		}
 
 		// Private methods.
@@ -460,11 +458,8 @@ namespace YtAnalytics.Controls.Testing
 		/// </summary>
 		private void OnEnableConsole()
 		{
-			// Set the prompt.
-			this.labelConsole.Text = "{0}@{1}>".FormatWith(this.Info.Username, this.Info.Host);
 			this.tabControl.SelectedTab = this.tabPageConsole;
-			this.textBoxConsole.Enabled = true;
-			this.textBoxConsole.Select();
+			this.console.Enable("{0}@{1}>".FormatWith(this.Info.Username, this.Info.Host));
 		}
 
 		/// <summary>
@@ -472,10 +467,7 @@ namespace YtAnalytics.Controls.Testing
 		/// </summary>
 		private void OnDisableConsole()
 		{
-			this.textAreaConsole.Clear();
-			this.textBoxConsole.Clear();
-			this.textBoxConsole.Enabled = false;
-			this.labelConsole.Text = ">";
+			this.console.Disable();
 			this.tabControl.SelectedTab = this.tabPageAuthentication;
 		}
 
@@ -511,32 +503,6 @@ namespace YtAnalytics.Controls.Testing
 		}
 
 		/// <summary>
-		/// An event handler called when the SSH command has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnCommandChanged(object sender, EventArgs e)
-		{
-			// Update the execution button enabled state.
-			this.buttonCommand.Enabled = !string.IsNullOrWhiteSpace(this.textBoxConsole.Text);
-		}
-
-		/// <summary>
-		/// An event handler called when the user enters an SSH command.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnEnterCommand(object sender, KeyEventArgs e)
-		{
-			// Process the command only when the enter key is pressed.
-			if ((e.KeyCode == Keys.Enter) && (!string.IsNullOrWhiteSpace(this.textBoxConsole.Text)))
-			{
-				// Execute the command.
-				this.OnBeginCommand(sender, e);
-			}
-		}
-
-		/// <summary>
 		/// An event handler called when the user clicks on the execute command button.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -561,19 +527,8 @@ namespace YtAnalytics.Controls.Testing
 				this.Commands.Unlock();
 			}
 
-			// Else, begin a new command.
-			this.OnBeginCommand(sender, e);
-		}
-
-		/// <summary>
-		/// An event handler called when executing an SSH command.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnBeginCommand(object sender, EventArgs e)
-		{
-			// Get the command text.
-			string text = this.textBoxConsole.Text;
+			// Else, get the command text.
+			string text = this.console.Command;
 			try
 			{
 				// Begin the command.
@@ -582,24 +537,13 @@ namespace YtAnalytics.Controls.Testing
 			catch (Exception exception)
 			{
 				// Show the error.
-				this.textAreaConsole.AppendText("{0}@{1}> {2}{3}Command failed.{4}".FormatWith(
+				this.console.AppendText("{0}@{1}> {2}{3}Command failed.{4}",
 					this.Info.Username,
 					this.Info.Host,
 					text,
 					Environment.NewLine,
-					exception.Message));
+					exception.Message);
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when an SSH command completes.
-		/// </summary>
-		private void OnCommandComplete()
-		{
-			this.buttonCommand.Image = Resources.PlayStart_16;
-			this.buttonCommand.Enabled = false;
-			this.textBoxConsole.Enabled = true;
-			this.textBoxConsole.Select();
 		}
 	}
 }

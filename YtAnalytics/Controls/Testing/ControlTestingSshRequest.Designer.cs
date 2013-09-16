@@ -50,11 +50,7 @@
 			this.labelUsername = new System.Windows.Forms.Label();
 			this.radioPasswordAuthentication = new System.Windows.Forms.RadioButton();
 			this.tabPageConsole = new System.Windows.Forms.TabPage();
-			this.layoutConsole = new System.Windows.Forms.TableLayoutPanel();
-			this.textBoxConsole = new System.Windows.Forms.TextBox();
-			this.textAreaConsole = new System.Windows.Forms.RichTextBox();
-			this.labelConsole = new System.Windows.Forms.Label();
-			this.buttonCommand = new System.Windows.Forms.Button();
+			this.console = new YtAnalytics.Controls.ControlConsole();
 			this.buttonExport = new System.Windows.Forms.Button();
 			this.buttonImport = new System.Windows.Forms.Button();
 			this.buttonUndo = new System.Windows.Forms.Button();
@@ -63,10 +59,10 @@
 			this.buttonConnect = new System.Windows.Forms.Button();
 			this.buttonDisconnect = new System.Windows.Forms.Button();
 			this.labelServer = new System.Windows.Forms.Label();
+			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.log = new YtAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -75,7 +71,6 @@
 			this.tabControl.SuspendLayout();
 			this.tabPageAuthentication.SuspendLayout();
 			this.tabPageConsole.SuspendLayout();
-			this.layoutConsole.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -247,7 +242,7 @@
 			// 
 			// tabPageConsole
 			// 
-			this.tabPageConsole.Controls.Add(this.layoutConsole);
+			this.tabPageConsole.Controls.Add(this.console);
 			this.tabPageConsole.Location = new System.Drawing.Point(4, 22);
 			this.tabPageConsole.Name = "tabPageConsole";
 			this.tabPageConsole.Size = new System.Drawing.Size(500, 164);
@@ -255,80 +250,14 @@
 			this.tabPageConsole.Text = "Console";
 			this.tabPageConsole.UseVisualStyleBackColor = true;
 			// 
-			// layoutConsole
+			// console
 			// 
-			this.layoutConsole.ColumnCount = 3;
-			this.layoutConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.layoutConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.layoutConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.layoutConsole.Controls.Add(this.textBoxConsole, 1, 1);
-			this.layoutConsole.Controls.Add(this.textAreaConsole, 0, 0);
-			this.layoutConsole.Controls.Add(this.labelConsole, 0, 1);
-			this.layoutConsole.Controls.Add(this.buttonCommand, 2, 1);
-			this.layoutConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.layoutConsole.Location = new System.Drawing.Point(0, 0);
-			this.layoutConsole.Name = "layoutConsole";
-			this.layoutConsole.RowCount = 2;
-			this.layoutConsole.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.layoutConsole.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.layoutConsole.Size = new System.Drawing.Size(500, 164);
-			this.layoutConsole.TabIndex = 2;
-			// 
-			// textBoxConsole
-			// 
-			this.textBoxConsole.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.textBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxConsole.Enabled = false;
-			this.textBoxConsole.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxConsole.Location = new System.Drawing.Point(17, 146);
-			this.textBoxConsole.Name = "textBoxConsole";
-			this.textBoxConsole.Size = new System.Drawing.Size(461, 15);
-			this.textBoxConsole.TabIndex = 0;
-			this.textBoxConsole.TextChanged += new System.EventHandler(this.OnCommandChanged);
-			this.textBoxConsole.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterCommand);
-			// 
-			// textAreaConsole
-			// 
-			this.textAreaConsole.BackColor = System.Drawing.Color.Black;
-			this.textAreaConsole.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.layoutConsole.SetColumnSpan(this.textAreaConsole, 3);
-			this.textAreaConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textAreaConsole.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textAreaConsole.ForeColor = System.Drawing.Color.White;
-			this.textAreaConsole.Location = new System.Drawing.Point(0, 0);
-			this.textAreaConsole.Margin = new System.Windows.Forms.Padding(0);
-			this.textAreaConsole.Name = "textAreaConsole";
-			this.textAreaConsole.ReadOnly = true;
-			this.textAreaConsole.Size = new System.Drawing.Size(500, 143);
-			this.textAreaConsole.TabIndex = 1;
-			this.textAreaConsole.Text = "";
-			this.textAreaConsole.WordWrap = false;
-			// 
-			// labelConsole
-			// 
-			this.labelConsole.AutoSize = true;
-			this.labelConsole.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labelConsole.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelConsole.Location = new System.Drawing.Point(0, 143);
-			this.labelConsole.Margin = new System.Windows.Forms.Padding(0);
-			this.labelConsole.Name = "labelConsole";
-			this.labelConsole.Size = new System.Drawing.Size(14, 21);
-			this.labelConsole.TabIndex = 2;
-			this.labelConsole.Text = ">";
-			this.labelConsole.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// buttonCommand
-			// 
-			this.buttonCommand.Enabled = false;
-			this.buttonCommand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonCommand.Image = global::YtAnalytics.Resources.PlayStart_16;
-			this.buttonCommand.Location = new System.Drawing.Point(481, 144);
-			this.buttonCommand.Margin = new System.Windows.Forms.Padding(0, 1, 0, 0);
-			this.buttonCommand.Name = "buttonCommand";
-			this.buttonCommand.Size = new System.Drawing.Size(19, 19);
-			this.buttonCommand.TabIndex = 3;
-			this.buttonCommand.UseVisualStyleBackColor = true;
-			this.buttonCommand.Click += new System.EventHandler(this.OnExecuteCommand);
+			this.console.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.console.Location = new System.Drawing.Point(0, 0);
+			this.console.Name = "console";
+			this.console.Size = new System.Drawing.Size(500, 164);
+			this.console.TabIndex = 0;
+			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
 			// 
 			// buttonExport
 			// 
@@ -422,6 +351,14 @@
 			this.labelServer.TabIndex = 0;
 			this.labelServer.Text = "&Server:";
 			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.TabIndex = 0;
+			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
@@ -436,14 +373,6 @@
 			// 
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
-			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
-			this.log.TabIndex = 0;
 			// 
 			// ControlTestingSshRequest
 			// 
@@ -464,8 +393,6 @@
 			this.tabPageAuthentication.ResumeLayout(false);
 			this.tabPageAuthentication.PerformLayout();
 			this.tabPageConsole.ResumeLayout(false);
-			this.layoutConsole.ResumeLayout(false);
-			this.layoutConsole.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -498,11 +425,7 @@
 		private DotNetApi.Windows.Controls.SecureTextBox secureTextBoxPassword;
 		private System.Windows.Forms.Button buttonLoadKey;
 		private System.Windows.Forms.TabPage tabPageConsole;
-		private System.Windows.Forms.RichTextBox textAreaConsole;
-		private System.Windows.Forms.TextBox textBoxConsole;
-		private System.Windows.Forms.TableLayoutPanel layoutConsole;
-		private System.Windows.Forms.Label labelConsole;
-		private System.Windows.Forms.Button buttonCommand;
+		private ControlConsole console;
 
 	}
 }

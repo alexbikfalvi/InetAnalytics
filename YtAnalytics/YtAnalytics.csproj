@@ -55,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlConsole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlConsole.Designer.cs">
+      <DependentUpon>ControlConsole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Database\ControlDatabase.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -650,6 +656,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\ControlConsole.resx">
+      <DependentUpon>ControlConsole.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </EmbeddedResource>
