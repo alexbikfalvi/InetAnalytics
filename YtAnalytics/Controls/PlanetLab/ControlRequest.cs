@@ -103,7 +103,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="password">The password.</param>
 		/// <param name="parameter">The request parameter.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		protected void BeginRequest(PlRequest request, string username, SecureString password, object parameter)
+		protected void BeginRequest(PlRequest request, string username, SecureString password, object parameter = null)
 		{
 			// Set the pending values to null.
 			this.pendingRequest = null;
@@ -140,13 +140,26 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.OnBeginRequest,
 					new object[] { MessageStatus.Busy, "Please wait..." });
 
-				// Begin the request.
-				this.result = request.Begin(
-					username,
-					password,
-					parameter,
-					this.OnCallback
-					);
+				// If the parameter is not null.
+				if (null != parameter)
+				{
+					// Begin the request with a parameter.
+					this.result = request.Begin(
+						username,
+						password,
+						parameter,
+						this.OnCallback
+						);
+				}
+				else
+				{
+					// Begin the request without a parameter.
+					this.result = request.Begin(
+						username,
+						password,
+						this.OnCallback
+						);
+				}
 			}
 			catch (Exception exception)
 			{

@@ -127,7 +127,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new nodes request for the specified node.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlNodeGroup.GetFilter(PlNodeGroup.Fields.NodeGroupId, id));
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlNodeGroup.GetFilter(PlNodeGroup.Fields.NodeGroupId, id));
 			}
 			catch
 			{

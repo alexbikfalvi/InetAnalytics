@@ -128,7 +128,7 @@ namespace YtAnalytics.Controls.Log
 				this.listViewParameters.Items.Clear();
 				int index = 0;
 				foreach (object param in newEvent.Paremeters)
-					this.listViewParameters.Items.Add(new ListViewItem(new string[] { (index++).ToString(), param.ToString() }));
+					this.listViewParameters.Items.Add(new ListViewItem(new string[] { (index++).ToString(), param.ToExtendedString() }));
 				if (!this.tabControl.TabPages.Contains(this.tabPageParameters)) this.tabControl.TabPages.Add(this.tabPageParameters);
 			}
 			else if (this.tabControl.TabPages.Contains(this.tabPageParameters)) this.tabControl.TabPages.Remove(this.tabPageParameters);
@@ -163,7 +163,7 @@ namespace YtAnalytics.Controls.Log
 					Environment.NewLine);
 			}
 
-			if (this.labelError.Text != string.Empty)
+			if (!string.IsNullOrEmpty(this.labelError.Text))
 			{
 				if (!this.tabControl.TabPages.Contains(this.tabPageError)) this.tabControl.TabPages.Add(this.tabPageError);
 			}

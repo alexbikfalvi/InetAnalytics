@@ -28,6 +28,8 @@ namespace YtAnalytics.Controls
 	/// </summary>
 	public sealed partial class ControlConsole : UserControl
 	{
+		private bool command = false;
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -58,16 +60,20 @@ namespace YtAnalytics.Controls
 		/// An event called when presses the Enter key after typing a command or clicks the execute button.
 		/// </summary>
 		public event EventHandler Execute;
+		/// <summary>
+		/// An event called when the user cancels the current command.
+		/// </summary>
+		public event EventHandler Cancel;
 
 		// Public methods.
 
 		/// <summary>
-		/// Appends the specified text to the console text area.
+		/// Appends the specified text to the console text area using the default color.
 		/// </summary>
 		/// <param name="text">The text.</param>
 		public void AppendText(string text)
 		{
-			this.AppendText(text, this.ForeColor);
+			this.AppendText(text, this.textArea.ForeColor);
 		}
 
 		/// <summary>
@@ -90,13 +96,13 @@ namespace YtAnalytics.Controls
 		}
 
 		/// <summary>
-		/// Appends the specified formatted text to the console text area.
+		/// Appends the specified formatted text to the console text area using the default color.
 		/// </summary>
 		/// <param name="format">The text format.</param>
 		/// <param name="args">The arguments.</param>
 		public void AppendText(string format, params object[] args)
 		{
-			this.AppendText(format.FormatWith(args), this.ForeColor);
+			this.AppendText(format.FormatWith(args), this.textArea.ForeColor);
 		}
 
 		/// <summary>
@@ -109,6 +115,7 @@ namespace YtAnalytics.Controls
 			this.label.Text = prompt;
 			this.textBox.Enabled = true;
 			this.textBox.Select();
+			this.command = false;
 		}
 
 		/// <summary>
@@ -120,6 +127,7 @@ namespace YtAnalytics.Controls
 			this.textBox.Clear();
 			this.textBox.Enabled = false;
 			this.label.Text = ">";
+			this.command = false;
 		}
 
 		/// <summary>
@@ -128,14 +136,17 @@ namespace YtAnalytics.Controls
 		/// <param name="command">The command.</param>
 		public void BeginCommand(string command)
 		{
-			// Delete and disable the command text box.
-			this.textBox.Clear();
-			this.textBox.Enabled = false;
+			// Set the begin command to true.
+			this.command = true;
 			// Change the execute button image.
 			this.button.Image = Resources.PlayStop_16;
 			this.button.Enabled = true;
+			// Delete and disable the command text box.
+			this.textBox.Clear();
+			this.textBox.Enabled = false;
+			this.textArea.Select();
 			// Add the command to the text area.
-			this.AppendText("{0}> {1}{2}", this.label.Text, command, Environment.NewLine);
+			this.AppendText("{0} {1}{2}", this.label.Text, command, Environment.NewLine);
 		}
 
 		/// <summary>
@@ -147,6 +158,7 @@ namespace YtAnalytics.Controls
 			this.button.Enabled = false;
 			this.textBox.Enabled = true;
 			this.textBox.Select();
+			this.command = false;
 		}
 
 		// Private methods.
@@ -158,8 +170,17 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnClick(object sender, EventArgs e)
 		{
-			// Raise the event.
-			if (null != this.Execute) this.Execute(sender, e);
+			// If the console processes a command.
+			if (this.command)
+			{
+				// Raise the cancel event.
+				if (null != this.Cancel) this.Cancel(sender, e);
+			}
+			else
+			{
+				// Raise the execute event.
+				if (null != this.Execute) this.Execute(sender, e);
+			}
 		}
 
 		/// <summary>
@@ -169,8 +190,12 @@ namespace YtAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnCommandChanged(object sender, EventArgs e)
 		{
-			// Update the button enabled state.
-			this.button.Enabled = !string.IsNullOrWhiteSpace(this.textBox.Text);
+			// If there is no executing command.
+			if (!this.command)
+			{
+				// Update the button enabled state.
+				this.button.Enabled = !string.IsNullOrWhiteSpace(this.textBox.Text);
+			}
 		}
 
 		/// <summary>
@@ -178,13 +203,43 @@ namespace YtAnalytics.Controls
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
+		private void OnCommandKeyDown(object sender, KeyEventArgs e)
 		{
 			// Process the command only when the enter key is pressed.
-			if ((e.KeyCode == Keys.Enter) && (!string.IsNullOrWhiteSpace(this.textBox.Text)))
+			if ((e.KeyCode == Keys.Enter) && (!string.IsNullOrWhiteSpace(this.textBox.Text)) && (!this.command))
 			{
 				// Execute the command.
 				if (null != this.Execute) this.Execute(sender, e);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the users presses a key in the console.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnConsoleKeyDown(object sender, KeyEventArgs e)
+		{
+			// If the Control+C keys were pressed.
+			if (e.Control && (e.KeyCode == Keys.C) && this.command)
+			{
+				// Raise the cancel event.
+				if (null != this.Cancel) this.Cancel(sender, e);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user focuses on the console text area.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnConsoleEnter(object sender, EventArgs e)
+		{
+			// If the console is not during a command.
+			if (!this.command)
+			{
+				// Select the text box.
+				this.textBox.Select();
 			}
 		}
 	}

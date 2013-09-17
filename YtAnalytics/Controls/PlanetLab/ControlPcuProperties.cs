@@ -133,7 +133,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new pcus request for the specified pcu.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlPcu.GetFilter(PlPcu.Fields.PcuId, id));
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlPcu.GetFilter(PlPcu.Fields.PcuId, id));
 			}
 			catch
 			{

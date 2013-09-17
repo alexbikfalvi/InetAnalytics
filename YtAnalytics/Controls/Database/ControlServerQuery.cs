@@ -410,7 +410,7 @@ namespace YtAnalytics.Controls.Database
 		private void OnQueryChanged(object sender, EventArgs e)
 		{
 			// Set the enabled state of the start button.
-			this.buttonStart.Enabled = this.codeBox.Text != string.Empty;
+			this.buttonStart.Enabled = !string.IsNullOrWhiteSpace(this.codeBox.Text);
 		}
 
 		/// <summary>

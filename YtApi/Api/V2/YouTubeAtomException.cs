@@ -51,7 +51,7 @@ namespace YtApi.Api.V2
 			: base(info, context)
 		{
 			// Validate the arguments.
-			info.ValidateNotNull("info");
+			if (null == info) throw new ArgumentNullException("info");
 			// Set the fields.
 			this.atom = (YtApi.Api.V2.Atom.Atom)info.GetValue("atom", typeof(YtApi.Api.V2.Atom.Atom));
 		}
@@ -73,7 +73,7 @@ namespace YtApi.Api.V2
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			// Validate thea arguments.
-			info.ValidateNotNull("info");
+			if (null == info) throw new ArgumentNullException("info");
 			// Call the base class method.
 			base.GetObjectData(info, context);
 			// Add the fields.

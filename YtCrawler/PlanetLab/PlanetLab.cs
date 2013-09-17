@@ -29,6 +29,7 @@ namespace YtCrawler.PlanetLab
 		private CrawlerConfig config;
 
 		private PlList<PlSite> sites = new PlList<PlSite>();
+		private PlList<PlSlice> slices = new PlList<PlSlice>();
 
 		/// <summary>
 		/// Creates anew PlanetLab configuration with the specified configuration.
@@ -41,8 +42,8 @@ namespace YtCrawler.PlanetLab
 
 			try
 			{
-				// Load the PlanetLab configuration.
-				this.Sites.LoadFromFile(this.config.PlanetLabSitesFileName);
+				// Load the PlanetLab sites configuration.
+				this.sites.LoadFromFile(this.config.PlanetLabConfig.SitesFileName);
 			}
 			catch { }
 		}
@@ -50,9 +51,13 @@ namespace YtCrawler.PlanetLab
 		// Public properties.
 
 		/// <summary>
-		/// Gets the collection of Planet-Lab sites.
+		/// Gets the collection of PlanetLab sites.
 		/// </summary>
 		public PlList<PlSite> Sites { get { return this.sites; } }
+		/// <summary>
+		/// Gets the collection of PlanetLab slices.
+		/// </summary>
+		public PlList<PlSlice> Slices { get { return this.slices; } }
 
 		// Public methods.
 
@@ -64,7 +69,7 @@ namespace YtCrawler.PlanetLab
 			try
 			{
 				// Save the PlanetLab configuration.
-				this.Sites.SaveToFile(this.config.PlanetLabSitesFileName);
+				this.Sites.SaveToFile(this.config.PlanetLabConfig.SitesFileName);
 			}
 			catch { }
 			// Suppress the finalizer.

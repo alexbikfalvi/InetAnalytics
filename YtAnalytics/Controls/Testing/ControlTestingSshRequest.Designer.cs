@@ -252,12 +252,14 @@
 			// 
 			// console
 			// 
+			this.console.ButtonImage = ((System.Drawing.Image)(resources.GetObject("console.ButtonImage")));
 			this.console.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.console.Location = new System.Drawing.Point(0, 0);
 			this.console.Name = "console";
 			this.console.Size = new System.Drawing.Size(500, 164);
 			this.console.TabIndex = 0;
 			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
+			this.console.Cancel += new System.EventHandler(this.OnCancelCommand);
 			// 
 			// buttonExport
 			// 

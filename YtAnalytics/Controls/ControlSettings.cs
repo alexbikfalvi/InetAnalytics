@@ -61,7 +61,7 @@ namespace YtAnalytics.Controls
 		private void LoadSettings()
 		{
 			this.numericMessageCloseDelay.Value = (decimal)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds;
-			this.textBoxYtUserName.Text = this.crawler.Config.YouTubeUserName;
+			this.textBoxYtUserName.Text = this.crawler.Config.YouTubeUsername;
 			this.textBoxYtPassword.SecureText = this.crawler.Config.YouTubePassword;
 			this.textBoxYt2Key.SecureText = this.crawler.Config.YouTubeV2ApiKey;
 			this.textBoxYtCategories.Text = this.crawler.Config.YouTubeCategoriesFileName;
@@ -77,7 +77,7 @@ namespace YtAnalytics.Controls
 		private void SaveSettings()
 		{
 			this.crawler.Config.ConsoleMessageCloseDelay = TimeSpan.FromMilliseconds((double)this.numericMessageCloseDelay.Value);
-			this.crawler.Config.YouTubeUserName = this.textBoxYtUserName.Text;
+			this.crawler.Config.YouTubeUsername = this.textBoxYtUserName.Text;
 			this.crawler.Config.YouTubePassword = this.textBoxYtPassword.SecureText;
 			this.crawler.Config.YouTubeV2ApiKey = this.textBoxYt2Key.SecureText;
 			this.crawler.Config.YouTubeCategoriesFileName = this.textBoxYtCategories.Text;

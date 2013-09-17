@@ -40,7 +40,7 @@ namespace YtAnalytics.Controls.Testing
 	/// </summary>
 	public sealed partial class ControlTestingSshRequest : ControlSsh
 	{
-		private static string logSource = "Testing Secure Shell";
+		private static string logSource = "Secure Shell";
 
 		// Private variables.
 
@@ -90,58 +90,104 @@ namespace YtAnalytics.Controls.Testing
 
 		// Protected methods.
 
-		protected override void OnConnecting()
+		/// <summary>
+		/// An event handler called when connecting to an SSH server.
+		/// </summary>
+		/// <param name="info">The connection info.</param>
+		protected override void OnConnecting(ConnectionInfo info)
 		{
 			// Change the controls enabled state.
 			this.OnDisableControls();
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send("Connecting to the SSH server \'{0}\'".FormatWith(this.Info.Host), Resources.ServerBusy_16);
+			this.status.Send("Connecting to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			// Log
+			this.log.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlTestingSshRequest.logSource,
+				"Connecting to the SSH server \'{0}\'.",
+				new object[] { info.Host }));
 		}
 
-		protected override void OnConnectSucceeded()
+		/// <summary>
+		/// An event handler called when connecting to an SSH server succeeded.
+		/// </summary>
+		/// <param name="info">The connection info.</param>
+		protected override void OnConnectSucceeded(ConnectionInfo info)
 		{
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send("Connected to the SSH server \'{0}\'".FormatWith(this.Info.Host), Resources.ServerSuccess_16);
+			this.status.Send("Connected to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerSuccess_16);
 			// Enable the console.
 			this.OnEnableConsole();
+			// Log
+			this.log.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Success,
+				ControlTestingSshRequest.logSource,
+				"Connected to the SSH server \'{0}\'.",
+				new object[] { info.Host }));
 		}
 
-		protected override void OnConnectFailed(Exception exception)
+		/// <summary>
+		/// An event handler called when connecting to an SSH server failed.
+		/// </summary>
+		/// <param name="info">The connection info.</param>
+		/// <param name="exception">The exception.</param>
+		protected override void OnConnectFailed(ConnectionInfo info, Exception exception)
 		{
 			// Change the controls enabled state.
 			this.OnEnableControls();
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send("Connecting to the SSH server \'{0}\' failed".FormatWith(this.Info.Host), Resources.ServerError_16);
+			this.status.Send("Connecting to the SSH server \'{0}\' failed".FormatWith(info.Host), Resources.ServerError_16);
+			// Log
+			this.log.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Error,
+				ControlTestingSshRequest.logSource,
+				"Connecting to the SSH server \'{0}\' failed.",
+				new object[] { info.Host }));
 		}
 
 		/// <summary>
 		/// An event handler called when disconnecting from an SSH server.
 		/// </summary>
-		protected override void OnDisconnecting()
+		/// <param name="info">The connection info.</param>
+		protected override void OnDisconnecting(ConnectionInfo info)
 		{
-			// Call the base class method.
-			base.OnDisconnecting();
-
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = false;
+			// Update the status bar.
+			this.status.Send("Disconnecting from the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			// Log
+			this.log.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlTestingSshRequest.logSource,
+				"Disconnecting from the SSH server \'{0}\'.",
+				new object[] { info.Host }));
 		}
 
 		/// <summary>
 		/// An event handler called when disconnected from an SSH server.
 		/// </summary>
-		protected override void OnDisconnected()
+		/// <param name="info">The connection info.</param>
+		protected override void OnDisconnected(ConnectionInfo info)
 		{
-			// Call the base class method.
-			base.OnDisconnected();
-			
 			// Update the status bar.
 			this.status.Send("Disconnected.", Resources.Server_16);
+			// Log
+			this.log.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Success,
+				ControlTestingSshRequest.logSource,
+				"Disconnected from the SSH server \'{0}\'.",
+				new object[] { info.Host }));
 
 			// Change the controls enabled state.
 			this.OnEnableControls();
@@ -153,19 +199,35 @@ namespace YtAnalytics.Controls.Testing
 		}
 
 		/// <summary>
-		/// An event handler called when an error occurred on an SSH connection.
+		/// An event handler called when an error occurres on an SSH server connection.
 		/// </summary>
-		/// <param name="exception">The exception.</param>
-		protected override void OnErrorOccurred(Exception exception)
+		/// <param name="info">The connection info.</param>
+		/// <param name="exception">The error exception.</param>
+		protected override void OnErrorOccurred(ConnectionInfo info, Exception exception)
 		{
+			// Log
+			this.log.Add(this.crawler.Log.Add(
+				LogEventLevel.Important,
+				LogEventType.Error,
+				ControlTestingSshRequest.logSource,
+				"The client connected to the SSH server \'{0}\' received an error. {1}",
+				new object[] { info.Host, exception.Message }));
 		}
 
 		/// <summary>
-		/// An event handler called when receiving the key from the remote host on a given SSH connection.
+		/// An event handler called when receiving a key from the remote host.
 		/// </summary>
-		/// <param name="args">The arguuments.</param>
-		protected override void OnHostKeyReceived(HostKeyEventArgs args)
+		/// <param name="info">The connection info.</param>
+		/// <param name="args">The event arguments.</param>
+		protected override void OnHostKeyReceived(ConnectionInfo info, HostKeyEventArgs args)
 		{
+			// Log
+			this.log.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlTestingSshRequest.logSource,
+				"The client connected to the SSH server \'{0}\' received key \'{1}\' of {2} bits. Key: {3}. Fingerprint: {4}.",
+				new object[] { info.Host, args.HostKeyName, args.KeyLength, args.HostKey, args.FingerPrint }));
 		}
 
 		/// <summary>
@@ -186,7 +248,7 @@ namespace YtAnalytics.Controls.Testing
 		protected override void OnCommandData(SshCommand command, string data)
 		{
 			// Set the exception message as a result argument.
-			this.console.AppendText(data);
+			this.console.AppendText(data, Color.LightGray);
 		}
 
 		/// <summary>
@@ -197,7 +259,7 @@ namespace YtAnalytics.Controls.Testing
 		protected override void OnCommandSucceeded(SshCommand command, string result)
 		{
 			// Set the exception message as a result argument.
-			this.console.AppendText("{0}{1}", result, Environment.NewLine);
+			this.console.AppendText(result, Color.LightGray);
 			this.console.AppendText("SUCCESS", Color.Lime);
 			this.console.AppendText(" Code: {0}.{1}", command.ExitStatus, Environment.NewLine);
 			// Call the command complete event handler.
@@ -212,8 +274,13 @@ namespace YtAnalytics.Controls.Testing
 		protected override void OnCommandFailed(SshCommand command, string error)
 		{
 			// Set the exception message as a result argument.
+			if (!string.IsNullOrWhiteSpace(error))
+			{
+				this.console.AppendText(error, Color.LightGray);
+			} 
 			this.console.AppendText("FAIL", Color.Red);
-			this.console.AppendText(" Code: {0}. Reason: {1}{2}", command.ExitStatus, error, Environment.NewLine);
+			this.console.AppendText(" Code: {0}.", command.ExitStatus);
+			this.console.AppendText(Environment.NewLine);
 			// Call the command complete event handler.
 			this.console.EndCommand();
 		}
@@ -513,14 +580,8 @@ namespace YtAnalytics.Controls.Testing
 			this.Commands.Lock();
 			try
 			{
-				// If the number of executing commands is greater than zero.
-				if (this.Commands.Count > 0)
-				{
-					// Cancel the first command.
-					this.Commands.First().CancelAsync();
-					// Return.
-					return;
-				}
+				// If the number of executing commands is greater than zero, do nothing.
+				if (this.Commands.Count > 0) return;
 			}
 			finally
 			{
@@ -543,6 +604,30 @@ namespace YtAnalytics.Controls.Testing
 					text,
 					Environment.NewLine,
 					exception.Message);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user cancels a command.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCancelCommand(object sender, EventArgs e)
+		{
+			// Lock the list of commands.
+			this.Commands.Lock();
+			try
+			{
+				// If the number of executing commands is greater than zero.
+				if (this.Commands.Count > 0)
+				{
+					// Cancel the first command.
+					this.Commands.First().CancelAsync();
+				}
+			}
+			finally
+			{
+				this.Commands.Unlock();
 			}
 		}
 	}

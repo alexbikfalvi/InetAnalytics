@@ -35,9 +35,9 @@ using YtCrawler.Status;
 namespace YtAnalytics.Controls.PlanetLab
 {
 	/// <summary>
-	/// A control class for PlanetLab sites.
+	/// A control class for PlanetLab slices.
 	/// </summary>
-	public partial class ControlSites : NotificationControl
+	public partial class ControlSlices : ControlRequest
 	{
 		// Private variables.
 
@@ -57,7 +57,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlSites()
+		public ControlSlices()
 		{
 			// Initialize component.
 			InitializeComponent();
@@ -65,9 +65,6 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Load the map.
-			this.mapControl.LoadMap("Ne110mAdmin0Countries");
 
 			// Initialize the delegates.
 			this.delegateUpdateSites = new Action(this.OnUpdateSites);
@@ -111,8 +108,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Begin the request.
 				this.request.Begin(
-					CrawlerStatic.PlanetLabUsername,
-					CrawlerStatic.PlanetLabPassword,
+					this.crawler.Config.PlanetLabConfig.Username,
+					this.crawler.Config.PlanetLabConfig.Password,
 					this.OnCallback);
 			}
 			catch (Exception exception)
@@ -211,105 +208,105 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnUpdateSites()
 		{
-			// Execute this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateUpdateSites);
-				return;
-			}
+			//// Execute this method on the UI thread.
+			//if (this.InvokeRequired)
+			//{
+			//	this.Invoke(this.delegateUpdateSites);
+			//	return;
+			//}
 
-			// Clear the list view.
-			this.listViewSites.Items.Clear();
-			// Clear the map markers.
-			this.mapControl.Markers.Clear();
+			//// Clear the list view.
+			//this.listViewSites.Items.Clear();
+			//// Clear the map markers.
+			//this.mapControl.Markers.Clear();
 
-			// Update the filter.
-			this.filter = this.textBoxFilter.Text.Trim();
-			// The number of displayed sites.
-			int count = 0;
+			//// Update the filter.
+			//this.filter = this.textBoxFilter.Text;
+			//// The number of displayed sites.
+			//int count = 0;
 
-			// Add the list view items.
-			foreach (PlSite site in this.crawler.PlanetLab.Sites)
-			{
-				// If the filter is not null.
-				if (null != this.filter)
-				{
-					// If the site name does not match the filter, continue.
-					if (site.Name == null) continue;
-					if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
-				}
+			//// Add the list view items.
+			//foreach (PlSite site in this.crawler.PlanetLab.Sites)
+			//{
+			//	// If the filter is not null.
+			//	if (null != this.filter)
+			//	{
+			//		// If the site name does not match the filter, continue.
+			//		if (site.Name == null) continue;
+			//		if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
+			//	}
 
-				// Increment the number of displayed sites.
-				count++;
+			//	// Increment the number of displayed sites.
+			//	count++;
 
-				// Create a new geo marker for this site.
-				MapMarker marker = null;
-				// If the site has coordinates.
-				if (site.Latitude.HasValue && site.Longitude.HasValue)
-				{
-					// Create a circular marker.
-					marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-					marker.Name = site.Name;
-					// Add the marker to the map.
-					this.mapControl.Markers.Add(marker);
-				}
+			//	// Create a new geo marker for this site.
+			//	MapMarker marker = null;
+			//	// If the site has coordinates.
+			//	if (site.Latitude.HasValue && site.Longitude.HasValue)
+			//	{
+			//		// Create a circular marker.
+			//		marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
+			//		marker.Name = site.Name;
+			//		// Add the marker to the map.
+			//		this.mapControl.Markers.Add(marker);
+			//	}
 				
-				// Create the list view item.
-				ListViewItem item = new ListViewItem(new string[] {
-					site.SiteId.ToString(),
-					site.Name,
-					site.Url,
-					site.DateCreated.ToString(),
-					site.LastUpdated.ToString(),
-					site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
-					site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
-				}, 0);
-				item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
-				this.listViewSites.Items.Add(item);
+			//	// Create the list view item.
+			//	ListViewItem item = new ListViewItem(new string[] {
+			//		site.SiteId.ToString(),
+			//		site.Name,
+			//		site.Url,
+			//		site.DateCreated.ToString(),
+			//		site.LastUpdated.ToString(),
+			//		site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
+			//		site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
+			//	}, 0);
+			//	item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
+			//	this.listViewSites.Items.Add(item);
 
-				if (null != marker)
-				{
-					marker.Tag = item;
-				}
-			}
+			//	if (null != marker)
+			//	{
+			//		marker.Tag = item;
+			//	}
+			//}
 
-			// Update the label.
-			this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.crawler.PlanetLab.Sites.Count), Resources.GlobeLab_16);
+			//// Update the label.
+			//this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.crawler.PlanetLab.Sites.Count), Resources.GlobeLab_16);
 		}
 
-		/// <summary>
-		/// An event handler called when the site selection has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSelectionChanged(object sender, EventArgs e)
-		{
-			// If there exists an emphasized marker, de-emphasize it.
-			if (this.marker != null)
-			{
-				this.marker.Emphasized = false;
-				this.marker = null;
-			}
-			// If no site is selected.
-			if (this.listViewSites.SelectedItems.Count == 0)
-			{
-				// Change the properties button enabled state.
-				this.buttonProperties.Enabled = false;
-			}
-			else
-			{
-				// Change the properties button enabled state.
-				this.buttonProperties.Enabled = true;
-				// Get the site-marker for this item.
-				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
-				// If the marker is not null, emphasize the marker.
-				if (tag.Value != null)
-				{
-					this.marker = tag.Value;
-					this.marker.Emphasized = true;
-				}
-			}
-		}
+		///// <summary>
+		///// An event handler called when the site selection has changed.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
+		//private void OnSelectionChanged(object sender, EventArgs e)
+		//{
+		//	// If there exists an emphasized marker, de-emphasize it.
+		//	if (this.marker != null)
+		//	{
+		//		this.marker.Emphasized = false;
+		//		this.marker = null;
+		//	}
+		//	// If no site is selected.
+		//	if (this.listViewSites.SelectedItems.Count == 0)
+		//	{
+		//		// Change the properties button enabled state.
+		//		this.buttonProperties.Enabled = false;
+		//	}
+		//	else
+		//	{
+		//		// Change the properties button enabled state.
+		//		this.buttonProperties.Enabled = true;
+		//		// Get the site-marker for this item.
+		//		KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+		//		// If the marker is not null, emphasize the marker.
+		//		if (tag.Value != null)
+		//		{
+		//			this.marker = tag.Value;
+		//			this.marker.Emphasized = true;
+		//		}
+		//	}
+		//}
 
 		/// <summary>
 		/// An event handler called when the user selects to view the site properties.
@@ -318,74 +315,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnProperties(object sender, EventArgs e)
 		{
-			// If there is no selected site item, do nothing.
-			if (this.listViewSites.SelectedItems.Count == 0) return;
-	
-			// Get the site-marker for this item.
-			KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+			//// If there is no selected site item, do nothing.
+			//if (this.listViewSites.SelectedItems.Count == 0) return;
 
-			// Show the site properties.
-			this.formSiteProperties.ShowDialog(this, "Site", tag.Key);
-		}
+			//// Get the site-marker for this item.
+			//KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 
-		/// <summary>
-		/// An event handler called when the filter text has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnFilterTextChanged(object sender, EventArgs e)
-		{
-			// If the filter has changed.
-			if ((this.filter != this.textBoxFilter.Text.Trim()) && (!string.IsNullOrWhiteSpace(this.textBoxFilter.Text)))
-			{
-				// Update the clear button state.
-				this.buttonClear.Enabled = !string.IsNullOrWhiteSpace(this.textBoxFilter.Text);
-				// Update the sites.
-				this.OnUpdateSites();
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the filter is cleared.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnFilterClear(object sender, EventArgs e)
-		{
-			this.textBoxFilter.Text = string.Empty;
-		}
-
-		/// <summary>
-		/// An event handler called when a map marker is clicked.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnMapMarkerClick(object sender, EventArgs e)
-		{
-			// If the highlighted map marker is null, do nothing.
-			if (null == this.mapControl.HighlightedMarker) return;
-			// Get the marker tag as a list view item.
-			ListViewItem item = this.mapControl.HighlightedMarker.Tag as ListViewItem;
-			// If the list view item is null, do nothing.
-			if (null == item) return;
-			// Clear the current selection.
-			this.listViewSites.SelectedItems.Clear();
-			// Select the corresponding item.
-			item.Selected = true;
-			item.EnsureVisible();
-		}
-
-		/// <summary>
-		/// An event handler called when a map marker is double-clicked.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnMapMarkerDoubleClick(object sender, EventArgs e)
-		{
-			// Call the click event handler.
-			this.OnMapMarkerClick(sender, e);
-			// Call the properties event handler.
-			this.OnProperties(sender, e);
+			//// Show the site properties.
+			//this.formSiteProperties.ShowDialog(this, "Site", tag.Key);
 		}
 	}
 }

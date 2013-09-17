@@ -167,6 +167,8 @@ namespace YtCrawler
 				this.spiders.Dispose();
 				// Close the PlanetLab.
 				this.planetLab.Dispose();
+				// Close the configuration.
+				this.config.Dispose();
 			}
 		}
 	}

@@ -136,7 +136,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new nodes request for the specified slice.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlSlice.GetFilter(PlSlice.Fields.SliceId, id));
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlSlice.GetFilter(PlSlice.Fields.SliceId, id));
 			}
 			catch
 			{

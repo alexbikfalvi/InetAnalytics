@@ -79,6 +79,7 @@ namespace YtAnalytics.Forms
 
 		private TreeNode treeNodePlanetLab;
 		private TreeNode treeNodePlanetLabSites;
+		private TreeNode treeNodePlanetLabSlices;
 
 		private TreeNode treeNodeTestingWebRequest;
 		private TreeNode treeNodeTestingSshRequest;
@@ -260,11 +261,15 @@ namespace YtAnalytics.Forms
 			this.treeNodePlanetLabSites = new TreeNode("Sites",
 				this.imageList.Images.IndexOfKey("FolderClosedGlobe"),
 				this.imageList.Images.IndexOfKey("FolderOpenGlobe"));
+			this.treeNodePlanetLabSlices = new TreeNode("Slices",
+				this.imageList.Images.IndexOfKey("FolderClosedGlobe"),
+				this.imageList.Images.IndexOfKey("FolderOpenGlobe"));
 			this.treeNodePlanetLab = new TreeNode("PlanetLab",
 				this.imageList.Images.IndexOfKey("ServersGlobe"),
 				this.imageList.Images.IndexOfKey("ServersGlobe"),
 				new TreeNode[] {
-					this.treeNodePlanetLabSites
+					this.treeNodePlanetLabSites,
+					this.treeNodePlanetLabSlices
 				});
 
 			this.treeNodeTestingWebRequest = new TreeNode("Web request",

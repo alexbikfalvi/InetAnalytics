@@ -105,9 +105,9 @@ namespace YtAnalytics.Forms.Comments
 		private void OnInputChanged(object sender, EventArgs e)
 		{
 			this.buttonAdd.Enabled =
-				(this.control.Item != string.Empty) &&
-				(this.control.User != string.Empty) &&
-				(this.control.Text != string.Empty);
+				!string.IsNullOrWhiteSpace(this.control.Item) &&
+				!string.IsNullOrWhiteSpace(this.control.User) &&
+				!string.IsNullOrWhiteSpace(this.control.Text);
 		}
 	}
 }

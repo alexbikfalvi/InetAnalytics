@@ -66,7 +66,7 @@
 			this.textBox.Size = new System.Drawing.Size(561, 15);
 			this.textBox.TabIndex = 0;
 			this.textBox.TextChanged += new System.EventHandler(this.OnCommandChanged);
-			this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
+			this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnCommandKeyDown);
 			// 
 			// textArea
 			// 
@@ -84,6 +84,8 @@
 			this.textArea.TabIndex = 1;
 			this.textArea.Text = "";
 			this.textArea.WordWrap = false;
+			this.textArea.Enter += new System.EventHandler(this.OnConsoleEnter);
+			this.textArea.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnConsoleKeyDown);
 			// 
 			// label
 			// 
@@ -118,6 +120,7 @@
 			this.Controls.Add(this.layout);
 			this.Name = "ControlConsole";
 			this.Size = new System.Drawing.Size(600, 400);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnConsoleKeyDown);
 			this.layout.ResumeLayout(false);
 			this.layout.PerformLayout();
 			this.ResumeLayout(false);

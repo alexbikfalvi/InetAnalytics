@@ -67,7 +67,7 @@ namespace YtCrawler.Database
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			// Validate the arguments.
-			info.ValidateNotNull("info");
+			if (null == info) throw new ArgumentNullException("info");
 			// Call the base class method.
 			base.GetObjectData(info, context);
 			// Set the property.

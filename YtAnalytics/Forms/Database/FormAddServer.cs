@@ -126,10 +126,10 @@ namespace YtAnalytics.Forms.Database
 		private void OnInputChanged(object sender, EventArgs e)
 		{
 			this.buttonAdd.Enabled =
-				(this.control.ServerName != string.Empty) &&
-				(this.control.DataSource != string.Empty) &&
-				(this.control.Username != string.Empty) &&
-				(!this.control.Password.IsEmpty());
+				!string.IsNullOrWhiteSpace(this.control.ServerName) &&
+				!string.IsNullOrWhiteSpace(this.control.DataSource) &&
+				!string.IsNullOrWhiteSpace(this.control.Username) &&
+				!this.control.Password.IsEmpty();
 		}
 	}
 }

@@ -118,7 +118,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchChanged(object sender, EventArgs e)
 		{
-			if (this.textBoxUser.Text != string.Empty)
+			if (!string.IsNullOrWhiteSpace(this.textBoxUser.Text))
 			{
 				this.buttonStart.Enabled = true;
 				this.uri = YouTubeUri.GetPlaylistsFeed(

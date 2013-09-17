@@ -26,7 +26,7 @@ namespace YtCrawler
 	/// </summary>
 	public static class CrawlerStatic
 	{
-		public static string YouTubeUserName { get; internal set; }
+		public static string YouTubeUsername { get; internal set; }
 
 		public static SecureString YouTubePassword { get; internal set; }
 
@@ -52,7 +52,7 @@ namespace YtCrawler
 
 		public static int[] ConsoleSideMenuSelectedNode { get; internal set; }
 
-		public static string PlanetLabUserName { get; internal set; }
+		public static string PlanetLabUsername { get; internal set; }
 
 		public static SecureString PlanetLabPassword { get; internal set; }
 

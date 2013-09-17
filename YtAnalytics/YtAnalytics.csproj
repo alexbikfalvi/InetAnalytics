@@ -193,6 +193,12 @@
     <Compile Include="Controls\PlanetLab\ControlAddressTypeProperties.Designer.cs">
       <DependentUpon>ControlAddressTypeProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSlices.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSlices.Designer.cs">
+      <DependentUpon>ControlSlices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -722,6 +728,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlAddressTypeProperties.resx">
       <DependentUpon>ControlAddressTypeProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSlices.resx">
+      <DependentUpon>ControlSlices.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>

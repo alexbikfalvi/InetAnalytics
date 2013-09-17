@@ -108,7 +108,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new tags request for the specified tag.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlNodeTag.GetFilter(PlNodeTag.Fields.NodeTagId, id));
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlNodeTag.GetFilter(PlNodeTag.Fields.NodeTagId, id));
 			}
 			catch
 			{

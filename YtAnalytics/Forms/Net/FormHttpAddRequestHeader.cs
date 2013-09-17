@@ -107,8 +107,8 @@ namespace YtAnalytics.Forms.Net
 		private void OnInputChanged(object sender, EventArgs e)
 		{
 			this.buttonAdd.Enabled = 
-				(this.control.Header != string.Empty) &&
-				(this.control.Value != string.Empty);
+				!string.IsNullOrWhiteSpace(this.control.Header) &&
+				!string.IsNullOrWhiteSpace(this.control.Value);
 		}
 	}
 }

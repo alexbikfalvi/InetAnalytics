@@ -22,13 +22,14 @@ using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Security;
 using YtCrawler.Database;
+using YtCrawler.PlanetLab;
 
 namespace YtCrawler
 {
 	/// <summary>
 	/// Global configuration for the YouTube crawler.
 	/// </summary>
-	public sealed class CrawlerConfig
+	public sealed class CrawlerConfig : IDisposable
 	{
 		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
 		internal static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
@@ -37,6 +38,7 @@ namespace YtCrawler
 		private string rootPath;
 		private string root;
 		private DbConfig dbConfig;
+		private PlanetLabConfig plConfig;
 
 		/// <summary>
 		/// Creates a new crawler configuration based on the specified root registry key.
@@ -49,16 +51,14 @@ namespace YtCrawler
 			this.rootPath = rootPath;
 			this.root = "{0}\\{1}".FormatWith(this.rootKey.Name, this.rootPath);
 
-			RegistryKey dbKey;
-			if(null == (dbKey = this.rootKey.OpenSubKey(this.rootPath + "\\Database", RegistryKeyPermissionCheck.ReadWriteSubTree)))
-			{
-				dbKey = this.rootKey.CreateSubKey(this.rootPath + "\\Database", RegistryKeyPermissionCheck.ReadWriteSubTree);
-			}
+			// Create the database configuration.
+			this.dbConfig = new DbConfig(this.rootKey, this.rootPath + "\\Database");
 
-			this.dbConfig = new DbConfig(dbKey);
+			// Create the PlanetLab configuration.
+			this.plConfig = new PlanetLabConfig(this.rootKey, this.rootPath + "\\PlanetLab");
 
 			// Initialize the static configuration.
-			CrawlerStatic.YouTubeUserName = this.YouTubeUserName;
+			CrawlerStatic.YouTubeUsername = this.YouTubeUsername;
 			CrawlerStatic.YouTubePassword = this.YouTubePassword;
 			CrawlerStatic.YouTubeCategoriesFileName = this.YouTubeCategoriesFileName;
 			CrawlerStatic.YouTubeV2ApiKey = this.YouTubeV2ApiKey;
@@ -71,15 +71,15 @@ namespace YtCrawler
 			CrawlerStatic.ConsoleSideMenuVisibleItems = this.ConsoleSideMenuVisibleItems;
 			CrawlerStatic.ConsoleSideMenuSelectedItem = this.ConsoleSideMenuSelectedItem;
 			CrawlerStatic.ConsoleSideMenuSelectedNode = this.ConsoleSideMenuSelectedNode;
-			CrawlerStatic.PlanetLabUserName = this.PlanetLabUserName;
-			CrawlerStatic.PlanetLabPassword = this.PlanetLabPassword;
-			CrawlerStatic.PlanetLabSitesFileName = this.PlanetLabSitesFileName;
+			CrawlerStatic.PlanetLabUsername = this.PlanetLabConfig.Username;
+			CrawlerStatic.PlanetLabPassword = this.PlanetLabConfig.Password;
+			CrawlerStatic.PlanetLabSitesFileName = this.PlanetLabConfig.SitesFileName;
 		}
 
 		/// <summary>
 		/// Gets or sets the YouTube account name.
 		/// </summary>
-		public string YouTubeUserName
+		public string YouTubeUsername
 		{
 			get
 			{
@@ -88,7 +88,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + "\\YouTube", "UserName", value);
-				CrawlerStatic.YouTubeUserName = value;
+				CrawlerStatic.YouTubeUsername = value;
 			}
 		}
 
@@ -279,56 +279,9 @@ namespace YtCrawler
 			}
 			set
 			{
+				if (null == value) return;
 				DotNetApi.Windows.Registry.SetInt32Array(this.root + "\\Console", "SideMenuSelectedNode", value);
 				CrawlerStatic.ConsoleSideMenuSelectedNode = value;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the PlanetLab account name.
-		/// </summary>
-		public string PlanetLabUserName
-		{
-			get
-			{
-				return DotNetApi.Windows.Registry.GetString(this.root + "\\PlanetLab", "UserName", string.Empty);
-			}
-			set
-			{
-				DotNetApi.Windows.Registry.SetString(this.root + "\\PlanetLab", "UserName", value);
-				CrawlerStatic.PlanetLabUserName = value;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the PlanetLab account password.
-		/// </summary>
-		public SecureString PlanetLabPassword
-		{
-			get
-			{
-				return DotNetApi.Windows.Registry.GetSecureString(this.root + "\\PlanetLab", "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-			}
-			set
-			{
-				DotNetApi.Windows.Registry.SetSecureString(this.root + "\\PlanetLab", "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-				CrawlerStatic.PlanetLabPassword = value;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the PlanetLab sites file name.
-		/// </summary>
-		public string PlanetLabSitesFileName
-		{
-			get
-			{
-				return DotNetApi.Windows.Registry.GetString(this.root + "\\PlanetLab", "SitesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Alex Bikfalvi\\YouTube Analytics\\PlanetLab\\Sites.xml");
-			}
-			set
-			{
-				DotNetApi.Windows.Registry.SetString(this.root + "\\PlanetLab", "SitesFileName", value);
-				CrawlerStatic.PlanetLabSitesFileName = value;
 			}
 		}
 
@@ -336,10 +289,30 @@ namespace YtCrawler
 		/// Gets the database configuration.
 		/// </summary>
 		public DbConfig DatabaseConfig { get { return this.dbConfig; } }
+		
+		/// <summary>
+		/// Gets the PlanetLab configuration.
+		/// </summary>
+		public PlanetLabConfig PlanetLabConfig { get { return this.plConfig; } }
 
 		/// <summary>
 		/// Gets the spiders configuration path.
 		/// </summary>
 		public string SpidersConfigPath { get { return this.root + "\\Spiders"; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			// Dispose the database configuration.
+			this.dbConfig.Dispose();
+			// Dispose the PlanetLab configuration.
+			this.plConfig.Dispose();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
+		}
 	}
 }

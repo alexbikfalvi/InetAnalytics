@@ -163,7 +163,7 @@ namespace YtAnalytics.Controls.Testing
 				}
 
 				// If the method is POST and the data is not empty.
-				if ((result.Request.Method == "POST") && (this.textBoxRequestData.Text != string.Empty))
+				if ((result.Request.Method == "POST") && (!string.IsNullOrEmpty(this.textBoxRequestData.Text)))
 				{
 					// Get the current encoding.
 					Encoding encoding = Encoding.GetEncoding(this.encodings[this.comboBoxEncoding.SelectedIndex].CodePage);
@@ -347,7 +347,7 @@ namespace YtAnalytics.Controls.Testing
 		private void OnInputChanged(object sender, EventArgs e)
 		{
 			// Enable the start button.
-			this.buttonStart.Enabled = this.textBoxUrl.Text != string.Empty;
+			this.buttonStart.Enabled = !string.IsNullOrWhiteSpace(this.textBoxUrl.Text);
 			// Enable the save and undo buttons.
 			this.buttonSave.Enabled = true;
 			this.buttonUndo.Enabled = true;

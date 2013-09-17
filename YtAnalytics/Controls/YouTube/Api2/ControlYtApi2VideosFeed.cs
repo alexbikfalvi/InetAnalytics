@@ -145,7 +145,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchChanged(object sender, EventArgs e)
 		{
-			if (this.textBoxId.Text != string.Empty)
+			if (!string.IsNullOrWhiteSpace(this.textBoxId.Text))
 			{
 				this.buttonStart.Enabled = true;
 				this.uri = this.delegateFeed(

@@ -104,7 +104,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchChanged(object sender, EventArgs e)
 		{
-			if (this.textBoxVideo.Text != string.Empty)
+			if (!string.IsNullOrWhiteSpace(this.textBoxVideo.Text))
 			{
 				this.buttonStart.Enabled = true;
 				this.uri = YouTubeUri.GetCommentsFeed(

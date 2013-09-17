@@ -109,7 +109,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new sites request for the specified site.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlKey.GetFilter(PlKey.Fields.KeyId, id));
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlKey.GetFilter(PlKey.Fields.KeyId, id));
 			}
 			catch
 			{

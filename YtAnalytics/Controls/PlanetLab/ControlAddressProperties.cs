@@ -121,7 +121,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new addresses request for the specified address.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUserName, CrawlerStatic.PlanetLabPassword, PlAddress.GetFilter(PlAddress.Fields.AddressId, id));
+				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlAddress.GetFilter(PlAddress.Fields.AddressId, id));
 			}
 			catch
 			{

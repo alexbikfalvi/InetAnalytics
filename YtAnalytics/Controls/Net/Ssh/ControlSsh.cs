@@ -97,8 +97,13 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// If there exists an SSH client.
 				if (null != this.client)
 				{
-					// Disconnect the client.
-					this.Disconnect();
+					// Disconnect the client and wait for the operation to complete.
+					this.Disconnect().WaitOne();
+				}
+				if (null != this.client)
+				{
+					// Dispose of the client.
+					this.client.Dispose();
 				}
 			}		
 			// Call the base class methid.
@@ -109,7 +114,8 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// Connects the client to the SSH server specified in the connection info.
 		/// </summary>
 		/// <param name="info">The connection info.</param>
-		protected void Connect(ConnectionInfo info)
+		/// <returns>A wait handle that will signal the completion of the asynchronous operation.</returns>
+		protected WaitHandle Connect(ConnectionInfo info)
 		{
 			// Synchronize access to the SSH client.
 			lock (this.sync)
@@ -133,6 +139,9 @@ namespace YtAnalytics.Controls.Net.Ssh
 				this.client.HostKeyReceived += this.OnSshHostKeyReceived;
 			}
 
+			// Create a manual reset event.
+			ManualResetEvent wait = new ManualResetEvent(false);
+
 			// Connect to the SSH server on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
 			{
@@ -154,14 +163,22 @@ namespace YtAnalytics.Controls.Net.Ssh
 						// Call the connect failed action.
 						this.OnConnectFailedInternal(exception);
 					}
+					finally
+					{
+						// Signal the wait handle.
+						wait.Set();
+					}
 				}
 			});
+
+			return wait;
 		}
 
 		/// <summary>
 		/// Disconnects the current client from the SSH server.
 		/// </summary>
-		protected void Disconnect()
+		/// <returns>A wait handle that will signal the completion of the asynchronous operation.</returns>
+		protected WaitHandle Disconnect()
 		{
 			// Synchronize access to the SSH client.
 			lock (this.sync)
@@ -178,6 +195,9 @@ namespace YtAnalytics.Controls.Net.Ssh
 				}
 			}
 
+			// Create a manual reset event.
+			ManualResetEvent wait = new ManualResetEvent(false);
+
 			// Disconnect from the SSH server on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
 			{
@@ -185,29 +205,48 @@ namespace YtAnalytics.Controls.Net.Ssh
 				{
 					try
 					{
-						// Call the event handler.
-						this.OnDisconnectingInternal();
-
-						// Lock the commands.
-						this.commands.Lock();
-
-						// Cancel all executing commands.
-						for (SshCommand command = this.commands.FirstOrDefault(); command != null; command = this.commands.FirstOrDefault())
+						try
 						{
-							// Cancel the asynchronous command.
-							command.CancelAsync();
+							// Call the event handler.
+							this.OnDisconnectingInternal();
+
+							// Lock the commands.
+							this.commands.Lock();
+
+							try
+							{
+								// Cancel all executing commands.
+								foreach (SshCommand command in this.commands)
+								{
+									// Cancel the asynchronous command.
+									command.CancelAsync();
+								}
+								// Clear the commands.
+								this.commands.Clear();
+							}
+							finally
+							{
+								this.commands.Unlock();
+							}
+
+							// Disconnect the client.
+							this.client.Disconnect();
 						}
-						
-						// Disconnect the client.
-						this.client.Disconnect();
+						finally
+						{
+							// Call the event handler.
+							this.OnDisconnectedInternal();
+						}
 					}
 					finally
 					{
-						// Call the event handler.
-						this.OnDisconnectedInternal();
+						// Signal the wait handle.
+						wait.Set();
 					}
 				}
 			});
+
+			return wait;
 		}
 
 		/// <summary>
@@ -250,8 +289,12 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// Get the command data.
 				ThreadPool.QueueUserWorkItem((object state) =>
 					{
+						// Get the command output stream.
+						PipeStream stream = command.OutputStream as PipeStream;
+						// Set the stream as blocking.
+						stream.BlockLastReadBuffer = true;
 						// Read the command data.
-						using (StreamReader reader = new StreamReader(command.OutputStream))
+						using (PipeReader reader = new PipeReader(stream))
 						{
 							// While the command is not completed.
 							while (!asyncResult.IsCompleted)
@@ -278,52 +321,59 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <summary>
 		/// An event handler called when connecting to an SSH server.
 		/// </summary>
-		protected virtual void OnConnecting()
+		/// <param name="info">The connection info.</param>
+		protected virtual void OnConnecting(ConnectionInfo info)
 		{
 		}
 
 		/// <summary>
 		/// An event handler called when connecting to an SSH server succeeded.
 		/// </summary>
-		protected virtual void OnConnectSucceeded()
+		/// <param name="info">The connection info.</param>
+		protected virtual void OnConnectSucceeded(ConnectionInfo info)
 		{
 		}
 
 		/// <summary>
 		/// An event handler called when connecting to an SSH server failed.
 		/// </summary>
+		/// <param name="info">The connection info.</param>
 		/// <param name="exception">The exception.</param>
-		protected virtual void OnConnectFailed(Exception exception)
+		protected virtual void OnConnectFailed(ConnectionInfo info, Exception exception)
 		{
 		}
 
 		/// <summary>
 		/// An event handler called when disconnecting from an SSH server.
 		/// </summary>
-		protected virtual void OnDisconnecting()
+		/// <param name="info">The connection info.</param>
+		protected virtual void OnDisconnecting(ConnectionInfo info)
 		{
 		}
 
 		/// <summary>
 		/// An event handler called when disconnected from an SSH server.
 		/// </summary>
-		protected virtual void OnDisconnected()
+		/// <param name="info">The connection info.</param>
+		protected virtual void OnDisconnected(ConnectionInfo info)
 		{
 		}
 
 		/// <summary>
 		/// An event handler called when an error occurres on an SSH server connection.
 		/// </summary>
+		/// <param name="info">The connection info.</param>
 		/// <param name="exception">The error exception.</param>
-		protected virtual void OnErrorOccurred(Exception exception)
+		protected virtual void OnErrorOccurred(ConnectionInfo info, Exception exception)
 		{
 		}
 
 		/// <summary>
 		/// An event handler called when receiving a key from the remote host.
 		/// </summary>
+		/// <param name="info">The connection info.</param>
 		/// <param name="args">The event arguments.</param>
-		protected virtual void OnHostKeyReceived(HostKeyEventArgs args)
+		protected virtual void OnHostKeyReceived(ConnectionInfo info, HostKeyEventArgs args)
 		{
 		}
 
@@ -338,6 +388,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <summary>
 		/// An event handler called when the client receives data for an executing command.
 		/// </summary>
+		/// <param name="info">The connection info.</param>
 		/// <param name="command">The command.</param>
 		/// <param name="data">The received data.</param>
 		protected virtual void OnCommandData(SshCommand command, string data)
@@ -371,13 +422,15 @@ namespace YtAnalytics.Controls.Net.Ssh
 		{
 			// Change the client state to connecting.
 			this.state = ClientState.Connecting;
+			// Save the client connection info.
+			ConnectionInfo info = this.client.ConnectionInfo;
 			// Show a connecting message.
 			this.ShowMessage(
 				Resources.ServerBusy_32, "Connecting", "Connecting to the SSH server \'{0}\'".FormatWith(this.client.ConnectionInfo.Host), true, -1,
 				(object[] parameters) =>
 				{
 					// Call the event handler.
-					this.OnConnecting();
+					this.OnConnecting(info);
 				});
 		}
 
@@ -388,6 +441,8 @@ namespace YtAnalytics.Controls.Net.Ssh
 		{
 			// Change the client state to connected.
 			this.state = ClientState.Connected;
+			// Save the client connection info.
+			ConnectionInfo info = this.client.ConnectionInfo;
 			// Show a message.
 			this.ShowMessage(
 				Resources.ServerSuccess_32, "Connecting Succeeded", "Connecting to the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
@@ -395,7 +450,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 				(object[] parameters) =>
 				{
 					// Call the event handler.
-					this.OnConnectSucceeded();
+					this.OnConnectSucceeded(info);
 				});
 		}
 
@@ -407,14 +462,15 @@ namespace YtAnalytics.Controls.Net.Ssh
 		{
 			// Change the state.
 			this.state = ClientState.Disconnected;
-
+			// Save the client connection info.
+			ConnectionInfo info = this.client.ConnectionInfo;
 			// Show a message.
 			this.ShowMessage(Resources.ServerError_32, "Connecting Failed", "Connecting to the SSH sever \'{0}\' failed. {1}".FormatWith(this.client.ConnectionInfo.Host, exception.Message),
 				false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 				(object[] parameters) =>
 				{
 					// Call the event handler.
-					this.OnConnectFailed(exception);
+					this.OnConnectFailed(info, exception);
 				});
 			// Dispose the clinet.
 			this.client.Dispose();
@@ -428,13 +484,15 @@ namespace YtAnalytics.Controls.Net.Ssh
 		{
 			// Change the state.
 			this.state = ClientState.Disconnecting;
+			// Save the client connection info.
+			ConnectionInfo info = this.client.ConnectionInfo;
 			// Show a disconnecting message.
 			this.ShowMessage(
 				Resources.ServerBusy_32, "Disconnecting", "Disconnecting from the SSH server \'{0}\'".FormatWith(this.client.ConnectionInfo.Host), true, -1,
 				(object[] parameters) =>
 				{
 					// Call the event handler.
-					this.OnDisconnecting();
+					this.OnDisconnecting(info);
 				});
 		}
 
@@ -445,6 +503,8 @@ namespace YtAnalytics.Controls.Net.Ssh
 		{
 			// Change the state.
 			this.state = ClientState.Disconnected;
+			// Save the client connection info.
+			ConnectionInfo info = this.client.ConnectionInfo;
 			// Show a message.
 			this.ShowMessage(
 				Resources.ServerSuccess_32, "Disconnecting Succeeded", "Disconnecting from the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
@@ -452,7 +512,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 				(object[] parameters) =>
 				{
 					// Call the event handler.
-					this.OnDisconnected();
+					this.OnDisconnected(info);
 				});
 			// Dispose the clinet.
 			this.client.Dispose();
@@ -466,7 +526,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 		private void OnErrorOccurredInternal(Exception exception)
 		{
 			// Call the event handler.
-			this.OnErrorOccurred(exception);
+			this.OnErrorOccurred(this.client.ConnectionInfo, exception);
 		}
 
 		/// <summary>
@@ -476,7 +536,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 		private void OnHostKeyReceivedInternal(HostKeyEventArgs args)
 		{
 			// Call the event handler.
-			this.OnHostKeyReceived(args);
+			this.OnHostKeyReceived(this.client.ConnectionInfo, args);
 		}
 
 		/// <summary>
@@ -505,13 +565,16 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// If the current state is disconnected, ignore the error.
 				if (ClientState.Disconnected == this.state) return;
 
+				// Save the client connection info.
+				ConnectionInfo info = this.client.ConnectionInfo;
+
 				// If the client is no longer connected.
 				if (!this.client.IsConnected)
 				{
 					// Call the disconnecting event handler.
-					this.OnDisconnecting();
+					this.OnDisconnecting(info);
 					// Call the disconnected event handler.
-					this.OnDisconnected();
+					this.OnDisconnected(info);
 				}
 			}
 		}

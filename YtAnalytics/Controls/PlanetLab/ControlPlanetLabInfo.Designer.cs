@@ -79,7 +79,7 @@
 			this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelTitle.Location = new System.Drawing.Point(3, 0);
 			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(95, 20);
+			this.labelTitle.Size = new System.Drawing.Size(90, 20);
 			this.labelTitle.TabIndex = 1;
 			this.labelTitle.Text = "PlanetLab";
 			// 
@@ -105,7 +105,7 @@
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(723, 377);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(723, 577);
 			this.tableLayoutPanel.TabIndex = 5;
 			// 
 			// labelConfiguration
@@ -134,20 +134,20 @@
 			this.settings.AutoScroll = true;
 			this.tableLayoutPanel.SetColumnSpan(this.settings, 2);
 			this.settings.Crawler = null;
-			this.settings.Dock = System.Windows.Forms.DockStyle.Top;
+			this.settings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.settings.Location = new System.Drawing.Point(3, 124);
 			this.settings.Name = "settings";
-			this.settings.Size = new System.Drawing.Size(717, 250);
+			this.settings.Size = new System.Drawing.Size(717, 450);
 			this.settings.TabIndex = 8;
 			// 
-			// ControlPlanetLab
+			// ControlPlanetLabInfo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
-			this.Name = "ControlPlanetLab";
-			this.Size = new System.Drawing.Size(800, 400);
+			this.Name = "ControlPlanetLabInfo";
+			this.Size = new System.Drawing.Size(800, 600);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();

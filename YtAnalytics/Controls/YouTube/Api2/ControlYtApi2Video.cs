@@ -245,7 +245,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnInputChanged(object sender, EventArgs e)
 		{
-			this.buttonStart.Enabled = this.textBox.Text != string.Empty;
+			this.buttonStart.Enabled = !string.IsNullOrWhiteSpace(this.textBox.Text);
 		}
 
 		/// <summary>
