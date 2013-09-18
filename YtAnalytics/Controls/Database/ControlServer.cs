@@ -409,10 +409,21 @@ namespace YtAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnCurrentDatabaseProperties(object sender, EventArgs e)
+		private void OnDatabaseProperties(object sender, EventArgs e)
 		{
-			// Show the properties dialog.
-			this.formDatabaseProperties.ShowDialog(this, this.server.Database, true);
+			// If there are no database items selected, show the default database.
+			if (this.listViewDatabases.SelectedItems.Count == 0)
+			{
+				// Show the properties dialog.
+				this.formDatabaseProperties.ShowDialog(this, this.server.Database, true);
+			}
+			else
+			{
+				// Else, get the database item.
+				DbObjectDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbObjectDatabase;
+				// Show the database properties.
+				this.formDatabaseProperties.ShowDialog(this, db, db.Equals(this.server.Database));
+			}
 		}
 
 		/// <summary>
@@ -449,6 +460,7 @@ namespace YtAnalytics.Controls.Database
 			if (this.listViewDatabases.SelectedItems.Count == 0)
 			{
 				this.buttonDatabaseSelect.Enabled = false;
+				this.buttonDatabaseProperties.Enabled = this.server.Database != null;
 			}
 			else
 			{
@@ -456,6 +468,7 @@ namespace YtAnalytics.Controls.Database
 				DbObjectDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbObjectDatabase;
 				// Set the enabled state of the selection button.
 				this.buttonDatabaseSelect.Enabled = !db.Equals(this.server.Database);
+				this.buttonDatabaseProperties.Enabled = true;
 			}
 		}
 
@@ -486,21 +499,6 @@ namespace YtAnalytics.Controls.Database
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
 			}
-		}
-
-		/// <summary>
-		/// An event handle called when a database item is activated.
-		/// </summary>
-		/// <param name="sender">The database item.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnDatabaseItemActivated(object sender, EventArgs e)
-		{
-			// If there are no database items selected, do nothing.
-			if (this.listViewDatabases.SelectedItems.Count == 0) return;
-			// Else, get the database item.
-			DbObjectDatabase db = this.listViewDatabases.SelectedItems[0].Tag as DbObjectDatabase;
-			// Show the database properties.
-			this.formDatabaseProperties.ShowDialog(this, db, db.Equals(this.server.Database));
 		}
 
 		/// <summary>

@@ -56,6 +56,12 @@ namespace YtCrawler
 
 		public static SecureString PlanetLabPassword { get; internal set; }
 
+		public static int PlanetLabPersonId { get; internal set; }
+
 		public static string PlanetLabSitesFileName { get; internal set; }
+
+		public static string PlanetLabPersonsFileName { get; internal set; }
+
+		public static string PlanetLabSlicesFileName { get; internal set; }
 	}
 }

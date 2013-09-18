@@ -37,20 +37,18 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control class for PlanetLab slices.
 	/// </summary>
-	public partial class ControlSlices : ControlRequest
+	public partial class ControlSlices : NotificationControl
 	{
 		// Private variables.
 
 		private Crawler crawler = null;
 		private StatusHandler status = null;
 
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
-		private MapMarker marker = null;
-		private string filter = string.Empty;
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
 
-		private Action delegateUpdateSites = null;
+		private Action delegateUpdateSlices = null;
 
-		private FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
+		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
 
 		// Public declarations
 
@@ -67,7 +65,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Dock = DockStyle.Fill;
 
 			// Initialize the delegates.
-			this.delegateUpdateSites = new Action(this.OnUpdateSites);
+			this.delegateUpdateSlices = new Action(this.OnUpdateSlices);
 		}
 
 		/// <summary>
@@ -85,31 +83,53 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Enable the control.
 			this.Enabled = true;
 
-			// Update the list of PlanetLab sites.
-			this.OnUpdateSites();
+			// Update the list of PlanetLab slices.
+			this.OnUpdateSlices();
 		}
 
 		/// <summary>
-		/// An event handler called when the user refreshes the list of PlanetLab nodes.
+		/// An event handler called when the user refreshes the list of PlanetLab slices.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnRefresh(object sender, EventArgs e)
 		{
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// Warn the user about the refresh.
+			if (MessageBox.Show(
+				this,
+				"You will now refresh the list with the slices to which you have access with your PlanetLab account. Click Yes to continue.",
+				"Refresh PlanetLab Slices",
+				MessageBoxButtons.YesNo,
+				MessageBoxIcon.Question,
+				MessageBoxDefaultButton.Button2) == DialogResult.No)
+			{
+				return;
+			}
+
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = false;
 			this.buttonCancel.Enabled = true;
 
+			// Clear the list.
+			this.listViewSlices.Items.Clear();
+
 			// Show the notification box.
-			this.ShowMessage(Resources.GlobeClock_48, "Refreshing PlanetLab", "Refreshing the list of PlanetLab nodes...");
+			this.ShowMessage(Resources.GlobeClock_48, "Refreshing PlanetLab", "Refreshing the list of PlanetLab slices...");
 
 			// Begin an asynchrnoys PlanetLab request.
 			try
 			{
 				// Begin the request.
 				this.request.Begin(
-					this.crawler.Config.PlanetLabConfig.Username,
-					this.crawler.Config.PlanetLabConfig.Password,
+					this.crawler.Config.PlanetLab.Username,
+					this.crawler.Config.PlanetLab.Password,
 					this.OnCallback);
 			}
 			catch (Exception exception)
@@ -118,7 +138,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab nodes. {0}".FormatWith(exception.Message),
+					"An error occured while refreshing the PlanetLab slices. {0}".FormatWith(exception.Message),
 					false,
 					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
@@ -126,7 +146,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user cancels the refresh of PlanetLab nodes.
+		/// An event handler called when the user cancels the refresh of PlanetLab slices.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
@@ -157,27 +177,42 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeWarning_48,
 						"PlanetLab Error",
-						"Refreshing the PlanetLab nodes has failed (RPC code {0} {1})".FormatWith(rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
+						"Refreshing the PlanetLab slices has failed (RPC code {0} {1})".FormatWith(rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
 				}
 				else
 				{
-					// Update the list of PlanetLab sites.
-					this.crawler.PlanetLab.Sites.Update(rpcResponse.Value as XmlRpcArray);
+					// Get the slices array.
+					XmlRpcArray slices = rpcResponse.Value as XmlRpcArray;
+
+					// Update the list of PlanetLab slices, filtering by the current person account.
+					this.crawler.Config.PlanetLab.Slices.Update(slices.Where((XmlRpcValue value) =>
+						{
+							XmlRpcStruct str = value.Value as XmlRpcStruct;
+							if (null == str) return false;
+
+							XmlRpcMember member = str[PlSlice.Fields.PersonIds.GetName()];
+							if (null == member) return false;
+
+							XmlRpcArray array = member.Value.Value as XmlRpcArray;
+							if (null == array) return false;
+
+							return array.Contains(CrawlerStatic.PlanetLabPersonId);
+						}));
 
 					// Show a success message.
 					this.ShowMessage(
 						Resources.GlobeSuccess_48,
 						"PlanetLab Success",
-						"Refreshing the PlanetLab nodes has completed successfuly.",
+						"Refreshing the PlanetLab slices has completed successfuly.",
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
 
-					// Update the list of sites.
-					this.OnUpdateSites();
+					// Update the list of slices.
+					this.OnUpdateSlices();
 				}
 			}
 			catch (Exception exception)
@@ -186,7 +221,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab nodes. {0}".FormatWith(exception.Message),
+					"An error occured while refreshing the PlanetLab slices. {0}".FormatWith(exception.Message),
 					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
 			}
@@ -204,109 +239,58 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// Updates the list of PlanetLab sites.
+		/// Updates the list of PlanetLab slices.
 		/// </summary>
-		private void OnUpdateSites()
+		private void OnUpdateSlices()
 		{
-			//// Execute this method on the UI thread.
-			//if (this.InvokeRequired)
-			//{
-			//	this.Invoke(this.delegateUpdateSites);
-			//	return;
-			//}
+			// Execute this method on the UI thread.
+			if (this.InvokeRequired)
+			{
+				this.Invoke(this.delegateUpdateSlices);
+				return;
+			}
 
-			//// Clear the list view.
-			//this.listViewSites.Items.Clear();
-			//// Clear the map markers.
-			//this.mapControl.Markers.Clear();
+			// Clear the list view.
+			this.listViewSlices.Items.Clear();
 
-			//// Update the filter.
-			//this.filter = this.textBoxFilter.Text;
-			//// The number of displayed sites.
-			//int count = 0;
+			// Lock the slices list.
+			this.crawler.Config.PlanetLab.Slices.Lock();
+			try
+			{
+				// Add the list view items.
+				foreach (PlSlice slice in this.crawler.Config.PlanetLab.Slices)
+				{
+					// Create the list view item.
+					ListViewItem item = new ListViewItem(new string[] {
+						slice.Id.HasValue ? slice.Id.Value.ToString() : string.Empty,
+						slice.Name,
+						slice.Created.ToString(),
+						slice.Expires.ToString(),
+						slice.NodeIds != null ? slice.NodeIds.Length.ToString() : "0",
+						slice.MaxNodes.ToString()
+					}, 0);
+					item.Tag = slice;
+					this.listViewSlices.Items.Add(item);
+				}
+			}
+			finally
+			{
+				this.crawler.Config.PlanetLab.Slices.Unlock();
+			}
 
-			//// Add the list view items.
-			//foreach (PlSite site in this.crawler.PlanetLab.Sites)
-			//{
-			//	// If the filter is not null.
-			//	if (null != this.filter)
-			//	{
-			//		// If the site name does not match the filter, continue.
-			//		if (site.Name == null) continue;
-			//		if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
-			//	}
-
-			//	// Increment the number of displayed sites.
-			//	count++;
-
-			//	// Create a new geo marker for this site.
-			//	MapMarker marker = null;
-			//	// If the site has coordinates.
-			//	if (site.Latitude.HasValue && site.Longitude.HasValue)
-			//	{
-			//		// Create a circular marker.
-			//		marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-			//		marker.Name = site.Name;
-			//		// Add the marker to the map.
-			//		this.mapControl.Markers.Add(marker);
-			//	}
-				
-			//	// Create the list view item.
-			//	ListViewItem item = new ListViewItem(new string[] {
-			//		site.SiteId.ToString(),
-			//		site.Name,
-			//		site.Url,
-			//		site.DateCreated.ToString(),
-			//		site.LastUpdated.ToString(),
-			//		site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
-			//		site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
-			//	}, 0);
-			//	item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
-			//	this.listViewSites.Items.Add(item);
-
-			//	if (null != marker)
-			//	{
-			//		marker.Tag = item;
-			//	}
-			//}
-
-			//// Update the label.
-			//this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.crawler.PlanetLab.Sites.Count), Resources.GlobeLab_16);
+			// Update the label.
+			this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count), Resources.GlobeLab_16);
 		}
 
-		///// <summary>
-		///// An event handler called when the site selection has changed.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		//private void OnSelectionChanged(object sender, EventArgs e)
-		//{
-		//	// If there exists an emphasized marker, de-emphasize it.
-		//	if (this.marker != null)
-		//	{
-		//		this.marker.Emphasized = false;
-		//		this.marker = null;
-		//	}
-		//	// If no site is selected.
-		//	if (this.listViewSites.SelectedItems.Count == 0)
-		//	{
-		//		// Change the properties button enabled state.
-		//		this.buttonProperties.Enabled = false;
-		//	}
-		//	else
-		//	{
-		//		// Change the properties button enabled state.
-		//		this.buttonProperties.Enabled = true;
-		//		// Get the site-marker for this item.
-		//		KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
-		//		// If the marker is not null, emphasize the marker.
-		//		if (tag.Value != null)
-		//		{
-		//			this.marker = tag.Value;
-		//			this.marker.Emphasized = true;
-		//		}
-		//	}
-		//}
+		/// <summary>
+		/// An event handler called when the site selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectionChanged(object sender, EventArgs e)
+		{
+			this.buttonProperties.Enabled = this.listViewSlices.SelectedItems.Count != 0;
+		}
 
 		/// <summary>
 		/// An event handler called when the user selects to view the site properties.
@@ -315,14 +299,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnProperties(object sender, EventArgs e)
 		{
-			//// If there is no selected site item, do nothing.
-			//if (this.listViewSites.SelectedItems.Count == 0) return;
+			// If there is no selected site item, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
 
-			//// Get the site-marker for this item.
-			//KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+			// Get the slice for this item.
+			PlSlice slice = this.listViewSlices.SelectedItems[0].Tag as PlSlice;
 
-			//// Show the site properties.
-			//this.formSiteProperties.ShowDialog(this, "Site", tag.Key);
+			// Show the site properties.
+			this.formSliceProperties.ShowDialog(this, "Slice", slice);
 		}
 	}
 }

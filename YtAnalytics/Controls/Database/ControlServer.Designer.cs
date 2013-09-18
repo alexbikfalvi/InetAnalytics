@@ -275,7 +275,7 @@
 			this.listViewDatabases.TabIndex = 5;
 			this.listViewDatabases.UseCompatibleStateImageBehavior = false;
 			this.listViewDatabases.View = System.Windows.Forms.View.Details;
-			this.listViewDatabases.ItemActivate += new System.EventHandler(this.OnDatabaseItemActivated);
+			this.listViewDatabases.ItemActivate += new System.EventHandler(this.OnDatabaseProperties);
 			this.listViewDatabases.SelectedIndexChanged += new System.EventHandler(this.OnDatabaseSelectionChanged);
 			// 
 			// columnHeaderDatabaseName
@@ -335,7 +335,7 @@
 			this.buttonDatabaseProperties.Text = "Properties";
 			this.buttonDatabaseProperties.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonDatabaseProperties.UseVisualStyleBackColor = true;
-			this.buttonDatabaseProperties.Click += new System.EventHandler(this.OnCurrentDatabaseProperties);
+			this.buttonDatabaseProperties.Click += new System.EventHandler(this.OnDatabaseProperties);
 			// 
 			// textBoxDatabase
 			// 

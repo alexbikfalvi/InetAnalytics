@@ -40,7 +40,6 @@ namespace YtCrawler
 		private Comments.Comments comments;
 		private DbServers servers;
 		private Spiders spiders;
-		private PlanetLab.PlanetLab planetLab;
 		private Testing.Testing testing;
 
 		/// <summary>
@@ -73,9 +72,6 @@ namespace YtCrawler
 
 			// Create the crawler spiders.
 			this.spiders = new Spiders(this);
-
-			// Create the PlanetLab configuration.
-			this.planetLab = new PlanetLab.PlanetLab(this.config);
 
 			// Create the crawler testing.
 			this.testing = new Testing.Testing(rootKey, rootPath);
@@ -133,11 +129,6 @@ namespace YtCrawler
 		public Spiders Spiders { get { return this.spiders; } }
 
 		/// <summary>
-		/// Returns the PlanetLab configuration.
-		/// </summary>
-		public PlanetLab.PlanetLab PlanetLab { get { return this.planetLab; } }
-
-		/// <summary>
 		/// Returns the crawler testing configuration.
 		/// </summary>
 		public Testing.Testing Testing { get { return this.testing; } }
@@ -165,8 +156,6 @@ namespace YtCrawler
 				this.categories.Dispose();
 				// Close the spiders.
 				this.spiders.Dispose();
-				// Close the PlanetLab.
-				this.planetLab.Dispose();
 				// Close the configuration.
 				this.config.Dispose();
 			}

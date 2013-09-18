@@ -121,6 +121,7 @@ namespace YtAnalytics.Forms
 
 		private ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
 		private ControlSites controlPlanetLabSites = new ControlSites();
+		private ControlSlices controlPlanetLabSlices = new ControlSlices();
 
 		private ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
 		private ControlTestingSshRequest controlTestingSshRequest = new ControlTestingSshRequest();
@@ -325,6 +326,7 @@ namespace YtAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlSpiderStandardFeeds);
 			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLab);
 			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSites);
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSlices);
 			this.splitContainer.Panel2.Controls.Add(this.controlTestingWebRequest);
 			this.splitContainer.Panel2.Controls.Add(this.controlTestingSshRequest);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
@@ -362,6 +364,7 @@ namespace YtAnalytics.Forms
 
 			this.treeNodePlanetLab.Tag = this.controlPlanetLab;
 			this.treeNodePlanetLabSites.Tag = this.controlPlanetLabSites;
+			this.treeNodePlanetLabSlices.Tag = this.controlPlanetLabSlices;
 
 			this.treeNodeTestingWebRequest.Tag = this.controlTestingWebRequest;
 			this.treeNodeTestingSshRequest.Tag = this.controlTestingSshRequest;
@@ -408,6 +411,7 @@ namespace YtAnalytics.Forms
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
 			this.controlPlanetLab.Initialize(this.crawler);
 			this.controlPlanetLabSites.Initialize(this.crawler);
+			this.controlPlanetLabSlices.Initialize(this.crawler);
 			this.controlTestingWebRequest.Initialize(this.crawler);
 			this.controlTestingSshRequest.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);

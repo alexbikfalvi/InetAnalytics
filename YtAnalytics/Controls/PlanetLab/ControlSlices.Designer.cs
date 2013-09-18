@@ -31,19 +31,24 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSlices));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.listViewSlices = new System.Windows.Forms.ListView();
+			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.columnHeaderCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderExpires = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderNodes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderMaximum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
-			this.listView = new System.Windows.Forms.ListView();
-			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -62,7 +67,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.listView);
+			this.splitContainer.Panel1.Controls.Add(this.listViewSlices);
 			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
 			// 
 			// splitContainer.Panel2
@@ -71,6 +76,45 @@
 			this.splitContainer.Size = new System.Drawing.Size(800, 600);
 			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.TabIndex = 2;
+			// 
+			// listViewSlices
+			// 
+			this.listViewSlices.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listViewSlices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderId,
+            this.columnHeaderName,
+            this.columnHeaderCreated,
+            this.columnHeaderExpires,
+            this.columnHeaderNodes,
+            this.columnHeaderMaximum});
+			this.listViewSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listViewSlices.FullRowSelect = true;
+			this.listViewSlices.GridLines = true;
+			this.listViewSlices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewSlices.HideSelection = false;
+			this.listViewSlices.Location = new System.Drawing.Point(0, 25);
+			this.listViewSlices.Name = "listViewSlices";
+			this.listViewSlices.Size = new System.Drawing.Size(798, 398);
+			this.listViewSlices.SmallImageList = this.imageList;
+			this.listViewSlices.TabIndex = 10;
+			this.listViewSlices.UseCompatibleStateImageBehavior = false;
+			this.listViewSlices.View = System.Windows.Forms.View.Details;
+			this.listViewSlices.ItemActivate += new System.EventHandler(this.OnProperties);
+			// 
+			// columnHeaderId
+			// 
+			this.columnHeaderId.Text = "ID";
+			// 
+			// columnHeaderName
+			// 
+			this.columnHeaderName.Text = "Name";
+			this.columnHeaderName.Width = 120;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "GlobeObject");
 			// 
 			// toolStrip
 			// 
@@ -120,12 +164,6 @@
 			this.buttonProperties.Text = "&Properties";
 			this.buttonProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "GlobeObject");
-			// 
 			// legendItemSuccess
 			// 
 			this.legendItemSuccess.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
@@ -146,6 +184,26 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
+			// columnHeaderCreated
+			// 
+			this.columnHeaderCreated.Text = "Created";
+			this.columnHeaderCreated.Width = 120;
+			// 
+			// columnHeaderExpires
+			// 
+			this.columnHeaderExpires.Text = "Expires";
+			this.columnHeaderExpires.Width = 120;
+			// 
+			// columnHeaderNodes
+			// 
+			this.columnHeaderNodes.Text = "Nodes";
+			this.columnHeaderNodes.Width = 80;
+			// 
+			// columnHeaderMaximum
+			// 
+			this.columnHeaderMaximum.Text = "Maximum";
+			this.columnHeaderMaximum.Width = 80;
+			// 
 			// controlLog
 			// 
 			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -153,29 +211,6 @@
 			this.controlLog.Name = "controlLog";
 			this.controlLog.Size = new System.Drawing.Size(798, 169);
 			this.controlLog.TabIndex = 0;
-			// 
-			// listView
-			// 
-			this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderName});
-			this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView.FullRowSelect = true;
-			this.listView.GridLines = true;
-			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(0, 25);
-			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(798, 398);
-			this.listView.SmallImageList = this.imageList;
-			this.listView.TabIndex = 10;
-			this.listView.UseCompatibleStateImageBehavior = false;
-			this.listView.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeaderName
-			// 
-			this.columnHeaderName.Text = "Name";
-			this.columnHeaderName.Width = 120;
 			// 
 			// ControlSlices
 			// 
@@ -211,7 +246,12 @@
 		private System.Windows.Forms.ToolStripSeparator separator1;
 		private System.Windows.Forms.ToolStripButton buttonProperties;
 		private Log.ControlLogList controlLog;
-		private System.Windows.Forms.ListView listView;
+		private System.Windows.Forms.ListView listViewSlices;
 		private System.Windows.Forms.ColumnHeader columnHeaderName;
+		private System.Windows.Forms.ColumnHeader columnHeaderId;
+		private System.Windows.Forms.ColumnHeader columnHeaderCreated;
+		private System.Windows.Forms.ColumnHeader columnHeaderExpires;
+		private System.Windows.Forms.ColumnHeader columnHeaderNodes;
+		private System.Windows.Forms.ColumnHeader columnHeaderMaximum;
 	}
 }

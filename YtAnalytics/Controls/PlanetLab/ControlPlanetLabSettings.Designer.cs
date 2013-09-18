@@ -40,9 +40,14 @@
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderFirstName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderLastName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderPhone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderEmail = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.buttonSave = new System.Windows.Forms.Button();
 			this.labelValidation = new System.Windows.Forms.Label();
+			this.buttonProperties = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// textBoxUsername
@@ -74,9 +79,9 @@
 			// buttonValidate
 			// 
 			this.buttonValidate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonValidate.Location = new System.Drawing.Point(322, 3);
+			this.buttonValidate.Location = new System.Drawing.Point(312, 3);
 			this.buttonValidate.Name = "buttonValidate";
-			this.buttonValidate.Size = new System.Drawing.Size(75, 23);
+			this.buttonValidate.Size = new System.Drawing.Size(85, 23);
 			this.buttonValidate.TabIndex = 4;
 			this.buttonValidate.Text = "&Validate";
 			this.buttonValidate.UseVisualStyleBackColor = true;
@@ -100,7 +105,11 @@
 			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderId,
             this.columnHeaderFirstName,
-            this.columnHeaderLastName});
+            this.columnHeaderLastName,
+            this.columnHeaderEnabled,
+            this.columnHeaderPhone,
+            this.columnHeaderEmail,
+            this.columnHeaderUrl});
 			this.listView.FullRowSelect = true;
 			this.listView.GridLines = true;
 			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -111,12 +120,14 @@
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 6;
 			this.listView.UseCompatibleStateImageBehavior = false;
-			this.listView.View = System.Windows.Forms.View.Tile;
-			this.listView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnAccountChanged);
+			this.listView.View = System.Windows.Forms.View.Details;
+			this.listView.ItemActivate += new System.EventHandler(this.OnProperties);
+			this.listView.SelectedIndexChanged += new System.EventHandler(this.OnAccountSelectionChanged);
 			// 
 			// columnHeaderId
 			// 
 			this.columnHeaderId.Text = "ID";
+			this.columnHeaderId.Width = 80;
 			// 
 			// columnHeaderFirstName
 			// 
@@ -128,19 +139,39 @@
 			this.columnHeaderLastName.Text = "Last name";
 			this.columnHeaderLastName.Width = 120;
 			// 
+			// columnHeaderEnabled
+			// 
+			this.columnHeaderEnabled.Text = "Enabled";
+			// 
+			// columnHeaderPhone
+			// 
+			this.columnHeaderPhone.Text = "Phone";
+			this.columnHeaderPhone.Width = 120;
+			// 
+			// columnHeaderEmail
+			// 
+			this.columnHeaderEmail.Text = "Email";
+			this.columnHeaderEmail.Width = 120;
+			// 
+			// columnHeaderUrl
+			// 
+			this.columnHeaderUrl.Text = "URL";
+			this.columnHeaderUrl.Width = 120;
+			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "User_32.png");
+			this.imageList.Images.SetKeyName(0, "User");
+			this.imageList.Images.SetKeyName(1, "UserStar");
 			// 
 			// buttonSave
 			// 
 			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonSave.Enabled = false;
-			this.buttonSave.Location = new System.Drawing.Point(322, 274);
+			this.buttonSave.Location = new System.Drawing.Point(312, 274);
 			this.buttonSave.Name = "buttonSave";
-			this.buttonSave.Size = new System.Drawing.Size(75, 23);
+			this.buttonSave.Size = new System.Drawing.Size(85, 23);
 			this.buttonSave.TabIndex = 7;
 			this.buttonSave.Text = "&Save";
 			this.buttonSave.UseVisualStyleBackColor = true;
@@ -151,15 +182,30 @@
 			this.labelValidation.AutoSize = true;
 			this.labelValidation.Location = new System.Drawing.Point(3, 60);
 			this.labelValidation.Name = "labelValidation";
-			this.labelValidation.Size = new System.Drawing.Size(337, 13);
+			this.labelValidation.Size = new System.Drawing.Size(372, 13);
 			this.labelValidation.TabIndex = 5;
-			this.labelValidation.Text = "To validate your credentials, &select your PlanetLab account and save:";
+			this.labelValidation.Text = "To validate your credentials, &select your default PlanetLab account and save:";
+			// 
+			// buttonProperties
+			// 
+			this.buttonProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonProperties.Enabled = false;
+			this.buttonProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.buttonProperties.Location = new System.Drawing.Point(221, 274);
+			this.buttonProperties.Name = "buttonProperties";
+			this.buttonProperties.Size = new System.Drawing.Size(85, 23);
+			this.buttonProperties.TabIndex = 8;
+			this.buttonProperties.Text = "&Properties";
+			this.buttonProperties.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.buttonProperties.UseVisualStyleBackColor = true;
+			this.buttonProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
 			// ControlPlanetLabSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
+			this.Controls.Add(this.buttonProperties);
 			this.Controls.Add(this.labelValidation);
 			this.Controls.Add(this.buttonSave);
 			this.Controls.Add(this.listView);
@@ -178,6 +224,7 @@
 			this.Controls.SetChildIndex(this.listView, 0);
 			this.Controls.SetChildIndex(this.buttonSave, 0);
 			this.Controls.SetChildIndex(this.labelValidation, 0);
+			this.Controls.SetChildIndex(this.buttonProperties, 0);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -197,5 +244,10 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderId;
 		private System.Windows.Forms.Label labelValidation;
 		private System.Windows.Forms.ImageList imageList;
+		private System.Windows.Forms.Button buttonProperties;
+		private System.Windows.Forms.ColumnHeader columnHeaderEnabled;
+		private System.Windows.Forms.ColumnHeader columnHeaderPhone;
+		private System.Windows.Forms.ColumnHeader columnHeaderEmail;
+		private System.Windows.Forms.ColumnHeader columnHeaderUrl;
 	}
 }

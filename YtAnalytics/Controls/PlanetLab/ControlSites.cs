@@ -93,7 +93,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user refreshes the list of PlanetLab nodes.
+		/// An event handler called when the user refreshes the list of PlanetLab slices.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
@@ -104,7 +104,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonCancel.Enabled = true;
 
 			// Show the notification box.
-			this.ShowMessage(Resources.GlobeClock_48, "Refreshing PlanetLab", "Refreshing the list of PlanetLab nodes...");
+			this.ShowMessage(Resources.GlobeClock_48, "Refreshing PlanetLab", "Refreshing the list of PlanetLab sites...");
 
 			// Begin an asynchrnoys PlanetLab request.
 			try
@@ -121,7 +121,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab nodes. {0}".FormatWith(exception.Message),
+					"An error occured while refreshing the PlanetLab sites. {0}".FormatWith(exception.Message),
 					false,
 					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
@@ -129,7 +129,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user cancels the refresh of PlanetLab nodes.
+		/// An event handler called when the user cancels the refresh of PlanetLab slices.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
@@ -160,7 +160,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.ShowMessage(
 						Resources.GlobeWarning_48,
 						"PlanetLab Error",
-						"Refreshing the PlanetLab nodes has failed (RPC code {0} {1})".FormatWith(rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
+						"Refreshing the PlanetLab sites has failed (RPC code {0} {1})".FormatWith(rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
@@ -168,13 +168,13 @@ namespace YtAnalytics.Controls.PlanetLab
 				else
 				{
 					// Update the list of PlanetLab sites.
-					this.crawler.PlanetLab.Sites.Update(rpcResponse.Value as XmlRpcArray);
+					this.crawler.Config.PlanetLab.Sites.Update(rpcResponse.Value as XmlRpcArray);
 
 					// Show a success message.
 					this.ShowMessage(
 						Resources.GlobeSuccess_48,
 						"PlanetLab Success",
-						"Refreshing the PlanetLab nodes has completed successfuly.",
+						"Refreshing the PlanetLab sites has completed successfuly.",
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 						this.OnComplete);
@@ -189,7 +189,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ShowMessage(
 					Resources.GlobeError_48,
 					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab nodes. {0}".FormatWith(exception.Message),
+					"An error occured while refreshing the PlanetLab sites. {0}".FormatWith(exception.Message),
 					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
 			}
@@ -228,53 +228,62 @@ namespace YtAnalytics.Controls.PlanetLab
 			// The number of displayed sites.
 			int count = 0;
 
-			// Add the list view items.
-			foreach (PlSite site in this.crawler.PlanetLab.Sites)
+			// Lock the sites.
+			this.crawler.Config.PlanetLab.Sites.Lock();
+			try
 			{
-				// If the filter is not null.
-				if (null != this.filter)
+				// Add the list view items.
+				foreach (PlSite site in this.crawler.Config.PlanetLab.Sites)
 				{
-					// If the site name does not match the filter, continue.
-					if (site.Name == null) continue;
-					if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
-				}
+					// If the filter is not null.
+					if (null != this.filter)
+					{
+						// If the site name does not match the filter, continue.
+						if (site.Name == null) continue;
+						if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
+					}
 
-				// Increment the number of displayed sites.
-				count++;
+					// Increment the number of displayed sites.
+					count++;
 
-				// Create a new geo marker for this site.
-				MapMarker marker = null;
-				// If the site has coordinates.
-				if (site.Latitude.HasValue && site.Longitude.HasValue)
-				{
-					// Create a circular marker.
-					marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-					marker.Name = site.Name;
-					// Add the marker to the map.
-					this.mapControl.Markers.Add(marker);
-				}
-				
-				// Create the list view item.
-				ListViewItem item = new ListViewItem(new string[] {
-					site.SiteId.ToString(),
-					site.Name,
-					site.Url,
-					site.DateCreated.ToString(),
-					site.LastUpdated.ToString(),
-					site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
-					site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
-				}, 0);
-				item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
-				this.listViewSites.Items.Add(item);
+					// Create a new geo marker for this site.
+					MapMarker marker = null;
+					// If the site has coordinates.
+					if (site.Latitude.HasValue && site.Longitude.HasValue)
+					{
+						// Create a circular marker.
+						marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
+						marker.Name = site.Name;
+						// Add the marker to the map.
+						this.mapControl.Markers.Add(marker);
+					}
 
-				if (null != marker)
-				{
-					marker.Tag = item;
+					// Create the list view item.
+					ListViewItem item = new ListViewItem(new string[] {
+						site.SiteId.ToString(),
+						site.Name,
+						site.Url,
+						site.DateCreated.ToString(),
+						site.LastUpdated.ToString(),
+						site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
+						site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
+					}, 0);
+					item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
+					this.listViewSites.Items.Add(item);
+
+					if (null != marker)
+					{
+						marker.Tag = item;
+					}
 				}
+			}
+			finally
+			{
+				this.crawler.Config.PlanetLab.Sites.Unlock();
 			}
 
 			// Update the label.
-			this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.crawler.PlanetLab.Sites.Count), Resources.GlobeLab_16);
+			this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.crawler.Config.PlanetLab.Sites.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>

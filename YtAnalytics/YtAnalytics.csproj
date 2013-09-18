@@ -992,6 +992,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\UserStar_48.png" />
+    <None Include="Resources\UserStar_32.png" />
+    <None Include="Resources\UserStar_24.png" />
+    <None Include="Resources\UserStar_16.png" />
     <None Include="Resources\TestGlobeGoto_48.png" />
     <None Include="Resources\TestGlobeGoto_32.png" />
     <None Include="Resources\TestGlobeGoto_24.png" />

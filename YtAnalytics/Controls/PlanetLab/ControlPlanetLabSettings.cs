@@ -19,6 +19,7 @@
 using System;
 using System.Security;
 using System.Windows.Forms;
+using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 using DotNetApi.Security;
 using DotNetApi.Web.XmlRpc;
@@ -38,8 +39,10 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private string validatedUsername = null;
 		private SecureString validatedPassword = null;
-		private PlList<PlPerson> validatedAccounts = null;
-		private PlPerson validatedAccount = null;
+		private PlList<PlPerson> validatedPersons = new PlList<PlPerson>();
+		private int validatedPerson = -1;
+
+		private FormObjectProperties<ControlPersonProperties> formPersonProperties = new FormObjectProperties<ControlPersonProperties>();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -81,23 +84,41 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Create a PlanetLab nodes list for the given response.
-				this.validatedAccounts = PlList<PlPerson>.Create(response.Value as XmlRpcArray);
+				// Set the validated account.
+				this.validatedUsername = this.textBoxUsername.Text;
+				this.validatedPassword = this.textBoxPassword.SecureText;
 
-				// Populate the accounts list.
-				foreach (PlPerson account in this.validatedAccounts)
+				// Update the list of PlanetLab persons for the given response.
+				this.validatedPersons.Update(response.Value as XmlRpcArray);
+				this.validatedPerson = -1;
+
+				// Lock the list.
+				this.validatedPersons.Lock();
+				try
 				{
-					if (account.Id.HasValue)
+					// Populate the accounts list.
+					foreach (PlPerson person in this.validatedPersons)
 					{
-						ListViewItem item = new ListViewItem(new string[] {
-							account.Id.Value.ToString(),
-							account.FirstName,
-							account.LastName
-						});
-						item.ImageIndex = 0;
-						item.Checked = false;
-						this.listView.Items.Add(item);
+						if (person.Id.HasValue)
+						{
+							ListViewItem item = new ListViewItem(new string[] {
+								person.Id.Value.ToString(),
+								person.FirstName,
+								person.LastName,
+								person.IsEnabled.HasValue ? person.IsEnabled.Value ? "Yes" : "No" : "Unknown",
+								person.Phone,
+								person.Email,
+								person.Url
+							});
+							item.ImageKey = "User";
+							item.Tag = person;
+							this.listView.Items.Add(item);
+						}
 					}
+				}
+				finally
+				{
+					this.validatedPersons.Unlock();
 				}
 			}
 		}
@@ -111,8 +132,43 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			if (null == this.crawler) return;
 
-			this.textBoxUsername.Text = CrawlerStatic.PlanetLabUsername;
-			this.textBoxPassword.SecureText = CrawlerStatic.PlanetLabPassword;
+			// Load the configuration.
+			this.validatedUsername = CrawlerStatic.PlanetLabUsername;
+			this.validatedPassword = CrawlerStatic.PlanetLabPassword;
+			this.validatedPersons = this.crawler.Config.PlanetLab.Persons;
+			this.validatedPerson = CrawlerStatic.PlanetLabPersonId;
+
+			// Set the username.
+			this.textBoxUsername.Text = this.validatedUsername;
+			// Set the password.
+			this.textBoxPassword.SecureText = this.validatedPassword;
+			// Set the list of persons.
+			this.validatedPersons.Lock();
+			try
+			{
+				foreach (PlPerson person in this.validatedPersons)
+				{
+					if (person.Id.HasValue)
+					{
+						ListViewItem item = new ListViewItem(new string[] {
+								person.Id.Value.ToString(),
+								person.FirstName,
+								person.LastName,
+								person.IsEnabled.HasValue ? person.IsEnabled.Value ? "Yes" : "No" : "Unknown",
+								person.Phone,
+								person.Email,
+								person.Url
+							});
+						item.ImageKey = person.Id == this.validatedPerson ? "UserStar" : "User";
+						item.Tag = person;
+						this.listView.Items.Add(item);
+					}
+				}
+			}
+			finally
+			{
+				this.validatedPersons.Unlock();
+			}
 		}
 
 		/// <summary>
@@ -127,8 +183,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Disable the validation and save buttons.
 			this.buttonValidate.Enabled = false;
 			this.buttonSave.Enabled = false;
+			this.buttonProperties.Enabled = false;
 			// Clear the accounts list view.
 			this.listView.Items.Clear();
+			// Clear the list of validated person and persons.
+			this.validatedPersons.Clear();
+			this.validatedPerson = -1;
 
 			// Try and validate the user account.
 			try
@@ -138,7 +198,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 			catch
 			{
-				// Enable the validation button.
+				// Change the state of the validation button.
 				this.OnChanged(this, EventArgs.Empty);
 			}
 		}
@@ -156,24 +216,91 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
+		/// An event handler called when the account selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAccountSelectionChanged(object sender, EventArgs e)
+		{
+			// If there is a selected item.
+			if (this.listView.SelectedItems.Count > 0)
+			{
+				// Get the selected person.
+				PlPerson person = this.listView.SelectedItems[0].Tag as PlPerson;
+
+				this.buttonSave.Enabled = person.Id != this.validatedPerson;
+				this.buttonProperties.Enabled = true;
+			}
+			else
+			{
+				this.buttonSave.Enabled = false;
+				this.buttonProperties.Enabled = false;
+			}
+		}
+
+		/// <summary>
 		/// Saves the current configuration.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnSave(object sender, EventArgs e)
 		{
-			// Save the configuration.
-			this.crawler.Config.PlanetLabConfig.Username = this.textBoxUsername.Text;
-			this.crawler.Config.PlanetLabConfig.Password = this.textBoxPassword.SecureText;
+			// If there is no account selected, show a message and return.
+			if (this.listView.SelectedItems.Count == 0)
+			{
+				MessageBox.Show(this, "You must select a default PlanetLab account.", "Cannot Save Credentials", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			// If there exists a validated person.
+			if (this.validatedPerson != -1)
+			{
+				// Clear the default selection for the corresponding item.
+				foreach (ListViewItem oldItem in this.listView.Items)
+				{
+					if (oldItem.Tag.Equals(this.validatedPerson))
+					{
+						oldItem.ImageKey = "User";
+					}
+				}
+			}
+
+			// Get the selected item.
+			ListViewItem newItem = this.listView.SelectedItems[0];
+			newItem.ImageKey = "UserStar";
+			
+			// Get the selected person.
+			PlPerson person = newItem.Tag as PlPerson;
+
+			// Set the selected person ID.
+			this.validatedPerson = person.Id.HasValue ? person.Id.Value : -1;
+
+			// Save the PlanetLab credentials.
+			this.crawler.Config.PlanetLab.SaveCredentials(
+				this.validatedUsername,
+				this.validatedPassword,
+				this.validatedPersons,
+				this.validatedPerson);
+
+			// Disable the save button.
+			this.buttonSave.Enabled = false;
 		}
 
 		/// <summary>
-		/// An event handler called when the selected account has changed.
+		/// Shows the properties of the selected PlanetLab account.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAccountChanged(object sender, ItemCheckEventArgs e)
+		private void OnProperties(object sender, EventArgs e)
 		{
+			// If there is no account selected, do nothing.
+			if (this.listView.SelectedItems.Count == 0) return;
+
+			// Get the person.
+			PlPerson person = this.listView.SelectedItems[0].Tag as PlPerson;
+
+			// Open a new dialog with the PlanetLab properties.
+			this.formPersonProperties.ShowDialog(this, "Person", person);
 		}
 	}
 }

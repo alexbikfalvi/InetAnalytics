@@ -60,10 +60,10 @@ namespace YtCrawler.Database
 			this.config = config;
 
 			// Get the ID of the primary database server.
-			string primaryId = DotNetApi.Windows.Registry.GetString(this.config.DatabaseConfig.Key.Name, "Primary", null);
+			string primaryId = DotNetApi.Windows.Registry.GetString(this.config.Database.Key.Name, "Primary", null);
 
 			// Create the servers list.
-			foreach (string id in this.config.DatabaseConfig.Servers)
+			foreach (string id in this.config.Database.Servers)
 			{
 				// Compute the database server log file.
 				string logFile = this.config.DatabaseLogFileName.FormatWith(id, "{0}", "{1}", "{2}");
@@ -71,7 +71,7 @@ namespace YtCrawler.Database
 				try
 				{
 					// Open the server configuration registry key.
-					RegistryKey key = this.config.DatabaseConfig.Key.OpenSubKey(id, true);
+					RegistryKey key = this.config.Database.Key.OpenSubKey(id, true);
 					// If the registry key could not be opened, continue to the next server.
 					if (null == key) continue;
 					// Get the database server type.
@@ -98,7 +98,7 @@ namespace YtCrawler.Database
 				catch (Exception)
 				{
 					// If any exception occurs, remove the server configuration.
-					config.DatabaseConfig.Remove(id);
+					config.Database.Remove(id);
 				}
 			}
 		}
@@ -189,7 +189,7 @@ namespace YtCrawler.Database
 			// Change the primary server.
 			this.primary = server;
 			// Update the registry key.
-			Registry.SetValue(this.config.DatabaseConfig.Key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
+			Registry.SetValue(this.config.Database.Key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
 			// Raise the primary server changed event.
 			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(this, new DbPrimaryServerChangedEventArgs(oldPrimary, this.primary));
 		}
@@ -237,7 +237,7 @@ namespace YtCrawler.Database
 			// Check the server ID does not exist. Otherwise, throw an exception.
 			if (this.servers.ContainsKey(id)) throw new CrawlerException("Cannot add a new database server. The server ID \'{0}\' already exists.".FormatWith(id));
 			// Create the registry key for this server.
-			RegistryKey key = this.config.DatabaseConfig.Key.CreateSubKey(id);
+			RegistryKey key = this.config.Database.Key.CreateSubKey(id);
 			// Compute the database server log file.
 			string logFile = string.Format(this.config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
 			DbServer server;
@@ -261,7 +261,7 @@ namespace YtCrawler.Database
 				// Close the key.
 				key.Close();
 				// Delete the registry key.
-				this.config.DatabaseConfig.Key.DeleteSubKeyTree(id);
+				this.config.Database.Key.DeleteSubKeyTree(id);
 				// Re-throw the exception.
 				throw;
 			}
@@ -411,7 +411,7 @@ namespace YtCrawler.Database
 				// Lock the mutex.
 				this.mutex.WaitOne();
 				// Remove the server configuration.
-				this.config.DatabaseConfig.Key.DeleteSubKeyTree(id);
+				this.config.Database.Key.DeleteSubKeyTree(id);
 				// Remove the server.
 				this.servers.Remove(id);
 			}
