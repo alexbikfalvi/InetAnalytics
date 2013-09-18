@@ -68,7 +68,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// General.
 
 				this.Title = node.Hostname;
-				this.Icon = Resources.GlobeObject_32;
+				this.Icon = Resources.GlobeNode_32;
 
 				this.textBoxHostname.Text = node.Hostname;
 				this.textBoxVersion.Text = node.Version;

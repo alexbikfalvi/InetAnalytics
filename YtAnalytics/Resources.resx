@@ -2313,4 +2313,100 @@ Female, 45-54 years
   <data name="UserStar_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\UserStar_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GlobeNode_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeNode_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeNode_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeNode_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeNode_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeNode_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeNode_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeNode_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeAdd_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeAdd_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeAdd_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeAdd_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeAdd_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeAdd_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeAdd_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeAdd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLarge_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLarge_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLarge_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLarge_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLarge_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLarge_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLarge_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLarge_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeMedium_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeMedium_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeMedium_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeMedium_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeMedium_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeMedium_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeMedium_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeMedium_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeRemove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeRemove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeRemove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeRemove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeRemove_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeRemove_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeRemove_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeRemove_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeSmall_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeSmall_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeSmall_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeSmall_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeSmall_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeSmall_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeSmall_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeSmall_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallAdd_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallAdd_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallAdd_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallAdd_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallAdd_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallAdd_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallAdd_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallAdd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallRemove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallRemove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallRemove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallRemove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallRemove_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallRemove_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObjectSmallRemove_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ObjectSmallRemove_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

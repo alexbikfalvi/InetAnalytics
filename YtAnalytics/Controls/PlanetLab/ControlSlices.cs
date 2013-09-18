@@ -17,14 +17,11 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
-using MapApi;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
@@ -97,14 +94,14 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If there is no validated PlanetLab person account, show a message and return.
 			if (-1 == CrawlerStatic.PlanetLabPersonId)
 			{
-				MessageBox.Show(this, "You must set and validate a PlanetLab account in settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			// Warn the user about the refresh.
 			if (MessageBox.Show(
 				this,
-				"You will now refresh the list with the slices to which you have access with your PlanetLab account. Click Yes to continue.",
+				"You will now refresh the list with the slices to which you have access with your PlanetLab account. This will remove the configuration of slices that are no longer available. Click Yes to continue.",
 				"Refresh PlanetLab Slices",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,

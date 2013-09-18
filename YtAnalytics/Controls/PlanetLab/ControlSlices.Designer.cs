@@ -34,21 +34,27 @@
 			this.listViewSlices = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderExpires = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderNodes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderMaximum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
+			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.columnHeaderCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderExpires = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderNodes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderMaximum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
+			this.buttonAddSlice = new System.Windows.Forms.ToolStripButton();
+			this.buttonRemoveSlice = new System.Windows.Forms.ToolStripButton();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonAddNode = new System.Windows.Forms.ToolStripButton();
+			this.buttonRemoveNode = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -100,6 +106,7 @@
 			this.listViewSlices.UseCompatibleStateImageBehavior = false;
 			this.listViewSlices.View = System.Windows.Forms.View.Details;
 			this.listViewSlices.ItemActivate += new System.EventHandler(this.OnProperties);
+			this.listViewSlices.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
 			// 
 			// columnHeaderId
 			// 
@@ -109,6 +116,26 @@
 			// 
 			this.columnHeaderName.Text = "Name";
 			this.columnHeaderName.Width = 120;
+			// 
+			// columnHeaderCreated
+			// 
+			this.columnHeaderCreated.Text = "Created";
+			this.columnHeaderCreated.Width = 120;
+			// 
+			// columnHeaderExpires
+			// 
+			this.columnHeaderExpires.Text = "Expires";
+			this.columnHeaderExpires.Width = 120;
+			// 
+			// columnHeaderNodes
+			// 
+			this.columnHeaderNodes.Text = "Nodes";
+			this.columnHeaderNodes.Width = 80;
+			// 
+			// columnHeaderMaximum
+			// 
+			this.columnHeaderMaximum.Text = "Maximum";
+			this.columnHeaderMaximum.Width = 80;
 			// 
 			// imageList
 			// 
@@ -122,7 +149,13 @@
             this.buttonRefresh,
             this.buttonCancel,
             this.separator1,
-            this.buttonProperties});
+            this.buttonProperties,
+            this.separator2,
+            this.buttonAddSlice,
+            this.buttonRemoveSlice,
+            this.separator3,
+            this.buttonAddNode,
+            this.buttonRemoveNode});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
@@ -164,6 +197,14 @@
 			this.buttonProperties.Text = "&Properties";
 			this.buttonProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
+			// controlLog
+			// 
+			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLog.Location = new System.Drawing.Point(0, 0);
+			this.controlLog.Name = "controlLog";
+			this.controlLog.Size = new System.Drawing.Size(798, 169);
+			this.controlLog.TabIndex = 0;
+			// 
 			// legendItemSuccess
 			// 
 			this.legendItemSuccess.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
@@ -184,33 +225,50 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
-			// columnHeaderCreated
+			// buttonAddSlice
 			// 
-			this.columnHeaderCreated.Text = "Created";
-			this.columnHeaderCreated.Width = 120;
+			this.buttonAddSlice.Image = global::YtAnalytics.Resources.ObjectSmallAdd_16;
+			this.buttonAddSlice.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonAddSlice.Name = "buttonAddSlice";
+			this.buttonAddSlice.Size = new System.Drawing.Size(75, 22);
+			this.buttonAddSlice.Text = "&Add slice";
 			// 
-			// columnHeaderExpires
+			// buttonRemoveSlice
 			// 
-			this.columnHeaderExpires.Text = "Expires";
-			this.columnHeaderExpires.Width = 120;
+			this.buttonRemoveSlice.Enabled = false;
+			this.buttonRemoveSlice.Image = global::YtAnalytics.Resources.ObjectSmallRemove_16;
+			this.buttonRemoveSlice.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRemoveSlice.Name = "buttonRemoveSlice";
+			this.buttonRemoveSlice.Size = new System.Drawing.Size(96, 22);
+			this.buttonRemoveSlice.Text = "R&emove slice";
 			// 
-			// columnHeaderNodes
+			// separator2
 			// 
-			this.columnHeaderNodes.Text = "Nodes";
-			this.columnHeaderNodes.Width = 80;
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
 			// 
-			// columnHeaderMaximum
+			// separator3
 			// 
-			this.columnHeaderMaximum.Text = "Maximum";
-			this.columnHeaderMaximum.Width = 80;
+			this.separator3.Name = "separator3";
+			this.separator3.Size = new System.Drawing.Size(6, 25);
 			// 
-			// controlLog
+			// buttonAddNode
 			// 
-			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlLog.Location = new System.Drawing.Point(0, 0);
-			this.controlLog.Name = "controlLog";
-			this.controlLog.Size = new System.Drawing.Size(798, 169);
-			this.controlLog.TabIndex = 0;
+			this.buttonAddNode.Enabled = false;
+			this.buttonAddNode.Image = global::YtAnalytics.Resources.NodeAdd_16;
+			this.buttonAddNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonAddNode.Name = "buttonAddNode";
+			this.buttonAddNode.Size = new System.Drawing.Size(79, 22);
+			this.buttonAddNode.Text = "A&dd node";
+			// 
+			// buttonRemoveNode
+			// 
+			this.buttonRemoveNode.Enabled = false;
+			this.buttonRemoveNode.Image = global::YtAnalytics.Resources.NodeRemove_16;
+			this.buttonRemoveNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRemoveNode.Name = "buttonRemoveNode";
+			this.buttonRemoveNode.Size = new System.Drawing.Size(100, 22);
+			this.buttonRemoveNode.Text = "Remo&ve node";
 			// 
 			// ControlSlices
 			// 
@@ -253,5 +311,11 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderExpires;
 		private System.Windows.Forms.ColumnHeader columnHeaderNodes;
 		private System.Windows.Forms.ColumnHeader columnHeaderMaximum;
+		private System.Windows.Forms.ToolStripSeparator separator2;
+		private System.Windows.Forms.ToolStripButton buttonAddSlice;
+		private System.Windows.Forms.ToolStripButton buttonRemoveSlice;
+		private System.Windows.Forms.ToolStripSeparator separator3;
+		private System.Windows.Forms.ToolStripButton buttonAddNode;
+		private System.Windows.Forms.ToolStripButton buttonRemoveNode;
 	}
 }
