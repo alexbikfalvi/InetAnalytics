@@ -34,8 +34,8 @@ namespace YtCrawler.Testing
 		/// <param name="rootPath">The root registry path.</param>
 		public Testing(RegistryKey rootKey, string rootPath)
 		{
-			this.WebRequest = new TestingWebRequest("{0}\\{1}\\Testing\\WebRequest".FormatWith(rootKey.Name, rootPath));
-			this.SshRequest = new TestingSshRequest("{0}\\{1}\\Testing\\SshRequest".FormatWith(rootKey.Name, rootPath));
+			this.WebRequest = new TestingWebRequest(@"{0}\{1}\Testing\WebRequest".FormatWith(rootKey.Name, rootPath));
+			this.SshRequest = new TestingSshRequest(@"{0}\{1}\Testing\SshRequest".FormatWith(rootKey.Name, rootPath));
 		}
 
 		// Public properties.

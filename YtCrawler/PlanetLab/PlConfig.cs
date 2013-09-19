@@ -50,7 +50,7 @@ namespace YtCrawler.PlanetLab
 				this.key = rootKey.CreateSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree);
 			}
 			// Set the root path.
-			this.root = "{0}\\{1}".FormatWith(rootKey.Name, path);
+			this.root = @"{0}\{1}".FormatWith(rootKey.Name, path);
 
 			// Load the PlanetLab sites configuration.
 			try { this.sites.LoadFromFile(this.SitesFileName); }

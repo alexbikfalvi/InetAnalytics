@@ -86,7 +86,7 @@ namespace YtCrawler.Database
 			// Create the logger for this server.
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
-			this.logSource = "Database\\{0}".FormatWith(this.id);
+			this.logSource = @"Database\{0}".FormatWith(this.id);
 
 			// Create the database tables and relationships.
 			this.tables = new DbTables(this.key);
@@ -136,7 +136,7 @@ namespace YtCrawler.Database
 			// Create the logger for this server.
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
-			this.logSource = "Database\\{0}".FormatWith(this.id);
+			this.logSource = @"Database\{0}".FormatWith(this.id);
 
 			// Create the database tables and relationships.
 			this.tables = new DbTables(this.key);

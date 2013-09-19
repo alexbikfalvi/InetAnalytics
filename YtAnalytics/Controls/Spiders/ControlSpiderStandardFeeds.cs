@@ -34,7 +34,7 @@ namespace YtAnalytics.Controls.Spiders
 	/// </summary>
 	public partial class ControlSpiderStandardFeeds : ControlDatabase
 	{
-		//private string logSource = "Spider\\Standard Feeds";
+		//private string logSource = @"Spider\Standard Feeds";
 
 		// Private variables.
 

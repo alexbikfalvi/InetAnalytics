@@ -281,7 +281,7 @@ namespace YtApi.Ajax
 			MatchCollection matches = Regex.Matches(value, "^t:");
 
 			if (matches.Count != 1) throw new AjaxException("Cannot parse chart axis data: the series type can only be \"t\".");
-			if (Regex.IsMatch(value, "\\|")) throw new AjaxException("Cannot parse chart axis data: only one data series is allowed.");
+			if (Regex.IsMatch(value, @"\|")) throw new AjaxException("Cannot parse chart axis data: only one data series is allowed.");
 
 			// Get the data
 			string[] dataString = value.Substring(matches[0].Length).Split(AjaxHistory.commaSplit, StringSplitOptions.RemoveEmptyEntries);

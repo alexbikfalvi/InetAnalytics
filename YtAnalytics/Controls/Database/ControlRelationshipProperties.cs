@@ -87,7 +87,7 @@ namespace YtAnalytics.Controls.Database
 				this.textBoxFieldLeft.Text = newRelationship.FieldLeft;
 				this.textBoxFieldRight.Text = newRelationship.FieldRight;
 				this.checkBoxReadOnly.Checked = newRelationship.ReadOnly;
-				this.labelTitle.Text = "{0}\\{1} ← {2}\\{3}".FormatWith(
+				this.labelTitle.Text = @"{0}\{1} ← {2}\{3}".FormatWith(
 					newRelationship.TableLeft.LocalName,
 					newRelationship.FieldLeft,
 					newRelationship.TableRight.LocalName,
