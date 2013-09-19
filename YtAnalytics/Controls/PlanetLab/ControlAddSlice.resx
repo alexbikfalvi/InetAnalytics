@@ -117,56 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>254, 17</value>
+  <metadata name="labelTitle.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
-  <data name="imageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAm
-        BQAAAk1TRnQBSQFMAwEBAAHQAQAB0AEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
-        ARADAAEBAQABIAYAARAiAAMxAU0BtgKxAfgBxQLCAfsDbwHiA2MB2ANTAaoDOwFkAw0BEtwAA0UBfQHb
-        AdYB0wH+AbABbwEvAf8BsQFwATEB/wHlAeAB3gH/A2QB/wNbAf8DewH8A28B4wMzAVPUAANXAbcDlwH1
-        AeYB4QHeAf8BsAFvAS8B/wGcAUoBAAH/AbEBcQEzAf8B5gHhAd4B/wFjAWIBYwH/AzkB/wNBAf8DfAHu
-        A1ABnswAA0YBfgHaAdUB0gH+AeQB3wHdAf8BkgKRAf8B6gHlAeIB/wGwAW8BLwH/AbEBcQEyAf8B6AHj
-        AeEB/wOMAf8DogH/Az0B/wM5Af8DfAHuAzIBUcQAAzABTAHcAdYB0wH+AbABbwEvAf8BsAFvATAB/wHs
-        AecB5QH/A98B/wHmAeEB3gH/Ae0B6AHlAf8D5AH/AWICYQH/A94B/wPSAf8DOwH/A0IB/wNvAeMDDQES
-        wAABtgKxAfgBsAFvAS8B/wGcAUoBAAH/AZwBSgEAAf8BsQFxATIB/wHmAeEB3gH/AZIBkQGSAf8BmwGa
-        AZsB/wHmAeEB3gH/AeUB4AHdAf8BbAJrAf8DUAH/A0QB/wM5Af8DhgH7AzoBYcAAAcUCwgH7AbABbwEv
-        Af8BnAFKAQAB/wGcAUoBAAH/AZwBSgEAAf8BsgFyATQB/wHqAeYB5QH/AesB5gHjAf8BsAFvAS8B/wGx
-        AXEBMgH/AegB4wHgAf8BxgLFAf8DqwH/AzkB/wNdAf8DUwGqwAADcQHhAeUB4AHdAf8BsAFvAS8B/wGc
-        AUoBAAH/AZwBSgEAAf8BsQFxATMB/wHsAegB5gH/Ae0B6AHlAf8BsAFvAS8B/wGxAXEBMgH/AegB4wHg
-        Af8B/AL7Bf8DSQH/AzwB/wNkAdnAAANkAdkDZgH/AecB4QHeAf8BsAFvAS8B/wGxAXABMQH/AeYB4QHf
-        Af8BwQHAAcEB/wP7Af8B7QHoAeUB/wHpAeQB4QH/AY4CjQn/A0kB/wM8Af8DYwHYwAADUwGqA10B/wFm
-        AmUB/wHrAeUB4wH/AeoB5QHjAf8BhgGFAYYB/wNvAf8DuAH/A8cB/wGPAo4B/wNlAf8DuAH/A6sB/wM5
-        Af8DWwH/A1MBqsAAAzoBYQOGAfsDOQH/AXECcAH/AXQBcwF0Af8DQwH/Az8B/wNQAf8DUAH/Az4B/wNF
-        Af8DUAH/A0QB/wM5Af8DewH8AzsBZMAAAw0BEgNvAeMDQgH/A0AB/wPeAf8D0gH/AzoB/wPlAf8D2wH/
-        AzkB/wPeAf8D0gH/AzsB/wNBAf8DbwHjAw0BEsQAAzIBUQN8Ae4DOQH/A0AB/wOrAf8DWQH/A4cB/wNy
-        Af8DZAH/A6IB/wM9Af8DOQH/A3wB7gMzAVPMAANQAZ4DfAHuA0EB/wM5Af8DOgH/AzoB/wM6Af8DOgH/
-        AzkB/wNCAf8DfAHuA1ABntQAAzMBUwNvAeMDewH8A1sB/wM8Af8DPAH/A10B/wOGAfsDbwHjAzIBUdwA
-        Aw0BEgM7AWQDUwGqA2MB2ANkAdkDUgGpAzoBYQMNARLQAAFCAU0BPgcAAT4DAAEoAwABQAMAARADAAEB
-        AQABAQUAAYAXAAP/AQAB8AEPBgAB4AEHBgABwAEDBgABgAEBRgABgAEBBgABwAEDBgAB4AEHBgAB8AEP
-        BgAL
-</value>
-  </data>
-  <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>156, 17</value>
+  <metadata name="textBoxName.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="buttonCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
-        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
-        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
-        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
-        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
-        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
-        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
-        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
-        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
-        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
-</value>
-  </data>
+  <metadata name="pictureBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="labelSearch.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="listView.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="labelStatus.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="buttonCancel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="buttonSelect.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="buttonClose.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="buttonRefresh.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

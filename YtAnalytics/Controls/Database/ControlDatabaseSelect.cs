@@ -44,7 +44,7 @@ namespace YtAnalytics.Controls.Database
 		/// </summary>
 		public ControlDatabaseSelect()
 		{
-			// Initialize the components.
+			// Initialize the component.
 			this.InitializeComponent();
 		}
 

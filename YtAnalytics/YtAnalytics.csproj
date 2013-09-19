@@ -73,6 +73,12 @@
     <Compile Include="Controls\Net\Ssh\ControlSsh.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSlice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSlice.Designer.cs">
+      <DependentUpon>ControlAddSlice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlRequest.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -508,6 +514,7 @@
     <Compile Include="Events\CommentEventArgs.cs" />
     <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
     <Compile Include="Events\PasswordChangedEventArgs.cs" />
+    <Compile Include="Events\PlanetLabEventArgs.cs" />
     <Compile Include="Events\ProfileEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
@@ -667,6 +674,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddSlice.resx">
+      <DependentUpon>ControlAddSlice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlRequest.resx">
       <DependentUpon>ControlRequest.cs</DependentUpon>

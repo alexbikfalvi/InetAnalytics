@@ -286,7 +286,20 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSelectionChanged(object sender, EventArgs e)
 		{
-			this.buttonProperties.Enabled = this.listViewSlices.SelectedItems.Count != 0;
+			if (this.listViewSlices.SelectedItems.Count > 0)
+			{
+				this.buttonProperties.Enabled = true;
+				this.buttonRemoveSlice.Enabled = true;
+				this.buttonAddNode.Enabled = true;
+				this.buttonRemoveNode.Enabled = true;
+			}
+			else
+			{
+				this.buttonProperties.Enabled = false;
+				this.buttonRemoveSlice.Enabled = false;
+				this.buttonAddNode.Enabled = false;
+				this.buttonRemoveNode.Enabled = false;
+			}
 		}
 
 		/// <summary>
@@ -304,6 +317,63 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Show the site properties.
 			this.formSliceProperties.ShowDialog(this, "Slice", slice);
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a new slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddSlice(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when the user removes an existing slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRemoveSlice(object sender, EventArgs e)
+		{
+			// If there are no selected slices, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+			// Get the selected item.
+			ListViewItem item = this.listViewSlices.SelectedItems[0];
+			// Get the slice.
+			PlSlice slice = item.Tag as PlSlice;
+			// Else, ask user confirmation.
+			if (MessageBox.Show(
+				this,
+				"You are removing the slice \'{0}\' from your slices list. Do you want to continue?".FormatWith(slice.Name),
+				"Remove Slice",
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+			{
+				// Remove the slice.
+				this.crawler.Config.PlanetLab.Slices.Remove(slice);
+				// Remove the list view item.
+				this.listViewSlices.Items.Remove(item);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a node to a slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddNode(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when the user removes a node from a slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRemoveNode(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
