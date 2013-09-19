@@ -19,23 +19,22 @@
 using System;
 using System.Windows.Forms;
 using YtAnalytics.Events;
-using YtCrawler.Database;
-using YtCrawler.Database.Data;
+using PlanetLab.Api
 using DotNetApi.Windows;
 
-namespace YtAnalytics.Forms.Database
+namespace YtAnalytics.Forms.PlanetLab
 {
 	/// <summary>
-	/// A form dialog allowing the selection of an object from the database.
+	/// A form dialog allowing the selection of a PlanetLab slice.
 	/// </summary>
-	public partial class FormDatabaseSelect : Form
+	public sealed partial class FormAddSlice : Form
 	{
 		private bool canClose = true;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormDatabaseSelect()
+		public FormAddSlice()
 		{
 			InitializeComponent();
 
@@ -46,52 +45,24 @@ namespace YtAnalytics.Forms.Database
 		// Public properties.
 
 		/// <summary>
-		/// The database selected result.
+		/// The selected PlanetLab slice.
 		/// </summary>
-		public DbObject SelectedResult { get; private set; }
-		/// <summary>
-		/// The database all results.
-		/// </summary>
-		public DbDataObject AllResults { get; private set; }
+		public PlSlice Result { get; private set; }
 
 		// Public methods.
-
-		/// <summary>
-		/// Opens the modal dialog to select database objects from the specified database server and table.
-		/// </summary>
-		/// <typeparam name="T">The database object type.</typeparam>
-		/// <param name="owner">The window owner.</param>
-		/// <param name="server">The database server.</param>
-		/// <param name="table">The database table.</param>
-		/// <param name="result">The result to display when the dialog opens.</param>
-		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServer server, ITable table, DbDataObject result)
-		{
-			// Reset the result.
-			this.SelectedResult = null;
-			this.AllResults = result;
-			// Initialize the control.
-			this.control.Select(server, table, result);
-			// Show the dialog.
-			return base.ShowDialog(owner);
-		}
 
 		/// <summary>
 		/// Opens the modal dialog to select database objects from the specified database server and query.
 		/// </summary>
 		/// <typeparam name="T">The database object type.</typeparam>
 		/// <param name="owner">The window owner.</param>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		/// <param name="result">The result to display when the dialog opens.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServer server, DbQuery query, DbDataObject result)
+		public DialogResult ShowDialog(IWin32Window owner)
 		{
 			// Reset the result.
-			this.SelectedResult = null;
-			this.AllResults = result;
-			// Initialize the control.
-			this.control.Select(server, query, result);
+			this.Result = null;
+			// Refresh the results list.
+			this.control.RefreshList();
 			// Show the dialog.
 			return base.ShowDialog(owner);
 		}
@@ -119,15 +90,14 @@ namespace YtAnalytics.Forms.Database
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the database object.
+		/// An event handler called when the user selects a .
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSelected(object sender, DatabaseObjectSelectedEventArgs e)
+		private void OnSelected(object sender, PlanetLabObjectEventArgs<PlSlice> e)
 		{
 			// Set the result.
-			this.SelectedResult = e.SelectedResult;
-			this.AllResults = e.AllResults;
+			this.Result = e.Object;
 			// Set the dialog result.
 			this.DialogResult = DialogResult.OK;
 			// Close the form.
@@ -180,17 +150,6 @@ namespace YtAnalytics.Forms.Database
 		private void OnDatabaseOperationFinished(object sender, EventArgs e)
 		{
 			this.canClose = true;
-		}
-
-		/// <summary>
-		/// An event handler called when the form loads.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnLoad(object sender, EventArgs e)
-		{
-			// If the current result is null, refresh the results list.
-			if (this.AllResults == null) this.control.RefreshList();
 		}
 	}
 }

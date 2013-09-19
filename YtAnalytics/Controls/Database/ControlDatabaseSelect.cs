@@ -30,7 +30,7 @@ namespace YtAnalytics.Controls.Database
 	/// <summary>
 	/// A control that selects items from a database, based on a query selected by the user.
 	/// </summary>
-	public partial class ControlDatabaseSelect : ControlDatabase
+	public sealed partial class ControlDatabaseSelect : ControlDatabase
 	{
 		private DbServer server = null;
 		private DbCommand command = null;
@@ -294,7 +294,6 @@ namespace YtAnalytics.Controls.Database
 			// Execute the database operation.
 			this.DatabaseQuery(this.server, this.query);
 		}
-
 
 		/// <summary>
 		/// An event handler called when the user chooses an item.

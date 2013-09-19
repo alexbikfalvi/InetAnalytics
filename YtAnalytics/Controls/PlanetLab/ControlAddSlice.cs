@@ -26,7 +26,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control that receives user input data to add a new PlanetLab slice.
 	/// </summary>
-	public partial class ControlAddSlice : ControlRequest
+	public sealed partial class ControlAddSlice : ControlRequest
 	{
 		/// <summary>
 		/// Creates a new control instance.
@@ -58,7 +58,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		// Public methods.
 
-
+		public void RefreshList()
+		{
+		}
 
 		// Private methods.
 	}
