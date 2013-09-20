@@ -2409,4 +2409,52 @@ Female, 45-54 years
   <data name="ObjectSmallRemove_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ObjectSmallRemove_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="NodeLargeError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeError_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeError_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeError_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeError_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeFloppy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeFloppy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeFloppy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeFloppy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeFloppy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeFloppy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeFloppy_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeFloppy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeSuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeSuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeSuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeSuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeWarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeWarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeWarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeLargeWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\NodeLargeWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

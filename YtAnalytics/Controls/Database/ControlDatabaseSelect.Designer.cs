@@ -47,7 +47,7 @@
 			this.labelTitle.Location = new System.Drawing.Point(75, 34);
 			this.labelTitle.Name = "labelTitle";
 			this.labelTitle.Size = new System.Drawing.Size(172, 20);
-			this.labelTitle.TabIndex = 1;
+			this.labelTitle.TabIndex = 0;
 			this.labelTitle.Text = "Select database object";
 			// 
 			// buttonClose
@@ -56,7 +56,7 @@
 			this.buttonClose.Location = new System.Drawing.Point(522, 374);
 			this.buttonClose.Name = "buttonClose";
 			this.buttonClose.Size = new System.Drawing.Size(75, 23);
-			this.buttonClose.TabIndex = 4;
+			this.buttonClose.TabIndex = 6;
 			this.buttonClose.Text = "&Close";
 			this.buttonClose.UseVisualStyleBackColor = true;
 			this.buttonClose.Click += new System.EventHandler(this.OnClose);
@@ -78,7 +78,7 @@
 			this.buttonCancel.Location = new System.Drawing.Point(84, 374);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-			this.buttonCancel.TabIndex = 6;
+			this.buttonCancel.TabIndex = 3;
 			this.buttonCancel.Text = "C&ancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
@@ -90,7 +90,7 @@
 			this.buttonRefresh.Location = new System.Drawing.Point(3, 374);
 			this.buttonRefresh.Name = "buttonRefresh";
 			this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
-			this.buttonRefresh.TabIndex = 3;
+			this.buttonRefresh.TabIndex = 2;
 			this.buttonRefresh.Text = "&Refresh";
 			this.buttonRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonRefresh.UseVisualStyleBackColor = true;
@@ -122,7 +122,7 @@
 			this.dataGrid.ReadOnly = true;
 			this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGrid.Size = new System.Drawing.Size(594, 294);
-			this.dataGrid.TabIndex = 7;
+			this.dataGrid.TabIndex = 1;
 			this.dataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnCellDoubleClick);
 			this.dataGrid.SelectionChanged += new System.EventHandler(this.OnSelectionChanged);
 			// 
@@ -134,7 +134,7 @@
 			this.labelStatus.Location = new System.Drawing.Point(165, 374);
 			this.labelStatus.Name = "labelStatus";
 			this.labelStatus.Size = new System.Drawing.Size(270, 23);
-			this.labelStatus.TabIndex = 8;
+			this.labelStatus.TabIndex = 4;
 			this.labelStatus.Text = "Ready.";
 			this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -152,6 +152,14 @@
 			this.Controls.Add(this.pictureBox);
 			this.Name = "ControlDatabaseSelect";
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Controls.SetChildIndex(this.pictureBox, 0);
+			this.Controls.SetChildIndex(this.labelTitle, 0);
+			this.Controls.SetChildIndex(this.buttonRefresh, 0);
+			this.Controls.SetChildIndex(this.buttonClose, 0);
+			this.Controls.SetChildIndex(this.buttonSelect, 0);
+			this.Controls.SetChildIndex(this.buttonCancel, 0);
+			this.Controls.SetChildIndex(this.dataGrid, 0);
+			this.Controls.SetChildIndex(this.labelStatus, 0);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
 			this.ResumeLayout(false);

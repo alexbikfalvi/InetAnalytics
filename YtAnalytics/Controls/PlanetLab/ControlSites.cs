@@ -235,12 +235,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Add the list view items.
 				foreach (PlSite site in this.crawler.Config.PlanetLab.Sites)
 				{
-					// If the filter is not null.
-					if (null != this.filter)
+					// If the filter is not null or empty.
+					if (!string.IsNullOrEmpty(this.filter))
 					{
 						// If the site name does not match the filter, continue.
-						if (site.Name == null) continue;
-						if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
+						if (!string.IsNullOrEmpty(site.Name))
+						{
+							if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
+						}
 					}
 
 					// Increment the number of displayed sites.
@@ -345,7 +347,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnFilterTextChanged(object sender, EventArgs e)
 		{
 			// If the filter has changed.
-			if ((this.filter != this.textBoxFilter.Text.Trim()) && (!string.IsNullOrWhiteSpace(this.textBoxFilter.Text)))
+			if (this.filter != this.textBoxFilter.Text.Trim())
 			{
 				// Update the clear button state.
 				this.buttonClear.Enabled = !string.IsNullOrWhiteSpace(this.textBoxFilter.Text);

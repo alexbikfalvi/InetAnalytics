@@ -43,6 +43,8 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private delegate void RequestCompletedAction(XmlRpcResponse response);
 
+		private object sync = new object();
+
 		private PlRequest request = null;
 		private IAsyncResult result = null;
 
@@ -60,18 +62,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Create the delegates.
 			this.delegateCompleteRequest = new RequestCompletedAction(this.OnCompleteRequestUi);
-		}
-
-		/// <summary>
-		/// Cancels the current PlanetLab request, if any.
-		/// </summary>
-		public void CancelRequest()
-		{
-			// If there is no current request, do nothing.
-			if (null == this.request) return;
-
-			// Cancel the request.
-			this.request.Cancel(this.result);
 		}
 
 		// Protected methods.
@@ -111,77 +101,99 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.pendingPassword = null;
 			this.pendingParameter = null;
 
-			// If a request is already in progress.
-			if (null != this.request)
+			lock (this.sync)
 			{
-				// Set the pending values.
-				this.pendingRequest = request;
-				this.pendingUsername = username;
-				this.pendingPassword = password;
-				this.pendingParameter = parameter;
+				// If a request is already in progress.
+				if (null != this.request)
+				{
+					// Set the pending values.
+					this.pendingRequest = request;
+					this.pendingUsername = username;
+					this.pendingPassword = password;
+					this.pendingParameter = parameter;
+					// Cancel the current request
+					this.request.Cancel(this.result);
+					// Return.
+					return;
+				}
+
+				// Save the new request.
+				this.request = request;
+				try
+				{
+
+					// Show the notification box.
+					this.ShowMessage(
+						Resources.GlobeClock_48,
+						"PlanetLab Update",
+						"Refreshing the PlanetLab information...",
+						true,
+						-1,
+						this.OnBeginRequest,
+						new object[] { MessageStatus.Busy, "Please wait..." });
+
+					// If the parameter is not null.
+					if (null != parameter)
+					{
+						// Begin the request with a parameter.
+						this.result = request.Begin(
+							username,
+							password,
+							parameter,
+							this.OnCallback
+							);
+					}
+					else
+					{
+						// Begin the request without a parameter.
+						this.result = request.Begin(
+							username,
+							password,
+							this.OnCallback
+							);
+					}
+				}
+				catch (Exception exception)
+				{
+					// Set the current request and result to null.
+					this.request = null;
+					this.result = null;
+
+					// Show the notification box.
+					this.ShowMessage(
+						Resources.GlobeError_48,
+						"PlanetLab Update",
+						"Refreshing the PlanetLab information failed. {0}".FormatWith(exception.Message),
+						false,
+						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+						this.OnEndRequest,
+						new object[] { MessageStatus.Error, "Refreshing the PlanetLab information failed.{0}{1}{2}".FormatWith(
+							Environment.NewLine,
+							Environment.NewLine,
+							exception.Message) });
+
+					// Rethrow the exception.
+					throw;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Cancels the current request, if any.
+		/// </summary>
+		protected void CancelRequest()
+		{
+			lock (sync)
+			{
+				// If there is no current request, do nothing.
+				if (null == this.request) return;
 				// Cancel the current request
 				this.request.Cancel(this.result);
-				// Return.
-				return;
-			}
-
-			// Save the new request.
-			this.request = request;
-			try
-			{
-
-				// Show the notification box.
-				this.ShowMessage(
-					Resources.GlobeClock_48,
-					"PlanetLab Update",
-					"Refreshing the PlanetLab information...",
-					true,
-					-1,
-					this.OnBeginRequest,
-					new object[] { MessageStatus.Busy, "Please wait..." });
-
-				// If the parameter is not null.
-				if (null != parameter)
-				{
-					// Begin the request with a parameter.
-					this.result = request.Begin(
-						username,
-						password,
-						parameter,
-						this.OnCallback
-						);
-				}
-				else
-				{
-					// Begin the request without a parameter.
-					this.result = request.Begin(
-						username,
-						password,
-						this.OnCallback
-						);
-				}
-			}
-			catch (Exception exception)
-			{
-				// Set the current request and result to null.
-				this.request = null;
-				this.result = null;
-
-				// Show the notification box.
-				this.ShowMessage(
-					Resources.GlobeError_48,
-					"PlanetLab Update",
-					"Refreshing the PlanetLab information failed. {0}".FormatWith(exception.Message),
-					false,
-					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-					this.OnEndRequest,
-					new object[] { MessageStatus.Error, "Refreshing the PlanetLab information failed.{0}{1}{2}".FormatWith(
-						Environment.NewLine,
-						Environment.NewLine,
-						exception.Message) });
-
-				// Rethrow the exception.
-				throw;
+				// Set the pending values to null.
+				this.pendingRequest = null;
+				this.pendingUsername = null;
+				this.pendingPassword = null;
+				this.pendingParameter = null;
 			}
 		}
 
@@ -204,6 +216,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
+		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
+		/// </summary>
+		protected virtual void OnCancelRequest()
+		{
+			// Do nothing.
+		}
+
+		/// <summary>
 		/// An event handler called when the current request ends, and the notification box is hidden.
 		/// </summary>
 		/// <param name="parameters">The task parameters.</param>
@@ -220,68 +240,96 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="result">The result of the asynchronous operation.</param>
 		private void OnCallback(AsyncWebResult result)
 		{
-			// If the current request is null, do nothing.
-			if (null == this.request) return;
-
-			try
+			lock (this.sync)
 			{
-				// The asynchronous web result.
-				AsyncWebResult asyncResult = null;
-				// Complete the asyncrhonous request.
-				XmlRpcResponse response = this.request.End(result, out asyncResult);
+				// If the current request is null, do nothing.
+				if (null == this.request) return;
 
-				// If no fault occurred during the XML-RPC request.
-				if (response.Fault == null)
+				try
 				{
-					// Display a success notification message.
-					this.ShowMessage(
-						Resources.GlobeSuccess_48,
-						"PlanetLab Update",
-						"Refreshing the PlanetLab information completed successfully.",
-						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnEndRequest);
-				}
-				else
-				{
-					// Display an error notification message.
-					this.ShowMessage(
-						Resources.GlobeWarning_48,
-						"PlanetLab Error",
-						"Refreshing the PlanetLab information has failed (RPC code {0} {1})".FormatWith(response.Fault.FaultCode, response.Fault.FaultString),
-						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnEndRequest,
-						new object[] { MessageStatus.Warning, "Refreshing the PlanetLab information has failed.{0}{1}RPC code: {2}{3}{4}{5})".FormatWith(
-							Environment.NewLine,
-							Environment.NewLine,
-							response.Fault.FaultCode,
-							Environment.NewLine,
-							Environment.NewLine,
-							response.Fault.FaultString) });
-				}
+					// The asynchronous web result.
+					AsyncWebResult asyncResult = null;
+					// Complete the asyncrhonous request.
+					XmlRpcResponse response = this.request.End(result, out asyncResult);
 
-				// Call the event handler.
-				this.OnCompleteRequestUi(response);
-				// Set the current request to null.
-				this.request = null;
-				this.result = null;
-			}
-			catch (WebException exception)
-			{
-				// Set the current request to null.
-				this.request = null;
-				this.result = null;
-				// If the exception status is canceled.
-				if (exception.Status == WebExceptionStatus.RequestCanceled)
-				{
-					// Hide the notification message.
-					this.HideMessage(this.OnEndRequest);
-					// Begin a pending request, if any.
-					this.BeginRequest();
+					// If no fault occurred during the XML-RPC request.
+					if (response.Fault == null)
+					{
+						// Display a success notification message.
+						this.ShowMessage(
+							Resources.GlobeSuccess_48,
+							"PlanetLab Update",
+							"Refreshing the PlanetLab information completed successfully.",
+							false,
+							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+							this.OnEndRequest);
+					}
+					else
+					{
+						// Display an error notification message.
+						this.ShowMessage(
+							Resources.GlobeWarning_48,
+							"PlanetLab Error",
+							"Refreshing the PlanetLab information has failed (RPC code {0} {1})".FormatWith(response.Fault.FaultCode, response.Fault.FaultString),
+							false,
+							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+							this.OnEndRequest,
+							new object[] { MessageStatus.Warning, "Refreshing the PlanetLab information has failed.{0}{1}RPC code: {2}{3}{4}{5})".FormatWith(
+								Environment.NewLine,
+								Environment.NewLine,
+								response.Fault.FaultCode,
+								Environment.NewLine,
+								Environment.NewLine,
+								response.Fault.FaultString) });
+					}
+
+					// Call the event handler.
+					this.OnCompleteRequestUi(response);
+					// Set the current request to null.
+					this.request = null;
+					this.result = null;
 				}
-				else
+				catch (WebException exception)
 				{
+					// Set the current request to null.
+					this.request = null;
+					this.result = null;
+					// If the exception status is canceled.
+					if (exception.Status == WebExceptionStatus.RequestCanceled)
+					{
+						// Hide the notification message.
+						this.HideMessage((object[] parameters) =>
+							{
+								// Call the cancel request handler.
+								this.OnCancelRequest();
+								// Call the end request handler.
+								this.OnEndRequest();
+							});
+						// Begin a pending request, if any.
+						this.BeginRequest();
+					}
+					else
+					{
+						// Display an error notification message.
+						this.ShowMessage(
+							Resources.GlobeError_48,
+							"PlanetLab Update",
+							"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
+							false,
+							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+							this.OnEndRequest,
+							new object[] { MessageStatus.Error, "Refreshing the PlanetLab information has failed.{0}{1}{2})".FormatWith(
+								Environment.NewLine,
+								Environment.NewLine,
+								exception.Message) });
+					}
+				}
+				catch (Exception exception)
+				{
+					// Set the current request to null.
+					this.request = null;
+					this.result = null;
+
 					// Display an error notification message.
 					this.ShowMessage(
 						Resources.GlobeError_48,
@@ -295,25 +343,6 @@ namespace YtAnalytics.Controls.PlanetLab
 							Environment.NewLine,
 							exception.Message) });
 				}
-			}
-			catch (Exception exception)
-			{
-				// Set the current request to null.
-				this.request = null;
-				this.result = null;
-
-				// Display an error notification message.
-				this.ShowMessage(
-					Resources.GlobeError_48,
-					"PlanetLab Update",
-					"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
-					false,
-					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-					this.OnEndRequest,
-					new object[] { MessageStatus.Error, "Refreshing the PlanetLab information has failed.{0}{1}{2})".FormatWith(
-						Environment.NewLine,
-						Environment.NewLine,
-						exception.Message) });
 			}
 		}
 

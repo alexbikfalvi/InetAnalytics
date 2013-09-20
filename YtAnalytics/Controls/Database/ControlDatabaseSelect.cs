@@ -234,6 +234,8 @@ namespace YtAnalytics.Controls.Database
 				this.OnQueryFailed(server, query, exception);
 				return;
 			}
+			// Set the current command to null.
+			this.command = null;
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
@@ -257,6 +259,9 @@ namespace YtAnalytics.Controls.Database
 			this.buttonCancel.Enabled = false;
 			this.buttonClose.Enabled = true;
 
+			// Set the current command to null.
+			this.command = null;
+
 			// Update the status box.
 			this.labelStatus.Text = "Query failed. {0}".FormatWith(exception.Message);
 
@@ -272,6 +277,12 @@ namespace YtAnalytics.Controls.Database
 		{
 			// Disable the cancel button.
 			this.buttonCancel.Enabled = false;
+
+			// If the current command is null, do nothing.
+			if (null == this.command) return;
+
+			// Cancel the command.
+			base.DatabaseQueryCancel(this.command);
 		}
 
 		// Private methods.

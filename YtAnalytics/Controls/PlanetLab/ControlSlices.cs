@@ -46,6 +46,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		private Action delegateUpdateSlices = null;
 
 		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
+		private FormAddSlice formAddSlice = new FormAddSlice();
+		private FormAddNodeLocation formAddNodeLocation = new FormAddNodeLocation();
 
 		// Public declarations
 
@@ -326,7 +328,23 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnAddSlice(object sender, EventArgs e)
 		{
-
+			// Show the add slice dialog.
+			if (this.formAddSlice.ShowDialog(this) == DialogResult.OK)
+			{
+				// Add the slice to the slices list.
+				this.crawler.Config.PlanetLab.Slices.Add(this.formAddSlice.Result);
+				// Add a new list item.
+				ListViewItem item = new ListViewItem(new string[] {
+						this.formAddSlice.Result.Id.HasValue ? this.formAddSlice.Result.Id.Value.ToString() : string.Empty,
+						this.formAddSlice.Result.Name,
+						this.formAddSlice.Result.Created.ToString(),
+						this.formAddSlice.Result.Expires.ToString(),
+						this.formAddSlice.Result.NodeIds != null ? this.formAddSlice.Result.NodeIds.Length.ToString() : "0",
+						this.formAddSlice.Result.MaxNodes.ToString()
+					}, 0);
+				item.Tag = this.formAddSlice.Result;
+				this.listViewSlices.Items.Add(item);
+			}
 		}
 
 		/// <summary>
@@ -357,11 +375,34 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a node to a slice.
+		/// An event handler called when the user adds a node to a slice based on site location.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAddNode(object sender, EventArgs e)
+		private void OnAddNodeLocation(object sender, EventArgs e)
+		{
+			// Show the add node by location dialog.
+			if (this.formAddNodeLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			{
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a node to a slice based on node state.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddNodeState(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a node to a slice based on slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddNodeSlice(object sender, EventArgs e)
 		{
 
 		}

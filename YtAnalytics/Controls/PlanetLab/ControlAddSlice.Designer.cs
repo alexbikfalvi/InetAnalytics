@@ -28,8 +28,10 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAddSlice));
 			this.labelTitle = new System.Windows.Forms.Label();
-			this.textBoxName = new System.Windows.Forms.TextBox();
+			this.textBoxFilter = new System.Windows.Forms.TextBox();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelSearch = new System.Windows.Forms.Label();
 			this.listView = new System.Windows.Forms.ListView();
@@ -39,6 +41,7 @@
 			this.columnHeaderExpires = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderNodes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderMaximum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.labelStatus = new System.Windows.Forms.Label();
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonSelect = new System.Windows.Forms.Button();
@@ -57,14 +60,15 @@
 			this.labelTitle.TabIndex = 0;
 			this.labelTitle.Text = "Add PlanetLab slice";
 			// 
-			// textBoxName
+			// textBoxFilter
 			// 
-			this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.textBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxName.Location = new System.Drawing.Point(110, 73);
-			this.textBoxName.Name = "textBoxName";
-			this.textBoxName.Size = new System.Drawing.Size(487, 20);
-			this.textBoxName.TabIndex = 4;
+			this.textBoxFilter.Location = new System.Drawing.Point(110, 73);
+			this.textBoxFilter.Name = "textBoxFilter";
+			this.textBoxFilter.Size = new System.Drawing.Size(487, 20);
+			this.textBoxFilter.TabIndex = 2;
+			this.textBoxFilter.TextChanged += new System.EventHandler(this.OnFilterTextChanged);
 			// 
 			// pictureBox
 			// 
@@ -103,9 +107,12 @@
 			this.listView.Location = new System.Drawing.Point(3, 99);
 			this.listView.Name = "listView";
 			this.listView.Size = new System.Drawing.Size(594, 269);
-			this.listView.TabIndex = 11;
+			this.listView.SmallImageList = this.imageList;
+			this.listView.TabIndex = 3;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
+			this.listView.ItemActivate += new System.EventHandler(this.OnProperties);
+			this.listView.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
 			// 
 			// columnHeaderId
 			// 
@@ -136,6 +143,12 @@
 			this.columnHeaderMaximum.Text = "Maximum";
 			this.columnHeaderMaximum.Width = 80;
 			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "GlobeObject");
+			// 
 			// labelStatus
 			// 
 			this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -144,7 +157,7 @@
 			this.labelStatus.Location = new System.Drawing.Point(165, 374);
 			this.labelStatus.Name = "labelStatus";
 			this.labelStatus.Size = new System.Drawing.Size(270, 23);
-			this.labelStatus.TabIndex = 16;
+			this.labelStatus.TabIndex = 6;
 			this.labelStatus.Text = "Ready.";
 			this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -154,9 +167,10 @@
 			this.buttonCancel.Location = new System.Drawing.Point(84, 374);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-			this.buttonCancel.TabIndex = 15;
+			this.buttonCancel.TabIndex = 5;
 			this.buttonCancel.Text = "C&ancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
+			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
 			// 
 			// buttonSelect
 			// 
@@ -164,9 +178,10 @@
 			this.buttonSelect.Location = new System.Drawing.Point(441, 374);
 			this.buttonSelect.Name = "buttonSelect";
 			this.buttonSelect.Size = new System.Drawing.Size(75, 23);
-			this.buttonSelect.TabIndex = 14;
+			this.buttonSelect.TabIndex = 7;
 			this.buttonSelect.Text = "&Select";
 			this.buttonSelect.UseVisualStyleBackColor = true;
+			this.buttonSelect.Click += new System.EventHandler(this.OnSelect);
 			// 
 			// buttonClose
 			// 
@@ -174,9 +189,10 @@
 			this.buttonClose.Location = new System.Drawing.Point(522, 374);
 			this.buttonClose.Name = "buttonClose";
 			this.buttonClose.Size = new System.Drawing.Size(75, 23);
-			this.buttonClose.TabIndex = 13;
+			this.buttonClose.TabIndex = 8;
 			this.buttonClose.Text = "&Close";
 			this.buttonClose.UseVisualStyleBackColor = true;
+			this.buttonClose.Click += new System.EventHandler(this.OnClose);
 			// 
 			// buttonRefresh
 			// 
@@ -185,10 +201,11 @@
 			this.buttonRefresh.Location = new System.Drawing.Point(3, 374);
 			this.buttonRefresh.Name = "buttonRefresh";
 			this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
-			this.buttonRefresh.TabIndex = 12;
+			this.buttonRefresh.TabIndex = 4;
 			this.buttonRefresh.Text = "&Refresh";
 			this.buttonRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonRefresh.UseVisualStyleBackColor = true;
+			this.buttonRefresh.Click += new System.EventHandler(this.OnRefreshStarted);
 			// 
 			// ControlAddSlice
 			// 
@@ -202,7 +219,7 @@
 			this.Controls.Add(this.buttonRefresh);
 			this.Controls.Add(this.listView);
 			this.Controls.Add(this.labelSearch);
-			this.Controls.Add(this.textBoxName);
+			this.Controls.Add(this.textBoxFilter);
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(0, 230);
@@ -210,7 +227,7 @@
 			this.Size = new System.Drawing.Size(600, 400);
 			this.Controls.SetChildIndex(this.pictureBox, 0);
 			this.Controls.SetChildIndex(this.labelTitle, 0);
-			this.Controls.SetChildIndex(this.textBoxName, 0);
+			this.Controls.SetChildIndex(this.textBoxFilter, 0);
 			this.Controls.SetChildIndex(this.labelSearch, 0);
 			this.Controls.SetChildIndex(this.listView, 0);
 			this.Controls.SetChildIndex(this.buttonRefresh, 0);
@@ -228,7 +245,7 @@
 
 		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.Label labelTitle;
-		private System.Windows.Forms.TextBox textBoxName;
+		private System.Windows.Forms.TextBox textBoxFilter;
 		private System.Windows.Forms.Label labelSearch;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderId;
@@ -242,5 +259,6 @@
 		private System.Windows.Forms.Button buttonSelect;
 		private System.Windows.Forms.Button buttonClose;
 		private System.Windows.Forms.Button buttonRefresh;
+		private System.Windows.Forms.ImageList imageList;
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace YtAnalytics.Forms.PlanetLab
 {
-	partial class FormAddSlice
+	partial class FormAddNodeLocation
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,7 +30,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.control = new YtAnalytics.Controls.PlanetLab.ControlAddSlice();
+			this.control = new YtAnalytics.Controls.PlanetLab.ControlAddNodeLocation();
 			this.SuspendLayout();
 			// 
 			// control
@@ -40,24 +40,24 @@ namespace YtAnalytics.Forms.PlanetLab
 			this.control.Location = new System.Drawing.Point(0, 0);
 			this.control.MinimumSize = new System.Drawing.Size(0, 230);
 			this.control.Name = "control";
-			this.control.Size = new System.Drawing.Size(584, 362);
+			this.control.Size = new System.Drawing.Size(784, 562);
 			this.control.TabIndex = 0;
 			this.control.RequestStarted += new System.EventHandler(this.OnRequestStarted);
 			this.control.RequestFinished += new System.EventHandler(this.OnRequestFinished);
-			this.control.Selected += new YtAnalytics.Events.PlanetLabObjectEventHandler<PlSlice>(this.OnSelected);
+			this.control.Selected += new YtAnalytics.Events.PlanetLabObjectEventHandler<PlNode>(this.OnSelected);
 			this.control.Closed += new System.EventHandler(this.OnClosed);
 			// 
-			// FormAddSlice
+			// FormAddNodeLocation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(584, 362);
+			this.ClientSize = new System.Drawing.Size(784, 562);
 			this.Controls.Add(this.control);
 			this.MinimizeBox = false;
-			this.Name = "FormAddSlice";
+			this.Name = "FormAddNodeLocation";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.Text = "Add PlanetLab Slice";
+			this.Text = "Add PlanetLab Node";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.ResumeLayout(false);
 
@@ -65,7 +65,7 @@ namespace YtAnalytics.Forms.PlanetLab
 
 		#endregion
 
-		private Controls.PlanetLab.ControlAddSlice control;
+		private Controls.PlanetLab.ControlAddNodeLocation control;
 
 
 

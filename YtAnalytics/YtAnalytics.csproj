@@ -205,6 +205,12 @@
     <Compile Include="Controls\PlanetLab\ControlSlices.Designer.cs">
       <DependentUpon>ControlSlices.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddNodeLocation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddNodeLocation.Designer.cs">
+      <DependentUpon>ControlAddNodeLocation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -518,6 +524,12 @@
     <Compile Include="Events\ProfileEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
+    <Compile Include="Forms\PlanetLab\FormAddNodeLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddNodeLocation.Designer.cs">
+      <DependentUpon>FormAddNodeLocation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormAddSlice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -749,6 +761,9 @@
       <DependentUpon>ControlSlices.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddNodeLocation.resx">
+      <DependentUpon>ControlAddNodeLocation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -903,6 +918,9 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddNodeLocation.resx">
+      <DependentUpon>FormAddNodeLocation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormAddSlice.resx">
       <DependentUpon>FormAddSlice.cs</DependentUpon>
     </EmbeddedResource>
@@ -1011,6 +1029,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\NodeLargeWarning_48.png" />
+    <None Include="Resources\NodeLargeWarning_32.png" />
+    <None Include="Resources\NodeLargeWarning_24.png" />
+    <None Include="Resources\NodeLargeWarning_16.png" />
+    <None Include="Resources\NodeLargeSuccess_48.png" />
+    <None Include="Resources\NodeLargeSuccess_32.png" />
+    <None Include="Resources\NodeLargeSuccess_24.png" />
+    <None Include="Resources\NodeLargeSuccess_16.png" />
+    <None Include="Resources\NodeLargeFloppy_48.png" />
+    <None Include="Resources\NodeLargeFloppy_32.png" />
+    <None Include="Resources\NodeLargeFloppy_24.png" />
+    <None Include="Resources\NodeLargeFloppy_16.png" />
+    <None Include="Resources\NodeLargeError_48.png" />
+    <None Include="Resources\NodeLargeError_32.png" />
+    <None Include="Resources\NodeLargeError_24.png" />
+    <None Include="Resources\NodeLargeError_16.png" />
     <None Include="Resources\GlobeNode_48.png" />
     <None Include="Resources\GlobeNode_32.png" />
     <None Include="Resources\GlobeNode_24.png" />

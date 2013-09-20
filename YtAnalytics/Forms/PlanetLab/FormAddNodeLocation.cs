@@ -19,22 +19,23 @@
 using System;
 using System.Windows.Forms;
 using YtAnalytics.Events;
+using YtCrawler;
 using PlanetLab.Api;
 using DotNetApi.Windows;
 
 namespace YtAnalytics.Forms.PlanetLab
 {
 	/// <summary>
-	/// A form dialog allowing the selection of a PlanetLab slice.
+	/// A form dialog allowing the selection of a PlanetLab node based on site location.
 	/// </summary>
-	public sealed partial class FormAddSlice : Form
+	public sealed partial class FormAddNodeLocation : Form
 	{
 		private bool canClose = true;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddSlice()
+		public FormAddNodeLocation()
 		{
 			InitializeComponent();
 
@@ -45,22 +46,23 @@ namespace YtAnalytics.Forms.PlanetLab
 		// Public properties.
 
 		/// <summary>
-		/// The selected PlanetLab slice.
+		/// The selected PlanetLab node.
 		/// </summary>
-		public PlSlice Result { get; private set; }
+		public PlNode Result { get; private set; }
 
 		// Public methods.
 
 		/// <summary>
 		/// Opens the modal dialog to select a PlanetLab object.
 		/// </summary>
+		/// <param name="config">The crawler configuration.</param>
 		/// <returns>The dialog result.</returns>
-		public new DialogResult ShowDialog()
+		public new DialogResult ShowDialog(CrawlerConfig config)
 		{
 			// Reset the result.
 			this.Result = null;
 			// Refresh the results list.
-			this.control.RefreshList();
+			this.control.Refresh(config);
 			// Show the dialog.
 			return base.ShowDialog();
 		}
@@ -69,13 +71,14 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// Opens the modal dialog to select a PlanetLab object.
 		/// </summary>
 		/// <param name="owner">The window owner.</param>
+		/// <param name="config">The crawler configuration.</param>
 		/// <returns>The dialog result.</returns>
-		public new DialogResult ShowDialog(IWin32Window owner)
+		public new DialogResult ShowDialog(IWin32Window owner, CrawlerConfig config)
 		{
 			// Reset the result.
 			this.Result = null;
-			// Refresh the results list.
-			this.control.RefreshList();
+			// Refresh the control.
+			this.control.Refresh(config);
 			// Show the dialog.
 			return base.ShowDialog(owner);
 		}
@@ -103,11 +106,11 @@ namespace YtAnalytics.Forms.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects a .
+		/// An event handler called when the user selects a node.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSelected(object sender, PlanetLabObjectEventArgs<PlSlice> e)
+		private void OnSelected(object sender, PlanetLabObjectEventArgs<PlNode> e)
 		{
 			// Set the result.
 			this.Result = e.Object;
