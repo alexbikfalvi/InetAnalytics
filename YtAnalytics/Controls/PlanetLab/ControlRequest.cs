@@ -41,8 +41,6 @@ namespace YtAnalytics.Controls.PlanetLab
 			Busy = 3
 		}
 
-		private delegate void RequestCompletedAction(XmlRpcResponse response);
-
 		private object sync = new object();
 
 		private PlRequest request = null;
@@ -53,7 +51,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private SecureString pendingPassword = null;
 		private object pendingParameter = null;
 
-		private RequestCompletedAction delegateCompleteRequest;
+		private Action<XmlRpcResponse> delegateCompleteRequest;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -61,7 +59,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		public ControlRequest()
 		{
 			// Create the delegates.
-			this.delegateCompleteRequest = new RequestCompletedAction(this.OnCompleteRequestUi);
+			this.delegateCompleteRequest = new Action<XmlRpcResponse>(this.OnCompleteRequestUi);
 		}
 
 		// Protected methods.

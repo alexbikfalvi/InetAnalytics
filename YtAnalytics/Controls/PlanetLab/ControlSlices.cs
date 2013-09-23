@@ -34,14 +34,14 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control class for PlanetLab slices.
 	/// </summary>
-	public partial class ControlSlices : NotificationControl
+	public partial class ControlSlices : ControlRequest
 	{
 		// Private variables.
 
 		private Crawler crawler = null;
 		private StatusHandler status = null;
 
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		private PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
 
 		private Action delegateUpdateSlices = null;
 
@@ -86,6 +86,54 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.OnUpdateSlices();
 		}
 
+		// Protected methods.
+
+		/// <summary>
+		/// An event handler called when the current request begins, and the notification box is displayed.
+		/// </summary>
+		/// <param name="parameters">The task parameters.</param>
+		protected override void OnBeginRequest(object[] parameters = null)
+		{
+			// Set the button enabled state.
+			this.buttonRefresh.Enabled = false;
+			this.buttonCancel.Enabled = true;
+			this.buttonProperties.Enabled = false;
+			this.buttonAddSlice.Enabled = false;
+			this.buttonRemoveSlice.Enabled = false;
+			this.buttonAddNode.Enabled = false;
+			this.buttonRemoveNode.Enabled = false;
+		}
+
+		/// <summary>
+		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response)
+		{
+		}
+
+		/// <summary>
+		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
+		/// </summary>
+		protected override void OnCancelRequest()
+		{
+			// Set the button enabled state.
+			this.buttonRefresh.Enabled = true;
+			this.buttonCancel.Enabled = false;
+			this.buttonAddSlice.Enabled = true;
+		}
+
+		/// <summary>
+		/// An event handler called when the current request ends, and the notification box is hidden.
+		/// </summary>
+		/// <param name="parameters">The task parameters.</param>
+		protected override void OnEndRequest(object[] parameters = null)
+		{
+			base.OnEndRequest(parameters);
+		}
+
+		// Private methods.
+
 		/// <summary>
 		/// An event handler called when the user refreshes the list of PlanetLab slices.
 		/// </summary>
@@ -112,35 +160,22 @@ namespace YtAnalytics.Controls.PlanetLab
 				return;
 			}
 
-			// Set the button enabled state.
-			this.buttonRefresh.Enabled = false;
-			this.buttonCancel.Enabled = true;
-
 			// Clear the list.
 			this.listViewSlices.Items.Clear();
 
-			// Show the notification box.
-			this.ShowMessage(Resources.GlobeClock_48, "Refreshing PlanetLab", "Refreshing the list of PlanetLab slices...");
+			// Update the status.
+			this.status.Send("Refreshing the list of PlanetLab slices...", Resources.GlobeClock_16);
 
-			// Begin an asynchrnoys PlanetLab request.
+			// Begin an asynchrnous PlanetLab request.
 			try
 			{
 				// Begin the request.
-				this.request.Begin(
-					this.crawler.Config.PlanetLab.Username,
-					this.crawler.Config.PlanetLab.Password,
-					this.OnCallback);
+				this.BeginRequest(this.requestGetSlices, this.crawler.Config.PlanetLab.Username, this.crawler.Config.PlanetLab.Password);
 			}
-			catch (Exception exception)
+			catch
 			{
-				// Show an error message.
-				this.ShowMessage(
-					Resources.GlobeError_48,
-					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab slices. {0}".FormatWith(exception.Message),
-					false,
-					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-					this.OnComplete);
+				// Update the status.
+				this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
 			}
 		}
 
@@ -151,6 +186,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnCancel(object sender, EventArgs e)
 		{
+			// Cancel the request.
+			this.CancelRequest();
 			// Disable the cancel button.
 			this.buttonCancel.Enabled = false;
 		}
@@ -167,7 +204,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				AsyncWebResult asyncResult;
 				
 				// Get the XML RPC response.
-				XmlRpcResponse rpcResponse = this.request.End(result, out asyncResult);
+				XmlRpcResponse rpcResponse = this.requestGetSlices.End(result, out asyncResult);
 
 				// If a fault occurred during the XML-RPC request.
 				if (rpcResponse.Fault != null)
@@ -224,17 +261,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
 					this.OnComplete);
 			}
-		}
-
-		/// <summary>
-		/// An event handler called when the request has completed.
-		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		private void OnComplete(object[] parameters)
-		{
-			// Set the button enabled state.
-			this.buttonRefresh.Enabled = true;
-			this.buttonCancel.Enabled = false;
 		}
 
 		/// <summary>

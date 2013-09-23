@@ -4702,6 +4702,46 @@ namespace YtAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap NodeLargeQuestion_16 {
+            get {
+                object obj = ResourceManager.GetObject("NodeLargeQuestion_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NodeLargeQuestion_24 {
+            get {
+                object obj = ResourceManager.GetObject("NodeLargeQuestion_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NodeLargeQuestion_32 {
+            get {
+                object obj = ResourceManager.GetObject("NodeLargeQuestion_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NodeLargeQuestion_48 {
+            get {
+                object obj = ResourceManager.GetObject("NodeLargeQuestion_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap NodeLargeSuccess_16 {
             get {
                 object obj = ResourceManager.GetObject("NodeLargeSuccess_16", resourceCulture);

@@ -26,6 +26,7 @@ using MapApi;
 using YtAnalytics.Events;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
+using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
 
@@ -36,13 +37,10 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public sealed partial class ControlAddNodeLocation : ControlRequest
 	{
-		private enum State
+		public static readonly string[] nodeImageKeys = new string[]
 		{
-			Sites = 0,
-			Nodes = 1
+			"NodeUnknown", "NodeBoot", "NodeSafeBoot", "NodeDisabled", "NodeReinstall"
 		};
-
-		private State state = State.Sites;
 
 		private readonly PlRequest requestSites = new PlRequest(PlRequest.RequestMethod.GetSites);
 		private readonly PlRequest requestNodes = new PlRequest(PlRequest.RequestMethod.GetNodes);
@@ -55,8 +53,6 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 		private readonly FormObjectProperties<ControlNodeProperties> formNodeProperties = new FormObjectProperties<ControlNodeProperties>();
-
-		private readonly string[] status = new string[] { string.Empty, string.Empty };
 
 		private MapMarker marker = null;
 
@@ -101,8 +97,17 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Update the sites list.
 			this.sites.CopyFrom(config.PlanetLab.Sites);
-			// Set the default state.
-			this.tabControl.SelectedIndex = 0;
+			// Clear the list view.
+			this.listViewSites.Items.Clear();
+			this.listViewNodes.Items.Clear();
+			// Clear the map markers.
+			this.mapControl.Markers.Clear();
+			// Reset the filters.
+			this.textBoxFilterSite.Clear();
+			this.textBoxFilterNode.Clear();
+			// Reset the wizard.
+			this.wizard.SelectedIndex = 0;
+			this.wizardPageSite.NextEnabled = false;
 			// Update the sites.
 			this.OnUpdateSites();
 		}
@@ -118,12 +123,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Disable the buttons.
 			this.buttonRefresh.Enabled = false;
 			this.buttonCancel.Enabled = true;
-			this.buttonBack.Enabled = false;
-			this.buttonNext.Enabled = false;
+			this.wizard.SelectedPage.NextEnabled = false;
+			this.wizard.SelectedPage.BackEnabled = false;
 			this.buttonClose.Enabled = false;
-			this.tabControl.Enabled = false;
-			// Update the label.
-			this.labelStatus.Text = "Refreshing...";
 
 			// Raise the PlanetLab request started event.
 			if (this.RequestStarted != null) this.RequestStarted(this, EventArgs.Empty);
@@ -135,19 +137,16 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="response">The XML-RPC response.</param>
 		protected override void OnCompleteRequest(XmlRpcResponse response)
 		{
-			//// If the request has not failed.
-			//if ((null == response.Fault) && (null != response.Value))
-			//{
-			//	// Update the list of PlanetLab slices list for the given response.
-			//	this.slices.Update(response.Value as XmlRpcArray);
-			//	// Update the list view.
-			//	this.OnUpdateSites();
-			//}
-			//else
-			//{
-			//	// Update the status.
-			//	this.labelStatus.Text = "Refresh failed. {0}".FormatWith(response.Fault);
-			//}
+			// Call the handler for the current wizard.
+			switch (this.wizard.SelectedIndex)
+			{
+				case 0:
+					this.OnCompleteRequestSites(response);
+					break;
+				case 1:
+					this.OnCompleteRequestNodes(response);
+					break;
+			}
 		}
 
 		/// <summary>
@@ -156,7 +155,15 @@ namespace YtAnalytics.Controls.PlanetLab
 		protected override void OnCancelRequest()
 		{
 			// Update the status.
-			this.labelStatus.Text = "Refresh canceled.";
+			switch (this.wizard.SelectedIndex)
+			{
+				case 0:
+					this.wizardPageSite.Status = "Refreshing the PlanetLab sites was canceled.";
+					break;
+				case 1:
+					this.wizardPageNode.Status = "Refreshing the PlanetLab nodes was canceled.";
+					break;
+			}
 		}
 
 		/// <summary>
@@ -165,13 +172,13 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="parameters">The task parameters.</param>
 		protected override void OnEndRequest(object[] parameters = null)
 		{
-			//// Enable the buttons.
-			//this.buttonRefresh.Enabled = true;
-			//this.buttonCancel.Enabled = false;
-			//this.buttonNext.Enabled = this.listView.Items.Count > 0;
-			//this.buttonClose.Enabled = true;
-			//// Raise the PlanetLab request finished event.
-			//if (this.RequestFinished != null) this.RequestFinished(this, EventArgs.Empty);
+			// Enable the buttons.
+			this.buttonRefresh.Enabled = true;
+			this.buttonCancel.Enabled = false;
+			this.wizard.SelectedPage.BackEnabled = true;
+			this.buttonClose.Enabled = true;
+			// Raise the PlanetLab request finished event.
+			if (this.RequestFinished != null) this.RequestFinished(this, EventArgs.Empty);
 		}
 
 		// Private methods.
@@ -179,17 +186,22 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Refreshes the list of PlanetLab sites.
 		/// </summary>
-		public void RefreshListSites()
+		public void OnRefreshListSites()
 		{
-			// Clear the sites and nodes list.
+			// Clear the list view.
 			this.listViewSites.Items.Clear();
 			this.listViewNodes.Items.Clear();
-			// Clear the filters.
+			// Clear the map markers.
+			this.mapControl.Markers.Clear();
+			// Reset the filters.
 			this.textBoxFilterSite.Clear();
 			this.textBoxFilterNode.Clear();
 			// Clear the lists.
 			this.sites.Clear();
 			this.nodes.Clear();
+			// Update the status.
+			this.wizardPageSite.Status = "Refreshing the PlanetLab sites...";
+
 			try
 			{
 				// Begin the PlanetLab sites request.
@@ -198,7 +210,81 @@ namespace YtAnalytics.Controls.PlanetLab
 			catch
 			{
 				// Update the label.
-				this.labelStatus.Text = "Refresh failed.";
+				this.wizardPageSite.Status = "Refreshing the PlanetLab sites failed.";
+			}
+		}
+
+		/// <summary>
+		/// Refreshes the list of PlanetLab nodes for the selected site.
+		/// </summary>
+		public void OnRefreshListNodes()
+		{
+			// If there is no selected site item, do nothing.
+			if (this.listViewSites.SelectedItems.Count == 0) return;
+
+			// Get the site-marker for this item.
+			KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+
+			// Clear the list view.
+			this.listViewNodes.Items.Clear();
+			// Reset the filters.
+			this.textBoxFilterNode.Clear();
+			// Clear the lists.
+			this.nodes.Clear();
+			// Update the status.
+			this.wizardPageNode.Status = "Refreshing the PlanetLab nodes...";
+
+			try
+			{
+				// Begin the PlanetLab nodes request.
+				this.BeginRequest(this.requestNodes, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlNode.GetFilter(PlNode.Fields.SiteId, tag.Key.Id));
+			}
+			catch
+			{
+				// Update the label.
+				this.wizardPageSite.Status = "Refreshing the PlanetLab nodes failed.";
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the control completes an asynchronous request for the list of PlanetLab sites.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		private void OnCompleteRequestSites(XmlRpcResponse response)
+		{
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Update the list of PlanetLab sites list for the given response.
+				this.sites.Update(response.Value as XmlRpcArray);
+				// Update the sites list.
+				this.OnUpdateSites();
+			}
+			else
+			{
+				// Update the status.
+				this.wizardPageSite.Status = "Refreshing the PlanetLab sites failed. {0}".FormatWith(response.Fault);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the control completes an asynchronous request for the list of PlanetLab nodes.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		private void OnCompleteRequestNodes(XmlRpcResponse response)
+		{
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Update the list of PlanetLab nodes list for the given response.
+				this.nodes.Update(response.Value as XmlRpcArray);
+				// Update the nodes list.
+				this.OnUpdateNodes();
+			}
+			else
+			{
+				// Update the status.
+				this.wizardPageNode.Status = "Refreshing the PlanetLab nodes failed. {0}".FormatWith(response.Fault);
 			}
 		}
 
@@ -207,43 +293,18 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnRefreshStarted(object sender, EventArgs e)
+		private void OnRefresh(object sender, EventArgs e)
 		{
-			//// Refresh the list.
-			//this.RefreshList();
-		}
-
-		/// <summary>
-		/// An event handler called when the user clicks on the back button.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnBack(object sender, EventArgs e)
-		{
-		}
-
-		/// <summary>
-		/// An event handler called when the user clicks on the next button.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnNext(object sender, EventArgs e)
-		{
-			// Switch according to the state.
-			switch (this.state)
+			// Refresh the list according to the selected index.
+			switch (this.wizard.SelectedIndex)
 			{
-				case State.Sites:
+				case 0:
+					this.OnRefreshListSites();
 					break;
-				case State.Nodes:
+				case 1:
+					this.OnRefreshListNodes();
 					break;
 			}
-
-			//// If there is no selected PlanetLab object, do nothing.
-			//if (this.listView.SelectedItems.Count == 0) return;
-			//// Else, get the PlanetLab object.
-			//PlSlice result = this.listView.SelectedItems[0].Tag as PlSlice;
-			//// Raise the event.
-			//if (this.Selected != null) this.Selected(this, new PlanetLabObjectEventArgs<PlSlice>(result));
 		}
 
 		/// <summary>
@@ -282,15 +343,13 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.marker.Emphasized = true;
 				}
 			}
-			// If the current state is sites.
-			if (this.state == State.Sites)
-			{
-				// Update the controls state.
-				this.buttonNext.Enabled = this.listViewSites.SelectedItems.Count > 0;
-			}
+			// Update the next button.
+			this.wizardPageSite.NextEnabled = this.listViewSites.SelectedItems.Count > 0;
+			// Reset the nodes controls.
+			this.listViewNodes.Items.Clear();
+			this.textBoxFilterNode.Clear();
 		}
 
-		/// <summary>
 		/// <summary>
 		/// An event handler called when the node selection has changed.
 		/// </summary>
@@ -298,8 +357,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeSelectionChanged(object sender, EventArgs e)
 		{
-			//// Set the select button enabled state.
-			//this.buttonNext.Enabled = this.listView.SelectedItems.Count > 0;
+			// Update the next button.
+			this.wizardPageNode.NextEnabled = this.listViewNodes.SelectedItems.Count > 0;
 		}
 
 		/// <summary>
@@ -326,10 +385,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeProperties(object sender, EventArgs e)
 		{
-			//// If there is no selected PlanetLab object, do nothing.
-			//if (this.listView.SelectedItems.Count == 0) return;
-			//// Show the properties dialog.
-			//this.formProperties.ShowDialog(this, "Slice", this.listView.SelectedItems[0].Tag as PlSlice);
+			// If there is no selected node item, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
+
+			// Get the node for this item.
+			PlNode node = this.listViewNodes.SelectedItems[0].Tag as PlNode;
+
+			// Show the node properties.
+			this.formNodeProperties.ShowDialog(this, "Node", node);
 		}
 
 		/// <summary>
@@ -367,12 +430,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeFilterTextChanged(object sender, EventArgs e)
 		{
-			//// If the filter has changed.
-			//if (this.filter != this.textBoxFilterSite.Text.Trim())
-			//{
-			//	// Update the list.
-			//	this.OnUpdateList();
-			//}
+			// If the filter has changed.
+			if (this.filterNode != this.textBoxFilterNode.Text.Trim())
+			{
+				// Update the list.
+				this.OnUpdateNodes();
+			}
 		}
 
 		/// <summary>
@@ -385,11 +448,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.listViewNodes.Items.Clear();
 			// Clear the map markers.
 			this.mapControl.Markers.Clear();
-			// Reset the filters.
-			this.textBoxFilterSite.Clear();
-			this.textBoxFilterNode.Clear();
-			// Reset the tabs.
-			this.tabControl.SelectedIndex = 0;
+			// Disable the button.
+			this.wizardPageSite.NextEnabled = false;
 
 			// Update the filter.
 			this.filterSite = this.textBoxFilterSite.Text.Trim();
@@ -430,15 +490,16 @@ namespace YtAnalytics.Controls.PlanetLab
 
 					// Create the list view item.
 					ListViewItem item = new ListViewItem(new string[] {
-						site.SiteId.ToString(),
+						site.SiteId.HasValue ? site.SiteId.Value.ToString() : string.Empty,
 						site.Name,
 						site.Url,
 						site.DateCreated.ToString(),
 						site.LastUpdated.ToString(),
 						site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
 						site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
-					}, 0);
+					});
 					item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
+					item.ImageKey = "Site";
 					this.listViewSites.Items.Add(item);
 
 					if (null != marker)
@@ -452,7 +513,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.sites.Unlock();
 			}
 			// Update the status.
-			this.labelStatus.Text = "Showing {0} of {1} PlanetLab slices.".FormatWith(count, this.sites.Count);
+			this.wizardPageSite.Status = "Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.sites.Count);
 		}
 
 		/// <summary>
@@ -460,6 +521,58 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnUpdateNodes()
 		{
+			// Clear the list view.
+			this.listViewNodes.Items.Clear();
+			// Disable the button.
+			this.wizardPageNode.NextEnabled = false;
+
+			// Update the filter.
+			this.filterNode = this.textBoxFilterSite.Text.Trim();
+			// The number of displayed sites.
+			int count = 0;
+
+			// Lock the list.
+			this.nodes.Lock();
+			try
+			{
+				// Update the sites list.
+				foreach (PlNode node in this.nodes)
+				{
+					// If the filter is not null or empty.
+					if (!string.IsNullOrEmpty(this.filterNode))
+					{
+						// If the site name does not match the filter, continue.
+						if (!string.IsNullOrEmpty(node.Hostname))
+						{
+							if (!node.Hostname.ToLower().Contains(this.filterNode.ToLower())) continue;
+						}
+					}
+
+					// Increment the number of displayed nodes.
+					count++;
+
+					// Create the list view item.
+					ListViewItem item = new ListViewItem(new string[] {
+						node.NodeId.HasValue ? node.NodeId.Value.ToString() : string.Empty,
+						node.Hostname,
+						node.BootState,
+						node.Model,
+						node.Version,
+						node.DateCreated.HasValue ? node.DateCreated.Value.ToString() : string.Empty,
+						node.LastUpdated.HasValue ? node.LastUpdated.Value.ToString() : string.Empty,
+						node.NodeType
+					});
+					item.Tag = node;
+					item.ImageKey = ControlAddNodeLocation.nodeImageKeys[(int)node.GetBootState()];
+					this.listViewNodes.Items.Add(item);
+				}
+			}
+			finally
+			{
+				this.nodes.Unlock();
+			}
+			// Update the status.
+			this.wizardPageNode.Status = "Showing {0} of {1} PlanetLab nodes.".FormatWith(count, this.nodes.Count);
 		}
 
 		/// <summary>
@@ -496,60 +609,39 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// Sets the status message for the specified state.
+		/// An event handler called when the wizard tab has changed.
 		/// </summary>
-		/// <param name="text">The text.</param>
-		/// <param name="state">The state.</param>
-		private void OnSetStatus(string text, State state)
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnWizardPageChanged(object sender, EventArgs e)
 		{
-			// Set the status for the specified state.
-			this.status[(int)state] = text;
-			// If the current state equals with state.
-			if (this.state == state)
+			switch (this.wizard.SelectedIndex)
 			{
-				// Update the label.
-				this.labelStatus.Text = text;
+				case 0:
+					// Do nothing.
+					break;
+				case 1:
+					// Refresh the list of PlanetLab nodes.
+					this.OnRefreshListNodes();
+					break;
 			}
 		}
 
 		/// <summary>
-		/// An event handler called before a new tab is selected.
+		/// An event handler called when the wizard has finished.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnTabSelecting(object sender, TabControlCancelEventArgs e)
+		private void OnWizardFinished(object sender, EventArgs e)
 		{
-			// Get the new state.
-			State state = (State)e.TabPageIndex;
+			// If there is no selected node item, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
 
-			// Check the user can switch to the new state.
-			if ((state == State.Nodes) && (this.listViewSites.SelectedItems.Count == 0))
-			{
-				MessageBox.Show(this, "You must first select a PlanetLab site.", "Add Node to Slice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				e.Cancel = true;
-			}
-			else
-			{
-				this.state = state;
-			}
+			// Get the node for this item.
+			PlNode node = this.listViewNodes.SelectedItems[0].Tag as PlNode;
 
-			// Update the buttons state.
-			switch (this.state)
-			{
-				case State.Sites:
-					this.buttonBack.Enabled = false;
-					this.buttonNext.Enabled = this.listViewSites.SelectedItems.Count > 0;
-					this.buttonNext.Text = "&Next";
-					break;
-				case State.Nodes:
-					this.buttonBack.Enabled = true;
-					this.buttonNext.Enabled = this.listViewNodes.SelectedItems.Count > 0;
-					this.buttonNext.Text = "&Select";
-					break;
-			}
-
-			// Update the status message.
-			this.labelStatus.Text = this.status[(int)this.state];
+			// Raise the event.
+			if (null != this.Selected) this.Selected(this, new PlanetLabObjectEventArgs<PlNode>(node));
 		}
 	}
 }

@@ -57,7 +57,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		/// <param name="config">The crawler configuration.</param>
 		/// <returns>The dialog result.</returns>
-		public new DialogResult ShowDialog(CrawlerConfig config)
+		public DialogResult ShowDialog(CrawlerConfig config)
 		{
 			// Reset the result.
 			this.Result = null;
@@ -73,7 +73,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// <param name="owner">The window owner.</param>
 		/// <param name="config">The crawler configuration.</param>
 		/// <returns>The dialog result.</returns>
-		public new DialogResult ShowDialog(IWin32Window owner, CrawlerConfig config)
+		public DialogResult ShowDialog(IWin32Window owner, CrawlerConfig config)
 		{
 			// Reset the result.
 			this.Result = null;

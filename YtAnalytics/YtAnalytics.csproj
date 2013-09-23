@@ -1029,6 +1029,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\NodeLargeQuestion_48.png" />
+    <None Include="Resources\NodeLargeQuestion_32.png" />
+    <None Include="Resources\NodeLargeQuestion_24.png" />
+    <None Include="Resources\NodeLargeQuestion_16.png" />
     <None Include="Resources\NodeLargeWarning_48.png" />
     <None Include="Resources\NodeLargeWarning_32.png" />
     <None Include="Resources\NodeLargeWarning_24.png" />
