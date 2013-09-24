@@ -135,10 +135,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event handler called when the request completes.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
 		{
-			// Call the base class method.
-			base.OnCompleteRequest(response);
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{

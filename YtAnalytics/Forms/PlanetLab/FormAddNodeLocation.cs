@@ -147,5 +147,10 @@ namespace YtAnalytics.Forms.PlanetLab
 				e.Cancel = true;
 			}
 		}
+
+		private void OnSelected(object sender)
+		{
+
+		}
 	}
 }

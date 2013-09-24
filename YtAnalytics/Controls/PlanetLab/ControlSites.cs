@@ -37,7 +37,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control class for PlanetLab sites.
 	/// </summary>
-	public partial class ControlSites : NotificationControl
+	public partial class ControlSites : ControlRequest
 	{
 		// Private variables.
 
@@ -45,14 +45,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		private StatusHandler status = null;
 
 		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
+		
 		private MapMarker marker = null;
 		private string filter = string.Empty;
 
-		private Action delegateUpdateSites = null;
-
 		private FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
-
-		// Public declarations
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -68,10 +65,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Load the map.
 			this.mapControl.LoadMap("Ne110mAdmin0Countries");
-
-			// Initialize the delegates.
-			this.delegateUpdateSites = new Action(this.OnUpdateSites);
 		}
+
+		// Public methods.
 
 		/// <summary>
 		/// Initializes the control with a crawler object.
@@ -92,6 +88,70 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.OnUpdateSites();
 		}
 
+		// Protected methods.
+
+		/// <summary>
+		/// An event handler called when the current request begins, and the notification box is displayed.
+		/// </summary>
+		/// <param name="parameters">The task parameters.</param>
+		protected override void OnBeginRequest(object[] parameters = null)
+		{
+			// Set the button enabled state.
+			this.buttonRefresh.Enabled = false;
+			this.buttonCancel.Enabled = true;
+			this.buttonProperties.Enabled = false;
+		}
+
+		/// <summary>
+		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
+		{
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Get the slices array.
+				XmlRpcArray slices = response.Value as XmlRpcArray;
+
+				// Update the list of PlanetLab sites.
+				this.crawler.Config.PlanetLab.Sites.Update(response.Value as XmlRpcArray);
+
+				// Update the list of sites.
+				this.OnUpdateSites();
+			}
+			else
+			{
+				// Update the status.
+				this.status.Send("Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
+		/// </summary>
+		protected override void OnCancelRequest()
+		{
+			// Set the button enabled state.
+			this.buttonCancel.Enabled = false;
+			// Update the status.
+			this.status.Send("Refreshing the list of PlanetLab slices canceled.", Resources.GlobeCanceled_16);
+		}
+
+		/// <summary>
+		/// An event handler called when the current request ends, and the notification box is hidden.
+		/// </summary>
+		/// <param name="parameters">The task parameters.</param>
+		protected override void OnEndRequest(object[] parameters = null)
+		{
+			// Set the button enabled state.
+			this.buttonRefresh.Enabled = true;
+			this.buttonCancel.Enabled = false;
+		}
+
+		// Private methods.
+
 		/// <summary>
 		/// An event handler called when the user refreshes the list of PlanetLab slices.
 		/// </summary>
@@ -99,32 +159,27 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRefresh(object sender, EventArgs e)
 		{
-			// Set the button enabled state.
-			this.buttonRefresh.Enabled = false;
-			this.buttonCancel.Enabled = true;
+			// Clear the list.
+			this.listViewSites.Items.Clear();
+			// Clear the map markers.
+			this.mapControl.Markers.Clear();
 
-			// Show the notification box.
-			this.ShowMessage(Resources.GlobeClock_48, "Refreshing PlanetLab", "Refreshing the list of PlanetLab sites...");
+			// Update the status.
+			this.status.Send("Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
 
-			// Begin an asynchrnoys PlanetLab request.
+			// Begin an asynchronous PlanetLab request.
 			try
 			{
 				// Begin the request.
-				this.request.Begin(
+				this.BeginRequest(
+					this.request,
 					CrawlerStatic.PlanetLabUsername,
-					CrawlerStatic.PlanetLabPassword,
-					this.OnCallback);
+					CrawlerStatic.PlanetLabPassword);
 			}
-			catch (Exception exception)
+			catch
 			{
-				// Show an error message.
-				this.ShowMessage(
-					Resources.GlobeError_48,
-					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab sites. {0}".FormatWith(exception.Message),
-					false,
-					(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-					this.OnComplete);
+				// Update the status.
+				this.status.Send("Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
 			}
 		}
 
@@ -137,62 +192,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Disable the cancel button.
 			this.buttonCancel.Enabled = false;
-		}
-
-		/// <summary>
-		/// An event handler called when the asynchronous request has completed.
-		/// </summary>
-		/// <param name="result">The result of the asynchronous operation.</param>
-		private void OnCallback(AsyncWebResult result)
-		{
-			try
-			{
-				// Complete the request.
-				AsyncWebResult asyncResult;
-				
-				// Get the XML RPC response.
-				XmlRpcResponse rpcResponse = this.request.End(result, out asyncResult);
-
-				// If a fault occurred during the XML-RPC request.
-				if (rpcResponse.Fault != null)
-				{
-					// Show an error message.
-					this.ShowMessage(
-						Resources.GlobeWarning_48,
-						"PlanetLab Error",
-						"Refreshing the PlanetLab sites has failed (RPC code {0} {1})".FormatWith(rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
-						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnComplete);
-				}
-				else
-				{
-					// Update the list of PlanetLab sites.
-					this.crawler.Config.PlanetLab.Sites.Update(rpcResponse.Value as XmlRpcArray);
-
-					// Show a success message.
-					this.ShowMessage(
-						Resources.GlobeSuccess_48,
-						"PlanetLab Success",
-						"Refreshing the PlanetLab sites has completed successfuly.",
-						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnComplete);
-
-					// Update the list of sites.
-					this.OnUpdateSites();
-				}
-			}
-			catch (Exception exception)
-			{
-				// Show an error message.
-				this.ShowMessage(
-					Resources.GlobeError_48,
-					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab sites. {0}".FormatWith(exception.Message),
-					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-					this.OnComplete);
-			}
+			// Cancel the request.
+			this.CancelRequest();
 		}
 
 		/// <summary>
@@ -211,13 +212,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnUpdateSites()
 		{
-			// Execute this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateUpdateSites);
-				return;
-			}
-
 			// Clear the list view.
 			this.listViewSites.Items.Clear();
 			// Clear the map markers.

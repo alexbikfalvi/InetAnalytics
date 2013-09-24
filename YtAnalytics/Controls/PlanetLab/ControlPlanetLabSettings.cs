@@ -75,10 +75,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// A methods called when completing a PlanetLab request.
 		/// </summary>
 		/// <param name="response">The response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
 		{
-			// Call the base class method.
-			base.OnCompleteRequest(response);
 			// Enable the validation button.
 			this.OnChanged(this, EventArgs.Empty);
 			// If the request has not failed.

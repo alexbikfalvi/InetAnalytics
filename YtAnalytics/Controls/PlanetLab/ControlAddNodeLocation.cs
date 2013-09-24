@@ -56,6 +56,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private MapMarker marker = null;
 
+		private Action<XmlRpcResponse> actionCompleteSitesRequest;
+		private Action<XmlRpcResponse> actionCompleteNodesRequest;
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -66,6 +69,10 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Load the map.
 			this.mapControl.LoadMap("Ne110mAdmin0Countries");
+
+			// Create the delegates.
+			this.actionCompleteSitesRequest = new Action<XmlRpcResponse>(this.OnCompleteSitesRequest);
+			this.actionCompleteNodesRequest = new Action<XmlRpcResponse>(this.OnCompleteNodesRequest);
 		}
 
 		// Public events.
@@ -135,17 +142,16 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
 		{
-			// Call the handler for the current wizard.
-			switch (this.wizard.SelectedIndex)
+			// Get the action delegate from the user state.
+			Action<XmlRpcResponse> action = state as Action<XmlRpcResponse>;
+			// If the action delegate is not null.
+			if (null != action)
 			{
-				case 0:
-					this.OnCompleteRequestSites(response);
-					break;
-				case 1:
-					this.OnCompleteRequestNodes(response);
-					break;
+				// Call the delegate with the current response.
+				action(response);
 			}
 		}
 
@@ -205,7 +211,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin the PlanetLab sites request.
-				this.BeginRequest(this.requestSites, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
+				this.BeginRequest(
+					this.requestSites,
+					CrawlerStatic.PlanetLabUsername,
+					CrawlerStatic.PlanetLabPassword,
+					null,
+					this.actionCompleteSitesRequest);
 			}
 			catch
 			{
@@ -237,7 +248,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin the PlanetLab nodes request.
-				this.BeginRequest(this.requestNodes, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlNode.GetFilter(PlNode.Fields.SiteId, tag.Key.Id));
+				this.BeginRequest(
+					this.requestNodes,
+					CrawlerStatic.PlanetLabUsername,
+					CrawlerStatic.PlanetLabPassword,
+					PlNode.GetFilter(PlNode.Fields.SiteId, tag.Key.Id),
+					this.actionCompleteNodesRequest);
 			}
 			catch
 			{
@@ -250,7 +266,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event handler called when the control completes an asynchronous request for the list of PlanetLab sites.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		private void OnCompleteRequestSites(XmlRpcResponse response)
+		private void OnCompleteSitesRequest(XmlRpcResponse response)
 		{
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
@@ -271,7 +287,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event handler called when the control completes an asynchronous request for the list of PlanetLab nodes.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		private void OnCompleteRequestNodes(XmlRpcResponse response)
+		private void OnCompleteNodesRequest(XmlRpcResponse response)
 		{
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))

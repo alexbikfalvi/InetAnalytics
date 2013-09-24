@@ -33,6 +33,9 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public class ControlRequest : NotificationControl
 	{
+		/// <summary>
+		/// An enumeration representing the message status.
+		/// </summary>
 		protected enum MessageStatus
 		{
 			Success = 0,
@@ -50,8 +53,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		private string pendingUsername = null;
 		private SecureString pendingPassword = null;
 		private object pendingParameter = null;
+		private object pendingState = null;
 
-		private Action<XmlRpcResponse> delegateCompleteRequest;
+		private Action<XmlRpcResponse, object> actionCompleteRequest;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -59,7 +63,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		public ControlRequest()
 		{
 			// Create the delegates.
-			this.delegateCompleteRequest = new Action<XmlRpcResponse>(this.OnCompleteRequestUi);
+			this.actionCompleteRequest = new Action<XmlRpcResponse, object>(this.OnCompleteRequestUi);
 		}
 
 		// Protected methods.
@@ -69,18 +73,18 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		protected void BeginRequest()
 		{
-			// Check that all pending values are not null.
+			// Check that all required pending values are not null.
 			if (null == this.pendingRequest) return;
 			if (null == this.pendingUsername) return;
 			if (null == this.pendingPassword) return;
-			if (null == this.pendingParameter) return;
 
 			// Begin a normal requets using the pending values.
 			this.BeginRequest(
 				this.pendingRequest,
 				this.pendingUsername,
 				this.pendingPassword,
-				this.pendingParameter);
+				this.pendingParameter,
+				this.pendingState);
 		}
 
 		/// <summary>
@@ -90,14 +94,15 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="username">The username.</param>
 		/// <param name="password">The password.</param>
 		/// <param name="parameter">The request parameter.</param>
-		/// <returns>The result of the asynchronous operation.</returns>
-		protected void BeginRequest(PlRequest request, string username, SecureString password, object parameter = null)
+		/// <param name="state">The request state.</param>
+		protected void BeginRequest(PlRequest request, string username, SecureString password, object parameter = null, object state = null)
 		{
 			// Set the pending values to null.
 			this.pendingRequest = null;
 			this.pendingUsername = null;
 			this.pendingPassword = null;
 			this.pendingParameter = null;
+			this.pendingState = null;
 
 			lock (this.sync)
 			{
@@ -109,6 +114,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.pendingUsername = username;
 					this.pendingPassword = password;
 					this.pendingParameter = parameter;
+					this.pendingState = state;
 					// Cancel the current request
 					this.request.Cancel(this.result);
 					// Return.
@@ -138,7 +144,8 @@ namespace YtAnalytics.Controls.PlanetLab
 							username,
 							password,
 							parameter,
-							this.OnCallback
+							this.OnCallback,
+							state
 							);
 					}
 					else
@@ -147,7 +154,8 @@ namespace YtAnalytics.Controls.PlanetLab
 						this.result = request.Begin(
 							username,
 							password,
-							this.OnCallback
+							this.OnCallback,
+							state
 							);
 					}
 				}
@@ -192,6 +200,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.pendingUsername = null;
 				this.pendingPassword = null;
 				this.pendingParameter = null;
+				this.pendingState = null;
 			}
 		}
 
@@ -208,7 +217,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		protected virtual void OnCompleteRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		protected virtual void OnCompleteRequest(XmlRpcResponse response, object state)
 		{
 			// Do nothing.
 		}
@@ -282,7 +292,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					}
 
 					// Call the event handler.
-					this.OnCompleteRequestUi(response);
+					this.OnCompleteRequestUi(response, asyncResult.AsyncState);
 					// Set the current request to null.
 					this.request = null;
 					this.result = null;
@@ -348,11 +358,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// Completes the current request. The method is UI thread-safe.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		private void OnCompleteRequestUi(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		private void OnCompleteRequestUi(XmlRpcResponse response, object state)
 		{
 			// Execute the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(this.delegateCompleteRequest, new object[] { response });
-			else this.OnCompleteRequest(response);
+			if (this.InvokeRequired) this.Invoke(this.actionCompleteRequest, new object[] { response, state });
+			else this.OnCompleteRequest(response, state);
 		}
 	}
 }

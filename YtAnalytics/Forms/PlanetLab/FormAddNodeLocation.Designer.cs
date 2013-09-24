@@ -40,18 +40,18 @@ namespace YtAnalytics.Forms.PlanetLab
 			this.control.Location = new System.Drawing.Point(0, 0);
 			this.control.MinimumSize = new System.Drawing.Size(0, 230);
 			this.control.Name = "control";
-			this.control.Size = new System.Drawing.Size(784, 562);
+			this.control.Size = new System.Drawing.Size(784, 532);
 			this.control.TabIndex = 0;
 			this.control.RequestStarted += new System.EventHandler(this.OnRequestStarted);
 			this.control.RequestFinished += new System.EventHandler(this.OnRequestFinished);
-			this.control.Selected += new YtAnalytics.Events.PlanetLabObjectEventHandler<PlNode>(this.OnSelected);
+			this.control.Selected += new YtAnalytics.Events.PlanetLabObjectEventHandler<global::PlanetLab.Api.PlNode>(this.OnSelected);
 			this.control.Closed += new System.EventHandler(this.OnClosed);
 			// 
 			// FormAddNodeLocation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(784, 562);
+			this.ClientSize = new System.Drawing.Size(784, 532);
 			this.Controls.Add(this.control);
 			this.MinimizeBox = false;
 			this.Name = "FormAddNodeLocation";

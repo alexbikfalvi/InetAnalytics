@@ -102,9 +102,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="parameters"></param>
 		protected override void OnBeginRequest(object[] parameters = null)
 		{
-			// Call the base class method.
-			base.OnBeginRequest(parameters);
-
 			// If the parameters are not null.
 			if (null != parameters)
 			{
@@ -123,9 +120,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="parameters">The task parameters.</param>
 		protected override void OnEndRequest(object[] parameters = null)
 		{
-			// Call the base class method.
-			base.OnEndRequest(parameters);
-
 			// If the parameters are not null.
 			if (null != parameters)
 			{

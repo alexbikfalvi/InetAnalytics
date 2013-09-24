@@ -43,11 +43,12 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
 
-		private Action delegateUpdateSlices = null;
-
 		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
 		private FormAddSlice formAddSlice = new FormAddSlice();
 		private FormAddNodeLocation formAddNodeLocation = new FormAddNodeLocation();
+
+		private Action<XmlRpcResponse> actionCompleteSlicesRequest;
+		private Action<XmlRpcResponse> actionCompleteAddNodeRequest;
 
 		// Public declarations
 
@@ -63,8 +64,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
 
-			// Initialize the delegates.
-			this.delegateUpdateSlices = new Action(this.OnUpdateSlices);
+			// Create the delegates.
+			this.actionCompleteSlicesRequest = new Action<XmlRpcResponse>(this.OnCompleteSlicesRequest);
+			this.actionCompleteAddNodeRequest = new Action<XmlRpcResponse>(this.OnCompleteAddNodeRequest);
 		}
 
 		/// <summary>
@@ -108,8 +110,17 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
 		{
+			// Get the action delegate from the user state.
+			Action<XmlRpcResponse> action = state as Action<XmlRpcResponse>;
+			// If the action delegate is not null.
+			if (null != action)
+			{
+				// Call the delegate with the current response.
+				action(response);
+			}
 		}
 
 		/// <summary>
@@ -118,9 +129,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		protected override void OnCancelRequest()
 		{
 			// Set the button enabled state.
-			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
-			this.buttonAddSlice.Enabled = true;
+			// Update the status.
+			this.status.Send("Refreshing the list of PlanetLab slices canceled.", Resources.GlobeCanceled_16);
 		}
 
 		/// <summary>
@@ -129,7 +140,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="parameters">The task parameters.</param>
 		protected override void OnEndRequest(object[] parameters = null)
 		{
-			base.OnEndRequest(parameters);
+			// Set the button enabled state.
+			this.buttonRefresh.Enabled = true;
+			this.buttonCancel.Enabled = false;
+			this.buttonAddSlice.Enabled = true;
 		}
 
 		// Private methods.
@@ -166,11 +180,16 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab slices...", Resources.GlobeClock_16);
 
-			// Begin an asynchrnous PlanetLab request.
+			// Begin an asynchronous PlanetLab request.
 			try
 			{
 				// Begin the request.
-				this.BeginRequest(this.requestGetSlices, this.crawler.Config.PlanetLab.Username, this.crawler.Config.PlanetLab.Password);
+				this.BeginRequest(
+					this.requestGetSlices,
+					this.crawler.Config.PlanetLab.Username,
+					this.crawler.Config.PlanetLab.Password,
+					null,
+					this.actionCompleteSlicesRequest);
 			}
 			catch
 			{
@@ -186,81 +205,55 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnCancel(object sender, EventArgs e)
 		{
-			// Cancel the request.
-			this.CancelRequest();
 			// Disable the cancel button.
 			this.buttonCancel.Enabled = false;
+			// Cancel the request.
+			this.CancelRequest();
 		}
 
 		/// <summary>
-		/// An event handler called when the asynchronous request has completed.
+		/// A method called when receiving the response to a slices refresh request.
 		/// </summary>
-		/// <param name="result">The result of the asynchronous operation.</param>
-		private void OnCallback(AsyncWebResult result)
+		/// <param name="response">The response.</param>
+		private void OnCompleteSlicesRequest(XmlRpcResponse response)
 		{
-			try
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Complete the request.
-				AsyncWebResult asyncResult;
-				
-				// Get the XML RPC response.
-				XmlRpcResponse rpcResponse = this.requestGetSlices.End(result, out asyncResult);
+				// Get the slices array.
+				XmlRpcArray slices = response.Value as XmlRpcArray;
 
-				// If a fault occurred during the XML-RPC request.
-				if (rpcResponse.Fault != null)
-				{
-					// Show an error message.
-					this.ShowMessage(
-						Resources.GlobeWarning_48,
-						"PlanetLab Error",
-						"Refreshing the PlanetLab slices has failed (RPC code {0} {1})".FormatWith(rpcResponse.Fault.FaultCode, rpcResponse.Fault.FaultString),
-						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnComplete);
-				}
-				else
-				{
-					// Get the slices array.
-					XmlRpcArray slices = rpcResponse.Value as XmlRpcArray;
+				// Update the list of PlanetLab slices, filtering by the current person account.
+				this.crawler.Config.PlanetLab.Slices.Update(slices.Where((XmlRpcValue value) =>
+					{
+						XmlRpcStruct str = value.Value as XmlRpcStruct;
+						if (null == str) return false;
 
-					// Update the list of PlanetLab slices, filtering by the current person account.
-					this.crawler.Config.PlanetLab.Slices.Update(slices.Where((XmlRpcValue value) =>
-						{
-							XmlRpcStruct str = value.Value as XmlRpcStruct;
-							if (null == str) return false;
+						XmlRpcMember member = str[PlSlice.Fields.PersonIds.GetName()];
+						if (null == member) return false;
 
-							XmlRpcMember member = str[PlSlice.Fields.PersonIds.GetName()];
-							if (null == member) return false;
+						XmlRpcArray array = member.Value.Value as XmlRpcArray;
+						if (null == array) return false;
 
-							XmlRpcArray array = member.Value.Value as XmlRpcArray;
-							if (null == array) return false;
+						return array.Contains(CrawlerStatic.PlanetLabPersonId);
+					}));
 
-							return array.Contains(CrawlerStatic.PlanetLabPersonId);
-						}));
-
-					// Show a success message.
-					this.ShowMessage(
-						Resources.GlobeSuccess_48,
-						"PlanetLab Success",
-						"Refreshing the PlanetLab slices has completed successfuly.",
-						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnComplete);
-
-					// Update the list of slices.
-					this.OnUpdateSlices();
-				}
+				// Update the list of slices.
+				this.OnUpdateSlices();
 			}
-			catch (Exception exception)
+			else
 			{
-				// Show an error message.
-				this.ShowMessage(
-					Resources.GlobeError_48,
-					"PlanetLab Error",
-					"An error occured while refreshing the PlanetLab slices. {0}".FormatWith(exception.Message),
-					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-					this.OnComplete);
+				// Update the status.
+				this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
 			}
+		}
+
+		/// <summary>
+		/// A method called when receiving the response to an add node request.
+		/// </summary>
+		/// <param name="response">The response.</param>
+		private void OnCompleteAddNodeRequest(XmlRpcResponse response)
+		{
 		}
 
 		/// <summary>
@@ -268,13 +261,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnUpdateSlices()
 		{
-			// Execute this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateUpdateSlices);
-				return;
-			}
-
 			// Clear the list view.
 			this.listViewSlices.Items.Clear();
 
