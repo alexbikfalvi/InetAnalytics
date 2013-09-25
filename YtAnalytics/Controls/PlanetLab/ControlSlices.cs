@@ -76,6 +76,39 @@ namespace YtAnalytics.Controls.PlanetLab
 			public PlNode Node { get; private set; }
 		}
 
+		/// <summary>
+		/// A class representing the refresh slice request state.
+		/// </summary>
+		private class RequestStateRefreshSlice : RequestState
+		{
+			/// <summary>
+			/// Creates a new request state instance.
+			/// </summary>
+			/// <param name="actionRequestStarted">The request started action.</param>
+			/// <param name="actionRequestResult">The request result action.</param>
+			/// <param name="actionRequestCanceled">The request canceled action.</param>
+			/// <param name="actionRequestException">The request exception action.</param>
+			/// <param name="actionRequestFinished">The request finished action.</param>
+			/// <param name="slice">The slice.</param>
+			public RequestStateRefreshSlice(
+				Action<RequestState> actionRequestStarted,
+				Action<XmlRpcResponse, RequestState> actionRequestResult,
+				Action<RequestState> actionRequestCanceled,
+				Action<Exception, RequestState> actionRequestException,
+				Action<RequestState> actionRequestFinished,
+				PlSlice slice
+				)
+				: base(actionRequestStarted, actionRequestResult, actionRequestCanceled, actionRequestException, actionRequestFinished)
+			{
+				this.Slice = slice;
+			}
+
+			/// <summary>
+			/// Gets the PlanetLab slice corresponding to this request.
+			/// </summary>
+			public PlSlice Slice { get; private set; }
+		}
+
 		// Private variables.
 
 		private Crawler crawler = null;
@@ -495,14 +528,11 @@ namespace YtAnalytics.Controls.PlanetLab
 				int? code = response.Value.AsInt;
 				if (code.HasValue ? 1 == code.Value : false)
 				{
-					// Show a dialog.
-					MessageBox.Show(this,
-						"The slice {0} was successfully added to the PlanetLab node {1}.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
-						"Add Slice to Node",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Information);
 					// Update the status.
 					this.status.Send("Slice {0} to the PlanetLab node {1} succeeded.".FormatWith(requestState.Slice.Id, requestState.Node.Id), Resources.GlobeSuccess_16);
+
+					// Set the request as successful.
+					requestState.Success = true;
 				}
 				else
 				{
@@ -553,6 +583,102 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="state">The request state.</param>
 		private void OnAddSliceToNodesRequestFinished(RequestState state)
+		{
+			// Enable the slices list.
+			this.listViewSlices.Enabled = true;
+
+			// If the request is successful.
+			if (state.Success)
+			{
+				// Get the request state.
+				RequestStateAddSliceToNodes requestState = state as RequestStateAddSliceToNodes;
+
+				// Refresh the slice information.
+				this.OnRefreshSlice(requestState.Slice);
+			}
+		}
+
+		/// <summary>
+		/// Refreshes the information of the specified slice.
+		/// </summary>
+		/// <param name="slice">The slice.</param>
+		private void OnRefreshSlice(PlSlice slice)
+		{
+			// Create the request state.
+			RequestStateRefreshSlice requestState = new RequestStateRefreshSlice(
+				this.OnRefreshSliceRequestStarted,
+				this.OnRefreshSliceRequestResult,
+				null,
+				null,
+				this.OnRefreshSliceRequestFinished,
+				slice);
+
+			// Begin an asynchronous PlanetLab request.
+			this.BeginRequest(
+				this.requestGetSlices,
+				this.crawler.Config.PlanetLab.Username,
+				this.crawler.Config.PlanetLab.Password,
+				PlSlice.GetFilter(PlSlice.Fields.SliceId, slice.Id),
+				requestState);
+		}
+
+		/// <summary>
+		/// A method called when the refresh slice request started.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSliceRequestStarted(RequestState state)
+		{
+			// Disable the slices list.
+			this.listViewSlices.Enabled = false;
+		}
+
+		/// <summary>
+		/// A method called when receiving the response to a refresh slice request.
+		/// </summary>
+		/// <param name="response">The response.</param>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSliceRequestResult(XmlRpcResponse response, RequestState state)
+		{
+			// Convert the request state.
+			RequestStateRefreshSlice requestState = state as RequestStateRefreshSlice;
+			// Get the slice.
+			PlSlice slice = requestState.Slice;
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Get the slices list.
+				XmlRpcArray slices = response.Value as XmlRpcArray;
+
+				// If the response list has one element.
+				if (null != slices ? slices.Values.Length == 1 : false)
+				{
+					// Update the slice.
+					slice.Parse(slices.Values[0].Value as XmlRpcStruct);
+					// Find the list view item corresponding to the slice.
+					ListViewItem item = this.listViewSlices.Items.FirstOrDefault((ListViewItem it) =>
+						{
+							return object.ReferenceEquals(slice, it.Tag);
+						});
+					// If the item is not null.
+					if (null != item)
+					{
+						// Update the item.
+						item.SubItems[0].Text = slice.Id.HasValue ? slice.Id.Value.ToString() : string.Empty;
+						item.SubItems[1].Text = slice.Name;
+						item.SubItems[2].Text = slice.Created.ToString();
+						item.SubItems[3].Text = slice.Expires.ToString();
+						item.SubItems[4].Text = slice.NodeIds != null ? slice.NodeIds.Length.ToString() : "0";
+						item.SubItems[5].Text = slice.MaxNodes.ToString();
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// A method called when the refresh slice request has finished.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSliceRequestFinished(RequestState state)
 		{
 			// Enable the slices list.
 			this.listViewSlices.Enabled = true;

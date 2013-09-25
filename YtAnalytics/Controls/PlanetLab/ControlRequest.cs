@@ -70,6 +70,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.ActionRequestCanceled = actionRequestCanceled;
 				this.ActionRequestException = actionRequestException;
 				this.ActionRequestFinished = actionRequestFinished;
+				this.Success = false;
 			}
 
 			/// <summary>
@@ -92,6 +93,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			/// Gets the request finished action.
 			/// </summary>
 			public Action<RequestState> ActionRequestFinished { get; private set; }
+			/// <summary>
+			/// Indicates whether the request has been successful.
+			/// </summary>
+			public bool Success { get; set; }
 		}
 
 		private object sync = new object();
