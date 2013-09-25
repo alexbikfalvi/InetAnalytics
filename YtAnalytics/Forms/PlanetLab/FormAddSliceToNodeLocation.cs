@@ -28,14 +28,14 @@ namespace YtAnalytics.Forms.PlanetLab
 	/// <summary>
 	/// A form dialog allowing the selection of a PlanetLab node based on site location.
 	/// </summary>
-	public sealed partial class FormAddNodeLocation : Form
+	public sealed partial class FormAddSliceToNodeLocation : Form
 	{
 		private bool canClose = true;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddNodeLocation()
+		public FormAddSliceToNodeLocation()
 		{
 			InitializeComponent();
 

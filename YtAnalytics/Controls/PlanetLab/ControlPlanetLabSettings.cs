@@ -76,7 +76,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="response">The response.</param>
 		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
+		protected override void OnRequestResult(XmlRpcResponse response, RequestState state)
 		{
 			// Enable the validation button.
 			this.OnChanged(this, EventArgs.Empty);

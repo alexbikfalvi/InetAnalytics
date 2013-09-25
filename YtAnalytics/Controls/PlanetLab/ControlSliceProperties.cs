@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using PlanetLab;
@@ -59,7 +60,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new slice.
 			if (null == slice)
 			{
-				this.Title = "Slice information not available";
+				this.Title = "Slice unknown";
+				this.Message = "The slice information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -68,6 +70,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// General.
 
 				this.Title = slice.Name;
+				this.Message = string.Empty;
 				this.Icon = Resources.GlobeObject_32;
 
 				this.textBoxName.Text = slice.Name;
@@ -130,20 +133,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating slice information...";
+			this.Title = "Updating...";
+			this.Message = "Updating the information for slice {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
-			try
-			{
-				// Begin a new nodes request for the specified slice.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlSlice.GetFilter(PlSlice.Fields.SliceId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.Icon = Resources.GlobeError_32;
-				this.Title = "Slice information not available";
-			}
+			// Begin a new nodes request for the specified slice.
+			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlSlice.GetFilter(PlSlice.Fields.SliceId, id));
 		}
 
 		/// <summary>
@@ -151,8 +146,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
 		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
+		protected override void OnRequestResult(XmlRpcResponse response, RequestState state)
 		{
+			// Call the base class method.
+			base.OnRequestResult(response, state);
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -171,6 +168,24 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 			}
 		}
+
+		/// <summary>
+		/// An event handler called when the current request throws an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestException(Exception exception, RequestState state)
+		{
+			// Catch all exceptions.
+			this.Icon = Resources.GlobeError_32;
+			this.Title = "Slice unknown";
+			this.Message = "An error occurred while requesting the slice information. {0}{1}{2}".FormatWith(
+				Environment.NewLine,
+				Environment.NewLine,
+				exception.Message);
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the node selection has changed.

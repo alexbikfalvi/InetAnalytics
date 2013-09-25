@@ -2,7 +2,7 @@
 
 namespace YtAnalytics.Forms.PlanetLab
 {
-	partial class FormAddNodeLocation
+	partial class FormAddSliceToNodeLocation
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,7 +30,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.control = new YtAnalytics.Controls.PlanetLab.ControlAddNodeLocation();
+			this.control = new YtAnalytics.Controls.PlanetLab.ControlAddSliceToNodeLocation();
 			this.SuspendLayout();
 			// 
 			// control
@@ -47,17 +47,17 @@ namespace YtAnalytics.Forms.PlanetLab
 			this.control.Selected += new YtAnalytics.Events.PlanetLabObjectEventHandler<global::PlanetLab.Api.PlNode>(this.OnSelected);
 			this.control.Closed += new System.EventHandler(this.OnClosed);
 			// 
-			// FormAddNodeLocation
+			// FormAddSliceToNodeLocation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 532);
 			this.Controls.Add(this.control);
 			this.MinimizeBox = false;
-			this.Name = "FormAddNodeLocation";
+			this.Name = "FormAddSliceToNodeLocation";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.Text = "Add PlanetLab Node";
+			this.Text = "Add PlanetLab Slice to Node";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.ResumeLayout(false);
 
@@ -65,7 +65,7 @@ namespace YtAnalytics.Forms.PlanetLab
 
 		#endregion
 
-		private Controls.PlanetLab.ControlAddNodeLocation control;
+		private Controls.PlanetLab.ControlAddSliceToNodeLocation control;
 
 
 

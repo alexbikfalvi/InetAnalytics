@@ -34,21 +34,61 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control class for PlanetLab slices.
 	/// </summary>
-	public partial class ControlSlices : ControlRequest
+	public sealed partial class ControlSlices : ControlRequest
 	{
+		/// <summary>
+		/// A class representing the add slice to nodes request state.
+		/// </summary>
+		private class RequestStateAddSliceToNodes : RequestState
+		{
+			/// <summary>
+			/// Creates a new request state instance.
+			/// </summary>
+			/// <param name="actionRequestStarted">The request started action.</param>
+			/// <param name="actionRequestResult">The request result action.</param>
+			/// <param name="actionRequestCanceled">The request canceled action.</param>
+			/// <param name="actionRequestException">The request exception action.</param>
+			/// <param name="actionRequestFinished">The request finished action.</param>
+			/// <param name="slice">The slice.</param>
+			/// <param name="node">The node.</param>
+			public RequestStateAddSliceToNodes(
+				Action<RequestState> actionRequestStarted,
+				Action<XmlRpcResponse, RequestState> actionRequestResult,
+				Action<RequestState> actionRequestCanceled,
+				Action<Exception, RequestState> actionRequestException,
+				Action<RequestState> actionRequestFinished,
+				PlSlice slice,
+				PlNode node
+				)
+				: base(actionRequestStarted, actionRequestResult, actionRequestCanceled, actionRequestException, actionRequestFinished)
+			{
+				this.Slice = slice;
+				this.Node = node;
+			}
+
+			/// <summary>
+			/// Gets the PlanetLab slice corresponding to this request.
+			/// </summary>
+			public PlSlice Slice { get; private set; }
+			/// <summary>
+			/// Gets the PlanetLab node corresponding to this request.
+			/// </summary>
+			public PlNode Node { get; private set; }
+		}
+
 		// Private variables.
 
 		private Crawler crawler = null;
 		private StatusHandler status = null;
 
 		private PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		private PlRequest requestAddNodeToSlice = new PlRequest(PlRequest.RequestMethod.AddSliceToNodes);
 
 		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
 		private FormAddSlice formAddSlice = new FormAddSlice();
-		private FormAddNodeLocation formAddNodeLocation = new FormAddNodeLocation();
+		private FormAddSliceToNodeLocation formAddSliceToNodeLocation = new FormAddSliceToNodeLocation();
 
-		private Action<XmlRpcResponse> actionCompleteSlicesRequest;
-		private Action<XmlRpcResponse> actionCompleteAddNodeRequest;
+		private RequestState requestStateGetSlices;
 
 		// Public declarations
 
@@ -64,9 +104,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
 
-			// Create the delegates.
-			this.actionCompleteSlicesRequest = new Action<XmlRpcResponse>(this.OnCompleteSlicesRequest);
-			this.actionCompleteAddNodeRequest = new Action<XmlRpcResponse>(this.OnCompleteAddNodeRequest);
+			// Create the request states.
+			this.requestStateGetSlices = new RequestState(
+				null, this.OnRefreshSlicesRequestResult, this.OnRefreshSlicesRequestCanceled, this.OnRefreshSlicesRequestException, null);
 		}
 
 		/// <summary>
@@ -93,8 +133,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when the current request begins, and the notification box is displayed.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected override void OnBeginRequest(object[] parameters = null)
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestStarted(RequestState state)
 		{
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = false;
@@ -102,48 +142,24 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonProperties.Enabled = false;
 			this.buttonAddSlice.Enabled = false;
 			this.buttonRemoveSlice.Enabled = false;
-			this.buttonAddNode.Enabled = false;
-			this.buttonRemoveNode.Enabled = false;
+			this.buttonAddToNode.Enabled = false;
+			this.buttonRemoveFromNode.Enabled = false;
+			// Call the base class method.
+			base.OnRequestStarted(state);
 		}
 
 		/// <summary>
-		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
+		/// An event handler called when the current request finishes, and the notification box is hidden.
 		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
 		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
-		{
-			// Get the action delegate from the user state.
-			Action<XmlRpcResponse> action = state as Action<XmlRpcResponse>;
-			// If the action delegate is not null.
-			if (null != action)
-			{
-				// Call the delegate with the current response.
-				action(response);
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
-		/// </summary>
-		protected override void OnCancelRequest()
-		{
-			// Set the button enabled state.
-			this.buttonCancel.Enabled = false;
-			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab slices canceled.", Resources.GlobeCanceled_16);
-		}
-
-		/// <summary>
-		/// An event handler called when the current request ends, and the notification box is hidden.
-		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected override void OnEndRequest(object[] parameters = null)
+		protected override void OnRequestFinished(RequestState state)
 		{
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
 			this.buttonAddSlice.Enabled = true;
+			// Call the base class method.
+			base.OnRequestFinished(state);
 		}
 
 		// Private methods.
@@ -181,21 +197,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.status.Send("Refreshing the list of PlanetLab slices...", Resources.GlobeClock_16);
 
 			// Begin an asynchronous PlanetLab request.
-			try
-			{
-				// Begin the request.
-				this.BeginRequest(
-					this.requestGetSlices,
-					this.crawler.Config.PlanetLab.Username,
-					this.crawler.Config.PlanetLab.Password,
-					null,
-					this.actionCompleteSlicesRequest);
-			}
-			catch
-			{
-				// Update the status.
-				this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
-			}
+			this.BeginRequest(
+				this.requestGetSlices,
+				this.crawler.Config.PlanetLab.Username,
+				this.crawler.Config.PlanetLab.Password,
+				null,
+				this.requestStateGetSlices);
 		}
 
 		/// <summary>
@@ -215,7 +222,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// A method called when receiving the response to a slices refresh request.
 		/// </summary>
 		/// <param name="response">The response.</param>
-		private void OnCompleteSlicesRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSlicesRequestResult(XmlRpcResponse response, RequestState state)
 		{
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
@@ -249,11 +257,24 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// A method called when receiving the response to an add node request.
+		/// A method called when the get slices request has been canceled.
 		/// </summary>
-		/// <param name="response">The response.</param>
-		private void OnCompleteAddNodeRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSlicesRequestCanceled(RequestState state)
 		{
+			// Update the status.
+			this.status.Send("Refreshing the list of PlanetLab slices was canceled.", Resources.GlobeCanceled_16);
+		}
+
+		/// <summary>
+		/// A method called when the get slices request returned an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSlicesRequestException(Exception exception, RequestState state)
+		{
+			// Update the status.
+			this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
 		}
 
 		/// <summary>
@@ -304,15 +325,15 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				this.buttonProperties.Enabled = true;
 				this.buttonRemoveSlice.Enabled = true;
-				this.buttonAddNode.Enabled = true;
-				this.buttonRemoveNode.Enabled = true;
+				this.buttonAddToNode.Enabled = true;
+				this.buttonRemoveFromNode.Enabled = true;
 			}
 			else
 			{
 				this.buttonProperties.Enabled = false;
 				this.buttonRemoveSlice.Enabled = false;
-				this.buttonAddNode.Enabled = false;
-				this.buttonRemoveNode.Enabled = false;
+				this.buttonAddToNode.Enabled = false;
+				this.buttonRemoveFromNode.Enabled = false;
 			}
 		}
 
@@ -387,34 +408,172 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a node to a slice based on site location.
+		/// An event handler called when the user adds a slice to a node selected by location.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAddNodeLocation(object sender, EventArgs e)
+		private void OnAddToNodeLocation(object sender, EventArgs e)
 		{
-			// Show the add node by location dialog.
-			if (this.formAddNodeLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
 			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// If there is no selected slice, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+
+			// Get the slice.
+			PlSlice slice = this.listViewSlices.SelectedItems[0].Tag as PlSlice;
+
+			// Show the add node by location dialog.
+			if (this.formAddSliceToNodeLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			{
+				// Get the PlanetLab node.
+				PlNode node = this.formAddSliceToNodeLocation.Result;
+
+				// If the slice does not have an ID, show an error message and return.
+				if (!slice.Id.HasValue)
+				{
+					MessageBox.Show(this, "The selected slice does not have an identifier.", "Add Slice to Node", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
+				// If the node does not have an ID, show an error message and return.
+				if (!node.Id.HasValue)
+				{
+					MessageBox.Show(this, "The selected node does not have an identifier.", "Add Slice to Node", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
+
+				// Update the status.
+				this.status.Send("Adding slice {0} to the PlanetLab node {1}...".FormatWith(slice.Id, node.Id), Resources.GlobeClock_16);
+
+				// Create the request state.
+				RequestStateAddSliceToNodes requestState = new RequestStateAddSliceToNodes(
+					this.OnAddSliceToNodesRequestStarted,
+					this.OnAddSliceToNodesRequestResult,
+					this.OnAddSliceToNodesRequestCanceled,
+					this.OnAddSliceToNodesRequestException,
+					this.OnAddSliceToNodesRequestFinished,
+					slice,
+					node);
+
+				// Begin an asynchronous PlanetLab request.
+				this.BeginRequest(
+					this.requestAddNodeToSlice,
+					this.crawler.Config.PlanetLab.Username,
+					this.crawler.Config.PlanetLab.Password,
+					new object[] { slice.Id.Value, new int[] { node.Id.Value } },
+					requestState);
 			}
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a node to a slice based on node state.
+		/// A method called when the add slice to nodes request started.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		private void OnAddSliceToNodesRequestStarted(RequestState state)
+		{
+			// Disable the slices list.
+			this.listViewSlices.Enabled = false;
+		}
+
+		/// <summary>
+		/// A method called when receiving the response to an add slice to nodes request.
+		/// </summary>
+		/// <param name="response">The response.</param>
+		/// <param name="state">The request state.</param>
+		private void OnAddSliceToNodesRequestResult(XmlRpcResponse response, RequestState state)
+		{
+			// Convert the request state.
+			RequestStateAddSliceToNodes requestState = state as RequestStateAddSliceToNodes;
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Get the response value.
+				int? code = response.Value.AsInt;
+				if (code.HasValue ? 1 == code.Value : false)
+				{
+					// Show a dialog.
+					MessageBox.Show(this,
+						"The slice {0} was successfully added to the PlanetLab node {1}.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+						"Add Slice to Node",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Information);
+					// Update the status.
+					this.status.Send("Slice {0} to the PlanetLab node {1} succeeded.".FormatWith(requestState.Slice.Id, requestState.Node.Id), Resources.GlobeSuccess_16);
+				}
+				else
+				{
+					// Show a dialog.
+					MessageBox.Show(this,
+						"Cannot add the slice {0} to the PlanetLab node {1}. The PlanetLab server responded, however the operation was not succesfull.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+						"Add Slice to Node",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Warning);
+					// Update the status.
+					this.status.Send("Adding slice {0} to the PlanetLab node {1} failed.".FormatWith(requestState.Slice.Id, requestState.Node.Id), Resources.GlobeWarning_16);
+				}
+			}
+			else
+			{
+				// Update the status.
+				this.status.Send("Adding slice {0} to the PlanetLab node {1} failed.".FormatWith(requestState.Slice.Id, requestState.Node.Id), Resources.GlobeError_16);
+			}
+		}
+
+		/// <summary>
+		/// A method called when the add slice to nodes request has been canceled.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		private void OnAddSliceToNodesRequestCanceled(RequestState state)
+		{
+			// Convert the request state.
+			RequestStateAddSliceToNodes requestState = state as RequestStateAddSliceToNodes;
+			// Update the status.
+			this.status.Send("Adding the slice {0} to PlanetLab node {1} was canceled.".FormatWith(requestState.Slice.Id, requestState.Node.Id), Resources.GlobeCanceled_16);
+		}
+
+		/// <summary>
+		/// A method called when the get slices request returned an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		private void OnAddSliceToNodesRequestException(Exception exception, RequestState state)
+		{
+			// Convert the request state.
+			RequestStateAddSliceToNodes requestState = state as RequestStateAddSliceToNodes;
+			// Update the status.
+			this.status.Send("Adding slice {0} to the PlanetLab node {1} failed.".FormatWith(requestState.Slice.Id, requestState.Node.Id), Resources.GlobeError_16);
+		}
+
+		/// <summary>
+		/// A method called when the add slice to nodes request has finished.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		private void OnAddSliceToNodesRequestFinished(RequestState state)
+		{
+			// Enable the slices list.
+			this.listViewSlices.Enabled = true;
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a slice to a node selected by state.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAddNodeState(object sender, EventArgs e)
+		private void OnAddToNodeState(object sender, EventArgs e)
 		{
 
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a node to a slice based on slice.
+		/// An event handler called when the user adds a slice to a node selected by slice.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAddNodeSlice(object sender, EventArgs e)
+		private void OnAddToNodeSlice(object sender, EventArgs e)
 		{
 
 		}
@@ -424,7 +583,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnRemoveNode(object sender, EventArgs e)
+		private void OnRemoveFromNode(object sender, EventArgs e)
 		{
 
 		}

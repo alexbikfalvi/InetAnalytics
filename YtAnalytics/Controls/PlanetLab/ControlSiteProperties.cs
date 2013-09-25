@@ -67,7 +67,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new site.
 			if (null == site)
 			{
-				this.Title = "Site information not available";
+				this.Title = "Address unknown";
+				this.Message = "The address information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -76,6 +77,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// General.
 
 				this.Title = site.Name;
+				this.Message = string.Empty;
 				this.Icon = Resources.GlobeSchema_32;
 
 				this.textBoxName.Text = site.Name;
@@ -195,20 +197,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating site information...";
+			this.Title = "Updating...";
+			this.Message = "Updating the information for site {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
-			try
-			{
-				// Begin a new sites request for the specified site.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlSite.GetFilter(PlSite.Fields.SiteId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.Icon = Resources.GlobeError_32;
-				this.Title = "Site information not available";
-			}
+			// Begin a new sites request for the specified site.
+			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlSite.GetFilter(PlSite.Fields.SiteId, id));
 		}
 
 		/// <summary>
@@ -216,8 +210,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
 		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
+		protected override void OnRequestResult(XmlRpcResponse response, RequestState state)
 		{
+			// Call the base class method.
+			base.OnRequestResult(response, state);
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -236,6 +232,24 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 			}
 		}
+
+		/// <summary>
+		/// An event handler called when the current request throws an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestException(Exception exception, RequestState state)
+		{
+			// Catch all exceptions.
+			this.Icon = Resources.GlobeError_32;
+			this.Title = "Site unknown";
+			this.Message = "An error occurred while requesting the site information. {0}{1}{2}".FormatWith(
+				Environment.NewLine,
+				Environment.NewLine,
+				exception.Message);
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the node selection has changed.

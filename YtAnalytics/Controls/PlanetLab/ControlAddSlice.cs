@@ -80,25 +80,18 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.textBoxFilter.Clear();
 			// Clear the list.
 			this.slices.Clear();
-			try
-			{
-				// Begin the PlanetLab request.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
-			}
-			catch
-			{
-				// Update the label.
-				this.labelStatus.Text = "Refresh failed.";
-			}
+
+			// Begin the PlanetLab request.
+			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
 		}
 
 		// Protected methods.
 
 		/// <summary>
-		/// An event handler called when the current request begins, and the notification box is displayed.
+		/// An event handler called when the current request starts, and the notification box is displayed.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected override void OnBeginRequest(object[] parameters = null)
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestStarted(RequestState state)
 		{
 			// Disable the buttons.
 			this.buttonRefresh.Enabled = false;
@@ -117,7 +110,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
 		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
+		protected override void OnRequestResult(XmlRpcResponse response, RequestState state)
 		{
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
@@ -137,17 +130,29 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
 		/// </summary>
-		protected override void OnCancelRequest()
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestCanceled(RequestState state)
 		{
 			// Update the status.
 			this.labelStatus.Text = "Refresh canceled.";
 		}
 
 		/// <summary>
+		/// An event handler called when the current request throws an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestException(Exception exception, RequestState state)
+		{
+			// Update the status.
+			this.labelStatus.Text = "Refresh failed.";
+		}
+
+		/// <summary>
 		/// An event handler called when the current request ends, and the notification box is hidden.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected override void OnEndRequest(object[] parameters = null)
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestFinished(RequestState state)
 		{
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;

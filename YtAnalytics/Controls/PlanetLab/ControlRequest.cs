@@ -34,14 +34,64 @@ namespace YtAnalytics.Controls.PlanetLab
 	public class ControlRequest : NotificationControl
 	{
 		/// <summary>
-		/// An enumeration representing the message status.
+		/// An enumeration representing the request status.
 		/// </summary>
-		protected enum MessageStatus
+		protected enum RequestStatus
 		{
 			Success = 0,
 			Warning = 1,
 			Error = 2,
 			Busy = 3
+		}
+
+		/// <summary>
+		/// A class representing the request state.
+		/// </summary>
+		protected class RequestState
+		{
+			/// <summary>
+			/// Creates a new request state instance.
+			/// </summary>
+			/// <param name="actionRequestStarted">The request started action.</param>
+			/// <param name="actionRequestResult">The request result action.</param>
+			/// <param name="actionRequestCanceled">The request canceled action.</param>
+			/// <param name="actionRequestException">The request exception action.</param>
+			/// <param name="actionRequestFinished">The request finished action.</param>
+			public RequestState(
+				Action<RequestState> actionRequestStarted,
+				Action<XmlRpcResponse, RequestState> actionRequestResult,
+				Action<RequestState> actionRequestCanceled,
+				Action<Exception, RequestState> actionRequestException,
+				Action<RequestState> actionRequestFinished
+				)
+			{
+				this.ActionRequestStarted = actionRequestStarted;
+				this.ActionRequestResult = actionRequestResult;
+				this.ActionRequestCanceled = actionRequestCanceled;
+				this.ActionRequestException = actionRequestException;
+				this.ActionRequestFinished = actionRequestFinished;
+			}
+
+			/// <summary>
+			/// Gets the request started action.
+			/// </summary>
+			public Action<RequestState> ActionRequestStarted { get; private set; }
+			/// <summary>
+			/// Gets the request result action.
+			/// </summary>
+			public Action<XmlRpcResponse, RequestState> ActionRequestResult { get; private set; }
+			/// <summary>
+			/// Gets the request canceled action.
+			/// </summary>
+			public Action<RequestState> ActionRequestCanceled { get; private set; }
+			/// <summary>
+			/// Gets the request exception action.
+			/// </summary>
+			public Action<Exception, RequestState> ActionRequestException { get; private set; }
+			/// <summary>
+			/// Gets the request finished action.
+			/// </summary>
+			public Action<RequestState> ActionRequestFinished { get; private set; }
 		}
 
 		private object sync = new object();
@@ -52,18 +102,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		private PlRequest pendingRequest = null;
 		private string pendingUsername = null;
 		private SecureString pendingPassword = null;
-		private object pendingParameter = null;
-		private object pendingState = null;
-
-		private Action<XmlRpcResponse, object> actionCompleteRequest;
+		private object[] pendingParameters = null;
+		private RequestState pendingState = null;
 
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
 		public ControlRequest()
 		{
-			// Create the delegates.
-			this.actionCompleteRequest = new Action<XmlRpcResponse, object>(this.OnCompleteRequestUi);
 		}
 
 		// Protected methods.
@@ -83,7 +129,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.pendingRequest,
 				this.pendingUsername,
 				this.pendingPassword,
-				this.pendingParameter,
+				this.pendingParameters,
 				this.pendingState);
 		}
 
@@ -95,13 +141,31 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="password">The password.</param>
 		/// <param name="parameter">The request parameter.</param>
 		/// <param name="state">The request state.</param>
-		protected void BeginRequest(PlRequest request, string username, SecureString password, object parameter = null, object state = null)
+		protected void BeginRequest(PlRequest request, string username, SecureString password, object parameter = null, RequestState state = null)
+		{
+			this.BeginRequest(
+				request,
+				username,
+				password,
+				parameter != null ? new object[] { parameter } : null,
+				state);
+		}
+
+		/// <summary>
+		/// Begins a new asynchronous PlanetLab request.
+		/// </summary>
+		/// <param name="request">The PlanetLab request.</param>
+		/// <param name="username">The username.</param>
+		/// <param name="password">The password.</param>
+		/// <param name="parameters">The request parameters.</param>
+		/// <param name="state">The request state.</param>
+		protected void BeginRequest(PlRequest request, string username, SecureString password, object[] parameters, RequestState state = null)
 		{
 			// Set the pending values to null.
 			this.pendingRequest = null;
 			this.pendingUsername = null;
 			this.pendingPassword = null;
-			this.pendingParameter = null;
+			this.pendingParameters = null;
 			this.pendingState = null;
 
 			lock (this.sync)
@@ -113,7 +177,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.pendingRequest = request;
 					this.pendingUsername = username;
 					this.pendingPassword = password;
-					this.pendingParameter = parameter;
+					this.pendingParameters = parameters;
 					this.pendingState = state;
 					// Cancel the current request
 					this.request.Cancel(this.result);
@@ -133,17 +197,19 @@ namespace YtAnalytics.Controls.PlanetLab
 						"Refreshing the PlanetLab information...",
 						true,
 						-1,
-						this.OnBeginRequest,
-						new object[] { MessageStatus.Busy, "Please wait..." });
+						(object[] param) =>
+							{
+								this.OnRequestStarted(state);
+							});
 
 					// If the parameter is not null.
-					if (null != parameter)
+					if (null != parameters)
 					{
 						// Begin the request with a parameter.
 						this.result = request.Begin(
 							username,
 							password,
-							parameter,
+							parameters,
 							this.OnCallback,
 							state
 							);
@@ -172,14 +238,13 @@ namespace YtAnalytics.Controls.PlanetLab
 						"Refreshing the PlanetLab information failed. {0}".FormatWith(exception.Message),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnEndRequest,
-						new object[] { MessageStatus.Error, "Refreshing the PlanetLab information failed.{0}{1}{2}".FormatWith(
-							Environment.NewLine,
-							Environment.NewLine,
-							exception.Message) });
-
-					// Rethrow the exception.
-					throw;
+						(object[] param) =>
+							{
+								// Call the request exception event handler.
+								this.OnRequestException(exception, state);
+								// Call the request finished event handler.
+								this.OnRequestFinished(state);
+							});
 				}
 			}
 		}
@@ -199,18 +264,27 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.pendingRequest = null;
 				this.pendingUsername = null;
 				this.pendingPassword = null;
-				this.pendingParameter = null;
+				this.pendingParameters = null;
 				this.pendingState = null;
 			}
 		}
 
 		/// <summary>
-		/// An event handler called when the current request begins, and the notification box is displayed.
+		/// An event handler called when the current request starts, and the notification box is displayed.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected virtual void OnBeginRequest(object[] parameters = null)
+		/// <param name="state">The request state.</param>
+		protected virtual void OnRequestStarted(RequestState state)
 		{
-			// Do nothing.
+			// If the request state is not null.
+			if (null != state)
+			{
+				// If the delegate for this method is not null.
+				if (null != state.ActionRequestStarted)
+				{
+					// Call the delegate.
+					state.ActionRequestStarted(state);
+				}
+			}
 		}
 
 		/// <summary>
@@ -218,26 +292,73 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
 		/// <param name="state">The request state.</param>
-		protected virtual void OnCompleteRequest(XmlRpcResponse response, object state)
+		protected virtual void OnRequestResult(XmlRpcResponse response, RequestState state)
 		{
-			// Do nothing.
+			// If the request state is not null.
+			if (null != state)
+			{
+				// If the delegate for this method is not null.
+				if (null != state.ActionRequestResult)
+				{
+					// Call the delegate.
+					state.ActionRequestResult(response, state);
+				}
+			}
 		}
 
 		/// <summary>
 		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
 		/// </summary>
-		protected virtual void OnCancelRequest()
+		/// <param name="state">The request state.</param>
+		protected virtual void OnRequestCanceled(RequestState state)
 		{
-			// Do nothing.
+			// If the request state is not null.
+			if (null != state)
+			{
+				// If the delegate for this method is not null.
+				if (null != state.ActionRequestCanceled)
+				{
+					// Call the delegate.
+					state.ActionRequestCanceled(state);
+				}
+			}
 		}
 
 		/// <summary>
-		/// An event handler called when the current request ends, and the notification box is hidden.
+		/// An event handler called when the current request throws an exception.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected virtual void OnEndRequest(object[] parameters = null)
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected virtual void OnRequestException(Exception exception, RequestState state)
 		{
-			// Do nothing.
+			// If the request state is not null.
+			if (null != state)
+			{
+				// If the delegate for this method is not null.
+				if (null != state.ActionRequestException)
+				{
+					// Call the delegate.
+					state.ActionRequestException(exception, state);
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the current request finishes, and the notification box is hidden.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		protected virtual void OnRequestFinished(RequestState state)
+		{
+			// If the request state is not null.
+			if (null != state)
+			{
+				// If the delegate for this method is not null.
+				if (null != state.ActionRequestFinished)
+				{
+					// Call the delegate.
+					state.ActionRequestFinished(state);
+				}
+			}
 		}
 
 		// Private methods.
@@ -270,7 +391,13 @@ namespace YtAnalytics.Controls.PlanetLab
 							"Refreshing the PlanetLab information completed successfully.",
 							false,
 							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-							this.OnEndRequest);
+							(object[] parameters) =>
+								{
+									// Call the complete request event handler.
+									this.OnRequestResult(response, asyncResult.AsyncState as RequestState);
+									// Call the end request event handler.
+									this.OnRequestFinished(asyncResult.AsyncState as RequestState);
+								});
 					}
 					else
 					{
@@ -281,18 +408,14 @@ namespace YtAnalytics.Controls.PlanetLab
 							"Refreshing the PlanetLab information has failed (RPC code {0} {1})".FormatWith(response.Fault.FaultCode, response.Fault.FaultString),
 							false,
 							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-							this.OnEndRequest,
-							new object[] { MessageStatus.Warning, "Refreshing the PlanetLab information has failed.{0}{1}RPC code: {2}{3}{4}{5})".FormatWith(
-								Environment.NewLine,
-								Environment.NewLine,
-								response.Fault.FaultCode,
-								Environment.NewLine,
-								Environment.NewLine,
-								response.Fault.FaultString) });
+							(object[] paremeters) =>
+								{
+									// Call the complete request event handler.
+									this.OnRequestResult(response, asyncResult.AsyncState as RequestState);
+									// Call the end request event handler.
+									this.OnRequestFinished(asyncResult.AsyncState as RequestState);
+								});
 					}
-
-					// Call the event handler.
-					this.OnCompleteRequestUi(response, asyncResult.AsyncState);
 					// Set the current request to null.
 					this.request = null;
 					this.result = null;
@@ -309,9 +432,9 @@ namespace YtAnalytics.Controls.PlanetLab
 						this.HideMessage((object[] parameters) =>
 							{
 								// Call the cancel request handler.
-								this.OnCancelRequest();
+								this.OnRequestCanceled(result.AsyncState as RequestState);
 								// Call the end request handler.
-								this.OnEndRequest();
+								this.OnRequestFinished(result.AsyncState as RequestState);
 							});
 						// Begin a pending request, if any.
 						this.BeginRequest();
@@ -325,11 +448,13 @@ namespace YtAnalytics.Controls.PlanetLab
 							"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 							false,
 							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-							this.OnEndRequest,
-							new object[] { MessageStatus.Error, "Refreshing the PlanetLab information has failed.{0}{1}{2})".FormatWith(
-								Environment.NewLine,
-								Environment.NewLine,
-								exception.Message) });
+							(object[] parameters) =>
+								{
+									// Call the exception handler.
+									this.OnRequestException(exception, result.AsyncState as RequestState);
+									// Call the request finished event handler.
+									this.OnRequestFinished(result.AsyncState as RequestState);
+								});
 					}
 				}
 				catch (Exception exception)
@@ -345,25 +470,15 @@ namespace YtAnalytics.Controls.PlanetLab
 						"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 						false,
 						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-						this.OnEndRequest,
-						new object[] { MessageStatus.Error, "Refreshing the PlanetLab information has failed.{0}{1}{2})".FormatWith(
-							Environment.NewLine,
-							Environment.NewLine,
-							exception.Message) });
+						(object[] parameters) =>
+							{
+								// Call the exception handler.
+								this.OnRequestException(exception, result.AsyncState as RequestState);
+								// Call the request finished event handler.
+								this.OnRequestFinished(result.AsyncState as RequestState);
+							});
 				}
 			}
-		}
-
-		/// <summary>
-		/// Completes the current request. The method is UI thread-safe.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		/// <param name="state">The request state.</param>
-		private void OnCompleteRequestUi(XmlRpcResponse response, object state)
-		{
-			// Execute the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(this.actionCompleteRequest, new object[] { response, state });
-			else this.OnCompleteRequest(response, state);
 		}
 	}
 }

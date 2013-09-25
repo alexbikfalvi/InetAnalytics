@@ -35,7 +35,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control that receives user input data to add a new node to a PlanetLab slice by location.
 	/// </summary>
-	public sealed partial class ControlAddNodeLocation : ControlRequest
+	public sealed partial class ControlAddSliceToNodeLocation : ControlRequest
 	{
 		public static readonly string[] nodeImageKeys = new string[]
 		{
@@ -56,13 +56,13 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private MapMarker marker = null;
 
-		private Action<XmlRpcResponse> actionCompleteSitesRequest;
-		private Action<XmlRpcResponse> actionCompleteNodesRequest;
+		private RequestState requestStateSites;
+		private RequestState requestStateNodes;
 
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlAddNodeLocation()
+		public ControlAddSliceToNodeLocation()
 		{
 			// Initialize the component.
 			this.InitializeComponent();
@@ -70,9 +70,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Load the map.
 			this.mapControl.LoadMap("Ne110mAdmin0Countries");
 
-			// Create the delegates.
-			this.actionCompleteSitesRequest = new Action<XmlRpcResponse>(this.OnCompleteSitesRequest);
-			this.actionCompleteNodesRequest = new Action<XmlRpcResponse>(this.OnCompleteNodesRequest);
+			// Create the request states.
+			this.requestStateSites = new RequestState(null, this.OnSitesRequestResult, null, null, null);
+			this.requestStateNodes = new RequestState(null, this.OnNodesRequestResult, null, null, null);
 		}
 
 		// Public events.
@@ -124,8 +124,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when the current request begins, and the notification box is displayed.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected override void OnBeginRequest(object[] parameters = null)
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestStarted(RequestState state)
 		{
 			// Disable the buttons.
 			this.buttonRefresh.Enabled = false;
@@ -139,26 +139,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
-		/// </summary>
-		/// <param name="response">The XML-RPC response.</param>
-		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
-		{
-			// Get the action delegate from the user state.
-			Action<XmlRpcResponse> action = state as Action<XmlRpcResponse>;
-			// If the action delegate is not null.
-			if (null != action)
-			{
-				// Call the delegate with the current response.
-				action(response);
-			}
-		}
-
-		/// <summary>
 		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
 		/// </summary>
-		protected override void OnCancelRequest()
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestCanceled(RequestState state)
 		{
 			// Update the status.
 			switch (this.wizard.SelectedIndex)
@@ -173,10 +157,29 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the current request ends, and the notification box is hidden.
+		/// An event handler called when the current request throws an exception.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected override void OnEndRequest(object[] parameters = null)
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestException(Exception exception, RequestState state)
+		{
+			// Update the status.
+			switch (this.wizard.SelectedIndex)
+			{
+				case 0:
+					this.wizardPageSite.Status = "Refreshing the PlanetLab sites failed.";
+					break;
+				case 1:
+					this.wizardPageNode.Status = "Refreshing the PlanetLab nodes failed.";
+					break;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the current request finishes, and the notification box is hidden.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestFinished(RequestState state)
 		{
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;
@@ -208,21 +211,13 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.wizardPageSite.Status = "Refreshing the PlanetLab sites...";
 
-			try
-			{
-				// Begin the PlanetLab sites request.
-				this.BeginRequest(
-					this.requestSites,
-					CrawlerStatic.PlanetLabUsername,
-					CrawlerStatic.PlanetLabPassword,
-					null,
-					this.actionCompleteSitesRequest);
-			}
-			catch
-			{
-				// Update the label.
-				this.wizardPageSite.Status = "Refreshing the PlanetLab sites failed.";
-			}
+			// Begin the PlanetLab sites request.
+			this.BeginRequest(
+				this.requestSites,
+				CrawlerStatic.PlanetLabUsername,
+				CrawlerStatic.PlanetLabPassword,
+				null,
+				this.requestStateSites);
 		}
 
 		/// <summary>
@@ -245,28 +240,21 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.wizardPageNode.Status = "Refreshing the PlanetLab nodes...";
 
-			try
-			{
-				// Begin the PlanetLab nodes request.
-				this.BeginRequest(
-					this.requestNodes,
-					CrawlerStatic.PlanetLabUsername,
-					CrawlerStatic.PlanetLabPassword,
-					PlNode.GetFilter(PlNode.Fields.SiteId, tag.Key.Id),
-					this.actionCompleteNodesRequest);
-			}
-			catch
-			{
-				// Update the label.
-				this.wizardPageSite.Status = "Refreshing the PlanetLab nodes failed.";
-			}
+			// Begin the PlanetLab nodes request.
+			this.BeginRequest(
+				this.requestNodes,
+				CrawlerStatic.PlanetLabUsername,
+				CrawlerStatic.PlanetLabPassword,
+				PlNode.GetFilter(PlNode.Fields.SiteId, tag.Key.Id),
+				this.requestStateNodes);
 		}
 
 		/// <summary>
 		/// An event handler called when the control completes an asynchronous request for the list of PlanetLab sites.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		private void OnCompleteSitesRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		private void OnSitesRequestResult(XmlRpcResponse response, RequestState state)
 		{
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
@@ -287,7 +275,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event handler called when the control completes an asynchronous request for the list of PlanetLab nodes.
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
-		private void OnCompleteNodesRequest(XmlRpcResponse response)
+		/// <param name="state">The request state.</param>
+		private void OnNodesRequestResult(XmlRpcResponse response, RequestState state)
 		{
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
@@ -579,7 +568,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						node.NodeType
 					});
 					item.Tag = node;
-					item.ImageKey = ControlAddNodeLocation.nodeImageKeys[(int)node.GetBootState()];
+					item.ImageKey = ControlAddSliceToNodeLocation.nodeImageKeys[(int)node.GetBootState()];
 					this.listViewNodes.Items.Add(item);
 				}
 			}

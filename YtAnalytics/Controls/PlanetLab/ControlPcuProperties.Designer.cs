@@ -30,10 +30,8 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPcuProperties));
-			this.labelTitle = new System.Windows.Forms.Label();
 			this.textBoxHostname = new System.Windows.Forms.TextBox();
 			this.labelHostname = new System.Windows.Forms.Label();
-			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
 			this.labelNodes = new System.Windows.Forms.Label();
@@ -63,23 +61,12 @@
 			this.listViewNodes = new System.Windows.Forms.ListView();
 			this.columnHeaderNode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
 			this.tabPageIdentifiers.SuspendLayout();
 			this.tabPageStatus.SuspendLayout();
 			this.tabPageNodes.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// labelTitle
-			// 
-			this.labelTitle.AutoSize = true;
-			this.labelTitle.Location = new System.Drawing.Point(59, 29);
-			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(89, 13);
-			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "No PCU selected";
-			this.labelTitle.UseMnemonic = false;
 			// 
 			// textBoxHostname
 			// 
@@ -99,15 +86,6 @@
 			this.labelHostname.Size = new System.Drawing.Size(58, 13);
 			this.labelHostname.TabIndex = 0;
 			this.labelHostname.Text = "&Hostname:";
-			// 
-			// pictureBox
-			// 
-			this.pictureBox.Image = global::YtAnalytics.Resources.GlobePower_32;
-			this.pictureBox.Location = new System.Drawing.Point(20, 20);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(32, 32);
-			this.pictureBox.TabIndex = 2;
-			this.pictureBox.TabStop = false;
 			// 
 			// tabControl
 			// 
@@ -437,14 +415,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl);
-			this.Controls.Add(this.labelTitle);
-			this.Controls.Add(this.pictureBox);
 			this.Name = "ControlPlanetLabPcuProperties";
 			this.Size = new System.Drawing.Size(350, 400);
-			this.Controls.SetChildIndex(this.pictureBox, 0);
-			this.Controls.SetChildIndex(this.labelTitle, 0);
 			this.Controls.SetChildIndex(this.tabControl, 0);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageGeneral.ResumeLayout(false);
 			this.tabPageGeneral.PerformLayout();
@@ -460,8 +433,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.Label labelTitle;
-		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.TextBox textBoxHostname;
 		private System.Windows.Forms.Label labelHostname;
 		private System.Windows.Forms.TabControl tabControl;

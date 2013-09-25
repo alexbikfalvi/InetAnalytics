@@ -48,11 +48,11 @@
 			this.buttonAddSlice = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemoveSlice = new System.Windows.Forms.ToolStripButton();
 			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonAddNode = new System.Windows.Forms.ToolStripDropDownButton();
-			this.addNodeByLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addNodeByStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addNodeBySliceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.buttonRemoveNode = new System.Windows.Forms.ToolStripButton();
+			this.buttonAddToNode = new System.Windows.Forms.ToolStripDropDownButton();
+			this.itemSelectNodeLocation = new System.Windows.Forms.ToolStripMenuItem();
+			this.itemSelectNodeState = new System.Windows.Forms.ToolStripMenuItem();
+			this.itemSelectNodeSlice = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttonRemoveFromNode = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -157,8 +157,8 @@
             this.buttonAddSlice,
             this.buttonRemoveSlice,
             this.separator3,
-            this.buttonAddNode,
-            this.buttonRemoveNode});
+            this.buttonAddToNode,
+            this.buttonRemoveFromNode});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
@@ -229,49 +229,49 @@
 			this.separator3.Name = "separator3";
 			this.separator3.Size = new System.Drawing.Size(6, 25);
 			// 
-			// buttonAddNode
+			// buttonAddToNode
 			// 
-			this.buttonAddNode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNodeByLocationToolStripMenuItem,
-            this.addNodeByStateToolStripMenuItem,
-            this.addNodeBySliceToolStripMenuItem});
-			this.buttonAddNode.Enabled = false;
-			this.buttonAddNode.Image = global::YtAnalytics.Resources.NodeAdd_16;
-			this.buttonAddNode.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonAddNode.Name = "buttonAddNode";
-			this.buttonAddNode.Size = new System.Drawing.Size(88, 22);
-			this.buttonAddNode.Text = "A&dd node";
+			this.buttonAddToNode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itemSelectNodeLocation,
+            this.itemSelectNodeState,
+            this.itemSelectNodeSlice});
+			this.buttonAddToNode.Enabled = false;
+			this.buttonAddToNode.Image = global::YtAnalytics.Resources.NodeAdd_16;
+			this.buttonAddToNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonAddToNode.Name = "buttonAddToNode";
+			this.buttonAddToNode.Size = new System.Drawing.Size(102, 22);
+			this.buttonAddToNode.Text = "A&dd to node";
 			// 
-			// addNodeByLocationToolStripMenuItem
+			// itemSelectNodeLocation
 			// 
-			this.addNodeByLocationToolStripMenuItem.Name = "addNodeByLocationToolStripMenuItem";
-			this.addNodeByLocationToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-			this.addNodeByLocationToolStripMenuItem.Text = "Add node by location";
-			this.addNodeByLocationToolStripMenuItem.Click += new System.EventHandler(this.OnAddNodeLocation);
+			this.itemSelectNodeLocation.Name = "itemSelectNodeLocation";
+			this.itemSelectNodeLocation.Size = new System.Drawing.Size(197, 22);
+			this.itemSelectNodeLocation.Text = "Select node by location";
+			this.itemSelectNodeLocation.Click += new System.EventHandler(this.OnAddToNodeLocation);
 			// 
-			// addNodeByStateToolStripMenuItem
+			// itemSelectNodeState
 			// 
-			this.addNodeByStateToolStripMenuItem.Name = "addNodeByStateToolStripMenuItem";
-			this.addNodeByStateToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-			this.addNodeByStateToolStripMenuItem.Text = "Add node by state";
-			this.addNodeByStateToolStripMenuItem.Click += new System.EventHandler(this.OnAddNodeState);
+			this.itemSelectNodeState.Name = "itemSelectNodeState";
+			this.itemSelectNodeState.Size = new System.Drawing.Size(197, 22);
+			this.itemSelectNodeState.Text = "Select node by state";
+			this.itemSelectNodeState.Click += new System.EventHandler(this.OnAddToNodeState);
 			// 
-			// addNodeBySliceToolStripMenuItem
+			// itemSelectNodeSlice
 			// 
-			this.addNodeBySliceToolStripMenuItem.Name = "addNodeBySliceToolStripMenuItem";
-			this.addNodeBySliceToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-			this.addNodeBySliceToolStripMenuItem.Text = "Add node by slice";
-			this.addNodeBySliceToolStripMenuItem.Click += new System.EventHandler(this.OnAddNodeSlice);
+			this.itemSelectNodeSlice.Name = "itemSelectNodeSlice";
+			this.itemSelectNodeSlice.Size = new System.Drawing.Size(197, 22);
+			this.itemSelectNodeSlice.Text = "Select node by slice";
+			this.itemSelectNodeSlice.Click += new System.EventHandler(this.OnAddToNodeSlice);
 			// 
-			// buttonRemoveNode
+			// buttonRemoveFromNode
 			// 
-			this.buttonRemoveNode.Enabled = false;
-			this.buttonRemoveNode.Image = global::YtAnalytics.Resources.NodeRemove_16;
-			this.buttonRemoveNode.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonRemoveNode.Name = "buttonRemoveNode";
-			this.buttonRemoveNode.Size = new System.Drawing.Size(100, 22);
-			this.buttonRemoveNode.Text = "Remo&ve node";
-			this.buttonRemoveNode.Click += new System.EventHandler(this.OnRemoveNode);
+			this.buttonRemoveFromNode.Enabled = false;
+			this.buttonRemoveFromNode.Image = global::YtAnalytics.Resources.NodeRemove_16;
+			this.buttonRemoveFromNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRemoveFromNode.Name = "buttonRemoveFromNode";
+			this.buttonRemoveFromNode.Size = new System.Drawing.Size(129, 22);
+			this.buttonRemoveFromNode.Text = "Remo&ve from node";
+			this.buttonRemoveFromNode.Click += new System.EventHandler(this.OnRemoveFromNode);
 			// 
 			// controlLog
 			// 
@@ -346,10 +346,10 @@
 		private System.Windows.Forms.ToolStripButton buttonAddSlice;
 		private System.Windows.Forms.ToolStripButton buttonRemoveSlice;
 		private System.Windows.Forms.ToolStripSeparator separator3;
-		private System.Windows.Forms.ToolStripButton buttonRemoveNode;
-		private System.Windows.Forms.ToolStripDropDownButton buttonAddNode;
-		private System.Windows.Forms.ToolStripMenuItem addNodeByLocationToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem addNodeByStateToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem addNodeBySliceToolStripMenuItem;
+		private System.Windows.Forms.ToolStripButton buttonRemoveFromNode;
+		private System.Windows.Forms.ToolStripDropDownButton buttonAddToNode;
+		private System.Windows.Forms.ToolStripMenuItem itemSelectNodeLocation;
+		private System.Windows.Forms.ToolStripMenuItem itemSelectNodeState;
+		private System.Windows.Forms.ToolStripMenuItem itemSelectNodeSlice;
 	}
 }

@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using PlanetLab;
@@ -59,16 +60,18 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new PCU.
 			if (null == pcu)
 			{
-				this.labelTitle.Text = "PCU information not available";
-				this.pictureBox.Image = Resources.GlobeWarning_32;
+				this.Title = "PCU unknown";
+				this.Message = "The PCU information is not available.";
+				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
 			else
 			{
 				// General.
 
-				this.labelTitle.Text = pcu.Hostname;
-				this.pictureBox.Image = Resources.GlobePower_32;
+				this.Title = pcu.Hostname;
+				this.Message = string.Empty;
+				this.Icon = Resources.GlobePower_32;
 
 				this.textBoxHostname.Text = pcu.Hostname;
 				this.textBoxModel.Text = pcu.Model;
@@ -126,21 +129,13 @@ namespace YtAnalytics.Controls.PlanetLab
 		protected override void OnUpdate(int id)
 		{
 			// Hide the current information.
-			this.pictureBox.Image = Resources.GlobeClock_32;
-			this.labelTitle.Text = "Updating PCU information...";
+			this.Icon = Resources.GlobeClock_32;
+			this.Title = "Updating...";
+			this.Message = "Updating the information for PCU {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
-			try
-			{
-				// Begin a new pcus request for the specified pcu.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlPcu.GetFilter(PlPcu.Fields.PcuId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.pictureBox.Image = Resources.GlobeError_32;
-				this.labelTitle.Text = "PCU information not available";
-			}
+			// Begin a new pcus request for the specified pcu.
+			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlPcu.GetFilter(PlPcu.Fields.PcuId, id));
 		}
 
 		/// <summary>
@@ -148,8 +143,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
 		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
+		protected override void OnRequestResult(XmlRpcResponse response, RequestState state)
 		{
+			// Call the base class method.
+			base.OnRequestResult(response, state);
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -170,6 +167,24 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
+		/// An event handler called when the current request throws an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestException(Exception exception, RequestState state)
+		{
+			// Catch all exceptions.
+			this.Icon = Resources.GlobeError_32;
+			this.Title = "PCU unknown";
+			this.Message = "An error occurred while requesting the PCU information. {0}{1}{2}".FormatWith(
+				Environment.NewLine,
+				Environment.NewLine,
+				exception.Message);
+		}
+
+		// Private methods.
+
+		/// <summary>
 		/// An event handler called when the PCU selection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -178,7 +193,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			this.buttonNode.Enabled = this.listViewNodes.SelectedItems.Count > 0;
 		}
-
 
 		/// <summary>
 		/// An event handler called when the user selects the properties of a node.

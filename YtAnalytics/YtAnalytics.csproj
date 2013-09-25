@@ -205,11 +205,11 @@
     <Compile Include="Controls\PlanetLab\ControlSlices.Designer.cs">
       <DependentUpon>ControlSlices.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlAddNodeLocation.cs">
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodeLocation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PlanetLab\ControlAddNodeLocation.Designer.cs">
-      <DependentUpon>ControlAddNodeLocation.cs</DependentUpon>
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodeLocation.Designer.cs">
+      <DependentUpon>ControlAddSliceToNodeLocation.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
@@ -524,11 +524,11 @@
     <Compile Include="Events\ProfileEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
-    <Compile Include="Forms\PlanetLab\FormAddNodeLocation.cs">
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodeLocation.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PlanetLab\FormAddNodeLocation.Designer.cs">
-      <DependentUpon>FormAddNodeLocation.cs</DependentUpon>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodeLocation.Designer.cs">
+      <DependentUpon>FormAddSliceToNodeLocation.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PlanetLab\FormAddSlice.cs">
       <SubType>Form</SubType>
@@ -761,8 +761,8 @@
       <DependentUpon>ControlSlices.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlanetLab\ControlAddNodeLocation.resx">
-      <DependentUpon>ControlAddNodeLocation.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddSliceToNodeLocation.resx">
+      <DependentUpon>ControlAddSliceToNodeLocation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
@@ -918,8 +918,8 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PlanetLab\FormAddNodeLocation.resx">
-      <DependentUpon>FormAddNodeLocation.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodeLocation.resx">
+      <DependentUpon>FormAddSliceToNodeLocation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormAddSlice.resx">
       <DependentUpon>FormAddSlice.cs</DependentUpon>

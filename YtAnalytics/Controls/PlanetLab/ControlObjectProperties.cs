@@ -19,6 +19,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using DotNetApi;
+using DotNetApi.Web.XmlRpc;
 using PlanetLab.Api;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -81,6 +83,14 @@ namespace YtAnalytics.Controls.PlanetLab
 			get { return this.labelTitle.Text; }
 			set { this.labelTitle.Text = value; }
 		}
+		/// <summary>
+		/// Gets or sets the control message text.
+		/// </summary>
+		protected string Message
+		{
+			get { return this.labelMessage.Text; }
+			set { this.labelMessage.Text = value; }
+		}
 
 		// Public methods.
 
@@ -99,37 +109,73 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when the current request begins, and the notification box is shown.
 		/// </summary>
-		/// <param name="parameters"></param>
-		protected override void OnBeginRequest(object[] parameters = null)
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestStarted(RequestState state)
 		{
-			// If the parameters are not null.
-			if (null != parameters)
+			// Update the status.
+			this.pictureBox.Image = Resources.GlobeClock_32;
+			this.labelMessage.Text = "Updating the PlanetLab information ...";
+		}
+
+		/// <summary>
+		/// An event handler called when the control completes an asynchronous request for a PlanetLab resource.
+		/// </summary>
+		/// <param name="response">The XML-RPC response.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestResult(XmlRpcResponse response, RequestState state)
+		{
+			// If the response fault component is not null.
+			if (response.Fault != null)
 			{
-				this.pictureBox.Image = this.images[(int)parameters[0]];
-				this.labelMessage.Text = parameters[1] as string;
+				// Update the status.
+				this.pictureBox.Image = Resources.GlobeWarning_32;
+				this.labelMessage.Text = "Refreshing the PlanetLab information has failed.{0}{1}RPC code: {2}{3}{4}{5})".FormatWith(
+					Environment.NewLine,
+					Environment.NewLine,
+					response.Fault.FaultCode,
+					Environment.NewLine,
+					Environment.NewLine,
+					response.Fault.FaultString);
 			}
-			else
+			else if (response.Value == null)
 			{
-				this.labelMessage.Text = null;
+				// Update the status.
+				this.labelMessage.Text = "The requested PlanetLab information is not available.";
 			}
 		}
 
 		/// <summary>
-		/// An event handler called when the current request ends, and the notification box is hidden.
+		/// An event handler called when an asynchronous request for a PlanetLab resource was canceled.
 		/// </summary>
-		/// <param name="parameters">The task parameters.</param>
-		protected override void OnEndRequest(object[] parameters = null)
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestCanceled(RequestState state)
 		{
-			// If the parameters are not null.
-			if (null != parameters)
-			{
-				this.pictureBox.Image = this.images[(int)parameters[0]];
-				this.labelMessage.Text = parameters[1] as string;
-			}
-			else
-			{
-				this.labelMessage.Text = null;
-			}
+			// Update the status.
+			this.pictureBox.Image = Resources.GlobeCanceled_32;
+			this.labelMessage.Text = "Updating the PlanetLab information canceled.";
+		}
+
+		/// <summary>
+		/// An event handler called when the current request throws an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestException(Exception exception, RequestState state)
+		{
+			// Update the status.
+			this.pictureBox.Image = Resources.GlobeError_32;
+			this.labelMessage.Text = "Updating the PlanetLab information failed. {0}{1}{2}".FormatWith(
+				Environment.NewLine,
+				Environment.NewLine,
+				exception.Message);
+		}
+
+		/// <summary>
+		/// An event handler called when the current request finishes, and the notification box is hidden.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestFinished(RequestState state)
+		{
 		}
 
 		/// <summary>

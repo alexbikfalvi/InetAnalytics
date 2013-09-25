@@ -60,7 +60,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Change the display information for the new address.
 			if (null == address)
 			{
-				this.Title = "Node information not available";
+				this.Title = "Address unknown";
+				this.Message = "The address information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
 			}
@@ -69,6 +70,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// General.
 
 				this.Title = string.Format("Address {0}", address.AddressId);
+				this.Message = string.Empty;
 				this.Icon = Resources.GlobeEnvelope_32;
 
 				this.textBoxAddress.Text = "{0}{1}{2}{3}{4}".FormatWith(address.Line1, Environment.NewLine, address.Line2, Environment.NewLine, address.Line3);
@@ -115,20 +117,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating address information...";
+			this.Title = "Updating...";
+			this.Message = "Updating the information for address {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
-			try
-			{
-				// Begin a new addresses request for the specified address.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlAddress.GetFilter(PlAddress.Fields.AddressId, id));
-			}
-			catch
-			{
-				// Catch all exceptions.
-				this.Icon = Resources.GlobeError_32;
-				this.Title = "Address information not available";
-			}
+			// Begin a new addresses request for the specified address.
+			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlAddress.GetFilter(PlAddress.Fields.AddressId, id));
 		}
 
 		/// <summary>
@@ -136,8 +130,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="response">The XML-RPC response.</param>
 		/// <param name="state">The request state.</param>
-		protected override void OnCompleteRequest(XmlRpcResponse response, object state)
+		protected override void OnRequestResult(XmlRpcResponse response, RequestState state)
 		{
+			// Call the base class method.
+			base.OnRequestResult(response, state);
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -156,6 +152,24 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 			}
 		}
+
+		/// <summary>
+		/// An event handler called when the current request throws an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestException(Exception exception, RequestState state)
+		{
+			// Catch all exceptions.
+			this.Icon = Resources.GlobeError_32;
+			this.Title = "Address unknown";
+			this.Message = "An error occurred while requesting the address information. {0}{1}{2}".FormatWith(
+				Environment.NewLine,
+				Environment.NewLine,
+				exception.Message);
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the address type selection has changed.
