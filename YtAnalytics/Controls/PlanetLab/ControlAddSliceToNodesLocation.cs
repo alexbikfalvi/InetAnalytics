@@ -35,7 +35,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control that receives user input data to add a new node to a PlanetLab slice by location.
 	/// </summary>
-	public sealed partial class ControlAddSliceToNodeLocation : ControlRequest
+	public sealed partial class ControlAddSliceToNodesLocation : ControlRequest
 	{
 		public static readonly string[] nodeImageKeys = new string[]
 		{
@@ -62,7 +62,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlAddSliceToNodeLocation()
+		public ControlAddSliceToNodesLocation()
 		{
 			// Initialize the component.
 			this.InitializeComponent();
@@ -568,7 +568,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						node.NodeType
 					});
 					item.Tag = node;
-					item.ImageKey = ControlAddSliceToNodeLocation.nodeImageKeys[(int)node.GetBootState()];
+					item.ImageKey = ControlAddSliceToNodesLocation.nodeImageKeys[(int)node.GetBootState()];
 					this.listViewNodes.Items.Add(item);
 				}
 			}

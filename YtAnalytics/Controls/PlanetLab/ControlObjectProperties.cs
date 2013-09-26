@@ -53,15 +53,29 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.InitializeComponent();
 		}
 
+		// Public events.
+
+		/// <summary>
+		/// An event raised when the current object has changed.
+		/// </summary>
+		public event EventHandler ObjectChanged;
+
 		// Public properties.
 
+		/// <summary>
+		/// Gets or sets the current PlanetLab object.
+		/// </summary>
 		public PlObject Object
 		{
 			get { return this.obj; }
 			set
 			{
+				// Set the object.
 				this.obj = value;
+				// Call the event handler.
 				this.OnObjectSet(value);
+				// Raise the event.
+				if (null != this.ObjectChanged) this.ObjectChanged(this, EventArgs.Empty);
 			}
 		}
 

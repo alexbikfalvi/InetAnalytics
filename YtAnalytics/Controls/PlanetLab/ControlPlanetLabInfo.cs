@@ -44,6 +44,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event raised when the user selects the sites link.
 		/// </summary>
 		public event EventHandler ClickSites;
+		/// <summary>
+		/// An event raised when the user selects the slices link.
+		/// </summary>
+		public event EventHandler ClickSlices;
 
 		// Public methods.
 
@@ -60,13 +64,23 @@ namespace YtAnalytics.Controls.PlanetLab
 		// Private methods.
 
 		/// <summary>
-		/// An event handler called when the user selects the nodes link.
+		/// An event handler called when the user selects the sites link.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnNodesClick(object sender, LinkLabelLinkClickedEventArgs e)
+		private void OnSitesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			if (null != this.ClickSites) this.ClickSites(this, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the slices link.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesClick(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if (null != this.ClickSlices) this.ClickSlices(this, e);
 		}
 	}
 }

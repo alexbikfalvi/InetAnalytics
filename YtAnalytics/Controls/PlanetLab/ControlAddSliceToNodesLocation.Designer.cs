@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls.PlanetLab
 {
-	partial class ControlAddSliceToNodeLocation
+	partial class ControlAddSliceToNodesLocation
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAddSliceToNodeLocation));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAddSliceToNodesLocation));
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelStatus = new System.Windows.Forms.Label();
@@ -82,9 +82,9 @@
 			this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelTitle.Location = new System.Drawing.Point(75, 28);
 			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(207, 20);
+			this.labelTitle.Size = new System.Drawing.Size(215, 20);
 			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "Add PlanetLab slice to node";
+			this.labelTitle.Text = "Add PlanetLab slice to nodes";
 			// 
 			// pictureBox
 			// 
@@ -439,7 +439,7 @@
 			this.labelSubtitle.TabIndex = 9;
 			this.labelSubtitle.Text = "Select site";
 			// 
-			// ControlAddSliceToNodeLocation
+			// ControlAddSliceToNodesLocation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -455,7 +455,7 @@
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(0, 230);
-			this.Name = "ControlAddSliceToNodeLocation";
+			this.Name = "ControlAddSliceToNodesLocation";
 			this.Size = new System.Drawing.Size(800, 600);
 			this.Controls.SetChildIndex(this.pictureBox, 0);
 			this.Controls.SetChildIndex(this.labelTitle, 0);

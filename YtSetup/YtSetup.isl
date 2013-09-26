@@ -4592,7 +4592,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]YtAnalytics.Primary output</td><td/></row>
-		<row><td>ProductCode</td><td>{CEE796D8-2E8B-4200-A808-0CA1E72D22E3}</td><td/></row>
+		<row><td>ProductCode</td><td>{B348F331-F724-416E-AE3A-1BB613D76019}</td><td/></row>
 		<row><td>ProductName</td><td>YouTube Analytics</td><td/></row>
 		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>

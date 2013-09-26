@@ -36,11 +36,31 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		public FormObjectProperties()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
+
+			// Set an object changed event handler.
+			this.controlPlanetLab.ObjectChanged += this.OnObjectChanged;
 
 			// Set the font.
 			Window.SetFont(this);
 		}
+
+		// Public events.
+
+		/// <summary>
+		/// An event raised when the current object has changed.
+		/// </summary>
+		public event EventHandler ObjectChanged;
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets the current PlanetLab object.
+		/// </summary>
+		public PlObject Object { get { return this.controlPlanetLab.Object; } }
+
+		// Public methods.
 
 		/// <summary>
 		/// Shows the form as a dialog with the specified PlanetLab object.
@@ -79,6 +99,19 @@ namespace YtAnalytics.Forms.PlanetLab
 			this.Text = "{0} {1} Properties".FormatWith(title, obj.Id.HasValue ? obj.Id.Value.ToString() : "(unknown)");
 			// Open the dialog.
 			return base.ShowDialog(owner);
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// An event handler called when the PlanetLab object has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnObjectChanged(object sender, EventArgs e)
+		{
+			// Raise the event.
+			if (null != this.ObjectChanged) this.ObjectChanged(sender, e);
 		}
 	}
 }

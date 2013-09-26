@@ -511,6 +511,7 @@ namespace YtAnalytics.Forms
 			this.controlWebStatistics.Comment += this.CommentVideo;
 
 			this.controlPlanetLab.ClickSites += this.PlanetLabSitesClick;
+			this.controlPlanetLab.ClickSlices += this.PlanetLabSlicesClick;
 
 			this.controlSpiderInfo.StandardFeedsClick += this.BrowserSpiderStandardFeedsClick;
 
@@ -730,6 +731,12 @@ namespace YtAnalytics.Forms
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
 			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSites;
+		}
+
+		private void PlanetLabSlicesClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
+			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSlices;
 		}
 
 		private void BrowserCommentsVideosClick(object sender, EventArgs e)

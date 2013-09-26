@@ -33,9 +33,11 @@
 			this.labelDescription = new System.Windows.Forms.Label();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-			this.labelConfiguration = new System.Windows.Forms.Label();
+			this.labelSlices = new System.Windows.Forms.Label();
 			this.labelSites = new System.Windows.Forms.Label();
 			this.settings = new YtAnalytics.Controls.PlanetLab.ControlPlanetLabSettings();
+			this.labelConfiguration = new System.Windows.Forms.Label();
+			this.linkLabelSlices = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.SuspendLayout();
@@ -59,7 +61,7 @@
 			this.linkLabelSites.TabIndex = 5;
 			this.linkLabelSites.TabStop = true;
 			this.linkLabelSites.Text = "Sites";
-			this.linkLabelSites.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnNodesClick);
+			this.linkLabelSites.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnSitesClick);
 			// 
 			// labelDescription
 			// 
@@ -91,38 +93,41 @@
 			this.tableLayoutPanel.ColumnCount = 2;
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel.Controls.Add(this.labelConfiguration, 0, 3);
+			this.tableLayoutPanel.Controls.Add(this.labelSlices, 1, 3);
 			this.tableLayoutPanel.Controls.Add(this.labelTitle, 0, 0);
 			this.tableLayoutPanel.Controls.Add(this.linkLabelSites, 0, 2);
 			this.tableLayoutPanel.Controls.Add(this.labelDescription, 0, 1);
 			this.tableLayoutPanel.Controls.Add(this.labelSites, 1, 2);
-			this.tableLayoutPanel.Controls.Add(this.settings, 0, 4);
+			this.tableLayoutPanel.Controls.Add(this.settings, 0, 5);
+			this.tableLayoutPanel.Controls.Add(this.labelConfiguration, 0, 4);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelSlices, 0, 3);
 			this.tableLayoutPanel.Location = new System.Drawing.Point(74, 20);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
-			this.tableLayoutPanel.RowCount = 5;
+			this.tableLayoutPanel.RowCount = 6;
+			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel.Size = new System.Drawing.Size(723, 577);
 			this.tableLayoutPanel.TabIndex = 5;
 			// 
-			// labelConfiguration
+			// labelSlices
 			// 
-			this.labelConfiguration.AutoSize = true;
-			this.tableLayoutPanel.SetColumnSpan(this.labelConfiguration, 2);
-			this.labelConfiguration.Location = new System.Drawing.Point(3, 105);
-			this.labelConfiguration.Margin = new System.Windows.Forms.Padding(3, 40, 3, 3);
-			this.labelConfiguration.Name = "labelConfiguration";
-			this.labelConfiguration.Size = new System.Drawing.Size(231, 13);
-			this.labelConfiguration.TabIndex = 7;
-			this.labelConfiguration.Text = "The PlanetLab uses the following configuration.";
+			this.labelSlices.AutoSize = true;
+			this.labelSlices.Location = new System.Drawing.Point(44, 68);
+			this.labelSlices.Margin = new System.Windows.Forms.Padding(3);
+			this.labelSlices.Name = "labelSlices";
+			this.labelSlices.Size = new System.Drawing.Size(331, 13);
+			this.labelSlices.TabIndex = 7;
+			this.labelSlices.Text = "Visualize the PlanetLab slices available for distributed measurements.";
 			// 
 			// labelSites
 			// 
 			this.labelSites.AutoSize = true;
-			this.labelSites.Location = new System.Drawing.Point(39, 49);
+			this.labelSites.Location = new System.Drawing.Point(44, 49);
 			this.labelSites.Margin = new System.Windows.Forms.Padding(3);
 			this.labelSites.Name = "labelSites";
 			this.labelSites.Size = new System.Drawing.Size(326, 13);
@@ -135,10 +140,33 @@
 			this.tableLayoutPanel.SetColumnSpan(this.settings, 2);
 			this.settings.Crawler = null;
 			this.settings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.settings.Location = new System.Drawing.Point(3, 124);
+			this.settings.Location = new System.Drawing.Point(3, 143);
 			this.settings.Name = "settings";
-			this.settings.Size = new System.Drawing.Size(717, 450);
+			this.settings.Size = new System.Drawing.Size(717, 431);
 			this.settings.TabIndex = 8;
+			// 
+			// labelConfiguration
+			// 
+			this.labelConfiguration.AutoSize = true;
+			this.tableLayoutPanel.SetColumnSpan(this.labelConfiguration, 2);
+			this.labelConfiguration.Location = new System.Drawing.Point(3, 124);
+			this.labelConfiguration.Margin = new System.Windows.Forms.Padding(3, 40, 3, 3);
+			this.labelConfiguration.Name = "labelConfiguration";
+			this.labelConfiguration.Size = new System.Drawing.Size(231, 13);
+			this.labelConfiguration.TabIndex = 7;
+			this.labelConfiguration.Text = "The PlanetLab uses the following configuration.";
+			// 
+			// linkLabelSlices
+			// 
+			this.linkLabelSlices.AutoSize = true;
+			this.linkLabelSlices.Location = new System.Drawing.Point(3, 68);
+			this.linkLabelSlices.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelSlices.Name = "linkLabelSlices";
+			this.linkLabelSlices.Size = new System.Drawing.Size(35, 13);
+			this.linkLabelSlices.TabIndex = 9;
+			this.linkLabelSlices.TabStop = true;
+			this.linkLabelSlices.Text = "Slices";
+			this.linkLabelSlices.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnSlicesClick);
 			// 
 			// ControlPlanetLabInfo
 			// 
@@ -165,5 +193,7 @@
 		private System.Windows.Forms.Label labelSites;
 		private System.Windows.Forms.Label labelConfiguration;
 		private ControlPlanetLabSettings settings;
+		private System.Windows.Forms.LinkLabel linkLabelSlices;
+		private System.Windows.Forms.Label labelSlices;
 	}
 }

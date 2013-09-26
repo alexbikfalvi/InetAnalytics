@@ -126,12 +126,12 @@
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(938, 17);
+			this.statusLabelMiddle.Size = new System.Drawing.Size(907, 17);
 			this.statusLabelMiddle.Spring = true;
 			// 
 			// statusLabelRight
 			// 
-			this.statusLabelRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.statusLabelRight.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.statusLabelRight.Name = "statusLabelRight";
 			this.statusLabelRight.Size = new System.Drawing.Size(0, 17);
 			// 
