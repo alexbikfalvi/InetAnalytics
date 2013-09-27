@@ -40,7 +40,7 @@
 			this.buttonSelect = new System.Windows.Forms.Button();
 			this.buttonClose = new System.Windows.Forms.Button();
 			this.buttonRefresh = new System.Windows.Forms.Button();
-			this.listViewNodes = new System.Windows.Forms.ListView();
+			this.listView = new System.Windows.Forms.ListView();
 			this.columnNodeId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnNodeHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnNodeBootState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -154,12 +154,12 @@
 			this.buttonRefresh.UseVisualStyleBackColor = true;
 			this.buttonRefresh.Click += new System.EventHandler(this.OnRefreshStarted);
 			// 
-			// listViewNodes
+			// listView
 			// 
-			this.listViewNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.listView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.listViewNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnNodeId,
             this.columnNodeHostname,
             this.columnNodeBootState,
@@ -168,17 +168,17 @@
             this.columnNodeDateCreated,
             this.columnNodeLastUpdated,
             this.columnNodeType});
-			this.listViewNodes.FullRowSelect = true;
-			this.listViewNodes.GridLines = true;
-			this.listViewNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.listViewNodes.HideSelection = false;
-			this.listViewNodes.Location = new System.Drawing.Point(3, 99);
-			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(794, 469);
-			this.listViewNodes.SmallImageList = this.imageList;
-			this.listViewNodes.TabIndex = 9;
-			this.listViewNodes.UseCompatibleStateImageBehavior = false;
-			this.listViewNodes.View = System.Windows.Forms.View.Details;
+			this.listView.FullRowSelect = true;
+			this.listView.GridLines = true;
+			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listView.HideSelection = false;
+			this.listView.Location = new System.Drawing.Point(3, 99);
+			this.listView.Name = "listView";
+			this.listView.Size = new System.Drawing.Size(794, 469);
+			this.listView.SmallImageList = this.imageList;
+			this.listView.TabIndex = 9;
+			this.listView.UseCompatibleStateImageBehavior = false;
+			this.listView.View = System.Windows.Forms.View.Details;
 			// 
 			// columnNodeId
 			// 
@@ -222,7 +222,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
-			this.Controls.Add(this.listViewNodes);
+			this.Controls.Add(this.listView);
 			this.Controls.Add(this.labelStatus);
 			this.Controls.Add(this.buttonCancel);
 			this.Controls.Add(this.buttonSelect);
@@ -244,7 +244,7 @@
 			this.Controls.SetChildIndex(this.buttonSelect, 0);
 			this.Controls.SetChildIndex(this.buttonCancel, 0);
 			this.Controls.SetChildIndex(this.labelStatus, 0);
-			this.Controls.SetChildIndex(this.listViewNodes, 0);
+			this.Controls.SetChildIndex(this.listView, 0);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -263,7 +263,7 @@
 		private System.Windows.Forms.Button buttonClose;
 		private System.Windows.Forms.Button buttonRefresh;
 		private System.Windows.Forms.ImageList imageList;
-		private System.Windows.Forms.ListView listViewNodes;
+		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnNodeId;
 		private System.Windows.Forms.ColumnHeader columnNodeHostname;
 		private System.Windows.Forms.ColumnHeader columnNodeBootState;

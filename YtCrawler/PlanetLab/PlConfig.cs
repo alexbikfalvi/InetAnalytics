@@ -36,6 +36,7 @@ namespace YtCrawler.PlanetLab
 		private PlList<PlSite> sites = new PlList<PlSite>();
 		private PlList<PlPerson> persons = new PlList<PlPerson>();
 		private PlList<PlSlice> slices = new PlList<PlSlice>();
+		private PlList<PlNode> nodes = new PlList<PlNode>();
 
 		/// <summary>
 		/// Creates a PlanetLab configuration instance at the specified registry key.

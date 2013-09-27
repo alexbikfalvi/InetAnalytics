@@ -268,11 +268,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			int count = 0;
 
 			// Lock the list.
-			slices.Lock();
+			this.slices.Lock();
 			try
 			{
 				// Update the slices list.
-				foreach (PlSlice slice in slices)
+				foreach (PlSlice slice in this.slices)
 				{
 					// If the filter is not null or empty.
 					if (!string.IsNullOrEmpty(this.filter))
@@ -302,10 +302,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 			finally
 			{
-				slices.Unlock();
+				this.slices.Unlock();
 			}
 			// Update the status.
-			this.labelStatus.Text = "Showing {0} of {1} PlanetLab slices.".FormatWith(count, slices.Count);
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab slices.".FormatWith(count, this.slices.Count);
 		}
 	}
 }
