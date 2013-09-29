@@ -48,21 +48,29 @@
 			this.buttonAddSlice = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemoveSlice = new System.Windows.Forms.ToolStripButton();
 			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonAddToNode = new System.Windows.Forms.ToolStripDropDownButton();
-			this.itemSelectNodeLocation = new System.Windows.Forms.ToolStripMenuItem();
-			this.itemSelectNodeState = new System.Windows.Forms.ToolStripMenuItem();
-			this.itemSelectNodeSlice = new System.Windows.Forms.ToolStripMenuItem();
-			this.buttonRemoveFromNode = new System.Windows.Forms.ToolStripButton();
+			this.buttonAddToNodes = new System.Windows.Forms.ToolStripDropDownButton();
+			this.contextMenuAddToNodes = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.itemSelectNodesLocation = new System.Windows.Forms.ToolStripMenuItem();
+			this.itemSelectNodesState = new System.Windows.Forms.ToolStripMenuItem();
+			this.itemSelectNodesSlice = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttonRemoveFromNodes = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemRemoveFromNodes = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.contextMenuAddToNodes.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -110,6 +118,7 @@
 			this.listViewSlices.View = System.Windows.Forms.View.Details;
 			this.listViewSlices.ItemActivate += new System.EventHandler(this.OnProperties);
 			this.listViewSlices.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
+			this.listViewSlices.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick);
 			// 
 			// columnHeaderId
 			// 
@@ -157,8 +166,8 @@
             this.buttonAddSlice,
             this.buttonRemoveSlice,
             this.separator3,
-            this.buttonAddToNode,
-            this.buttonRemoveFromNode});
+            this.buttonAddToNodes,
+            this.buttonRemoveFromNodes});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
@@ -229,49 +238,63 @@
 			this.separator3.Name = "separator3";
 			this.separator3.Size = new System.Drawing.Size(6, 25);
 			// 
-			// buttonAddToNode
+			// buttonAddToNodes
 			// 
-			this.buttonAddToNode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.itemSelectNodeLocation,
-            this.itemSelectNodeState,
-            this.itemSelectNodeSlice});
-			this.buttonAddToNode.Enabled = false;
-			this.buttonAddToNode.Image = global::YtAnalytics.Resources.NodeAdd_16;
-			this.buttonAddToNode.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonAddToNode.Name = "buttonAddToNode";
-			this.buttonAddToNode.Size = new System.Drawing.Size(102, 22);
-			this.buttonAddToNode.Text = "A&dd to node";
+			this.buttonAddToNodes.DropDown = this.contextMenuAddToNodes;
+			this.buttonAddToNodes.Enabled = false;
+			this.buttonAddToNodes.Image = global::YtAnalytics.Resources.NodeAdd_16;
+			this.buttonAddToNodes.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonAddToNodes.Name = "buttonAddToNodes";
+			this.buttonAddToNodes.Size = new System.Drawing.Size(107, 22);
+			this.buttonAddToNodes.Text = "A&dd to nodes";
 			// 
-			// itemSelectNodeLocation
+			// contextMenuAddToNodes
 			// 
-			this.itemSelectNodeLocation.Name = "itemSelectNodeLocation";
-			this.itemSelectNodeLocation.Size = new System.Drawing.Size(197, 22);
-			this.itemSelectNodeLocation.Text = "Select node by location";
-			this.itemSelectNodeLocation.Click += new System.EventHandler(this.OnAddToNodeLocation);
+			this.contextMenuAddToNodes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itemSelectNodesLocation,
+            this.itemSelectNodesState,
+            this.itemSelectNodesSlice});
+			this.contextMenuAddToNodes.Name = "contextMenuAddToNodes";
+			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 70);
 			// 
-			// itemSelectNodeState
+			// itemSelectNodesLocation
 			// 
-			this.itemSelectNodeState.Name = "itemSelectNodeState";
-			this.itemSelectNodeState.Size = new System.Drawing.Size(197, 22);
-			this.itemSelectNodeState.Text = "Select node by state";
-			this.itemSelectNodeState.Click += new System.EventHandler(this.OnAddToNodeState);
+			this.itemSelectNodesLocation.Name = "itemSelectNodesLocation";
+			this.itemSelectNodesLocation.Size = new System.Drawing.Size(202, 22);
+			this.itemSelectNodesLocation.Text = "Select nodes by location";
+			this.itemSelectNodesLocation.Click += new System.EventHandler(this.OnAddToNodesLocation);
 			// 
-			// itemSelectNodeSlice
+			// itemSelectNodesState
 			// 
-			this.itemSelectNodeSlice.Name = "itemSelectNodeSlice";
-			this.itemSelectNodeSlice.Size = new System.Drawing.Size(197, 22);
-			this.itemSelectNodeSlice.Text = "Select node by slice";
-			this.itemSelectNodeSlice.Click += new System.EventHandler(this.OnAddToNodeSlice);
+			this.itemSelectNodesState.Name = "itemSelectNodesState";
+			this.itemSelectNodesState.Size = new System.Drawing.Size(202, 22);
+			this.itemSelectNodesState.Text = "Select nodes by state";
+			this.itemSelectNodesState.Click += new System.EventHandler(this.OnAddToNodesState);
 			// 
-			// buttonRemoveFromNode
+			// itemSelectNodesSlice
 			// 
-			this.buttonRemoveFromNode.Enabled = false;
-			this.buttonRemoveFromNode.Image = global::YtAnalytics.Resources.NodeRemove_16;
-			this.buttonRemoveFromNode.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonRemoveFromNode.Name = "buttonRemoveFromNode";
-			this.buttonRemoveFromNode.Size = new System.Drawing.Size(129, 22);
-			this.buttonRemoveFromNode.Text = "Remo&ve from node";
-			this.buttonRemoveFromNode.Click += new System.EventHandler(this.OnRemoveFromNode);
+			this.itemSelectNodesSlice.Name = "itemSelectNodesSlice";
+			this.itemSelectNodesSlice.Size = new System.Drawing.Size(202, 22);
+			this.itemSelectNodesSlice.Text = "Select nodes by slice";
+			this.itemSelectNodesSlice.Click += new System.EventHandler(this.OnAddToNodesSlice);
+			// 
+			// menuItemAddToNodes
+			// 
+			this.menuItemAddToNodes.DropDown = this.contextMenuAddToNodes;
+			this.menuItemAddToNodes.Image = global::YtAnalytics.Resources.NodeAdd_16;
+			this.menuItemAddToNodes.Name = "menuItemAddToNodes";
+			this.menuItemAddToNodes.Size = new System.Drawing.Size(181, 22);
+			this.menuItemAddToNodes.Text = "&Add to nodes";
+			// 
+			// buttonRemoveFromNodes
+			// 
+			this.buttonRemoveFromNodes.Enabled = false;
+			this.buttonRemoveFromNodes.Image = global::YtAnalytics.Resources.NodeRemove_16;
+			this.buttonRemoveFromNodes.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRemoveFromNodes.Name = "buttonRemoveFromNodes";
+			this.buttonRemoveFromNodes.Size = new System.Drawing.Size(134, 22);
+			this.buttonRemoveFromNodes.Text = "Remo&ve from nodes";
+			this.buttonRemoveFromNodes.Click += new System.EventHandler(this.OnRemoveFromNodes);
 			// 
 			// controlLog
 			// 
@@ -301,6 +324,37 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAddToNodes,
+            this.menuItemRemoveFromNodes,
+            this.toolStripSeparator1,
+            this.menuItemProperties});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(182, 76);
+			// 
+			// menuItemRemoveFromNodes
+			// 
+			this.menuItemRemoveFromNodes.Image = global::YtAnalytics.Resources.NodeRemove_16;
+			this.menuItemRemoveFromNodes.Name = "menuItemRemoveFromNodes";
+			this.menuItemRemoveFromNodes.Size = new System.Drawing.Size(181, 22);
+			this.menuItemRemoveFromNodes.Text = "&Remove from nodes";
+			this.menuItemRemoveFromNodes.Click += new System.EventHandler(this.OnRemoveFromNodes);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+			// 
+			// menuItemProperties
+			// 
+			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemProperties.Name = "menuItemProperties";
+			this.menuItemProperties.Size = new System.Drawing.Size(181, 22);
+			this.menuItemProperties.Text = "&Properties";
+			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
+			// 
 			// ControlSlices
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -317,6 +371,8 @@
 			this.splitContainer.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.contextMenuAddToNodes.ResumeLayout(false);
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -346,10 +402,16 @@
 		private System.Windows.Forms.ToolStripButton buttonAddSlice;
 		private System.Windows.Forms.ToolStripButton buttonRemoveSlice;
 		private System.Windows.Forms.ToolStripSeparator separator3;
-		private System.Windows.Forms.ToolStripButton buttonRemoveFromNode;
-		private System.Windows.Forms.ToolStripDropDownButton buttonAddToNode;
-		private System.Windows.Forms.ToolStripMenuItem itemSelectNodeLocation;
-		private System.Windows.Forms.ToolStripMenuItem itemSelectNodeState;
-		private System.Windows.Forms.ToolStripMenuItem itemSelectNodeSlice;
+		private System.Windows.Forms.ToolStripButton buttonRemoveFromNodes;
+		private System.Windows.Forms.ToolStripDropDownButton buttonAddToNodes;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem menuItemAddToNodes;
+		private System.Windows.Forms.ToolStripMenuItem menuItemRemoveFromNodes;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
+		private System.Windows.Forms.ContextMenuStrip contextMenuAddToNodes;
+		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesLocation;
+		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesState;
+		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesSlice;
 	}
 }

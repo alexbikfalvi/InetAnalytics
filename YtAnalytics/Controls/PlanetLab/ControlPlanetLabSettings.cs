@@ -301,5 +301,24 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Open a new dialog with the PlanetLab properties.
 			this.formPersonProperties.ShowDialog(this, "Person", person);
 		}
+
+		/// <summary>
+		/// An event handler called when user user clicks the list view.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				if (this.listView.FocusedItem != null)
+				{
+					if (this.listView.FocusedItem.Bounds.Contains(e.Location))
+					{
+						this.contextMenu.Show(this.listView, e.Location);
+					}
+				}
+			}
+		}
 	}
 }

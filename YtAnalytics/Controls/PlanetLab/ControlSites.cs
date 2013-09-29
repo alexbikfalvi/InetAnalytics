@@ -100,6 +100,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonRefresh.Enabled = false;
 			this.buttonCancel.Enabled = true;
 			this.buttonProperties.Enabled = false;
+			this.menuItemProperties.Enabled = false;
 		}
 
 		/// <summary>
@@ -303,11 +304,13 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Change the properties button enabled state.
 				this.buttonProperties.Enabled = false;
+				this.menuItemProperties.Enabled = false;
 			}
 			else
 			{
 				// Change the properties button enabled state.
 				this.buttonProperties.Enabled = true;
+				this.menuItemProperties.Enabled = true;
 				// Get the site-marker for this item.
 				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 				// If the marker is not null, emphasize the marker.
@@ -394,6 +397,25 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.OnMapMarkerClick(sender, e);
 			// Call the properties event handler.
 			this.OnProperties(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the list view.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				if (this.listViewSites.FocusedItem != null)
+				{
+					if (this.listViewSites.FocusedItem.Bounds.Contains(e.Location))
+					{
+						this.contextMenu.Show(this.listViewSites, e.Location);
+					}
+				}
+			}
 		}
 	}
 }

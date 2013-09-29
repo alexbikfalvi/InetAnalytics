@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Security.SecureString secureString1 = new System.Security.SecureString();
+			System.Security.SecureString secureString3 = new System.Security.SecureString();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPlanetLabSettings));
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
 			this.labelUsername = new System.Windows.Forms.Label();
@@ -48,6 +48,9 @@
 			this.buttonSave = new System.Windows.Forms.Button();
 			this.labelValidation = new System.Windows.Forms.Label();
 			this.buttonProperties = new System.Windows.Forms.Button();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// textBoxUsername
@@ -91,7 +94,7 @@
 			// 
 			this.textBoxPassword.Location = new System.Drawing.Point(91, 31);
 			this.textBoxPassword.Name = "textBoxPassword";
-			this.textBoxPassword.SecureText = secureString1;
+			this.textBoxPassword.SecureText = secureString3;
 			this.textBoxPassword.Size = new System.Drawing.Size(200, 20);
 			this.textBoxPassword.TabIndex = 3;
 			this.textBoxPassword.UseSystemPasswordChar = true;
@@ -123,6 +126,7 @@
 			this.listView.View = System.Windows.Forms.View.Details;
 			this.listView.ItemActivate += new System.EventHandler(this.OnProperties);
 			this.listView.SelectedIndexChanged += new System.EventHandler(this.OnAccountSelectionChanged);
+			this.listView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick);
 			// 
 			// columnHeaderId
 			// 
@@ -200,6 +204,21 @@
 			this.buttonProperties.UseVisualStyleBackColor = true;
 			this.buttonProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemProperties});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(128, 26);
+			// 
+			// menuItemProperties
+			// 
+			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemProperties.Name = "menuItemProperties";
+			this.menuItemProperties.Size = new System.Drawing.Size(152, 22);
+			this.menuItemProperties.Text = "&Properties";
+			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
+			// 
 			// ControlPlanetLabSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,6 +244,7 @@
 			this.Controls.SetChildIndex(this.buttonSave, 0);
 			this.Controls.SetChildIndex(this.labelValidation, 0);
 			this.Controls.SetChildIndex(this.buttonProperties, 0);
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -249,5 +269,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderPhone;
 		private System.Windows.Forms.ColumnHeader columnHeaderEmail;
 		private System.Windows.Forms.ColumnHeader columnHeaderUrl;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
 	}
 }

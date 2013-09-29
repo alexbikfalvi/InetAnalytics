@@ -121,6 +121,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
 		private FormAddSlice formAddSlice = new FormAddSlice();
 		private FormAddSliceToNodeLocation formAddSliceToNodeLocation = new FormAddSliceToNodeLocation();
+		//private FormAdd
 		private FormRemoveSliceFromNode formRemoveSliceFromNode = new FormRemoveSliceFromNode();
 
 		private RequestState requestStateGetSlices;
@@ -177,8 +178,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonProperties.Enabled = false;
 			this.buttonAddSlice.Enabled = false;
 			this.buttonRemoveSlice.Enabled = false;
-			this.buttonAddToNode.Enabled = false;
-			this.buttonRemoveFromNode.Enabled = false;
+			this.buttonAddToNodes.Enabled = false;
+			this.buttonRemoveFromNodes.Enabled = false;
+			this.menuItemProperties.Enabled = false;
+			this.menuItemAddToNodes.Enabled = false;
+			this.menuItemRemoveFromNodes.Enabled = false;
 			// Call the base class method.
 			base.OnRequestStarted(state);
 		}
@@ -360,15 +364,21 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				this.buttonProperties.Enabled = true;
 				this.buttonRemoveSlice.Enabled = true;
-				this.buttonAddToNode.Enabled = true;
-				this.buttonRemoveFromNode.Enabled = true;
+				this.buttonAddToNodes.Enabled = true;
+				this.buttonRemoveFromNodes.Enabled = true;
+				this.menuItemProperties.Enabled = true;
+				this.menuItemAddToNodes.Enabled = true;
+				this.menuItemRemoveFromNodes.Enabled = true;
 			}
 			else
 			{
 				this.buttonProperties.Enabled = false;
 				this.buttonRemoveSlice.Enabled = false;
-				this.buttonAddToNode.Enabled = false;
-				this.buttonRemoveFromNode.Enabled = false;
+				this.buttonAddToNodes.Enabled = false;
+				this.buttonRemoveFromNodes.Enabled = false;
+				this.menuItemProperties.Enabled = false;
+				this.menuItemAddToNodes.Enabled = false;
+				this.menuItemRemoveFromNodes.Enabled = false;
 			}
 		}
 
@@ -443,11 +453,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a slice to a node selected by location.
+		/// An event handler called when the user adds a slice to nodes selected by location.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAddToNodeLocation(object sender, EventArgs e)
+		private void OnAddToNodesLocation(object sender, EventArgs e)
 		{
 			// If there is no validated PlanetLab person account, show a message and return.
 			if (-1 == CrawlerStatic.PlanetLabPersonId)
@@ -471,13 +481,13 @@ namespace YtAnalytics.Controls.PlanetLab
 				// If the slice does not have an ID, show an error message and return.
 				if (!slice.Id.HasValue)
 				{
-					MessageBox.Show(this, "The selected slice does not have an identifier.", "Add Slice to Node", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(this, "The selected slice does not have an identifier.", "Add Slice to Nodes", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 				// If the node does not have an ID, show an error message and return.
 				if (!node.Id.HasValue)
 				{
-					MessageBox.Show(this, "The selected node does not have an identifier.", "Add Slice to Node", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(this, "The selected node does not have an identifier.", "Add Slice to Nodes", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 
@@ -715,31 +725,47 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a slice to a node selected by state.
+		/// An event handler called when the user adds a slice to nodes selected by state.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAddToNodeState(object sender, EventArgs e)
+		private void OnAddToNodesState(object sender, EventArgs e)
+		{
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// If there is no selected slice, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+
+			// Get the slice.
+			PlSlice slice = this.listViewSlices.SelectedItems[0].Tag as PlSlice;
+
+			// Show the add slice to node by state dialog.
+			//if (this.formAddSliceToNodeState.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			//{
+			//}
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a slice to nodes selected by slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddToNodesSlice(object sender, EventArgs e)
 		{
 
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a slice to a node selected by slice.
+		/// An event handler called when the user removes a slice from nodes.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnAddToNodeSlice(object sender, EventArgs e)
-		{
-
-		}
-
-		/// <summary>
-		/// An event handler called when the user removes a node from a slice.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnRemoveFromNode(object sender, EventArgs e)
+		private void OnRemoveFromNodes(object sender, EventArgs e)
 		{
 			// If there is no validated PlanetLab person account, show a message and return.
 			if (-1 == CrawlerStatic.PlanetLabPersonId)
@@ -757,7 +783,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the slice does not have an ID, show an error message and return.
 			if (!slice.Id.HasValue)
 			{
-				MessageBox.Show(this, "The selected slice does not have an identifier.", "Remove Slice to Node", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(this, "The selected slice does not have an identifier.", "Remove Slice to Nodes", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -908,6 +934,25 @@ namespace YtAnalytics.Controls.PlanetLab
 
 				// Refresh the slice information.
 				this.OnRefreshSlice(requestState.Slice);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the list view.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				if (this.listViewSlices.FocusedItem != null)
+				{
+					if (this.listViewSlices.FocusedItem.Bounds.Contains(e.Location))
+					{
+						this.contextMenu.Show(this.listViewSlices, e.Location);
+					}
+				}
 			}
 		}
 	}

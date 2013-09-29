@@ -54,11 +54,14 @@
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -196,6 +199,7 @@
 			this.listViewSites.View = System.Windows.Forms.View.Details;
 			this.listViewSites.ItemActivate += new System.EventHandler(this.OnProperties);
 			this.listViewSites.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
+			this.listViewSites.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick);
 			// 
 			// columnHeaderId
 			// 
@@ -257,6 +261,21 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemProperties});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(153, 48);
+			// 
+			// menuItemProperties
+			// 
+			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemProperties.Name = "menuItemProperties";
+			this.menuItemProperties.Size = new System.Drawing.Size(152, 22);
+			this.menuItemProperties.Text = "&Properties";
+			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
+			// 
 			// ControlSites
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -273,6 +292,7 @@
 			this.splitContainer.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -303,5 +323,7 @@
 		private System.Windows.Forms.ToolStripTextBox textBoxFilter;
 		private System.Windows.Forms.ToolStripButton buttonClear;
 		private DotNetApi.Windows.Controls.MapControl mapControl;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
 	}
 }

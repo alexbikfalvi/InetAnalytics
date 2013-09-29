@@ -72,7 +72,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// <param name="owner">The window owner.</param>
 		/// <param name="slice">The PlanetLab slice.</param>
 		/// <returns>The dialog result.</returns>
-		public new DialogResult ShowDialog(IWin32Window owner, PlSlice slice)
+		public DialogResult ShowDialog(IWin32Window owner, PlSlice slice)
 		{
 			// Reset the result.
 			this.Result = null;

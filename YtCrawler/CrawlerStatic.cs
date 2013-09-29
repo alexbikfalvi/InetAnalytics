@@ -60,8 +60,12 @@ namespace YtCrawler
 
 		public static string PlanetLabSitesFileName { get; internal set; }
 
-		public static string PlanetLabPersonsFileName { get; internal set; }
+		public static string PlanetLabNodesFileName { get; internal set; }
 
-		public static string PlanetLabSlicesFileName { get; internal set; }
+		public static string PlanetLab
+
+		public static string PlanetLabLocalPersonsFileName { get; internal set; }
+
+		public static string PlanetLabLocalSlicesFileName { get; internal set; }
 	}
 }

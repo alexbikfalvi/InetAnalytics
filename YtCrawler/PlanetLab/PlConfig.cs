@@ -57,12 +57,16 @@ namespace YtCrawler.PlanetLab
 			try { this.sites.LoadFromFile(this.SitesFileName); }
 			catch { }
 
+			// Load the PlanetLab nodes configuration.
+			try { this.nodes.LoadFromFile(this.NodesFileName); }
+			catch { }
+
 			// Load the PlanetLab persons configuration.
-			try { this.persons.LoadFromFile(this.PersonsFileName); }
+			try { this.persons.LoadFromFile(this.LocalPersonsFileName); }
 			catch { }
 
 			// Load the PlanetLab slices configuration.
-			try { this.slices.LoadFromFile(this.SlicesFileName); }
+			try { this.slices.LoadFromFile(this.LocalSlicesFileName); }
 			catch { }
 
 			// Initialize the static configuration.
@@ -70,7 +74,9 @@ namespace YtCrawler.PlanetLab
 			CrawlerStatic.PlanetLabPassword = this.Password;
 			CrawlerStatic.PlanetLabPersonId = this.PersonId;
 			CrawlerStatic.PlanetLabSitesFileName = this.SitesFileName;
-			CrawlerStatic.PlanetLabPersonsFileName = this.PersonsFileName;
+			CrawlerStatic.PlanetLabNodesFileName = this.NodesFileName;
+			CrawlerStatic.PlanetLabLocalPersonsFileName = this.LocalPersonsFileName;
+			CrawlerStatic.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
 		}
 
 		// Public properties.
@@ -121,39 +127,58 @@ namespace YtCrawler.PlanetLab
 			}
 		}
 		/// <summary>
-		/// Gets or sets the PlanetLab persons file name.
+		/// Gets or sets the PlanetLab nodes file name.
 		/// </summary>
-		public string PersonsFileName
+		public string NodesFileName
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "PersonsFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\Persons.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root, "NodesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\Nodes.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root, "PersonsFileName", value);
-				CrawlerStatic.PlanetLabPersonsFileName = value;
+				DotNetApi.Windows.Registry.SetString(this.root, "NodesFileName", value);
+				CrawlerStatic.PlanetLabNodesFileName = value;
 			}
 		}
 		/// <summary>
-		/// Gets or sets the PlanetLab slices file name.
+		/// Gets or sets the local PlanetLab persons file name.
 		/// </summary>
-		public string SlicesFileName
+		public string LocalPersonsFileName
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "SlicesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\Slices.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root, "LocalPersonsFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\LocalPersons.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root, "SlicesFileName", value);
-				CrawlerStatic.PlanetLabSlicesFileName = value;
+				DotNetApi.Windows.Registry.SetString(this.root, "LocalPersonsFileName", value);
+				CrawlerStatic.PlanetLabLocalPersonsFileName = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the local PlanetLab slices file name.
+		/// </summary>
+		public string LocalSlicesFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.Registry.GetString(this.root, "LocalSlicesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\LocalSlices.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root, "LocalSlicesFileName", value);
+				CrawlerStatic.PlanetLabLocalSlicesFileName = value;
 			}
 		}
 		/// <summary>
 		/// Gets the collection of PlanetLab sites.
 		/// </summary>
 		public PlList<PlSite> Sites { get { return this.sites; } }
+		/// <summary>
+		/// Gets the collection of PlanetLab nodes.
+		/// </summary>
+		public PlList<PlNode> Nodes { get { return this.nodes; } }
 		/// <summary>
 		/// Gets the collection of PlanetLab persons.
 		/// </summary>
@@ -173,8 +198,11 @@ namespace YtCrawler.PlanetLab
 			// Save the PlanetLab sites.
 			try { this.Sites.SaveToFile(this.SitesFileName); }
 			catch { }
+			// Save the PlanetLab nodes.
+			try { this.Nodes.SaveToFile(this.SitesFileName); }
+			catch { }
 			// Save the PlanetLab slices.
-			try { this.Slices.SaveToFile(this.SlicesFileName); }
+			try { this.Slices.SaveToFile(this.LocalSlicesFileName); }
 			catch { }
 			// Close the registry key.
 			this.key.Close();
@@ -199,7 +227,7 @@ namespace YtCrawler.PlanetLab
 			CrawlerStatic.PlanetLabPassword = password;
 			// Save the persons.
 			this.persons.CopyFrom(persons);
-			try { this.persons.SaveToFile(this.PersonsFileName); }
+			try { this.persons.SaveToFile(this.LocalPersonsFileName); }
 			catch { }
 			// Save the person.
 			DotNetApi.Windows.Registry.SetInteger(this.root, "PersonId", person);

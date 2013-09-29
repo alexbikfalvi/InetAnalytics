@@ -31,9 +31,9 @@ namespace YtAnalytics.Controls.Log
 		{
 			InitializeComponent();
 
-			this.toolStripComboBox.SelectedIndex = 0;
+			this.comboBox.SelectedIndex = 0;
 
-			this.MaximumItems = ControlLogList.maximumValues[this.toolStripComboBox.SelectedIndex];
+			this.MaximumItems = ControlLogList.maximumValues[this.comboBox.SelectedIndex];
 		}
 
 		/// <summary>
@@ -56,8 +56,8 @@ namespace YtAnalytics.Controls.Log
 			this.listView.Items.Add(item);
 			this.listView.EnsureVisible(this.listView.Items.Count - 1);
 			// If the clear button is disabled, enable the button.
-			if (!this.toolStripButtonClear.Enabled)
-				this.toolStripButtonClear.Enabled = true;
+			if (!this.buttonClear.Enabled)
+				this.buttonClear.Enabled = true;
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace YtAnalytics.Controls.Log
 		/// <param name="e">The event arguments.</param>
 		private void OnMaximumItemsChanged(object sender, EventArgs e)
 		{
-			this.MaximumItems = ControlLogList.maximumValues[this.toolStripComboBox.SelectedIndex];
+			this.MaximumItems = ControlLogList.maximumValues[this.comboBox.SelectedIndex];
 		}
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace YtAnalytics.Controls.Log
 		private void OnClear(object sender, EventArgs e)
 		{
 			this.listView.Items.Clear();
-			this.toolStripButtonClear.Enabled = false;
+			this.buttonClear.Enabled = false;
 		}
 
 		/// <summary>
@@ -100,10 +100,50 @@ namespace YtAnalytics.Controls.Log
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnItemActivate(object sender, EventArgs e)
+		private void OnProperties(object sender, EventArgs e)
 		{
-			if (this.listView.SelectedItems.Count != 0)
+			if (this.listView.SelectedItems.Count > 0)
+			{
 				this.formLogEvent.ShowDialog(this, this.listView.SelectedItems[0].Tag as LogEvent);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the log event selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectionChanged(object sender, EventArgs e)
+		{
+			if (this.listView.SelectedItems.Count > 0)
+			{
+				this.buttonProperties.Enabled = true;
+				this.menuItemProperties.Enabled = true;
+			}
+			else
+			{
+				this.buttonProperties.Enabled = false;
+				this.menuItemProperties.Enabled = false;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the event list.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				if (this.listView.FocusedItem != null)
+				{
+					if (this.listView.FocusedItem.Bounds.Contains(e.Location))
+					{
+						this.contextMenu.Show(this.listView, e.Location);
+					}
+				}
+			}
 		}
 	}
 }
