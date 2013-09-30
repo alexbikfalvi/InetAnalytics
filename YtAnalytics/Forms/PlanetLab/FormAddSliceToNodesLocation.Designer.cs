@@ -2,7 +2,7 @@
 
 namespace YtAnalytics.Forms.PlanetLab
 {
-	partial class FormRemoveSliceFromNode
+	partial class FormAddSliceToNodesLocation
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,7 +30,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.control = new YtAnalytics.Controls.PlanetLab.ControlRemoveSliceFromNodes();
+			this.control = new YtAnalytics.Controls.PlanetLab.ControlAddSliceToNodesLocation();
 			this.SuspendLayout();
 			// 
 			// control
@@ -40,24 +40,24 @@ namespace YtAnalytics.Forms.PlanetLab
 			this.control.Location = new System.Drawing.Point(0, 0);
 			this.control.MinimumSize = new System.Drawing.Size(0, 230);
 			this.control.Name = "control";
-			this.control.Size = new System.Drawing.Size(584, 362);
+			this.control.Size = new System.Drawing.Size(784, 532);
 			this.control.TabIndex = 0;
 			this.control.RequestStarted += new System.EventHandler(this.OnRequestStarted);
 			this.control.RequestFinished += new System.EventHandler(this.OnRequestFinished);
 			this.control.Selected += new YtAnalytics.Events.ArrayEventHandler<int>(this.OnSelected);
 			this.control.Closed += new System.EventHandler(this.OnClosed);
 			// 
-			// FormRemoveSliceFromNode
+			// FormAddSliceToNodeLocation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(584, 362);
+			this.ClientSize = new System.Drawing.Size(784, 532);
 			this.Controls.Add(this.control);
 			this.MinimizeBox = false;
-			this.Name = "FormRemoveSliceFromNode";
+			this.Name = "FormAddSliceToNodeLocation";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.Text = "Add PlanetLab Slice";
+			this.Text = "Add PlanetLab Slice to Node";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.ResumeLayout(false);
 
@@ -65,7 +65,7 @@ namespace YtAnalytics.Forms.PlanetLab
 
 		#endregion
 
-		private Controls.PlanetLab.ControlRemoveSliceFromNodes control;
+		private Controls.PlanetLab.ControlAddSliceToNodesLocation control;
 
 
 

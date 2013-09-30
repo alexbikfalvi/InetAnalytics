@@ -134,7 +134,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Load the configuration.
 			this.validatedUsername = CrawlerStatic.PlanetLabUsername;
 			this.validatedPassword = CrawlerStatic.PlanetLabPassword;
-			this.validatedPersons = this.crawler.Config.PlanetLab.Persons;
+			this.validatedPersons = this.crawler.Config.PlanetLab.LocalPersons;
 			this.validatedPerson = CrawlerStatic.PlanetLabPersonId;
 
 			// Set the username.
@@ -193,7 +193,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			try
 			{
 				// Begin a new nodes request for the specified person.
-				this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlPerson.GetFilter(PlPerson.Fields.Email, this.textBoxUsername.Text));
+				this.BeginRequest(this.request, this.textBoxUsername.Text, this.textBoxPassword.SecureText, PlPerson.GetFilter(PlPerson.Fields.Email, this.textBoxUsername.Text));
 			}
 			catch
 			{

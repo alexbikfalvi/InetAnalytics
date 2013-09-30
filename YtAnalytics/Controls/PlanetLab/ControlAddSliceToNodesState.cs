@@ -17,10 +17,12 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using YtAnalytics.Events;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
+using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
 using DotNetApi;
@@ -31,21 +33,32 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control that receives user input data to add a slice to PlanetLab nodes.
 	/// </summary>
-	public sealed partial class ControlAddSliceToNodeState : ControlRequest
+	public sealed partial class ControlAddSliceToNodesState : ControlRequest
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodes);
-		private PlList<PlSlice> slices = new PlList<PlSlice>();
-		private string filter = string.Empty;
+		public static readonly string[] nodeImageKeys = new string[]
+		{
+			"NodeUnknown", "NodeBoot", "NodeSafeBoot", "NodeDisabled", "NodeReinstall"
+		};
 
-		private FormObjectProperties<ControlSliceProperties> formProperties = new FormObjectProperties<ControlSliceProperties>();
+		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodes);
+		private PlList<PlNode> nodes = null;
+		private string filterHostname = string.Empty;
+		private HashSet<int> selected = new HashSet<int>();
+
+		private FormObjectProperties<ControlNodeProperties> formProperties = new FormObjectProperties<ControlNodeProperties>();
 
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlAddSliceToNodeState()
+		public ControlAddSliceToNodesState()
 		{
 			// Initialize the component.
 			this.InitializeComponent();
+			// Set the filter list items.
+			foreach (PlBootState state in Enum.GetValues(typeof(PlBootState)))
+			{
+				this.stateFilter.AddItem(state, state.GetDisplayName(), CheckState.Checked);
+			}
 		}
 
 		// Public events.
@@ -59,9 +72,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		public event EventHandler RequestFinished;
 		/// <summary>
-		/// An event raised when a PlanetLab site was selected.
+		/// An event raised when a PlanetLab node was selected.
 		/// </summary>
-		public event PlanetLabObjectEventHandler<PlSlice> Selected;
+		public event ArrayEventHandler<int> Selected;
 		/// <summary>
 		/// An event raised when user closes the selection.
 		/// </summary>
@@ -70,19 +83,34 @@ namespace YtAnalytics.Controls.PlanetLab
 		// Public methods.
 
 		/// <summary>
-		/// Refreshes the list of PlanetLab slices.
+		/// Refreshes the list of PlanetLab nodes.
 		/// </summary>
-		public void RefreshList()
+		/// <param name="config">The crawler config.</param>
+		public void Refresh(CrawlerConfig config)
 		{
-			// Clear the slices list.
-			this.listView.Items.Clear();
+			// Set the nodes.
+			this.nodes = config.PlanetLab.Nodes;
 			// Clear the filter.
 			this.textBoxFilter.Clear();
-			// Clear the list.
-			this.slices.Clear();
-
-			// Begin the PlanetLab request.
-			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
+			this.stateFilter.CheckAll();
+			// Clear the button state.
+			this.buttonRefresh.Enabled = true;
+			this.buttonCancel.Enabled = false;
+			this.buttonSelect.Enabled = false;
+			this.buttonClose.Enabled = true;
+			// Clear the selected nodes.
+			this.selected.Clear();
+			// If the nodes list is empty.
+			if (this.nodes.Count == 0)
+			{
+				// Begin refreshing the nodes list.
+				this.OnRefreshStarted(this, EventArgs.Empty);
+			}
+			else
+			{
+				// Update the list view.
+				this.OnUpdateList();
+			}
 		}
 
 		// Protected methods.
@@ -116,7 +144,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if ((null == response.Fault) && (null != response.Value))
 			{
 				// Update the list of PlanetLab slices list for the given response.
-				this.slices.Update(response.Value as XmlRpcArray);
+				this.nodes.Update(response.Value as XmlRpcArray);
 				// Update the list view.
 				this.OnUpdateList();
 			}
@@ -172,8 +200,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRefreshStarted(object sender, EventArgs e)
 		{
-			// Refresh the list.
-			this.RefreshList();
+			// Clear the slices list.
+			this.listView.Items.Clear();
+			// Begin the PlanetLab request.
+			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
 		}
 
 		/// <summary>
@@ -184,11 +214,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnSelect(object sender, EventArgs e)
 		{
 			// If there is no selected PlanetLab object, do nothing.
-			if (this.listView.SelectedItems.Count == 0) return;
-			// Else, get the PlanetLab object.
-			PlSlice result = this.listView.SelectedItems[0].Tag as PlSlice;
+			if (this.selected.Count == 0) return;
+			// Else, get the list of node IDs.
+			int[] result = new int[this.selected.Count];
+			this.selected.CopyTo(result);
 			// Raise the event.
-			if (this.Selected != null) this.Selected(this, new PlanetLabObjectEventArgs<PlSlice>(result));
+			if (this.Selected != null) this.Selected(this, new ArrayEventArgs<int>(result));
 		}
 
 		/// <summary>
@@ -203,17 +234,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the object selection has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSelectionChanged(object sender, EventArgs e)
-		{
-			// Set the select button enabled state.
-			this.buttonSelect.Enabled = this.listView.SelectedItems.Count > 0;
-		}
-
-		/// <summary>
 		/// An event handler called when the user views the properties of the PlanetLab object.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -223,7 +243,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If there is no selected PlanetLab object, do nothing.
 			if (this.listView.SelectedItems.Count == 0) return;
 			// Show the properties dialog.
-			this.formProperties.ShowDialog(this, "Slice", this.listView.SelectedItems[0].Tag as PlSlice);
+			this.formProperties.ShowDialog(this, "Node", this.listView.SelectedItems[0].Tag as PlNode);
 		}
 
 		/// <summary>
@@ -240,14 +260,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the filter text has changed.
+		/// An event handler called when the hostname filter text has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnFilterTextChanged(object sender, EventArgs e)
+		private void OnHostnameFilterChanged(object sender, EventArgs e)
 		{
 			// If the filter has changed.
-			if (this.filter != this.textBoxFilter.Text.Trim())
+			if (this.filterHostname != this.textBoxFilter.Text.Trim())
 			{
 				// Update the list.
 				this.OnUpdateList();
@@ -263,49 +283,125 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.listView.Items.Clear();
 
 			// Update the filter.
-			this.filter = this.textBoxFilter.Text.Trim();
+			this.filterHostname = this.textBoxFilter.Text.Trim();
 			// The number of displayed sites.
 			int count = 0;
 
 			// Lock the list.
-			slices.Lock();
+			this.nodes.Lock();
 			try
 			{
-				// Update the slices list.
-				foreach (PlSlice slice in slices)
+				// Update the nodes list.
+				foreach (PlNode node in this.nodes)
 				{
 					// If the filter is not null or empty.
-					if (!string.IsNullOrEmpty(this.filter))
+					if (!string.IsNullOrEmpty(this.filterHostname))
 					{
 						// If the site name does not match the filter, continue.
-						if (!string.IsNullOrEmpty(slice.Name))
+						if (!string.IsNullOrEmpty(node.Hostname))
 						{
-							if (!slice.Name.ToLower().Contains(this.filter.ToLower())) continue;
+							if (!node.Hostname.ToLower().Contains(this.filterHostname.ToLower())) continue;
 						}
 					}
 
-					// Increment the number of displayed sites.
-					count++;
+					// Get the node boot state.
+					PlBootState state = node.GetBootState();
 
-					// Create the list view item.
-					ListViewItem item = new ListViewItem(new string[] {
-							slice.Id.HasValue ? slice.Id.Value.ToString() : string.Empty,
-							slice.Name,
-							slice.Created.ToString(),
-							slice.Expires.ToString(),
-							slice.NodeIds != null ? slice.NodeIds.Length.ToString() : "0",
-							slice.MaxNodes.ToString()
-						}, 0);
-					item.Tag = slice;
-					this.listView.Items.Add(item);
+					// If the filter for the node state is checked.
+					if (this.stateFilter[(int)state].State == CheckState.Checked)
+					{
+						// Increment the number of displayed nodes.
+						count++;
+
+						// Create the list view item.
+						ListViewItem item = new ListViewItem(new string[] {
+								node.Id.HasValue ? node.Id.Value.ToString() : string.Empty,
+								node.Hostname,
+								node.BootState,
+								node.Model,
+								node.Version,
+								node.DateCreated.HasValue ? node.DateCreated.Value.ToString() : string.Empty,
+								node.LastUpdated.HasValue ? node.LastUpdated.Value.ToString() : string.Empty,
+								node.NodeType
+							});
+						item.ImageKey = ControlAddSliceToNodesState.nodeImageKeys[(int)state];
+						item.Tag = node;
+						item.Checked = this.selected.Contains(node.Id ?? -1);
+
+						this.listView.Items.Add(item);
+					}
 				}
 			}
 			finally
 			{
-				slices.Unlock();
+				this.nodes.Unlock();
 			}
 			// Update the status.
-			this.labelStatus.Text = "Showing {0} of {1} PlanetLab slices.".FormatWith(count, slices.Count);
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(count, this.nodes.Count, this.selected.Count, this.selected.Count == 1 ? string.Empty : "s");
+		}
+
+		/// <summary>
+		/// An event handler called when the user selected the filter by state context menu.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFilterState(object sender, EventArgs e)
+		{
+			if (this.checkBoxFilter.Checked)
+			{
+				this.stateFilter.Show(this.checkBoxFilter, 0, this.checkBoxFilter.Height);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the state filter list has been closed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStateFilterClosed(object sender, ToolStripDropDownClosedEventArgs e)
+		{
+			this.checkBoxFilter.Checked = false;
+		}
+
+		/// <summary>
+		/// An event handler called when the user checks an item in the boot state filter list.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStateFilterCheck(object sender, ItemCheckEventArgs e)
+		{
+			// If the nodes list has not been initialized, do nothing.
+			if (null == this.nodes) return;
+			// Update the nodes list.
+			this.OnUpdateList();
+		}
+
+		/// <summary>
+		/// An event handler called when a node has been checked.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeChecked(object sender, ItemCheckedEventArgs e)
+		{
+			// Get the selected node.
+			PlNode node = e.Item.Tag as PlNode;
+			// If the node does not have an ID, do nothing.
+			if (!node.Id.HasValue) return;
+			// If the node has been checked.
+			if (e.Item.Checked)
+			{
+				// Add the node ID to the selected nodes.
+				this.selected.Add(node.Id.Value);
+			}
+			else
+			{
+				// Else, remove the node ID from the selected nodes.
+				this.selected.Remove(node.Id.Value);
+			}
+			// Set the select button enabled state.
+			this.buttonSelect.Enabled = this.selected.Count > 0;
+			// Update the status.
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listView.Items.Count, this.nodes.Count, this.selected.Count, this.selected.Count == 1 ? string.Empty : "s");
 		}
 	}
 }

@@ -37,46 +37,6 @@ namespace YtAnalytics.Controls.PlanetLab
 	public sealed partial class ControlSlices : ControlRequest
 	{
 		/// <summary>
-		/// A class representing the slice-node request state.
-		/// </summary>
-		private class SliceNodeRequestState : RequestState
-		{
-			/// <summary>
-			/// Creates a new request state instance.
-			/// </summary>
-			/// <param name="actionRequestStarted">The request started action.</param>
-			/// <param name="actionRequestResult">The request result action.</param>
-			/// <param name="actionRequestCanceled">The request canceled action.</param>
-			/// <param name="actionRequestException">The request exception action.</param>
-			/// <param name="actionRequestFinished">The request finished action.</param>
-			/// <param name="slice">The slice.</param>
-			/// <param name="node">The node.</param>
-			public SliceNodeRequestState(
-				Action<RequestState> actionRequestStarted,
-				Action<XmlRpcResponse, RequestState> actionRequestResult,
-				Action<RequestState> actionRequestCanceled,
-				Action<Exception, RequestState> actionRequestException,
-				Action<RequestState> actionRequestFinished,
-				PlSlice slice,
-				PlNode node
-				)
-				: base(actionRequestStarted, actionRequestResult, actionRequestCanceled, actionRequestException, actionRequestFinished)
-			{
-				this.Slice = slice;
-				this.Node = node;
-			}
-
-			/// <summary>
-			/// Gets the PlanetLab slice corresponding to this request.
-			/// </summary>
-			public PlSlice Slice { get; private set; }
-			/// <summary>
-			/// Gets the PlanetLab node corresponding to this request.
-			/// </summary>
-			public PlNode Node { get; private set; }
-		}
-
-		/// <summary>
 		/// A class representing the a slice request state.
 		/// </summary>
 		private class SliceRequestState : RequestState
@@ -109,6 +69,41 @@ namespace YtAnalytics.Controls.PlanetLab
 			public PlSlice Slice { get; private set; }
 		}
 
+		/// <summary>
+		/// A class representing the slice-node request state.
+		/// </summary>
+		private class SliceIdsRequestState : SliceRequestState
+		{
+			/// <summary>
+			/// Creates a new request state instance.
+			/// </summary>
+			/// <param name="actionRequestStarted">The request started action.</param>
+			/// <param name="actionRequestResult">The request result action.</param>
+			/// <param name="actionRequestCanceled">The request canceled action.</param>
+			/// <param name="actionRequestException">The request exception action.</param>
+			/// <param name="actionRequestFinished">The request finished action.</param>
+			/// <param name="slice">The slice.</param>
+			/// <param name="ids">The IDs.</param>
+			public SliceIdsRequestState(
+				Action<RequestState> actionRequestStarted,
+				Action<XmlRpcResponse, RequestState> actionRequestResult,
+				Action<RequestState> actionRequestCanceled,
+				Action<Exception, RequestState> actionRequestException,
+				Action<RequestState> actionRequestFinished,
+				PlSlice slice,
+				int[] ids
+				)
+				: base(actionRequestStarted, actionRequestResult, actionRequestCanceled, actionRequestException, actionRequestFinished, slice)
+			{
+				this.Ids = ids;
+			}
+
+			/// <summary>
+			/// Gets the PlanetLab Ids corresponding to this request.
+			/// </summary>
+			public int[] Ids { get; private set; }
+		}
+
 		// Private variables.
 
 		private Crawler crawler = null;
@@ -120,9 +115,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
 		private FormAddSlice formAddSlice = new FormAddSlice();
-		private FormAddSliceToNodeLocation formAddSliceToNodeLocation = new FormAddSliceToNodeLocation();
-		//private FormAdd
-		private FormRemoveSliceFromNode formRemoveSliceFromNode = new FormRemoveSliceFromNode();
+		private FormAddSliceToNodesLocation formAddSliceToNodesLocation = new FormAddSliceToNodesLocation();
+		private FormAddSliceToNodesState formAddSliceToNodesState = new FormAddSliceToNodesState();
+		private FormRemoveSliceFromNodes formRemoveSliceFromNodes = new FormRemoveSliceFromNodes();
 
 		private RequestState requestStateGetSlices;
 
@@ -270,8 +265,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Get the slices array.
 				XmlRpcArray slices = response.Value as XmlRpcArray;
 
-				// Update the list of PlanetLab slices, filtering by the current person account.
-				this.crawler.Config.PlanetLab.Slices.Update(slices.Where((XmlRpcValue value) =>
+				// Update the list of PlanetLab local slices, filtering by the current person account.
+				this.crawler.Config.PlanetLab.LocalSlices.Update(slices.Where((XmlRpcValue value) =>
 					{
 						XmlRpcStruct str = value.Value as XmlRpcStruct;
 						if (null == str) return false;
@@ -325,11 +320,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.listViewSlices.Items.Clear();
 
 			// Lock the slices list.
-			this.crawler.Config.PlanetLab.Slices.Lock();
+			this.crawler.Config.PlanetLab.LocalSlices.Lock();
 			try
 			{
 				// Add the list view items.
-				foreach (PlSlice slice in this.crawler.Config.PlanetLab.Slices)
+				foreach (PlSlice slice in this.crawler.Config.PlanetLab.LocalSlices)
 				{
 					// Create the list view item.
 					ListViewItem item = new ListViewItem(new string[] {
@@ -346,11 +341,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 			finally
 			{
-				this.crawler.Config.PlanetLab.Slices.Unlock();
+				this.crawler.Config.PlanetLab.LocalSlices.Unlock();
 			}
 
 			// Update the label.
-			this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count), Resources.GlobeLab_16);
+			this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
@@ -407,10 +402,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnAddSlice(object sender, EventArgs e)
 		{
 			// Show the add slice dialog.
-			if (this.formAddSlice.ShowDialog(this) == DialogResult.OK)
+			if (this.formAddSlice.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
 			{
 				// Add the slice to the slices list.
-				this.crawler.Config.PlanetLab.Slices.Add(this.formAddSlice.Result);
+				this.crawler.Config.PlanetLab.LocalSlices.Add(this.formAddSlice.Result);
 				// Add a new list item.
 				ListViewItem item = new ListViewItem(new string[] {
 						this.formAddSlice.Result.Id.HasValue ? this.formAddSlice.Result.Id.Value.ToString() : string.Empty,
@@ -446,7 +441,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 			{
 				// Remove the slice.
-				this.crawler.Config.PlanetLab.Slices.Remove(slice);
+				this.crawler.Config.PlanetLab.LocalSlices.Remove(slice);
 				// Remove the list view item.
 				this.listViewSlices.Items.Remove(item);
 			}
@@ -472,50 +467,91 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Get the slice.
 			PlSlice slice = this.listViewSlices.SelectedItems[0].Tag as PlSlice;
 
-			// Show the add slice to node by location dialog.
-			if (this.formAddSliceToNodeLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			// Show the add slice to nodes by location dialog.
+			if (this.formAddSliceToNodesLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
 			{
-				// Get the PlanetLab node.
-				PlNode node = this.formAddSliceToNodeLocation.Result;
-
-				// If the slice does not have an ID, show an error message and return.
-				if (!slice.Id.HasValue)
-				{
-					MessageBox.Show(this, "The selected slice does not have an identifier.", "Add Slice to Nodes", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
-				// If the node does not have an ID, show an error message and return.
-				if (!node.Id.HasValue)
-				{
-					MessageBox.Show(this, "The selected node does not have an identifier.", "Add Slice to Nodes", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
-
-				// Update the status.
-				this.status.Send(
-					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-					"Adding slice {0} to the PlanetLab node {1}...".FormatWith(slice.Id, node.Id),
-					Resources.GlobeLab_16,
-					Resources.GlobeClock_16);
-
-				// Create the request state.
-				SliceNodeRequestState requestState = new SliceNodeRequestState(
-					this.OnAddSliceToNodesRequestStarted,
-					this.OnAddSliceToNodesRequestResult,
-					this.OnAddSliceToNodesRequestCanceled,
-					this.OnAddSliceToNodesRequestException,
-					this.OnAddSliceToNodesRequestFinished,
-					slice,
-					node);
-
-				// Begin an asynchronous PlanetLab request.
-				this.BeginRequest(
-					this.requestAddSliceToNodes,
-					this.crawler.Config.PlanetLab.Username,
-					this.crawler.Config.PlanetLab.Password,
-					new object[] { slice.Id.Value, new int[] { node.Id.Value } },
-					requestState);
+				// Add the slice to nodes.
+				this.OnAddSliceToNodes(slice, this.formAddSliceToNodesLocation.Result);
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a slice to nodes selected by state.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddToNodesState(object sender, EventArgs e)
+		{
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// If there is no selected slice, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+
+			// Get the slice.
+			PlSlice slice = this.listViewSlices.SelectedItems[0].Tag as PlSlice;
+
+			// Show the add slice to nodes by state dialog.
+			if (this.formAddSliceToNodesState.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			{
+				// Add the slice to nodes.
+				this.OnAddSliceToNodes(slice, this.formAddSliceToNodesState.Result);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a slice to nodes selected by slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAddToNodesSlice(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// An event handler called when adding a slice to PlanetLab nodes.
+		/// </summary>
+		/// <param name="slice">The slice.</param>
+		/// <param name="ids">The list of node IDs.</param>
+		private void OnAddSliceToNodes(PlSlice slice, int[] ids)
+		{
+			// If the slice does not have an ID, show an error message and return.
+			if (!slice.Id.HasValue)
+			{
+				MessageBox.Show(this, "The selected slice does not have an identifier.", "Add Slice to Nodes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// Update the status.
+			this.status.Send(
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				"Adding slice {0} to {1} PlanetLab node{2}...".FormatWith(slice.Id, ids.Length, ids.Length == 1 ? string.Empty : "s"),
+				Resources.GlobeLab_16,
+				Resources.GlobeClock_16);
+
+			// Create the request state.
+			SliceIdsRequestState requestState = new SliceIdsRequestState(
+				this.OnAddSliceToNodesRequestStarted,
+				this.OnAddSliceToNodesRequestResult,
+				this.OnAddSliceToNodesRequestCanceled,
+				this.OnAddSliceToNodesRequestException,
+				this.OnAddSliceToNodesRequestFinished,
+				slice,
+				ids);
+
+			// Begin an asynchronous PlanetLab request.
+			this.BeginRequest(
+				this.requestAddSliceToNodes,
+				this.crawler.Config.PlanetLab.Username,
+				this.crawler.Config.PlanetLab.Password,
+				new object[] { slice.Id.Value, ids },
+				requestState);
 		}
 
 		/// <summary>
@@ -536,7 +572,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnAddSliceToNodesRequestResult(XmlRpcResponse response, RequestState state)
 		{
 			// Convert the request state.
-			SliceNodeRequestState requestState = state as SliceNodeRequestState;
+			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -546,8 +582,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-						"Adding slice {0} to the PlanetLab node {1} succeeded.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						"Adding slice {0} to {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
 
@@ -558,14 +594,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Show a dialog.
 					MessageBox.Show(this,
-						"Cannot add the slice {0} to the PlanetLab node {1}. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+						"Cannot add the slice {0} to {1} PlanetLab node{2}. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 						"Add Slice to Node",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning);
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-						"Adding slice {0} to the PlanetLab node {1} failed.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
 				}
@@ -574,8 +610,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Update the status.
 				this.status.Send(
-					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-					"Adding slice {0} to the PlanetLab node {1} failed.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+					"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
 			}
@@ -588,11 +624,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnAddSliceToNodesRequestCanceled(RequestState state)
 		{
 			// Convert the request state.
-			SliceNodeRequestState requestState = state as SliceNodeRequestState;
+			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-				"Adding the slice {0} to PlanetLab node {1} was canceled.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				"Adding the slice {0} to {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 		}
@@ -605,11 +641,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnAddSliceToNodesRequestException(Exception exception, RequestState state)
 		{
 			// Convert the request state.
-			SliceNodeRequestState requestState = state as SliceNodeRequestState;
+			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-				"Adding the slice {0} to the PlanetLab node {1} failed.".FormatWith(requestState.Slice.Id, requestState.Node.Id),
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				"Adding the slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 		}
@@ -629,7 +665,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (state.Success)
 			{
 				// Get the request state.
-				SliceNodeRequestState requestState = state as SliceNodeRequestState;
+				SliceIdsRequestState requestState = state as SliceIdsRequestState;
 
 				// Refresh the slice information.
 				this.OnRefreshSlice(requestState.Slice);
@@ -725,42 +761,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user adds a slice to nodes selected by state.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnAddToNodesState(object sender, EventArgs e)
-		{
-			// If there is no validated PlanetLab person account, show a message and return.
-			if (-1 == CrawlerStatic.PlanetLabPersonId)
-			{
-				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-
-			// If there is no selected slice, do nothing.
-			if (this.listViewSlices.SelectedItems.Count == 0) return;
-
-			// Get the slice.
-			PlSlice slice = this.listViewSlices.SelectedItems[0].Tag as PlSlice;
-
-			// Show the add slice to node by state dialog.
-			//if (this.formAddSliceToNodeState.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
-			//{
-			//}
-		}
-
-		/// <summary>
-		/// An event handler called when the user adds a slice to nodes selected by slice.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnAddToNodesSlice(object sender, EventArgs e)
-		{
-
-		}
-
-		/// <summary>
 		/// An event handler called when the user removes a slice from nodes.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -788,26 +788,27 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 
 			// Show the remove slice from node dialog.
-			if (this.formRemoveSliceFromNode.ShowDialog(this, slice) == DialogResult.OK)
+			if (this.formRemoveSliceFromNodes.ShowDialog(this, slice) == DialogResult.OK)
 			{
 				// Get the PlanetLab node IDs.
-				int[] ids = this.formRemoveSliceFromNode.Result;
+				int[] ids = this.formRemoveSliceFromNodes.Result;
 
 				// Update the status.
 				this.status.Send(
-					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
+					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
 					"Removing slice {0} from the PlanetLab nodes...",
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
 
 				// Create the request state.
-				SliceRequestState requestState = new SliceRequestState(
+				SliceIdsRequestState requestState = new SliceIdsRequestState(
 					this.OnRemoveSliceFromNodesRequestStarted,
 					this.OnRemoveSliceFromNodesRequestResult,
 					this.OnRemoveSliceFromNodesRequestCanceled,
 					this.OnRemoveSliceFromNodesRequestException,
 					this.OnRemoveSliceFromNodesRequestFinished,
-					slice);
+					slice,
+					ids);
 
 				// Begin an asynchronous PlanetLab request.
 				this.BeginRequest(
@@ -837,7 +838,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnRemoveSliceFromNodesRequestResult(XmlRpcResponse response, RequestState state)
 		{
 			// Convert the request state.
-			SliceRequestState requestState = state as SliceRequestState;
+			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
@@ -847,8 +848,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-						"Remove slice {0} from the PlanetLab nodes succeeded.".FormatWith(requestState.Slice.Id),
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						"Removing slice {0} from {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
 
@@ -859,14 +860,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Show a dialog.
 					MessageBox.Show(this,
-						"Cannot remove the slice {0} from the PlanetLab nodes. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id),
+						"Cannot remove the slice {0} from {1} PlanetLab node{2}. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 						"Remove Slice from Node",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning);
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-						"Removing slice {0} from the PlanetLab nodes failed.".FormatWith(requestState.Slice.Id),
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
 				}
@@ -875,8 +876,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Update the status.
 				this.status.Send(
-					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-					"Removing slice {0} from the PlanetLab nodes failed.".FormatWith(requestState.Slice.Id),
+					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+					"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
 			}
@@ -889,11 +890,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnRemoveSliceFromNodesRequestCanceled(RequestState state)
 		{
 			// Convert the request state.
-			SliceRequestState requestState = state as SliceRequestState;
+			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-				"Removing the slice {0} from PlanetLab nodes was canceled.".FormatWith(requestState.Slice.Id),
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				"Removing the slice {0} from {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 		}
@@ -906,11 +907,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnRemoveSliceFromNodesRequestException(Exception exception, RequestState state)
 		{
 			// Convert the request state.
-			SliceRequestState requestState = state as SliceRequestState;
+			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.Slices.Count),
-				"Removing the slice {0} from the PlanetLab nodes failed.".FormatWith(requestState.Slice.Id),
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				"Removing the slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 		}

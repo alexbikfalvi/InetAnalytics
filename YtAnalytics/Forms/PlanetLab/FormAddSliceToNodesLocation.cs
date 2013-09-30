@@ -26,16 +26,16 @@ using DotNetApi.Windows;
 namespace YtAnalytics.Forms.PlanetLab
 {
 	/// <summary>
-	/// A form dialog allowing the selection of a PlanetLab slice.
+	/// A form dialog allowing the selection of a PlanetLab node based on site location.
 	/// </summary>
-	public sealed partial class FormAddSlice : Form
+	public sealed partial class FormAddSliceToNodesLocation : Form
 	{
 		private bool canClose = true;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddSlice()
+		public FormAddSliceToNodesLocation()
 		{
 			InitializeComponent();
 
@@ -46,9 +46,9 @@ namespace YtAnalytics.Forms.PlanetLab
 		// Public properties.
 
 		/// <summary>
-		/// The selected PlanetLab slice.
+		/// The selected PlanetLab nodes.
 		/// </summary>
-		public PlSlice Result { get; private set; }
+		public int[] Result { get; private set; }
 
 		// Public methods.
 
@@ -77,7 +77,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		{
 			// Reset the result.
 			this.Result = null;
-			// Refresh the results list.
+			// Refresh the control.
 			this.control.Refresh(config);
 			// Show the dialog.
 			return base.ShowDialog(owner);
@@ -106,14 +106,14 @@ namespace YtAnalytics.Forms.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects a .
+		/// An event handler called when the user selects a node.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSelected(object sender, PlanetLabObjectEventArgs<PlSlice> e)
+		private void OnSelected(object sender, ArrayEventArgs<int> e)
 		{
 			// Set the result.
-			this.Result = e.Object;
+			this.Result = e.Value;
 			// Set the dialog result.
 			this.DialogResult = DialogResult.OK;
 			// Close the form.

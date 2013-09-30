@@ -34,9 +34,10 @@ namespace YtCrawler.PlanetLab
 		private string root;
 
 		private PlList<PlSite> sites = new PlList<PlSite>();
-		private PlList<PlPerson> persons = new PlList<PlPerson>();
-		private PlList<PlSlice> slices = new PlList<PlSlice>();
 		private PlList<PlNode> nodes = new PlList<PlNode>();
+		private PlList<PlSlice> slices = new PlList<PlSlice>();
+		private PlList<PlPerson> localPersons = new PlList<PlPerson>();
+		private PlList<PlSlice> localSlices = new PlList<PlSlice>();
 
 		/// <summary>
 		/// Creates a PlanetLab configuration instance at the specified registry key.
@@ -61,12 +62,16 @@ namespace YtCrawler.PlanetLab
 			try { this.nodes.LoadFromFile(this.NodesFileName); }
 			catch { }
 
-			// Load the PlanetLab persons configuration.
-			try { this.persons.LoadFromFile(this.LocalPersonsFileName); }
+			// Load the PlanetLab slices configuration.
+			try { this.slices.LoadFromFile(this.SlicesFileName); }
 			catch { }
 
-			// Load the PlanetLab slices configuration.
-			try { this.slices.LoadFromFile(this.LocalSlicesFileName); }
+			// Load the PlanetLab local persons configuration.
+			try { this.localPersons.LoadFromFile(this.LocalPersonsFileName); }
+			catch { }
+
+			// Load the PlanetLab local slices configuration.
+			try { this.localSlices.LoadFromFile(this.LocalSlicesFileName); }
 			catch { }
 
 			// Initialize the static configuration.
@@ -142,6 +147,21 @@ namespace YtCrawler.PlanetLab
 			}
 		}
 		/// <summary>
+		/// Gets or sets the PlanetLab slices file name.
+		/// </summary>
+		public string SlicesFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.Registry.GetString(this.root, "SlicesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\Slices.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root, "SlicesFileName", value);
+				CrawlerStatic.PlanetLabSlicesFileName = value;
+			}
+		}
+		/// <summary>
 		/// Gets or sets the local PlanetLab persons file name.
 		/// </summary>
 		public string LocalPersonsFileName
@@ -180,13 +200,17 @@ namespace YtCrawler.PlanetLab
 		/// </summary>
 		public PlList<PlNode> Nodes { get { return this.nodes; } }
 		/// <summary>
-		/// Gets the collection of PlanetLab persons.
-		/// </summary>
-		public PlList<PlPerson> Persons { get { return this.persons; } }
-		/// <summary>
 		/// Gets the collection of PlanetLab slices.
 		/// </summary>
 		public PlList<PlSlice> Slices { get { return this.slices; } }
+		/// <summary>
+		/// Gets the collection of PlanetLab persons.
+		/// </summary>
+		public PlList<PlPerson> LocalPersons { get { return this.localPersons; } }
+		/// <summary>
+		/// Gets the collection of PlanetLab slices.
+		/// </summary>
+		public PlList<PlSlice> LocalSlices { get { return this.localSlices; } }
 
 		// Public methods.
 
@@ -199,10 +223,13 @@ namespace YtCrawler.PlanetLab
 			try { this.Sites.SaveToFile(this.SitesFileName); }
 			catch { }
 			// Save the PlanetLab nodes.
-			try { this.Nodes.SaveToFile(this.SitesFileName); }
+			try { this.Nodes.SaveToFile(this.NodesFileName); }
 			catch { }
 			// Save the PlanetLab slices.
-			try { this.Slices.SaveToFile(this.LocalSlicesFileName); }
+			try { this.Slices.SaveToFile(this.SlicesFileName); }
+			catch { }
+			// Save the PlanetLab local slices.
+			try { this.LocalSlices.SaveToFile(this.LocalSlicesFileName); }
 			catch { }
 			// Close the registry key.
 			this.key.Close();
@@ -226,8 +253,8 @@ namespace YtCrawler.PlanetLab
 			DotNetApi.Windows.Registry.SetSecureString(this.root, "Password", password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			CrawlerStatic.PlanetLabPassword = password;
 			// Save the persons.
-			this.persons.CopyFrom(persons);
-			try { this.persons.SaveToFile(this.LocalPersonsFileName); }
+			this.LocalPersons.CopyFrom(persons);
+			try { this.LocalPersons.SaveToFile(this.LocalPersonsFileName); }
 			catch { }
 			// Save the person.
 			DotNetApi.Windows.Registry.SetInteger(this.root, "PersonId", person);

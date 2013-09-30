@@ -34,8 +34,8 @@ namespace YtAnalytics.Controls.PlanetLab
 	public sealed partial class ControlAddSlice : ControlRequest
 	{
 		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
-		private PlList<PlSlice> slices = new PlList<PlSlice>();
 		private string filter = string.Empty;
+		private PlList<PlSlice> slices = null;
 
 		private FormObjectProperties<ControlSliceProperties> formProperties = new FormObjectProperties<ControlSliceProperties>();
 
@@ -72,17 +72,29 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Refreshes the list of PlanetLab slices.
 		/// </summary>
-		public void RefreshList()
+		/// <param name="config">The crawler configuration.</param>
+		public void Refresh(CrawlerConfig config)
 		{
-			// Clear the slices list.
-			this.listView.Items.Clear();
+			// Set the slices.
+			this.slices = config.PlanetLab.Slices;
 			// Clear the filter.
 			this.textBoxFilter.Clear();
-			// Clear the list.
-			this.slices.Clear();
-
-			// Begin the PlanetLab request.
-			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
+			// Clear the buttons state.
+			this.buttonRefresh.Enabled = true;
+			this.buttonCancel.Enabled = false;
+			this.buttonSelect.Enabled = false;
+			this.buttonClose.Enabled = true;
+			// If the slices list is empty.
+			if (this.slices.Count == 0)
+			{
+				// Begin refreshing the slices list.
+				this.OnRefreshStarted(this, EventArgs.Empty);
+			}
+			else
+			{
+				// Update the list view.
+				this.OnUpdateList();
+			}
 		}
 
 		// Protected methods.
@@ -172,8 +184,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRefreshStarted(object sender, EventArgs e)
 		{
-			// Refresh the list.
-			this.RefreshList();
+			// Clear the slices list.
+			this.listView.Items.Clear();
+			// Begin the PlanetLab request.
+			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
 		}
 
 		/// <summary>
@@ -284,7 +298,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						}
 					}
 
-					// Increment the number of displayed sites.
+					// Increment the number of displayed slices.
 					count++;
 
 					// Create the list view item.

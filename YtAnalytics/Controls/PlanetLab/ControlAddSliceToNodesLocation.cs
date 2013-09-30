@@ -45,7 +45,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private readonly PlRequest requestSites = new PlRequest(PlRequest.RequestMethod.GetSites);
 		private readonly PlRequest requestNodes = new PlRequest(PlRequest.RequestMethod.GetNodes);
 		
-		private readonly PlList<PlSite> sites = new PlList<PlSite>();
+		private PlList<PlSite> sites = null;
 		private readonly PlList<PlNode> nodes = new PlList<PlNode>();
 		
 		private string filterSite = string.Empty;
@@ -88,7 +88,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event raised when a PlanetLab site was selected.
 		/// </summary>
-		public event PlanetLabObjectEventHandler<PlNode> Selected;
+		public event ArrayEventHandler<int> Selected;
 		/// <summary>
 		/// An event raised when user closes the selection.
 		/// </summary>
@@ -103,7 +103,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		public void Refresh(CrawlerConfig config)
 		{
 			// Update the sites list.
-			this.sites.CopyFrom(config.PlanetLab.Sites);
+			this.sites = config.PlanetLab.Sites;
 			// Clear the list view.
 			this.listViewSites.Items.Clear();
 			this.listViewNodes.Items.Clear();
@@ -645,8 +645,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Get the node for this item.
 			PlNode node = this.listViewNodes.SelectedItems[0].Tag as PlNode;
 
+			// Create a new ID array for the selected node.
+			int[] result = new int[] { node.Id ?? -1 };
+
 			// Raise the event.
-			if (null != this.Selected) this.Selected(this, new PlanetLabObjectEventArgs<PlNode>(node));
+			if (null != this.Selected) this.Selected(this, new ArrayEventArgs<int>(result));
 		}
 	}
 }

@@ -266,10 +266,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSelect(object sender, EventArgs e)
 		{
-			// If there is no selected PlanetLab object, do nothing.
-			if (this.listView.SelectedItems.Count == 0) return;
 			// Get the list of checked list view items.
 			IList<ListViewItem> checkedItems = this.listView.Items.Checked();
+			// If there are no selected items, do nothing.
+			if (checkedItems.Count == 0) return;
 			// Create a new array with the node IDs.
 			int[] result = new int[checkedItems.Count];
 			// Update the IDs list.

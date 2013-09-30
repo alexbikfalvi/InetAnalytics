@@ -208,7 +208,7 @@
 			this.buttonSelectAll.Location = new System.Drawing.Point(3, 70);
 			this.buttonSelectAll.Name = "buttonSelectAll";
 			this.buttonSelectAll.Size = new System.Drawing.Size(75, 23);
-			this.buttonSelectAll.TabIndex = 10;
+			this.buttonSelectAll.TabIndex = 1;
 			this.buttonSelectAll.Text = "Select &all";
 			this.buttonSelectAll.UseVisualStyleBackColor = true;
 			this.buttonSelectAll.Click += new System.EventHandler(this.OnSelectAll);
@@ -219,7 +219,7 @@
 			this.buttonClearAll.Location = new System.Drawing.Point(84, 70);
 			this.buttonClearAll.Name = "buttonClearAll";
 			this.buttonClearAll.Size = new System.Drawing.Size(75, 23);
-			this.buttonClearAll.TabIndex = 11;
+			this.buttonClearAll.TabIndex = 2;
 			this.buttonClearAll.Text = "Cl&ear all";
 			this.buttonClearAll.UseVisualStyleBackColor = true;
 			this.buttonClearAll.Click += new System.EventHandler(this.OnClearAll);

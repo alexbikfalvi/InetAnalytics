@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls.PlanetLab
 {
-	partial class ControlAddSliceToNodeState
+	partial class ControlAddSliceToNodesState
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAddSliceToNodeState));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAddSliceToNodesState));
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.textBoxFilter = new System.Windows.Forms.TextBox();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
@@ -49,6 +49,8 @@
 			this.columnNodeDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnNodeLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnNodeType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.checkBoxFilter = new System.Windows.Forms.CheckBox();
+			this.stateFilter = new DotNetApi.Windows.Controls.ToolStripDropDownCheckedList();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -68,9 +70,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxFilter.Location = new System.Drawing.Point(110, 73);
 			this.textBoxFilter.Name = "textBoxFilter";
-			this.textBoxFilter.Size = new System.Drawing.Size(687, 20);
+			this.textBoxFilter.Size = new System.Drawing.Size(606, 20);
 			this.textBoxFilter.TabIndex = 2;
-			this.textBoxFilter.TextChanged += new System.EventHandler(this.OnFilterTextChanged);
+			this.textBoxFilter.TextChanged += new System.EventHandler(this.OnHostnameFilterChanged);
 			// 
 			// pictureBox
 			// 
@@ -94,7 +96,11 @@
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "GlobeObject");
+			this.imageList.Images.SetKeyName(0, "NodeUnknown");
+			this.imageList.Images.SetKeyName(1, "NodeBoot");
+			this.imageList.Images.SetKeyName(2, "NodeSafeBoot");
+			this.imageList.Images.SetKeyName(3, "NodeDisabled");
+			this.imageList.Images.SetKeyName(4, "NodeReinstall");
 			// 
 			// labelStatus
 			// 
@@ -104,7 +110,7 @@
 			this.labelStatus.Location = new System.Drawing.Point(165, 574);
 			this.labelStatus.Name = "labelStatus";
 			this.labelStatus.Size = new System.Drawing.Size(470, 23);
-			this.labelStatus.TabIndex = 6;
+			this.labelStatus.TabIndex = 7;
 			this.labelStatus.Text = "Ready.";
 			this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -114,7 +120,7 @@
 			this.buttonCancel.Location = new System.Drawing.Point(84, 574);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-			this.buttonCancel.TabIndex = 5;
+			this.buttonCancel.TabIndex = 6;
 			this.buttonCancel.Text = "C&ancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
@@ -125,7 +131,7 @@
 			this.buttonSelect.Location = new System.Drawing.Point(641, 574);
 			this.buttonSelect.Name = "buttonSelect";
 			this.buttonSelect.Size = new System.Drawing.Size(75, 23);
-			this.buttonSelect.TabIndex = 7;
+			this.buttonSelect.TabIndex = 8;
 			this.buttonSelect.Text = "&Select";
 			this.buttonSelect.UseVisualStyleBackColor = true;
 			this.buttonSelect.Click += new System.EventHandler(this.OnSelect);
@@ -136,7 +142,7 @@
 			this.buttonClose.Location = new System.Drawing.Point(722, 574);
 			this.buttonClose.Name = "buttonClose";
 			this.buttonClose.Size = new System.Drawing.Size(75, 23);
-			this.buttonClose.TabIndex = 8;
+			this.buttonClose.TabIndex = 9;
 			this.buttonClose.Text = "&Close";
 			this.buttonClose.UseVisualStyleBackColor = true;
 			this.buttonClose.Click += new System.EventHandler(this.OnClose);
@@ -148,7 +154,7 @@
 			this.buttonRefresh.Location = new System.Drawing.Point(3, 574);
 			this.buttonRefresh.Name = "buttonRefresh";
 			this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
-			this.buttonRefresh.TabIndex = 4;
+			this.buttonRefresh.TabIndex = 5;
 			this.buttonRefresh.Text = "&Refresh";
 			this.buttonRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonRefresh.UseVisualStyleBackColor = true;
@@ -159,6 +165,7 @@
 			this.listView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.listView.CheckBoxes = true;
 			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnNodeId,
             this.columnNodeHostname,
@@ -176,13 +183,16 @@
 			this.listView.Name = "listView";
 			this.listView.Size = new System.Drawing.Size(794, 469);
 			this.listView.SmallImageList = this.imageList;
-			this.listView.TabIndex = 9;
+			this.listView.TabIndex = 4;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
+			this.listView.ItemActivate += new System.EventHandler(this.OnProperties);
+			this.listView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.OnNodeChecked);
 			// 
 			// columnNodeId
 			// 
 			this.columnNodeId.Text = "ID";
+			this.columnNodeId.Width = 80;
 			// 
 			// columnNodeHostname
 			// 
@@ -217,11 +227,38 @@
 			this.columnNodeType.Text = "Type";
 			this.columnNodeType.Width = 120;
 			// 
-			// ControlAddSliceToNodeState
+			// checkBoxFilter
+			// 
+			this.checkBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.checkBoxFilter.Appearance = System.Windows.Forms.Appearance.Button;
+			this.checkBoxFilter.Image = global::YtAnalytics.Resources.Filter_16;
+			this.checkBoxFilter.Location = new System.Drawing.Point(722, 71);
+			this.checkBoxFilter.Name = "checkBoxFilter";
+			this.checkBoxFilter.Size = new System.Drawing.Size(75, 23);
+			this.checkBoxFilter.TabIndex = 3;
+			this.checkBoxFilter.Text = "&Filter by";
+			this.checkBoxFilter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.checkBoxFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.checkBoxFilter.UseVisualStyleBackColor = true;
+			this.checkBoxFilter.CheckedChanged += new System.EventHandler(this.OnFilterState);
+			// 
+			// stateFilter
+			// 
+			this.stateFilter.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+			this.stateFilter.ListMinimumSize = new System.Drawing.Size(200, 200);
+			this.stateFilter.ListSize = new System.Drawing.Size(200, 200);
+			this.stateFilter.Name = "checkedListFilter";
+			this.stateFilter.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
+			this.stateFilter.Size = new System.Drawing.Size(208, 205);
+			this.stateFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnStateFilterCheck);
+			this.stateFilter.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnStateFilterClosed);
+			// 
+			// ControlAddSliceToNodesState
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
+			this.Controls.Add(this.checkBoxFilter);
 			this.Controls.Add(this.listView);
 			this.Controls.Add(this.labelStatus);
 			this.Controls.Add(this.buttonCancel);
@@ -233,7 +270,7 @@
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(0, 230);
-			this.Name = "ControlAddSliceToNodeState";
+			this.Name = "ControlAddSliceToNodesState";
 			this.Size = new System.Drawing.Size(800, 600);
 			this.Controls.SetChildIndex(this.pictureBox, 0);
 			this.Controls.SetChildIndex(this.labelTitle, 0);
@@ -245,6 +282,7 @@
 			this.Controls.SetChildIndex(this.buttonCancel, 0);
 			this.Controls.SetChildIndex(this.labelStatus, 0);
 			this.Controls.SetChildIndex(this.listView, 0);
+			this.Controls.SetChildIndex(this.checkBoxFilter, 0);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -272,5 +310,7 @@
 		private System.Windows.Forms.ColumnHeader columnNodeDateCreated;
 		private System.Windows.Forms.ColumnHeader columnNodeLastUpdated;
 		private System.Windows.Forms.ColumnHeader columnNodeType;
+		private System.Windows.Forms.CheckBox checkBoxFilter;
+		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList stateFilter;
 	}
 }

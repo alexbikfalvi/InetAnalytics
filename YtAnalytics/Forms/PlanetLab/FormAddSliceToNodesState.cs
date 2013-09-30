@@ -26,16 +26,16 @@ using DotNetApi.Windows;
 namespace YtAnalytics.Forms.PlanetLab
 {
 	/// <summary>
-	/// A form dialog allowing the selection of a PlanetLab node based on site location.
+	/// A form dialog allowing the selection of a PlanetLab node based on node state.
 	/// </summary>
-	public sealed partial class FormAddSliceToNodeLocation : Form
+	public sealed partial class FormAddSliceToNodesState : Form
 	{
 		private bool canClose = true;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddSliceToNodeLocation()
+		public FormAddSliceToNodesState()
 		{
 			InitializeComponent();
 
@@ -46,9 +46,9 @@ namespace YtAnalytics.Forms.PlanetLab
 		// Public properties.
 
 		/// <summary>
-		/// The selected PlanetLab node.
+		/// The array of selected PlanetLab nodes.
 		/// </summary>
-		public PlNode Result { get; private set; }
+		public int[] Result { get; private set; }
 
 		// Public methods.
 
@@ -110,10 +110,10 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSelected(object sender, PlanetLabObjectEventArgs<PlNode> e)
+		private void OnSelected(object sender, ArrayEventArgs<int> e)
 		{
 			// Set the result.
-			this.Result = e.Object;
+			this.Result = e.Value;
 			// Set the dialog result.
 			this.DialogResult = DialogResult.OK;
 			// Close the form.
@@ -146,11 +146,6 @@ namespace YtAnalytics.Forms.PlanetLab
 				// Cancel the closing.
 				e.Cancel = true;
 			}
-		}
-
-		private void OnSelected(object sender)
-		{
-
 		}
 	}
 }

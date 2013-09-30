@@ -27,14 +27,14 @@ namespace YtAnalytics.Forms.PlanetLab
 	/// <summary>
 	/// A form dialog allowing the removal of a slice from a PlanetLab node.
 	/// </summary>
-	public sealed partial class FormRemoveSliceFromNode : Form
+	public sealed partial class FormRemoveSliceFromNodes : Form
 	{
 		private bool canClose = true;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormRemoveSliceFromNode()
+		public FormRemoveSliceFromNodes()
 		{
 			InitializeComponent();
 

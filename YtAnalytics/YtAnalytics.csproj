@@ -537,17 +537,23 @@
     <Compile Include="Events\ProfileEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
-    <Compile Include="Forms\PlanetLab\FormRemoveSliceFromNode.cs">
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesState.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PlanetLab\FormRemoveSliceFromNode.Designer.cs">
-      <DependentUpon>FormRemoveSliceFromNode.cs</DependentUpon>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesState.Designer.cs">
+      <DependentUpon>FormAddSliceToNodesState.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PlanetLab\FormAddSliceToNodeLocation.cs">
+    <Compile Include="Forms\PlanetLab\FormRemoveSliceFromNodes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PlanetLab\FormAddSliceToNodeLocation.Designer.cs">
-      <DependentUpon>FormAddSliceToNodeLocation.cs</DependentUpon>
+    <Compile Include="Forms\PlanetLab\FormRemoveSliceFromNodes.Designer.cs">
+      <DependentUpon>FormRemoveSliceFromNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesLocation.Designer.cs">
+      <DependentUpon>FormAddSliceToNodesLocation.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PlanetLab\FormAddSlice.cs">
       <SubType>Form</SubType>
@@ -943,11 +949,14 @@
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PlanetLab\FormRemoveSliceFromNode.resx">
-      <DependentUpon>FormRemoveSliceFromNode.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesState.resx">
+      <DependentUpon>FormAddSliceToNodesState.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodeLocation.resx">
-      <DependentUpon>FormAddSliceToNodeLocation.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlanetLab\FormRemoveSliceFromNodes.resx">
+      <DependentUpon>FormRemoveSliceFromNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesLocation.resx">
+      <DependentUpon>FormAddSliceToNodesLocation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormAddSlice.resx">
       <DependentUpon>FormAddSlice.cs</DependentUpon>
