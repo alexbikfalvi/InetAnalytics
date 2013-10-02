@@ -38,7 +38,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 	/// </summary>
 	public partial class ControlYtApi2Categories : NotificationControl
 	{
-		private static string logSource = "APIv2 Categories";
+		private static readonly string logSource = "APIv2 Categories";
 
 		private Crawler crawler;
 
@@ -192,6 +192,8 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		{
 			// Clear the list view.
 			this.listView.Items.Clear();
+			// Set the selected category to null.
+			this.controlCategory.Catergory = null;
 			// Add the categories to the list view.
 			foreach (YouTubeCategory category in this.crawler.Categories)
 			{

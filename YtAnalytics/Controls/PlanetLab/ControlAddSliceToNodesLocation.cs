@@ -532,7 +532,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.wizardPageNode.NextEnabled = false;
 
 			// Update the filter.
-			this.filterNode = this.textBoxFilterSite.Text.Trim();
+			this.filterNode = this.textBoxFilterNode.Text.Trim();
 			// The number of displayed sites.
 			int count = 0;
 

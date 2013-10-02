@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Globalization;
 using YtApi.Api.V2.Atom;
 using YtApi.Api.V2.Data;
 using DotNetApi;
@@ -73,6 +74,9 @@ namespace YtApi.Api.V2
 
 			// Set the request headers.
 			if (null != this.settings) asyncState.Request.Headers.Add("X-GData-Key", "key={0}".FormatWith(this.settings.Key.ConvertToUnsecureString()));
+
+			// Set the accepted language to the current culture.
+			asyncState.Request.Headers["Accept-Language"] = CultureInfo.CurrentCulture.Name;
 
 			// Begin the request.
 			return this.Begin(asyncState);

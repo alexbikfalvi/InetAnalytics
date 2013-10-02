@@ -19,6 +19,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -138,9 +139,9 @@ namespace YtCrawler.Log
 			// Add the event data.
 			try
 			{
-				this.level = (LogEventLevel) int.Parse(element.Attribute(XName.Get("level")).Value);
-				this.type = (LogEventType)int.Parse(element.Attribute(XName.Get("type")).Value);
-				this.timestamp = DateTime.Parse(element.Attribute(XName.Get("timestamp")).Value);
+				this.level = (LogEventLevel) int.Parse(element.Attribute(XName.Get("level")).Value, CultureInfo.InvariantCulture);
+				this.type = (LogEventType)int.Parse(element.Attribute(XName.Get("type")).Value, CultureInfo.InvariantCulture);
+				this.timestamp = DateTime.Parse(element.Attribute(XName.Get("timestamp")).Value, CultureInfo.InvariantCulture);
 				this.source = element.Element(XName.Get("source")).Value;
 				this.message = element.Element(XName.Get("message")).Value;
 				this.parent = parent;
@@ -276,9 +277,9 @@ namespace YtCrawler.Log
 			{
 				XElement element = new XElement(
 					XName.Get("event"),
-					new XAttribute("level", (int)this.Level),
-					new XAttribute("type", (int)this.Type),
-					new XAttribute("timestamp", this.Timestamp),
+					new XAttribute("level", ((int)this.Level).ToString(CultureInfo.InvariantCulture)),
+					new XAttribute("type", ((int)this.Type).ToString(CultureInfo.InvariantCulture)),
+					new XAttribute("timestamp", this.Timestamp.ToString(CultureInfo.InvariantCulture)),
 					new XElement("source", this.Source),
 					new XElement("message", this.MessageRaw));
 

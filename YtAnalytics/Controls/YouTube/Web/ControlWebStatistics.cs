@@ -39,7 +39,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 	/// </summary>
 	public partial class ControlWebStatistics : ThreadSafeControl
 	{
-		private static string logSource = "Web Statistics";
+		private static readonly string logSource = "Web Statistics";
 
 		private Crawler crawler;
 		private AjaxRequestStatistics request;

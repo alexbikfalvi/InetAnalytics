@@ -39,7 +39,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 	/// </summary>
 	public partial class ControlYtApi2PlaylistsFeed : ThreadSafeControl
 	{
-		private static string logSource = "APIv2 Playlists Feed";
+		private static readonly string logSource = "APIv2 Playlists Feed";
 
 		// Private variables.
 

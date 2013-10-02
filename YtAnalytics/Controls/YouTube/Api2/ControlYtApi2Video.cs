@@ -35,7 +35,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 	/// </summary>
 	public partial class ControlYtApi2Video : ThreadSafeControl
 	{
-		private static string logSource = "APIv2 Video Entry";
+		private static readonly string logSource = "APIv2 Video Entry";
 
 		private Crawler crawler;
 		private YouTubeRequestVideo request;

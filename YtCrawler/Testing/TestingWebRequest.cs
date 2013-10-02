@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
@@ -337,7 +338,7 @@ namespace YtCrawler.Testing
 					new XElement("url", this.Url),
 					new XElement("method", this.Method),
 					new XElement("data", this.EncodeToBase64(this.Data)),
-					new XElement("data-encoding", this.DataEncoding),
+					new XElement("data-encoding", this.DataEncoding.ToString(CultureInfo.InvariantCulture)),
 					new XElement("headers",
 						new XElement("system-headers",
 							new XElement("accept",
@@ -348,7 +349,7 @@ namespace YtCrawler.Testing
 								this.EncodeToBase64(this.ContentTypeHeaderValue)),
 							new XElement("date",
 								new XAttribute("checked", this.DateHeaderChecked),
-								this.DateHeaderValue.ToString()),
+								this.DateHeaderValue.ToString(CultureInfo.InvariantCulture)),
 							new XElement("expect",
 								new XAttribute("checked", this.ExpectHeaderChecked),
 								this.EncodeToBase64(this.ExpectHeaderValue)),
@@ -381,7 +382,7 @@ namespace YtCrawler.Testing
 			this.Url = root.Element("url").Value;
 			this.Method = root.Element("method").Value;
 			this.Data = this.DecodeFromBase64(root.Element("data").Value);
-			this.DataEncoding = int.Parse(root.Element("data-encoding").Value);
+			this.DataEncoding = int.Parse(root.Element("data-encoding").Value, CultureInfo.InvariantCulture);
 
 			// Get the system headers element.
 			XElement systemHeaders = root.Element("headers").Element("system-headers");
@@ -395,7 +396,7 @@ namespace YtCrawler.Testing
 
 			this.AcceptHeaderValue = this.DecodeFromBase64(systemHeaders.Element("accept").Value);
 			this.ContentTypeHeaderValue = this.DecodeFromBase64(systemHeaders.Element("content-type").Value);
-			this.DateHeaderValue = DateTime.Parse(systemHeaders.Element("date").Value);
+			this.DateHeaderValue = DateTime.Parse(systemHeaders.Element("date").Value, CultureInfo.InvariantCulture);
 			this.ExpectHeaderValue = this.DecodeFromBase64(systemHeaders.Element("expect").Value);
 			this.RefererHeaderValue = this.DecodeFromBase64(systemHeaders.Element("referer").Value);
 			this.UserAgentHeaderValue = this.DecodeFromBase64(systemHeaders.Element("user-agent").Value);

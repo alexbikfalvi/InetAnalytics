@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,9 +70,9 @@ namespace YtCrawler.Comments
 			this.text = text;
 
 			this.xml = new XElement("comment",
-				new XAttribute("type", (int)this.type),
+				new XAttribute("type", ((int)this.type).ToString(CultureInfo.InvariantCulture)),
 				new XAttribute("guid", this.guid),
-				new XAttribute("time", this.time),
+				new XAttribute("time", this.time.ToString(CultureInfo.InvariantCulture)),
 				new XAttribute("item", this.item),
 				new XAttribute("user", this.user),
 				text);
@@ -83,9 +84,9 @@ namespace YtCrawler.Comments
 		/// <param name="xml">The XML element.</param>
 		public Comment(XElement xml)
 		{
-			this.type = (CommentType)int.Parse(xml.Attribute("type").Value);
+			this.type = (CommentType)int.Parse(xml.Attribute("type").Value, CultureInfo.InvariantCulture);
 			this.guid = Guid.Parse(xml.Attribute("guid").Value);
-			this.time = DateTime.Parse(xml.Attribute("time").Value);
+			this.time = DateTime.Parse(xml.Attribute("time").Value, CultureInfo.InvariantCulture);
 			this.user = xml.Attribute("user").Value;
 			this.item = xml.Attribute("item").Value;
 			this.text = xml.Value;

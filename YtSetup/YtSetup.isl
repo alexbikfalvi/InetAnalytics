@@ -353,6 +353,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{E49F7429-2B5D-4B6A-A21E-BB1AD076114D}</td><td>LOG</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{6B1F5BDA-3898-4513-AC89-1353494A18C7}</td><td>COMMENTS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{C77A7409-C831-4097-A4C0-3CBFF6749683}</td><td>PLANETLAB</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{67FB954B-AC7F-4BFE-9D44-8000F328DC42}</td><td>YOUTUBE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MapApi.Primary_output</td><td>{272FDA5A-F243-4E14-9F28-D6474E65413B}</td><td>INSTALLDIR</td><td>2</td><td/><td>mapapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlanetLab.Primary_output</td><td>{0419693F-2984-4156-AD0D-BA4ED4AE0576}</td><td>INSTALLDIR</td><td>2</td><td/><td>planetlab.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Renci.SshNet.Primary_output</td><td>{0520892B-5DF9-4FF1-9AF2-03209E624843}</td><td>INSTALLDIR</td><td>2</td><td/><td>renci.sshnet.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1076,6 +1077,7 @@
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>LOG</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>PLANETLAB</td><td>ISX_DEFAULTCOMPONENT5</td></row>
+		<row><td>YOUTUBE</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>YOUTUBE_ANALYTICS1</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 	</table>
 
@@ -1201,6 +1203,7 @@
 		<row><td>USERPROFILE</td><td>TARGETDIR</td><td>.:USERPR~1|UserProfile</td><td/><td>0</td><td/></row>
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
+		<row><td>YOUTUBE</td><td>YOUTUBE_ANALYTICS1</td><td>YouTube</td><td/><td>0</td><td/></row>
 		<row><td>YOUTUBE_ANALYTICS</td><td>ALEX_BIKFALVI</td><td>YOUTUB~1|YouTube Analytics</td><td/><td>0</td><td/></row>
 		<row><td>YOUTUBE_ANALYTICS1</td><td>ALEX_BIKFALVI1</td><td>YOUTUB~1|YouTube Analytics</td><td/><td>0</td><td/></row>
 		<row><td>YOUTUBE_ANALYTICS2</td><td>UNIVERSITAT_POMPEU_FABRA</td><td>YOUTUB~1|YouTube Analytics</td><td/><td>0</td><td/></row>
@@ -1905,6 +1908,7 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT5</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>AlwaysInstall</td><td>MapApi.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>PlanetLab.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>Renci.SshNet.Primary_output</td></row>
@@ -2087,6 +2091,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_5769D4A7_240E_4C26_A35A_7B49F9E132AB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_E797B05F_6FA6_407D_84C1_A5AE6B755465_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_B54F2721_D2BC_49A7_A0B0_4B49DB63D41B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_65C67A7D_D2C2_42FE_A2CE_9A96D3046E97_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MapApi.Primary_output</td><td/><td/><td>_99675D80_C835_4BFD_9169_6904ADE26239_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlanetLab.Primary_output</td><td/><td/><td>_A4ACB76D_2460_406E_A174_20B6566317F6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Renci.SshNet.Primary_output</td><td/><td/><td>_DFA9113B_6EE5_470B_9C79_BAE0B9EF227A_FILTER</td><td/><td/><td/><td/></row>
@@ -4550,7 +4555,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>Registry117</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry118</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Console</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry121</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Log</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
-		<row><td>Registry122</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\PlanetLab</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry122</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\PlanetLab\Keys</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry123</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry124</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Testing\WebRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry125</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube\V2</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>

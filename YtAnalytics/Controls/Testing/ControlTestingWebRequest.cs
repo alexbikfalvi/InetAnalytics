@@ -36,7 +36,7 @@ namespace YtAnalytics.Controls.Testing
 	/// </summary>
 	public partial class ControlTestingWebRequest : ThreadSafeControl
 	{
-		private static string logSource = "Testing Web Request";
+		private static readonly string logSource = "Testing Web Request";
 
 		// Private variables.
 

@@ -38,7 +38,7 @@ namespace YtAnalytics.Controls.Database
 	/// </summary>
 	public partial class ControlServer : ControlDatabase
 	{
-		private static string logSource = "Database";
+		private static readonly string logSource = "Database";
 
 		private Crawler crawler;
 		private DbServer server;

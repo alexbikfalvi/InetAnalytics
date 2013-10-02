@@ -43,7 +43,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 	/// </summary>
 	public partial class ControlYtApi2CommentsFeed : ThreadSafeControl
 	{
-		private static string logSource = "APIv2 Comments Feed";
+		private static readonly string logSource = "APIv2 Comments Feed";
 
 		// Private variables.
 

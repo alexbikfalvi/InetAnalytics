@@ -411,7 +411,7 @@ namespace YtAnalytics.Forms
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
 			this.controlPlanetLab.Initialize(this.crawler);
 			this.controlPlanetLabSites.Initialize(this.crawler);
-			this.controlPlanetLabSlices.Initialize(this.crawler);
+			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlTestingWebRequest.Initialize(this.crawler);
 			this.controlTestingSshRequest.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);

@@ -40,7 +40,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 	/// </summary>
 	public partial class ControlYtApi2StandardFeed : NotificationControl
 	{
-		private static string logSource = "APIv2 Standard Feed";
+		private static readonly string logSource = "APIv2 Standard Feed";
 
 		// Private variables.
 

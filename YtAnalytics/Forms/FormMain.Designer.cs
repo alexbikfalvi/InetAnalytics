@@ -126,7 +126,7 @@
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(907, 17);
+			this.statusLabelMiddle.Size = new System.Drawing.Size(938, 17);
 			this.statusLabelMiddle.Spring = true;
 			// 
 			// statusLabelRight
@@ -266,8 +266,9 @@
 			this.imageList.Images.SetKeyName(40, "Cubes");
 			this.imageList.Images.SetKeyName(41, "GlobeSettings");
 			this.imageList.Images.SetKeyName(42, "GlobeSchema");
-			this.imageList.Images.SetKeyName(43, "TestGlobeGoto");
-			this.imageList.Images.SetKeyName(44, "TestConnectGoto");
+			this.imageList.Images.SetKeyName(43, "GlobeObject");
+			this.imageList.Images.SetKeyName(44, "TestGlobeGoto");
+			this.imageList.Images.SetKeyName(45, "TestConnectGoto");
 			// 
 			// controlSideConfiguration
 			// 

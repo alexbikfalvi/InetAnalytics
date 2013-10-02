@@ -18,6 +18,7 @@
 
 using System;
 using DotNetApi;
+using DotNetApi.Xml;
 using YtApi.Api.V2.Atom;
 
 namespace YtApi.Api.V2.Data
@@ -48,8 +49,8 @@ namespace YtApi.Api.V2.Data
 			// Convert the values
 			try
 			{
-				this.Latitude = double.Parse(tokens[0]);
-				this.Longitude = double.Parse(tokens[1]);
+				this.Latitude = tokens[0].ToDouble();
+				this.Longitude = tokens[1].ToDouble();
 			}
 			catch (Exception exception)
 			{

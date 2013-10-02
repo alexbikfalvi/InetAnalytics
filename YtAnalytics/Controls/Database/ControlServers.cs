@@ -101,7 +101,7 @@ namespace YtAnalytics.Controls.Database
 			}
 		};
 
-		private static string logSource = "Database";
+		private static readonly string logSource = "Database";
 
 		private Crawler crawler;
 
@@ -113,7 +113,7 @@ namespace YtAnalytics.Controls.Database
 		private ImageList imageList = null;
 		private TreeNode treeNode = null;
 		private string[] imageKeys = { "ServerDown", "ServerUp", "ServerWarning", "ServerBusy", "ServerBusy", "ServerBusy" };
-		private Control.ControlCollection panel = null;
+		private Control.ControlCollection controls = null;
 
 
 		/// <summary>
@@ -134,8 +134,9 @@ namespace YtAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="crawler">The crawler instance.</param>
 		/// <param name="treeNode">The root tree node for the database servers.</param>
-		/// <param name="panel">The panel where to add the server control.</param>
-		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection panel, ImageList imageList)
+		/// <param name="controls">The panel where to add the server control.</param>
+		/// <param name="imageList">The image list.</param>
+		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection controls, ImageList imageList)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
@@ -144,8 +145,8 @@ namespace YtAnalytics.Controls.Database
 			// Set the image list.
 			this.imageList = imageList;
 			this.listView.SmallImageList = imageList;
-			// Set the controls panel.
-			this.panel = panel;
+			// Set the controls collection.
+			this.controls = controls;
 
 			// Set the log event handler for the database servers.
 			this.crawler.Servers.EventLogged += this.OnEventLogged;
@@ -218,9 +219,9 @@ namespace YtAnalytics.Controls.Database
 			controls.ControlQuery.Initialize(this.crawler, server);
 
 			// Add the controls to the panel.
-			this.panel.Add(controls.ControlServer);
-			this.panel.Add(controls.ControlQuery);
-			this.panel.Add(controls.ControlLog);
+			this.controls.Add(controls.ControlServer);
+			this.controls.Add(controls.ControlQuery);
+			this.controls.Add(controls.ControlLog);
 
 			// Set the tree nodes tag.
 			nodeServer.Tag = controls.ControlServer;
@@ -242,9 +243,9 @@ namespace YtAnalytics.Controls.Database
 			this.treeNode.Nodes.Remove(this.items[id].Node);
 
 			// Remove the controls from the panel.
-			this.panel.Remove(this.items[id].ControlServer);
-			this.panel.Remove(this.items[id].ControlQuery);
-			this.panel.Remove(this.items[id].ControlLog);
+			this.controls.Remove(this.items[id].ControlServer);
+			this.controls.Remove(this.items[id].ControlQuery);
+			this.controls.Remove(this.items[id].ControlLog);
 
 			// Dispose the controls.
 			this.items[id].ControlServer.Dispose();

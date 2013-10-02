@@ -40,7 +40,7 @@ namespace YtAnalytics.Controls.Testing
 	/// </summary>
 	public sealed partial class ControlTestingSshRequest : ControlSsh
 	{
-		private static string logSource = "Secure Shell";
+		private static readonly string logSource = "Secure Shell";
 
 		// Private variables.
 

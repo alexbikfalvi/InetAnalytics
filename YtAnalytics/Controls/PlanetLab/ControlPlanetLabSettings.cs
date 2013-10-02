@@ -21,6 +21,7 @@ using System.Security;
 using System.Windows.Forms;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
+using YtCrawler.Log;
 using DotNetApi.Security;
 using DotNetApi.Web.XmlRpc;
 using PlanetLab.Api;
@@ -33,6 +34,8 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public sealed partial class ControlPlanetLabSettings : ControlRequest
 	{
+		private static readonly string logSource = "PlanetLab";
+
 		private Crawler crawler;
 
 		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetPersons);
@@ -280,6 +283,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.validatedPassword,
 				this.validatedPersons,
 				this.validatedPerson);
+
+			// Log
+			this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlPlanetLabSettings.logSource,
+				"Saved credentials for the PlanetLab account \'{0}\'.",
+				new object[] { this.validatedUsername });
 
 			// Disable the save button.
 			this.buttonSave.Enabled = false;

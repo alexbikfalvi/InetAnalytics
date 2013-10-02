@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Xml.Linq;
@@ -32,7 +33,7 @@ namespace YtCrawler.Log
 	{
 		private string filePattern;
 
-		private Dictionary<DateTime, XDocument> logs = new Dictionary<DateTime,XDocument>(); // The set of log files.
+		private Dictionary<DateTime, XDocument> logs = new Dictionary<DateTime, XDocument>(); // The set of log files.
 
 		private Mutex mutex = new Mutex(); // Synchronization mutex.
 
@@ -69,7 +70,7 @@ namespace YtCrawler.Log
 					try
 					{
 						// Get the XML date.
-						DateTime date = DateTime.Parse(xml.Root.Attribute(XName.Get("date")).Value);
+						DateTime date = DateTime.Parse(xml.Root.Attribute(XName.Get("date")).Value, CultureInfo.InvariantCulture);
 						// Set the file name.
 						fileName = this.filePattern.FormatWith(date.Year, date.Month, date.Day);
 						// Save the XML file.
@@ -137,12 +138,12 @@ namespace YtCrawler.Log
 						{
 							// Read the XML from the file.
 							try { xml = XDocument.Load(fileName); }
-							catch (Exception) { xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date))); }
+							catch (Exception) { xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date.ToString(CultureInfo.InvariantCulture)))); }
 						}
 						else
 						{
 							// Create a new empty XML.
-							xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date)));
+							xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date.ToString(CultureInfo.InvariantCulture))));
 						}
 						// Add the XML to the logs list.
 						this.logs.Add(evt.Timestamp.Date, xml);

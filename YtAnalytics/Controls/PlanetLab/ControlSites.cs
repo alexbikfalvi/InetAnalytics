@@ -30,6 +30,7 @@ using PlanetLab.Api;
 using PlanetLab.Requests;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
+using YtCrawler.Log;
 using YtCrawler.Status;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -39,6 +40,8 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public sealed partial class ControlSites : ControlRequest
 	{
+		private static readonly string logSource = "PlanetLab";
+
 		// Private variables.
 
 		private Crawler crawler = null;
@@ -121,11 +124,37 @@ namespace YtAnalytics.Controls.PlanetLab
 
 				// Update the list of sites.
 				this.OnUpdateSites();
+
+				// Log
+				this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					ControlSites.logSource,
+					"Refreshing the list of PlanetLab sites completed successfully.");
 			}
 			else
 			{
 				// Update the status.
 				this.status.Send("Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
+				if (null == response.Fault)
+				{
+					// Log
+					this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSites.logSource,
+						"Refreshing the list of PlanetLab sites failed.");
+				}
+				else
+				{
+					// Log
+					this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSites.logSource,
+						"Refreshing the list of PlanetLab sites failed with code {0} ({1}).",
+						new object[] { response.Fault.FaultCode, response.Fault.FaultString });
+				}
 			}
 		}
 
@@ -138,7 +167,13 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonCancel.Enabled = false;
 			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab slices was canceled.", Resources.GlobeCanceled_16);
+			this.status.Send("Refreshing the list of PlanetLab sites was canceled.", Resources.GlobeCanceled_16);
+			// Log
+			this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Canceled,
+				ControlSites.logSource,
+				"Refreshing the list of PlanetLab sites was canceled.");
 		}
 
 		/// <summary>
@@ -150,6 +185,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
+			// Log
+			this.crawler.Log.Add(
+				LogEventLevel.Important,
+				LogEventType.Error,
+				ControlSites.logSource,
+				"Refreshing the list of PlanetLab sites failed. {1}",
+				new object[] { exception.Message },
+				exception);
 		}
 
 		/// <summary>
@@ -179,6 +222,12 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
+			// Log
+			this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlSites.logSource,
+				"Refreshing the list of PlanetLab sites.");
 
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
