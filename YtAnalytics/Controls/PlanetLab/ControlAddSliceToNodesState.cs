@@ -40,12 +40,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			"NodeUnknown", "NodeBoot", "NodeSafeBoot", "NodeDisabled", "NodeReinstall"
 		};
 
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodes);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodes);
 		private PlList<PlNode> nodes = null;
 		private string filterHostname = string.Empty;
-		private HashSet<int> selected = new HashSet<int>();
+		private readonly HashSet<int> selected = new HashSet<int>();
 
-		private FormObjectProperties<ControlNodeProperties> formProperties = new FormObjectProperties<ControlNodeProperties>();
+		private readonly FormObjectProperties<ControlNodeProperties> formProperties = new FormObjectProperties<ControlNodeProperties>();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -284,8 +284,6 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Update the filter.
 			this.filterHostname = this.textBoxFilter.Text.Trim();
-			// The number of displayed sites.
-			int count = 0;
 
 			// Lock the list.
 			this.nodes.Lock();
@@ -310,9 +308,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					// If the filter for the node state is checked.
 					if (this.stateFilter[(int)state].State == CheckState.Checked)
 					{
-						// Increment the number of displayed nodes.
-						count++;
-
 						// Create the list view item.
 						ListViewItem item = new ListViewItem(new string[] {
 								node.Id.HasValue ? node.Id.Value.ToString() : string.Empty,
@@ -337,7 +332,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.nodes.Unlock();
 			}
 			// Update the status.
-			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(count, this.nodes.Count, this.selected.Count, this.selected.Count == 1 ? string.Empty : "s");
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listView.Items.Count, this.nodes.Count, this.selected.Count, this.selected.Count == 1 ? string.Empty : "s");
 		}
 
 		/// <summary>

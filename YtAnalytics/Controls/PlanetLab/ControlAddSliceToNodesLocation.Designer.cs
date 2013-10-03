@@ -44,13 +44,13 @@
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.listViewSites = new System.Windows.Forms.ListView();
-			this.columnSliceId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceLatitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceLongitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSiteId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSiteName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSiteUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSiteDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSiteLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSiteLatitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSiteLongitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.textBoxFilterSite = new System.Windows.Forms.TextBox();
 			this.labelFilterSite = new System.Windows.Forms.Label();
 			this.wizardPageNode = new DotNetApi.Windows.Controls.WizardPage();
@@ -66,6 +66,8 @@
 			this.textBoxFilterNode = new System.Windows.Forms.TextBox();
 			this.labelFilterNode = new System.Windows.Forms.Label();
 			this.labelSubtitle = new System.Windows.Forms.Label();
+			this.buttonClearAll = new System.Windows.Forms.Button();
+			this.buttonSelectAll = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.wizard.SuspendLayout();
 			this.wizardPageSite.SuspendLayout();
@@ -127,7 +129,7 @@
 			this.buttonNext.Name = "buttonNext";
 			this.buttonNext.Size = new System.Drawing.Size(75, 23);
 			this.buttonNext.TabIndex = 6;
-			this.buttonNext.Text = "&Next";
+			this.buttonNext.Text = "&Select";
 			this.buttonNext.UseVisualStyleBackColor = true;
 			// 
 			// buttonClose
@@ -191,7 +193,7 @@
 			this.wizard.Pages.AddRange(new DotNetApi.Windows.Controls.WizardPage[] {
             this.wizardPageSite,
             this.wizardPageNode});
-			this.wizard.SelectedIndex = 0;
+			this.wizard.SelectedIndex = 1;
 			this.wizard.Size = new System.Drawing.Size(800, 495);
 			this.wizard.StatusLabel = this.labelStatus;
 			this.wizard.TabIndex = 8;
@@ -253,13 +255,13 @@
 			// 
 			this.listViewSites.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listViewSites.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnSliceId,
-            this.columnSliceName,
-            this.columnSliceUrl,
-            this.columnSliceDateCreated,
-            this.columnSliceLastUpdated,
-            this.columnSliceLatitude,
-            this.columnSliceLongitude});
+            this.columnSiteId,
+            this.columnSiteName,
+            this.columnSiteUrl,
+            this.columnSiteDateCreated,
+            this.columnSiteLastUpdated,
+            this.columnSiteLatitude,
+            this.columnSiteLongitude});
 			this.listViewSites.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewSites.FullRowSelect = true;
 			this.listViewSites.GridLines = true;
@@ -275,39 +277,39 @@
 			this.listViewSites.ItemActivate += new System.EventHandler(this.OnSiteProperties);
 			this.listViewSites.SelectedIndexChanged += new System.EventHandler(this.OnSiteSelectionChanged);
 			// 
-			// columnSliceId
+			// columnSiteId
 			// 
-			this.columnSliceId.Text = "ID";
+			this.columnSiteId.Text = "ID";
 			// 
-			// columnSliceName
+			// columnSiteName
 			// 
-			this.columnSliceName.Text = "Name";
-			this.columnSliceName.Width = 120;
+			this.columnSiteName.Text = "Name";
+			this.columnSiteName.Width = 120;
 			// 
-			// columnSliceUrl
+			// columnSiteUrl
 			// 
-			this.columnSliceUrl.Text = "URL";
-			this.columnSliceUrl.Width = 120;
+			this.columnSiteUrl.Text = "URL";
+			this.columnSiteUrl.Width = 120;
 			// 
-			// columnSliceDateCreated
+			// columnSiteDateCreated
 			// 
-			this.columnSliceDateCreated.Text = "Date created";
-			this.columnSliceDateCreated.Width = 120;
+			this.columnSiteDateCreated.Text = "Date created";
+			this.columnSiteDateCreated.Width = 120;
 			// 
-			// columnSliceLastUpdated
+			// columnSiteLastUpdated
 			// 
-			this.columnSliceLastUpdated.Text = "Last updated";
-			this.columnSliceLastUpdated.Width = 120;
+			this.columnSiteLastUpdated.Text = "Last updated";
+			this.columnSiteLastUpdated.Width = 120;
 			// 
-			// columnSliceLatitude
+			// columnSiteLatitude
 			// 
-			this.columnSliceLatitude.Text = "Latitude";
-			this.columnSliceLatitude.Width = 100;
+			this.columnSiteLatitude.Text = "Latitude";
+			this.columnSiteLatitude.Width = 100;
 			// 
-			// columnSliceLongitude
+			// columnSiteLongitude
 			// 
-			this.columnSliceLongitude.Text = "Longitude";
-			this.columnSliceLongitude.Width = 100;
+			this.columnSiteLongitude.Text = "Longitude";
+			this.columnSiteLongitude.Width = 100;
 			// 
 			// textBoxFilterSite
 			// 
@@ -331,6 +333,8 @@
 			// wizardPageNode
 			// 
 			this.wizardPageNode.BackEnabled = true;
+			this.wizardPageNode.Controls.Add(this.buttonClearAll);
+			this.wizardPageNode.Controls.Add(this.buttonSelectAll);
 			this.wizardPageNode.Controls.Add(this.listViewNodes);
 			this.wizardPageNode.Controls.Add(this.textBoxFilterNode);
 			this.wizardPageNode.Controls.Add(this.labelFilterNode);
@@ -350,6 +354,7 @@
 			this.listViewNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.listViewNodes.CheckBoxes = true;
 			this.listViewNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnNodeId,
             this.columnNodeHostname,
@@ -363,19 +368,20 @@
 			this.listViewNodes.GridLines = true;
 			this.listViewNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listViewNodes.HideSelection = false;
-			this.listViewNodes.Location = new System.Drawing.Point(6, 32);
+			this.listViewNodes.Location = new System.Drawing.Point(6, 61);
 			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(788, 463);
+			this.listViewNodes.Size = new System.Drawing.Size(788, 434);
 			this.listViewNodes.SmallImageList = this.imageList;
 			this.listViewNodes.TabIndex = 3;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
 			this.listViewNodes.View = System.Windows.Forms.View.Details;
 			this.listViewNodes.ItemActivate += new System.EventHandler(this.OnNodeProperties);
-			this.listViewNodes.SelectedIndexChanged += new System.EventHandler(this.OnNodeSelectionChanged);
+			this.listViewNodes.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.OnNodeChecked);
 			// 
 			// columnNodeId
 			// 
 			this.columnNodeId.Text = "ID";
+			this.columnNodeId.Width = 80;
 			// 
 			// columnNodeHostname
 			// 
@@ -435,9 +441,31 @@
 			this.labelSubtitle.ForeColor = System.Drawing.Color.Gray;
 			this.labelSubtitle.Location = new System.Drawing.Point(76, 48);
 			this.labelSubtitle.Name = "labelSubtitle";
-			this.labelSubtitle.Size = new System.Drawing.Size(56, 13);
+			this.labelSubtitle.Size = new System.Drawing.Size(122, 13);
 			this.labelSubtitle.TabIndex = 9;
-			this.labelSubtitle.Text = "Select site";
+			this.labelSubtitle.Text = "Step 2 of 2: Select node";
+			// 
+			// buttonClearAll
+			// 
+			this.buttonClearAll.Enabled = false;
+			this.buttonClearAll.Location = new System.Drawing.Point(87, 32);
+			this.buttonClearAll.Name = "buttonClearAll";
+			this.buttonClearAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonClearAll.TabIndex = 7;
+			this.buttonClearAll.Text = "Cl&ear all";
+			this.buttonClearAll.UseVisualStyleBackColor = true;
+			this.buttonClearAll.Click += new System.EventHandler(this.OnClearAll);
+			// 
+			// buttonSelectAll
+			// 
+			this.buttonSelectAll.Enabled = false;
+			this.buttonSelectAll.Location = new System.Drawing.Point(6, 32);
+			this.buttonSelectAll.Name = "buttonSelectAll";
+			this.buttonSelectAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonSelectAll.TabIndex = 6;
+			this.buttonSelectAll.Text = "Select &all";
+			this.buttonSelectAll.UseVisualStyleBackColor = true;
+			this.buttonSelectAll.Click += new System.EventHandler(this.OnSelectAll);
 			// 
 			// ControlAddSliceToNodesLocation
 			// 
@@ -500,13 +528,13 @@
 		private System.Windows.Forms.SplitContainer splitContainer;
 		private DotNetApi.Windows.Controls.MapControl mapControl;
 		private System.Windows.Forms.ListView listViewSites;
-		private System.Windows.Forms.ColumnHeader columnSliceId;
-		private System.Windows.Forms.ColumnHeader columnSliceName;
-		private System.Windows.Forms.ColumnHeader columnSliceUrl;
-		private System.Windows.Forms.ColumnHeader columnSliceDateCreated;
-		private System.Windows.Forms.ColumnHeader columnSliceLastUpdated;
-		private System.Windows.Forms.ColumnHeader columnSliceLatitude;
-		private System.Windows.Forms.ColumnHeader columnSliceLongitude;
+		private System.Windows.Forms.ColumnHeader columnSiteId;
+		private System.Windows.Forms.ColumnHeader columnSiteName;
+		private System.Windows.Forms.ColumnHeader columnSiteUrl;
+		private System.Windows.Forms.ColumnHeader columnSiteDateCreated;
+		private System.Windows.Forms.ColumnHeader columnSiteLastUpdated;
+		private System.Windows.Forms.ColumnHeader columnSiteLatitude;
+		private System.Windows.Forms.ColumnHeader columnSiteLongitude;
 		private System.Windows.Forms.TextBox textBoxFilterSite;
 		private System.Windows.Forms.Label labelFilterSite;
 		private System.Windows.Forms.Label labelFilterNode;
@@ -520,5 +548,7 @@
 		private System.Windows.Forms.ColumnHeader columnNodeBootState;
 		private System.Windows.Forms.TextBox textBoxFilterNode;
 		private System.Windows.Forms.ColumnHeader columnNodeType;
+		private System.Windows.Forms.Button buttonClearAll;
+		private System.Windows.Forms.Button buttonSelectAll;
 	}
 }

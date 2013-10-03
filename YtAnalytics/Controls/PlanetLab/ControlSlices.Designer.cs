@@ -53,9 +53,9 @@
 			this.itemSelectNodesLocation = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemSelectNodesState = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemSelectNodesSlice = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttonRemoveFromNodes = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
-			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -255,7 +255,6 @@
             this.itemSelectNodesState,
             this.itemSelectNodesSlice});
 			this.contextMenuAddToNodes.Name = "contextMenuAddToNodes";
-			this.contextMenuAddToNodes.OwnerItem = this.menuItemAddToNodes;
 			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 92);
 			// 
 			// itemSelectNodesLocation
@@ -274,11 +273,18 @@
 			// 
 			// itemSelectNodesSlice
 			// 
-			this.itemSelectNodesSlice.Enabled = false;
 			this.itemSelectNodesSlice.Name = "itemSelectNodesSlice";
 			this.itemSelectNodesSlice.Size = new System.Drawing.Size(202, 22);
 			this.itemSelectNodesSlice.Text = "Select nodes by slice";
 			this.itemSelectNodesSlice.Click += new System.EventHandler(this.OnAddToNodesSlice);
+			// 
+			// menuItemAddToNodes
+			// 
+			this.menuItemAddToNodes.DropDown = this.contextMenuAddToNodes;
+			this.menuItemAddToNodes.Image = global::YtAnalytics.Resources.NodeAdd_16;
+			this.menuItemAddToNodes.Name = "menuItemAddToNodes";
+			this.menuItemAddToNodes.Size = new System.Drawing.Size(181, 22);
+			this.menuItemAddToNodes.Text = "&Add to nodes";
 			// 
 			// buttonRemoveFromNodes
 			// 
@@ -297,14 +303,6 @@
 			this.controlLog.Name = "controlLog";
 			this.controlLog.Size = new System.Drawing.Size(798, 169);
 			this.controlLog.TabIndex = 0;
-			// 
-			// menuItemAddToNodes
-			// 
-			this.menuItemAddToNodes.DropDown = this.contextMenuAddToNodes;
-			this.menuItemAddToNodes.Image = global::YtAnalytics.Resources.NodeAdd_16;
-			this.menuItemAddToNodes.Name = "menuItemAddToNodes";
-			this.menuItemAddToNodes.Size = new System.Drawing.Size(181, 22);
-			this.menuItemAddToNodes.Text = "&Add to nodes";
 			// 
 			// legendItemSuccess
 			// 

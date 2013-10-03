@@ -545,10 +545,15 @@
     <Compile Include="Events\CommentEventArgs.cs" />
     <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
     <Compile Include="Events\PasswordChangedEventArgs.cs" />
-    <Compile Include="Events\PlanetLabObjectEventArgs.cs" />
     <Compile Include="Events\ProfileEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesSlice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesSlice.Designer.cs">
+      <DependentUpon>FormAddSliceToNodesSlice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormAddSliceToNodesState.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -967,6 +972,9 @@
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderStandardFeeds.resx">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesSlice.resx">
+      <DependentUpon>FormAddSliceToNodesSlice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesState.resx">
       <DependentUpon>FormAddSliceToNodesState.cs</DependentUpon>

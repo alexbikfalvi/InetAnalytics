@@ -157,6 +157,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private FormAddSlice formAddSlice = new FormAddSlice();
 		private FormAddSliceToNodesLocation formAddSliceToNodesLocation = new FormAddSliceToNodesLocation();
 		private FormAddSliceToNodesState formAddSliceToNodesState = new FormAddSliceToNodesState();
+		private FormAddSliceToNodesSlice formAddSliceToNodesSlice = new FormAddSliceToNodesSlice();
 		private FormRemoveSliceFromNodes formRemoveSliceFromNodes = new FormRemoveSliceFromNodes();
 
 		private RequestState requestStateGetSlices;
@@ -251,6 +252,36 @@ namespace YtAnalytics.Controls.PlanetLab
 		// Private methods.
 
 		/// <summary>
+		/// An event handler called when a slice has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSliceChanged(object sender, PlEventArgs e)
+		{
+			// Get the slice.
+			PlSlice slice = e.Object as PlSlice;
+			// Find the list view item corresponding to the slice.
+			ListViewItem item = this.listViewSlices.Items.FirstOrDefault((ListViewItem it) =>
+			{
+				// Get the slice info.
+				SliceInfo info = (SliceInfo)it.Tag;
+				// Return true if the item corresponds to the same slice.
+				return object.ReferenceEquals(slice, info.Slice);
+			});
+			// If the item is not null.
+			if (null != item)
+			{
+				// Update the item.
+				item.SubItems[0].Text = slice.Id.HasValue ? slice.Id.Value.ToString() : string.Empty;
+				item.SubItems[1].Text = slice.Name;
+				item.SubItems[2].Text = slice.Created.ToString();
+				item.SubItems[3].Text = slice.Expires.ToString();
+				item.SubItems[4].Text = slice.NodeIds != null ? slice.NodeIds.Length.ToString() : "0";
+				item.SubItems[5].Text = slice.MaxNodes.ToString();
+			}
+		}
+
+		/// <summary>
 		/// Clears the current list of slices.
 		/// </summary>
 		private void OnClearSlices()
@@ -260,6 +291,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Get the slice info.
 				SliceInfo info = (SliceInfo) item.Tag;
+				// Remove the slice changed event handler.
+				info.Slice.Changed -= this.OnSliceChanged;
 				// Remove the tree node.
 				this.treeNode.Nodes.Remove(info.Node);
 				// Remove the control.
@@ -299,6 +332,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Add the item to the list view.
 			this.listViewSlices.Items.Add(item);
+
+			// Add the slice changed event handler.
+			slice.Changed += this.OnSliceChanged;
 		}
 
 		/// <summary>
@@ -573,6 +609,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Remove the slice.
 				this.crawler.Config.PlanetLab.LocalSlices.Remove(info.Slice);
+				// Remove the slice changed event handler.
+				info.Slice.Changed -= this.OnSliceChanged;
 				// Remove the list view item.
 				this.listViewSlices.Items.Remove(item);
 				// Remove the tree node.
@@ -647,9 +685,26 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnAddToNodesSlice(object sender, EventArgs e)
 		{
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
+			// If there is no selected slice, do nothing.
+			if (this.listViewSlices.SelectedItems.Count == 0) return;
+
+			// Get the slice.
+			SliceInfo info = (SliceInfo)this.listViewSlices.SelectedItems[0].Tag;
+
+			// Show the add slice to nodes by state dialog.
+			if (this.formAddSliceToNodesSlice.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			{
+				// Add the slice to nodes.
+				this.OnAddSliceToNodes(info.Slice, this.formAddSliceToNodesSlice.Result);
+			}
 		}
-
 
 		/// <summary>
 		/// An event handler called when adding a slice to PlanetLab nodes.
@@ -922,25 +977,6 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Update the slice.
 					slice.Parse(slices.Values[0].Value as XmlRpcStruct);
-					// Find the list view item corresponding to the slice.
-					ListViewItem item = this.listViewSlices.Items.FirstOrDefault((ListViewItem it) =>
-						{
-							// Get the slice info.
-							SliceInfo info = (SliceInfo)it.Tag;
-							// Return true if the item corresponds to the same slice.
-							return object.ReferenceEquals(slice, info.Slice);
-						});
-					// If the item is not null.
-					if (null != item)
-					{
-						// Update the item.
-						item.SubItems[0].Text = slice.Id.HasValue ? slice.Id.Value.ToString() : string.Empty;
-						item.SubItems[1].Text = slice.Name;
-						item.SubItems[2].Text = slice.Created.ToString();
-						item.SubItems[3].Text = slice.Expires.ToString();
-						item.SubItems[4].Text = slice.NodeIds != null ? slice.NodeIds.Length.ToString() : "0";
-						item.SubItems[5].Text = slice.MaxNodes.ToString();
-					}
 				}
 			}
 		}

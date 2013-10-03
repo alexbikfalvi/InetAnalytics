@@ -1,6 +1,6 @@
 ﻿namespace YtAnalytics.Controls.PlanetLab
 {
-	partial class ControlAddSliceToNodesLocation
+	partial class ControlAddSliceToNodesSlice
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAddSliceToNodesLocation));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAddSliceToNodesSlice));
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelStatus = new System.Windows.Forms.Label();
@@ -40,20 +40,21 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.buttonBack = new System.Windows.Forms.Button();
 			this.wizard = new DotNetApi.Windows.Controls.WizardControl();
-			this.wizardPageSite = new DotNetApi.Windows.Controls.WizardPage();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
-			this.listViewSites = new System.Windows.Forms.ListView();
+			this.wizardPageSlice = new DotNetApi.Windows.Controls.WizardPage();
+			this.listViewSlices = new System.Windows.Forms.ListView();
 			this.columnSliceId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSliceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSliceDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSliceUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSliceDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceLatitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnSliceLongitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.textBoxFilterSite = new System.Windows.Forms.TextBox();
-			this.labelFilterSite = new System.Windows.Forms.Label();
+			this.columnSliceExpires = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSliceNodes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSliceMaximum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.textBoxFilterSlice = new System.Windows.Forms.TextBox();
+			this.labelFilterSlice = new System.Windows.Forms.Label();
 			this.wizardPageNode = new DotNetApi.Windows.Controls.WizardPage();
+			this.buttonClearAll = new System.Windows.Forms.Button();
+			this.buttonSelectAll = new System.Windows.Forms.Button();
 			this.listViewNodes = new System.Windows.Forms.ListView();
 			this.columnNodeId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnNodeHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -68,11 +69,7 @@
 			this.labelSubtitle = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.wizard.SuspendLayout();
-			this.wizardPageSite.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
-			this.splitContainer.Panel1.SuspendLayout();
-			this.splitContainer.Panel2.SuspendLayout();
-			this.splitContainer.SuspendLayout();
+			this.wizardPageSlice.SuspendLayout();
 			this.wizardPageNode.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -127,7 +124,7 @@
 			this.buttonNext.Name = "buttonNext";
 			this.buttonNext.Size = new System.Drawing.Size(75, 23);
 			this.buttonNext.TabIndex = 6;
-			this.buttonNext.Text = "&Next";
+			this.buttonNext.Text = "&Select";
 			this.buttonNext.UseVisualStyleBackColor = true;
 			// 
 			// buttonClose
@@ -158,7 +155,7 @@
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Site");
+			this.imageList.Images.SetKeyName(0, "Slice");
 			this.imageList.Images.SetKeyName(1, "NodeBoot");
 			this.imageList.Images.SetKeyName(2, "NodeDisabled");
 			this.imageList.Images.SetKeyName(3, "NodeSafeBoot");
@@ -182,16 +179,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.wizard.BackButton = this.buttonBack;
-			this.wizard.Controls.Add(this.wizardPageSite);
+			this.wizard.Controls.Add(this.wizardPageSlice);
 			this.wizard.Controls.Add(this.wizardPageNode);
 			this.wizard.Location = new System.Drawing.Point(0, 73);
 			this.wizard.Name = "wizard";
 			this.wizard.NextButton = this.buttonNext;
 			this.wizard.Padding = new System.Windows.Forms.Padding(3);
 			this.wizard.Pages.AddRange(new DotNetApi.Windows.Controls.WizardPage[] {
-            this.wizardPageSite,
+            this.wizardPageSlice,
             this.wizardPageNode});
-			this.wizard.SelectedIndex = 0;
+			this.wizard.SelectedIndex = 1;
 			this.wizard.Size = new System.Drawing.Size(800, 495);
 			this.wizard.StatusLabel = this.labelStatus;
 			this.wizard.TabIndex = 8;
@@ -199,81 +196,48 @@
 			this.wizard.PageChanged += new System.EventHandler(this.OnWizardPageChanged);
 			this.wizard.Finished += new System.EventHandler(this.OnWizardFinished);
 			// 
-			// wizardPageSite
+			// wizardPageSlice
 			// 
-			this.wizardPageSite.BackEnabled = true;
-			this.wizardPageSite.Controls.Add(this.splitContainer);
-			this.wizardPageSite.Controls.Add(this.textBoxFilterSite);
-			this.wizardPageSite.Controls.Add(this.labelFilterSite);
-			this.wizardPageSite.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.wizardPageSite.Location = new System.Drawing.Point(0, 0);
-			this.wizardPageSite.Name = "wizardPageSite";
-			this.wizardPageSite.Padding = new System.Windows.Forms.Padding(3);
-			this.wizardPageSite.Size = new System.Drawing.Size(800, 495);
-			this.wizardPageSite.Status = "Ready.";
-			this.wizardPageSite.TabIndex = 0;
-			this.wizardPageSite.Title = "Select site";
-			this.wizardPageSite.Visible = false;
+			this.wizardPageSlice.BackEnabled = true;
+			this.wizardPageSlice.Controls.Add(this.listViewSlices);
+			this.wizardPageSlice.Controls.Add(this.textBoxFilterSlice);
+			this.wizardPageSlice.Controls.Add(this.labelFilterSlice);
+			this.wizardPageSlice.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.wizardPageSlice.Location = new System.Drawing.Point(0, 0);
+			this.wizardPageSlice.Name = "wizardPageSlice";
+			this.wizardPageSlice.Padding = new System.Windows.Forms.Padding(3);
+			this.wizardPageSlice.Size = new System.Drawing.Size(800, 495);
+			this.wizardPageSlice.Status = "Ready.";
+			this.wizardPageSlice.TabIndex = 0;
+			this.wizardPageSlice.Title = "Select slice";
+			this.wizardPageSlice.Visible = false;
 			// 
-			// splitContainer
+			// listViewSlices
 			// 
-			this.splitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.listViewSlices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.splitContainer.Location = new System.Drawing.Point(6, 32);
-			this.splitContainer.Name = "splitContainer";
-			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer.Panel1
-			// 
-			this.splitContainer.Panel1.Controls.Add(this.mapControl);
-			this.splitContainer.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			// 
-			// splitContainer.Panel2
-			// 
-			this.splitContainer.Panel2.Controls.Add(this.listViewSites);
-			this.splitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.splitContainer.Size = new System.Drawing.Size(788, 463);
-			this.splitContainer.SplitterDistance = 317;
-			this.splitContainer.TabIndex = 10;
-			// 
-			// mapControl
-			// 
-			this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.mapControl.Location = new System.Drawing.Point(0, 0);
-			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
-			this.mapControl.Name = "mapControl";
-			this.mapControl.Size = new System.Drawing.Size(786, 315);
-			this.mapControl.TabIndex = 0;
-			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
-			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
-			// 
-			// listViewSites
-			// 
-			this.listViewSites.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.listViewSites.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.listViewSlices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnSliceId,
             this.columnSliceName,
+            this.columnSliceDescription,
             this.columnSliceUrl,
             this.columnSliceDateCreated,
-            this.columnSliceLastUpdated,
-            this.columnSliceLatitude,
-            this.columnSliceLongitude});
-			this.listViewSites.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listViewSites.FullRowSelect = true;
-			this.listViewSites.GridLines = true;
-			this.listViewSites.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.listViewSites.HideSelection = false;
-			this.listViewSites.Location = new System.Drawing.Point(0, 0);
-			this.listViewSites.Name = "listViewSites";
-			this.listViewSites.Size = new System.Drawing.Size(786, 140);
-			this.listViewSites.SmallImageList = this.imageList;
-			this.listViewSites.TabIndex = 0;
-			this.listViewSites.UseCompatibleStateImageBehavior = false;
-			this.listViewSites.View = System.Windows.Forms.View.Details;
-			this.listViewSites.ItemActivate += new System.EventHandler(this.OnSiteProperties);
-			this.listViewSites.SelectedIndexChanged += new System.EventHandler(this.OnSiteSelectionChanged);
+            this.columnSliceExpires,
+            this.columnSliceNodes,
+            this.columnSliceMaximum});
+			this.listViewSlices.FullRowSelect = true;
+			this.listViewSlices.GridLines = true;
+			this.listViewSlices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewSlices.HideSelection = false;
+			this.listViewSlices.Location = new System.Drawing.Point(6, 32);
+			this.listViewSlices.Name = "listViewSlices";
+			this.listViewSlices.Size = new System.Drawing.Size(788, 463);
+			this.listViewSlices.SmallImageList = this.imageList;
+			this.listViewSlices.TabIndex = 3;
+			this.listViewSlices.UseCompatibleStateImageBehavior = false;
+			this.listViewSlices.View = System.Windows.Forms.View.Details;
+			this.listViewSlices.SelectedIndexChanged += new System.EventHandler(this.OnSliceSelectionChanged);
 			// 
 			// columnSliceId
 			// 
@@ -283,6 +247,11 @@
 			// 
 			this.columnSliceName.Text = "Name";
 			this.columnSliceName.Width = 120;
+			// 
+			// columnSliceDescription
+			// 
+			this.columnSliceDescription.Text = "Description";
+			this.columnSliceDescription.Width = 120;
 			// 
 			// columnSliceUrl
 			// 
@@ -294,43 +263,43 @@
 			this.columnSliceDateCreated.Text = "Date created";
 			this.columnSliceDateCreated.Width = 120;
 			// 
-			// columnSliceLastUpdated
+			// columnSliceExpires
 			// 
-			this.columnSliceLastUpdated.Text = "Last updated";
-			this.columnSliceLastUpdated.Width = 120;
+			this.columnSliceExpires.Text = "Expires";
+			this.columnSliceExpires.Width = 120;
 			// 
-			// columnSliceLatitude
+			// columnSliceNodes
 			// 
-			this.columnSliceLatitude.Text = "Latitude";
-			this.columnSliceLatitude.Width = 100;
+			this.columnSliceNodes.Text = "Nodes";
 			// 
-			// columnSliceLongitude
+			// columnSliceMaximum
 			// 
-			this.columnSliceLongitude.Text = "Longitude";
-			this.columnSliceLongitude.Width = 100;
+			this.columnSliceMaximum.Text = "Maximum";
 			// 
-			// textBoxFilterSite
+			// textBoxFilterSlice
 			// 
-			this.textBoxFilterSite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.textBoxFilterSlice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxFilterSite.Location = new System.Drawing.Point(99, 6);
-			this.textBoxFilterSite.Name = "textBoxFilterSite";
-			this.textBoxFilterSite.Size = new System.Drawing.Size(695, 20);
-			this.textBoxFilterSite.TabIndex = 2;
-			this.textBoxFilterSite.TextChanged += new System.EventHandler(this.OnSiteFilterTextChanged);
+			this.textBoxFilterSlice.Location = new System.Drawing.Point(99, 6);
+			this.textBoxFilterSlice.Name = "textBoxFilterSlice";
+			this.textBoxFilterSlice.Size = new System.Drawing.Size(695, 20);
+			this.textBoxFilterSlice.TabIndex = 2;
+			this.textBoxFilterSlice.TextChanged += new System.EventHandler(this.OnSliceFilterTextChanged);
 			// 
-			// labelFilterSite
+			// labelFilterSlice
 			// 
-			this.labelFilterSite.AutoSize = true;
-			this.labelFilterSite.Location = new System.Drawing.Point(6, 9);
-			this.labelFilterSite.Name = "labelFilterSite";
-			this.labelFilterSite.Size = new System.Drawing.Size(87, 13);
-			this.labelFilterSite.TabIndex = 1;
-			this.labelFilterSite.Text = "&Search by name:";
+			this.labelFilterSlice.AutoSize = true;
+			this.labelFilterSlice.Location = new System.Drawing.Point(6, 9);
+			this.labelFilterSlice.Name = "labelFilterSlice";
+			this.labelFilterSlice.Size = new System.Drawing.Size(87, 13);
+			this.labelFilterSlice.TabIndex = 1;
+			this.labelFilterSlice.Text = "&Search by name:";
 			// 
 			// wizardPageNode
 			// 
 			this.wizardPageNode.BackEnabled = true;
+			this.wizardPageNode.Controls.Add(this.buttonClearAll);
+			this.wizardPageNode.Controls.Add(this.buttonSelectAll);
 			this.wizardPageNode.Controls.Add(this.listViewNodes);
 			this.wizardPageNode.Controls.Add(this.textBoxFilterNode);
 			this.wizardPageNode.Controls.Add(this.labelFilterNode);
@@ -345,11 +314,34 @@
 			this.wizardPageNode.Title = "Select node";
 			this.wizardPageNode.Visible = false;
 			// 
+			// buttonClearAll
+			// 
+			this.buttonClearAll.Enabled = false;
+			this.buttonClearAll.Location = new System.Drawing.Point(87, 32);
+			this.buttonClearAll.Name = "buttonClearAll";
+			this.buttonClearAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonClearAll.TabIndex = 5;
+			this.buttonClearAll.Text = "Cl&ear all";
+			this.buttonClearAll.UseVisualStyleBackColor = true;
+			this.buttonClearAll.Click += new System.EventHandler(this.OnClearAll);
+			// 
+			// buttonSelectAll
+			// 
+			this.buttonSelectAll.Enabled = false;
+			this.buttonSelectAll.Location = new System.Drawing.Point(6, 32);
+			this.buttonSelectAll.Name = "buttonSelectAll";
+			this.buttonSelectAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonSelectAll.TabIndex = 4;
+			this.buttonSelectAll.Text = "Select &all";
+			this.buttonSelectAll.UseVisualStyleBackColor = true;
+			this.buttonSelectAll.Click += new System.EventHandler(this.OnSelectAll);
+			// 
 			// listViewNodes
 			// 
 			this.listViewNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.listViewNodes.CheckBoxes = true;
 			this.listViewNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnNodeId,
             this.columnNodeHostname,
@@ -363,19 +355,20 @@
 			this.listViewNodes.GridLines = true;
 			this.listViewNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listViewNodes.HideSelection = false;
-			this.listViewNodes.Location = new System.Drawing.Point(6, 32);
+			this.listViewNodes.Location = new System.Drawing.Point(6, 61);
 			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(788, 463);
+			this.listViewNodes.Size = new System.Drawing.Size(788, 434);
 			this.listViewNodes.SmallImageList = this.imageList;
 			this.listViewNodes.TabIndex = 3;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
 			this.listViewNodes.View = System.Windows.Forms.View.Details;
 			this.listViewNodes.ItemActivate += new System.EventHandler(this.OnNodeProperties);
-			this.listViewNodes.SelectedIndexChanged += new System.EventHandler(this.OnNodeSelectionChanged);
+			this.listViewNodes.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.OnNodeChecked);
 			// 
 			// columnNodeId
 			// 
 			this.columnNodeId.Text = "ID";
+			this.columnNodeId.Width = 80;
 			// 
 			// columnNodeHostname
 			// 
@@ -435,11 +428,11 @@
 			this.labelSubtitle.ForeColor = System.Drawing.Color.Gray;
 			this.labelSubtitle.Location = new System.Drawing.Point(76, 48);
 			this.labelSubtitle.Name = "labelSubtitle";
-			this.labelSubtitle.Size = new System.Drawing.Size(56, 13);
+			this.labelSubtitle.Size = new System.Drawing.Size(64, 13);
 			this.labelSubtitle.TabIndex = 9;
-			this.labelSubtitle.Text = "Select site";
+			this.labelSubtitle.Text = "Select node";
 			// 
-			// ControlAddSliceToNodesLocation
+			// ControlAddSliceToNodesSlice
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -455,7 +448,7 @@
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(0, 230);
-			this.Name = "ControlAddSliceToNodesLocation";
+			this.Name = "ControlAddSliceToNodesSlice";
 			this.Size = new System.Drawing.Size(800, 600);
 			this.Controls.SetChildIndex(this.pictureBox, 0);
 			this.Controls.SetChildIndex(this.labelTitle, 0);
@@ -469,12 +462,8 @@
 			this.Controls.SetChildIndex(this.labelSubtitle, 0);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.wizard.ResumeLayout(false);
-			this.wizardPageSite.ResumeLayout(false);
-			this.wizardPageSite.PerformLayout();
-			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
-			this.splitContainer.ResumeLayout(false);
+			this.wizardPageSlice.ResumeLayout(false);
+			this.wizardPageSlice.PerformLayout();
 			this.wizardPageNode.ResumeLayout(false);
 			this.wizardPageNode.PerformLayout();
 			this.ResumeLayout(false);
@@ -494,21 +483,11 @@
 		private System.Windows.Forms.Button buttonBack;
 		private System.Windows.Forms.ImageList imageList;
 		private DotNetApi.Windows.Controls.WizardControl wizard;
-		private DotNetApi.Windows.Controls.WizardPage wizardPageSite;
+		private DotNetApi.Windows.Controls.WizardPage wizardPageSlice;
 		private DotNetApi.Windows.Controls.WizardPage wizardPageNode;
 		private System.Windows.Forms.Label labelSubtitle;
-		private System.Windows.Forms.SplitContainer splitContainer;
-		private DotNetApi.Windows.Controls.MapControl mapControl;
-		private System.Windows.Forms.ListView listViewSites;
-		private System.Windows.Forms.ColumnHeader columnSliceId;
-		private System.Windows.Forms.ColumnHeader columnSliceName;
-		private System.Windows.Forms.ColumnHeader columnSliceUrl;
-		private System.Windows.Forms.ColumnHeader columnSliceDateCreated;
-		private System.Windows.Forms.ColumnHeader columnSliceLastUpdated;
-		private System.Windows.Forms.ColumnHeader columnSliceLatitude;
-		private System.Windows.Forms.ColumnHeader columnSliceLongitude;
-		private System.Windows.Forms.TextBox textBoxFilterSite;
-		private System.Windows.Forms.Label labelFilterSite;
+		private System.Windows.Forms.TextBox textBoxFilterSlice;
+		private System.Windows.Forms.Label labelFilterSlice;
 		private System.Windows.Forms.Label labelFilterNode;
 		private System.Windows.Forms.ListView listViewNodes;
 		private System.Windows.Forms.ColumnHeader columnNodeId;
@@ -520,5 +499,16 @@
 		private System.Windows.Forms.ColumnHeader columnNodeBootState;
 		private System.Windows.Forms.TextBox textBoxFilterNode;
 		private System.Windows.Forms.ColumnHeader columnNodeType;
+		private System.Windows.Forms.ListView listViewSlices;
+		private System.Windows.Forms.ColumnHeader columnSliceId;
+		private System.Windows.Forms.ColumnHeader columnSliceName;
+		private System.Windows.Forms.ColumnHeader columnSliceUrl;
+		private System.Windows.Forms.ColumnHeader columnSliceDateCreated;
+		private System.Windows.Forms.ColumnHeader columnSliceExpires;
+		private System.Windows.Forms.ColumnHeader columnSliceNodes;
+		private System.Windows.Forms.ColumnHeader columnSliceMaximum;
+		private System.Windows.Forms.ColumnHeader columnSliceDescription;
+		private System.Windows.Forms.Button buttonClearAll;
+		private System.Windows.Forms.Button buttonSelectAll;
 	}
 }

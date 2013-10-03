@@ -47,7 +47,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		
 		private PlList<PlSite> sites = null;
 		private readonly PlList<PlNode> nodes = new PlList<PlNode>();
-		
+
+		private readonly HashSet<int> selectedNodes = new HashSet<int>();
+
 		private string filterSite = string.Empty;
 		private string filterNode = string.Empty;
 
@@ -112,6 +114,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Reset the filters.
 			this.textBoxFilterSite.Clear();
 			this.textBoxFilterNode.Clear();
+			// Clear the lists.
+			this.nodes.Clear();
+			this.selectedNodes.Clear();
 			// Reset the wizard.
 			this.wizard.SelectedIndex = 0;
 			this.wizardPageSite.NextEnabled = false;
@@ -208,6 +213,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Clear the lists.
 			this.sites.Clear();
 			this.nodes.Clear();
+			this.selectedNodes.Clear();
+			// Disable the selection buttons.
+			this.buttonSelectAll.Enabled = false;
+			this.buttonClearAll.Enabled = false;
 			// Update the status.
 			this.wizardPageSite.Status = "Refreshing the PlanetLab sites...";
 
@@ -237,6 +246,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.textBoxFilterNode.Clear();
 			// Clear the lists.
 			this.nodes.Clear();
+			this.selectedNodes.Clear();
+			// Disable the selection buttons.
+			this.buttonSelectAll.Enabled = false;
+			this.buttonClearAll.Enabled = false;
 			// Update the status.
 			this.wizardPageNode.Status = "Refreshing the PlanetLab nodes...";
 
@@ -353,17 +366,70 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Reset the nodes controls.
 			this.listViewNodes.Items.Clear();
 			this.textBoxFilterNode.Clear();
+			// Clear the lists.
+			this.nodes.Clear();
+			this.selectedNodes.Clear();
 		}
 
 		/// <summary>
-		/// An event handler called when the node selection has changed.
+		/// An event handler called when the user selects all items.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnNodeSelectionChanged(object sender, EventArgs e)
+		private void OnSelectAll(object sender, EventArgs e)
 		{
-			// Update the next button.
-			this.wizardPageNode.NextEnabled = this.listViewNodes.SelectedItems.Count > 0;
+			// Change the items selection state.
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				item.Checked = true;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user clears all items.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnClearAll(object sender, EventArgs e)
+		{
+			// Change the items selection state.
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				item.Checked = false;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a node has been checked.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeChecked(object sender, ItemCheckedEventArgs e)
+		{
+			// Get the selected node.
+			PlNode node = e.Item.Tag as PlNode;
+			// If the node does not have an ID, do nothing.
+			if (!node.Id.HasValue) return;
+			// If the node has been checked.
+			if (e.Item.Checked)
+			{
+				// Add the node ID to the selected nodes.
+				this.selectedNodes.Add(node.Id.Value);
+			}
+			else
+			{
+				// Else, remove the node ID from the selected nodes.
+				this.selectedNodes.Remove(node.Id.Value);
+			}
+			// Compute the number of selected items.
+			int count = this.listViewNodes.CheckedItems.Count;
+			// Set the enabled state of the selection buttons.
+			this.buttonSelectAll.Enabled = count < this.listViewNodes.Items.Count;
+			this.buttonClearAll.Enabled = count > 0;
+			// Set the select button enabled state.
+			this.wizardPageNode.NextEnabled = this.selectedNodes.Count > 0;
+			// Update the status.
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listViewNodes.Items.Count, this.nodes.Count, this.selectedNodes.Count, this.selectedNodes.Count == 1 ? string.Empty : "s");
 		}
 
 		/// <summary>
@@ -458,8 +524,6 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Update the filter.
 			this.filterSite = this.textBoxFilterSite.Text.Trim();
-			// The number of displayed sites.
-			int count = 0;
 
 			// Lock the list.
 			this.sites.Lock();
@@ -477,9 +541,6 @@ namespace YtAnalytics.Controls.PlanetLab
 							if (!site.Name.ToLower().Contains(this.filterSite.ToLower())) continue;
 						}
 					}
-
-					// Increment the number of displayed sites.
-					count++;
 
 					// Create a new geo marker for this site.
 					MapMarker marker = null;
@@ -518,7 +579,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.sites.Unlock();
 			}
 			// Update the status.
-			this.wizardPageSite.Status = "Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.sites.Count);
+			this.wizardPageSite.Status = "Showing {0} of {1} PlanetLab sites.".FormatWith(this.listViewNodes.Items.Count, this.sites.Count);
 		}
 
 		/// <summary>
@@ -533,8 +594,6 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Update the filter.
 			this.filterNode = this.textBoxFilterNode.Text.Trim();
-			// The number of displayed sites.
-			int count = 0;
 
 			// Lock the list.
 			this.nodes.Lock();
@@ -553,9 +612,6 @@ namespace YtAnalytics.Controls.PlanetLab
 						}
 					}
 
-					// Increment the number of displayed nodes.
-					count++;
-
 					// Create the list view item.
 					ListViewItem item = new ListViewItem(new string[] {
 						node.NodeId.HasValue ? node.NodeId.Value.ToString() : string.Empty,
@@ -569,6 +625,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					});
 					item.Tag = node;
 					item.ImageKey = ControlAddSliceToNodesLocation.nodeImageKeys[(int)node.GetBootState()];
+					item.Checked = this.selectedNodes.Contains(node.Id ?? -1);
 					this.listViewNodes.Items.Add(item);
 				}
 			}
@@ -576,8 +633,13 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				this.nodes.Unlock();
 			}
+			// Get the number of checked items.
+			int count = this.listViewNodes.CheckedItems.Count;
+			// Set the enabled state of the selection buttons.
+			this.buttonSelectAll.Enabled = (this.listViewNodes.Items.Count > 0) && (count < this.listViewNodes.Items.Count);
+			this.buttonClearAll.Enabled = count > 0;
 			// Update the status.
-			this.wizardPageNode.Status = "Showing {0} of {1} PlanetLab nodes.".FormatWith(count, this.nodes.Count);
+			this.wizardPageNode.Status = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listViewNodes.Items.Count, this.nodes.Count, this.selectedNodes.Count, this.selectedNodes.Count == 1 ? string.Empty : "s");
 		}
 
 		/// <summary>
@@ -639,17 +701,13 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnWizardFinished(object sender, EventArgs e)
 		{
-			// If there is no selected node item, do nothing.
-			if (this.listViewNodes.SelectedItems.Count == 0) return;
-
-			// Get the node for this item.
-			PlNode node = this.listViewNodes.SelectedItems[0].Tag as PlNode;
-
-			// Create a new ID array for the selected node.
-			int[] result = new int[] { node.Id ?? -1 };
-
+			// If there are no selected nodes, do nothing.
+			if (this.selectedNodes.Count == 0) return;
+			// Else, get the list of node IDs.
+			int[] result = new int[this.selectedNodes.Count];
+			this.selectedNodes.CopyTo(result);
 			// Raise the event.
-			if (null != this.Selected) this.Selected(this, new ArrayEventArgs<int>(result));
+			if (this.Selected != null) this.Selected(this, new ArrayEventArgs<int>(result));
 		}
 	}
 }

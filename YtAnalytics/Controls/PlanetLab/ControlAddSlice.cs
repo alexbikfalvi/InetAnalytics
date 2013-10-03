@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using YtAnalytics.Events;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
+using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
 using DotNetApi;
@@ -61,7 +62,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event raised when a PlanetLab site was selected.
 		/// </summary>
-		public event PlanetLabObjectEventHandler<PlSlice> Selected;
+		public event PlEventHandler<PlSlice> Selected;
 		/// <summary>
 		/// An event raised when user closes the selection.
 		/// </summary>
@@ -202,7 +203,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Else, get the PlanetLab object.
 			PlSlice result = this.listView.SelectedItems[0].Tag as PlSlice;
 			// Raise the event.
-			if (this.Selected != null) this.Selected(this, new PlanetLabObjectEventArgs<PlSlice>(result));
+			if (this.Selected != null) this.Selected(this, new PlEventArgs<PlSlice>(result));
 		}
 
 		/// <summary>

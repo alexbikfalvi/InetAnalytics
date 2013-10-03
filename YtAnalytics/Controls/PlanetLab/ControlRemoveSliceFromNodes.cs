@@ -380,12 +380,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnCheckedChanged(object sender, ItemCheckedEventArgs e)
 		{
 			// Count the number of selected items.
-			int count = 0;
-			foreach (ListViewItem item in this.listView.Items)
-			{
-				if (null == item) continue;
-				count += item.Checked ? 1 : 0;
-			}
+			int count = this.listView.CheckedItems.Count;
 			// Change the select buttons enabled state.
 			this.buttonSelectAll.Enabled = count < slice.NodeIds.Length;
 			this.buttonClearAll.Enabled = count > 0;
