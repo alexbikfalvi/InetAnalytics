@@ -23,6 +23,7 @@ using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 using PlanetLab;
 using PlanetLab.Api;
+using PlanetLab.Database;
 using PlanetLab.Requests;
 using DotNetApi;
 using DotNetApi.Web.XmlRpc;
@@ -36,7 +37,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	{
 		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
 		private string filter = string.Empty;
-		private PlList<PlSlice> slices = null;
+		private PlDatabaseList<PlSlice> slices = null;
 
 		private FormObjectProperties<ControlSliceProperties> formProperties = new FormObjectProperties<ControlSliceProperties>();
 
@@ -62,7 +63,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event raised when a PlanetLab site was selected.
 		/// </summary>
-		public event PlEventHandler<PlSlice> Selected;
+		public event PlObjectEventHandler<PlSlice> Selected;
 		/// <summary>
 		/// An event raised when user closes the selection.
 		/// </summary>
@@ -129,7 +130,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if ((null == response.Fault) && (null != response.Value))
 			{
 				// Update the list of PlanetLab slices list for the given response.
-				this.slices.Update(response.Value as XmlRpcArray);
+				this.slices.CopyFrom(response.Value as XmlRpcArray);
 				// Update the list view.
 				this.OnUpdateList();
 			}
@@ -203,7 +204,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Else, get the PlanetLab object.
 			PlSlice result = this.listView.SelectedItems[0].Tag as PlSlice;
 			// Raise the event.
-			if (this.Selected != null) this.Selected(this, new PlEventArgs<PlSlice>(result));
+			if (this.Selected != null) this.Selected(this, new PlObjectEventArgs<PlSlice>(result));
 		}
 
 		/// <summary>

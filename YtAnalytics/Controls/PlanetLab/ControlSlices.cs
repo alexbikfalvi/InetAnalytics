@@ -256,7 +256,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSliceChanged(object sender, PlEventArgs e)
+		private void OnSliceChanged(object sender, PlObjectEventArgs e)
 		{
 			// Get the slice.
 			PlSlice slice = e.Object as PlSlice;
@@ -412,7 +412,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				XmlRpcArray slices = response.Value as XmlRpcArray;
 
 				// Update the list of PlanetLab local slices, filtering by the current person account.
-				this.crawler.Config.PlanetLab.LocalSlices.Update(slices.Where((XmlRpcValue value) =>
+				this.crawler.Config.PlanetLab.LocalSlices.CopyFrom(slices.Where((XmlRpcValue value) =>
 					{
 						XmlRpcStruct str = value.Value as XmlRpcStruct;
 						if (null == str) return false;

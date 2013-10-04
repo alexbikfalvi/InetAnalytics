@@ -27,6 +27,7 @@ using DotNetApi.Windows.Controls;
 using MapApi;
 using PlanetLab;
 using PlanetLab.Api;
+using PlanetLab.Database;
 using PlanetLab.Requests;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
@@ -120,7 +121,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				XmlRpcArray slices = response.Value as XmlRpcArray;
 
 				// Update the list of PlanetLab sites.
-				this.crawler.Config.PlanetLab.Sites.Update(response.Value as XmlRpcArray);
+				this.crawler.Config.PlanetLab.Sites.CopyFrom(response.Value as XmlRpcArray);
 
 				// Update the list of sites.
 				this.OnUpdateSites();
@@ -207,6 +208,13 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		// Private methods.
+
+		/// <summary>
+		/// An event handler called when clearing the list of sites.
+		/// </summary>
+		private void OnClearSites()
+		{
+		}
 
 		/// <summary>
 		/// An event handler called when the user refreshes the list of PlanetLab slices.

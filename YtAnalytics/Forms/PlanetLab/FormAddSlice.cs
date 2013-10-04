@@ -111,7 +111,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSelected(object sender, PlEventArgs<PlSlice> e)
+		private void OnSelected(object sender, PlObjectEventArgs<PlSlice> e)
 		{
 			// Set the result.
 			this.Result = e.Object;

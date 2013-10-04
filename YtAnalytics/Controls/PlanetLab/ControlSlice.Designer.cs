@@ -131,6 +131,7 @@
             this.itemSelectNodesState,
             this.itemSelectNodesSlice});
 			this.contextMenuAddToNodes.Name = "contextMenuAddToNodes";
+			this.contextMenuAddToNodes.OwnerItem = this.buttonAddToNodes;
 			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 92);
 			// 
 			// itemSelectNodesLocation
@@ -149,7 +150,6 @@
 			// 
 			// itemSelectNodesSlice
 			// 
-			this.itemSelectNodesSlice.Enabled = false;
 			this.itemSelectNodesSlice.Name = "itemSelectNodesSlice";
 			this.itemSelectNodesSlice.Size = new System.Drawing.Size(202, 22);
 			this.itemSelectNodesSlice.Text = "Select nodes by slice";

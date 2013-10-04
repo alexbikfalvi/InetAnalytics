@@ -44,7 +44,7 @@ namespace YtAnalytics.Forms.PlanetLab
 			this.control.TabIndex = 0;
 			this.control.RequestStarted += new System.EventHandler(this.OnRequestStarted);
 			this.control.RequestFinished += new System.EventHandler(this.OnRequestFinished);
-			this.control.Selected += new global::PlanetLab.PlEventHandler<PlSlice>(this.OnSelected);
+			this.control.Selected += new global::PlanetLab.PlObjectEventHandler<PlSlice>(this.OnSelected);
 			this.control.Closed += new System.EventHandler(this.OnClosed);
 			// 
 			// FormAddSlice

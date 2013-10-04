@@ -28,6 +28,7 @@ using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 using PlanetLab;
 using PlanetLab.Api;
+using PlanetLab.Database;
 using PlanetLab.Requests;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -45,7 +46,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private readonly PlRequest requestSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
 		private readonly PlRequest requestNodes = new PlRequest(PlRequest.RequestMethod.GetNodes);
 		
-		private PlList<PlSlice> slices = null;
+		private PlDatabaseList<PlSlice> slices = null;
 		private readonly PlList<PlNode> nodes = new PlList<PlNode>();
 
 		private readonly HashSet<int> selectedNodes = new HashSet<int>();
@@ -264,7 +265,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if ((null == response.Fault) && (null != response.Value))
 			{
 				// Update the list of PlanetLab sites list for the given response.
-				this.slices.Update(response.Value as XmlRpcArray);
+				this.slices.CopyFrom(response.Value as XmlRpcArray);
 				// Update the slices list.
 				this.OnUpdateSlices();
 			}

@@ -22,6 +22,7 @@ using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Security;
 using PlanetLab.Api;
+using PlanetLab.Database;
 
 namespace YtCrawler.PlanetLab
 {
@@ -33,11 +34,16 @@ namespace YtCrawler.PlanetLab
 		private RegistryKey key;
 		private string root;
 
-		private PlList<PlSite> sites = new PlList<PlSite>();
-		private PlList<PlNode> nodes = new PlList<PlNode>();
-		private PlList<PlSlice> slices = new PlList<PlSlice>();
-		private PlList<PlPerson> localPersons = new PlList<PlPerson>();
-		private PlList<PlSlice> localSlices = new PlList<PlSlice>();
+		private readonly PlDatabase<PlSite> dbSites = new PlDatabase<PlSite>();
+		private readonly PlDatabase<PlNode> dbNodes = new PlDatabase<PlNode>();
+		private readonly PlDatabase<PlPerson> dbPersons = new PlDatabase<PlPerson>();
+		private readonly PlDatabase<PlSlice> dbSlices = new PlDatabase<PlSlice>();
+
+		private readonly PlDatabaseList<PlSite> listSites;
+		private readonly PlDatabaseList<PlNode> listNodes;
+		private readonly PlDatabaseList<PlSlice> listSlices;
+		private readonly PlDatabaseList<PlPerson> listLocalPersons;
+		private readonly PlDatabaseList<PlSlice> listLocalSlices;
 
 		/// <summary>
 		/// Creates a PlanetLab configuration instance at the specified registry key.
@@ -54,24 +60,31 @@ namespace YtCrawler.PlanetLab
 			// Set the root path.
 			this.root = @"{0}\{1}".FormatWith(rootKey.Name, path);
 
+			// Create the PlanetLab lists.
+			this.listSites = new PlDatabaseList<PlSite>(this.dbSites);
+			this.listNodes = new PlDatabaseList<PlNode>(this.dbNodes);
+			this.listSlices = new PlDatabaseList<PlSlice>(this.dbSlices);
+			this.listLocalPersons = new PlDatabaseList<PlPerson>(this.dbPersons);
+			this.listLocalSlices = new PlDatabaseList<PlSlice>(this.dbSlices);
+
 			// Load the PlanetLab sites configuration.
-			try { this.sites.LoadFromFile(this.SitesFileName); }
+			try { this.listSites.LoadFromFile(this.SitesFileName); }
 			catch { }
 
 			// Load the PlanetLab nodes configuration.
-			try { this.nodes.LoadFromFile(this.NodesFileName); }
+			try { this.listNodes.LoadFromFile(this.NodesFileName); }
 			catch { }
 
 			// Load the PlanetLab slices configuration.
-			try { this.slices.LoadFromFile(this.SlicesFileName); }
+			try { this.listSlices.LoadFromFile(this.SlicesFileName); }
 			catch { }
 
 			// Load the PlanetLab local persons configuration.
-			try { this.localPersons.LoadFromFile(this.LocalPersonsFileName); }
+			try { this.listLocalPersons.LoadFromFile(this.LocalPersonsFileName); }
 			catch { }
 
 			// Load the PlanetLab local slices configuration.
-			try { this.localSlices.LoadFromFile(this.LocalSlicesFileName); }
+			try { this.listLocalSlices.LoadFromFile(this.LocalSlicesFileName); }
 			catch { }
 
 			// Initialize the static configuration.
@@ -194,23 +207,23 @@ namespace YtCrawler.PlanetLab
 		/// <summary>
 		/// Gets the collection of PlanetLab sites.
 		/// </summary>
-		public PlList<PlSite> Sites { get { return this.sites; } }
+		public PlDatabaseList<PlSite> Sites { get { return this.listSites; } }
 		/// <summary>
 		/// Gets the collection of PlanetLab nodes.
 		/// </summary>
-		public PlList<PlNode> Nodes { get { return this.nodes; } }
+		public PlDatabaseList<PlNode> Nodes { get { return this.listNodes; } }
 		/// <summary>
 		/// Gets the collection of PlanetLab slices.
 		/// </summary>
-		public PlList<PlSlice> Slices { get { return this.slices; } }
+		public PlDatabaseList<PlSlice> Slices { get { return this.listSlices; } }
 		/// <summary>
 		/// Gets the collection of PlanetLab persons.
 		/// </summary>
-		public PlList<PlPerson> LocalPersons { get { return this.localPersons; } }
+		public PlDatabaseList<PlPerson> LocalPersons { get { return this.listLocalPersons; } }
 		/// <summary>
 		/// Gets the collection of PlanetLab slices.
 		/// </summary>
-		public PlList<PlSlice> LocalSlices { get { return this.localSlices; } }
+		public PlDatabaseList<PlSlice> LocalSlices { get { return this.listLocalSlices; } }
 
 		// Public methods.
 

@@ -137,7 +137,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Load the configuration.
 			this.validatedUsername = CrawlerStatic.PlanetLabUsername;
 			this.validatedPassword = CrawlerStatic.PlanetLabPassword;
-			this.validatedPersons = this.crawler.Config.PlanetLab.LocalPersons;
+			this.crawler.Config.PlanetLab.LocalPersons.CopyTo(this.validatedPersons);
 			this.validatedPerson = CrawlerStatic.PlanetLabPersonId;
 
 			// Set the username.
