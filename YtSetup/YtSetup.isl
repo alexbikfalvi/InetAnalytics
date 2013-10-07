@@ -4555,11 +4555,11 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>Registry117</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry118</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Console</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry121</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Log</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
-		<row><td>Registry122</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\PlanetLab\Keys</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry123</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Spiders\StandardFeeds</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry124</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Testing\WebRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry125</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\YouTube\V2</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry2</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Testing\SshRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry3</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\PlanetLab\Slices</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry51</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry52</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td>VideosFileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Comments\Videos.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry53</td><td>1</td><td>Software\Alex Bikfalvi\YtAnalytics\Comments</td><td>UsersFileName</td><td>[AppDataFolder]Alex Bikfalvi\YouTube Analytics\Comments\Users.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>

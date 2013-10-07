@@ -17,8 +17,11 @@
  */
 
 using System;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using DotNetApi;
+using DotNetApi.IO;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
@@ -27,6 +30,7 @@ using PlanetLab.Api;
 using PlanetLab.Requests;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
+using YtCrawler.PlanetLab;
 using YtCrawler.Status;
 
 namespace YtAnalytics.Controls.PlanetLab
@@ -104,59 +108,17 @@ namespace YtAnalytics.Controls.PlanetLab
 			public int[] Ids { get; private set; }
 		}
 
-		/// <summary>
-		/// A structure representing the slice information.
-		/// </summary>
-		private struct SliceInfo
-		{
-			/// <summary>
-			/// Creates a new slice information variable.
-			/// </summary>
-			/// <param name="slice">The PlanetLab slice.</param>
-			/// <param name="node">The tree node.</param>
-			/// <param name="control">The control.</param>
-			public SliceInfo(PlSlice slice, TreeNode node, Control control)
-				: this()
-			{
-				this.Slice = slice;
-				this.Node = node;
-				this.Control = control;
-			}
-
-			/// <summary>
-			/// Gets the PlanetLab slice.
-			/// </summary>
-			public PlSlice Slice { get; private set; }
-			/// <summary>
-			/// Gets the tree node.
-			/// </summary>
-			public TreeNode Node { get; private set; }
-			/// <summary>
-			/// Gets the control.
-			/// </summary>
-			public Control Control { get; private set; }
-		}
-
 		// Private variables.
 
 		private Crawler crawler = null;
 		private StatusHandler status = null;
 
-		private TreeNode treeNode = null;
-		private Control.ControlCollection controls = null;
-		private ImageList treeImageList = null;
+		private PlSlice slice = null;
+		private PlConfigSlice config = null;
 
 		private PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
 		private PlRequest requestAddSliceToNodes = new PlRequest(PlRequest.RequestMethod.AddSliceToNodes);
 		private PlRequest requestRemoveSliceFromNodes = new PlRequest(PlRequest.RequestMethod.DeleteSliceFromNodes);
-
-		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
-		private FormAddSlice formAddSlice = new FormAddSlice();
-		private FormAddSliceToNodesLocation formAddSliceToNodesLocation = new FormAddSliceToNodesLocation();
-		private FormAddSliceToNodesState formAddSliceToNodesState = new FormAddSliceToNodesState();
-		private FormRemoveSliceFromNodes formRemoveSliceFromNodes = new FormRemoveSliceFromNodes();
-
-		private RequestState requestStateGetSlices;
 
 		// Public declarations
 
@@ -172,19 +134,16 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
 
-			// Create the request states.
-			this.requestStateGetSlices = new RequestState(
-				null, this.OnRefreshSlicesRequestResult, this.OnRefreshSlicesRequestCanceled, this.OnRefreshSlicesRequestException, null);
+			// Load the map.
+			this.mapControl.LoadMap("Ne110mAdmin0Countries");
 		}
 
 		/// <summary>
 		/// Initializes the control with a crawler object.
 		/// </summary>
 		/// <param name="crawler">The crawler object.</param>
-		/// <param name="treeNode">The root tree node for the database servers.</param>
-		/// <param name="controls">The panel where to add the server control.</param>
-		/// <param name="imageList">The image list.</param>
-		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection controls, ImageList imageList)
+		/// <param name="slice">The slice.</param>
+		public void Initialize(Crawler crawler, PlSlice slice)
 		{
 			// Save the parameters.
 			this.crawler = crawler;
@@ -192,20 +151,18 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
 
-			// Set the tree node.
-			this.treeNode = treeNode;
+			// Set the slice.
+			this.slice = slice;
+			this.slice.Changed += OnSliceChanged;
 
-			// Set the control collection.
-			this.controls = controls;
+			// Set the slice configuration.
+			this.config = this.crawler.Config.PlanetLab.GetSliceConfiguration(this.slice);
 
-			// Set the tree image list.
-			this.treeImageList = imageList;
-		
 			// Enable the control.
 			this.Enabled = true;
 
-			// Update the list of PlanetLab slices.
-			//this.OnUpdateSlices();
+			// Update the information of the PlanetLab slice.
+			this.OnUpdateSlice();
 		}
 
 		// Protected methods.
@@ -239,6 +196,53 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		// Private methods.
+
+		/// <summary>
+		/// Updates the information of the current PlanetLab slice.
+		/// </summary>
+		private void OnUpdateSlice()
+		{
+			// Set the slice information.
+			this.textBoxName.Text = this.slice.Name;
+			this.textBoxDescription.Text = this.slice.Description;
+			this.textBoxUrl.Text = this.slice.Url;
+
+			this.textBoxCreated.Text = this.slice.Created.HasValue ? this.slice.Created.Value.ToString() : string.Empty;
+			this.textBoxExpires.Text = this.slice.Expires.HasValue ? this.slice.Expires.Value.ToString() : string.Empty;
+			this.textBoxMaxNodes.Text = this.slice.MaxNodes.HasValue ? this.slice.MaxNodes.Value.ToString() : string.Empty;
+
+			this.textBoxKey.Text = this.config.Key != null ? Encoding.UTF8.GetString(this.config.Key).Replace("\n", Environment.NewLine) : string.Empty;
+
+			//// Clear the current slices.
+			//this.OnClearSlices();
+
+			//// Lock the slices list.
+			//this.crawler.Config.PlanetLab.LocalSlices.Lock();
+			//try
+			//{
+			//	// Add the list view items.
+			//	foreach (PlSlice slice in this.crawler.Config.PlanetLab.LocalSlices)
+			//	{
+			//		this.OnAddSlice(slice);
+			//	}
+			//}
+			//finally
+			//{
+			//	this.crawler.Config.PlanetLab.LocalSlices.Unlock();
+			//}
+
+			//// Update the label.
+			//this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
+		}
+
+		/// <summary>
+		/// An event handler called when the current slice has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSliceChanged(object sender, PlObjectEventArgs e)
+		{
+		}
 
 		/// <summary>
 		/// An event handler called when the user refreshes the list of PlanetLab slices.
@@ -352,34 +356,6 @@ namespace YtAnalytics.Controls.PlanetLab
 			//// Update the status.
 			//this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
 		}
-
-		/// <summary>
-		/// Updates the information of the current PlanetLab slice.
-		/// </summary>
-		private void OnUpdateSlice()
-		{
-			//// Clear the current slices.
-			//this.OnClearSlices();
-
-			//// Lock the slices list.
-			//this.crawler.Config.PlanetLab.LocalSlices.Lock();
-			//try
-			//{
-			//	// Add the list view items.
-			//	foreach (PlSlice slice in this.crawler.Config.PlanetLab.LocalSlices)
-			//	{
-			//		this.OnAddSlice(slice);
-			//	}
-			//}
-			//finally
-			//{
-			//	this.crawler.Config.PlanetLab.LocalSlices.Unlock();
-			//}
-
-			//// Update the label.
-			//this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
-		}
-
 
 		/// <summary>
 		/// An event handler called when the user adds a slice to nodes selected by location.
@@ -873,6 +849,35 @@ namespace YtAnalytics.Controls.PlanetLab
 			//	// Refresh the slice information.
 			//	this.OnRefreshSlice(requestState.Slice);
 			//}
+		}
+
+		/// <summary>
+		/// An event handler called when setting the key for a PlanetLab slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSetKey(object sender, EventArgs e)
+		{
+			// Open the dialog.
+			if (this.openFileDialog.ShowDialog(this) == DialogResult.OK)
+			{
+				try
+				{
+					// Open the file.
+					using (FileStream fileStream = new FileStream(this.openFileDialog.FileName, FileMode.Open))
+					{
+						// Set the key data.
+						this.config.Key = fileStream.ReadToEnd();
+						// Set the key data as a string to the text box.
+						this.textBoxKey.Text = this.config.Key != null ? Encoding.UTF8.GetString(this.config.Key).Replace("\n", Environment.NewLine) : string.Empty;
+					}
+				}
+				catch (Exception exception)
+				{
+					// Show an error dialog if an exception is thrown.
+					MessageBox.Show("Could not open the RSA key file. {0}".FormatWith(exception.Message), "Cannot Open File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
 		}
 	}
 }

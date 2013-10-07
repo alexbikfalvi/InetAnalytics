@@ -13,10 +13,19 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			// If disposing the managed resources.
+			if (disposing)
 			{
-				components.Dispose();
+				// Remove the sites list event handler.
+				this.crawler.Config.PlanetLab.Sites.Changed -= this.OnSitesChanged;
+				// If the components are not null.
+				if (components != null)
+				{
+					// Dispose the components.
+					components.Dispose();
+				}
 			}
+			// Call the base class method.
 			base.Dispose(disposing);
 		}
 

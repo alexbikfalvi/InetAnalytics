@@ -24,6 +24,7 @@ using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
+using PlanetLab.Database;
 using PlanetLab.Requests;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
@@ -193,6 +194,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Save the parameters.
 			this.crawler = crawler;
 
+			// Set the slices list event handler.
+			this.crawler.Config.PlanetLab.LocalSlices.Changed += this.OnSlicesChanged;
+
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
 
@@ -282,6 +286,17 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
+		/// An event handler called when the list of slices has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesChanged(object sender, EventArgs e)
+		{
+			// Update the list of slices.
+			this.OnUpdateSlices();
+		}
+
+		/// <summary>
 		/// Clears the current list of slices.
 		/// </summary>
 		private void OnClearSlices()
@@ -296,9 +311,9 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Remove the tree node.
 				this.treeNode.Nodes.Remove(info.Node);
 				// Remove the control.
-				// *** this.controls.Remove(info.Control);
+				this.controls.Remove(info.Control);
 				// Dispose the control.
-				// *** info.Control.Dispose();
+				info.Control.Dispose();
 			}
 			// Clear the list view.
 			this.listViewSlices.Items.Clear();
@@ -310,14 +325,17 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="slice">The slice.</param>
 		private void OnAddSlice(PlSlice slice)
 		{
+			// Create a new control.
+			ControlSlice control = new ControlSlice();
+			control.Initialize(this.crawler, slice);
+			this.controls.Add(control);
+
 			// Create a new tree node.
 			TreeNode node = new TreeNode(slice.Name);
 			node.ImageKey = "GlobeObject";
 			node.SelectedImageKey = "GlobeObject";
+			node.Tag = control;
 			this.treeNode.Nodes.Add(node);
-			
-			// Create a new control.
-			Control control = null;
 
 			// Create the list view item.
 			ListViewItem item = new ListViewItem(new string[] {
@@ -425,9 +443,6 @@ namespace YtAnalytics.Controls.PlanetLab
 
 						return array.Contains(CrawlerStatic.PlanetLabPersonId);
 					}));
-
-				// Update the list of slices.
-				this.OnUpdateSlices();
 
 				// Log
 				this.controlLog.Add(this.crawler.Log.Add(
@@ -616,9 +631,9 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Remove the tree node.
 				this.treeNode.Nodes.Remove(info.Node);
 				// Remove the control.
-				// *** this.controls.Remove(info.Control);
+				this.controls.Remove(info.Control);
 				// Dispose the control.
-				// *** info.Control.Dispose();
+				info.Control.Dispose();
 			}
 		}
 

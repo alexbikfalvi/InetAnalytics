@@ -2481,4 +2481,28 @@ Female, 45-54 years
   <data name="GlobeCanceled_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\GlobeCanceled_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="KeyVerticalCube_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVerticalCube_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyVerticalCube_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVerticalCube_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyVerticalCube_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVerticalCube_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyVerticalCube_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVerticalCube_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyVertical_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVertical_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyVertical_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVertical_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyVertical_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVertical_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyVertical_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\KeyVertical_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

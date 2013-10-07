@@ -17,10 +17,12 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Security;
 using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Security;
+using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Database;
 
@@ -32,6 +34,8 @@ namespace YtCrawler.PlanetLab
 	public sealed class PlConfig : IDisposable
 	{
 		private RegistryKey key;
+		private RegistryKey keySlices;
+
 		private string root;
 
 		private readonly PlDatabase<PlSite> dbSites = new PlDatabase<PlSite>();
@@ -45,6 +49,8 @@ namespace YtCrawler.PlanetLab
 		private readonly PlDatabaseList<PlPerson> listLocalPersons;
 		private readonly PlDatabaseList<PlSlice> listLocalSlices;
 
+		private readonly Dictionary<int, PlConfigSlice> configSlices = new Dictionary<int, PlConfigSlice>();
+
 		/// <summary>
 		/// Creates a PlanetLab configuration instance at the specified registry key.
 		/// </summary>
@@ -52,11 +58,17 @@ namespace YtCrawler.PlanetLab
 		/// <param name="path">The registry key.</param>
 		public PlConfig(RegistryKey rootKey, string path)
 		{
-			// Open the database configuration key.
+			// Open the PlanetLab configuration key.
 			if (null == (this.key = rootKey.OpenSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree)))
 			{
 				this.key = rootKey.CreateSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree);
 			}
+			// Open the PlanetLab slices configuration key.
+			if (null == (this.keySlices = this.key.OpenSubKey("Slices", RegistryKeyPermissionCheck.ReadWriteSubTree)))
+			{
+				this.keySlices = this.key.CreateSubKey("Slices", RegistryKeyPermissionCheck.ReadWriteSubTree);
+			}
+
 			// Set the root path.
 			this.root = @"{0}\{1}".FormatWith(rootKey.Name, path);
 
@@ -66,6 +78,12 @@ namespace YtCrawler.PlanetLab
 			this.listSlices = new PlDatabaseList<PlSlice>(this.dbSlices);
 			this.listLocalPersons = new PlDatabaseList<PlPerson>(this.dbPersons);
 			this.listLocalSlices = new PlDatabaseList<PlSlice>(this.dbSlices);
+
+			// Set the lists event handlers.
+			this.listLocalSlices.Cleared += this.OnSlicesCleared;
+			this.listLocalSlices.Updated += this.OnSlicesUpdated;
+			this.listLocalSlices.Added += this.OnSlicesAdded;
+			this.listLocalSlices.Removed += this.OnSlicesRemoved;
 
 			// Load the PlanetLab sites configuration.
 			try { this.listSites.LoadFromFile(this.SitesFileName); }
@@ -95,6 +113,97 @@ namespace YtCrawler.PlanetLab
 			CrawlerStatic.PlanetLabNodesFileName = this.NodesFileName;
 			CrawlerStatic.PlanetLabLocalPersonsFileName = this.LocalPersonsFileName;
 			CrawlerStatic.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
+		}
+
+		/// <summary>
+		/// An event handler called when the list of slices is cleared.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesCleared(object sender, EventArgs e)
+		{
+			// For all slices.
+			foreach (PlConfigSlice configSlice in this.configSlices.Values)
+			{
+				// Dispose the configuration.
+				configSlice.Dispose();
+				// Delete the configuration key.
+				PlConfigSlice.Delete(configSlice, this.keySlices);
+			}
+			// Clear the slices configurations.
+			this.configSlices.Clear();
+		}
+
+		/// <summary>
+		/// An event handler called when the list of slices is updated.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesUpdated(object sender, EventArgs e)
+		{
+			// Lock the slices list.
+			this.listLocalSlices.Lock();
+			try
+			{
+				// For each slice.
+				foreach (PlSlice slice in this.listLocalSlices)
+				{
+					// If the slice has a valid identifier.
+					if (slice.Id.HasValue)
+					{
+						// Create a new slice configuration.
+						PlConfigSlice configSlice = new PlConfigSlice(slice, this.keySlices);
+						// Add the configuration to the dictionary.
+						this.configSlices.Add(slice.Id.Value, configSlice);
+					}
+				}
+			}
+			finally
+			{
+				// Unlock the slices list.
+				this.listLocalSlices.Unlock();
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a slice is added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesAdded(object sender, PlObjectEventArgs<PlSlice> e)
+		{
+			// If the slice has a valid identifier.
+			if (e.Object.Id.HasValue)
+			{
+				// Create a new slice configuration.
+				PlConfigSlice configSlice = new PlConfigSlice(e.Object, this.keySlices);
+				// Add the configuration to the dictionary.
+				this.configSlices.Add(e.Object.Id.Value, configSlice);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a slice is removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesRemoved(object sender, PlObjectEventArgs<PlSlice> e)
+		{
+			// If the slice has a valid identifier.
+			if (e.Object.Id.HasValue)
+			{
+				// Get the current configuration.
+				PlConfigSlice configSlice;
+				if (this.configSlices.TryGetValue(e.Object.Id.Value, out configSlice))
+				{
+					// Remove the configuration.
+					this.configSlices.Remove(e.Object.Id.Value);
+					// Dispose the configuration.
+					configSlice.Dispose();
+					// Delete the configuration.
+					PlConfigSlice.Delete(configSlice, this.keySlices);
+				}
+			}
 		}
 
 		// Public properties.
@@ -244,7 +353,13 @@ namespace YtCrawler.PlanetLab
 			// Save the PlanetLab local slices.
 			try { this.LocalSlices.SaveToFile(this.LocalSlicesFileName); }
 			catch { }
+			// Dispose the slices configuration.
+			foreach (PlConfigSlice configSlice in this.configSlices.Values)
+			{
+				configSlice.Dispose();
+			}
 			// Close the registry key.
+			this.keySlices.Close();
 			this.key.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
@@ -272,6 +387,31 @@ namespace YtCrawler.PlanetLab
 			// Save the person.
 			DotNetApi.Windows.Registry.SetInteger(this.root, "PersonId", person);
 			CrawlerStatic.PlanetLabPersonId = person;
+		}
+
+		/// <summary>
+		/// Returns the configuration for the specified slice.
+		/// </summary>
+		/// <param name="slice">The slice.</param>
+		/// <returns>The slice configuration.</returns>
+		public PlConfigSlice GetSliceConfiguration(PlSlice slice)
+		{
+			// Validate the arguments.
+			if (null == slice) throw new ArgumentNullException("slice");
+			// If the slice does not have a valid identifier, throw an exception.
+			if (!slice.Id.HasValue) throw new CrawlerException("The slice does not have a valid identifier.");
+
+
+			// Return the configuration.
+			PlConfigSlice configSlice;
+			// Try and get the configuration.
+			if (!this.configSlices.TryGetValue(slice.Id.Value, out configSlice))
+			{
+				// If the configuration does not exist, throw an exception.
+				throw new CrawlerException("The specified slice does not have a configuration.");
+			}
+
+			return configSlice;
 		}
 	}
 }

@@ -82,6 +82,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Save the parameters.
 			this.crawler = crawler;
 
+			// Set the site list event handler.
+			this.crawler.Config.PlanetLab.Sites.Changed += this.OnSitesChanged;
+
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
 		
@@ -122,9 +125,6 @@ namespace YtAnalytics.Controls.PlanetLab
 
 				// Update the list of PlanetLab sites.
 				this.crawler.Config.PlanetLab.Sites.CopyFrom(response.Value as XmlRpcArray);
-
-				// Update the list of sites.
-				this.OnUpdateSites();
 
 				// Log
 				this.crawler.Log.Add(
@@ -210,10 +210,101 @@ namespace YtAnalytics.Controls.PlanetLab
 		// Private methods.
 
 		/// <summary>
+		/// An event handler called when the site has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSiteChanged(object sender, PlObjectEventArgs e)
+		{
+			// Get the site.
+			PlSite site = e.Object as PlSite;
+			// Find the list view item corresponding to the slice.
+			ListViewItem item = this.listViewSites.Items.FirstOrDefault((ListViewItem it) =>
+			{
+				// Get the slice info.
+				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)it.Tag;
+				// Return true if the item corresponds to the same slice.
+				return object.ReferenceEquals(site, tag.Key);
+			});
+			// If the item is not null.
+			if (null != item)
+			{
+				// Update the item.
+				item.SubItems[0].Text = site.SiteId.ToString();
+				item.SubItems[1].Text = site.Name;
+				item.SubItems[2].Text = site.Url;
+				item.SubItems[3].Text = site.DateCreated.ToString();
+				item.SubItems[4].Text = site.LastUpdated.ToString();
+				item.SubItems[5].Text = site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty;
+				item.SubItems[6].Text = site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the list of PlanetLab sites has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSitesChanged(object sender, EventArgs e)
+		{
+			// Refresh the list of sites.
+			this.OnUpdateSites();
+		}
+
+		/// <summary>
 		/// An event handler called when clearing the list of sites.
 		/// </summary>
 		private void OnClearSites()
 		{
+			// For all items.
+			foreach (ListViewItem item in this.listViewSites.Items)
+			{
+				// Get the slice tag.
+				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)item.Tag;
+				// Remove the slice changed event handler.
+				tag.Key.Changed -= this.OnSiteChanged;
+			}
+			// Clear the list view.
+			this.listViewSites.Items.Clear();
+			// Clear the map markers.
+			this.mapControl.Markers.Clear();
+		}
+
+		private void OnAddSite(PlSite site)
+		{
+			// Create a new geo marker for this site.
+			MapMarker marker = null;
+			// If the site has coordinates.
+			if (site.Latitude.HasValue && site.Longitude.HasValue)
+			{
+				// Create a circular marker.
+				marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
+				marker.Name = site.Name;
+				// Add the marker to the map.
+				this.mapControl.Markers.Add(marker);
+			}
+
+			// Create the list view item.
+			ListViewItem item = new ListViewItem(new string[] {
+						site.SiteId.ToString(),
+						site.Name,
+						site.Url,
+						site.DateCreated.ToString(),
+						site.LastUpdated.ToString(),
+						site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
+						site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
+					}, 0);
+			item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
+			this.listViewSites.Items.Add(item);
+
+			// Add the site event handler.
+			site.Changed += this.OnSiteChanged;
+
+			// Add the item to the marker.
+			if (null != marker)
+			{
+				marker.Tag = item;
+			}
 		}
 
 		/// <summary>
@@ -223,10 +314,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRefresh(object sender, EventArgs e)
 		{
-			// Clear the list.
-			this.listViewSites.Items.Clear();
-			// Clear the map markers.
-			this.mapControl.Markers.Clear();
+			// Clear the sites.
+			this.OnClearSites();
 
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
@@ -273,15 +362,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnUpdateSites()
 		{
-			// Clear the list view.
-			this.listViewSites.Items.Clear();
-			// Clear the map markers.
-			this.mapControl.Markers.Clear();
+			// Clear the sites.
+			this.OnClearSites();
 
 			// Update the filter.
 			this.filter = this.textBoxFilter.Text.Trim();
-			// The number of displayed sites.
-			int count = 0;
 
 			// Lock the sites.
 			this.crawler.Config.PlanetLab.Sites.Lock();
@@ -300,38 +385,8 @@ namespace YtAnalytics.Controls.PlanetLab
 						}
 					}
 
-					// Increment the number of displayed sites.
-					count++;
-
-					// Create a new geo marker for this site.
-					MapMarker marker = null;
-					// If the site has coordinates.
-					if (site.Latitude.HasValue && site.Longitude.HasValue)
-					{
-						// Create a circular marker.
-						marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-						marker.Name = site.Name;
-						// Add the marker to the map.
-						this.mapControl.Markers.Add(marker);
-					}
-
-					// Create the list view item.
-					ListViewItem item = new ListViewItem(new string[] {
-						site.SiteId.ToString(),
-						site.Name,
-						site.Url,
-						site.DateCreated.ToString(),
-						site.LastUpdated.ToString(),
-						site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
-						site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
-					}, 0);
-					item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
-					this.listViewSites.Items.Add(item);
-
-					if (null != marker)
-					{
-						marker.Tag = item;
-					}
+					// Add a site.
+					this.OnAddSite(site);
 				}
 			}
 			finally
@@ -340,7 +395,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 
 			// Update the label.
-			this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(count, this.crawler.Config.PlanetLab.Sites.Count), Resources.GlobeLab_16);
+			this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(this.listViewSites.Items.Count, this.crawler.Config.PlanetLab.Sites.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>

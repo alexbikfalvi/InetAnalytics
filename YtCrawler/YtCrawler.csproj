@@ -53,6 +53,7 @@
     <Compile Include="Database\DbServerTableChangedEventArgs.cs" />
     <Compile Include="Database\DbTableEventArgs.cs" />
     <Compile Include="Log\LogEventArgs.cs" />
+    <Compile Include="PlanetLab\PlConfigSlice.cs" />
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />
     <Compile Include="Spider\SpiderEventArgs.cs" />
     <Compile Include="Status\Status.cs" />

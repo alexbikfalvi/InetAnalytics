@@ -1093,6 +1093,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\KeyVerticalCube_48.png" />
+    <None Include="Resources\KeyVerticalCube_32.png" />
+    <None Include="Resources\KeyVerticalCube_24.png" />
+    <None Include="Resources\KeyVerticalCube_16.png" />
+    <None Include="Resources\KeyVertical_48.png" />
+    <None Include="Resources\KeyVertical_32.png" />
+    <None Include="Resources\KeyVertical_24.png" />
+    <None Include="Resources\KeyVertical_16.png" />
     <None Include="Resources\GlobeCanceled_48.png" />
     <None Include="Resources\GlobeCanceled_32.png" />
     <None Include="Resources\GlobeCanceled_24.png" />
