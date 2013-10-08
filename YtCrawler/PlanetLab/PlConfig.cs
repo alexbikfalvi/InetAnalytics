@@ -115,97 +115,6 @@ namespace YtCrawler.PlanetLab
 			CrawlerStatic.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
 		}
 
-		/// <summary>
-		/// An event handler called when the list of slices is cleared.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSlicesCleared(object sender, EventArgs e)
-		{
-			// For all slices.
-			foreach (PlConfigSlice configSlice in this.configSlices.Values)
-			{
-				// Dispose the configuration.
-				configSlice.Dispose();
-				// Delete the configuration key.
-				PlConfigSlice.Delete(configSlice, this.keySlices);
-			}
-			// Clear the slices configurations.
-			this.configSlices.Clear();
-		}
-
-		/// <summary>
-		/// An event handler called when the list of slices is updated.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSlicesUpdated(object sender, EventArgs e)
-		{
-			// Lock the slices list.
-			this.listLocalSlices.Lock();
-			try
-			{
-				// For each slice.
-				foreach (PlSlice slice in this.listLocalSlices)
-				{
-					// If the slice has a valid identifier.
-					if (slice.Id.HasValue)
-					{
-						// Create a new slice configuration.
-						PlConfigSlice configSlice = new PlConfigSlice(slice, this.keySlices);
-						// Add the configuration to the dictionary.
-						this.configSlices.Add(slice.Id.Value, configSlice);
-					}
-				}
-			}
-			finally
-			{
-				// Unlock the slices list.
-				this.listLocalSlices.Unlock();
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a slice is added.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSlicesAdded(object sender, PlObjectEventArgs<PlSlice> e)
-		{
-			// If the slice has a valid identifier.
-			if (e.Object.Id.HasValue)
-			{
-				// Create a new slice configuration.
-				PlConfigSlice configSlice = new PlConfigSlice(e.Object, this.keySlices);
-				// Add the configuration to the dictionary.
-				this.configSlices.Add(e.Object.Id.Value, configSlice);
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when a slice is removed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSlicesRemoved(object sender, PlObjectEventArgs<PlSlice> e)
-		{
-			// If the slice has a valid identifier.
-			if (e.Object.Id.HasValue)
-			{
-				// Get the current configuration.
-				PlConfigSlice configSlice;
-				if (this.configSlices.TryGetValue(e.Object.Id.Value, out configSlice))
-				{
-					// Remove the configuration.
-					this.configSlices.Remove(e.Object.Id.Value);
-					// Dispose the configuration.
-					configSlice.Dispose();
-					// Delete the configuration.
-					PlConfigSlice.Delete(configSlice, this.keySlices);
-				}
-			}
-		}
-
 		// Public properties.
 
 		/// <summary>
@@ -314,6 +223,22 @@ namespace YtCrawler.PlanetLab
 			}
 		}
 		/// <summary>
+		/// Gets the sites database.
+		/// </summary>
+		public PlDatabase<PlSite> DbSites { get { return this.dbSites; } }
+		/// <summary>
+		/// Gets the nodes database.
+		/// </summary>
+		public PlDatabase<PlNode> DbNodes { get { return this.dbNodes; } }
+		/// <summary>
+		/// Gets the slices database.
+		/// </summary>
+		public PlDatabase<PlSlice> DbSlices { get { return this.dbSlices; } }
+		/// <summary>
+		/// Gets the persons database.
+		/// </summary>
+		public PlDatabase<PlPerson> DbPersons { get { return this.dbPersons; } }
+		/// <summary>
 		/// Gets the collection of PlanetLab sites.
 		/// </summary>
 		public PlDatabaseList<PlSite> Sites { get { return this.listSites; } }
@@ -412,6 +337,99 @@ namespace YtCrawler.PlanetLab
 			}
 
 			return configSlice;
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// An event handler called when the list of slices is cleared.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesCleared(object sender, EventArgs e)
+		{
+			// For all slices.
+			foreach (PlConfigSlice configSlice in this.configSlices.Values)
+			{
+				// Dispose the configuration.
+				configSlice.Dispose();
+				// Delete the configuration key.
+				PlConfigSlice.Delete(configSlice, this.keySlices);
+			}
+			// Clear the slices configurations.
+			this.configSlices.Clear();
+		}
+
+		/// <summary>
+		/// An event handler called when the list of slices is updated.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesUpdated(object sender, EventArgs e)
+		{
+			// Lock the slices list.
+			this.listLocalSlices.Lock();
+			try
+			{
+				// For each slice.
+				foreach (PlSlice slice in this.listLocalSlices)
+				{
+					// If the slice has a valid identifier.
+					if (slice.Id.HasValue)
+					{
+						// Create a new slice configuration.
+						PlConfigSlice configSlice = new PlConfigSlice(slice, this.keySlices);
+						// Add the configuration to the dictionary.
+						this.configSlices.Add(slice.Id.Value, configSlice);
+					}
+				}
+			}
+			finally
+			{
+				// Unlock the slices list.
+				this.listLocalSlices.Unlock();
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a slice is added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesAdded(object sender, PlObjectEventArgs<PlSlice> e)
+		{
+			// If the slice has a valid identifier.
+			if (e.Object.Id.HasValue)
+			{
+				// Create a new slice configuration.
+				PlConfigSlice configSlice = new PlConfigSlice(e.Object, this.keySlices);
+				// Add the configuration to the dictionary.
+				this.configSlices.Add(e.Object.Id.Value, configSlice);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a slice is removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesRemoved(object sender, PlObjectEventArgs<PlSlice> e)
+		{
+			// If the slice has a valid identifier.
+			if (e.Object.Id.HasValue)
+			{
+				// Get the current configuration.
+				PlConfigSlice configSlice;
+				if (this.configSlices.TryGetValue(e.Object.Id.Value, out configSlice))
+				{
+					// Remove the configuration.
+					this.configSlices.Remove(e.Object.Id.Value);
+					// Dispose the configuration.
+					configSlice.Dispose();
+					// Delete the configuration.
+					PlConfigSlice.Delete(configSlice, this.keySlices);
+				}
+			}
 		}
 	}
 }

@@ -17,9 +17,11 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Windows;
+using PlanetLab;
 using PlanetLab.Api;
 
 namespace YtCrawler.PlanetLab
@@ -46,6 +48,9 @@ namespace YtCrawler.PlanetLab
 			// Set the slice.
 			this.slice = slice;
 
+			// Set the slice event handler.
+			this.slice.Changed += this.OnSliceChanged;
+
 			// Set the key path.
 			this.keyPath = @"{0}\Slices".FormatWith(rootKey.Name);
 
@@ -55,13 +60,28 @@ namespace YtCrawler.PlanetLab
 				// If the key does not exist, create the key.
 				rootKey.CreateSubKey(this.slice.Id.Value.ToString());
 			}
-
-			// Read the slice key.
-
 		}
+
+		// Public event.
+
+		/// <summary>
+		/// An event raised when the current slice configuration has changed.
+		/// </summary>
+		public event EventHandler Changed;
+		/// <summary>
+		/// An event raised when the current slice configuration is being disposed.
+		/// </summary>
+		public event EventHandler Disposed;
 
 		// Public properties.
 
+		/// <summary>
+		/// Gets the slice name.
+		/// </summary>
+		public string Name
+		{
+			get { return this.slice.Name; }
+		}
 		/// <summary>
 		/// Gets or sets the PlanetLab slice private key.
 		/// </summary>
@@ -73,7 +93,10 @@ namespace YtCrawler.PlanetLab
 			}
 			set
 			{
+				// Set the key.
 				this.key.SetSecureByteArray("Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				// Call the changed event handler.
+				this.OnChanged();
 			}
 		}
 
@@ -98,10 +121,43 @@ namespace YtCrawler.PlanetLab
 		/// </summary>
 		public void Dispose()
 		{
+			// Call the disposed event handler.
+			this.OnDisposed();
+			// Remove the slice event handler.
+			this.slice.Changed -= this.OnSliceChanged;
 			// Close the current key.
 			if (null != key) this.key.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// An event handler called when the current slice configuration has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSliceChanged(object sender, PlObjectEventArgs e)
+		{
+			// Call the changed event handler.
+			this.OnChanged();
+		}
+
+		/// <summary>
+		/// An event handler called when the current slice configuration has changed.
+		/// </summary>
+		private void OnChanged()
+		{
+			// Raise the event.
+			if (null != this.Changed) this.Changed(this, EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// An event handler called when the current slice configuration is being disposed.
+		/// </summary>
+		private void OnDisposed()
+		{
+			// Raise the event.
+			if (null != this.Disposed) this.Disposed(this, EventArgs.Empty);
 		}
 	}
 }

@@ -28,10 +28,12 @@ using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
+using YtAnalytics.Forms;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 using YtCrawler.PlanetLab;
 using YtCrawler.Status;
+using MapApi;
 
 namespace YtAnalytics.Controls.PlanetLab
 {
@@ -40,6 +42,11 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public sealed partial class ControlSlice : ControlRequest
 	{
+		public static readonly string[] nodeImageKeys = new string[]
+		{
+			"NodeUnknown", "NodeBoot", "NodeSafeBoot", "NodeDisabled", "NodeReinstall"
+		};
+
 		/// <summary>
 		/// A class representing the a slice request state.
 		/// </summary>
@@ -116,9 +123,16 @@ namespace YtAnalytics.Controls.PlanetLab
 		private PlSlice slice = null;
 		private PlConfigSlice config = null;
 
+		private MapMarker marker = null;
+
 		private PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		private PlRequest requestGetNodes = new PlRequest(PlRequest.RequestMethod.GetNodes);
+		private PlRequest requestGetSites = new PlRequest(PlRequest.RequestMethod.GetSites);
 		private PlRequest requestAddSliceToNodes = new PlRequest(PlRequest.RequestMethod.AddSliceToNodes);
 		private PlRequest requestRemoveSliceFromNodes = new PlRequest(PlRequest.RequestMethod.DeleteSliceFromNodes);
+
+		private FormText formText = new FormText();
+
 
 		// Public declarations
 
@@ -153,7 +167,7 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Set the slice.
 			this.slice = slice;
-			this.slice.Changed += OnSliceChanged;
+			this.slice.Changed += this.OnSliceChanged;
 
 			// Set the slice configuration.
 			this.config = this.crawler.Config.PlanetLab.GetSliceConfiguration(this.slice);
@@ -211,29 +225,81 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.textBoxExpires.Text = this.slice.Expires.HasValue ? this.slice.Expires.Value.ToString() : string.Empty;
 			this.textBoxMaxNodes.Text = this.slice.MaxNodes.HasValue ? this.slice.MaxNodes.Value.ToString() : string.Empty;
 
-			this.textBoxKey.Text = this.config.Key != null ? Encoding.UTF8.GetString(this.config.Key).Replace("\n", Environment.NewLine) : string.Empty;
+			// Set the buttons enabled state.
+			this.buttonRemoveFromNodes.Enabled = this.slice.NodeIds.Length > 0;
 
-			//// Clear the current slices.
-			//this.OnClearSlices();
+			// Update the list of nodes.
+			this.OnUpdateNodes();
 
-			//// Lock the slices list.
-			//this.crawler.Config.PlanetLab.LocalSlices.Lock();
-			//try
-			//{
-			//	// Add the list view items.
-			//	foreach (PlSlice slice in this.crawler.Config.PlanetLab.LocalSlices)
-			//	{
-			//		this.OnAddSlice(slice);
-			//	}
-			//}
-			//finally
-			//{
-			//	this.crawler.Config.PlanetLab.LocalSlices.Unlock();
-			//}
-
-			//// Update the label.
-			//this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
+			// Update the label.
+			this.status.Send(@"Slice '{0}'.".FormatWith(this.slice.Name), Resources.GlobeLab_16);
 		}
+
+		/// <summary>
+		/// Updates the list of slice nodes.
+		/// </summary>
+		private void OnUpdateNodes()
+		{
+			// Clear the current nodes.
+			this.OnClearNodes();
+
+			// Add the list of nodes.
+			foreach (int id in this.slice.NodeIds)
+			{
+				// Get the node.
+				PlNode node = this.crawler.Config.PlanetLab.DbNodes.Find(id);
+				// If the node is null.
+				if (null == node)
+				{
+					// Refresh the nodes.
+					return;
+				}
+
+				// The node site.
+				PlSite site = null;
+				if (node.SiteId.HasValue)
+				{
+					// Get the site from the database.
+					site = this.crawler.Config.PlanetLab.DbSites.Find(node.SiteId.Value);
+					// If the site is null.
+					if (null == site)
+					{
+						// Refresh the sites.
+						return;
+					}
+				}
+
+				// Add a node event handler.
+				node.Changed += this.OnNodeChanged;
+
+				// Get the node boot state.
+				PlBootState state = node.GetBootState();
+
+				// Create a new geo marker for this site.
+				MapMarker marker = null;
+				if (null != site)
+				{
+					// If the site has coordinates.
+					if (site.Latitude.HasValue && site.Longitude.HasValue)
+					{
+						// Create a circular marker.
+						marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
+						marker.Name = "{0}{1}{2}".FormatWith(node.Hostname, Environment.NewLine, site.Name);
+						// Add the marker to the map.
+						this.mapControl.Markers.Add(marker);
+					}
+				}
+
+				// Create a list item.
+				ListViewItem item = new ListViewItem(new string[] { node.Id.Value.ToString(), node.Hostname });
+				item.ImageKey = ControlSlice.nodeImageKeys[(int)state];
+				item.Tag = new Triple<PlNode, PlSite, MapMarker>(node, site, marker);
+
+				// Add the list item.
+				this.listViewNodes.Items.Add(item);
+			}
+		}
+
 
 		/// <summary>
 		/// An event handler called when the current slice has changed.
@@ -242,6 +308,113 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSliceChanged(object sender, PlObjectEventArgs e)
 		{
+			// Update the slice information.
+			this.OnUpdateSlice();
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeChanged(object sender, PlObjectEventArgs e)
+		{
+			// Get the node.
+			PlNode node = e.Object as PlNode;
+			// Get the list item corresponding to the selected node.
+			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+				{
+					// Get the item tag.
+					Triple<PlNode, PlSite, MapMarker> tag = (Triple<PlNode, PlSite, MapMarker>)it.Tag;
+					// Check the tag node equals the current node.
+					return object.ReferenceEquals(tag.First, node);
+				});
+			// Update the node information.
+			if (null != item)
+			{
+				// Get the node boot state.
+				PlBootState state = node.GetBootState();
+
+				// Set the item information.
+				item.SubItems[0].Text = node.Id.Value.ToString();
+				item.SubItems[1].Text = node.Hostname;
+				item.ImageKey = ControlSlice.nodeImageKeys[(int)state];
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when clearing the list of nodes.
+		/// </summary>
+		private void OnClearNodes()
+		{
+			// For all node items.
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				// Get the tag.
+				Triple<PlNode, PlSite, MapMarker> tag = (Triple<PlNode, PlSite, MapMarker>)item.Tag;
+				// Remove the node event handler.
+				tag.First.Changed -= this.OnNodeChanged;
+				// Dispose the map marker.
+				tag.Third.Dispose();
+			}
+
+			// Clear the list.
+			this.listViewNodes.Items.Clear();
+			// Clear the map markers.
+			this.mapControl.Markers.Clear();
+		}
+
+		/// <summary>
+		/// An event handler called when disposing the list of nodes.
+		/// </summary>
+		private void OnDisposeNodes()
+		{
+			// For all node items.
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				// Get the tag.
+				Triple<PlNode, PlSite, MapMarker> tag = (Triple<PlNode, PlSite, MapMarker>)item.Tag;
+				// Remove the node event handler.
+				tag.First.Changed -= this.OnNodeChanged;
+				// Dispose the map marker.
+				tag.Third.Dispose();
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the site selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeSelectionChanged(object sender, EventArgs e)
+		{
+			// If there exists an emphasized marker, de-emphasize it.
+			if (this.marker != null)
+			{
+				this.marker.Emphasized = false;
+				this.marker = null;
+			}
+			// If no site is selected.
+			if (this.listViewNodes.SelectedItems.Count == 0)
+			{
+				// Change the properties button enabled state.
+				//this.buttonProperties.Enabled = false;
+				//this.menuItemProperties.Enabled = false;
+			}
+			else
+			{
+				// Change the properties button enabled state.
+				//this.buttonProperties.Enabled = true;
+				//this.menuItemProperties.Enabled = true;
+				// Get the tag for this item.
+				Triple<PlNode, PlSite, MapMarker> tag = (Triple<PlNode, PlSite, MapMarker>)this.listViewNodes.SelectedItems[0].Tag;
+				// If the marker is not null, emphasize the marker.
+				if (tag.Third != null)
+				{
+					this.marker = tag.Third;
+					this.marker.Emphasized = true;
+				}
+			}
 		}
 
 		/// <summary>
@@ -868,8 +1041,6 @@ namespace YtAnalytics.Controls.PlanetLab
 					{
 						// Set the key data.
 						this.config.Key = fileStream.ReadToEnd();
-						// Set the key data as a string to the text box.
-						this.textBoxKey.Text = this.config.Key != null ? Encoding.UTF8.GetString(this.config.Key).Replace("\n", Environment.NewLine) : string.Empty;
 					}
 				}
 				catch (Exception exception)
@@ -878,6 +1049,16 @@ namespace YtAnalytics.Controls.PlanetLab
 					MessageBox.Show("Could not open the RSA key file. {0}".FormatWith(exception.Message), "Cannot Open File", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when showing the slice key.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnShowKey(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			this.formText.ShowDialog(this, "Slice Private Key", this.config.Key != null ? Encoding.UTF8.GetString(this.config.Key).Replace("\n", Environment.NewLine) : string.Empty);
 		}
 	}
 }

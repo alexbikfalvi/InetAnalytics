@@ -16,6 +16,8 @@
 			// If disposing the managed resources.
 			if (disposing)
 			{
+				// Dispose the sites list.
+				this.OnDisposeSites();
 				// Remove the sites list event handler.
 				this.crawler.Config.PlanetLab.Sites.Changed -= this.OnSitesChanged;
 				// If the components are not null.

@@ -239,7 +239,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (this.listViewSites.SelectedItems.Count == 0) return;
 
 			// Get the site-marker for this item.
-			KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+			Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 
 			// Clear the list view.
 			this.listViewNodes.Items.Clear();
@@ -259,7 +259,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.requestNodes,
 				CrawlerStatic.PlanetLabUsername,
 				CrawlerStatic.PlanetLabPassword,
-				PlNode.GetFilter(PlNode.Fields.SiteId, tag.Key.Id),
+				PlNode.GetFilter(PlNode.Fields.SiteId, tag.First.Id),
 				this.requestStateNodes);
 		}
 
@@ -354,11 +354,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (this.listViewSites.SelectedItems.Count > 0)
 			{
 				// Get the site-marker for this item.
-				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+				Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 				// If the marker is not null, emphasize the marker.
-				if (tag.Value != null)
+				if (tag.Second != null)
 				{
-					this.marker = tag.Value;
+					this.marker = tag.Second;
 					this.marker.Emphasized = true;
 				}
 			}
@@ -444,10 +444,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (this.listViewSites.SelectedItems.Count == 0) return;
 
 			// Get the site-marker for this item.
-			KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+			Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 
 			// Show the site properties.
-			this.formSiteProperties.ShowDialog(this, "Site", tag.Key);
+			this.formSiteProperties.ShowDialog(this, "Site", tag.First);
 		}
 
 		/// <summary>
@@ -565,7 +565,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
 						site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
 					});
-					item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
+					item.Tag = new Pair<PlSite, MapMarker>(site, marker);
 					item.ImageKey = "Site";
 					this.listViewSites.Items.Add(item);
 

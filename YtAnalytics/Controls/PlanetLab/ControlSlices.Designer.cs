@@ -13,9 +13,17 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			// If disposing the managed resources.
+			if (disposing)
 			{
-				components.Dispose();
+				// Dispose the slices.
+				this.OnDisposeSlices();
+				// If the components are not null.
+				if (this.components != null)
+				{
+					// Dispose the components.
+					this.components.Dispose();
+				}
 			}
 			base.Dispose(disposing);
 		}

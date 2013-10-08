@@ -179,7 +179,11 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Create the request states.
 			this.requestStateGetSlices = new RequestState(
-				null, this.OnRefreshSlicesRequestResult, this.OnRefreshSlicesRequestCanceled, this.OnRefreshSlicesRequestException, null);
+				null,
+				this.OnRefreshSlicesRequestResult,
+				this.OnRefreshSlicesRequestCanceled,
+				this.OnRefreshSlicesRequestException,
+				null);
 		}
 
 		/// <summary>
@@ -317,6 +321,23 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 			// Clear the list view.
 			this.listViewSlices.Items.Clear();
+		}
+
+		/// <summary>
+		/// Disposes the current list of slices.
+		/// </summary>
+		private void OnDisposeSlices()
+		{
+			// For all items.
+			foreach (ListViewItem item in this.listViewSlices.Items)
+			{
+				// Get the slice info.
+				SliceInfo info = (SliceInfo)item.Tag;
+				// Remove the slice changed event handler.
+				info.Slice.Changed -= this.OnSliceChanged;
+				// Dispose the control.
+				info.Control.Dispose();
+			}
 		}
 
 		/// <summary>

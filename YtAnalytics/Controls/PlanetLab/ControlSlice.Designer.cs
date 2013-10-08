@@ -16,14 +16,16 @@
 			// If disposing the managed resources.
 			if (disposing)
 			{
+				// Dispose the nodes.
+				this.OnDisposeNodes();
+				// Remove the slice event handler.
+				this.slice.Changed -= this.OnSliceChanged;
 				// If the components are not null.
 				if (components != null)
 				{
 					// Dispose the components.
 					components.Dispose();
 				}
-				// Remove the slice event handler.
-				this.slice.Changed -= this.OnSliceChanged;
 			}
 			// Call the base class method.
 			base.Dispose(disposing);
@@ -41,9 +43,13 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSlice));
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.splitContainerSlice = new System.Windows.Forms.SplitContainer();
+			this.listViewNodes = new System.Windows.Forms.ListView();
+			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.panel = new System.Windows.Forms.Panel();
-			this.textBoxKey = new System.Windows.Forms.TextBox();
+			this.linkLabelKey = new System.Windows.Forms.LinkLabel();
 			this.labelKey = new System.Windows.Forms.Label();
 			this.labelMaxNodes = new System.Windows.Forms.Label();
 			this.labelExpires = new System.Windows.Forms.Label();
@@ -70,7 +76,6 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSetKey = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -81,6 +86,7 @@
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSlice)).BeginInit();
+			this.splitContainerSlice.Panel1.SuspendLayout();
 			this.splitContainerSlice.Panel2.SuspendLayout();
 			this.splitContainerSlice.SuspendLayout();
 			this.panel.SuspendLayout();
@@ -118,12 +124,57 @@
 			this.splitContainerSlice.Location = new System.Drawing.Point(0, 129);
 			this.splitContainerSlice.Name = "splitContainerSlice";
 			// 
+			// splitContainerSlice.Panel1
+			// 
+			this.splitContainerSlice.Panel1.Controls.Add(this.listViewNodes);
+			// 
 			// splitContainerSlice.Panel2
 			// 
 			this.splitContainerSlice.Panel2.Controls.Add(this.mapControl);
 			this.splitContainerSlice.Size = new System.Drawing.Size(800, 296);
 			this.splitContainerSlice.SplitterDistance = 266;
 			this.splitContainerSlice.TabIndex = 2;
+			// 
+			// listViewNodes
+			// 
+			this.listViewNodes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listViewNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderId,
+            this.columnHeaderHostname});
+			this.listViewNodes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listViewNodes.FullRowSelect = true;
+			this.listViewNodes.GridLines = true;
+			this.listViewNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewNodes.HideSelection = false;
+			this.listViewNodes.Location = new System.Drawing.Point(0, 0);
+			this.listViewNodes.MultiSelect = false;
+			this.listViewNodes.Name = "listViewNodes";
+			this.listViewNodes.Size = new System.Drawing.Size(264, 294);
+			this.listViewNodes.SmallImageList = this.imageList;
+			this.listViewNodes.TabIndex = 0;
+			this.listViewNodes.UseCompatibleStateImageBehavior = false;
+			this.listViewNodes.View = System.Windows.Forms.View.Details;
+			this.listViewNodes.SelectedIndexChanged += new System.EventHandler(this.OnNodeSelectionChanged);
+			// 
+			// columnHeaderId
+			// 
+			this.columnHeaderId.Text = "ID";
+			this.columnHeaderId.Width = 80;
+			// 
+			// columnHeaderHostname
+			// 
+			this.columnHeaderHostname.Text = "Hostname";
+			this.columnHeaderHostname.Width = 160;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "NodeUnknown");
+			this.imageList.Images.SetKeyName(1, "NodeBoot");
+			this.imageList.Images.SetKeyName(2, "NodeSafeBoot");
+			this.imageList.Images.SetKeyName(3, "NodeReinstall");
+			this.imageList.Images.SetKeyName(4, "NodeDisabled");
 			// 
 			// mapControl
 			// 
@@ -137,7 +188,7 @@
 			// panel
 			// 
 			this.panel.AutoScroll = true;
-			this.panel.Controls.Add(this.textBoxKey);
+			this.panel.Controls.Add(this.linkLabelKey);
 			this.panel.Controls.Add(this.labelKey);
 			this.panel.Controls.Add(this.labelMaxNodes);
 			this.panel.Controls.Add(this.labelExpires);
@@ -158,17 +209,16 @@
 			this.panel.Size = new System.Drawing.Size(800, 104);
 			this.panel.TabIndex = 1;
 			// 
-			// textBoxKey
+			// linkLabelKey
 			// 
-			this.textBoxKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.textBoxKey.Location = new System.Drawing.Point(432, 55);
-			this.textBoxKey.Multiline = true;
-			this.textBoxKey.Name = "textBoxKey";
-			this.textBoxKey.ReadOnly = true;
-			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.textBoxKey.Size = new System.Drawing.Size(215, 42);
-			this.textBoxKey.TabIndex = 13;
+			this.linkLabelKey.AutoSize = true;
+			this.linkLabelKey.Location = new System.Drawing.Point(429, 58);
+			this.linkLabelKey.Name = "linkLabelKey";
+			this.linkLabelKey.Size = new System.Drawing.Size(50, 13);
+			this.linkLabelKey.TabIndex = 13;
+			this.linkLabelKey.TabStop = true;
+			this.linkLabelKey.Text = "View key";
+			this.linkLabelKey.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnShowKey);
 			// 
 			// labelKey
 			// 
@@ -325,7 +375,6 @@
 			// buttonAddToNodes
 			// 
 			this.buttonAddToNodes.DropDown = this.contextMenuAddToNodes;
-			this.buttonAddToNodes.Enabled = false;
 			this.buttonAddToNodes.Image = global::YtAnalytics.Resources.NodeAdd_16;
 			this.buttonAddToNodes.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonAddToNodes.Name = "buttonAddToNodes";
@@ -339,7 +388,6 @@
             this.itemSelectNodesState,
             this.itemSelectNodesSlice});
 			this.contextMenuAddToNodes.Name = "contextMenuAddToNodes";
-			this.contextMenuAddToNodes.OwnerItem = this.buttonAddToNodes;
 			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 70);
 			// 
 			// itemSelectNodesLocation
@@ -395,12 +443,6 @@
 			this.controlLog.Size = new System.Drawing.Size(798, 169);
 			this.controlLog.TabIndex = 0;
 			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "GlobeObject");
-			// 
 			// legendItemSuccess
 			// 
 			this.legendItemSuccess.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
@@ -440,6 +482,7 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.splitContainerSlice.Panel1.ResumeLayout(false);
 			this.splitContainerSlice.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSlice)).EndInit();
 			this.splitContainerSlice.ResumeLayout(false);
@@ -486,10 +529,13 @@
 		private System.Windows.Forms.TextBox textBoxDescription;
 		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.TextBox textBoxName;
-		private System.Windows.Forms.TextBox textBoxKey;
-		private System.Windows.Forms.Label labelKey;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton buttonSetKey;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
+		private System.Windows.Forms.LinkLabel linkLabelKey;
+		private System.Windows.Forms.Label labelKey;
+		private System.Windows.Forms.ListView listViewNodes;
+		private System.Windows.Forms.ColumnHeader columnHeaderId;
+		private System.Windows.Forms.ColumnHeader columnHeaderHostname;
 	}
 }

@@ -235,6 +235,12 @@
     <Compile Include="Controls\PlanetLab\ControlAddSliceToNodesSlice.Designer.cs">
       <DependentUpon>ControlAddSliceToNodesSlice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSession.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSession.Designer.cs">
+      <DependentUpon>ControlSession.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -548,6 +554,12 @@
     <Compile Include="Events\ProfileEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
+    <Compile Include="Forms\FormText.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormText.Designer.cs">
+      <DependentUpon>FormText.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormAddSliceToNodesSlice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -819,6 +831,9 @@
     <EmbeddedResource Include="Controls\PlanetLab\ControlAddSliceToNodesSlice.resx">
       <DependentUpon>ControlAddSliceToNodesSlice.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSession.resx">
+      <DependentUpon>ControlSession.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -972,6 +987,9 @@
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderStandardFeeds.resx">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormText.resx">
+      <DependentUpon>FormText.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesSlice.resx">
       <DependentUpon>FormAddSliceToNodesSlice.cs</DependentUpon>

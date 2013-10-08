@@ -222,9 +222,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			ListViewItem item = this.listViewSites.Items.FirstOrDefault((ListViewItem it) =>
 			{
 				// Get the slice info.
-				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)it.Tag;
+				Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)it.Tag;
 				// Return true if the item corresponds to the same slice.
-				return object.ReferenceEquals(site, tag.Key);
+				return object.ReferenceEquals(site, tag.First);
 			});
 			// If the item is not null.
 			if (null != item)
@@ -260,14 +260,29 @@ namespace YtAnalytics.Controls.PlanetLab
 			foreach (ListViewItem item in this.listViewSites.Items)
 			{
 				// Get the slice tag.
-				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)item.Tag;
+				Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)item.Tag;
 				// Remove the slice changed event handler.
-				tag.Key.Changed -= this.OnSiteChanged;
+				tag.First.Changed -= this.OnSiteChanged;
 			}
 			// Clear the list view.
 			this.listViewSites.Items.Clear();
 			// Clear the map markers.
 			this.mapControl.Markers.Clear();
+		}
+
+		/// <summary>
+		/// An event handler called when disposing the list of sites.
+		/// </summary>
+		private void OnDisposeSites()
+		{
+			// For all items.
+			foreach (ListViewItem item in this.listViewSites.Items)
+			{
+				// Get the slice tag.
+				Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)item.Tag;
+				// Remove the slice changed event handler.
+				tag.First.Changed -= this.OnSiteChanged;
+			}
 		}
 
 		private void OnAddSite(PlSite site)
@@ -294,7 +309,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
 						site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty
 					}, 0);
-			item.Tag = new KeyValuePair<PlSite, MapMarker>(site, marker);
+			item.Tag = new Pair<PlSite, MapMarker>(site, marker);
 			this.listViewSites.Items.Add(item);
 
 			// Add the site event handler.
@@ -424,11 +439,11 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.buttonProperties.Enabled = true;
 				this.menuItemProperties.Enabled = true;
 				// Get the site-marker for this item.
-				KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+				Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 				// If the marker is not null, emphasize the marker.
-				if (tag.Value != null)
+				if (tag.Second != null)
 				{
-					this.marker = tag.Value;
+					this.marker = tag.Second;
 					this.marker.Emphasized = true;
 				}
 			}
@@ -445,10 +460,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (this.listViewSites.SelectedItems.Count == 0) return;
 	
 			// Get the site-marker for this item.
-			KeyValuePair<PlSite, MapMarker> tag = (KeyValuePair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
+			Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)this.listViewSites.SelectedItems[0].Tag;
 
 			// Show the site properties.
-			this.formSiteProperties.ShowDialog(this, "Site", tag.Key);
+			this.formSiteProperties.ShowDialog(this, "Site", tag.First);
 		}
 
 		/// <summary>
