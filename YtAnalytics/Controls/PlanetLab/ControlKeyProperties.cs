@@ -36,9 +36,9 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlKeyProperties : ControlObjectProperties
 	{
-		private MapBulletMarker marker = new MapBulletMarker();
+		private readonly MapBulletMarker marker = new MapBulletMarker();
 
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetKeys);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetKeys);
 
 		/// <summary>
 		/// Creates a new control instance.

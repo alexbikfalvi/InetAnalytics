@@ -38,16 +38,16 @@ namespace YtAnalytics.Controls.YouTube
 	public partial class ControlVideoProperties : ThreadSafeControl
 	{
 		private Video video;
-		private WebClient web = new WebClient();
+		private readonly WebClient web = new WebClient();
 
-		private List<Image> thumbnails = new List<Image>();
-		private Mutex mutex = new Mutex();
+		private readonly List<Image> thumbnails = new List<Image>();
+		private readonly object sync = new object();
 
 		private WaitCallback delegateThumbnailUpdateCompleted;
 
-		private FormImage formImage = new FormImage();
+		private readonly FormImage formImage = new FormImage();
 
-		private static string notAvailable = "(not available)";
+		private static readonly string notAvailable = "(not available)";
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -184,16 +184,10 @@ namespace YtAnalytics.Controls.YouTube
 			// Get the video corresponding to the current update.
 			Video video = state as Video;
 
-			// Wait on the thumbnail mutex.
-			this.mutex.WaitOne();
-			try
+			lock (this.sync)
 			{
 				// Clear the thumbnail list.
 				this.thumbnails.Clear();
-			}
-			finally
-			{
-				this.mutex.ReleaseMutex();
 			}
 
 			if (this.web.IsBusy)
@@ -246,9 +240,11 @@ namespace YtAnalytics.Controls.YouTube
 			if (canceled)
 			{
 				// If the request has been canceled, clear the thumbnail list.
-				this.mutex.WaitOne();
-				try { this.thumbnails.Clear(); }
-				finally { this.mutex.ReleaseMutex(); }
+
+				lock (this.sync)
+				{
+					this.thumbnails.Clear();
+				}
 
 				// If the current video is not null and different from the current video.
 				if ((this.video != null) && (this.video != video))
@@ -285,9 +281,10 @@ namespace YtAnalytics.Controls.YouTube
 				}
 
 				// Add the image to the list.
-				this.mutex.WaitOne();
-				try { this.thumbnails.Add(image); }
-				finally { this.mutex.ReleaseMutex(); }
+				lock (this.sync)
+				{
+					this.thumbnails.Add(image);
+				}
 
 				// If there are more images to download.
 				if (this.thumbnails.Count < video.Thumbnails.Count)

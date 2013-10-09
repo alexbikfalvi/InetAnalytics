@@ -33,8 +33,8 @@ namespace YtCrawler.Testing
 	public sealed class TestingWebRequest
 	{
 		private string key;
-		private Dictionary<string, string> headers = new Dictionary<string, string>();
-		private static char[] headerSeparator = { ':' };
+		private readonly Dictionary<string, string> headers = new Dictionary<string, string>();
+		private static readonly char[] headerSeparator = { ':' };
 
 		/// <summary>
 		/// Creates a new testing web request instance.

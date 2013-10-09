@@ -92,11 +92,11 @@
 			// toolStripContainer.ContentPanel
 			// 
 			this.toolStripContainer.ContentPanel.Controls.Add(this.splitContainer);
-			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1008, 528);
+			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1008, 684);
 			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer.Name = "toolStripContainer";
-			this.toolStripContainer.Size = new System.Drawing.Size(1008, 574);
+			this.toolStripContainer.Size = new System.Drawing.Size(1008, 730);
 			this.toolStripContainer.TabIndex = 0;
 			// 
 			// toolStripContainer.TopToolStripPanel
@@ -151,7 +151,7 @@
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.labelNotAvailable);
 			this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(4);
-			this.splitContainer.Size = new System.Drawing.Size(1008, 528);
+			this.splitContainer.Size = new System.Drawing.Size(1008, 684);
 			this.splitContainer.SplitterDistance = 246;
 			this.splitContainer.TabIndex = 0;
 			// 
@@ -180,12 +180,12 @@
 			this.sideMenu.MinimizedItemWidth = 25;
 			this.sideMenu.MinimumPanelHeight = 50;
 			this.sideMenu.Name = "sideMenu";
-			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 28, 0, 440);
+			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 28, 0, 392);
 			this.sideMenu.SelectedIndex = 0;
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.sideMenu.Size = new System.Drawing.Size(244, 526);
+			this.sideMenu.Size = new System.Drawing.Size(244, 682);
 			this.sideMenu.TabIndex = 0;
-			this.sideMenu.VisibleItems = 8;
+			this.sideMenu.VisibleItems = 7;
 			// 
 			// controlSideLog
 			// 
@@ -193,7 +193,7 @@
 			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
 			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(244, 58);
+			this.controlSideLog.Size = new System.Drawing.Size(244, 262);
 			this.controlSideLog.TabIndex = 2;
 			this.controlSideLog.Visible = false;
 			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
@@ -214,7 +214,7 @@
 			this.controlSideComments.SelectedImageIndex = 0;
 			this.controlSideComments.ShowLines = false;
 			this.controlSideComments.ShowRootLines = false;
-			this.controlSideComments.Size = new System.Drawing.Size(244, 58);
+			this.controlSideComments.Size = new System.Drawing.Size(244, 262);
 			this.controlSideComments.TabIndex = 3;
 			this.controlSideComments.Visible = false;
 			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -284,7 +284,7 @@
 			this.controlSideConfiguration.SelectedImageIndex = 0;
 			this.controlSideConfiguration.ShowLines = false;
 			this.controlSideConfiguration.ShowRootLines = false;
-			this.controlSideConfiguration.Size = new System.Drawing.Size(244, 58);
+			this.controlSideConfiguration.Size = new System.Drawing.Size(244, 262);
 			this.controlSideConfiguration.TabIndex = 1;
 			this.controlSideConfiguration.Visible = false;
 			this.controlSideConfiguration.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -303,7 +303,7 @@
 			this.controlSideTesting.SelectedImageIndex = 0;
 			this.controlSideTesting.ShowLines = false;
 			this.controlSideTesting.ShowRootLines = false;
-			this.controlSideTesting.Size = new System.Drawing.Size(244, 58);
+			this.controlSideTesting.Size = new System.Drawing.Size(244, 262);
 			this.controlSideTesting.TabIndex = 6;
 			this.controlSideTesting.Visible = false;
 			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -322,7 +322,7 @@
 			this.controlSidePlanetLab.SelectedImageIndex = 0;
 			this.controlSidePlanetLab.ShowLines = false;
 			this.controlSidePlanetLab.ShowRootLines = false;
-			this.controlSidePlanetLab.Size = new System.Drawing.Size(244, 58);
+			this.controlSidePlanetLab.Size = new System.Drawing.Size(244, 262);
 			this.controlSidePlanetLab.TabIndex = 7;
 			this.controlSidePlanetLab.Visible = false;
 			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -341,7 +341,7 @@
 			this.controlSideSpiders.SelectedImageIndex = 0;
 			this.controlSideSpiders.ShowLines = false;
 			this.controlSideSpiders.ShowRootLines = false;
-			this.controlSideSpiders.Size = new System.Drawing.Size(244, 58);
+			this.controlSideSpiders.Size = new System.Drawing.Size(244, 262);
 			this.controlSideSpiders.TabIndex = 5;
 			this.controlSideSpiders.Visible = false;
 			this.controlSideSpiders.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -360,7 +360,7 @@
 			this.controlSideDatabase.SelectedImageIndex = 0;
 			this.controlSideDatabase.ShowLines = false;
 			this.controlSideDatabase.ShowRootLines = false;
-			this.controlSideDatabase.Size = new System.Drawing.Size(244, 58);
+			this.controlSideDatabase.Size = new System.Drawing.Size(244, 262);
 			this.controlSideDatabase.TabIndex = 4;
 			this.controlSideDatabase.Visible = false;
 			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -379,7 +379,7 @@
 			this.controlSideBrowser.SelectedImageIndex = 0;
 			this.controlSideBrowser.ShowLines = false;
 			this.controlSideBrowser.ShowRootLines = false;
-			this.controlSideBrowser.Size = new System.Drawing.Size(244, 58);
+			this.controlSideBrowser.Size = new System.Drawing.Size(244, 262);
 			this.controlSideBrowser.TabIndex = 0;
 			this.controlSideBrowser.Visible = false;
 			this.controlSideBrowser.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -453,7 +453,7 @@
 			this.labelNotAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labelNotAvailable.Location = new System.Drawing.Point(4, 4);
 			this.labelNotAvailable.Name = "labelNotAvailable";
-			this.labelNotAvailable.Size = new System.Drawing.Size(748, 518);
+			this.labelNotAvailable.Size = new System.Drawing.Size(748, 674);
 			this.labelNotAvailable.TabIndex = 0;
 			this.labelNotAvailable.Text = "Feature not available";
 			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -564,7 +564,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1008, 574);
+			this.ClientSize = new System.Drawing.Size(1008, 730);
 			this.Controls.Add(this.toolStripContainer);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip;

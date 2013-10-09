@@ -36,8 +36,8 @@ namespace YtAnalytics.Controls.YouTube
 		private string pageBegin;
 		private string pageEnd;
 		private string pageTotal;
-		private static int[] commentsPerPageInt = new int[] { 10, 25, 50 };
-		private static object[] commentsPerPageObject = new object[] { 10, 25, 50 };
+		private static readonly int[] commentsPerPageInt = new int[] { 10, 25, 50 };
+		private static readonly object[] commentsPerPageObject = new object[] { 10, 25, 50 };
 
 		/// <summary>
 		/// Constructor.

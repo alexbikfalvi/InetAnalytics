@@ -29,7 +29,7 @@ namespace YtApi.Api.V2.Atom
 	/// </summary>
 	public sealed class AtomGdFeedLinkList : IEnumerable<AtomGdFeedLink>
 	{
-		private List<AtomGdFeedLink> categories = new List<AtomGdFeedLink>();
+		private readonly List<AtomGdFeedLink> categories = new List<AtomGdFeedLink>();
 
 		/// <summary>
 		/// Private constructor.

@@ -95,48 +95,48 @@ namespace YtAnalytics.Forms
 		private Control controlPanel = null;
 
 		// Panel controls.
-		private ControlYtApi2Info controlYtApi2 = new ControlYtApi2Info();
-		private ControlYtApi2VideosFeedsInfo controlYtApi2VideosFeedsInfo = new ControlYtApi2VideosFeedsInfo();
-		private ControlYtApi2Video controlYtApi2Video = new ControlYtApi2Video();
-		private ControlYtApi2CommentsFeed controlYtApi2CommentsFeed = new ControlYtApi2CommentsFeed();
-		private ControlYtApi2Search controlYtApi2Search = new ControlYtApi2Search();
-		private ControlYtApi2StandardFeed controlYtApi2StandardFeed = new ControlYtApi2StandardFeed();
-		private ControlYtApi2VideosFeed controlYtApi2RelatedFeed = new ControlYtApi2VideosFeed();
-		private ControlYtApi2VideosFeed controlYtApi2ResponseFeed = new ControlYtApi2VideosFeed();
-		private ControlYtApi2UserFeedsInfo controlYtApi2UserFeedInfo = new ControlYtApi2UserFeedsInfo();
-		private ControlYtApi2Profile controlYtApi2Profile = new ControlYtApi2Profile();
-		private ControlYtApi2VideosFeed controlYtApi2UploadsFeed = new ControlYtApi2VideosFeed();
-		private ControlYtApi2PlaylistsFeed controlYtApi2PlaylistsFeed = new ControlYtApi2PlaylistsFeed();
-		private ControlYtApi2VideosFeed controlYtApi2PlaylistFeed = new ControlYtApi2VideosFeed();
-		private ControlYtApi2VideosFeed controlYtApi2FavoritesFeed = new ControlYtApi2VideosFeed();
-		private ControlYtApi2Categories controlYtApi2Categories = new ControlYtApi2Categories();
-		private ControlYtApi3Info controlYtApi3 = new ControlYtApi3Info();
-		private ControlWeb controlWeb = new ControlWeb();
-		private ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
-		
-		private ControlServers controlDatabaseServers = new ControlServers();
-		
-		private ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
-		private ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
+		private readonly ControlYtApi2Info controlYtApi2 = new ControlYtApi2Info();
+		private readonly ControlYtApi2VideosFeedsInfo controlYtApi2VideosFeedsInfo = new ControlYtApi2VideosFeedsInfo();
+		private readonly ControlYtApi2Video controlYtApi2Video = new ControlYtApi2Video();
+		private readonly ControlYtApi2CommentsFeed controlYtApi2CommentsFeed = new ControlYtApi2CommentsFeed();
+		private readonly ControlYtApi2Search controlYtApi2Search = new ControlYtApi2Search();
+		private readonly ControlYtApi2StandardFeed controlYtApi2StandardFeed = new ControlYtApi2StandardFeed();
+		private readonly ControlYtApi2VideosFeed controlYtApi2RelatedFeed = new ControlYtApi2VideosFeed();
+		private readonly ControlYtApi2VideosFeed controlYtApi2ResponseFeed = new ControlYtApi2VideosFeed();
+		private readonly ControlYtApi2UserFeedsInfo controlYtApi2UserFeedInfo = new ControlYtApi2UserFeedsInfo();
+		private readonly ControlYtApi2Profile controlYtApi2Profile = new ControlYtApi2Profile();
+		private readonly ControlYtApi2VideosFeed controlYtApi2UploadsFeed = new ControlYtApi2VideosFeed();
+		private readonly ControlYtApi2PlaylistsFeed controlYtApi2PlaylistsFeed = new ControlYtApi2PlaylistsFeed();
+		private readonly ControlYtApi2VideosFeed controlYtApi2PlaylistFeed = new ControlYtApi2VideosFeed();
+		private readonly ControlYtApi2VideosFeed controlYtApi2FavoritesFeed = new ControlYtApi2VideosFeed();
+		private readonly ControlYtApi2Categories controlYtApi2Categories = new ControlYtApi2Categories();
+		private readonly ControlYtApi3Info controlYtApi3 = new ControlYtApi3Info();
+		private readonly ControlWeb controlWeb = new ControlWeb();
+		private readonly ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
 
-		private ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
-		private ControlSites controlPlanetLabSites = new ControlSites();
-		private ControlSlices controlPlanetLabSlices = new ControlSlices();
+		private readonly ControlServers controlDatabaseServers = new ControlServers();
 
-		private ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
-		private ControlTestingSshRequest controlTestingSshRequest = new ControlTestingSshRequest();
+		private readonly ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
+		private readonly ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
 
-		private ControlSettings controlSettings = new ControlSettings();
-		
-		private ControlLog controlLog = new ControlLog();
-		
-		private ControlCommentsInfo controlCommentsInfo = new ControlCommentsInfo();
-		private ControlComments controlCommentsVideos = new ControlComments();
-		private ControlComments controlCommentsUsers = new ControlComments();
-		private ControlComments controlCommentsPlaylists = new ControlComments();
+		private readonly ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
+		private readonly ControlSites controlPlanetLabSites = new ControlSites();
+		private readonly ControlSlices controlPlanetLabSlices = new ControlSlices();
+
+		private readonly ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
+		private readonly ControlTestingSshRequest controlTestingSshRequest = new ControlTestingSshRequest();
+
+		private readonly ControlSettings controlSettings = new ControlSettings();
+
+		private readonly ControlLog controlLog = new ControlLog();
+
+		private readonly ControlCommentsInfo controlCommentsInfo = new ControlCommentsInfo();
+		private readonly ControlComments controlCommentsVideos = new ControlComments();
+		private readonly ControlComments controlCommentsUsers = new ControlComments();
+		private readonly ControlComments controlCommentsPlaylists = new ControlComments();
 
 		// Forms.
-		private FormAbout formAbout = new FormAbout();
+		private readonly FormAbout formAbout = new FormAbout();
 
 		/// <summary>
 		/// Constructor for main form window.

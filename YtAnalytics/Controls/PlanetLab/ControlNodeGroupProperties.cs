@@ -36,7 +36,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlNodeGroupProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodeGroups);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodeGroups);
 
 		/// <summary>
 		/// Creates a new control instance.

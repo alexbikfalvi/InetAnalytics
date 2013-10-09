@@ -38,7 +38,7 @@ namespace YtCrawler.Database
 	{
 		private SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
 		private SqlConnection connection = new SqlConnection();
-		private Mutex mutex = new Mutex();
+		private readonly object sync = new object();
 
 		private DbObjectDatabase database = null;
 
@@ -220,54 +220,51 @@ namespace YtCrawler.Database
 		{
 			// Call the event handler.
 			base.OnOpening();
-			try
+
+			lock (this.sync)
 			{
-				// Lock the mutex (only one state changing operation allowed at one time).
-				this.mutex.WaitOne();
-				// Initialize the server.
-				this.OnInitialized();
-				// Change the state of the server to connecting.
-				base.OnStateChange(ServerState.Connecting);
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
-					this.logSource,
-					"Connecting to the database server with ID \'{0}\'.",
-					new object[] { this.Id }
-					);
-				// Open the database connection.
-				this.connection.Open();
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Normal,
-					LogEventType.Success,
-					this.logSource,
-					"Connected to the database server with ID \'{0}\'.",
-					new object[] { this.Id }
-					);
+				try
+				{
+					// Initialize the server.
+					this.OnInitialized();
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Connecting);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Connecting to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+					// Open the database connection.
+					this.connection.Open();
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Normal,
+						LogEventType.Success,
+						this.logSource,
+						"Connected to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+				}
+				catch (SqlException exception)
+				{
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Failed);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Opening the connection to the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
 			}
-			catch (SqlException exception)
-			{
-				// Change the state of the server to connecting.
-				base.OnStateChange(ServerState.Failed);
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Important,
-					LogEventType.Error,
-					this.logSource,
-					"Opening the connection to the database server with ID \'{0}\' failed. {1}",
-					new object[] { this.Id, exception.Message },
-					exception
-					);
-				// Rethrow the exception.
-				throw;
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
-			}			
 		}
 
 		/// <summary>
@@ -309,57 +306,54 @@ namespace YtCrawler.Database
 		{
 			// Call the event handler.
 			base.OnReopening();
-			try
+
+			lock (this.sync)
 			{
-				// Lock the mutex (only one state changing operation allowed at one time).
-				this.mutex.WaitOne();
-				// Change the state of the server to disconnecting.
-				base.OnStateChange(ServerState.Disconnecting);
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
-					this.logSource,
-					"Reconnecting to the database server with ID \'{0}\'.",
-					new object[] { this.Id }
-					);
-				// Open the database connection.
-				this.connection.Close();
-				// Initialize the server.
-				this.OnInitialized();
-				// Change the state of the server to connecting.
-				base.OnStateChange(ServerState.Connecting);
-				// Open the database connection.
-				this.connection.Open();
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Normal,
-					LogEventType.Success,
-					this.logSource,
-					"Reconnected to the database server with ID \'{0}\'.",
-					new object[] { this.Id }
-					);
-			}
-			catch (SqlException exception)
-			{
-				// Change the state of the server to connecting.
-				base.OnStateChange(ServerState.Failed);
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Important,
-					LogEventType.Error,
-					this.logSource,
-					"Reopening the connection to the database server with ID \'{0}\' failed. {1}",
-					new object[] { this.Id, exception.Message },
-					exception
-					);
-				// Rethrow the exception.
-				throw;
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
+				try
+				{
+					// Change the state of the server to disconnecting.
+					base.OnStateChange(ServerState.Disconnecting);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Reconnecting to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+					// Open the database connection.
+					this.connection.Close();
+					// Initialize the server.
+					this.OnInitialized();
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Connecting);
+					// Open the database connection.
+					this.connection.Open();
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Normal,
+						LogEventType.Success,
+						this.logSource,
+						"Reconnected to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+				}
+				catch (SqlException exception)
+				{
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Failed);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Reopening the connection to the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
 			}
 		}
 
@@ -422,51 +416,48 @@ namespace YtCrawler.Database
 		{
 			// Call the event handler.
 			base.OnClosing();
-			try
+
+			lock (this.sync)
 			{
-				// Lock the mutex (only one state changing operation allowed at one time).
-				this.mutex.WaitOne();
-				// Change the state of the server to disconnecting.
-				base.OnStateChange(ServerState.Disconnecting);
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
-					this.logSource,
-					"Disconnecting from the database server with ID \'{0}\'.",
-					new object[] { this.Id }
-					);
-				// Close the database connection.
-				this.connection.Close();
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Normal,
-					LogEventType.Success,
-					this.logSource,
-					"Disconnected from the database server with ID \'{0}\'.",
-					new object[] { this.Id }
-					);
-			}
-			catch (SqlException exception)
-			{
-				// Change the state of the server to connecting.
-				base.OnStateChange(ServerState.Failed);
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Important,
-					LogEventType.Error,
-					this.logSource,
-					"Disconnecting from the database server with ID \'{0}\' failed. {1}",
-					new object[] { this.Id, exception.Message },
-					exception
-					);
-				// Rethrow the exception.
-				throw;
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
+				try
+				{
+					// Change the state of the server to disconnecting.
+					base.OnStateChange(ServerState.Disconnecting);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Disconnecting from the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+					// Close the database connection.
+					this.connection.Close();
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Normal,
+						LogEventType.Success,
+						this.logSource,
+						"Disconnected from the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+				}
+				catch (SqlException exception)
+				{
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Failed);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Disconnecting from the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
 			}
 		}
 
@@ -582,10 +573,6 @@ namespace YtCrawler.Database
 					// Close the server connection synchronously.
 					this.Close();
 				}
-				// Wait on the mutex.
-				this.mutex.WaitOne();
-				// Close the mutex.
-				this.mutex.Close();
 			}
 			// Call the base class method.
 			base.Dispose(disposing);
@@ -613,45 +600,41 @@ namespace YtCrawler.Database
 		/// <param name="newPassword">The new password.</param>
 		private void ChangePassword(SecureString newPassword)
 		{
-			try
+			lock (this.sync)
 			{
-				// Lock the mutex (only one state changing operation allowed at one time).
-				this.mutex.WaitOne();
-				// Initialize the server.
-				this.OnInitialized();
-				// Change the server password.
-				SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword.ConvertToUnsecureString());
-				// If the password change was successfull, update the configuration.
-				this.Password = newPassword;
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
-					this.logSource,
-					"Changing the password for the database server with ID \'{0}\' completed successfully.",
-					new object[] { this.Id }
-					);
-				// Save the configuration.
-				this.SaveConfiguration();
-			}
-			catch (Exception exception)
-			{
-				// Log the event.
-				this.log.Add(
-					LogEventLevel.Important,
-					LogEventType.Error,
-					this.logSource,
-					"Changing the password for the database server with ID \'{0}\' failed. {1}",
-					new object[] { this.Id, exception.Message },
-					exception
-					);
-				// Rethrow the exception.
-				throw;
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
+				try
+				{
+					// Initialize the server.
+					this.OnInitialized();
+					// Change the server password.
+					SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword.ConvertToUnsecureString());
+					// If the password change was successfull, update the configuration.
+					this.Password = newPassword;
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Changing the password for the database server with ID \'{0}\' completed successfully.",
+						new object[] { this.Id }
+						);
+					// Save the configuration.
+					this.SaveConfiguration();
+				}
+				catch (Exception exception)
+				{
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Changing the password for the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
 			}
 		}
 

@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Data
 	/// </summary>
 	public sealed class LinkList : IEnumerable<Link>
 	{
-		private List<Link> list = new List<Link>();
+		private readonly List<Link> list = new List<Link>();
 
 		private Uri previous = null;
 		private Uri next = null;

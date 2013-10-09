@@ -29,7 +29,7 @@ namespace YtApi.Api.V2.Atom
 	/// </summary>
 	public sealed class AtomMediaCreditList : IEnumerable<AtomMediaCredit>
 	{
-		private List<AtomMediaCredit> links = new List<AtomMediaCredit>();
+		private readonly List<AtomMediaCredit> links = new List<AtomMediaCredit>();
 
 		/// <summary>
 		/// Private constructor.

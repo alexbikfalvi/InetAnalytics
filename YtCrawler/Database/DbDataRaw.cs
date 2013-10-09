@@ -31,9 +31,9 @@ namespace YtCrawler.Database
 
 		private int columnCount = 0;
 
-		private List<object[]> rows = new List<object[]>();
+		private readonly List<object[]> rows = new List<object[]>();
 		private string[] names = null;
-		private Dictionary<string, int> mapping = new Dictionary<string, int>();
+		private readonly Dictionary<string, int> mapping = new Dictionary<string, int>();
 
 		private AddRowAction handler;
 

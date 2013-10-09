@@ -35,8 +35,8 @@ namespace YtAnalytics.Controls.Comments
 	{
 		private CommentsList comments;
 
-		private FormAddComment formAdd = new FormAddComment();
-		private FormCommentProperties formComment = new FormCommentProperties();
+		private readonly FormAddComment formAdd = new FormAddComment();
+		private readonly FormCommentProperties formComment = new FormCommentProperties();
 
 		/// <summary>
 		/// Creates a new control instance.

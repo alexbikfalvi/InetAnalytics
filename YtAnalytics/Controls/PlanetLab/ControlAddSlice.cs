@@ -35,11 +35,12 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public sealed partial class ControlAddSlice : ControlRequest
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		
 		private string filter = string.Empty;
 		private PlDatabaseList<PlSlice> slices = null;
 
-		private FormObjectProperties<ControlSliceProperties> formProperties = new FormObjectProperties<ControlSliceProperties>();
+		private readonly FormObjectProperties<ControlSliceProperties> formProperties = new FormObjectProperties<ControlSliceProperties>();
 
 		/// <summary>
 		/// Creates a new control instance.

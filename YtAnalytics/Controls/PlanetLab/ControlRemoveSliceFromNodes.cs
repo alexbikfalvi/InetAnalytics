@@ -41,14 +41,14 @@ namespace YtAnalytics.Controls.PlanetLab
 			"NodeUnknown", "NodeBoot", "NodeSafeBoot", "NodeDisabled", "NodeReinstall"
 		};
 
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSlices);
 		private PlSlice slice = null;
 
 		private bool inhibitAutoCheck = false;
 
-		private Dictionary<int, PlNode> nodes = new Dictionary<int, PlNode>();
+		private readonly Dictionary<int, PlNode> nodes = new Dictionary<int, PlNode>();
 
-		private FormObjectProperties<ControlNodeProperties> formProperties = new FormObjectProperties<ControlNodeProperties>();
+		private readonly FormObjectProperties<ControlNodeProperties> formProperties = new FormObjectProperties<ControlNodeProperties>();
 
 		/// <summary>
 		/// Creates a new control instance.

@@ -28,7 +28,7 @@ namespace YtApi.Api.V2
 	/// </summary>
 	public class YouTube
 	{
-		private static YouTubeStandardFeed[] feeds = new YouTubeStandardFeed[] {
+		private static readonly YouTubeStandardFeed[] feeds = new YouTubeStandardFeed[] {
 			YouTubeStandardFeed.TopRated,
 			YouTubeStandardFeed.TopFavories,
 			YouTubeStandardFeed.MostShared,
@@ -39,7 +39,7 @@ namespace YtApi.Api.V2
 			YouTubeStandardFeed.RecentlyFeatured,
 			YouTubeStandardFeed.TrendingVideos
 		};
-		private static YouTubeTimeId[] times = new YouTubeTimeId[] {
+		private static readonly YouTubeTimeId[] times = new YouTubeTimeId[] {
 			YouTubeTimeId.AllTime,
 			YouTubeTimeId.Today,
 			YouTubeTimeId.ThisWeek,

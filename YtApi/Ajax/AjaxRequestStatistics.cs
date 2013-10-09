@@ -25,14 +25,14 @@ namespace YtApi.Ajax
 {
 	public class AjaxRequestStatistics : AjaxRequest
 	{
-		private static string uriScheme = "http";
-		private static string uriHost = "www.youtube.com";
-		private static int uriPort = -1;
-		private static string uriPath = "insight_ajax";
-		private static string uriFragment = "?action_get_statistics_and_data=1&v={0}";
-		public static CultureInfo culture = new CultureInfo("en-US");
+		private static readonly string uriScheme = "http";
+		private static readonly string uriHost = "www.youtube.com";
+		private static readonly int uriPort = -1;
+		private static readonly string uriPath = "insight_ajax";
+		private static readonly string uriFragment = "?action_get_statistics_and_data=1&v={0}";
+		public static readonly CultureInfo culture = new CultureInfo("en-US");
 
-		private AjaxRequestStatisticsFunction func = new AjaxRequestStatisticsFunction();
+		private readonly AjaxRequestStatisticsFunction func = new AjaxRequestStatisticsFunction();
 
 		/// <summary>
 		/// Conversion class for an asynchronous operation returning an XML document.

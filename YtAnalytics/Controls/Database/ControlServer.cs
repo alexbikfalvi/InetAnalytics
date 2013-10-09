@@ -43,21 +43,21 @@ namespace YtAnalytics.Controls.Database
 		private Crawler crawler;
 		private DbServer server;
 
-		private FormServerProperties formProperties = new FormServerProperties();
-		private FormDatabaseProperties formDatabaseProperties = new FormDatabaseProperties();
-		private FormTableProperties formTable = new FormTableProperties();
-		private FormRelationshipProperties formRelationship = new FormRelationshipProperties();
+		private readonly FormServerProperties formProperties = new FormServerProperties();
+		private readonly FormDatabaseProperties formDatabaseProperties = new FormDatabaseProperties();
+		private readonly FormTableProperties formTable = new FormTableProperties();
+		private readonly FormRelationshipProperties formRelationship = new FormRelationshipProperties();
 
 		private TreeNode treeNode = null;
 
-		private static Image[] images = {
-											Resources.ServerDown_48,
-											Resources.ServerUp_48,
-											Resources.ServerWarning_48,
-											Resources.ServerBusy_48,
-											Resources.ServerBusy_48,
-											Resources.ServerBusy_48
-										};
+		private static readonly Image[] images = {
+													 Resources.ServerDown_48,
+													 Resources.ServerUp_48,
+													 Resources.ServerWarning_48,
+													 Resources.ServerBusy_48,
+													 Resources.ServerBusy_48,
+													 Resources.ServerBusy_48
+												 };
 
 		/// <summary>
 		/// Creates a new instance of the control.

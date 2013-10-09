@@ -37,7 +37,7 @@ namespace YtAnalytics.Controls.Database
 		private DbQuery query = null;
 		private DbDataObject result = null;
 
-		private FormObjectProperties formObject = new FormObjectProperties();
+		private readonly FormObjectProperties formObject = new FormObjectProperties();
 
 		/// <summary>
 		/// Creates a new control instance.

@@ -48,7 +48,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		private AjaxVideoStatistics statistics = null;
 		private string statisticsVideo = null;
 
-		private FormDiscoveryProperties formEvent = new FormDiscoveryProperties();
+		private readonly FormDiscoveryProperties formEvent = new FormDiscoveryProperties();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -95,7 +95,7 @@ namespace YtAnalytics.Controls.YouTube.Web
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoChanged(object sender, EventArgs e)
 		{
-			this.buttonStart.Enabled = string.IsNullOrWhiteSpace(this.textBox.Text);
+			this.buttonStart.Enabled = !string.IsNullOrWhiteSpace(this.textBox.Text);
 		}
 
 		/// <summary>

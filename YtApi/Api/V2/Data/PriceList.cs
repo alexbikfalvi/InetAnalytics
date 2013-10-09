@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Data
 	/// </summary>
 	public sealed class PriceList : IEnumerable<Price>
 	{
-		private List<Price> list = new List<Price>();
+		private readonly List<Price> list = new List<Price>();
 
 		/// <summary>
 		/// Creates a new price list, based on a collection of atom objects.

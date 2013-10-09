@@ -36,7 +36,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlConfigurationFileProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetConfigurationFiles);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetConfigurationFiles);
 
 		/// <summary>
 		/// Creates a new control instance.

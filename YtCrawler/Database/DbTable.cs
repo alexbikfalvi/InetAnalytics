@@ -133,15 +133,15 @@ namespace YtCrawler.Database
 	/// </summary>
 	public class DbTable<T> : ITable where T : DbObject, new()
 	{
-		private static string xmlRoot = "DbTable";
-		private static string xmlRootLocalName = "localName";
-		private static string xmlRootDatabaseName = "databaseName";
-		private static string xmlRootSchema = "schema";
-		private static string xmlRoolDatabase = "database";
-		private static string xmlRootDefaultDatabase = "defaultDatabase";
-		private static string xmlField = "DbField";
-		private static string xmlFieldLocalName = "localName";
-		private static string xmlFieldDatabaseName = "databaseName";
+		private static readonly string xmlRoot = "DbTable";
+		private static readonly string xmlRootLocalName = "localName";
+		private static readonly string xmlRootDatabaseName = "databaseName";
+		private static readonly string xmlRootSchema = "schema";
+		private static readonly string xmlRoolDatabase = "database";
+		private static readonly string xmlRootDefaultDatabase = "defaultDatabase";
+		private static readonly string xmlField = "DbField";
+		private static readonly string xmlFieldLocalName = "localName";
+		private static readonly string xmlFieldDatabaseName = "databaseName";
 		
 		private bool readOnly = true;
 
@@ -153,11 +153,11 @@ namespace YtCrawler.Database
 		private bool defaultDatabase = true;
 
 		private Type type;
-		private List<DbField> fieldsList = new List<DbField>();
-		private Dictionary<string, DbField> fieldsIndex = new Dictionary<string, DbField>();
-		private List<IRelationship> relationships = new List<IRelationship>();
+		private readonly List<DbField> fieldsList = new List<DbField>();
+		private readonly Dictionary<string, DbField> fieldsIndex = new Dictionary<string, DbField>();
+		private readonly List<IRelationship> relationships = new List<IRelationship>();
 
-		private static char[] tokenSeparators = { ';', ',', ' ' };
+		private static readonly char[] tokenSeparators = { ';', ',', ' ' };
 
 		/// <summary>
 		/// Creates a new user-customizable table instance.

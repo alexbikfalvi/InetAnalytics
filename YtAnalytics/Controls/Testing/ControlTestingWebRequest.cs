@@ -47,11 +47,11 @@ namespace YtAnalytics.Controls.Testing
 		private AsyncWebRequest request = new AsyncWebRequest();
 		private IAsyncResult result = null;
 
-		private FormHttpAddRequestHeader formAddHttpRequestHeader = new FormHttpAddRequestHeader();
-		private FormHttpHeaderProperties formHttpHeader = new FormHttpHeaderProperties();
+		private readonly FormHttpAddRequestHeader formAddHttpRequestHeader = new FormHttpAddRequestHeader();
+		private readonly FormHttpHeaderProperties formHttpHeader = new FormHttpHeaderProperties();
 
 		private EncodingInfo[] encodings;
-		private Dictionary<int, int> encodingPages = new Dictionary<int,int>();
+		private readonly Dictionary<int, int> encodingPages = new Dictionary<int,int>();
 
 		private bool configurationChanged = false;
 

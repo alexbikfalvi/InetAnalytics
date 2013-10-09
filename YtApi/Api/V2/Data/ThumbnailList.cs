@@ -28,7 +28,7 @@ namespace YtApi.Api.V2.Data
 	/// </summary>
 	public sealed class ThumbnailList : IEnumerable<Thumbnail>
 	{
-		private List<Thumbnail> list = new List<Thumbnail>();
+		private readonly List<Thumbnail> list = new List<Thumbnail>();
 
 		/// <summary>
 		/// Creates a new thumbnail list based on a collection of atoms.

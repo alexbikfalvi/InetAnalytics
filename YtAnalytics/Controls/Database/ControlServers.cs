@@ -105,14 +105,14 @@ namespace YtAnalytics.Controls.Database
 
 		private Crawler crawler;
 
-		private FormAddServer formAdd = new FormAddServer();
-		private FormServerProperties formProperties = new FormServerProperties();
+		private readonly FormAddServer formAdd = new FormAddServer();
+		private readonly FormServerProperties formProperties = new FormServerProperties();
 
-		private Dictionary<string, ServerControls> items = new Dictionary<string, ServerControls>();
+		private readonly Dictionary<string, ServerControls> items = new Dictionary<string, ServerControls>();
 
 		private ImageList imageList = null;
 		private TreeNode treeNode = null;
-		private string[] imageKeys = { "ServerDown", "ServerUp", "ServerWarning", "ServerBusy", "ServerBusy", "ServerBusy" };
+		private static readonly string[] imageKeys = { "ServerDown", "ServerUp", "ServerWarning", "ServerBusy", "ServerBusy", "ServerBusy" };
 		private Control.ControlCollection controls = null;
 
 
@@ -187,13 +187,13 @@ namespace YtAnalytics.Controls.Database
 					server.Version,
 					server.Id
 				});
-			item.ImageKey = this.imageKeys[(int)server.State];
+			item.ImageKey = ControlServers.imageKeys[(int)server.State];
 			item.Tag = server.Id;
 			this.listView.Items.Add(item);
 			// Create a new tree node for the server.
 			TreeNode nodeServer = new TreeNode(this.GetServerTreeName(server));
-			nodeServer.ImageKey = this.imageKeys[(int)server.State];
-			nodeServer.SelectedImageKey = this.imageKeys[(int)server.State];
+			nodeServer.ImageKey = ControlServers.imageKeys[(int)server.State];
+			nodeServer.SelectedImageKey = ControlServers.imageKeys[(int)server.State];
 			this.treeNode.Nodes.Add(nodeServer);
 			// Create a new tree node for the server query.
 			TreeNode nodeQuery = new TreeNode("Query");
@@ -366,11 +366,11 @@ namespace YtAnalytics.Controls.Database
 				// Update the list view item.
 				controls.Item.SubItems[2].Text = e.Server.State.ToString();
 				controls.Item.SubItems[3].Text = e.Server.Version;
-				controls.Item.ImageKey = this.imageKeys[(int)e.Server.State];
+				controls.Item.ImageKey = ControlServers.imageKeys[(int)e.Server.State];
 
 				// Update the tree node.
-				controls.Node.ImageKey = this.imageKeys[(int)e.Server.State];
-				controls.Node.SelectedImageKey = this.imageKeys[(int)e.Server.State];
+				controls.Node.ImageKey = ControlServers.imageKeys[(int)e.Server.State];
+				controls.Node.SelectedImageKey = ControlServers.imageKeys[(int)e.Server.State];
 
 				// Call the selected item change event to update the buttons.
 				this.OnServerSelectionChanged(this, e);

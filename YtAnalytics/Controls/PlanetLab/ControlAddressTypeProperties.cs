@@ -36,7 +36,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlAddressTypeProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetAddressTypes);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetAddressTypes);
 
 		/// <summary>
 		/// Creates a new control instance.

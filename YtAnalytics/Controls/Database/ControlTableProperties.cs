@@ -36,10 +36,10 @@ namespace YtAnalytics.Controls.Database
 		private DbServer server;
 		private ITable table;
 		
-		private FormDatabaseSelect formDatabaseSelect = new FormDatabaseSelect();
-		private FormFieldProperties formField = new FormFieldProperties();
-		private FormRelationshipProperties formRelationship = new FormRelationshipProperties();
-		private FormCompareFields formCompareFields = new FormCompareFields();
+		private readonly FormDatabaseSelect formDatabaseSelect = new FormDatabaseSelect();
+		private readonly FormFieldProperties formField = new FormFieldProperties();
+		private readonly FormRelationshipProperties formRelationship = new FormRelationshipProperties();
+		private readonly FormCompareFields formCompareFields = new FormCompareFields();
 
 		private DbDataObject resultTables = null;
 		private DbDataObject resultDatabases = null;

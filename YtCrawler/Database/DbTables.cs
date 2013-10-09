@@ -29,13 +29,13 @@ namespace YtCrawler.Database
 	/// </summary>
 	public sealed class DbTables : IDisposable, IEnumerable<KeyValuePair<string, ITable>>
 	{
-		private static string keyName = "Tables";
+		private static readonly string keyName = "Tables";
 		private RegistryKey key;
 
-		private Dictionary<string, ITable> tables = new Dictionary<string,ITable>();
+		private readonly Dictionary<string, ITable> tables = new Dictionary<string,ITable>();
 
 		// YouTube tables.
-		private DbTable<DbObjectStandardFeed> tableStandardFeeds = new DbTable<DbObjectStandardFeed>("Standard feeds");
+		private readonly DbTable<DbObjectStandardFeed> tableStandardFeeds = new DbTable<DbObjectStandardFeed>("Standard feeds");
 
 		/// <summary>
 		/// Creates a new database table collection, based on the given server registry key.

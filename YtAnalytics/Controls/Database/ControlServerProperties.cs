@@ -31,13 +31,13 @@ namespace YtAnalytics.Controls.Database
 	public partial class ControlServerProperties : ThreadSafeControl
 	{
 		private DbServer server;
-		private static Image[] images = {
-											Resources.ServerDown_32,
-											Resources.ServerUp_32,
-											Resources.ServerWarning_32,
-											Resources.ServerBusy_32,
-											Resources.ServerBusy_32
-										};
+		private static readonly Image[] images = {
+													 Resources.ServerDown_32,
+													 Resources.ServerUp_32,
+													 Resources.ServerWarning_32,
+													 Resources.ServerBusy_32,
+													 Resources.ServerBusy_32
+												 };
 
 		/// <summary>
 		/// Creates a new log event control instance.

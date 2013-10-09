@@ -42,8 +42,7 @@ namespace YtCrawler.Database
 			LoginPasswordMustChange
 		};
 
-		private static Dictionary<int, Type> sqlCodes = new Dictionary<int,Type>
-		{
+		private static readonly Dictionary<int, Type> sqlCodes = new Dictionary<int,Type> {
 			{ 18452, Type.LoginInvalidConnect },
 			{ 18456, Type.LoginFailed },
 			{ 18487, Type.LoginPasswordExpired },

@@ -55,11 +55,11 @@ namespace YtCrawler.Database
 	/// </summary>
 	public class DbRelationship : IRelationship
 	{
-		private static string xmlRelationship = "DbRelationship";
-		private static string xmlLeftTable = "tableLeft";
-		private static string xmlRightTable = "tableRight";
-		private static string xmlLeftField = "fieldLeft";
-		private static string xmlRightField = "fieldRight";
+		private static readonly string xmlRelationship = "DbRelationship";
+		private static readonly string xmlLeftTable = "tableLeft";
+		private static readonly string xmlRightTable = "tableRight";
+		private static readonly string xmlLeftField = "fieldLeft";
+		private static readonly string xmlRightField = "fieldRight";
 
 		private ITable tableLeft;
 		private string fieldLeft;

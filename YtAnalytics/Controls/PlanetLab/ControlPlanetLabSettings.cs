@@ -38,14 +38,14 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private Crawler crawler;
 
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetPersons);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetPersons);
 
 		private string validatedUsername = null;
 		private SecureString validatedPassword = null;
-		private PlList<PlPerson> validatedPersons = new PlList<PlPerson>();
+		private readonly PlList<PlPerson> validatedPersons = new PlList<PlPerson>();
 		private int validatedPerson = -1;
 
-		private FormObjectProperties<ControlPersonProperties> formPersonProperties = new FormObjectProperties<ControlPersonProperties>();
+		private readonly FormObjectProperties<ControlPersonProperties> formPersonProperties = new FormObjectProperties<ControlPersonProperties>();
 
 		/// <summary>
 		/// Creates a new control instance.

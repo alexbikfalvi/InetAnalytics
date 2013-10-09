@@ -36,7 +36,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlPcuProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetPcus);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetPcus);
 
 		/// <summary>
 		/// Creates a new control instance.

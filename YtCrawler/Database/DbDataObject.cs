@@ -28,7 +28,7 @@ namespace YtCrawler.Database
 	public class DbDataObject : DbData
 	{
 		private ITable table;
-		private List<DbObject> rows = new List<DbObject>();
+		private readonly List<DbObject> rows = new List<DbObject>();
 
 		/// <summary>
 		/// Initializes a database table using data from the specified reader.
@@ -72,7 +72,7 @@ namespace YtCrawler.Database
 	/// <typeparam name="T">The table object type.</typeparam>
 	public class DbDataObject<T> : DbData where T : DbObject, new()
 	{
-		private List<T> rows = new List<T>();
+		private readonly List<T> rows = new List<T>();
 		private DbTable<T> table;
 
 		/// <summary>

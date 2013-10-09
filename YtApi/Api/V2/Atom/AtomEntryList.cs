@@ -27,7 +27,7 @@ namespace YtApi.Api.V2.Atom
 	/// </summary>
 	public class AtomEntryList : IEnumerable<AtomEntry>
 	{
-		private List<AtomEntry> list = new List<AtomEntry>();
+		private readonly List<AtomEntry> list = new List<AtomEntry>();
 
 		public AtomEntryList() { }
 

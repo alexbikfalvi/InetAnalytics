@@ -33,8 +33,8 @@ namespace YtApi.Ajax
 	[Serializable]
 	public class AjaxViewsHistory : AjaxHistory
 	{
-		private Dictionary<string, AjaxViewsHistoryDiscoveryEvent> events = new Dictionary<string, AjaxViewsHistoryDiscoveryEvent>();
-		private List<AjaxException> exceptions = new List<AjaxException>();
+		private readonly Dictionary<string, AjaxViewsHistoryDiscoveryEvent> events = new Dictionary<string, AjaxViewsHistoryDiscoveryEvent>();
+		private readonly List<AjaxException> exceptions = new List<AjaxException>();
 
 		/// <summary>
 		/// Parses a string containing history data in Google chart format, and creates a history object.

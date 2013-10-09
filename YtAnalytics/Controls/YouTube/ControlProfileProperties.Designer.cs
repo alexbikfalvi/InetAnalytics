@@ -19,10 +19,6 @@
 				{
 					components.Dispose();
 				}
-				// Wait on the mutex.
-				this.mutex.WaitOne();
-				// Close the mutex.
-				this.mutex.Close();
 			}
 			base.Dispose(disposing);
 		}

@@ -106,14 +106,6 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Enabled = true;
 		}
 
-		public void Connect()
-		{
-		}
-
-		public void Disconnect()
-		{
-		}
-
 		// Protected methods.
 
 		/// <summary>

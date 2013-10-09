@@ -27,7 +27,7 @@ namespace YtApi.Api.V2.Atom
 	/// </summary>
 	public class AtomExceptionList : IEnumerable<AtomException>
 	{
-		private List<AtomException> list = new List<AtomException>();
+		private readonly List<AtomException> list = new List<AtomException>();
 
 		public AtomExceptionList() { }
 

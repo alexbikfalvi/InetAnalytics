@@ -18,11 +18,11 @@ namespace YtAnalytics.Controls.Log
 	/// </summary>
 	public partial class ControlLogList : ThreadSafeControl
 	{
-		private int maximumItems;
-		private static int[] maximumValues = { 10, 100, 1000, int.MaxValue };
-		private FormEventProperties formLogEvent = new FormEventProperties();
-
 		private delegate void AddEventAction(LogEvent evt);
+
+		private int maximumItems;
+		private static readonly int[] maximumValues = { 10, 100, 1000, int.MaxValue };
+		private readonly FormEventProperties formLogEvent = new FormEventProperties();
 
 		/// <summary>
 		/// Creates a new control instance.

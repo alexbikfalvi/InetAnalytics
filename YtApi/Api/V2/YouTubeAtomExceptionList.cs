@@ -27,7 +27,7 @@ namespace YtApi.Api.V2
 	/// </summary>
 	public class YouTubeAtomExceptionList : IEnumerable<YouTubeAtomException>
 	{
-		private List<YouTubeAtomException> list = new List<YouTubeAtomException>();
+		private readonly List<YouTubeAtomException> list = new List<YouTubeAtomException>();
 
 		public YouTubeAtomExceptionList() { }
 

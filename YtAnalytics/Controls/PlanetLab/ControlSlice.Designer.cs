@@ -75,12 +75,22 @@
 			this.buttonRemoveFromNodes = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSetKey = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
+			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemDisconnect = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttonProperties = new System.Windows.Forms.ToolStripDropDownButton();
+			this.menuItemSliceProperties = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -92,6 +102,7 @@
 			this.panel.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.contextMenuAddToNodes.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -154,7 +165,9 @@
 			this.listViewNodes.TabIndex = 0;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
 			this.listViewNodes.View = System.Windows.Forms.View.Details;
+			this.listViewNodes.ItemActivate += new System.EventHandler(this.OnNodeProperties);
 			this.listViewNodes.SelectedIndexChanged += new System.EventHandler(this.OnNodeSelectionChanged);
+			this.listViewNodes.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick);
 			// 
 			// columnHeaderId
 			// 
@@ -184,6 +197,8 @@
 			this.mapControl.Name = "mapControl";
 			this.mapControl.Size = new System.Drawing.Size(528, 294);
 			this.mapControl.TabIndex = 0;
+			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
+			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
 			// 
 			// panel
 			// 
@@ -340,7 +355,11 @@
             this.buttonAddToNodes,
             this.buttonRemoveFromNodes,
             this.toolStripSeparator1,
-            this.buttonSetKey});
+            this.buttonSetKey,
+            this.toolStripSeparator2,
+            this.buttonConnect,
+            this.buttonDisconnect,
+            this.buttonProperties});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(800, 25);
@@ -388,6 +407,7 @@
             this.itemSelectNodesState,
             this.itemSelectNodesSlice});
 			this.contextMenuAddToNodes.Name = "contextMenuAddToNodes";
+			this.contextMenuAddToNodes.OwnerItem = this.buttonAddToNodes;
 			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 70);
 			// 
 			// itemSelectNodesLocation
@@ -435,6 +455,29 @@
 			this.buttonSetKey.Text = "Set &key";
 			this.buttonSetKey.Click += new System.EventHandler(this.OnSetKey);
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonConnect
+			// 
+			this.buttonConnect.Enabled = false;
+			this.buttonConnect.Image = global::YtAnalytics.Resources.Connect_16;
+			this.buttonConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonConnect.Name = "buttonConnect";
+			this.buttonConnect.Size = new System.Drawing.Size(72, 22);
+			this.buttonConnect.Text = "C&onnect";
+			// 
+			// buttonDisconnect
+			// 
+			this.buttonDisconnect.Enabled = false;
+			this.buttonDisconnect.Image = global::YtAnalytics.Resources.Disconnect_16;
+			this.buttonDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonDisconnect.Name = "buttonDisconnect";
+			this.buttonDisconnect.Size = new System.Drawing.Size(86, 22);
+			this.buttonDisconnect.Text = "&Disconnect";
+			// 
 			// controlLog
 			// 
 			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -468,6 +511,61 @@
 			this.openFileDialog.Filter = "All files (*.*)|*.*";
 			this.openFileDialog.Title = "Open Key File";
 			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemConnect,
+            this.menuItemDisconnect,
+            this.toolStripSeparator3,
+            this.menuItemNodeProperties,
+            this.menuItemSliceProperties});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(160, 98);
+			// 
+			// menuItemConnect
+			// 
+			this.menuItemConnect.Image = global::YtAnalytics.Resources.Connect_16;
+			this.menuItemConnect.Name = "menuItemConnect";
+			this.menuItemConnect.Size = new System.Drawing.Size(159, 22);
+			this.menuItemConnect.Text = "&Connect";
+			// 
+			// menuItemDisconnect
+			// 
+			this.menuItemDisconnect.Image = global::YtAnalytics.Resources.Disconnect_16;
+			this.menuItemDisconnect.Name = "menuItemDisconnect";
+			this.menuItemDisconnect.Size = new System.Drawing.Size(159, 22);
+			this.menuItemDisconnect.Text = "&Disconnect";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(156, 6);
+			// 
+			// menuItemNodeProperties
+			// 
+			this.menuItemNodeProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemNodeProperties.Name = "menuItemNodeProperties";
+			this.menuItemNodeProperties.Size = new System.Drawing.Size(159, 22);
+			this.menuItemNodeProperties.Text = "Node pr&operties";
+			this.menuItemNodeProperties.Click += new System.EventHandler(this.OnNodeProperties);
+			// 
+			// buttonProperties
+			// 
+			this.buttonProperties.Enabled = false;
+			this.buttonProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.buttonProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonProperties.Name = "buttonProperties";
+			this.buttonProperties.Size = new System.Drawing.Size(89, 22);
+			this.buttonProperties.Text = "&Properties";
+			// 
+			// menuItemSliceProperties
+			// 
+			this.menuItemSliceProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemSliceProperties.Name = "menuItemSliceProperties";
+			this.menuItemSliceProperties.Size = new System.Drawing.Size(159, 22);
+			this.menuItemSliceProperties.Text = "Slice prop&erties";
+			this.menuItemSliceProperties.Click += new System.EventHandler(this.OnSliceProperties);
+			// 
 			// ControlSlice
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -491,6 +589,7 @@
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenuAddToNodes.ResumeLayout(false);
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -537,5 +636,15 @@
 		private System.Windows.Forms.ListView listViewNodes;
 		private System.Windows.Forms.ColumnHeader columnHeaderId;
 		private System.Windows.Forms.ColumnHeader columnHeaderHostname;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripButton buttonConnect;
+		private System.Windows.Forms.ToolStripButton buttonDisconnect;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem menuItemConnect;
+		private System.Windows.Forms.ToolStripMenuItem menuItemDisconnect;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem menuItemNodeProperties;
+		private System.Windows.Forms.ToolStripDropDownButton buttonProperties;
+		private System.Windows.Forms.ToolStripMenuItem menuItemSliceProperties;
 	}
 }

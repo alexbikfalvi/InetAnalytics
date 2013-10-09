@@ -35,7 +35,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlInterfaceTagProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetInterfaceTags);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetInterfaceTags);
 
 		/// <summary>
 		/// Creates a new control instance.

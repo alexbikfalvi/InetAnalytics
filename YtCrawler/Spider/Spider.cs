@@ -42,9 +42,10 @@ namespace YtCrawler.Spider
 			Canceling = 2
 		}
 
+		private readonly object sync = new object();
+
 		private CrawlState state;
 		private DateTime lastUpdated;
-		private Mutex mutex = new Mutex();
 
 		/// <summary>
 		/// Creates a crawling spider with an undefined data origin.
@@ -103,14 +104,6 @@ namespace YtCrawler.Spider
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
 		protected virtual void Dispose(bool disposing)
 		{
-			// Dispose the current objects.
-			if (disposing)
-			{
-				// Wait on the mutex.
-				this.mutex.WaitOne();
-				// Close the mutex.
-				this.mutex.Close();
-			}
 		}
 
 		/// <summary>
@@ -118,9 +111,7 @@ namespace YtCrawler.Spider
 		/// </summary>
 		protected void OnStarted()
 		{
-			// Lock the mutex.
-			this.mutex.WaitOne();
-			try
+			lock (this.sync)
 			{
 				// If the spider is in the running state, throw an exception.
 				if (this.state != CrawlState.Stopped) throw new SpiderException("Cannot begin spider crawling because the spider is not in the stopped state.");
@@ -130,11 +121,6 @@ namespace YtCrawler.Spider
 				if (this.StateChanged != null) this.StateChanged(this, new SpiderEventArgs(this));
 				if (this.CrawlStarted != null) this.CrawlStarted(this, new SpiderEventArgs(this));
 			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
-			}
 		}
 
 		/// <summary>
@@ -142,9 +128,7 @@ namespace YtCrawler.Spider
 		/// </summary>
 		protected void OnFinished()
 		{
-			// Lock the mutex.
-			this.mutex.WaitOne();
-			try
+			lock (this.sync)
 			{
 				// If the spider is not in the running state, throw an exception.
 				if (this.state == CrawlState.Stopped) throw new SpiderException("Cannot finish spider crawling because the spider is already in the stopped state.");
@@ -154,11 +138,6 @@ namespace YtCrawler.Spider
 				if (this.StateChanged != null) this.StateChanged(this, new SpiderEventArgs(this));
 				if (this.CrawlFinished != null) this.CrawlFinished(this, new SpiderEventArgs(this));
 			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
-			}
 		}
 
 		/// <summary>
@@ -166,9 +145,7 @@ namespace YtCrawler.Spider
 		/// </summary>
 		protected void OnCanceled()
 		{
-			// Lock the mutex.
-			this.mutex.WaitOne();
-			try
+			lock (this.sync)
 			{
 				// If the spider is not in the running state, throw an exception.
 				if (this.state != CrawlState.Running) throw new SpiderException("Cannot cancel spider crawling because the spider is not in the running state.");
@@ -176,11 +153,6 @@ namespace YtCrawler.Spider
 				this.state = CrawlState.Canceling;
 				// Raise the event.
 				if (this.StateChanged != null) this.StateChanged(this, new SpiderEventArgs(this));
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
 			}
 		}
 	}

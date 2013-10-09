@@ -38,7 +38,7 @@ namespace YtAnalytics.Controls.Log
 		private ControlLogUpdateState state = null;
 		private List<LogEvent> events = null;
 
-		private FormEventProperties formLogEvent = new FormEventProperties();
+		private readonly FormEventProperties formLogEvent = new FormEventProperties();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -153,7 +153,7 @@ namespace YtAnalytics.Controls.Log
 		private void BeginUpdateLog(object argument)
 		{
 			// Wait for the handle of the current object to be created.
-			this.WaitForHandle();
+			if(!this.WaitForHandle()) return;
 
 			// Get the state.
 			ControlLogUpdateState state = argument as ControlLogUpdateState;
@@ -414,13 +414,13 @@ namespace YtAnalytics.Controls.Log
 	/// <summary>
 	/// Represents the state of an update request.
 	/// </summary>
-	internal sealed class ControlLogUpdateState : IDisposable
+	internal sealed class ControlLogUpdateState
 	{
 		private DateRangeEventArgs range;
 		private bool canceled = false;
 		private bool completed = false;
-		private Mutex mutex = new Mutex();
 		private List<LogEvent> events = null;
+		private readonly object sync = new object();
 
 		/// <summary>
 		/// Creates a new state instance.
@@ -452,17 +452,10 @@ namespace YtAnalytics.Controls.Log
 		{
 			get
 			{
-				// Acquire the mutex.
-				this.mutex.WaitOne();
-				try
+				lock (this.sync)
 				{
 					// Return the canceled state.
 					return this.canceled;
-				}
-				finally
-				{
-					// Release the mutex.
-					this.mutex.ReleaseMutex();
 				}
 			}
 		}
@@ -474,32 +467,15 @@ namespace YtAnalytics.Controls.Log
 		{
 			get
 			{
-				// Acquire the mutex.
-				this.mutex.WaitOne();
-				try
+				lock (this.sync)
 				{
 					// Return the canceled state.
 					return this.completed;
-				}
-				finally
-				{
-					// Release the mutex.
-					this.mutex.ReleaseMutex();
 				}
 			}
 		}
 
 		// Public methods.
-
-		public void Dispose()
-		{
-			// Wait on the mutex.
-			this.mutex.WaitOne();
-			// Dispose the fields.
-			this.mutex.Close();
-			// Suppress the finalizer.
-			GC.SuppressFinalize(this);
-		}
 
 		/// <summary>
 		/// Cancels the current update request.
@@ -507,9 +483,7 @@ namespace YtAnalytics.Controls.Log
 		/// <returns>Returns <b>true</b> if the cancel was successful.</returns>
 		public bool Cancel()
 		{
-			// Acquire the mutex.
-			this.mutex.WaitOne();
-			try
+			lock (this.sync)
 			{
 				// If the update is completed, return false.
 				if (this.completed) return false;
@@ -518,11 +492,6 @@ namespace YtAnalytics.Controls.Log
 				// Return true.
 				return true;
 			}
-			finally
-			{
-				// Release the mutex.
-				this.mutex.ReleaseMutex();
-			}
 		}
 
 		/// <summary>
@@ -530,17 +499,10 @@ namespace YtAnalytics.Controls.Log
 		/// </summary>
 		public void Complete()
 		{
-			// Acquire the mutex.
-			this.mutex.WaitOne();
-			try
+			lock (this.sync)
 			{
 				// Set the completed flag to true.
 				this.completed = true;
-			}
-			finally
-			{
-				// Release the mutex.
-				this.mutex.ReleaseMutex();
 			}
 		}
 	}

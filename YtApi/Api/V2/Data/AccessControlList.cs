@@ -29,7 +29,7 @@ namespace YtApi.Api.V2.Data
 	[Serializable]
 	public sealed class AccessControlList : IEnumerable<AccessControlEntry>
 	{
-		private List<AccessControlEntry> list = new List<AccessControlEntry>();
+		private readonly List<AccessControlEntry> list = new List<AccessControlEntry>();
 
 		/// <summary>
 		/// Creates a new access control list, based on a collection of atom objects.

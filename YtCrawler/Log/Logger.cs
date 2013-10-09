@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Xml.Linq;
 using DotNetApi;
+using DotNetApi.Concurrent.Generic;
 
 namespace YtCrawler.Log
 {
@@ -33,9 +34,7 @@ namespace YtCrawler.Log
 	{
 		private string filePattern;
 
-		private Dictionary<DateTime, XDocument> logs = new Dictionary<DateTime, XDocument>(); // The set of log files.
-
-		private Mutex mutex = new Mutex(); // Synchronization mutex.
+		private readonly ConcurrentDictionary<DateTime, XDocument> logs = new ConcurrentDictionary<DateTime, XDocument>(); // The set of log files.
 
 		/// <summary>
 		///  Creates a new logger instance.
@@ -58,14 +57,13 @@ namespace YtCrawler.Log
 		/// </summary>
 		public void Dispose()
 		{
-			// Wait for exclusive access to the log.
-			this.mutex.WaitOne();
-
+			// Lock the log.
+			this.logs.Lock();
 			try
 			{
 				string fileName;
 				// Save the log to the file.
-				foreach (XDocument xml in logs.Values)
+				foreach (XDocument xml in this.logs.Values)
 				{
 					try
 					{
@@ -81,14 +79,9 @@ namespace YtCrawler.Log
 			}
 			finally
 			{
-				// Release the exclusive access to the log.
-				this.mutex.ReleaseMutex();
+				this.logs.Unlock();
 			}
 
-			// Wait on the mutex.
-			this.mutex.WaitOne();
-			// Close the mutex.
-			this.mutex.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}
@@ -116,50 +109,39 @@ namespace YtCrawler.Log
 		{
 			LogEvent evt;
 
-			// Wait for exclusive access to the log.
-			this.mutex.WaitOne();
+			// Create the event.
+			evt = new LogEvent(level, type, DateTime.Now, source, message, parameters, exception, subevents);
+
+			// Compute the file name.
+			string fileName = string.Format(this.filePattern, evt.Timestamp.ToUniversalTime().Year, evt.Timestamp.ToUniversalTime().Month, evt.Timestamp.ToUniversalTime().Day);
 
 			try
 			{
-				// Create the event.
-				evt = new LogEvent(level, type, DateTime.Now, source, message, parameters, exception, subevents);
-
-				// Compute the file name.
-				string fileName = string.Format(this.filePattern, evt.Timestamp.ToUniversalTime().Year, evt.Timestamp.ToUniversalTime().Month, evt.Timestamp.ToUniversalTime().Day);
-
-				try
+				XDocument xml;
+				// Check whether there exists a file for the event date.
+				if (!this.logs.TryGetValue(evt.Timestamp.Date, out xml))
 				{
-					XDocument xml;
-					// Check whether there exists a file for the event date.
-					if (!this.logs.TryGetValue(evt.Timestamp.Date, out xml))
+					// If the file exists.
+					if (File.Exists(fileName))
 					{
-						// If the file exists.
-						if (File.Exists(fileName))
-						{
-							// Read the XML from the file.
-							try { xml = XDocument.Load(fileName); }
-							catch (Exception) { xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date.ToString(CultureInfo.InvariantCulture)))); }
-						}
-						else
-						{
-							// Create a new empty XML.
-							xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date.ToString(CultureInfo.InvariantCulture))));
-						}
-						// Add the XML to the logs list.
-						this.logs.Add(evt.Timestamp.Date, xml);
+						// Read the XML from the file.
+						try { xml = XDocument.Load(fileName); }
+						catch (Exception) { xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date.ToString(CultureInfo.InvariantCulture)))); }
 					}
-					// Add the event to the XML file.
-					xml.Root.Add(evt.Xml);
+					else
+					{
+						// Create a new empty XML.
+						xml = new XDocument(new XElement("log", new XAttribute("date", evt.Timestamp.ToUniversalTime().Date.ToString(CultureInfo.InvariantCulture))));
+					}
+					// Add the XML to the logs list.
+					this.logs.Add(evt.Timestamp.Date, xml);
 				}
-				catch (Exception ex)
-				{
-					evt.Logger = string.Format("Could not save the event {0} to the log \"{1}\" ({2}).", evt.Timestamp, fileName, ex.Message);
-				}
+				// Add the event to the XML file.
+				xml.Root.Add(evt.Xml);
 			}
-			finally
+			catch (Exception ex)
 			{
-				// Release the exclusive access to the log.
-				this.mutex.ReleaseMutex();
+				evt.Logger = string.Format("Could not save the event {0} to the log \"{1}\" ({2}).", evt.Timestamp, fileName, ex.Message);
 			}
 
 			// Raise the event for this log event.
@@ -174,30 +156,19 @@ namespace YtCrawler.Log
 		/// <param name="date"></param>
 		public void Read(DateTime date)
 		{
-			// Wait for exclusive access to the log.
-			this.mutex.WaitOne();
-
-			try
+			XDocument xml;
+			// If the specified date already exists in memory, do nothing.
+			if (this.logs.TryGetValue(date.Date, out xml)) return;
+			// Else, compute the file name.
+			string fileName = string.Format(this.filePattern, date.Year, date.Month, date.Day);
+			// If the file exists.
+			if (File.Exists(fileName))
 			{
-				XDocument xml;
-				// If the specified date already exists in memory, do nothing.
-				if (this.logs.TryGetValue(date.Date, out xml)) return;
-				// Else, compute the file name.
-				string fileName = string.Format(this.filePattern, date.Year, date.Month, date.Day);
-				// If the file exists.
-				if (File.Exists(fileName))
-				{
-					// Try and read the XML from the file.
-					try { xml = XDocument.Load(fileName); }
-					catch (Exception) { }
-					// Add the XML to the logs list.
-					this.logs.Add(date.Date, xml);
-				}
-			}
-			finally
-			{
-				// Release the exclusive access to the log.
-				this.mutex.ReleaseMutex();
+				// Try and read the XML from the file.
+				try { xml = XDocument.Load(fileName); }
+				catch (Exception) { }
+				// Add the XML to the logs list.
+				this.logs.Add(date.Date, xml);
 			}
 		}
 
@@ -256,24 +227,13 @@ namespace YtCrawler.Log
 		/// <param name="events">The list.</param>
 		private void Get(DateTime date, List<LogEvent> list)
 		{
-			// Wait for exclusive access to the log.
-			this.mutex.WaitOne();
-
-			try
+			XDocument xml;
+			// If the specified day exists in the log.
+			if (this.logs.TryGetValue(date.Date, out xml))
 			{
-				XDocument xml;
-				// If the specified day exists in the log.
-				if (this.logs.TryGetValue(date.Date, out xml))
-				{
-					// Add the events to the list.
-					foreach (XElement element in xml.Root.Elements("event"))
-						list.Add(new LogEvent(element));
-				}
-			}
-			finally
-			{
-				// Release the exclusive access to the log.
-				this.mutex.ReleaseMutex();
+				// Add the events to the list.
+				foreach (XElement element in xml.Root.Elements("event"))
+					list.Add(new LogEvent(element));
 			}
 		}
 	}

@@ -41,14 +41,15 @@ namespace YtCrawler.Database
 
 		private CrawlerConfig config;
 
-		private Dictionary<string, DbServer> servers = new Dictionary<string, DbServer>();
+		private readonly Dictionary<string, DbServer> servers = new Dictionary<string, DbServer>();
 		private IOrderedEnumerable<KeyValuePair<string, DbServer>> orderedServers = null;
 		private DbServer primary = null;
-		private Mutex mutex = new Mutex();
+		//private readonly Mutex mutex = new Mutex();
+		private readonly object sync = new object();
 
-		private static string[] dbServerTypeNames = {
-													    "Microsoft SQL Server"
-												    };
+		private static readonly string[] dbServerTypeNames = {
+																 "Microsoft SQL Server"
+															 };
 
 		/// <summary>
 		/// Creates a new database servers list, using the specified configuration.
@@ -367,10 +368,6 @@ namespace YtCrawler.Database
 			{
 				pair.Value.Dispose();
 			}
-			// Wait on the mutex.
-			this.mutex.WaitOne();
-			// Close the mutex.
-			this.mutex.Close();
 			// Supress the finalizer.
 			GC.SuppressFinalize(this);
 		}
@@ -383,17 +380,10 @@ namespace YtCrawler.Database
 		/// <param name="server">The server to add.</param>
 		private void Add(DbServer server)
 		{
-			try
+			lock (this.sync)
 			{
-				// Lock the mutex.
-				this.mutex.WaitOne();
 				// Add the server to the dictionary.
 				this.servers.Add(server.Id, server);
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
 			}
 			// Add the server event handlers.
 			server.StateChanged += this.OnStateChanged;
@@ -406,19 +396,12 @@ namespace YtCrawler.Database
 		/// <param name="id">The server ID.</param>
 		private void Remove(string id)
 		{
-			try
+			lock (this.sync)
 			{
-				// Lock the mutex.
-				this.mutex.WaitOne();
 				// Remove the server configuration.
 				this.config.Database.Key.DeleteSubKeyTree(id);
 				// Remove the server.
 				this.servers.Remove(id);
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
 			}
 		}
 

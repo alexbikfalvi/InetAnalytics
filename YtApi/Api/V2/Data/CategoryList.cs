@@ -29,7 +29,7 @@ namespace YtApi.Api.V2.Data
 	[Serializable]
 	public sealed class CategoryList : IEnumerable<Category>
 	{
-		private List<Category> list = new List<Category>();
+		private readonly List<Category> list = new List<Category>();
 
 		/// <summary>
 		/// Creates a new category list based on a collection of atom objects.

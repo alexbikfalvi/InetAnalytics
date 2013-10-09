@@ -35,16 +35,16 @@ namespace YtAnalytics.Controls.Log
 	/// </summary>
 	public partial class ControlLogEventProperties : ThreadSafeControl
 	{
-		private static Image[] eventImage = {
-												Resources.EventInformation_32,
-											    Resources.EventSuccess_32,
-											    Resources.EventError_32,
-											    Resources.EventCanceled_32,
-											    Resources.EventWarning_32,
-											    Resources.EventStop_32,
-												Resources.EventSuccessWarning_32,
-												Resources.EventErrorWarning_32
-										    };
+		private static readonly Image[] eventImage = {
+														 Resources.EventInformation_32,
+														 Resources.EventSuccess_32,
+														 Resources.EventError_32,
+														 Resources.EventCanceled_32,
+														 Resources.EventWarning_32,
+														 Resources.EventStop_32,
+														 Resources.EventSuccessWarning_32,
+														 Resources.EventErrorWarning_32
+													 };
 
 		private LogEvent evt = null;
 

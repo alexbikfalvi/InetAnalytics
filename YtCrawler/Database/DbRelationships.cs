@@ -30,13 +30,13 @@ namespace YtCrawler.Database
 	/// </summary>
 	public class DbRelationships : IEnumerable<DbRelationship>
 	{
-		private static string keyName = "Relationships";
-		private string key; 
+		private static readonly string keyName = "Relationships";
+		private string key;
 
-		private static string xmlRoot = "DbRelationships";
+		private static readonly string xmlRoot = "DbRelationships";
 
 		private DbTables tables;
-		private List<DbRelationship> relationships = new List<DbRelationship>();
+		private readonly List<DbRelationship> relationships = new List<DbRelationship>();
 
 		/// <summary>
 		/// Creates a list of database table relationships, from the specified registry key.

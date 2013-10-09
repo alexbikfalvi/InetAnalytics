@@ -34,16 +34,16 @@ namespace YtAnalytics.Controls.YouTube
 	public partial class ControlProfileProperties : ThreadSafeControl
 	{
 		private Profile profile;
-		private WebClient web = new WebClient();
+		private readonly WebClient web = new WebClient();
 
 		private Image thumbnail = null;
-		private Mutex mutex = new Mutex();
+		private readonly object sync = new object();
 
 		private WaitCallback delegateThumbnailUpdateCompleted;
 
-		private FormImage formImage = new FormImage();
+		private readonly FormImage formImage = new FormImage();
 
-		private static string notAvailable = "(not available)";
+		private static readonly string notAvailable = "(not available)";
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -167,16 +167,11 @@ namespace YtAnalytics.Controls.YouTube
 			// Get the profile corresponding to the current update.
 			Profile profile = state as Profile;
 
-			// Wait on the thumbnail mutex.
-			this.mutex.WaitOne();
-			try
+			// Synchronize access.
+			lock (this.sync)
 			{
 				// Clear the thumbnail list.
 				this.thumbnail = null;
-			}
-			finally
-			{
-				this.mutex.ReleaseMutex();
 			}
 
 			if (this.web.IsBusy)
@@ -224,9 +219,10 @@ namespace YtAnalytics.Controls.YouTube
 			if (canceled)
 			{
 				// If the request has been canceled, clear the thumbnail list.
-				this.mutex.WaitOne();
-				try { this.thumbnail = null; }
-				finally { this.mutex.ReleaseMutex(); }
+				lock (this.sync)
+				{
+					this.thumbnail = null;
+				}
 
 				// If the current video is not null and different from the current video.
 				if ((this.profile != null) && (this.profile != profile))
@@ -263,9 +259,10 @@ namespace YtAnalytics.Controls.YouTube
 				}
 
 				// Add the image to the list.
-				this.mutex.WaitOne();
-				try { this.thumbnail = image; }
-				finally { this.mutex.ReleaseMutex(); }
+				lock (this.sync)
+				{
+					this.thumbnail = image;
+				}
 
 				// Complete the update.
 				this.UpdateThumbnailsCompleted(profile);

@@ -32,16 +32,16 @@ namespace YtApi.Ajax
 		private	AjaxHistoryPoint[] series = null;
 		private AjaxHistoryMarker[] markers = null;
 
-		private static char[] uriSplit = { '&', '?' };
-		private static char[] pipeSplit = { '|' };
-		private static char[] commaSplit = { ',' };
+		private static readonly char[] uriSplit = { '&', '?' };
+		private static readonly char[] pipeSplit = { '|' };
+		private static readonly char[] commaSplit = { ',' };
 
-		private static string regChartType = "^cht=";
-		private static string regChartAxisLabels = "^chxl=";
-		private static string regChartAxisLabelPositions = "^chxp=";
-		private static string regChartAxisRanges = "^chxr=";
-		private static string regChartAxisData = "^chd=";
-		private static string regChartAxisMarkers = "^chm=";
+		private static readonly string regChartType = "^cht=";
+		private static readonly string regChartAxisLabels = "^chxl=";
+		private static readonly string regChartAxisLabelPositions = "^chxp=";
+		private static readonly string regChartAxisRanges = "^chxr=";
+		private static readonly string regChartAxisData = "^chd=";
+		private static readonly string regChartAxisMarkers = "^chm=";
 
 		protected enum ChartType
 		{

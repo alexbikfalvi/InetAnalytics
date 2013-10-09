@@ -27,201 +27,203 @@ namespace YtApi.Api.V2
 	/// </summary>
 	public class YouTubeUri
 	{
-		private static string[] standardFeedIds = {
-													  "top_rated",
-													  "top_favorites",
-													  "most_shared", // Experimental
-													  "most_popular",
-													  "most_recent",
-													  "most_discussed",
-													  "most_responded",
-													  "recently_featured",
-													  "on_the_web" // Experimental
-												  };
+		private static readonly string[] standardFeedIds = {
+															   "top_rated",
+															   "top_favorites",
+															   "most_shared", // Experimental
+															   "most_popular",
+															   "most_recent",
+															   "most_discussed",
+															   "most_responded",
+															   "recently_featured",
+															   "on_the_web" // Experimental
+														   };
 
-		private static string[] standardFeedNames = {
-														"Top rated",
-														"Top favorites",
-														"Most shared (experimental)",
-														"Most popular",
-														"Most recent",
-														"Most discussed",
-														"Most responded",
-														"Recently featured",
-														"Trending videos (experimental)"
-													};
+		private static readonly string[] standardFeedNames = {
+																 "Top rated",
+																 "Top favorites",
+																 "Most shared (experimental)",
+																 "Most popular",
+																 "Most recent",
+																 "Most discussed",
+																 "Most responded",
+																 "Recently featured",
+																 "Trending videos (experimental)"
+															 };
 
-		private static string[] timeIds = { "all_time", "today", "this_week", "this_month" };
+		private static readonly string[] timeIds = { "all_time", "today", "this_week", "this_month" };
 		
-		private static string[] timeNames = { "All time", "Today", "This week", "This month" };
+		private static readonly string[] timeNames = { "All time", "Today", "This week", "This month" };
 
-		private static string[] regionIds = {
-												"DZ", "AR", "AU", "BD", "BE", "BR", "BG", "CA", "CL", "CO", "HR", "CZ", "DK", "EG", "EE", "ET", "FI", "FR", "DE", "GH",
-												"GB", "GR", "HK", "HU", "IS", "IN", "ID", "IR", "IE", "IL", "IT", "JP", "JO", "KE", "LV", "LT", "MY", "MX", "MA", "NL",
-												"NZ", "NG", "NO", "PK", "PE", "PH", "PL", "PT", "RO", "RU", "SA", "SN", "RS", "SG", "SK", "SI", "ZA", "KR", "ES", "SE",
-												"TW", "TZ", "TH", "TN", "TR", "UG", "UA", "AE", "US", "VN", "YE"
-											};
+		private static readonly string[] regionIds = {
+														 "DZ", "AR", "AU", "BD", "BE", "BR", "BG", "CA", "CL", "CO", "HR", "CZ", "DK", "EG", "EE", "ET", "FI", "FR", "DE", "GH",
+														 "GB", "GR", "HK", "HU", "IS", "IN", "ID", "IR", "IE", "IL", "IT", "JP", "JO", "KE", "LV", "LT", "MY", "MX", "MA", "NL",
+														 "NZ", "NG", "NO", "PK", "PE", "PH", "PL", "PT", "RO", "RU", "SA", "SN", "RS", "SG", "SK", "SI", "ZA", "KR", "ES", "SE",
+														 "TW", "TZ", "TH", "TN", "TR", "UG", "UA", "AE", "US", "VN", "YE"
+													 };
 
-		private static string[] regionNames = {
-												  "Algeria",
-												  "Argentina",
-												  "Australia",
-												  "Bangladesh",
-												  "Belgium",
-												  "Brazil",
-												  "Bulgaria",
-												  "Canada",
-												  "Chile",
-												  "Colombia",
-												  "Croatia",
-												  "Czech Republic",
-												  "Denmark",
-												  "Egypt",
-												  "Estonia",
-												  "Ethiopia",
-												  "Finland",
-												  "France",
-												  "Germany",
-												  "Ghana",
-												  "Great Britain",
-												  "Greece",
-												  "Hong Kong",
-												  "Hungary",
-												  "Iceland",
-												  "India",
-												  "Indonesia",
-												  "Iran, Islamic Republic of",
-												  "Ireland",
-												  "Israel",
-												  "Italy",
-												  "Japan",
-												  "Jordan",
-												  "Kenya",
-												  "Latvia",
-												  "Lithuania",
-												  "Malaysia",
-												  "Mexico",
-												  "Morocco",
-												  "Netherlands",
-												  "New Zealand",
-												  "Nigeria",
-												  "Norway",
-												  "Pakistan",
-												  "Peru",
-												  "Philippines",
-												  "Poland",
-												  "Portugal",
-												  "Romania",
-												  "Russia",
-												  "Saudi Arabia",
-												  "Senegal",
-												  "Serbia",
-												  "Singapore",
-												  "Slovakia",
-												  "Slovenia",
-												  "South Africa",
-												  "South Korea",
-												  "Spain",
-												  "Sweden",
-												  "Taiwan",
-												  "Tanzania, United Republic of",
-												  "Thailand",
-												  "Tunisia",
-												  "Turkey",
-												  "Uganda",
-												  "Ukraine",
-												  "United Arab Emirates",
-												  "United States",
-												  "Vietnam",
-												  "Yemen"
-											  };
+		private static readonly string[] regionNames = {
+														   "Algeria",
+														   "Argentina",
+														   "Australia",
+														   "Bangladesh",
+														   "Belgium",
+														   "Brazil",
+														   "Bulgaria",
+														   "Canada",
+														   "Chile",
+														   "Colombia",
+														   "Croatia",
+														   "Czech Republic",
+														   "Denmark",
+														   "Egypt",
+														   "Estonia",
+														   "Ethiopia",
+														   "Finland",
+														   "France",
+														   "Germany",
+														   "Ghana",
+														   "Great Britain",
+														   "Greece",
+														   "Hong Kong",
+														   "Hungary",
+														   "Iceland",
+														   "India",
+														   "Indonesia",
+														   "Iran, Islamic Republic of",
+														   "Ireland",
+														   "Israel",
+														   "Italy",
+														   "Japan",
+														   "Jordan",
+														   "Kenya",
+														   "Latvia",
+														   "Lithuania",
+														   "Malaysia",
+														   "Mexico",
+														   "Morocco",
+														   "Netherlands",
+														   "New Zealand",
+														   "Nigeria",
+														   "Norway",
+														   "Pakistan",
+														   "Peru",
+														   "Philippines",
+														   "Poland",
+														   "Portugal",
+														   "Romania",
+														   "Russia",
+														   "Saudi Arabia",
+														   "Senegal",
+														   "Serbia",
+														   "Singapore",
+														   "Slovakia",
+														   "Slovenia",
+														   "South Africa",
+														   "South Korea",
+														   "Spain",
+														   "Sweden",
+														   "Taiwan",
+														   "Tanzania, United Republic of",
+														   "Thailand",
+														   "Tunisia",
+														   "Turkey",
+														   "Uganda",
+														   "Ukraine",
+														   "United Arab Emirates",
+														   "United States",
+														   "Vietnam",
+														   "Yemen"
+													   };
 
 
-		private static YouTubeTimeId[][] timeFeedValidity = {
-														new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Top rated
-													    new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Top favorites
-													    new YouTubeTimeId[] { },																	// Most shared
-													    new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.Today },										// Most popular
-													    new YouTubeTimeId[] { },																	// Most recent
-													    new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Most discussed
-													    new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Most responded
-													    new YouTubeTimeId[] { },																	// Recently featured
-													    new YouTubeTimeId[] { },																	// Trending videos
-												  };
+		private static readonly YouTubeTimeId[][] timeFeedValidity = {
+																		 new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Top rated
+																		 new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Top favorites
+																		 new YouTubeTimeId[] { },																	// Most shared
+																		 new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.Today },										// Most popular
+																		 new YouTubeTimeId[] { },																	// Most recent
+																		 new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Most discussed#
+																		 new YouTubeTimeId[] { YouTubeTimeId.AllTime, YouTubeTimeId.ThisMonth, YouTubeTimeId.ThisWeek, YouTubeTimeId.Today },	// Most responded
+																		 new YouTubeTimeId[] { },																	// Recently featured
+																		 new YouTubeTimeId[] { },																	// Trending videos
+																	 };
 
-		private static Uri uriCategories = new Uri("http://gdata.youtube.com/schemas/2007/categories.cat");
+		private static readonly Uri uriCategories = new Uri("http://gdata.youtube.com/schemas/2007/categories.cat");
 
 		/// <summary>
 		/// 0 - region ID in the format "XX/"
 		/// 1 - standard feed ID
 		/// 2 - category ID in the format "_CATEGORY"
 		/// </summary>
-		private static string uriStandardVideoFeedPattern = "https://gdata.youtube.com/feeds/api/standardfeeds/{0}{1}{2}?v=2";
+		private static readonly string uriStandardVideoFeedPattern = "https://gdata.youtube.com/feeds/api/standardfeeds/{0}{1}{2}?v=2";
 
 		/// <summary>
 		/// 0 - search query
 		/// </summary>
-		private static string uriVideosFeedPattern = "http://gdata.youtube.com/feeds/api/videos?q={0}&v=2";
+		private static readonly string uriVideosFeedPattern = "http://gdata.youtube.com/feeds/api/videos?q={0}&v=2";
 
 		/// <summary>
 		/// 0 - video ID
 		/// </summary>
-		private static string uriRelatedVideosFeedPattern = "https://gdata.youtube.com/feeds/api/videos/{0}/related?v=2";
+		private static readonly string uriRelatedVideosFeedPattern = "https://gdata.youtube.com/feeds/api/videos/{0}/related?v=2";
 
 		/// <summary>
 		/// 0 - video ID
 		/// </summary>
-		private static string uriResponseVideosFeedPattern = "http://gdata.youtube.com/feeds/api/videos/{0}/responses?v=2";
+		private static readonly string uriResponseVideosFeedPattern = "http://gdata.youtube.com/feeds/api/videos/{0}/responses?v=2";
 
 		/// <summary>
 		/// 0 - video ID
 		/// </summary>
-		private static string uriVideoEntryPattern = "https://gdata.youtube.com/feeds/api/videos/{0}?v=2";
+		private static readonly string uriVideoEntryPattern = "https://gdata.youtube.com/feeds/api/videos/{0}?v=2";
 
 		/// <summary>
 		/// 0 - video ID
 		/// </summary>
-		private static string uriVideoYouTubePattern = "http://www.youtube.com/watch?v={0}";
+		private static readonly string uriVideoYouTubePattern = "http://www.youtube.com/watch?v={0}";
 
 		/// <summary>
 		/// 0 - user name
 		/// </summary>
-		private static string uriUserYouTubePattern = "http://www.youtube.com/user/{0}";
+		private static readonly string uriUserYouTubePattern = "http://www.youtube.com/user/{0}";
 
 		/// <summary>
 		/// 0 - playlist ID
 		/// </summary>
-		private static string uriPlaylistYouTubePattern = "http://www.youtube.com/playlist?list={0}";
+		private static readonly string uriPlaylistYouTubePattern = "http://www.youtube.com/playlist?list={0}";
 
 		/// <summary>
 		/// 0 - user ID
 		/// </summary>
-		private static string uriProfileEntryPattern = "http://gdata.youtube.com/feeds/api/users/{0}?v=2";
+		private static readonly string uriProfileEntryPattern = "http://gdata.youtube.com/feeds/api/users/{0}?v=2";
 
 		/// <summary>
 		/// 0 - video ID
 		/// </summary>
-		private static string uriCommentsFeedPattern = "https://gdata.youtube.com/feeds/api/videos/{0}/comments?v=2";
+		private static readonly string uriCommentsFeedPattern = "https://gdata.youtube.com/feeds/api/videos/{0}/comments?v=2";
 
 		/// <summary>
 		/// 0 - user ID
 		/// </summary>
-		private static string uriUserUploadsFeed = "https://gdata.youtube.com/feeds/api/users/{0}/uploads?v=2";
+		private static readonly string uriUserUploadsFeed = "https://gdata.youtube.com/feeds/api/users/{0}/uploads?v=2";
 
 		/// <summary>
 		/// 0 - user ID
 		/// </summary>
-		private static string uriUserPlaylistsFeed = "https://gdata.youtube.com/feeds/api/users/{0}/playlists?v=2";
+		private static readonly string uriUserPlaylistsFeed = "https://gdata.youtube.com/feeds/api/users/{0}/playlists?v=2";
 
 		/// <summary>
 		/// 0 - user ID
 		/// </summary>
-		private static string uriUserFavoritesFeed = "https://gdata.youtube.com/feeds/api/users/{0}/favorites?v=2";
+		private static readonly string uriUserFavoritesFeed = "https://gdata.youtube.com/feeds/api/users/{0}/favorites?v=2";
 
 		/// <summary>
 		/// 0 - playlist ID
 		/// </summary>
-		private static string uriPlaylistFeed = "https://gdata.youtube.com/feeds/api/playlists/{0}?v=2";
+		private static readonly string uriPlaylistFeed = "https://gdata.youtube.com/feeds/api/playlists/{0}?v=2";
+
+		// Public properties.
 
 		/// <summary>
 		/// Returns the URI for YouTube categories.

@@ -35,7 +35,7 @@ namespace YtAnalytics.Controls.PlanetLab
 	/// </summary>
 	public partial class ControlSliceTagProperties : ControlObjectProperties
 	{
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSliceTags);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSliceTags);
 
 		/// <summary>
 		/// Creates a new control instance.

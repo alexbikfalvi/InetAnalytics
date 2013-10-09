@@ -49,7 +49,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		private IAsyncResult result;
 		private Feed<Playlist> feed = null;
 
-		private FormPlaylistProperties formPlaylist = new FormPlaylistProperties();
+		private readonly FormPlaylistProperties formPlaylist = new FormPlaylistProperties();
 
 		// Public declarations
 

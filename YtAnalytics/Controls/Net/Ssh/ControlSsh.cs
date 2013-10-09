@@ -37,7 +37,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <summary>
 		/// An enumeration representing the client state.
 		/// </summary>
-		protected enum ClientState
+		public enum ClientState
 		{
 			Disconnected = 0,
 			Connecting = 1,
@@ -49,7 +49,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 
 		private ClientState state = ClientState.Disconnected;
 		private SshClient client = null;
-		private ConcurrentList<SshCommand> commands = new ConcurrentList<SshCommand>();
+		private readonly ConcurrentList<SshCommand> commands = new ConcurrentList<SshCommand>();
 
 		private Action<Exception> actionErrorOccurred;
 		private Action<HostKeyEventArgs> actionHostKeyReceived;
@@ -71,6 +71,13 @@ namespace YtAnalytics.Controls.Net.Ssh
 			this.actionCommandSucceeded = new Action<SshCommand, string>(this.OnCommandSucceededInternal);
 			this.actionCommandFailed = new Action<SshCommand, string>(this.OnCommandFailedInternal);
 		}
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets the current client state.
+		/// </summary>
+		public ClientState State { get { lock (this.sync) { return this.state; } } }
 
 		// Protected properties.
 

@@ -38,10 +38,10 @@ namespace YtAnalytics.Controls.YouTube
 		private string pageBegin;
 		private string pageEnd;
 		private string pageTotal;
-		private static int[] videosPerPageInt = new int[] { 10, 25, 50 };
-		private static object[] videosPerPageObject = new object[] { 10, 25, 50 };
+		private static readonly int[] videosPerPageInt = new int[] { 10, 25, 50 };
+		private static readonly object[] videosPerPageObject = new object[] { 10, 25, 50 };
 
-		private FormVideo formVideo = new FormVideo();
+		private readonly FormVideo formVideo = new FormVideo();
 
 		private ContextMenuStrip contextMenu = null;
 

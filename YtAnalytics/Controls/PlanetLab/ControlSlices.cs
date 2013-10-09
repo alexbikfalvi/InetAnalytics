@@ -150,16 +150,16 @@ namespace YtAnalytics.Controls.PlanetLab
 		private Control.ControlCollection controls = null;
 		private ImageList treeImageList = null;
 
-		private PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
-		private PlRequest requestAddSliceToNodes = new PlRequest(PlRequest.RequestMethod.AddSliceToNodes);
-		private PlRequest requestRemoveSliceFromNodes = new PlRequest(PlRequest.RequestMethod.DeleteSliceFromNodes);
+		private readonly PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
+		private readonly PlRequest requestAddSliceToNodes = new PlRequest(PlRequest.RequestMethod.AddSliceToNodes);
+		private readonly PlRequest requestRemoveSliceFromNodes = new PlRequest(PlRequest.RequestMethod.DeleteSliceFromNodes);
 
-		private FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
-		private FormAddSlice formAddSlice = new FormAddSlice();
-		private FormAddSliceToNodesLocation formAddSliceToNodesLocation = new FormAddSliceToNodesLocation();
-		private FormAddSliceToNodesState formAddSliceToNodesState = new FormAddSliceToNodesState();
-		private FormAddSliceToNodesSlice formAddSliceToNodesSlice = new FormAddSliceToNodesSlice();
-		private FormRemoveSliceFromNodes formRemoveSliceFromNodes = new FormRemoveSliceFromNodes();
+		private readonly FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
+		private readonly FormAddSlice formAddSlice = new FormAddSlice();
+		private readonly FormAddSliceToNodesLocation formAddSliceToNodesLocation = new FormAddSliceToNodesLocation();
+		private readonly FormAddSliceToNodesState formAddSliceToNodesState = new FormAddSliceToNodesState();
+		private readonly FormAddSliceToNodesSlice formAddSliceToNodesSlice = new FormAddSliceToNodesSlice();
+		private readonly FormRemoveSliceFromNodes formRemoveSliceFromNodes = new FormRemoveSliceFromNodes();
 
 		private RequestState requestStateGetSlices;
 

@@ -33,10 +33,9 @@ namespace YtCrawler.Spider
 		private object result = null;
 		private bool canceled = false;
 
-		private Mutex mutex = new Mutex(); // A mutex to synchronize access to the asynchronous operation.
+		private readonly HashSet<AsyncWebOperation> asyncWeb = new HashSet<AsyncWebOperation>();
 
-		private HashSet<AsyncWebOperation> asyncWeb = new HashSet<AsyncWebOperation>();
-
+		private readonly object sync = new object();
 
 		/// <summary>
 		/// Creates a new asynchronous result instance using the specified user state.
@@ -92,18 +91,13 @@ namespace YtCrawler.Spider
 		{
 			// Create the asynchronous web operation.
 			AsyncWebOperation operation = new AsyncWebOperation(request, result);
-			// Lock the mutex.
-			this.mutex.WaitOne();
-			try
+
+			lock (this.sync)
 			{
 				// Add the result.
 				this.asyncWeb.Add(operation);
 			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
-			}
+
 			// Return the web operation.
 			return operation;
 		}
@@ -114,17 +108,10 @@ namespace YtCrawler.Spider
 		/// <param name="operation">The asynchronous web operation.</param>
 		public void RemoveAsyncWeb(AsyncWebOperation operation)
 		{
-			// Lock the mutex.
-			this.mutex.WaitOne();
-			try
+			lock (this.sync)
 			{
 				// Remove the result.
 				this.asyncWeb.Remove(operation);
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
 			}
 		}
 
@@ -136,20 +123,14 @@ namespace YtCrawler.Spider
 		{
 			// Set the canceled flag.
 			this.canceled = true;
-			// Lock the mutex.
-			this.mutex.WaitOne();
-			try
+
+			lock (this.sync)
 			{
 				// Cancel all web operations.
 				foreach (AsyncWebOperation operation in this.asyncWeb)
 				{
 					operation.Cancel();
 				}
-			}
-			finally
-			{
-				// Unlock the mutex.
-				this.mutex.ReleaseMutex();
 			}
 		}
 	}

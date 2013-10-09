@@ -36,7 +36,7 @@ namespace YtCrawler.Database
 		private string messageFinishSuccess = string.Empty;
 		private string messageFinishFail = string.Empty;
 
-		private List<object> parameters = new List<object>();
+		private readonly List<object> parameters = new List<object>();
 
 		private object userState;
 

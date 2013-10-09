@@ -29,7 +29,7 @@ namespace YtApi.Api.V2.Atom
 	/// </summary>
 	public sealed class AtomYtMaterialList : IEnumerable<AtomYtMaterial>
 	{
-		private List<AtomYtMaterial> categories = new List<AtomYtMaterial>();
+		private readonly List<AtomYtMaterial> categories = new List<AtomYtMaterial>();
 
 		/// <summary>
 		/// Private constructor.

@@ -47,7 +47,7 @@ namespace YtAnalytics.Controls.Database
 		private Crawler crawler;
 		private DbServer server;
 
-		private FormChangePassword formChangePassword = new FormChangePassword();
+		private readonly FormChangePassword formChangePassword = new FormChangePassword();
 
 		// Database command.
 		DbCommand command = null;

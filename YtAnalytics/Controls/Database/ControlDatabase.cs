@@ -42,7 +42,7 @@ namespace YtAnalytics.Controls.Database
 		protected delegate void ResultObjectAction(DbServer server, DbQuery query, DbDataObject result, int recordsAffected);
 		protected delegate void ExceptionAction(DbServer server, DbQuery query, Exception exception);
 
-		private FormChangePassword formChangePassword = new FormChangePassword();
+		private readonly FormChangePassword formChangePassword = new FormChangePassword();
 
 		private DbServerCallback delegateConnected;
 		private DbServerCallback delegateDisconnected;

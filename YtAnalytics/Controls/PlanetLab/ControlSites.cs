@@ -48,12 +48,12 @@ namespace YtAnalytics.Controls.PlanetLab
 		private Crawler crawler = null;
 		private StatusHandler status = null;
 
-		private PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
+		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
 		
 		private MapMarker marker = null;
 		private string filter = string.Empty;
 
-		private FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
+		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 
 		/// <summary>
 		/// Creates a new control instance.

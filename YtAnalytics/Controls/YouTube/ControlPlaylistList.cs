@@ -36,12 +36,12 @@ namespace YtAnalytics.Controls.YouTube
 		private string pageBegin;
 		private string pageEnd;
 		private string pageTotal;
-		private static int[] playlistsPerPageInt = new int[] { 10, 25, 50 };
-		private static object[] playlistsPerPageObject = new object[] { 10, 25, 50 };
+		private static readonly int[] playlistsPerPageInt = new int[] { 10, 25, 50 };
+		private static readonly object[] playlistsPerPageObject = new object[] { 10, 25, 50 };
 
 		private ContextMenuStrip contextMenu = null;
 
-		private FormPlaylistProperties formPlaylist = new FormPlaylistProperties();
+		private readonly FormPlaylistProperties formPlaylist = new FormPlaylistProperties();
 
 		/// <summary>
 		/// Constructor.

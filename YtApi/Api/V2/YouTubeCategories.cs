@@ -31,8 +31,8 @@ namespace YtApi.Api.V2
 	/// </summary>
 	public sealed class YouTubeCategories : IDisposable, IEnumerable<YouTubeCategory>
 	{
-		private List<YouTubeCategory> categories = new List<YouTubeCategory>();
-		private YouTubeRequest request = new YouTubeRequest(null);
+		private readonly List<YouTubeCategory> categories = new List<YouTubeCategory>();
+		private readonly YouTubeRequest request = new YouTubeRequest(null);
 
 		private object state = null;
 		private AsyncWebRequestCallback callback = null;

@@ -29,7 +29,7 @@ namespace YtApi.Api.V2.Data
 	[Serializable]
 	public sealed class GeoLocation
 	{
-		private static char[] locationSeparator = { ' ' };
+		private static readonly char[] locationSeparator = { ' ' };
 
 		/// <summary>
 		/// Creates a new geographical location object based on an atom instance.
