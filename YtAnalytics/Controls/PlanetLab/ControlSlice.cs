@@ -187,7 +187,7 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private readonly FormText formText = new FormText();
 		private readonly FormObjectProperties<ControlNodeProperties> formNodeProperties = new FormObjectProperties<ControlNodeProperties>();
-		private readonly FormObjectProperties<ControlSliceProperties> formSliceProperties = new FormObjectProperties<ControlSliceProperties>();
+		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 
 		// Public declarations
 
@@ -1252,11 +1252,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the slice properties.
+		/// An event handler called when the user selects the site properties.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSliceProperties(object sender, EventArgs e)
+		private void OnSiteProperties(object sender, EventArgs e)
 		{
 			// If there is no selected item, do nothing.
 			if (this.listViewNodes.SelectedItems.Count == 0) return;
@@ -1268,7 +1268,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			if (null != info.Site)
 			{
 				// Show the site properties.
-				this.formNodeProperties.ShowDialog(this, "Site", info.Site);
+				this.formSiteProperties.ShowDialog(this, "Site", info.Site);
 			}
 		}
 
@@ -1303,6 +1303,33 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.OnMapMarkerClick(sender, e);
 			// Call the properties event handler.
 			this.OnNodeProperties(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when connecting to a PlanetLab node.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnConnect(object sender, EventArgs e)
+		{
+			// If there is no node selected, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
+
+			// Get the node information.
+			NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
+
+			// If the node info already has a session, show an error message.
+		}
+
+		/// <summary>
+		/// An event handler called when disconnecting from a PlanetLab node.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnDisconnect(object sender, EventArgs e)
+		{
+			// If there is no node selected, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
 		}
 	}
 }

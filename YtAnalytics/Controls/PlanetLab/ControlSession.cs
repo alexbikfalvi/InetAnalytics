@@ -30,6 +30,7 @@ using YtCrawler;
 using YtCrawler.Log;
 using YtCrawler.PlanetLab;
 using YtCrawler.Status;
+using PlanetLab;
 using PlanetLab.Api;
 using Renci.SshNet;
 using Renci.SshNet.Common;
@@ -68,11 +69,30 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		// Public events.
 
-		public event EventHandler Connecting;
-		public event EventHandler Connected;
-		public event EventHandler Disconnecting;
-		public event EventHandler Disconnected;
-		public event EventHandler Closed;
+		/// <summary>
+		/// An event raised when connecting to a PlanetLab node.
+		/// </summary>
+		public event PlObjectEventHandler<PlNode> Connecting;
+		/// <summary>
+		/// An event raised when connecting to a PlanetLab node succeeded.
+		/// </summary>
+		public event PlObjectEventHandler<PlNode> ConnectSucceeded;
+		/// <summary>
+		/// An event raised when connecting to a PlanetLab node failed.
+		/// </summary>
+		public event PlExceptionEventHandler<PlNode> ConnectFailed;
+		/// <summary>
+		/// An event raised when disconnecting from a PlanetLab node.
+		/// </summary>
+		public event PlObjectEventHandler<PlNode> Disconnecting;
+		/// <summary>
+		/// An event raised when disconnected from a PlanetLab node.
+		/// </summary>
+		public event PlObjectEventHandler<PlNode> Disconnected;
+		/// <summary>
+		/// An event raised when the session control was closed.
+		/// </summary>
+		public event PlObjectEventHandler<PlNode> Closed;
 
 		// Public methods.
 
@@ -125,6 +145,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				ControlSession.logSource,
 				"Connecting to the PlanetLab node \'{0}\'.",
 				new object[] { info.Host }));
+			// Raise the event.
+			if (null != this.Connecting) this.Connecting(this, new PlObjectEventArgs<PlNode>(this.node));
 		}
 
 		/// <summary>
@@ -146,6 +168,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				ControlSession.logSource,
 				"Connected to the PlanetLab node \'{0}\'.",
 				new object[] { info.Host }));
+			// Raise the event.
+			if (null != this.ConnectSucceeded) this.ConnectSucceeded(this, new PlObjectEventArgs<PlNode>(this.node));
 		}
 
 		/// <summary>
@@ -166,6 +190,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				ControlSession.logSource,
 				"Connecting to the PlanetLab node \'{0}\' failed.",
 				new object[] { info.Host }));
+			// Raise the event.
+			if (null != this.ConnectFailed) this.ConnectFailed(this, new PlExceptionEventArgs<PlNode>(this.node, exception));
 		}
 
 		/// <summary>
@@ -185,6 +211,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				ControlSession.logSource,
 				"Disconnecting from the PlanetLab node \'{0}\'.",
 				new object[] { info.Host }));
+			// Raise the event.
+			if (null != this.Disconnecting) this.Disconnecting(this, new PlObjectEventArgs<PlNode>(this.node));
 		}
 
 		/// <summary>
@@ -207,6 +235,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonConnect.Enabled = true;
 			// Disable the console.
 			this.OnDisableConsole();
+			// Raise the event.
+			if (null != this.Disconnected) this.Disconnected(this, new PlObjectEventArgs<PlNode>(this.node));
 		}
 
 		/// <summary>

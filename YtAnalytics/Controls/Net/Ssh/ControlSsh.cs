@@ -141,6 +141,9 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// Create the SSH client.
 				this.client = new SshClient(info);
 
+				// Set the client properties.
+				this.client.KeepAliveInterval = new TimeSpan(0, 0, 10);
+
 				// Set the client event handlers.
 				this.client.ErrorOccurred += this.OnSshErrorOccurred;
 				this.client.HostKeyReceived += this.OnSshHostKeyReceived;
@@ -275,10 +278,27 @@ namespace YtAnalytics.Controls.Net.Ssh
 				{
 					throw new SshException("Cannot execute the command on the SSH server because the previous connection has already been released.");
 				};
-				// If the current client is not connected, do nothing.
+				// If the current client is not connected, disconnect the client.
 				if (!this.client.IsConnected)
 				{
-					throw new SshException("Cannot execute the command on the SSH server because the current client is not connected.");
+					// Change the state.
+					this.state = ClientState.Disconnected;
+					// Show a disconnected message.
+					this.ShowMessage(
+						Resources.ServerBusy_32, "Connection Failed", "The connection to the SSH server \'{0}\' failed unexpectedly.".FormatWith(this.client.ConnectionInfo.Host),
+						false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(object[] parameters) =>
+						{
+							// Call the disconnecting event handler.
+							this.OnDisconnecting(this.client.ConnectionInfo);
+							// Call the disconnected event handler.
+							this.OnDisconnected(this.client.ConnectionInfo);
+						});
+					// Dispose the clinet.
+					this.client.Dispose();
+					this.client = null;
+					// Throw an exception.
+					throw new SshException("Cannot execute the command on the SSH server because the connection failed.");
 				}
 
 				// Create a new command for the current text.
@@ -295,30 +315,30 @@ namespace YtAnalytics.Controls.Net.Ssh
 
 				// Get the command data.
 				ThreadPool.QueueUserWorkItem((object state) =>
+				{
+					// Get the command output stream.
+					PipeStream stream = command.OutputStream as PipeStream;
+					// Set the stream as blocking.
+					stream.BlockLastReadBuffer = true;
+					// Read the command data.
+					using (PipeReader reader = new PipeReader(stream))
 					{
-						// Get the command output stream.
-						PipeStream stream = command.OutputStream as PipeStream;
-						// Set the stream as blocking.
-						stream.BlockLastReadBuffer = true;
-						// Read the command data.
-						using (PipeReader reader = new PipeReader(stream))
+						// While the command is not completed.
+						while (!asyncResult.IsCompleted)
 						{
-							// While the command is not completed.
-							while (!asyncResult.IsCompleted)
+							// Read all current data in a string.
+							string data = reader.ReadToEnd();
+							// If the string null or empty, continue.
+							if (string.IsNullOrEmpty(data))
 							{
-								// Read all current data in a string.
-								string data = reader.ReadToEnd();
-								// If the string null or empty, continue.
-								if (string.IsNullOrEmpty(data))
-								{
-									this.OnCommandDataInternal(command, "!");
-									continue;
-								}
-								// Call the event handler event handler.
-								this.OnCommandDataInternal(command, data);
+								this.OnCommandDataInternal(command, "!");
+								continue;
 							}
+							// Call the event handler event handler.
+							this.OnCommandDataInternal(command, data);
 						}
-					});
+					}
+				});
 
 				// Return the command.
 				return command;
@@ -578,10 +598,22 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// If the client is no longer connected.
 				if (!this.client.IsConnected)
 				{
-					// Call the disconnecting event handler.
-					this.OnDisconnecting(info);
-					// Call the disconnected event handler.
-					this.OnDisconnected(info);
+					// Change the state.
+					this.state = ClientState.Disconnected;
+					// Show a disconnected message.
+					this.ShowMessage(
+						Resources.ServerBusy_32, "Connection Failed", "The connection to the SSH server \'{0}\' failed.".FormatWith(this.client.ConnectionInfo.Host),
+						false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(object[] parameters) =>
+						{
+							// Call the disconnecting event handler.
+							this.OnDisconnecting(info);
+							// Call the disconnected event handler.
+							this.OnDisconnected(info);
+						});
+					// Dispose the clinet.
+					this.client.Dispose();
+					this.client = null;
 				}
 			}
 		}

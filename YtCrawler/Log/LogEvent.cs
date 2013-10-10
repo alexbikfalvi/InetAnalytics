@@ -231,7 +231,7 @@ namespace YtCrawler.Log
 		/// <summary>
 		/// Returns the log event message, with the parameters included.
 		/// </summary>
-		public string Message { get { return this.parameters != null ? this.message.FormatWith(this.parameters) : this.message; } }
+		public string Message { get { return this.parameters != null ? this.message.FormatWith(this.parameters.ToExtendedString()) : this.message; } }
 		/// <summary>
 		/// Returns the raw log event message, without any parameters.
 		/// </summary>

@@ -597,13 +597,17 @@ namespace YtAnalytics.Controls.Testing
 			}
 			catch (Exception exception)
 			{
-				// Show the error.
-				this.console.AppendText("{0}@{1}> {2}{3}Command failed.{4}",
-					this.Info.Username,
-					this.Info.Host,
-					text,
-					Environment.NewLine,
-					exception.Message);
+				// If the client has not disconnected.
+				if (this.Info != null)
+				{
+					// Show the error.
+					this.console.AppendText("{0}@{1}> {2}{3}Command failed.{4}",
+						this.Info.Username,
+						this.Info.Host,
+						text,
+						Environment.NewLine,
+						exception.Message);
+				}
 			}
 		}
 

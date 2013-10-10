@@ -78,6 +78,9 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
 			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
+			this.buttonProperties = new System.Windows.Forms.ToolStripDropDownButton();
+			this.buttonNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttonSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.controlLog = new YtAnalytics.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -89,8 +92,7 @@
 			this.menuItemDisconnect = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.buttonProperties = new System.Windows.Forms.ToolStripDropDownButton();
-			this.menuItemSliceProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -468,6 +470,7 @@
 			this.buttonConnect.Name = "buttonConnect";
 			this.buttonConnect.Size = new System.Drawing.Size(72, 22);
 			this.buttonConnect.Text = "C&onnect";
+			this.buttonConnect.Click += new System.EventHandler(this.OnConnect);
 			// 
 			// buttonDisconnect
 			// 
@@ -477,6 +480,33 @@
 			this.buttonDisconnect.Name = "buttonDisconnect";
 			this.buttonDisconnect.Size = new System.Drawing.Size(86, 22);
 			this.buttonDisconnect.Text = "&Disconnect";
+			this.buttonDisconnect.Click += new System.EventHandler(this.OnDisconnect);
+			// 
+			// buttonProperties
+			// 
+			this.buttonProperties.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonNodeProperties,
+            this.buttonSiteProperties});
+			this.buttonProperties.Enabled = false;
+			this.buttonProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.buttonProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonProperties.Name = "buttonProperties";
+			this.buttonProperties.Size = new System.Drawing.Size(89, 22);
+			this.buttonProperties.Text = "&Properties";
+			// 
+			// buttonNodeProperties
+			// 
+			this.buttonNodeProperties.Name = "buttonNodeProperties";
+			this.buttonNodeProperties.Size = new System.Drawing.Size(159, 22);
+			this.buttonNodeProperties.Text = "Node properties";
+			this.buttonNodeProperties.Click += new System.EventHandler(this.OnNodeProperties);
+			// 
+			// buttonSiteProperties
+			// 
+			this.buttonSiteProperties.Name = "buttonSiteProperties";
+			this.buttonSiteProperties.Size = new System.Drawing.Size(159, 22);
+			this.buttonSiteProperties.Text = "Site properties";
+			this.buttonSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
 			// 
 			// controlLog
 			// 
@@ -518,7 +548,7 @@
             this.menuItemDisconnect,
             this.toolStripSeparator3,
             this.menuItemNodeProperties,
-            this.menuItemSliceProperties});
+            this.menuItemSiteProperties});
 			this.contextMenu.Name = "contextMenu";
 			this.contextMenu.Size = new System.Drawing.Size(160, 98);
 			// 
@@ -528,6 +558,7 @@
 			this.menuItemConnect.Name = "menuItemConnect";
 			this.menuItemConnect.Size = new System.Drawing.Size(159, 22);
 			this.menuItemConnect.Text = "&Connect";
+			this.menuItemConnect.Click += new System.EventHandler(this.OnConnect);
 			// 
 			// menuItemDisconnect
 			// 
@@ -535,6 +566,7 @@
 			this.menuItemDisconnect.Name = "menuItemDisconnect";
 			this.menuItemDisconnect.Size = new System.Drawing.Size(159, 22);
 			this.menuItemDisconnect.Text = "&Disconnect";
+			this.menuItemDisconnect.Click += new System.EventHandler(this.OnDisconnect);
 			// 
 			// toolStripSeparator3
 			// 
@@ -549,22 +581,13 @@
 			this.menuItemNodeProperties.Text = "Node pr&operties";
 			this.menuItemNodeProperties.Click += new System.EventHandler(this.OnNodeProperties);
 			// 
-			// buttonProperties
+			// menuItemSiteProperties
 			// 
-			this.buttonProperties.Enabled = false;
-			this.buttonProperties.Image = global::YtAnalytics.Resources.Properties_16;
-			this.buttonProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonProperties.Name = "buttonProperties";
-			this.buttonProperties.Size = new System.Drawing.Size(89, 22);
-			this.buttonProperties.Text = "&Properties";
-			// 
-			// menuItemSliceProperties
-			// 
-			this.menuItemSliceProperties.Image = global::YtAnalytics.Resources.Properties_16;
-			this.menuItemSliceProperties.Name = "menuItemSliceProperties";
-			this.menuItemSliceProperties.Size = new System.Drawing.Size(159, 22);
-			this.menuItemSliceProperties.Text = "Slice prop&erties";
-			this.menuItemSliceProperties.Click += new System.EventHandler(this.OnSliceProperties);
+			this.menuItemSiteProperties.Image = global::YtAnalytics.Resources.Properties_16;
+			this.menuItemSiteProperties.Name = "menuItemSiteProperties";
+			this.menuItemSiteProperties.Size = new System.Drawing.Size(159, 22);
+			this.menuItemSiteProperties.Text = "Site prop&erties";
+			this.menuItemSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
 			// 
 			// ControlSlice
 			// 
@@ -645,6 +668,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem menuItemNodeProperties;
 		private System.Windows.Forms.ToolStripDropDownButton buttonProperties;
-		private System.Windows.Forms.ToolStripMenuItem menuItemSliceProperties;
+		private System.Windows.Forms.ToolStripMenuItem menuItemSiteProperties;
+		private System.Windows.Forms.ToolStripMenuItem buttonNodeProperties;
+		private System.Windows.Forms.ToolStripMenuItem buttonSiteProperties;
 	}
 }
