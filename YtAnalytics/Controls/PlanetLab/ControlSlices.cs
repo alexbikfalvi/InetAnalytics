@@ -199,7 +199,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.crawler = crawler;
 
 			// Set the slices list event handler.
-			this.crawler.Config.PlanetLab.LocalSlices.Changed += this.OnSlicesChanged;
+			this.crawler.Config.PlanetLab.LocalSlices.Updated += this.OnSlicesUpdated;
+			this.crawler.Config.PlanetLab.LocalSlices.Cleared += this.OnSlicesCleared;
+			this.crawler.Config.PlanetLab.LocalSlices.Added += LocalSlices_Added;
+			this.crawler.Config.PlanetLab.LocalSlices.Removed += LocalSlices_Removed;
 
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
@@ -294,22 +297,39 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSlicesChanged(object sender, EventArgs e)
+		private void OnSlicesUpdated(object sender, EventArgs e)
 		{
-			// Update the list of slices.
-			this.OnUpdateSlices();
+			// Lock the slices list.
+			this.crawler.Config.PlanetLab.LocalSlices.Lock();
+			try
+			{
+				// Add the list view items.
+				foreach (PlSlice slice in this.crawler.Config.PlanetLab.LocalSlices)
+				{
+					this.OnAddSlice(slice);
+				}
+			}
+			finally
+			{
+				this.crawler.Config.PlanetLab.LocalSlices.Unlock();
+			}
+
+			// Update the label.
+			this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
-		/// Clears the current list of slices.
+		/// An event handler called when the list of slices has been cleared.
 		/// </summary>
-		private void OnClearSlices()
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesCleared(object sender, EventArgs e)
 		{
 			// For all items.
 			foreach (ListViewItem item in this.listViewSlices.Items)
 			{
 				// Get the slice info.
-				SliceInfo info = (SliceInfo) item.Tag;
+				SliceInfo info = (SliceInfo)item.Tag;
 				// Remove the slice changed event handler.
 				info.Slice.Changed -= this.OnSliceChanged;
 				// Remove the tree node.
@@ -321,6 +341,16 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 			// Clear the list view.
 			this.listViewSlices.Items.Clear();
+		}
+
+		void LocalSlices_Removed(object sender, PlObjectEventArgs<PlSlice> e)
+		{
+			throw new NotImplementedException();
+		}
+
+		void LocalSlices_Added(object sender, PlObjectEventArgs<PlSlice> e)
+		{
+			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -534,33 +564,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// Updates the list of PlanetLab slices.
-		/// </summary>
-		private void OnUpdateSlices()
-		{
-			// Clear the current slices.
-			this.OnClearSlices();
-
-			// Lock the slices list.
-			this.crawler.Config.PlanetLab.LocalSlices.Lock();
-			try
-			{
-				// Add the list view items.
-				foreach (PlSlice slice in this.crawler.Config.PlanetLab.LocalSlices)
-				{
-					this.OnAddSlice(slice);
-				}
-			}
-			finally
-			{
-				this.crawler.Config.PlanetLab.LocalSlices.Unlock();
-			}
-
-			// Update the label.
-			this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
-		}
-
-		/// <summary>
 		/// An event handler called when the slice selection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -616,10 +619,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Show the add slice dialog.
 			if (this.formAddSlice.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
 			{
+				// Ignore the changed to the slices list.
 				// Add the slice to the slices list.
 				this.crawler.Config.PlanetLab.LocalSlices.Add(this.formAddSlice.Result);
 				// Add the slice.
-				this.OnAddSlice(this.formAddSlice.Result);
+				// this.OnAddSlice(this.formAddSlice.Result);
 			}
 		}
 

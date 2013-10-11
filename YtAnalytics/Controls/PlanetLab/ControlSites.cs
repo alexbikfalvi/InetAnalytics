@@ -83,7 +83,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.crawler = crawler;
 
 			// Set the site list event handler.
-			this.crawler.Config.PlanetLab.Sites.Changed += this.OnSitesChanged;
+			this.crawler.Config.PlanetLab.Sites.Cleared += this.OnSitesCleared;
+			this.crawler.Config.PlanetLab.Sites.Updated += this.OnSitesUpdated;
+			this.crawler.Config.PlanetLab.Sites.Added += OnSitesAdded;
+			this.crawler.Config.PlanetLab.Sites.Removed += OnSitesRemoved;
 
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
@@ -92,7 +95,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Enabled = true;
 
 			// Update the list of PlanetLab sites.
-			this.OnUpdateSites();
+			this.OnSitesUpdated(this, EventArgs.Empty);
 		}
 
 		// Protected methods.
@@ -241,20 +244,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the list of PlanetLab sites has changed.
+		/// An event handler called when the list of PlanetLab sites has been cleared.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSitesChanged(object sender, EventArgs e)
-		{
-			// Refresh the list of sites.
-			this.OnUpdateSites();
-		}
-
-		/// <summary>
-		/// An event handler called when clearing the list of sites.
-		/// </summary>
-		private void OnClearSites()
+		private void OnSitesCleared(object sender, EventArgs e)
 		{
 			// For all items.
 			foreach (ListViewItem item in this.listViewSites.Items)
@@ -268,6 +262,117 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.listViewSites.Items.Clear();
 			// Clear the map markers.
 			this.mapControl.Markers.Clear();
+
+			// Update the label.
+			this.status.Send("Showing {0} of {1} PlanetLab site{2}.".FormatWith(
+				this.listViewSites.Items.Count,
+				this.crawler.Config.PlanetLab.Sites.Count,
+				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
+		}
+
+		/// <summary>
+		/// An event handler called when the list of PlanetLab sites has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSitesUpdated(object sender, EventArgs e)
+		{
+			// Lock the sites.
+			this.crawler.Config.PlanetLab.Sites.Lock();
+			try
+			{
+				// Add the list view items.
+				foreach (PlSite site in this.crawler.Config.PlanetLab.Sites)
+				{
+					// If the filter is not null or empty.
+					if (!string.IsNullOrEmpty(this.filter))
+					{
+						// If the site name does not match the filter, continue.
+						if (!string.IsNullOrEmpty(site.Name))
+						{
+							if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
+						}
+					}
+
+					// Add a site.
+					this.OnAddSite(site);
+				}
+			}
+			finally
+			{
+				this.crawler.Config.PlanetLab.Sites.Unlock();
+			}
+
+			// Update the label.
+			this.status.Send("Showing {0} of {1} PlanetLab site{2}.".FormatWith(
+				this.listViewSites.Items.Count,
+				this.crawler.Config.PlanetLab.Sites.Count,
+				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
+		}
+
+		/// <summary>
+		/// An event handler called when a new site has been added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSitesAdded(object sender, PlObjectEventArgs<PlSite> e)
+		{
+			// The filter flag.
+			bool filterFlag = false;
+
+			// If the filter is not null or empty.
+			if (!string.IsNullOrEmpty(this.filter))
+			{
+				// If the site name does not match the filter, return.
+				if (!string.IsNullOrEmpty(e.Object.Name))
+				{
+					filterFlag = !e.Object.Name.ToLower().Contains(this.filter.ToLower());
+				}
+			}
+
+			// If the site is not filtered.
+			if (!filterFlag)
+			{
+				// Add the site.
+				this.OnAddSite(e.Object);
+			}
+
+			// Update the label.
+			this.status.Send("Showing {0} of {1} PlanetLab site{2}.".FormatWith(
+				this.listViewSites.Items.Count,
+				this.crawler.Config.PlanetLab.Sites.Count,
+				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
+		}
+
+		/// <summary>
+		/// An event handler called when a site has been removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSitesRemoved(object sender, PlObjectEventArgs<PlSite> e)
+		{
+			// Get the list view item containing the site.
+			ListViewItem item = this.listViewSites.Items.FirstOrDefault((ListViewItem it) =>
+				{
+					// Get the item tag.
+					Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)it.Tag;
+					// Return true if the tag slice matches the current slice.
+					return object.ReferenceEquals(tag.First, e.Object);
+				});
+			// If the item is not null.
+			if (null != item)
+			{
+				// Get the item tag.
+				Pair<PlSite, MapMarker> tag = (Pair<PlSite, MapMarker>)item.Tag;
+				// Remove the slice changed event handler.
+				tag.First.Changed -= this.OnSiteChanged;
+				// Remove the map marker.
+				this.mapControl.Markers.Remove(tag.Second);
+				// Dispose the map marker.
+				tag.Second.Dispose();
+				// Remove the item.
+				this.listViewSites.Items.Remove(item);
+			}
 		}
 
 		/// <summary>
@@ -330,7 +435,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnRefresh(object sender, EventArgs e)
 		{
 			// Clear the sites.
-			this.OnClearSites();
+			this.OnSitesCleared(this, EventArgs.Empty);
 
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
@@ -370,47 +475,6 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
-		}
-
-		/// <summary>
-		/// Updates the list of PlanetLab sites.
-		/// </summary>
-		private void OnUpdateSites()
-		{
-			// Clear the sites.
-			this.OnClearSites();
-
-			// Update the filter.
-			this.filter = this.textBoxFilter.Text.Trim();
-
-			// Lock the sites.
-			this.crawler.Config.PlanetLab.Sites.Lock();
-			try
-			{
-				// Add the list view items.
-				foreach (PlSite site in this.crawler.Config.PlanetLab.Sites)
-				{
-					// If the filter is not null or empty.
-					if (!string.IsNullOrEmpty(this.filter))
-					{
-						// If the site name does not match the filter, continue.
-						if (!string.IsNullOrEmpty(site.Name))
-						{
-							if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
-						}
-					}
-
-					// Add a site.
-					this.OnAddSite(site);
-				}
-			}
-			finally
-			{
-				this.crawler.Config.PlanetLab.Sites.Unlock();
-			}
-
-			// Update the label.
-			this.status.Send("Showing {0} of {1} PlanetLab sites.".FormatWith(this.listViewSites.Items.Count, this.crawler.Config.PlanetLab.Sites.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
@@ -476,10 +540,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the filter has changed.
 			if (this.filter != this.textBoxFilter.Text.Trim())
 			{
+				// Update the filter.
+				this.filter = this.textBoxFilter.Text.Trim();
 				// Update the clear button state.
 				this.buttonClear.Enabled = !string.IsNullOrWhiteSpace(this.textBoxFilter.Text);
 				// Update the sites.
-				this.OnUpdateSites();
+				this.OnSitesUpdated(this, EventArgs.Empty);
 			}
 		}
 

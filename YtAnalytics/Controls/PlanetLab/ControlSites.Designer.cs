@@ -19,7 +19,8 @@
 				// Dispose the sites list.
 				this.OnDisposeSites();
 				// Remove the sites list event handler.
-				this.crawler.Config.PlanetLab.Sites.Changed -= this.OnSitesChanged;
+				this.crawler.Config.PlanetLab.Sites.Cleared -= this.OnSitesCleared;
+				this.crawler.Config.PlanetLab.Sites.Updated -= this.OnSitesUpdated;
 				// If the components are not null.
 				if (components != null)
 				{
