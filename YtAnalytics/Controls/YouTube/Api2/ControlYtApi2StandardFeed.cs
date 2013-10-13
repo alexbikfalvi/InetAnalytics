@@ -121,7 +121,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 			this.Enabled = true;
 
 			// Update the categories.
-			this.OnUpdateCategories(this, null);
+			this.OnUpdateCategories(this, EventArgs.Empty);
 		}
 
 		// Private methods.

@@ -256,7 +256,7 @@ namespace YtAnalytics.Controls.Database
 			this.items.Remove(id);
 
 			// Call the selected item change event to update the buttons.
-			this.OnServerSelectionChanged(this, null);
+			this.OnServerSelectionChanged(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -411,7 +411,7 @@ namespace YtAnalytics.Controls.Database
 				}
 
 				// Call the selected item change event to update the buttons.
-				this.OnServerSelectionChanged(this, null);
+				this.OnServerSelectionChanged(this, EventArgs.Empty);
 
 				// Log the change.
 				this.log.Add(this.crawler.Log.Add(

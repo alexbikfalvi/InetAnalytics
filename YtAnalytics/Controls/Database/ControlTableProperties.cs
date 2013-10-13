@@ -203,7 +203,7 @@ namespace YtAnalytics.Controls.Database
 			// Save the server configuration.
 			this.server.SaveConfiguration();
 			// Raise a configuration saved event.
-			if (this.ConfigurationSaved != null) this.ConfigurationSaved(this, null);
+			if (this.ConfigurationSaved != null) this.ConfigurationSaved(this, EventArgs.Empty);
 		}
 
 		// Protected methods.
@@ -217,7 +217,7 @@ namespace YtAnalytics.Controls.Database
 			// Disable the control.
 			this.tabControl.Enabled = false;
 			// Raise the database operation started event.
-			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, null);
+			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -229,7 +229,7 @@ namespace YtAnalytics.Controls.Database
 			// Enable the control.
 			this.tabControl.Enabled = true;
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -241,7 +241,7 @@ namespace YtAnalytics.Controls.Database
 			// Enable the control.
 			this.tabControl.Enabled = true;
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -255,7 +255,7 @@ namespace YtAnalytics.Controls.Database
 			// Disable the control.
 			this.tabControl.Enabled = false;
 			// Raise the database operation started event.
-			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, null);
+			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -270,7 +270,7 @@ namespace YtAnalytics.Controls.Database
 			// Enable the control.
 			this.tabControl.Enabled = true;
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 			// If the query state is not null.
 			if (query.State != null)
 			{
@@ -295,7 +295,7 @@ namespace YtAnalytics.Controls.Database
 			// Enable the control.
 			this.tabControl.Enabled = true;
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
 
 		// Private methods.
@@ -333,7 +333,7 @@ namespace YtAnalytics.Controls.Database
 					// Set the name.
 					this.textBoxNameDatabase.Text = this.resultTable.Name;
 					// Raise a configuration changed event.
-					if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, null);
+					if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, EventArgs.Empty);
 					// Set the changes to false.
 					this.changes = true;
 					// Create a new query to obtain the schema of the selected table.
@@ -378,7 +378,7 @@ namespace YtAnalytics.Controls.Database
 					this.checkBoxDefaultDatabase.Checked = false;
 					this.checkBoxDefaultDatabase.Enabled = true;
 					// Raise a configuration changed event.
-					if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, null);
+					if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, EventArgs.Empty);
 					// Set the changes to true.
 					this.changes = true;
 				}
@@ -545,7 +545,7 @@ namespace YtAnalytics.Controls.Database
 			// Set the schema name.
 			this.textBoxSchema.Text = this.resultSchema.Name;
 			// Raise a configuration changed event.
-			if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, null);
+			if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, EventArgs.Empty);
 			// Set the changes to true.
 			this.changes = true;
 		}
@@ -606,7 +606,7 @@ namespace YtAnalytics.Controls.Database
 				item.SubItems[1].Text = resultColumn.Name;
 				item.ImageKey = "Field";
 				// Raise a configuration changed event.
-				if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, null);
+				if (this.ConfigurationChanged != null) this.ConfigurationChanged(this, EventArgs.Empty);
 			}
 		}
 

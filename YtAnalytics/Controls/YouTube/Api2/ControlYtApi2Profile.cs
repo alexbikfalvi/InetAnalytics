@@ -106,7 +106,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 			this.buttonView.Enabled = true;
 			this.buttonComment.Enabled = true;
 			// Begin the query.
-			this.Start(this, null);
+			this.Start(this, EventArgs.Empty);
 		}
 
 		/// <summary>

@@ -199,7 +199,7 @@ namespace YtAnalytics.Controls.YouTube
 			this.listView.Items.Clear();
 			this.buttonNext.Enabled = false;
 			this.buttonPrevious.Enabled = false;
-			if (this.VideoSelectionChanged != null) this.VideoSelectionChanged(this, null);
+			if (this.VideoSelectionChanged != null) this.VideoSelectionChanged(this, EventArgs.Empty);
 		}
 
 		/// <summary>

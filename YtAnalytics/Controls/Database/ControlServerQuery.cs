@@ -228,7 +228,7 @@ namespace YtAnalytics.Controls.Database
 							// Get the event handler.
 							EventHandler handler = asyncState.AsyncState as EventHandler;
 							// Call the event handler.
-							handler(this, null);
+							handler(this, EventArgs.Empty);
 						}
 					}
 				}

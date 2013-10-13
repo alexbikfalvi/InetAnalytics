@@ -220,7 +220,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Enabled = true;
 
 			// Update the list of PlanetLab slices.
-			this.OnUpdateSlices();
+			this.OnSlicesUpdated(this, EventArgs.Empty);
 		}
 
 		// Protected methods.
@@ -432,18 +432,17 @@ namespace YtAnalytics.Controls.PlanetLab
 				return;
 			}
 
-			// Clear the current list of slices.
-			this.OnClearSlices();
-
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab slices...", Resources.GlobeClock_16);
-
 			// Log
 			this.controlLog.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				ControlSlices.logSource,
 				"Refreshing the list of PlanetLab slices."));
+
+			// Clear the current list of slices.
+			this.crawler.Config.PlanetLab.LocalSlices.Clear();
 
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(

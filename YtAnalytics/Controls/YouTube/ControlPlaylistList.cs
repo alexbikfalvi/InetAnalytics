@@ -196,7 +196,7 @@ namespace YtAnalytics.Controls.YouTube
 			this.listView.Items.Clear();
 			this.buttonNext.Enabled = false;
 			this.buttonPrevious.Enabled = false;
-			if (this.PlaylistSelectionChanged != null) this.PlaylistSelectionChanged(this, null);
+			if (this.PlaylistSelectionChanged != null) this.PlaylistSelectionChanged(this, EventArgs.Empty);
 		}
 
 		/// <summary>

@@ -375,7 +375,7 @@
 			this.buttonRefresh.Name = "buttonRefresh";
 			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
 			this.buttonRefresh.Text = "&Refresh";
-			this.buttonRefresh.Click += new System.EventHandler(this.OnRefresh);
+			this.buttonRefresh.Click += new System.EventHandler(this.OnUpdateSlice);
 			// 
 			// buttonCancel
 			// 

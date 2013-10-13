@@ -158,7 +158,7 @@ namespace YtAnalytics.Controls.Database
 			this.buttonRefresh.Enabled = false;
 			this.buttonClose.Enabled = false;
 			// Raise the database operation started event.
-			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, null);
+			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -171,7 +171,7 @@ namespace YtAnalytics.Controls.Database
 			this.buttonRefresh.Enabled = true;
 			this.buttonClose.Enabled = true;
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -184,7 +184,7 @@ namespace YtAnalytics.Controls.Database
 			this.buttonRefresh.Enabled = true;
 			this.buttonClose.Enabled = true;
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -202,7 +202,7 @@ namespace YtAnalytics.Controls.Database
 			this.buttonClose.Enabled = false;
 			this.buttonCancel.Enabled = true;
 			// Raise the database operation started event.
-			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, null);
+			if (this.DatabaseOperationStarted != null) this.DatabaseOperationStarted(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -243,7 +243,7 @@ namespace YtAnalytics.Controls.Database
 			// Update the status box.
 			this.labelStatus.Text = "{0} {1} fetched.".FormatWith(result.RowCount, result.RowCount == 1 ? "object" : "objects");
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -266,7 +266,7 @@ namespace YtAnalytics.Controls.Database
 			this.labelStatus.Text = "Query failed. {0}".FormatWith(exception.Message);
 
 			// Raise the database operation finished event.
-			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, null);
+			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
 
 		/// <summary>

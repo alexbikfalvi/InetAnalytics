@@ -189,6 +189,10 @@ namespace YtAnalytics.Controls.PlanetLab
 		private readonly FormObjectProperties<ControlNodeProperties> formNodeProperties = new FormObjectProperties<ControlNodeProperties>();
 		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 
+		private readonly FormAddSliceToNodesLocation formAddSliceToNodesLocation = new FormAddSliceToNodesLocation();
+		private readonly FormAddSliceToNodesState formAddSliceToNodesState = new FormAddSliceToNodesState();
+		private readonly FormAddSliceToNodesSlice formAddSliceToNodesSlice = new FormAddSliceToNodesSlice();
+
 		// Public declarations
 
 		/// <summary>
@@ -308,39 +312,40 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Add the list of nodes.
 				foreach (int id in this.slice.NodeIds)
 				{
-					// Get the node.
+					// The node.
 					PlNode node = this.crawler.Config.PlanetLab.DbNodes.Find(id);
+					// The site.
+					PlSite site = null;
+
 					// If the node is not null.
 					if (null != node)
 					{
 						// Add a node event handler.
 						node.Changed += this.OnNodeChanged;
+
+						// If the node has a site identifier.
+						if (node.SiteId.HasValue)
+						{
+							// Get the site from the database.
+							site = this.crawler.Config.PlanetLab.DbSites.Find(node.SiteId.Value);
+							// If the site is not null.
+							if (null != site)
+							{
+								// Add a site event handler.
+								site.Changed += OnSiteChanged;
+							}
+							else
+							{
+								// Add the site to the pending sites.
+								this.pendingSites.Add(node.SiteId.Value);
+							}
+						}
 					}
 					else
 					{
 						// Add the node ID to the pending list.
 						this.pendingNodes.Add(id);
 					}
-
-					// The node site.
-					PlSite site = null;
-					if (node.SiteId.HasValue)
-					{
-						// Get the site from the database.
-						site = this.crawler.Config.PlanetLab.DbSites.Find(node.SiteId.Value);
-						// If the site is not null.
-						if (null != site)
-						{
-							// Add a site event handler.
-							site.Changed += OnSiteChanged;
-						}
-						else
-						{
-							// Add the site to the pending sites.
-							this.pendingSites.Add(node.SiteId.Value);
-						}
-					}
-
 
 					// Create a new geo marker for this site.
 					MapMarker marker = null;
@@ -381,11 +386,11 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Refresh the pending nodes and sites.
 				if (this.pendingNodes.Count > 0)
 				{
-					throw new NotImplementedException();
+					//throw new NotImplementedException();
 				}
 				else if (this.pendingSites.Count > 0)
 				{
-					throw new NotImplementedException();
+					//throw new NotImplementedException();
 				}
 			}
 		}
@@ -475,10 +480,19 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Get the node info.
 				NodeInfo info = item.Tag as NodeInfo;
 				// Remove the event handlers.
-				info.Node.Changed -= this.OnNodeChanged;
-				info.Site.Changed -= this.OnSiteChanged;
+				if (info.Node != null)
+				{
+					info.Node.Changed -= this.OnNodeChanged;
+				}
+				if (info.Site != null)
+				{
+					info.Site.Changed -= this.OnSiteChanged;
+				}
 				// Dispose the map marker.
-				info.Marker.Dispose();
+				if (info.Marker != null)
+				{
+					info.Marker.Dispose();
+				}
 			}
 
 			// Clear the list.
@@ -498,10 +512,19 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Get the node info.
 				NodeInfo info = item.Tag as NodeInfo;
 				// Remove the event handlers.
-				info.Node.Changed -= this.OnNodeChanged;
-				info.Site.Changed -= this.OnSiteChanged;
+				if (info.Node != null)
+				{
+					info.Node.Changed -= this.OnNodeChanged;
+				}
+				if (info.Site != null)
+				{
+					info.Site.Changed -= this.OnSiteChanged;
+				}
 				// Dispose the map marker.
-				info.Marker.Dispose();
+				if (info.Marker != null)
+				{
+					info.Marker.Dispose();
+				}
 			}
 		}
 
@@ -563,11 +586,11 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user refreshes the list of PlanetLab slices.
+		/// An event handler called when the user updates PlanetLab slice information.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnRefresh(object sender, EventArgs e)
+		private void OnUpdateSlice(object sender, EventArgs e)
 		{
 			//// If there is no validated PlanetLab person account, show a message and return.
 			//if (-1 == CrawlerStatic.PlanetLabPersonId)
@@ -604,7 +627,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user cancels the refresh of PlanetLab slices.
+		/// An event handler called when the user cancels the update of PlanetLab slice.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
@@ -682,25 +705,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnAddToNodesLocation(object sender, EventArgs e)
 		{
-			//// If there is no validated PlanetLab person account, show a message and return.
-			//if (-1 == CrawlerStatic.PlanetLabPersonId)
-			//{
-			//	MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//	return;
-			//}
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
-			//// If there is no selected slice, do nothing.
-			//if (this.listViewSlices.SelectedItems.Count == 0) return;
-
-			//// Get the slice info.
-			//SliceInfo info = (SliceInfo)this.listViewSlices.SelectedItems[0].Tag;
-
-			//// Show the add slice to nodes by location dialog.
-			//if (this.formAddSliceToNodesLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
-			//{
-			//	// Add the slice to nodes.
-			//	this.OnAddSliceToNodes(info.Slice, this.formAddSliceToNodesLocation.Result);
-			//}
+			// Show the add slice to nodes by location dialog.
+			if (this.formAddSliceToNodesLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			{
+				// Add the slice to nodes.
+				this.OnAddSliceToNodes(this.formAddSliceToNodesLocation.Result);
+			}
 		}
 
 		/// <summary>
@@ -710,25 +727,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnAddToNodesState(object sender, EventArgs e)
 		{
-			//// If there is no validated PlanetLab person account, show a message and return.
-			//if (-1 == CrawlerStatic.PlanetLabPersonId)
-			//{
-			//	MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//	return;
-			//}
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
-			//// If there is no selected slice, do nothing.
-			//if (this.listViewSlices.SelectedItems.Count == 0) return;
-
-			//// Get the slice.
-			//SliceInfo info = (SliceInfo)this.listViewSlices.SelectedItems[0].Tag;
-
-			//// Show the add slice to nodes by state dialog.
-			//if (this.formAddSliceToNodesState.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
-			//{
-			//	// Add the slice to nodes.
-			//	this.OnAddSliceToNodes(info.Slice, this.formAddSliceToNodesState.Result);
-			//}
+			// Show the add slice to nodes by state dialog.
+			if (this.formAddSliceToNodesState.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			{
+				// Add the slice to nodes.
+				this.OnAddSliceToNodes(this.formAddSliceToNodesState.Result);
+			}
 		}
 
 		/// <summary>
@@ -738,16 +749,26 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnAddToNodesSlice(object sender, EventArgs e)
 		{
+			// If there is no validated PlanetLab person account, show a message and return.
+			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			{
+				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
+			// Show the add slice to nodes by state dialog.
+			if (this.formAddSliceToNodesSlice.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			{
+				// Add the slice to nodes.
+				this.OnAddSliceToNodes(this.formAddSliceToNodesState.Result);
+			}
 		}
 
-
 		/// <summary>
-		/// An event handler called when adding a slice to PlanetLab nodes.
+		/// An event handler called when adding the current slice to PlanetLab nodes.
 		/// </summary>
-		/// <param name="slice">The slice.</param>
 		/// <param name="ids">The list of node IDs.</param>
-		private void OnAddSliceToNodes(PlSlice slice, int[] ids)
+		private void OnAddSliceToNodes(int[] ids)
 		{
 			// If the slice does not have an ID, show an error message and return.
 			if (!slice.Id.HasValue)
@@ -788,8 +809,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="state">The request state.</param>
 		private void OnAddSliceToNodesRequestStarted(RequestState state)
 		{
-			//// Disable the slices list.
-			//this.listViewSlices.Enabled = false;
+			// Disable the toolbar.
+			this.toolStrip.Enabled = false;
 		}
 
 		/// <summary>
@@ -884,9 +905,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="state">The request state.</param>
 		private void OnAddSliceToNodesRequestFinished(RequestState state)
 		{
-			//// Enable the slices list.
-			//this.listViewSlices.Enabled = true;
-			//// Refresh the list selection.
+			// Enable the toolbar.
+			this.toolStrip.Enabled = true;
+			// Refresh the list selection.
 			//this.OnSelectionChanged(this, EventArgs.Empty);
 
 			// If the request is successful.

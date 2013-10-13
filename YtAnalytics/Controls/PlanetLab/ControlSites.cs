@@ -390,6 +390,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 		}
 
+		/// <summary>
+		/// Adds a site to the site list.
+		/// </summary>
+		/// <param name="site">The site.</param>
 		private void OnAddSite(PlSite site)
 		{
 			// Create a new geo marker for this site.
@@ -434,9 +438,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRefresh(object sender, EventArgs e)
 		{
-			// Clear the sites.
-			this.OnSitesCleared(this, EventArgs.Empty);
-
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
 			// Log
@@ -445,6 +446,9 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Information,
 				ControlSites.logSource,
 				"Refreshing the list of PlanetLab sites.");
+
+			// Clear the current list of sites.
+			this.crawler.Config.PlanetLab.Sites.Clear();
 
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
