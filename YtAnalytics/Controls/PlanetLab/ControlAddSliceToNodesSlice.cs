@@ -403,7 +403,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the select button enabled state.
 			this.wizardPageNode.NextEnabled = this.selectedNodes.Count > 0;
 			// Update the status.
-			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listViewNodes.Items.Count, this.nodes.Count, this.selectedNodes.Count, this.selectedNodes.Count == 1 ? string.Empty : "s");
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listViewNodes.Items.Count, this.nodes.Count, this.selectedNodes.Count, this.selectedNodes.Count.PluralSuffix());
 		}
 
 		/// <summary>
@@ -593,7 +593,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonSelectAll.Enabled = (this.listViewNodes.Items.Count > 0) && (count < this.listViewNodes.Items.Count);
 			this.buttonClearAll.Enabled = count > 0;
 			// Update the status.
-			this.wizardPageNode.Status = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listViewNodes.Items.Count, this.nodes.Count, this.selectedNodes.Count, this.selectedNodes.Count == 1 ? string.Empty : "s");
+			this.wizardPageNode.Status = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listViewNodes.Items.Count, this.nodes.Count, this.selectedNodes.Count, this.selectedNodes.Count.PluralSuffix());
 		}
 
 		/// <summary>

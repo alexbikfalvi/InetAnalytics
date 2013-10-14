@@ -241,7 +241,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 
 			// Set the status.
-			this.labelStatus.Text = "Selected {0} out of {1} node{2}.".FormatWith(0, this.slice.NodeIds.Length, this.slice.NodeIds.Length == 1 ? string.Empty : "s");
+			this.labelStatus.Text = "Selected {0} out of {1} node{2}.".FormatWith(0, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix());
 		}
 
 		/// <summary>
@@ -386,7 +386,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonClearAll.Enabled = count > 0;
 			this.buttonSelect.Enabled = count > 0;
 			// Set the status.
-			this.labelStatus.Text = "Selected {0} out of {1} node{2}.".FormatWith(count, slice.NodeIds.Length, this.slice.NodeIds.Length == 1 ? string.Empty : "s");
+			this.labelStatus.Text = "Selected {0} out of {1} node{2}.".FormatWith(count, slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix());
 		}
 
 		/// <summary>

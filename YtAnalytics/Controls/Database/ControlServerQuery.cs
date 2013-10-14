@@ -610,7 +610,7 @@ namespace YtAnalytics.Controls.Database
 					}
 
 					// Update the status box.
-					this.statusLabel.Text = "Query completed successfully: {0} {1} of data fetched.".FormatWith(table.RowCount.ToString(), table.RowCount == 1 ? "row" : "rows");
+					this.statusLabel.Text = "Query completed successfully: {0} row{1} of data fetched.".FormatWith(table.RowCount.ToString(), table.RowCount.PluralSuffix());
 				}
 				else
 				{

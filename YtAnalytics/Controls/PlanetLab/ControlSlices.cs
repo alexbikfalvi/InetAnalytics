@@ -161,7 +161,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private readonly FormAddSliceToNodesSlice formAddSliceToNodesSlice = new FormAddSliceToNodesSlice();
 		private readonly FormRemoveSliceFromNodes formRemoveSliceFromNodes = new FormRemoveSliceFromNodes();
 
-		private RequestState requestStateGetSlices;
+		private readonly RequestState requestStateGetSlices;
 
 		// Public declarations
 
@@ -177,7 +177,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
 
-			// Create the request states.
+			// Create the get slices request state.
 			this.requestStateGetSlices = new RequestState(
 				null,
 				this.OnRefreshSlicesRequestResult,
@@ -423,7 +423,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Warn the user about the refresh.
 			if (MessageBox.Show(
 				this,
-				"You will now refresh the list with the slices to which you have access with your PlanetLab account. This will remove the configuration of slices that are no longer available. Click Yes to continue.",
+				"You will now refresh the list with the slices to which you have access with your PlanetLab account. This will remove the configuration of slices that are no longer available and disconnect all current sessions. Click Yes to continue.",
 				"Refresh PlanetLab Slices",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
@@ -762,7 +762,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(
 				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-				"Adding slice {0} to {1} PlanetLab node{2}...".FormatWith(slice.Id, ids.Length, ids.Length == 1 ? string.Empty : "s"),
+				"Adding slice {0} to {1} PlanetLab node{2}...".FormatWith(slice.Id, ids.Length, ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeClock_16);
 
@@ -772,7 +772,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Information,
 				ControlSlices.logSource,
 				"Adding slice {0} to {1} PlanetLab node{2}.",
-				new object[] { slice.Id, ids.Length, ids.Length == 1 ? string.Empty : "s" }));
+				new object[] { slice.Id, ids.Length, ids.Length.PluralSuffix() }));
 
 			// Create the request state.
 			SliceIdsRequestState requestState = new SliceIdsRequestState(
@@ -822,7 +822,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Update the status.
 					this.status.Send(
 						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-						"Adding slice {0} to {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+						"Adding slice {0} to {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
 					// Log
@@ -831,7 +831,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						LogEventType.Success,
 						ControlSlices.logSource,
 						"Adding slice {0} to {1} PlanetLab node{2} completed successfully.",
-						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s" }));
+						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix() }));
 
 					// Set the request as successful.
 					requestState.Success = true;
@@ -840,14 +840,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Show a dialog.
 					MessageBox.Show(this,
-						"Cannot add the slice {0} to {1} PlanetLab node{2}. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+						"Cannot add the slice {0} to {1} PlanetLab node{2}. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						"Add Slice to Node",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning);
 					// Update the status.
 					this.status.Send(
 						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-						"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+						"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
 					// Log
@@ -856,7 +856,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						LogEventType.Error,
 						ControlSlices.logSource,
 						"Adding slice {0} to {1} PlanetLab node{2} failed.",
-						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s" }));
+						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix() }));
 				}
 			}
 			else
@@ -864,7 +864,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Update the status.
 				this.status.Send(
 					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-					"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+					"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
 				if (null == response.Fault)
@@ -875,7 +875,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						LogEventType.Error,
 						ControlSlices.logSource,
 						"Adding slice {0} to {1} PlanetLab node{2} failed.",
-						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s" }));
+						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix() }));
 				}
 				else
 				{
@@ -885,7 +885,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						LogEventType.Error,
 						ControlSlices.logSource,
 						"Adding slice {0} to {1} PlanetLab node{2} failed with code {3} ({4}).",
-						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s", response.Fault.FaultCode, response.Fault.FaultString }));
+						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix(), response.Fault.FaultCode, response.Fault.FaultString }));
 				}
 			}
 		}
@@ -901,7 +901,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(
 				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-				"Adding the slice {0} to {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+				"Adding the slice {0} to {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 			// Log
@@ -910,7 +910,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Canceled,
 				ControlSlices.logSource,
 				"Adding the slice {0} to {1} PlanetLab node{2} was canceled.",
-				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s" }));
+				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix() }));
 		}
 
 		/// <summary>
@@ -925,7 +925,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(
 				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-				"Adding the slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+				"Adding the slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 			// Log
@@ -934,7 +934,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Error,
 				ControlSlices.logSource,
 				"Adding the slice {0} to {1} PlanetLab node{2} failed. {3}",
-				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s", exception.Message },
+				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix(), exception.Message },
 				exception));
 		}
 
@@ -1068,7 +1068,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Update the status.
 				this.status.Send(
 					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-					"Removing slice {0} from {1} PlanetLab node{2}...".FormatWith(info.Slice.Id, ids.Length, ids.Length == 1 ? string.Empty : "s"),
+					"Removing slice {0} from {1} PlanetLab node{2}...".FormatWith(info.Slice.Id, ids.Length, ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
 				// Log
@@ -1077,7 +1077,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					LogEventType.Information,
 					ControlSlices.logSource,
 					"Removing slice {0} from {1} PlanetLab node{2}.",
-					new object[] { info.Slice.Id, ids.Length, ids.Length == 1 ? string.Empty : "s" }));
+					new object[] { info.Slice.Id, ids.Length, ids.Length.PluralSuffix() }));
 
 				// Create the request state.
 				SliceIdsRequestState requestState = new SliceIdsRequestState(
@@ -1128,7 +1128,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Update the status.
 					this.status.Send(
 						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-						"Removing slice {0} from {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+						"Removing slice {0} from {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
 
@@ -1138,7 +1138,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						LogEventType.Success,
 						ControlSlices.logSource,
 						"Removing slice {0} from {1} PlanetLab node{2} completed successfully.",
-						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s" }));
+						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix() }));
 
 					// Set the request as successful.
 					requestState.Success = true;
@@ -1147,14 +1147,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Show a dialog.
 					MessageBox.Show(this,
-						"Cannot remove the slice {0} from {1} PlanetLab node{2}. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+						"Cannot remove the slice {0} from {1} PlanetLab node{2}. The PlanetLab server responded, however the operation was not successful.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						"Remove Slice from Node",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning);
 					// Update the status.
 					this.status.Send(
 						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-						"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+						"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
 				}
@@ -1164,7 +1164,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Update the status.
 				this.status.Send(
 					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-					"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+					"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
 				if (null == response.Fault)
@@ -1175,7 +1175,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						LogEventType.Error,
 						ControlSlices.logSource,
 						"Removing slice {0} from {1} PlanetLab node{2} failed.",
-						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s" }));
+						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix() }));
 				}
 				else
 				{
@@ -1185,7 +1185,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						LogEventType.Error,
 						ControlSlices.logSource,
 						"Removing slice {0} from {1} PlanetLab node{2} failed with code {3} ({4}).",
-						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s", response.Fault.FaultCode, response.Fault.FaultString }));
+						new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix(), response.Fault.FaultCode, response.Fault.FaultString }));
 				}
 			}
 		}
@@ -1201,7 +1201,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(
 				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-				"Removing the slice {0} from {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+				"Removing the slice {0} from {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 			// Log
@@ -1210,7 +1210,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Canceled,
 				ControlSlices.logSource,
 				"Removing the slice {0} from {1} PlanetLab node{2} was canceled.",
-				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s" }));
+				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix() }));
 		}
 
 		/// <summary>
@@ -1225,7 +1225,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(
 				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
-				"Removing the slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s"),
+				"Removing the slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 			// Log
@@ -1234,7 +1234,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Error,
 				ControlSlices.logSource,
 				"Removing the slice {0} from {1} PlanetLab node{2} failed. {3}",
-				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length == 1 ? string.Empty : "s", exception.Message },
+				new object[] { requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix(), exception.Message },
 				exception));
 		}
 

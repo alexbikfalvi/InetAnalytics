@@ -333,7 +333,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.nodes.Unlock();
 			}
 			// Update the status.
-			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listView.Items.Count, this.nodes.Count, this.selected.Count, this.selected.Count == 1 ? string.Empty : "s");
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listView.Items.Count, this.nodes.Count, this.selected.Count, this.selected.Count.PluralSuffix());
 		}
 
 		/// <summary>
@@ -397,7 +397,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the select button enabled state.
 			this.buttonSelect.Enabled = this.selected.Count > 0;
 			// Update the status.
-			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listView.Items.Count, this.nodes.Count, this.selected.Count, this.selected.Count == 1 ? string.Empty : "s");
+			this.labelStatus.Text = "Showing {0} of {1} PlanetLab nodes. {2} node{3} selected.".FormatWith(this.listView.Items.Count, this.nodes.Count, this.selected.Count, this.selected.Count.PluralSuffix());
 		}
 	}
 }

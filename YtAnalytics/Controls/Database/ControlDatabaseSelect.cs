@@ -241,7 +241,7 @@ namespace YtAnalytics.Controls.Database
 			this.buttonCancel.Enabled = false;
 			this.buttonClose.Enabled = true;
 			// Update the status box.
-			this.labelStatus.Text = "{0} {1} fetched.".FormatWith(result.RowCount, result.RowCount == 1 ? "object" : "objects");
+			this.labelStatus.Text = "{0} object{1} fetched.".FormatWith(result.RowCount, result.RowCount.PluralSuffix());
 			// Raise the database operation finished event.
 			if (this.DatabaseOperationFinished != null) this.DatabaseOperationFinished(this, EventArgs.Empty);
 		}
