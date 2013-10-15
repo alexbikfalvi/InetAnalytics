@@ -150,10 +150,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlPcu> pcus = null;
 				// Create a PlanetLab PCUs list for the given response.
-				PlList<PlPcu> pcus = PlList<PlPcu>.Create(response.Value as XmlRpcArray);
+				try { pcus = PlList<PlPcu>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the PCUs count is greater than zero.
-				if (pcus.Count > 0)
+				if ((null != pcus) && (pcus.Count > 0))
 				{
 					// Display the information for the first PCU.
 					this.Object = pcus[0];

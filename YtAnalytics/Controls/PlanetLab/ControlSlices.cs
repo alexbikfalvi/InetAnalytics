@@ -479,51 +479,55 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Get the slices array.
 				XmlRpcArray slices = response.Value as XmlRpcArray;
 
-				// Update the list of PlanetLab local slices, filtering by the current person account.
-				this.crawler.Config.PlanetLab.LocalSlices.CopyFrom(slices.Where((XmlRpcValue value) =>
-					{
-						XmlRpcStruct str = value.Value as XmlRpcStruct;
-						if (null == str) return false;
+				try
+				{
+					// Update the list of PlanetLab local slices, filtering by the current person account.
+					this.crawler.Config.PlanetLab.LocalSlices.CopyFrom(slices.Where((XmlRpcValue value) =>
+						{
+							XmlRpcStruct str = value.Value as XmlRpcStruct;
+							if (null == str) return false;
 
-						XmlRpcMember member = str[PlSlice.Fields.PersonIds.GetName()];
-						if (null == member) return false;
+							XmlRpcMember member = str[PlSlice.Fields.PersonIds.GetName()];
+							if (null == member) return false;
 
-						XmlRpcArray array = member.Value.Value as XmlRpcArray;
-						if (null == array) return false;
+							XmlRpcArray array = member.Value.Value as XmlRpcArray;
+							if (null == array) return false;
 
-						return array.Contains(CrawlerStatic.PlanetLabPersonId);
-					}));
+							return array.Contains(CrawlerStatic.PlanetLabPersonId);
+						}));
 
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSlices.logSource,
+						"Refreshing the list of PlanetLab slices completed successfully."));
+					// Return.
+					return;
+				}
+				catch { }
+			}
+			
+			// Update the status when the operation failed.
+			this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
+			if (null == response.Fault)
+			{
 				// Log
 				this.controlLog.Add(this.crawler.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Success,
+					LogEventLevel.Important,
+					LogEventType.Error,
 					ControlSlices.logSource,
-					"Refreshing the list of PlanetLab slices completed successfully."));
+					"Refreshing the list of PlanetLab slices failed."));
 			}
 			else
 			{
-				// Update the status.
-				this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
-				if (null == response.Fault)
-				{
-					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
-						LogEventLevel.Important,
-						LogEventType.Error,
-						ControlSlices.logSource,
-						"Refreshing the list of PlanetLab slices failed."));
-				}
-				else
-				{
-					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
-						LogEventLevel.Important,
-						LogEventType.Error,
-						ControlSlices.logSource,
-						"Refreshing the list of PlanetLab slices failed with code {0} ({1}).",
-						new object[] { response.Fault.FaultCode, response.Fault.FaultString }));
-				}
+				// Log
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					ControlSlices.logSource,
+					"Refreshing the list of PlanetLab slices failed with code {0} ({1}).",
+					new object[] { response.Fault.FaultCode, response.Fault.FaultString }));
 			}
 		}
 
@@ -1012,10 +1016,11 @@ namespace YtAnalytics.Controls.PlanetLab
 				XmlRpcArray slices = response.Value as XmlRpcArray;
 
 				// If the response list has one element.
-				if (null != slices ? slices.Values.Length == 1 : false)
+				if ((null != slices) && (slices.Values.Length == 1))
 				{
 					// Update the slice.
-					slice.Parse(slices.Values[0].Value as XmlRpcStruct);
+					try { slice.Parse(slices.Values[0].Value as XmlRpcStruct); }
+					catch { }
 				}
 			}
 		}

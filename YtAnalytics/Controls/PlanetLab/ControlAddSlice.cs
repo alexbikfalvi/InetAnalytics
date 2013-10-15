@@ -130,10 +130,18 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Update the list of PlanetLab slices list for the given response.
-				this.slices.CopyFrom(response.Value as XmlRpcArray);
-				// Update the list view.
-				this.OnUpdateList();
+				try
+				{
+					// Update the list of PlanetLab slices list for the given response.
+					this.slices.CopyFrom(response.Value as XmlRpcArray);
+					// Update the list view.
+					this.OnUpdateList();
+				}
+				catch
+				{
+					// Update the status.
+					this.labelStatus.Text = "Refresh failed.";
+				}
 			}
 			else
 			{

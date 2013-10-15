@@ -125,10 +125,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlInterfaceTag> tags = null;
 				// Create a PlanetLab tags list for the given response.
-				PlList<PlInterfaceTag> tags = PlList<PlInterfaceTag>.Create(response.Value as XmlRpcArray);
+				try { tags = PlList<PlInterfaceTag>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the tags count is greater than zero.
-				if (tags.Count > 0)
+				if ((null != tags) && (tags.Count > 0))
 				{
 					// Display the information for the first tag.
 					this.Object = tags[0];

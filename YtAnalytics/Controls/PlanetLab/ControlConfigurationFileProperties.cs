@@ -156,10 +156,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlConfigurationFile> files = null;
 				// Create a PlanetLab files list for the given response.
-				PlList<PlConfigurationFile> files = PlList<PlConfigurationFile>.Create(response.Value as XmlRpcArray);
+				try { files = PlList<PlConfigurationFile>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the files count is greater than zero.
-				if (files.Count > 0)
+				if ((null != files) && (files.Count > 0))
 				{
 					// Display the information for the first configuration file.
 					this.Object = files[0];

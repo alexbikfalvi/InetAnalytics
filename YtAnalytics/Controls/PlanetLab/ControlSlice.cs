@@ -57,13 +57,15 @@ namespace YtAnalytics.Controls.PlanetLab
 			/// <summary>
 			/// Creates a new node info instance for the specified node.
 			/// </summary>
-			/// <param name="id">The node identifier.</param>
+			/// <param name="nodeId">The node identifier.</param>
+			/// <param name="siteId">The site identifier.</param>
 			/// <param name="node">The PlanetLab node.</param>
 			/// <param name="site">The PlanetLab site.</param>
 			/// <param name="marker">The map marker.</param>
-			public NodeInfo(int id, PlNode node, PlSite site, MapMarker marker)
+			public NodeInfo(int nodeId, int? siteId, PlNode node, PlSite site, MapMarker marker)
 			{
-				this.NodeId = id;
+				this.NodeId = nodeId;
+				this.SiteId = siteId;
 				this.Node = node;
 				this.Site = site;
 				this.Marker = marker;
@@ -72,9 +74,13 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Public fields.
 
 			/// <summary>
-			/// The node ID.
+			/// The node identifier.
 			/// </summary>
 			public readonly int NodeId;
+			/// <summary>
+			/// The site identifier.
+			/// </summary>
+			public int? SiteId;
 			/// <summary>
 			/// A field representing the PlanetLab node.
 			/// </summary>
@@ -294,16 +300,20 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.pendingSites.Clear();
 
 				// Add the list of nodes.
-				foreach (int id in this.slice.NodeIds)
+				foreach (int nodeId in this.slice.NodeIds)
 				{
 					// The node.
-					PlNode node = this.crawler.Config.PlanetLab.DbNodes.Find(id);
+					PlNode node = this.crawler.Config.PlanetLab.DbNodes.Find(nodeId);
+					// The site identifier.
+					int? siteId = null;
 					// The site.
 					PlSite site = null;
 
 					// If the node is not null.
 					if (null != node)
 					{
+						// Get the site identifier.
+						siteId = node.SiteId;
 						// Add a node event handler.
 						node.Changed += this.OnNodeChanged;
 
@@ -328,7 +338,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					else
 					{
 						// Add the node ID to the pending list.
-						this.pendingNodes.Add(id);
+						this.pendingNodes.Add(nodeId);
 					}
 
 					// Create a new geo marker for this site.
@@ -347,11 +357,11 @@ namespace YtAnalytics.Controls.PlanetLab
 					}
 
 					// Create the node information.
-					NodeInfo info = new NodeInfo(id, node, site, marker);
+					NodeInfo info = new NodeInfo(nodeId, siteId, node, site, marker);
 
 					// Create a list item.
 					ListViewItem item = new ListViewItem(new string[] {
-						id.ToString(),
+						nodeId.ToString(),
 						node != null ? node.Hostname : string.Empty
 					});
 					item.ImageKey = node != null ? ControlSlice.nodeImageKeys[(int)node.GetBootState()] : ControlSlice.nodeImageKeys[0];
@@ -374,7 +384,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 				else if (this.pendingSites.Count > 0)
 				{
-					//throw new NotImplementedException();
+					this.OnRefreshSites();
 				}
 			}
 		}
@@ -457,6 +467,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.menuItemConnect.Enabled = false;
 			this.menuItemDisconnect.Enabled = false;
 			this.menuItemNodeProperties.Enabled = false;
+			this.menuItemSiteProperties.Enabled = false;
 
 			// For all node items.
 			foreach (ListViewItem item in this.listViewNodes.Items)
@@ -649,17 +660,20 @@ namespace YtAnalytics.Controls.PlanetLab
 				XmlRpcArray slices = response.Value as XmlRpcArray;
 
 				// If the response array has one element.
-				if (slices.Length == 1)
+				if ((null != slices) && (slices.Length == 1))
 				{
-					// Update the current slice.
-					this.slice.Parse(slices.Values[0].Value as XmlRpcStruct);
+					try
+					{
+						// Update the current slice.
+						this.slice.Parse(slices.Values[0].Value as XmlRpcStruct);
+						// Return.
+						return;
+					}
+					catch { }
 				}
 			}
-			else
-			{
-				// Update the status.
-				this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
-			}
+			// Update the status.
+			this.status.Send("Refreshing the slice information failed.", Resources.GlobeError_16);
 		}
 
 		/// <summary>
@@ -688,25 +702,25 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnRefreshNodes()
 		{
-			// If there are no nodes to refresh, do nothing.
-			if (this.pendingNodes.Count == 0) return;
-
-			// Update the status.
-			this.status.Send(
-				@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
-				"Refreshing the nodes information...",
-				Resources.GlobeLab_16,
-				Resources.GlobeClock_16);
-
 			lock (this.pendingSync)
 			{
+				// If there are no nodes to refresh, do nothing.
+				if (this.pendingNodes.Count == 0) return;
+
+				// Update the status.
+				this.status.Send(
+					@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+					"Refreshing the nodes information...",
+					Resources.GlobeLab_16,
+					Resources.GlobeClock_16);
+
 				// Create the request state.
 				IdsRequestState requestState = new IdsRequestState(
 					null,
 					this.OnRefreshNodesRequestResult,
 					this.OnRefreshNodesRequestCanceled,
 					this.OnRefreshNodesRequestException,
-					null,
+					this.OnRefreshNodesRequestFinished,
 					this.pendingNodes.ToArray());
 
 				// Begin an asynchronous PlanetLab request.
@@ -737,11 +751,28 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Get the response array.
 				XmlRpcArray array = response.Value as XmlRpcArray;
 
+				// Check the array is not null.
+				if (null == array)
+				{
+					// Update the status.
+					this.status.Send(
+						@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+						"Refreshing the nodes information failed.",
+						Resources.GlobeLab_16,
+						Resources.GlobeError_16);
+					// Return.
+					return;
+				}
+
 				// For each value in the response array.
 				foreach (XmlRpcValue value in array.Values)
 				{
-					// Add the node to the nodes list.
-					PlNode node = this.crawler.Config.PlanetLab.Nodes.Add(value.Value as XmlRpcStruct);
+					// The PlanetLab node.
+					PlNode node = null;
+
+					// Try parse the structure to a PlanetLab node and add it to the nodes list.
+					try { node = this.crawler.Config.PlanetLab.Nodes.Add(value.Value as XmlRpcStruct); }
+					catch { }
 
 					// If the object is null, continue.
 					if (null == node) continue;
@@ -766,12 +797,13 @@ namespace YtAnalytics.Controls.PlanetLab
 						{
 							// Add a node event handler.
 							node.Changed += this.OnNodeChanged;
-							// Set the node.
+							// Set the node information.
 							info.Node = node;
+							info.SiteId = node.SiteId;
 						}
 
 						// If the site has not been set.
-						if (info.Site == null)
+						if (null == info.Site)
 						{
 							// If the node has a site identifier.
 							if (node.SiteId.HasValue)
@@ -782,7 +814,7 @@ namespace YtAnalytics.Controls.PlanetLab
 								if (null != site)
 								{
 									// Add a site event handler.
-									site.Changed += OnSiteChanged;
+									site.Changed += this.OnSiteChanged;
 									// Set the site.
 									info.Site = site;
 									// If the item does not have a marker and if the site has coordinates.
@@ -815,7 +847,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Update the status.
 				this.status.Send(
 					@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
-					"Refreshing nodes information completed successfully.",
+					"Refreshing the nodes information completed successfully.",
 					Resources.GlobeLab_16,
 					Resources.GlobeSuccess_16);
 			}
@@ -824,7 +856,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				// Update the status.
 				this.status.Send(
 					@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
-					"Refreshing the nodes failed.",
+					"Refreshing the nodes information failed.",
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
 			}
@@ -854,9 +886,25 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(
 				@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
-				"Refreshing the nodes failed.",
+				"Refreshing the nodes information failed.",
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
+		}
+
+		/// <summary>
+		/// A method called when a nodes refresh request has finished.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshNodesRequestFinished(RequestState state)
+		{
+			// If there are pending sites, refresh the sites.
+			lock (this.pendingSync)
+			{
+				if (this.pendingSites.Count > 0)
+				{
+					this.OnRefreshSites();
+				}
+			}
 		}
 
 		/// <summary>
@@ -864,6 +912,163 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnRefreshSites()
 		{
+			lock (this.pendingSync)
+			{
+				// If there are no sites to refresh, do nothing.
+				if (this.pendingSites.Count == 0) return;
+
+				// Update the status.
+				this.status.Send(
+					@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+					"Refreshing the sites information...",
+					Resources.GlobeLab_16,
+					Resources.GlobeClock_16);
+
+				// Create the request state.
+				IdsRequestState requestState = new IdsRequestState(
+					null,
+					this.OnRefreshSitesRequestResult,
+					this.OnRefreshSitesRequestCanceled,
+					this.OnRefreshSitesRequestException,
+					null,
+					this.pendingSites.ToArray());
+
+				// Begin an asynchronous PlanetLab request.
+				this.BeginRequest(
+					this.requestGetSites,
+					this.crawler.Config.PlanetLab.Username,
+					this.crawler.Config.PlanetLab.Password,
+					PlSite.GetFilter(PlSite.Fields.SiteId, requestState.Ids),
+					requestState);
+
+				// Clear the list of pending sites.
+				this.pendingSites.Clear();
+			}
+		}
+
+		/// <summary>
+		/// A method called when receiving the response to a sites refresh request.
+		/// </summary>
+		/// <param name="response">The response.</param>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSitesRequestResult(XmlRpcResponse response, RequestState state)
+		{
+			// Convert the request state.
+			IdsRequestState requestState = state as IdsRequestState;
+			// If the request has not failed.
+			if ((null == response.Fault) && (null != response.Value))
+			{
+				// Get the response array.
+				XmlRpcArray array = response.Value as XmlRpcArray;
+
+				// Check the array is not null.
+				if (null == array)
+				{
+					// Update the status.
+					this.status.Send(
+						@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+						"Refreshing the sites information failed.",
+						Resources.GlobeLab_16,
+						Resources.GlobeError_16);
+					// Return.
+					return;
+				}
+
+				// For each value in the response array.
+				foreach (XmlRpcValue value in array.Values)
+				{
+					// The PlanetLab site.
+					PlSite site = null;
+
+					// Try parse the structure to a PlanetLab node and add it to the sites list.
+					try { site = this.crawler.Config.PlanetLab.Sites.Add(value.Value as XmlRpcStruct); }
+					catch { }
+
+					// If the object is null, continue.
+					if (null == site) continue;
+
+					// Find the list item corresponding to the node.
+					ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+					{
+						// Get the node info.
+						NodeInfo info = it.Tag as NodeInfo;
+						// Check the site ID.
+						return info.SiteId == site.Id;
+					});
+
+					// If the item is not null.
+					if (null != item)
+					{
+						// Get the node info.
+						NodeInfo info = item.Tag as NodeInfo;
+
+						// If the site has not been set.
+						if (info.Site == null)
+						{
+							// Add a node event handler.
+							site.Changed += this.OnSiteChanged;
+							// Set the site.
+							info.Site = site;
+							// If the item does not have a marker and if the site has coordinates.
+							if ((null == info.Marker) && (null != info.Node) && site.Latitude.HasValue && site.Longitude.HasValue)
+							{
+								// Create a circular marker.
+								marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
+								marker.Name = "{0}{1}{2}".FormatWith(info.Node.Hostname, Environment.NewLine, site.Name);
+								// Add the marker to the map.
+								this.mapControl.Markers.Add(marker);
+								// Set the marker.
+								info.Marker = marker;
+							}
+						}
+					}
+				}
+
+				// Update the status.
+				this.status.Send(
+					@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+					"Refreshing the sites information completed successfully.",
+					Resources.GlobeLab_16,
+					Resources.GlobeSuccess_16);
+			}
+			else
+			{
+				// Update the status.
+				this.status.Send(
+					@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+					"Refreshing the sites information failed.",
+					Resources.GlobeLab_16,
+					Resources.GlobeError_16);
+			}
+		}
+
+		/// <summary>
+		/// A method called when a sites refresh request has been canceled.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSitesRequestCanceled(RequestState state)
+		{
+			// Update the status.
+			this.status.Send(
+				@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+				"Refreshing the sites information was canceled.",
+				Resources.GlobeLab_16,
+				Resources.GlobeCanceled_16);
+		}
+
+		/// <summary>
+		/// A method called when a sites refresh request returned an exception.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		/// <param name="state">The request state.</param>
+		private void OnRefreshSitesRequestException(Exception exception, RequestState state)
+		{
+			// Update the status.
+			this.status.Send(
+				@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
+				"Refreshing the sites information failed.",
+				Resources.GlobeLab_16,
+				Resources.GlobeError_16);
 		}
 
 		/// <summary>
@@ -1331,6 +1536,11 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Show the site properties.
 				this.formSiteProperties.ShowDialog(this, "Site", info.Site);
+			}
+			else if (info.SiteId.HasValue)
+			{
+				// Show the site properties.
+				this.formSiteProperties.ShowDialog(this, "Site", info.SiteId.Value);
 			}
 		}
 

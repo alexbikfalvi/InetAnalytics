@@ -273,10 +273,18 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Update the list of PlanetLab sites list for the given response.
-				this.sites.CopyFrom(response.Value as XmlRpcArray);
-				// Update the sites list.
-				this.OnUpdateSites();
+				try
+				{
+					// Update the list of PlanetLab sites list for the given response.
+					this.sites.CopyFrom(response.Value as XmlRpcArray);
+					// Update the sites list.
+					this.OnUpdateSites();
+				}
+				catch
+				{
+					// Update the status.
+					this.wizardPageSite.Status = "Refreshing the PlanetLab sites failed.";
+				}
 			}
 			else
 			{
@@ -295,10 +303,18 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Update the list of PlanetLab nodes list for the given response.
-				this.nodes.Update(response.Value as XmlRpcArray);
-				// Update the nodes list.
-				this.OnUpdateNodes();
+				try
+				{
+					// Update the list of PlanetLab nodes list for the given response.
+					this.nodes.Update(response.Value as XmlRpcArray);
+					// Update the nodes list.
+					this.OnUpdateNodes();
+				}
+				catch
+				{
+					// Update the status.
+					this.wizardPageNode.Status = "Refreshing the PlanetLab nodes failed.";
+				}
 			}
 			else
 			{

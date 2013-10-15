@@ -123,18 +123,27 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Get the slices array.
-				XmlRpcArray slices = response.Value as XmlRpcArray;
+				try
+				{
+					// Update the list of PlanetLab sites.
+					this.crawler.Config.PlanetLab.Sites.CopyFrom(response.Value as XmlRpcArray);
 
-				// Update the list of PlanetLab sites.
-				this.crawler.Config.PlanetLab.Sites.CopyFrom(response.Value as XmlRpcArray);
-
-				// Log
-				this.crawler.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Success,
-					ControlSites.logSource,
-					"Refreshing the list of PlanetLab sites completed successfully.");
+					// Log
+					this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSites.logSource,
+						"Refreshing the list of PlanetLab sites completed successfully.");
+				}
+				catch
+				{
+					// Log
+					this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSites.logSource,
+						"Refreshing the list of PlanetLab sites failed.");
+				}
 			}
 			else
 			{

@@ -179,10 +179,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlPerson> persons = null;
 				// Create a PlanetLab nodes list for the given response.
-				PlList<PlPerson> persons = PlList<PlPerson>.Create(response.Value as XmlRpcArray);
+				try { persons = PlList<PlPerson>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the nodes count is greater than zero.
-				if (persons.Count > 0)
+				if ((null != persons) && (persons.Count > 0))
 				{
 					// Display the information for the first person.
 					this.Object = persons[0];

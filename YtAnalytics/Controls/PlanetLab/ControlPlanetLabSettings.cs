@@ -91,7 +91,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.validatedPassword = this.textBoxPassword.SecureText;
 
 				// Update the list of PlanetLab persons for the given response.
-				this.validatedPersons.Update(response.Value as XmlRpcArray);
+				try	{ this.validatedPersons.Update(response.Value as XmlRpcArray); }
+				catch {	}
 				this.validatedPerson = -1;
 
 				// Lock the list.

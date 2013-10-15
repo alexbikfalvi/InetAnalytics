@@ -119,10 +119,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlAddressType> types = null;
 				// Create a PlanetLab address types list for the given response.
-				PlList<PlAddressType> types = PlList<PlAddressType>.Create(response.Value as XmlRpcArray);
+				try { types = PlList<PlAddressType>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the types count is greater than zero.
-				if (types.Count > 0)
+				if ((null != types) && (types.Count > 0))
 				{
 					// Display the information for the first type.
 					this.Object = types[0];

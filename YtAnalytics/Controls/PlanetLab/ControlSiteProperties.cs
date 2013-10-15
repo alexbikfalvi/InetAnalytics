@@ -217,10 +217,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlSite> sites = null;
 				// Create a PlanetLab sites list for the given response.
-				PlList<PlSite> sites = PlList<PlSite>.Create(response.Value as XmlRpcArray);
+				try { sites = PlList<PlSite>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the sites count is greater than zero.
-				if (sites.Count > 0)
+				if ((null != sites) && (sites.Count > 0))
 				{
 					// Display the information for the first site.
 					this.Object = sites[0];

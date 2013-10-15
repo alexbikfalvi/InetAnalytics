@@ -146,10 +146,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlInterface> iface = null;
 				// Create a PlanetLab interfaces list for the given response.
-				PlList<PlInterface> iface = PlList<PlInterface>.Create(response.Value as XmlRpcArray);
+				try { iface = PlList<PlInterface>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the interfaces count is greater than zero.
-				if (iface.Count > 0)
+				if ((null != iface) && (iface.Count > 0))
 				{
 					// Display the information for the first interface.
 					this.Object = iface[0];

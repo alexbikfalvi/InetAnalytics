@@ -153,10 +153,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlSlice> slices = null;
 				// Create a PlanetLab nodes list for the given response.
-				PlList<PlSlice> slices = PlList<PlSlice>.Create(response.Value as XmlRpcArray);
+				try { slices = PlList<PlSlice>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the nodes count is greater than zero.
-				if (slices.Count > 0)
+				if ((null != slices) && (slices.Count > 0))
 				{
 					// Display the information for the first slice.
 					this.Object = slices[0];

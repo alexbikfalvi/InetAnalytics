@@ -139,13 +139,20 @@ namespace YtAnalytics.Controls.PlanetLab
 				XmlRpcArray slices = response.Value as XmlRpcArray;
 
 				// If the response list has one element.
-				if (null != slices ? slices.Values.Length == 1 : false)
+				if ((null != slices) && (slices.Values.Length == 1))
 				{
-					// Update the slice.
-					this.slice.Parse(slices.Values[0].Value as XmlRpcStruct);
-
-					// Update the slice nodes.
-					this.OnUpdateNodes();
+					try
+					{
+						// Update the slice.
+						this.slice.Parse(slices.Values[0].Value as XmlRpcStruct);
+						// Update the slice nodes.
+						this.OnUpdateNodes();
+					}
+					catch
+					{
+						// Update the status.
+						this.labelStatus.Text = "Refresh failed.";
+					}
 				}
 			}
 			else

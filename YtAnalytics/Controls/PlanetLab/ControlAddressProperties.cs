@@ -137,10 +137,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlAddress> addresses = null;
 				// Create a PlanetLab addresses list for the given response.
-				PlList<PlAddress> addresses = PlList<PlAddress>.Create(response.Value as XmlRpcArray);
+				try { addresses = PlList<PlAddress>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the addresses count is greater than zero.
-				if (addresses.Count > 0)
+				if ((null != addresses) && (addresses.Count > 0))
 				{
 					// Display the information for the first address.
 					this.Object = addresses[0];

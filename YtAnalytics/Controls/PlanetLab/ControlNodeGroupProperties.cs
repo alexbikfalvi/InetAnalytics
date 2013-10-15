@@ -144,10 +144,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlNodeGroup> nodeGroups = null;
 				// Create a PlanetLab node groups list for the given response.
-				PlList<PlNodeGroup> nodeGroups = PlList<PlNodeGroup>.Create(response.Value as XmlRpcArray);
+				try { nodeGroups = PlList<PlNodeGroup>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the node groups count is greater than zero.
-				if (nodeGroups.Count > 0)
+				if ((null != nodeGroups) && (nodeGroups.Count > 0))
 				{
 					// Display the information for the first node group.
 					this.Object = nodeGroups[0];

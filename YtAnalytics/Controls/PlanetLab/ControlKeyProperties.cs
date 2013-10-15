@@ -125,10 +125,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
+				PlList<PlKey> keys = null;
 				// Create a PlanetLab keys list for the given response.
-				PlList<PlKey> keys = PlList<PlKey>.Create(response.Value as XmlRpcArray);
+				try { keys = PlList<PlKey>.Create(response.Value as XmlRpcArray); }
+				catch { }
 				// If the keys count is greater than zero.
-				if (keys.Count > 0)
+				if ((null != keys) && (keys.Count > 0))
 				{
 					// Display the information for the first key.
 					this.Object = keys[0];
