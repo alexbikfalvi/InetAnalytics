@@ -201,8 +201,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the slices list event handler.
 			this.crawler.Config.PlanetLab.LocalSlices.Updated += this.OnSlicesUpdated;
 			this.crawler.Config.PlanetLab.LocalSlices.Cleared += this.OnSlicesCleared;
-			this.crawler.Config.PlanetLab.LocalSlices.Added += LocalSlices_Added;
-			this.crawler.Config.PlanetLab.LocalSlices.Removed += LocalSlices_Removed;
+			this.crawler.Config.PlanetLab.LocalSlices.Added += this.OnSlicesAdded;
+			this.crawler.Config.PlanetLab.LocalSlices.Removed += this.OnSlicesRemoved;
 
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
@@ -343,14 +343,49 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.listViewSlices.Items.Clear();
 		}
 
-		void LocalSlices_Removed(object sender, PlObjectEventArgs<PlSlice> e)
+		/// <summary>
+		/// An event handler called when a slice has been added to the local slices list.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesAdded(object sender, PlObjectEventArgs<PlSlice> e)
 		{
-			throw new NotImplementedException();
+			// Add the slice.
+			this.OnAddSlice(e.Object);
 		}
 
-		void LocalSlices_Added(object sender, PlObjectEventArgs<PlSlice> e)
+		/// <summary>
+		/// An event handler called when a slice has been removed from the local slices list.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSlicesRemoved(object sender, PlObjectEventArgs<PlSlice> e)
 		{
-			throw new NotImplementedException();
+			// Search the list view item for the current slice.
+			ListViewItem item = this.listViewSlices.Items.FirstOrDefault((ListViewItem it) =>
+				{
+					// Get the slice info.
+					SliceInfo info = (SliceInfo)it.Tag;
+					// Compare the item slice with the current slice.
+					return object.ReferenceEquals(e.Object, info.Slice);
+				});
+
+			// If the item is not null.
+			if (null != item)
+			{
+				// Get the slice info.
+				SliceInfo info = (SliceInfo)item.Tag;
+				// Remove the slice changed event handler.
+				info.Slice.Changed -= this.OnSliceChanged;
+				// Remove the list view item.
+				this.listViewSlices.Items.Remove(item);
+				// Remove the tree node.
+				this.treeNode.Nodes.Remove(info.Node);
+				// Remove the control.
+				this.controls.Remove(info.Control);
+				// Dispose the control.
+				info.Control.Dispose();
+			}
 		}
 
 		/// <summary>
@@ -376,17 +411,19 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="slice">The slice.</param>
 		private void OnAddSlice(PlSlice slice)
 		{
-			// Create a new control.
-			ControlSlice control = new ControlSlice();
-			control.Initialize(this.crawler, slice);
-			this.controls.Add(control);
-
 			// Create a new tree node.
 			TreeNode node = new TreeNode(slice.Name);
 			node.ImageKey = "GlobeObject";
 			node.SelectedImageKey = "GlobeObject";
-			node.Tag = control;
 			this.treeNode.Nodes.Add(node);
+
+			// Create a new control.
+			ControlSlice control = new ControlSlice();
+			control.Initialize(this.crawler, slice, this.controls, node);
+			this.controls.Add(control);
+
+			// Set the node tag.
+			node.Tag = control;
 
 			// Create the list view item.
 			ListViewItem item = new ListViewItem(new string[] {
@@ -622,11 +659,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Show the add slice dialog.
 			if (this.formAddSlice.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
 			{
-				// Ignore the changed to the slices list.
 				// Add the slice to the slices list.
 				this.crawler.Config.PlanetLab.LocalSlices.Add(this.formAddSlice.Result);
-				// Add the slice.
-				// this.OnAddSlice(this.formAddSlice.Result);
 			}
 		}
 
@@ -652,16 +686,6 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Remove the slice.
 				this.crawler.Config.PlanetLab.LocalSlices.Remove(info.Slice);
-				// Remove the slice changed event handler.
-				info.Slice.Changed -= this.OnSliceChanged;
-				// Remove the list view item.
-				this.listViewSlices.Items.Remove(item);
-				// Remove the tree node.
-				this.treeNode.Nodes.Remove(info.Node);
-				// Remove the control.
-				this.controls.Remove(info.Control);
-				// Dispose the control.
-				info.Control.Dispose();
 			}
 		}
 

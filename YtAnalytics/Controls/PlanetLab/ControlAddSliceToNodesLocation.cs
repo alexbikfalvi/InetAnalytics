@@ -596,7 +596,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.sites.Unlock();
 			}
 			// Update the status.
-			this.wizardPageSite.Status = "Showing {0} of {1} PlanetLab sites.".FormatWith(this.listViewNodes.Items.Count, this.sites.Count);
+			this.wizardPageSite.Status = "Showing {0} of {1} PlanetLab sites.".FormatWith(this.listViewSites.Items.Count, this.sites.Count);
 		}
 
 		/// <summary>

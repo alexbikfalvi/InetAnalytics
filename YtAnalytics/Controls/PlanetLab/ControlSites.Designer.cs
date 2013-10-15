@@ -50,6 +50,8 @@
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
 			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonFilter = new System.Windows.Forms.ToolStripDropDownButton();
+			this.menuItemFilterNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.labelFilter = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxFilter = new System.Windows.Forms.ToolStripTextBox();
 			this.buttonClear = new System.Windows.Forms.ToolStripButton();
@@ -57,6 +59,7 @@
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderNodes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderLatitude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -115,6 +118,7 @@
             this.separator1,
             this.buttonProperties,
             this.separator2,
+            this.buttonFilter,
             this.labelFilter,
             this.textBoxFilter,
             this.buttonClear});
@@ -164,6 +168,25 @@
 			this.separator2.Name = "separator2";
 			this.separator2.Size = new System.Drawing.Size(6, 25);
 			// 
+			// buttonFilter
+			// 
+			this.buttonFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.buttonFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemFilterNodes});
+			this.buttonFilter.Image = global::YtAnalytics.Resources.Filter_16;
+			this.buttonFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonFilter.Name = "buttonFilter";
+			this.buttonFilter.Size = new System.Drawing.Size(29, 22);
+			this.buttonFilter.Text = "&Filter";
+			// 
+			// menuItemFilterNodes
+			// 
+			this.menuItemFilterNodes.CheckOnClick = true;
+			this.menuItemFilterNodes.Name = "menuItemFilterNodes";
+			this.menuItemFilterNodes.Size = new System.Drawing.Size(159, 22);
+			this.menuItemFilterNodes.Text = "Sites with nodes";
+			this.menuItemFilterNodes.CheckedChanged += new System.EventHandler(this.OnFilterChanged);
+			// 
 			// labelFilter
 			// 
 			this.labelFilter.Name = "labelFilter";
@@ -193,6 +216,7 @@
             this.columnHeaderId,
             this.columnHeaderName,
             this.columnHeaderUrl,
+            this.columnHeaderNodes,
             this.columnHeaderDateCreated,
             this.columnHeaderLastUpdated,
             this.columnHeaderLatitude,
@@ -226,6 +250,10 @@
 			// 
 			this.columnHeaderUrl.Text = "URL";
 			this.columnHeaderUrl.Width = 120;
+			// 
+			// columnHeaderNodes
+			// 
+			this.columnHeaderNodes.Text = "Nodes";
 			// 
 			// columnHeaderDateCreated
 			// 
@@ -278,13 +306,13 @@
 			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemProperties});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(153, 48);
+			this.contextMenu.Size = new System.Drawing.Size(128, 26);
 			// 
 			// menuItemProperties
 			// 
 			this.menuItemProperties.Image = global::YtAnalytics.Resources.Properties_16;
 			this.menuItemProperties.Name = "menuItemProperties";
-			this.menuItemProperties.Size = new System.Drawing.Size(152, 22);
+			this.menuItemProperties.Size = new System.Drawing.Size(127, 22);
 			this.menuItemProperties.Text = "&Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
@@ -337,5 +365,8 @@
 		private DotNetApi.Windows.Controls.MapControl mapControl;
 		private System.Windows.Forms.ContextMenuStrip contextMenu;
 		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
+		private System.Windows.Forms.ColumnHeader columnHeaderNodes;
+		private System.Windows.Forms.ToolStripDropDownButton buttonFilter;
+		private System.Windows.Forms.ToolStripMenuItem menuItemFilterNodes;
 	}
 }

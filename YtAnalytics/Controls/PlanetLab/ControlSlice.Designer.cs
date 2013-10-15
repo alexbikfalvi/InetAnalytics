@@ -465,7 +465,7 @@
 			// buttonConnect
 			// 
 			this.buttonConnect.Enabled = false;
-			this.buttonConnect.Image = global::YtAnalytics.Resources.Connect_16;
+			this.buttonConnect.Image = global::YtAnalytics.Resources.ConsoleConnect_16;
 			this.buttonConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonConnect.Name = "buttonConnect";
 			this.buttonConnect.Size = new System.Drawing.Size(72, 22);
@@ -475,7 +475,7 @@
 			// buttonDisconnect
 			// 
 			this.buttonDisconnect.Enabled = false;
-			this.buttonDisconnect.Image = global::YtAnalytics.Resources.Disconnect_16;
+			this.buttonDisconnect.Image = global::YtAnalytics.Resources.ConsoleDisconnect_16;
 			this.buttonDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonDisconnect.Name = "buttonDisconnect";
 			this.buttonDisconnect.Size = new System.Drawing.Size(86, 22);
@@ -550,11 +550,11 @@
             this.menuItemNodeProperties,
             this.menuItemSiteProperties});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(160, 98);
+			this.contextMenu.Size = new System.Drawing.Size(160, 120);
 			// 
 			// menuItemConnect
 			// 
-			this.menuItemConnect.Image = global::YtAnalytics.Resources.Connect_16;
+			this.menuItemConnect.Image = global::YtAnalytics.Resources.ConsoleConnect_16;
 			this.menuItemConnect.Name = "menuItemConnect";
 			this.menuItemConnect.Size = new System.Drawing.Size(159, 22);
 			this.menuItemConnect.Text = "&Connect";
@@ -562,7 +562,7 @@
 			// 
 			// menuItemDisconnect
 			// 
-			this.menuItemDisconnect.Image = global::YtAnalytics.Resources.Disconnect_16;
+			this.menuItemDisconnect.Image = global::YtAnalytics.Resources.ConsoleDisconnect_16;
 			this.menuItemDisconnect.Name = "menuItemDisconnect";
 			this.menuItemDisconnect.Size = new System.Drawing.Size(159, 22);
 			this.menuItemDisconnect.Text = "&Disconnect";

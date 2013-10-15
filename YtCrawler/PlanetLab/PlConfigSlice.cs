@@ -32,7 +32,6 @@ namespace YtCrawler.PlanetLab
 	public sealed class PlConfigSlice : IDisposable
 	{
 		private readonly PlSlice slice;
-		private readonly string keyPath;
 		private readonly RegistryKey key;
 
 		/// <summary>
@@ -50,9 +49,6 @@ namespace YtCrawler.PlanetLab
 
 			// Set the slice event handler.
 			this.slice.Changed += this.OnSliceChanged;
-
-			// Set the key path.
-			this.keyPath = @"{0}\Slices".FormatWith(rootKey.Name);
 
 			// Open or create the subkey for the current slice.
 			if (null == (this.key = rootKey.OpenSubKey(this.slice.Id.Value.ToString(), RegistryKeyPermissionCheck.ReadWriteSubTree)))
@@ -113,7 +109,7 @@ namespace YtCrawler.PlanetLab
 			if (null == config) throw new ArgumentNullException("config");
 
 			// Delete the registry key.
-			rootKey.DeleteSubKeyTree(@"{0}\{1}".FormatWith(config.keyPath, config.slice.Id.Value), false);
+			rootKey.DeleteSubKeyTree(config.slice.Id.Value.ToString(), false);
 		}
 
 		/// <summary>

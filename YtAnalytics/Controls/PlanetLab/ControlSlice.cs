@@ -146,6 +146,10 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private MapMarker marker = null;
 
+		private Control.ControlCollection controls = null;
+
+		private TreeNode treeNode = null;
+
 		private readonly object pendingSync = new object();
 		private readonly List<int> pendingNodes = new List<int>();
 		private readonly List<int> pendingSites = new List<int>();
@@ -197,7 +201,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="crawler">The crawler object.</param>
 		/// <param name="slice">The slice.</param>
-		public void Initialize(Crawler crawler, PlSlice slice)
+		/// <param name="controls">The controls collection.</param>
+		/// <param name="treeNode">The tree node corresponding to this control.</param>
+		public void Initialize(Crawler crawler, PlSlice slice, Control.ControlCollection controls, TreeNode treeNode)
 		{
 			// Save the parameters.
 			this.crawler = crawler;
@@ -208,6 +214,12 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the slice.
 			this.slice = slice;
 			this.slice.Changed += this.OnSliceChanged;
+
+			// Set the controls.
+			this.controls = controls;
+
+			// Set the tree node.
+			this.treeNode = treeNode;
 
 			// Set the slice configuration.
 			this.config = this.crawler.Config.PlanetLab.GetSliceConfiguration(this.slice);
@@ -487,6 +499,12 @@ namespace YtAnalytics.Controls.PlanetLab
 				if (info.Marker != null)
 				{
 					info.Marker.Dispose();
+				}
+				// Dispose the control.
+				if (info.ConsoleControl != null)
+				{
+					// Dispose the control.
+					info.ConsoleControl.Dispose();
 				}
 			}
 
@@ -1590,7 +1608,36 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Get the node information.
 			NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
 
-			// If the node info already has a session, show an error message.
+			// If the PlanetLab node is null.
+			if (null == info.Node)
+			{
+				MessageBox.Show(this, "The information for the PlanetLab node {0} is not available. Try refreshing the slice.".FormatWith(info.NodeId), "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			// If the node info already has a session.
+			if (info.ConsoleControl != null)
+			{
+				MessageBox.Show(this, "The node {0} is already connected.".FormatWith(info.Node.Hostname), "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// Create a new tree node.
+			TreeNode node = new TreeNode(info.Node.Hostname);
+			node.ImageKey = "GlobeConsole";
+			node.SelectedImageKey = "GlobeConsole";
+			this.treeNode.Nodes.Add(node);
+
+			// Create a new session control.
+			ControlSession control = new ControlSession();
+			control.Initialize(this.crawler, this.config, info.Node);
+			this.controls.Add(control);
+
+			// Set the node tag.
+			node.Tag = control;
+
+			// Update the node information.
+			info.ConsoleControl = control;
+			info.ConsoleNode = node;
 		}
 
 		/// <summary>

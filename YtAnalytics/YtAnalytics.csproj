@@ -1111,6 +1111,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\GlobeConsole_48.png" />
+    <None Include="Resources\GlobeConsole_32.png" />
+    <None Include="Resources\GlobeConsole_24.png" />
+    <None Include="Resources\GlobeConsole_16.png" />
+    <None Include="Resources\ConsoleDisconnect_48.png" />
+    <None Include="Resources\ConsoleDisconnect_32.png" />
+    <None Include="Resources\ConsoleDisconnect_24.png" />
+    <None Include="Resources\ConsoleDisconnect_16.png" />
+    <None Include="Resources\ConsoleConnect_48.png" />
+    <None Include="Resources\ConsoleConnect_32.png" />
+    <None Include="Resources\ConsoleConnect_24.png" />
+    <None Include="Resources\ConsoleConnect_16.png" />
+    <None Include="Resources\Console_48.png" />
+    <None Include="Resources\Console_32.png" />
+    <None Include="Resources\Console_24.png" />
+    <None Include="Resources\Console_16.png" />
     <None Include="Resources\KeyVerticalCube_48.png" />
     <None Include="Resources\KeyVerticalCube_32.png" />
     <None Include="Resources\KeyVerticalCube_24.png" />

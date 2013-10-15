@@ -245,10 +245,11 @@ namespace YtAnalytics.Controls.PlanetLab
 				item.SubItems[0].Text = site.SiteId.ToString();
 				item.SubItems[1].Text = site.Name;
 				item.SubItems[2].Text = site.Url;
-				item.SubItems[3].Text = site.DateCreated.ToString();
-				item.SubItems[4].Text = site.LastUpdated.ToString();
-				item.SubItems[5].Text = site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty;
-				item.SubItems[6].Text = site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty;
+				item.SubItems[3].Text = site.NodeIds.Length.ToString();
+				item.SubItems[4].Text = site.DateCreated.ToString();
+				item.SubItems[5].Text = site.LastUpdated.ToString();
+				item.SubItems[6].Text = site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty;
+				item.SubItems[7].Text = site.Longitude.HasValue ? site.Longitude.Value.LongitudeToString() : string.Empty;
 			}
 		}
 
@@ -302,6 +303,8 @@ namespace YtAnalytics.Controls.PlanetLab
 							if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
 						}
 					}
+					// If the site has zero nodes and the filter is checked, continue.
+					if ((site.NodeIds.Length == 0) && this.menuItemFilterNodes.Checked) continue;
 
 					// Add a site.
 					this.OnAddSite(site);
@@ -422,6 +425,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						site.SiteId.ToString(),
 						site.Name,
 						site.Url,
+						site.NodeIds.Length.ToString(),
 						site.DateCreated.ToString(),
 						site.LastUpdated.ToString(),
 						site.Latitude.HasValue ? site.Latitude.Value.LatitudeToString() : string.Empty,
@@ -557,9 +561,24 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.filter = this.textBoxFilter.Text.Trim();
 				// Update the clear button state.
 				this.buttonClear.Enabled = !string.IsNullOrWhiteSpace(this.textBoxFilter.Text);
+				// Clear the sites.
+				this.OnSitesCleared(sender, e);
 				// Update the sites.
-				this.OnSitesUpdated(this, EventArgs.Empty);
+				this.OnSitesUpdated(sender, e);
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the filter has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFilterChanged(object sender, EventArgs e)
+		{
+			// Clear the sites.
+			this.OnSitesCleared(sender, e);
+			// Update the sites.
+			this.OnSitesUpdated(sender, e);
 		}
 
 		/// <summary>

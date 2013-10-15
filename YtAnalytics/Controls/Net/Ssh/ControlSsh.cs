@@ -89,6 +89,10 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// Returns the number of commands in execution on the current SSH connection.
 		/// </summary>
 		protected ConcurrentList<SshCommand> Commands { get { return this.commands; } }
+		/// <summary>
+		/// Returns <b>true</b> if the SSH session is disconnected.
+		/// </summary>
+		protected bool IsDisconnected { get { lock (this.sync) { return this.state == ClientState.Disconnected; } } }
 
 		// Protected methods.
 
@@ -98,15 +102,26 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
 		protected override void Dispose(bool disposing)
 		{
-			// Disconnect and dispose the SSH client.
+			// The disconnection wait handle.
+			WaitHandle wait = null;
+			// Disconnect the SSH client.
 			lock (this.sync)
 			{
 				// If there exists an SSH client.
 				if (null != this.client)
 				{
 					// Disconnect the client and wait for the operation to complete.
-					this.Disconnect().WaitOne();
+					try { wait = this.Disconnect(); }
+					catch { }
 				}
+			}
+
+			// If disconnecting, wait for the operation to complete.
+			if (null != wait) wait.WaitOne();
+
+			// Dispose the SSH client.
+			lock (this.sync)
+			{
 				if (null != this.client)
 				{
 					// Dispose of the client.
@@ -228,8 +243,15 @@ namespace YtAnalytics.Controls.Net.Ssh
 								// Cancel all executing commands.
 								foreach (SshCommand command in this.commands)
 								{
-									// Cancel the asynchronous command.
-									command.CancelAsync();
+									// Try and cancel all asynchronous commands.
+									try
+									{
+										command.CancelAsync();
+									}
+									catch (Exception exception)
+									{
+										this.OnCommandFailedInternal(command, exception.Message);
+									}
 								}
 								// Clear the commands.
 								this.commands.Clear();
@@ -598,6 +620,31 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// If the client is no longer connected.
 				if (!this.client.IsConnected)
 				{
+					// Lock the commands.
+					this.commands.Lock();
+					try
+					{
+						// Cancel all executing commands.
+						foreach (SshCommand command in this.commands)
+						{
+							// Try and cancel all asynchronous commands.
+							try
+							{
+								command.CancelAsync();
+							}
+							catch (Exception exception)
+							{
+								this.OnCommandFailedInternal(command, exception.Message);
+							}
+						}
+						// Clear the commands.
+						this.commands.Clear();
+					}
+					finally
+					{
+						this.commands.Unlock();
+					}
+
 					// Change the state.
 					this.state = ClientState.Disconnected;
 					// Show a disconnected message.

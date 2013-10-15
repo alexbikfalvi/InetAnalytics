@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Linq;
 using System.Windows.Forms;
 using DotNetApi;
@@ -47,7 +48,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		// Private variables.
 
 		private Crawler crawler = null;
-		private PlConfigSlice slice = null;
+		private PlConfigSlice config = null;
 		private PlNode node = null;
 
 		private StatusHandler status = null;
@@ -89,10 +90,6 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// An event raised when disconnected from a PlanetLab node.
 		/// </summary>
 		public event PlObjectEventHandler<PlNode> Disconnected;
-		/// <summary>
-		/// An event raised when the session control was closed.
-		/// </summary>
-		public event PlObjectEventHandler<PlNode> Closed;
 
 		// Public methods.
 
@@ -100,23 +97,28 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// Initialized the control with the specified crawler.
 		/// </summary>
 		/// <param name="crawler">The crawler.</param>
-		public void Initialize(Crawler crawler, PlConfigSlice slice, PlNode node)
+		/// <param name="config">The slice configuration.</param>
+		/// <param name="node">The PlanetLab node.</param>
+		public void Initialize(Crawler crawler, PlConfigSlice config, PlNode node)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
 
-			// Set the slice.
-			this.slice = slice;
+			// Set the slice configuration.
+			this.config = config;
 			
 			// Set the node.
 			this.node = node;
 
 			// Set the slice configuration event handlers.
-			this.slice.Changed += this.OnConfigurationChanged;
-			this.slice.Disposed += this.OnConfigurationChanged;
+			this.config.Changed += this.OnConfigurationChanged;
+			this.config.Disposed += this.OnConfigurationChanged;
 
 			// Set the node event handlers.
 			this.node.Changed += this.OnConfigurationChanged;
+
+			// Set the node hostname.
+			this.labelHostname.Text = this.node.Hostname;
 
 			// Get the crawler status.
 			this.status = this.crawler.Status.GetHandler(this);
@@ -124,6 +126,79 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Enable the control.
 			this.Enabled = true;
+		}
+
+		// Public methods.
+
+		/// <summary>
+		/// Connects the console to the current SSH server.
+		/// </summary>
+		public void Connect()
+		{
+			// If the private key is null, show a message and return.
+			if (null == this.config.Key)
+			{
+				MessageBox.Show("The private key for the selected PlanetLab slice is not set.", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			try
+			{
+				// The connection info.
+				ConnectionInfo connectionInfo = null;
+				// Create a memory stream with the key data.
+				using (MemoryStream memoryStream = new MemoryStream(this.config.Key))
+				{
+					// Create the private key file.
+					using (PrivateKeyFile keyFile = new PrivateKeyFile(memoryStream))
+					{
+						// Create a key connection info.
+						connectionInfo = new PrivateKeyConnectionInfo(this.node.Hostname, this.config.Name, keyFile);
+					}
+				}
+				// Connect to the PlanetLab node.
+				base.Connect(connectionInfo);
+			}
+			catch (Exception exception)
+			{
+				// Show an error dialog if an exception is thrown.
+				MessageBox.Show("Cannot connect to the PlanetLab node. {0}".FormatWith(exception.Message), "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				// Log
+				this.log.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSession.logSource,
+					"Connecting to the PlanetLab node \'{0}\' failed. {1}",
+					new object[] { this.node.Hostname, exception.Message },
+					exception));
+				// Raise the connect failed event.
+				if (this.ConnectFailed != null) this.ConnectFailed(this, new PlExceptionEventArgs<PlNode>(this.node, exception));
+			}
+		}
+
+		/// <summary>
+		/// Disconnects the console from the current SSH server.
+		/// </summary>
+		public new void Disconnect()
+		{
+			try
+			{
+				// Disconnect from the PlanetLab node.
+				base.Disconnect();
+			}
+			catch (SshException exception)
+			{
+				// Log
+				this.log.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSession.logSource,
+					"Disconnecting from the PlanetLab node \'{0}\' failed. {1}",
+					new object[] { this.node.Hostname, exception.Message },
+					exception));
+				// Raise the disconnected event.
+				if (this.Disconnected != null) this.Disconnected(this, new PlObjectEventArgs<PlNode>(this.node));
+			}
 		}
 
 		// Protected methods.
@@ -190,7 +265,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				ControlSession.logSource,
 				"Connecting to the PlanetLab node \'{0}\' failed.",
 				new object[] { info.Host }));
-			// Raise the event.
+			// Raise the connect failed event.
 			if (null != this.ConnectFailed) this.ConnectFailed(this, new PlExceptionEventArgs<PlNode>(this.node, exception));
 		}
 
@@ -235,7 +310,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonConnect.Enabled = true;
 			// Disable the console.
 			this.OnDisableConsole();
-			// Raise the event.
+			// Raise the disconnected event.
 			if (null != this.Disconnected) this.Disconnected(this, new PlObjectEventArgs<PlNode>(this.node));
 		}
 
@@ -335,36 +410,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnConnect(object sender, EventArgs e)
 		{
-			// If the private key is null, show a message and return.
-			if (null == this.slice.Key)
-			{
-				MessageBox.Show("The private key for the selected PlanetLab slice is not set.", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
-
-			try
-			{
-				// The connection info.
-				ConnectionInfo connectionInfo = null;
-				// Create a memory stream with the key data.
-				using (MemoryStream memoryStream = new MemoryStream(this.slice.Key))
-				{
-					// Create the private key file.
-					using (PrivateKeyFile keyFile = new PrivateKeyFile(memoryStream))
-					{
-						// Create a key connection info.
-						connectionInfo = new PrivateKeyConnectionInfo(this.node.Hostname, this.slice.Name, keyFile);
-					}
-				}
-				// Connect to the PlanetLab node.
-				this.Connect(connectionInfo);
-			}
-			catch (Exception exception)
-			{
-				// Show an error dialog if an exception is thrown.
-				MessageBox.Show("Cannot connect to the PlanetLab node. {0}".FormatWith(exception.Message), "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
+			// Call the connect method.
+			this.Connect();
 		}
 
 		/// <summary>
@@ -374,17 +421,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnDisconnect(object sender, EventArgs e)
 		{
-			try
-			{
-				// Disconnect from the PlanetLab node.
-				this.Disconnect();
-			}
-			catch (SshException exception)
-			{
-				// Show an error dialog if an exception is thrown.
-				MessageBox.Show("An error occurred while disconnecting from the PlanetLab node. {0}".FormatWith(exception.Message), "Disconnect Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
+			// Call the disconnect method.
+			this.Disconnect();
 		}
 
 		/// <summary>
@@ -394,7 +432,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnConfigurationChanged(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		/// <summary>
