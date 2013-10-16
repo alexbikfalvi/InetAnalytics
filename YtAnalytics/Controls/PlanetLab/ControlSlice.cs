@@ -30,6 +30,7 @@ using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
 using YtAnalytics.Controls.Net.Ssh;
+using YtAnalytics.Events;
 using YtAnalytics.Forms;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
@@ -195,6 +196,15 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.OnRefreshSliceRequestException,
 				null);
 		}
+
+		// Public events.
+
+		/// <summary>
+		/// An event raised when a console is selected.
+		/// </summary>
+		public event PageSelectionEventHandler ConsoleSelected;
+
+		// Public methods.
 
 		/// <summary>
 		/// Initializes the control with a crawler object.
@@ -505,6 +515,7 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					// Dispose the control.
 					info.ConsoleControl.Dispose();
+					// Remove the control event handlers.
 				}
 			}
 
@@ -1638,6 +1649,19 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Update the node information.
 			info.ConsoleControl = control;
 			info.ConsoleNode = node;
+
+			// Set the control event handlers.
+			control.Connecting += this.OnConsoleConnecting;
+			control.ConnectSucceeded += this.OnConsoleConnectSucceeded;
+			control.ConnectFailed += this.OnConsoleConnectFailed;
+			control.Disconnecting += this.OnConsoleDisconnecting;
+			control.Disconnected += OnControlDisconnected;
+
+			// Switch to the specified node.
+			if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(node));
+
+			// Connect the control.
+			//control.
 		}
 
 		/// <summary>
@@ -1649,6 +1673,31 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// If there is no node selected, do nothing.
 			if (this.listViewNodes.SelectedItems.Count == 0) return;
+		}
+
+		private void OnConsoleConnecting(object sender, PlObjectEventArgs<PlNode> e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void OnConsoleConnectSucceeded(object sender, PlObjectEventArgs<PlNode> e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void OnConsoleConnectFailed(object sender, PlExceptionEventArgs<PlNode> e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void OnConsoleDisconnecting(object sender, PlObjectEventArgs<PlNode> e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void OnControlDisconnected(object sender, PlObjectEventArgs<PlNode> e)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

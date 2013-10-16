@@ -394,6 +394,106 @@ namespace YtAnalytics.Forms
 			this.controlSideConfiguration.Nodes.Add(this.treeNodeSettings);
 			this.controlSideComments.Nodes.Add(this.treeNodeComments);
 
+			// Set the control event handlers.
+			this.crawler.Status.Message += this.OnStatusMessage;
+
+			this.controlYtApi2.VideosGlobalClick += this.BrowserApi2VideosFeedsInfoClick;
+			this.controlYtApi2.VideosUserClick += this.BrowserApi2UserFeedsInfoClick;
+			this.controlYtApi2.CategoriesClick += this.BrowserApi2VideoCategoriesClick;
+
+			this.controlYtApi2VideosFeedsInfo.VideoClick += this.BrowserApi2VideoClick;
+			this.controlYtApi2VideosFeedsInfo.VideoCommentsClick += this.BrowserApi2VideoCommentsClick;
+			this.controlYtApi2VideosFeedsInfo.SearchFeedClick += this.BrowserApi2SearchFeedClick;
+			this.controlYtApi2VideosFeedsInfo.StandardFeedClick += this.BrowserApi2StandardFeedClick;
+			this.controlYtApi2VideosFeedsInfo.RelatedVideosFeedClick += this.BrowserApi2RelatedVideosFeedClick;
+			this.controlYtApi2VideosFeedsInfo.ResponseVideosFeedClick += this.BrowserApi2ResponseVideosFeedClick;
+
+			this.controlYtApi2Video.ViewVideoCommentsInApiV2 += this.ViewVideoCommentsInApiV2;
+			this.controlYtApi2Video.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2Video.ViewVideoRelatedInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2Video.ViewVideoResponsesInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2Video.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2Video.Comment += this.OnCommentVideo;
+
+			this.controlYtApi2StandardFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
+			this.controlYtApi2StandardFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2StandardFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2StandardFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2StandardFeed.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2StandardFeed.Comment += this.OnCommentVideo;
+
+			this.controlYtApi2Search.ViewVideoInApiV2 += this.ViewVideoInApiV2;
+			this.controlYtApi2Search.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2Search.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2Search.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2Search.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2Search.Comment += this.OnCommentVideo;
+
+			this.controlYtApi2RelatedFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
+			this.controlYtApi2RelatedFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2RelatedFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2RelatedFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2RelatedFeed.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2RelatedFeed.Comment += this.OnCommentVideo;
+
+			this.controlYtApi2ResponseFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
+			this.controlYtApi2ResponseFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2ResponseFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2ResponseFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2ResponseFeed.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2ResponseFeed.Comment += this.OnCommentVideo;
+
+			this.controlYtApi2UserFeedInfo.UserClick += this.BrowserApi2UserClick;
+			this.controlYtApi2UserFeedInfo.UploadsFeedClick += this.BrowserApi2UserUploadsClick;
+			this.controlYtApi2UserFeedInfo.FavoritesFeedClick += this.BrowserApi2UserFavoritesClick;
+			this.controlYtApi2UserFeedInfo.PlaylistsFeedClick += this.BrowserApi2UserPlaylistsClick;
+			this.controlYtApi2UserFeedInfo.PlaylistFeedClick += this.BrowserApi2PlaylistVideosClick;
+
+			this.controlYtApi2Profile.ViewUserUploadsInApiV2 += this.ViewApiV2UploadedVideos;
+			this.controlYtApi2Profile.ViewUserFavoritesInApiV2 += this.ViewApiV2FavoritedVideos;
+			this.controlYtApi2Profile.ViewUserPlaylistsInApiV2 += this.ViewApiV2Playlists;
+			this.controlYtApi2Profile.Comment += this.OnCommentUser;
+
+			this.controlYtApi2UploadsFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
+			this.controlYtApi2UploadsFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2UploadsFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2UploadsFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2UploadsFeed.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2UploadsFeed.Comment += this.OnCommentVideo;
+
+			this.controlYtApi2FavoritesFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
+			this.controlYtApi2FavoritesFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2FavoritesFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2FavoritesFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2FavoritesFeed.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2FavoritesFeed.Comment += this.OnCommentVideo;
+
+			this.controlYtApi2PlaylistsFeed.ViewPlaylistAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2PlaylistsFeed.ViewPlaylistVideosInApiV2 += this.ViewApiV2Playlist;
+			this.controlYtApi2PlaylistsFeed.Comment += this.OnCommentPlaylist;
+
+			this.controlYtApi2PlaylistFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
+			this.controlYtApi2PlaylistFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
+			this.controlYtApi2PlaylistFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
+			this.controlYtApi2PlaylistFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
+			this.controlYtApi2PlaylistFeed.ViewVideoInWeb += this.ViewVideoInWeb;
+			this.controlYtApi2PlaylistFeed.Comment += this.OnCommentVideo;
+
+			this.controlWeb.ClickVideoStatistics += this.BrowserWebVideosClick;
+
+			this.controlWebStatistics.Comment += this.OnCommentVideo;
+
+			this.controlPlanetLab.ClickSites += this.PlanetLabSitesClick;
+			this.controlPlanetLab.ClickSlices += this.PlanetLabSlicesClick;
+			this.controlPlanetLabSlices.SliceAdded += this.PlanetLabSliceAdded;
+			this.controlPlanetLabSlices.SliceRemoved += this.PlanetLabSliceRemoved;
+
+			this.controlSpiderInfo.StandardFeedsClick += this.BrowserSpiderStandardFeedsClick;
+
+			this.controlCommentsInfo.ClickVideos += this.BrowserCommentsVideosClick;
+			this.controlCommentsInfo.ClickUsers += this.BrowserCommentsUsersClick;
+			this.controlCommentsInfo.ClickPlaylists += this.BrowserCommentsPlaylistsClick;
+
 			// Initialize the controls.
 			this.controlYtApi2Video.Initialize(this.crawler);
 			this.controlYtApi2CommentsFeed.Initialize(this.crawler);
@@ -420,104 +520,6 @@ namespace YtAnalytics.Forms
 			this.controlCommentsVideos.Initialize(this.crawler.Comments.Videos, YtCrawler.Comments.Comment.CommentType.Video);
 			this.controlCommentsUsers.Initialize(this.crawler.Comments.Users, YtCrawler.Comments.Comment.CommentType.User);
 			this.controlCommentsPlaylists.Initialize(this.crawler.Comments.Playlists, YtCrawler.Comments.Comment.CommentType.Playlist);
-
-			// Set the control events.
-			this.crawler.Status.Message += this.OnStatusMessage;
-
-			this.controlYtApi2.VideosGlobalClick += this.BrowserApi2VideosGlobalClick;
-			this.controlYtApi2.VideosUserClick += this.BrowserApi2VideosUserClick;
-			this.controlYtApi2.CategoriesClick += this.BrowserApi2CategoriesClick;
-
-			this.controlYtApi2VideosFeedsInfo.VideoClick += this.BrowserApi2VideoClick;
-			this.controlYtApi2VideosFeedsInfo.VideoCommentsClick += this.BrowserApi2VideoCommentsClick;
-			this.controlYtApi2VideosFeedsInfo.SearchFeedClick += this.BrowserApi2SearchFeedClick;
-			this.controlYtApi2VideosFeedsInfo.StandardFeedClick += this.BrowserApi2StandardFeedClick;
-			this.controlYtApi2VideosFeedsInfo.RelatedVideosFeedClick += this.BrowserApi2RelatedVideosFeedClick;
-			this.controlYtApi2VideosFeedsInfo.ResponseVideosFeedClick += this.BrowserApi2ResponseVideosFeedClick;
-
-			this.controlYtApi2Video.ViewVideoCommentsInApiV2 += this.ViewVideoCommentsInApiV2;
-			this.controlYtApi2Video.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2Video.ViewVideoRelatedInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2Video.ViewVideoResponsesInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2Video.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2Video.Comment += this.CommentVideo;
-
-			this.controlYtApi2StandardFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2StandardFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2StandardFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2StandardFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2StandardFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2StandardFeed.Comment += this.CommentVideo;
-
-			this.controlYtApi2Search.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2Search.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2Search.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2Search.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2Search.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2Search.Comment += this.CommentVideo;
-
-			this.controlYtApi2RelatedFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2RelatedFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2RelatedFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2RelatedFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2RelatedFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2RelatedFeed.Comment += this.CommentVideo;
-
-			this.controlYtApi2ResponseFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2ResponseFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2ResponseFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2ResponseFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2ResponseFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2ResponseFeed.Comment += this.CommentVideo;
-
-			this.controlYtApi2UserFeedInfo.UserClick += this.BrowserApi2UserClick;
-			this.controlYtApi2UserFeedInfo.UploadsFeedClick += this.BrowserApi2UserUploadsClick;
-			this.controlYtApi2UserFeedInfo.FavoritesFeedClick += this.BrowserApi2UserFavoritesClick;
-			this.controlYtApi2UserFeedInfo.PlaylistsFeedClick += this.BrowserApi2UserPlaylistsClick;
-			this.controlYtApi2UserFeedInfo.PlaylistFeedClick += this.BrowserApi2PlaylistVideosClick;
-
-			this.controlYtApi2Profile.ViewUserUploadsInApiV2 += this.ViewApiV2UploadedVideos;
-			this.controlYtApi2Profile.ViewUserFavoritesInApiV2 += this.ViewApiV2FavoritedVideos;
-			this.controlYtApi2Profile.ViewUserPlaylistsInApiV2 += this.ViewApiV2Playlists;
-			this.controlYtApi2Profile.Comment += this.CommentUser;
-
-			this.controlYtApi2UploadsFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2UploadsFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2UploadsFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2UploadsFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2UploadsFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2UploadsFeed.Comment += this.CommentVideo;
-
-			this.controlYtApi2FavoritesFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2FavoritesFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2FavoritesFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2FavoritesFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2FavoritesFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2FavoritesFeed.Comment += this.CommentVideo;
-
-			this.controlYtApi2PlaylistsFeed.ViewPlaylistAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2PlaylistsFeed.ViewPlaylistVideosInApiV2 += this.ViewApiV2Playlist;
-			this.controlYtApi2PlaylistsFeed.Comment += this.CommentPlaylist;
-
-			this.controlYtApi2PlaylistFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2PlaylistFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2PlaylistFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2PlaylistFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2PlaylistFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2PlaylistFeed.Comment += this.CommentVideo;
-
-			this.controlWeb.ClickVideoStatistics += this.BrowserWebVideosClick;
-
-			this.controlWebStatistics.Comment += this.CommentVideo;
-
-			this.controlPlanetLab.ClickSites += this.PlanetLabSitesClick;
-			this.controlPlanetLab.ClickSlices += this.PlanetLabSlicesClick;
-
-			this.controlSpiderInfo.StandardFeedsClick += this.BrowserSpiderStandardFeedsClick;
-
-			this.controlCommentsInfo.ClickVideos += this.BrowserCommentsVideosClick;
-			this.controlCommentsInfo.ClickUsers += this.BrowserCommentsUsersClick;
-			this.controlCommentsInfo.ClickPlaylists += this.BrowserCommentsPlaylistsClick;
 
 			// Set the selected control.
 			this.controlPanel = this.labelNotAvailable;
@@ -631,132 +633,220 @@ namespace YtAnalytics.Forms
 			}
 		}
 
-		private void BrowserApi2VideosGlobalClick(object sender, EventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects the videos feeds information page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void BrowserApi2VideosFeedsInfoClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideosFeedsInfo;
 		}
-
-		private void BrowserApi2VideosUserClick(object sender, EventArgs e)
+		
+		/// <summary>
+		/// An event handler called when the user selects the user feeds information page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void BrowserApi2UserFeedsInfoClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UserFeedsInfo;
 		}
 
-		private void BrowserApi2CategoriesClick(object sender, EventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects the video categories page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void BrowserApi2VideoCategoriesClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoCategories;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the video page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2VideoClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the video comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2VideoCommentsClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the search feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2SearchFeedClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2SearchFeed;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the standard feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2StandardFeedClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2StandardFeed;
 		}
 
+		/// <summary>
+		/// An event handler called when user selects the related videos feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2RelatedVideosFeedClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the response videos feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2ResponseVideosFeedClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the user page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2UserClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2User;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the user uploads page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2UserUploadsClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the user favorites page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2UserFavoritesClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the user playlists page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2UserPlaylistsClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the playlist videos page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserApi2PlaylistVideosClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the web videos page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserWebVideosClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
 			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the standard feeds spider page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserSpiderStandardFeedsClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemSpiders;
 			this.controlSideSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
 		}
 
-		private void PlanetLabSitesClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
-			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSites;
-		}
-
-		private void PlanetLabSlicesClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
-			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSlices;
-		}
-
+		/// <summary>
+		/// An event handler called when the user selects the videos comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserCommentsVideosClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the users comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserCommentsUsersClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the playlists comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void BrowserCommentsPlaylistsClick(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view video in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewVideoInApiV2(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -764,6 +854,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2Video.View(e.Video);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view video comment in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewVideoCommentsInApiV2(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -771,6 +866,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2CommentsFeed.View(e.Value);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view related videos in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewRelatedVideosInApiV2(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -778,6 +878,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2RelatedFeed.View(e.Video.Id);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view response videos in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewResponseVideosInApiV2(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -785,6 +890,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2ResponseFeed.View(e.Video.Id);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view user in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewApiV2User(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -792,6 +902,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2Profile.View(e.Value);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view uploaded videos in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewApiV2UploadedVideos(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -799,6 +914,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2UploadsFeed.View(e.Profile.Id);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view favorited videos page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewApiV2FavoritedVideos(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -806,6 +926,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2FavoritesFeed.View(e.Profile.Id);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the playlists page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewApiV2Playlists(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -813,6 +938,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2PlaylistsFeed.View(e.Profile.Id);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the playlist page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewApiV2Playlist(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -820,6 +950,11 @@ namespace YtAnalytics.Forms
 			this.controlYtApi2PlaylistFeed.View(e.Value);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects to view video web information page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void ViewVideoInWeb(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
@@ -827,21 +962,90 @@ namespace YtAnalytics.Forms
 			this.controlWebStatistics.View(e.Video.Id);
 		}
 
-		private void CommentVideo(object sender, StringEventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects the PlanetLab sites page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void PlanetLabSitesClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
+			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSites;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the PlanetLab slices page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void PlanetLabSlicesClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
+			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSlices;
+		}
+
+		/// <summary>
+		/// An event handler called when the a PlanetLab slice control was added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void PlanetLabSliceAdded(object sender, ControlEventArgs<ControlSlice> e)
+		{
+			// Add the console selected event handler to the control.
+			e.Control.ConsoleSelected += this.PlanetLabConsoleSelected;
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab slice control was removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void PlanetLabSliceRemoved(object sender, ControlEventArgs<ControlSlice> e)
+		{
+			// Remove the console selected event handler from the control.
+			e.Control.ConsoleSelected -= this.PlanetLabConsoleSelected;
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab console is selected.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void PlanetLabConsoleSelected(object sender, PageSelectionEventArgs e)
+		{
+			this.controlSidePlanetLab.SelectedNode = e.Node;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the video comment page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommentVideo(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
 			this.controlCommentsVideos.AddComment(e.Value);
 		}
 
-		private void CommentUser(object sender, StringEventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects the user comment page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommentUser(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
 			this.controlCommentsUsers.AddComment(e.Value);
 		}
 
-		private void CommentPlaylist(object sender, StringEventArgs e)
+		/// <summary>
+		/// An event handler called when the user selects the playlist comment page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommentPlaylist(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;

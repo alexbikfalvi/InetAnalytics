@@ -549,6 +549,8 @@
     </Compile>
     <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\CommentEventArgs.cs" />
+    <Compile Include="Events\ControlEventArgs.cs" />
+    <Compile Include="Events\PageSelectionEventArgs.cs" />
     <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
     <Compile Include="Events\PasswordChangedEventArgs.cs" />
     <Compile Include="Events\ProfileEventArgs.cs" />

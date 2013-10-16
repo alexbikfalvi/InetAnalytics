@@ -51,6 +51,7 @@
 			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
 			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonFilter = new System.Windows.Forms.ToolStripDropDownButton();
+			this.menuItemInvertFilter = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemFilterNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.labelFilter = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxFilter = new System.Windows.Forms.ToolStripTextBox();
@@ -172,12 +173,21 @@
 			// 
 			this.buttonFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.buttonFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemInvertFilter,
             this.menuItemFilterNodes});
 			this.buttonFilter.Image = global::YtAnalytics.Resources.Filter_16;
 			this.buttonFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonFilter.Name = "buttonFilter";
 			this.buttonFilter.Size = new System.Drawing.Size(29, 22);
 			this.buttonFilter.Text = "&Filter";
+			// 
+			// menuItemInvertFilter
+			// 
+			this.menuItemInvertFilter.CheckOnClick = true;
+			this.menuItemInvertFilter.Name = "menuItemInvertFilter";
+			this.menuItemInvertFilter.Size = new System.Drawing.Size(159, 22);
+			this.menuItemInvertFilter.Text = "Invert filter";
+			this.menuItemInvertFilter.CheckedChanged += new System.EventHandler(this.OnFilterChanged);
 			// 
 			// menuItemFilterNodes
 			// 
@@ -368,5 +378,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderNodes;
 		private System.Windows.Forms.ToolStripDropDownButton buttonFilter;
 		private System.Windows.Forms.ToolStripMenuItem menuItemFilterNodes;
+		private System.Windows.Forms.ToolStripMenuItem menuItemInvertFilter;
 	}
 }

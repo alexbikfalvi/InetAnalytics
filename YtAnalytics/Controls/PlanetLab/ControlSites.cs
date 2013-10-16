@@ -85,8 +85,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the site list event handler.
 			this.crawler.Config.PlanetLab.Sites.Cleared += this.OnSitesCleared;
 			this.crawler.Config.PlanetLab.Sites.Updated += this.OnSitesUpdated;
-			this.crawler.Config.PlanetLab.Sites.Added += OnSitesAdded;
-			this.crawler.Config.PlanetLab.Sites.Removed += OnSitesRemoved;
+			this.crawler.Config.PlanetLab.Sites.Added += this.OnSitesAdded;
+			this.crawler.Config.PlanetLab.Sites.Removed += this.OnSitesRemoved;
 
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
@@ -287,6 +287,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSitesUpdated(object sender, EventArgs e)
 		{
+			int numNodes = 0;
+
 			// Lock the sites.
 			this.crawler.Config.PlanetLab.Sites.Lock();
 			try
@@ -300,7 +302,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						// If the site name does not match the filter, continue.
 						if (!string.IsNullOrEmpty(site.Name))
 						{
-							if (!site.Name.ToLower().Contains(this.filter.ToLower())) continue;
+							if (this.menuItemInvertFilter.Checked ^ (!site.Name.ToLower().Contains(this.filter.ToLower()))) continue;
 						}
 					}
 					// If the site has zero nodes and the filter is checked, continue.
@@ -308,6 +310,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 					// Add a site.
 					this.OnAddSite(site);
+
+					// Increment the number of nodes.
+					numNodes += site.NodeIds.Length;
 				}
 			}
 			finally
@@ -316,10 +321,13 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 
 			// Update the label.
-			this.status.Send("Showing {0} of {1} PlanetLab site{2}.".FormatWith(
+			this.status.Send(
+				"Showing {0} of {1} PlanetLab site{2}.".FormatWith(
 				this.listViewSites.Items.Count,
 				this.crawler.Config.PlanetLab.Sites.Count,
-				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
+				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()),
+				"Sites have {0} nodes.".FormatWith(numNodes),
+				Resources.GlobeLab_16);
 		}
 
 		/// <summary>

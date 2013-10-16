@@ -26,6 +26,7 @@ using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Database;
 using PlanetLab.Requests;
+using YtAnalytics.Events;
 using YtAnalytics.Forms.PlanetLab;
 using YtCrawler;
 using YtCrawler.Log;
@@ -119,7 +120,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			/// <param name="slice">The PlanetLab slice.</param>
 			/// <param name="node">The tree node.</param>
 			/// <param name="control">The control.</param>
-			public SliceInfo(PlSlice slice, TreeNode node, Control control)
+			public SliceInfo(PlSlice slice, TreeNode node, ControlSlice control)
 				: this()
 			{
 				this.Slice = slice;
@@ -138,7 +139,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			/// <summary>
 			/// Gets the control.
 			/// </summary>
-			public Control Control { get; private set; }
+			public ControlSlice Control { get; private set; }
 		}
 
 		// Private variables.
@@ -185,6 +186,19 @@ namespace YtAnalytics.Controls.PlanetLab
 				this.OnRefreshSlicesRequestException,
 				null);
 		}
+
+		// Public events.
+
+		/// <summary>
+		/// An event raised when a slice has been added.
+		/// </summary>
+		public event ControlEventHandler<ControlSlice> SliceAdded;
+		/// <summary>
+		/// An event raised when a slice has been removed.
+		/// </summary>
+		public event ControlEventHandler<ControlSlice> SliceRemoved;
+
+		// Public methods.
 
 		/// <summary>
 		/// Initializes the control with a crawler object.
@@ -330,6 +344,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Get the slice info.
 				SliceInfo info = (SliceInfo)item.Tag;
+				// Raise the slice removed event.
+				if (null != this.SliceRemoved) this.SliceRemoved(this, new ControlEventArgs<ControlSlice>(info.Control));
 				// Remove the slice changed event handler.
 				info.Slice.Changed -= this.OnSliceChanged;
 				// Remove the tree node.
@@ -375,6 +391,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Get the slice info.
 				SliceInfo info = (SliceInfo)item.Tag;
+				// Raise the slice removed event.
+				if (null != this.SliceRemoved) this.SliceRemoved(this, new ControlEventArgs<ControlSlice>(info.Control));
 				// Remove the slice changed event handler.
 				info.Slice.Changed -= this.OnSliceChanged;
 				// Remove the list view item.
@@ -398,6 +416,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Get the slice info.
 				SliceInfo info = (SliceInfo)item.Tag;
+				// Raise the slice removed event.
+				if (null != this.SliceRemoved) this.SliceRemoved(this, new ControlEventArgs<ControlSlice>(info.Control));
 				// Remove the slice changed event handler.
 				info.Slice.Changed -= this.OnSliceChanged;
 				// Dispose the control.
@@ -441,6 +461,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Add the slice changed event handler.
 			slice.Changed += this.OnSliceChanged;
+
+			// Raise the slice added event.
+			if (null != this.SliceAdded) this.SliceAdded(this, new ControlEventArgs<ControlSlice>(control));
 		}
 
 		/// <summary>
