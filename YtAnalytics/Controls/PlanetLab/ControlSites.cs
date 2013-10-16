@@ -650,5 +650,35 @@ namespace YtAnalytics.Controls.PlanetLab
 				}
 			}
 		}
+
+		/// <summary>
+		/// An event handler called when exporting the sites list as a CSV file.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnExportListCsv(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when exporting the sites list as an XML file.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnExportListXml(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when exporting the sites map.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnExportMap(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
