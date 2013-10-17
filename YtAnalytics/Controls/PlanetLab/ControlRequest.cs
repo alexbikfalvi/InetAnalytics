@@ -99,7 +99,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			public bool Success { get; set; }
 		}
 
-		private object sync = new object();
+		private readonly object sync = new object();
 
 		private PlRequest request = null;
 		private IAsyncResult result = null;

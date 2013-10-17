@@ -99,17 +99,7 @@ namespace YtCrawler.Database
 		/// <summary>
 		/// Gets the name of the local type.
 		/// </summary>
-		public string LocalType
-		{
-			get
-			{
-				Type type = this.Property.PropertyType;
-				if (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(Nullable<>)))
-					return "*{0}".FormatWith(type.GetGenericArguments()[0].Name);
-				else
-					return type.Name;
-			}
-		}
+		public string LocalType { get { return this.Property.PropertyType.GetName(); } }
 		/// <summary>
 		/// Gets the name of the database type.
 		/// </summary>

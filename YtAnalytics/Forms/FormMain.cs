@@ -79,6 +79,7 @@ namespace YtAnalytics.Forms
 
 		private TreeNode treeNodePlanetLab;
 		private TreeNode treeNodePlanetLabSites;
+		private TreeNode treeNodePlanetLabNodes;
 		private TreeNode treeNodePlanetLabSlices;
 
 		private TreeNode treeNodeTestingWebRequest;
@@ -121,6 +122,7 @@ namespace YtAnalytics.Forms
 
 		private readonly ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
 		private readonly ControlSites controlPlanetLabSites = new ControlSites();
+		private readonly ControlNodes controlPlanetLabNodes = new ControlNodes();
 		private readonly ControlSlices controlPlanetLabSlices = new ControlSlices();
 
 		private readonly ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
@@ -262,6 +264,9 @@ namespace YtAnalytics.Forms
 			this.treeNodePlanetLabSites = new TreeNode("Sites",
 				this.imageList.Images.IndexOfKey("FolderClosedGlobe"),
 				this.imageList.Images.IndexOfKey("FolderOpenGlobe"));
+			this.treeNodePlanetLabNodes = new TreeNode("Nodes",
+				this.imageList.Images.IndexOfKey("FolderClosedGlobe"),
+				this.imageList.Images.IndexOfKey("FolderOpenGlobe"));
 			this.treeNodePlanetLabSlices = new TreeNode("Slices",
 				this.imageList.Images.IndexOfKey("FolderClosedGlobe"),
 				this.imageList.Images.IndexOfKey("FolderOpenGlobe"));
@@ -270,6 +275,7 @@ namespace YtAnalytics.Forms
 				this.imageList.Images.IndexOfKey("ServersGlobe"),
 				new TreeNode[] {
 					this.treeNodePlanetLabSites,
+					this.treeNodePlanetLabNodes,
 					this.treeNodePlanetLabSlices
 				});
 
@@ -326,6 +332,7 @@ namespace YtAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlSpiderStandardFeeds);
 			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLab);
 			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSites);
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabNodes);
 			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSlices);
 			this.splitContainer.Panel2.Controls.Add(this.controlTestingWebRequest);
 			this.splitContainer.Panel2.Controls.Add(this.controlTestingSshRequest);
@@ -364,6 +371,7 @@ namespace YtAnalytics.Forms
 
 			this.treeNodePlanetLab.Tag = this.controlPlanetLab;
 			this.treeNodePlanetLabSites.Tag = this.controlPlanetLabSites;
+			this.treeNodePlanetLabNodes.Tag = this.controlPlanetLabNodes;
 			this.treeNodePlanetLabSlices.Tag = this.controlPlanetLabSlices;
 
 			this.treeNodeTestingWebRequest.Tag = this.controlTestingWebRequest;
@@ -511,6 +519,7 @@ namespace YtAnalytics.Forms
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
 			this.controlPlanetLab.Initialize(this.crawler);
 			this.controlPlanetLabSites.Initialize(this.crawler);
+			this.controlPlanetLabNodes.Initialize(this.crawler);
 			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlTestingWebRequest.Initialize(this.crawler);
 			this.controlTestingSshRequest.Initialize(this.crawler);

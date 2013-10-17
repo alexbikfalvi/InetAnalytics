@@ -56,6 +56,11 @@
 			this.labelFilter = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxFilter = new System.Windows.Forms.ToolStripTextBox();
 			this.buttonClear = new System.Windows.Forms.ToolStripButton();
+			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonExport = new System.Windows.Forms.ToolStripDropDownButton();
+			this.menuItemExportListCsv = new System.Windows.Forms.ToolStripMenuItem();
+			this.separator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemExportMap = new System.Windows.Forms.ToolStripMenuItem();
 			this.listViewSites = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -72,12 +77,6 @@
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonExport = new System.Windows.Forms.ToolStripDropDownButton();
-			this.menuItemExportListCsv = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItemExportMap = new System.Windows.Forms.ToolStripMenuItem();
-			this.separator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.menuItemExportListXml = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -227,6 +226,43 @@
 			this.buttonClear.Text = "C&lear";
 			this.buttonClear.Click += new System.EventHandler(this.OnFilterClear);
 			// 
+			// separator3
+			// 
+			this.separator3.Name = "separator3";
+			this.separator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonExport
+			// 
+			this.buttonExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemExportListCsv,
+            this.separator4,
+            this.menuItemExportMap});
+			this.buttonExport.Image = global::YtAnalytics.Resources.Export_16;
+			this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonExport.Name = "buttonExport";
+			this.buttonExport.Size = new System.Drawing.Size(69, 22);
+			this.buttonExport.Text = "&Export";
+			// 
+			// menuItemExportListCsv
+			// 
+			this.menuItemExportListCsv.Name = "menuItemExportListCsv";
+			this.menuItemExportListCsv.Size = new System.Drawing.Size(154, 22);
+			this.menuItemExportListCsv.Text = "Sites list as CSV";
+			this.menuItemExportListCsv.Click += new System.EventHandler(this.OnExportListCsv);
+			// 
+			// separator4
+			// 
+			this.separator4.Name = "separator4";
+			this.separator4.Size = new System.Drawing.Size(151, 6);
+			// 
+			// menuItemExportMap
+			// 
+			this.menuItemExportMap.Enabled = false;
+			this.menuItemExportMap.Name = "menuItemExportMap";
+			this.menuItemExportMap.Size = new System.Drawing.Size(154, 22);
+			this.menuItemExportMap.Text = "Sites map";
+			this.menuItemExportMap.Click += new System.EventHandler(this.OnExportMap);
+			// 
 			// listViewSites
 			// 
 			this.listViewSites.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -334,50 +370,6 @@
 			this.menuItemProperties.Text = "&Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
-			// separator3
-			// 
-			this.separator3.Name = "separator3";
-			this.separator3.Size = new System.Drawing.Size(6, 25);
-			// 
-			// buttonExport
-			// 
-			this.buttonExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemExportListCsv,
-            this.menuItemExportListXml,
-            this.separator4,
-            this.menuItemExportMap});
-			this.buttonExport.Image = global::YtAnalytics.Resources.Export_16;
-			this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonExport.Name = "buttonExport";
-			this.buttonExport.Size = new System.Drawing.Size(69, 22);
-			this.buttonExport.Text = "&Export";
-			// 
-			// menuItemExportListCsv
-			// 
-			this.menuItemExportListCsv.Name = "menuItemExportListCsv";
-			this.menuItemExportListCsv.Size = new System.Drawing.Size(157, 22);
-			this.menuItemExportListCsv.Text = "Sites list as CSV";
-			this.menuItemExportListCsv.Click += new System.EventHandler(this.OnExportListCsv);
-			// 
-			// menuItemExportMap
-			// 
-			this.menuItemExportMap.Name = "menuItemExportMap";
-			this.menuItemExportMap.Size = new System.Drawing.Size(157, 22);
-			this.menuItemExportMap.Text = "Sites map";
-			this.menuItemExportMap.Click += new System.EventHandler(this.OnExportMap);
-			// 
-			// separator4
-			// 
-			this.separator4.Name = "separator4";
-			this.separator4.Size = new System.Drawing.Size(154, 6);
-			// 
-			// menuItemExportListXml
-			// 
-			this.menuItemExportListXml.Name = "menuItemExportListXml";
-			this.menuItemExportListXml.Size = new System.Drawing.Size(157, 22);
-			this.menuItemExportListXml.Text = "Sites list as XML";
-			this.menuItemExportListXml.Click += new System.EventHandler(this.OnExportListXml);
-			// 
 			// ControlSites
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,7 +427,6 @@
 		private System.Windows.Forms.ToolStripDropDownButton buttonExport;
 		private System.Windows.Forms.ToolStripMenuItem menuItemExportListCsv;
 		private System.Windows.Forms.ToolStripMenuItem menuItemExportMap;
-		private System.Windows.Forms.ToolStripMenuItem menuItemExportListXml;
 		private System.Windows.Forms.ToolStripSeparator separator4;
 	}
 }

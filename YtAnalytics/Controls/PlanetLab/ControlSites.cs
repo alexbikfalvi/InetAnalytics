@@ -54,6 +54,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private string filter = string.Empty;
 
 		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
+		private readonly FormExport formExport = new FormExport();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -110,6 +111,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonRefresh.Enabled = false;
 			this.buttonCancel.Enabled = true;
 			this.buttonProperties.Enabled = false;
+			this.buttonExport.Enabled = false;
 			this.menuItemProperties.Enabled = false;
 		}
 
@@ -217,6 +219,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
+			this.buttonExport.Enabled = true;
 		}
 
 		// Private methods.
@@ -459,6 +462,9 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRefresh(object sender, EventArgs e)
 		{
+			// Clear the current list of sites.
+			this.crawler.Config.PlanetLab.Sites.Clear();
+
 			// Update the status.
 			this.status.Send("Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
 			// Log
@@ -467,9 +473,6 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Information,
 				ControlSites.logSource,
 				"Refreshing the list of PlanetLab sites.");
-
-			// Clear the current list of sites.
-			this.crawler.Config.PlanetLab.Sites.Clear();
 
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
@@ -500,6 +503,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
+			this.buttonExport.Enabled = true;
 		}
 
 		/// <summary>
@@ -658,18 +662,74 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnExportListCsv(object sender, EventArgs e)
 		{
-
+			// Lock the sites.
+			this.crawler.Config.PlanetLab.Sites.Lock();
+			try
+			{
+				// Show the export dialog.
+				this.formExport.ShowDialog<PlSite>(this, typeof(PlSite.Fields), this.crawler.Config.PlanetLab.Sites);
+			}
+			finally
+			{
+				// Unlock the sites.
+				this.crawler.Config.PlanetLab.Sites.Unlock();
+			}
 		}
 
-		/// <summary>
-		/// An event handler called when exporting the sites list as an XML file.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnExportListXml(object sender, EventArgs e)
-		{
+		///// <summary>
+		///// An event handler called when exporting the list of sites IP addresses.
+		///// </summary>
+		///// <param name="sender">The sender objects.</param>
+		///// <param name="e">The event arguments.</param>
+		//private void OnExportListIp(object sender, EventArgs e)
+		//{
+		//	try
+		//	{
+		//		// Create the CSV file.
+		//		using (FileStream file = new FileStream(@"c:\Users\Alex\Desktop\sites.csv", FileMode.Create))
+		//		{
+		//			// Create a stream text writer.
+		//			using (StreamWriter writer = new StreamWriter(file, Encoding.UTF8))
+		//			{
+		//				this.crawler.Config.PlanetLab.Sites.Lock();
+		//				try
+		//				{
+		//					foreach (PlSite site in this.crawler.Config.PlanetLab.Sites)
+		//					{
+		//						if (site.NodeIds.Length > 0)
+		//						{
+		//							PlNode node = this.crawler.Config.PlanetLab.DbNodes.Find(site.NodeIds[0]);
+		//							if (null != node)
+		//							{
+		//								string addr = string.Empty;
+		//								try
+		//								{
+		//									// Get the node IP.
+		//									IPAddress[] addresses = Dns.GetHostEntry(node.Hostname).AddressList;
+		//									addr = addresses.Length > 0 ? addresses[0].ToString() : string.Empty;
+		//								}
+		//								catch { }
 
-		}
+		//								writer.WriteLine("{0},\"{1}\",{2},{3},{4},{5}",
+		//									site.Id, site.Name, site.Url, node.Id, node.Hostname, addr
+		//									);
+		//							}
+		//						}
+		//					}
+		//				}
+		//				finally
+		//				{
+		//					this.crawler.Config.PlanetLab.Sites.Unlock();
+		//				}
+		//			}
+		//		}
+		//	}
+		//	catch (Exception exception)
+		//	{
+		//		// If an exception occurs, show an error message.
+		//		MessageBox.Show(this, "Exporting the data failed. {0}".FormatWith(exception.Message), "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		//	}
+		//}
 
 		/// <summary>
 		/// An event handler called when exporting the sites map.
@@ -678,7 +738,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnExportMap(object sender, EventArgs e)
 		{
-
+			// To do.
 		}
 	}
 }

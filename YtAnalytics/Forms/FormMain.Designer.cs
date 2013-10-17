@@ -268,8 +268,9 @@
 			this.imageList.Images.SetKeyName(42, "GlobeSchema");
 			this.imageList.Images.SetKeyName(43, "GlobeObject");
 			this.imageList.Images.SetKeyName(44, "GlobeConsole");
-			this.imageList.Images.SetKeyName(45, "TestGlobeGoto");
-			this.imageList.Images.SetKeyName(46, "TestConnectGoto");
+			this.imageList.Images.SetKeyName(45, "GlobeNode");
+			this.imageList.Images.SetKeyName(46, "TestGlobeGoto");
+			this.imageList.Images.SetKeyName(47, "TestConnectGoto");
 			// 
 			// controlSideConfiguration
 			// 

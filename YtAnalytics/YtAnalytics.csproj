@@ -79,6 +79,12 @@
     <Compile Include="Controls\PlanetLab\ControlAddSlice.Designer.cs">
       <DependentUpon>ControlAddSlice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlExportNodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlExportNodes.Designer.cs">
+      <DependentUpon>ControlExportNodes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlRequest.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -240,6 +246,12 @@
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSession.Designer.cs">
       <DependentUpon>ControlSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodes.Designer.cs">
+      <DependentUpon>ControlNodes.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
@@ -562,6 +574,18 @@
     <Compile Include="Forms\FormText.Designer.cs">
       <DependentUpon>FormText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportNodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportNodes.Designer.cs">
+      <DependentUpon>FormExportNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExport.Designer.cs">
+      <DependentUpon>FormExport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormAddSliceToNodesSlice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -752,6 +776,9 @@
     <EmbeddedResource Include="Controls\PlanetLab\ControlAddSlice.resx">
       <DependentUpon>ControlAddSlice.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlExportNodes.resx">
+      <DependentUpon>ControlExportNodes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlRequest.resx">
       <DependentUpon>ControlRequest.cs</DependentUpon>
     </EmbeddedResource>
@@ -835,6 +862,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlSession.resx">
       <DependentUpon>ControlSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodes.resx">
+      <DependentUpon>ControlNodes.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
@@ -992,6 +1023,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormText.resx">
       <DependentUpon>FormText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormExportNodes.resx">
+      <DependentUpon>FormExportNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormExport.resx">
+      <DependentUpon>FormExport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesSlice.resx">
       <DependentUpon>FormAddSliceToNodesSlice.cs</DependentUpon>

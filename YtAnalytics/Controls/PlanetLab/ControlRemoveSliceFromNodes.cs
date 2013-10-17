@@ -273,16 +273,14 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSelect(object sender, EventArgs e)
 		{
-			// Get the list of checked list view items.
-			IList<ListViewItem> checkedItems = this.listView.Items.Checked();
 			// If there are no selected items, do nothing.
-			if (checkedItems.Count == 0) return;
+			if (this.listView.CheckedItems.Count == 0) return;
 			// Create a new array with the node IDs.
-			int[] result = new int[checkedItems.Count];
+			int[] result = new int[this.listView.CheckedItems.Count];
 			// Update the IDs list.
-			for (int index = 0; index < checkedItems.Count; index++)
+			for (int index = 0; index < this.listView.CheckedItems.Count; index++)
 			{
-				if (checkedItems[index].Tag is int) result[index] = (int)checkedItems[index].Tag;
+				if (this.listView.CheckedItems[index].Tag is int) result[index] = (int)this.listView.CheckedItems[index].Tag;
 				else result[index] = -1;
 			}
 			// Raise the event.
