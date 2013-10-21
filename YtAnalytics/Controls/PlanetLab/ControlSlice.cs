@@ -258,6 +258,10 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.buttonConnect.Enabled = false;
 			this.buttonDisconnect.Enabled = false;
 			this.buttonProperties.Enabled = false;
+			this.menuItemConnect.Enabled = false;
+			this.menuItemDisconnect.Enabled = false;
+			this.menuItemNodeProperties.Enabled = false;
+			this.menuItemSiteProperties.Enabled = false;
 			// Disable the nodes list view.
 			this.listViewNodes.Enabled = false;
 			// Call the base class method.
@@ -609,7 +613,7 @@ namespace YtAnalytics.Controls.PlanetLab
 					this.buttonConnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Disconnected;
 					this.buttonDisconnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Connected;
 					this.menuItemConnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Disconnected;
-					this.menuItemDisconnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Disconnected;
+					this.menuItemDisconnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Connected;
 				}
 				else
 				{
@@ -1680,7 +1684,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Switch to the specified node.
 			if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(node));
 
-			// Connect the control.
+			// Connect the session.
 			control.Connect();
 		}
 
@@ -1704,11 +1708,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				return;
 			}
 			// If the node info does not have a session.
-			if (info.ConsoleControl != null)
+			if (info.ConsoleControl == null)
 			{
 				MessageBox.Show(this, "The node {0} is not connected.".FormatWith(info.Node.Hostname), "Cannot Disconnect", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
+			// Disconnect the session.
+			info.ConsoleControl.Disconnect();
 		}
 
 		/// <summary>
@@ -1738,6 +1745,16 @@ namespace YtAnalytics.Controls.PlanetLab
 
 				// Update the item status.
 				item.SubItems[2].Text = info.ConsoleControl.State.ToString();
+
+				// If there are selected items and the item matches the selected item.
+				if ((this.listViewNodes.SelectedItems.Count > 0) && (item == this.listViewNodes.SelectedItems[0]))
+				{
+					// Change the button enabled state.
+					this.buttonConnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Disconnected;
+					this.buttonDisconnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Connected;
+					this.menuItemConnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Disconnected;
+					this.menuItemDisconnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Connected;
+				}
 			}
 
 			// Return the item.
@@ -1816,6 +1833,31 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Call the state changed method.
 			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
 			{
+				// Get the node info.
+				NodeInfo info = item.Tag as NodeInfo;
+
+				// Switch to the specified node.
+				if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(this.treeNode));
+
+				// Remove the control event handlers.
+				info.ConsoleControl.Connecting -= this.OnConsoleConnecting;
+				info.ConsoleControl.ConnectSucceeded -= this.OnConsoleConnectSucceeded;
+				info.ConsoleControl.ConnectFailed -= this.OnConsoleConnectFailed;
+				info.ConsoleControl.Disconnecting -= this.OnConsoleDisconnecting;
+				info.ConsoleControl.Disconnected -= this.OnControlDisconnected;
+
+				// Remove the control.
+				this.controls.Remove(info.ConsoleControl);
+
+				// Remove the tree node.
+				this.treeNode.Nodes.Remove(info.ConsoleNode);
+
+				// Dispose the control.
+				info.ConsoleControl.Dispose();
+
+				// Update the node information.
+				info.ConsoleControl = null;
+				info.ConsoleNode = null;
 			}
 		}
 	}
