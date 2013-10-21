@@ -132,6 +132,7 @@
 			this.buttonConnect.Name = "buttonConnect";
 			this.buttonConnect.Size = new System.Drawing.Size(72, 22);
 			this.buttonConnect.Text = "&Connect";
+			this.buttonConnect.Click += new System.EventHandler(this.OnConnect);
 			// 
 			// buttonDisconnect
 			// 
@@ -141,6 +142,7 @@
 			this.buttonDisconnect.Name = "buttonDisconnect";
 			this.buttonDisconnect.Size = new System.Drawing.Size(86, 22);
 			this.buttonDisconnect.Text = "&Disconnect";
+			this.buttonDisconnect.Click += new System.EventHandler(this.OnDisconnect);
 			// 
 			// log
 			// 

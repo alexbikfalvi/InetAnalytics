@@ -77,7 +77,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <summary>
 		/// Gets the current client state.
 		/// </summary>
-		public ClientState State { get { lock (this.sync) { return this.state; } } }
+		public ClientState State { get { return this.state; } }
 
 		// Protected properties.
 
@@ -102,22 +102,29 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
 		protected override void Dispose(bool disposing)
 		{
-			// The disconnection wait handle.
-			WaitHandle wait = null;
-			// Disconnect the SSH client.
-			lock (this.sync)
+			// Create a manual reset event.
+			using (ManualResetEvent wait = new ManualResetEvent(false))
 			{
-				// If there exists an SSH client.
-				if (null != this.client)
-				{
-					// Disconnect the client and wait for the operation to complete.
-					try { wait = this.Disconnect(); }
-					catch { }
-				}
-			}
 
-			// If disconnecting, wait for the operation to complete.
-			if (null != wait) wait.WaitOne();
+				// Disconnect the SSH client.
+				lock (this.sync)
+				{
+					// If there exists an SSH client.
+					if (null != this.client)
+					{
+						// Disconnect the client and wait for the operation to complete.
+						try { this.Disconnect(wait); }
+						catch { }
+					}
+					else
+					{
+						wait.Set();
+					}
+				}
+
+				// Wait on the event.
+				wait.WaitOne();
+			}
 
 			// Dispose the SSH client.
 			lock (this.sync)
@@ -136,8 +143,9 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// Connects the client to the SSH server specified in the connection info.
 		/// </summary>
 		/// <param name="info">The connection info.</param>
+		/// <param name="wait">The event wait handle for synchronous operation.</param>
 		/// <returns>A wait handle that will signal the completion of the asynchronous operation.</returns>
-		protected WaitHandle Connect(ConnectionInfo info)
+		protected void Connect(ConnectionInfo info, EventWaitHandle wait = null)
 		{
 			// Synchronize access to the SSH client.
 			lock (this.sync)
@@ -145,11 +153,17 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// If the client is not disconnected, throw an exception.
 				if (this.state != ClientState.Disconnected)
 				{
+					// Signal the wait handle.
+					if (null != wait) wait.Set();
+					// Throw an exception.
 					throw new SshException("Cannot connect to the SSH server because the client is not disconnected.");
 				}
 				// If the client is not null, throw an exception.
 				if (this.client != null)
 				{
+					// Signal the wait handle.
+					if (null != wait) wait.Set();
+					// Throw an exception.
 					throw new SshException("Cannot connect to the SSH server because a previous connection has not been released.");
 				}
 
@@ -163,9 +177,6 @@ namespace YtAnalytics.Controls.Net.Ssh
 				this.client.ErrorOccurred += this.OnSshErrorOccurred;
 				this.client.HostKeyReceived += this.OnSshHostKeyReceived;
 			}
-
-			// Create a manual reset event.
-			ManualResetEvent wait = new ManualResetEvent(false);
 
 			// Connect to the SSH server on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
@@ -191,19 +202,18 @@ namespace YtAnalytics.Controls.Net.Ssh
 					finally
 					{
 						// Signal the wait handle.
-						wait.Set();
+						if (null != wait) wait.Set();
 					}
 				}
 			});
-
-			return wait;
 		}
 
 		/// <summary>
 		/// Disconnects the current client from the SSH server.
 		/// </summary>
+		/// <param name="wait">The event wait handle for synchronous operation.</param>
 		/// <returns>A wait handle that will signal the completion of the asynchronous operation.</returns>
-		protected WaitHandle Disconnect()
+		protected void Disconnect(EventWaitHandle wait = null)
 		{
 			// Synchronize access to the SSH client.
 			lock (this.sync)
@@ -211,17 +221,20 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// If the client is not connected, throw an exception.
 				if (this.state != ClientState.Connected)
 				{
+					// Signal the wait handle.
+					if (null != wait) wait.Set();
+					// Throw an exception.
 					throw new SshException("Cannot disconnect from the SSH server because the client is not connected.");
 				}
 				// If the client is null, throw an exception.
 				if (this.client == null)
 				{
+					// Signal the wait handle.
+					if (null != wait) wait.Set();
+					// Throw an exception.
 					throw new SshException("Cannot disconnect from the SSH server because the previous connection has already been released.");
 				}
 			}
-
-			// Create a manual reset event.
-			ManualResetEvent wait = new ManualResetEvent(false);
 
 			// Disconnect from the SSH server on the thread pool.
 			ThreadPool.QueueUserWorkItem((object state) =>
@@ -273,12 +286,10 @@ namespace YtAnalytics.Controls.Net.Ssh
 					finally
 					{
 						// Signal the wait handle.
-						wait.Set();
+						if (null != wait) wait.Set();
 					}
 				}
 			});
-
-			return wait;
 		}
 
 		/// <summary>

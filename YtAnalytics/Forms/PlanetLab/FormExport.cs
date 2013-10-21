@@ -54,6 +54,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// <summary>
 		/// Shows the form as a dialog to export the specified list of PlanetLab objects.
 		/// </summary>
+		/// <typeparam name="T">The PlanetLab object type.</typeparam>
 		/// <param name="owner">The owner window.</param>
 		/// <param name="fields">The fields.</param>
 		/// <param name="list">The list data.</param>

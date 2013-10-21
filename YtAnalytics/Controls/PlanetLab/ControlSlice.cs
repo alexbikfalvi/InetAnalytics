@@ -384,7 +384,8 @@ namespace YtAnalytics.Controls.PlanetLab
 					// Create a list item.
 					ListViewItem item = new ListViewItem(new string[] {
 						nodeId.ToString(),
-						node != null ? node.Hostname : string.Empty
+						node != null ? node.Hostname : string.Empty,
+						ControlSsh.ClientState.Disconnected.ToString()
 					});
 					item.ImageKey = node != null ? ControlSlice.nodeImageKeys[(int)node.GetBootState()] : ControlSlice.nodeImageKeys[0];
 					item.Tag = info;
@@ -474,6 +475,25 @@ namespace YtAnalytics.Controls.PlanetLab
 			{
 				// Get the node information.
 				NodeInfo info = item.Tag as NodeInfo;
+
+				// If the marker is not null.
+				if (null != info.Marker)
+				{
+					// Update the marker location.
+					info.Marker.Location = new MapPoint(site.Longitude.Value, site.Latitude.Value);
+				}
+				else
+				{
+					// If the site has coordinates.
+					if (site.Latitude.HasValue && site.Longitude.HasValue)
+					{
+						// Create a circular marker.
+						info.Marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
+						info.Marker.Name = "{0}{1}{2}".FormatWith(info.Node.Hostname, Environment.NewLine, site.Name);
+						// Add the marker to the map.
+						this.mapControl.Markers.Add(marker);
+					}
+				}
 			}
 		}
 
@@ -1655,13 +1675,13 @@ namespace YtAnalytics.Controls.PlanetLab
 			control.ConnectSucceeded += this.OnConsoleConnectSucceeded;
 			control.ConnectFailed += this.OnConsoleConnectFailed;
 			control.Disconnecting += this.OnConsoleDisconnecting;
-			control.Disconnected += OnControlDisconnected;
+			control.Disconnected += this.OnControlDisconnected;
 
 			// Switch to the specified node.
 			if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(node));
 
 			// Connect the control.
-			//control.
+			control.Connect();
 		}
 
 		/// <summary>
@@ -1673,31 +1693,130 @@ namespace YtAnalytics.Controls.PlanetLab
 		{
 			// If there is no node selected, do nothing.
 			if (this.listViewNodes.SelectedItems.Count == 0) return;
+
+			// Get the node information.
+			NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
+
+			// If the PlanetLab node is null.
+			if (null == info.Node)
+			{
+				MessageBox.Show(this, "The information for the PlanetLab node {0} is not available. Try refreshing the slice.".FormatWith(info.NodeId), "Cannot Disconnect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			// If the node info does not have a session.
+			if (info.ConsoleControl != null)
+			{
+				MessageBox.Show(this, "The node {0} is not connected.".FormatWith(info.Node.Hostname), "Cannot Disconnect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 		}
 
+		/// <summary>
+		/// A method called when the console state has changed.
+		/// </summary>
+		/// <param name="node">The PlanetLab node.</param>
+		/// <return>The list view item corresponding to the event.</return>
+		private ListViewItem OnConsoleStateChanged(PlNode node)
+		{
+			// Get the list view item corresponding to the node.
+			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+				{
+					// Get the node info.
+					NodeInfo info = it.Tag as NodeInfo;
+					// Return if the node info matches the node.
+					return object.ReferenceEquals(info.Node, node);
+				});
+
+			// If the item is not null.
+			if (item != null)
+			{
+				// Get the node info.
+				NodeInfo info = item.Tag as NodeInfo;
+
+				// If the info does not have a console control, do nothing.
+				if (null == info.ConsoleControl) return null;
+
+				// Update the item status.
+				item.SubItems[2].Text = info.ConsoleControl.State.ToString();
+			}
+
+			// Return the item.
+			return item;
+		}
+
+		/// <summary>
+		/// An event handler called when the console is connecting.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnConsoleConnecting(object sender, PlObjectEventArgs<PlNode> e)
 		{
-			throw new NotImplementedException();
+			ListViewItem item;
+
+			// Call the state changed method.
+			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
+			{
+			}
 		}
 
+		/// <summary>
+		/// An event handler called when the console connected successfully.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnConsoleConnectSucceeded(object sender, PlObjectEventArgs<PlNode> e)
 		{
-			throw new NotImplementedException();
+			ListViewItem item;
+
+			// Call the state changed method.
+			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
+			{
+			}
 		}
 
+		/// <summary>
+		/// An event handler called when the console connection failed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnConsoleConnectFailed(object sender, PlExceptionEventArgs<PlNode> e)
 		{
-			throw new NotImplementedException();
+			ListViewItem item;
+
+			// Call the state changed method.
+			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
+			{
+			}
 		}
 
+		/// <summary>
+		/// An event handler called when the console is disconnecting.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnConsoleDisconnecting(object sender, PlObjectEventArgs<PlNode> e)
 		{
-			throw new NotImplementedException();
+			ListViewItem item;
+
+			// Call the state changed method.
+			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
+			{
+			}
 		}
 
+		/// <summary>
+		/// An event handler called when the console has disconnected.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnControlDisconnected(object sender, PlObjectEventArgs<PlNode> e)
 		{
-			throw new NotImplementedException();
+			ListViewItem item;
+
+			// Call the state changed method.
+			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
+			{
+			}
 		}
 	}
 }

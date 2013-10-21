@@ -257,7 +257,6 @@
 			// 
 			// menuItemExportMap
 			// 
-			this.menuItemExportMap.Enabled = false;
 			this.menuItemExportMap.Name = "menuItemExportMap";
 			this.menuItemExportMap.Size = new System.Drawing.Size(154, 22);
 			this.menuItemExportMap.Text = "Sites map";

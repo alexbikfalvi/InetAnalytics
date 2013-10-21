@@ -179,7 +179,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Disconnects the console from the current SSH server.
 		/// </summary>
-		public new void Disconnect()
+		public void Disconnect()
 		{
 			try
 			{

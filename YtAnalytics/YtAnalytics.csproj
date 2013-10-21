@@ -574,6 +574,12 @@
     <Compile Include="Forms\FormText.Designer.cs">
       <DependentUpon>FormText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportMap.Designer.cs">
+      <DependentUpon>FormExportMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormExportNodes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1024,6 +1030,9 @@
     <EmbeddedResource Include="Forms\FormText.resx">
       <DependentUpon>FormText.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormExportMap.resx">
+      <DependentUpon>FormExportMap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormExportNodes.resx">
       <DependentUpon>FormExportNodes.cs</DependentUpon>
     </EmbeddedResource>
@@ -1150,6 +1159,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\MapExport_48.png" />
+    <None Include="Resources\MapExport_32.png" />
+    <None Include="Resources\MapExport_24.png" />
+    <None Include="Resources\MapExport_16.png" />
+    <None Include="Resources\Map_48.png" />
+    <None Include="Resources\Map_32.png" />
+    <None Include="Resources\Map_24.png" />
+    <None Include="Resources\Map_16.png" />
     <None Include="Resources\GlobeConsole_48.png" />
     <None Include="Resources\GlobeConsole_32.png" />
     <None Include="Resources\GlobeConsole_24.png" />

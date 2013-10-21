@@ -93,6 +93,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.columnHeaderState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -153,7 +154,8 @@
 			this.listViewNodes.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listViewNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderId,
-            this.columnHeaderHostname});
+            this.columnHeaderHostname,
+            this.columnHeaderState});
 			this.listViewNodes.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewNodes.FullRowSelect = true;
 			this.listViewNodes.GridLines = true;
@@ -174,12 +176,11 @@
 			// columnHeaderId
 			// 
 			this.columnHeaderId.Text = "ID";
-			this.columnHeaderId.Width = 80;
 			// 
 			// columnHeaderHostname
 			// 
 			this.columnHeaderHostname.Text = "Hostname";
-			this.columnHeaderHostname.Width = 160;
+			this.columnHeaderHostname.Width = 120;
 			// 
 			// imageList
 			// 
@@ -550,7 +551,7 @@
             this.menuItemNodeProperties,
             this.menuItemSiteProperties});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(160, 120);
+			this.contextMenu.Size = new System.Drawing.Size(160, 98);
 			// 
 			// menuItemConnect
 			// 
@@ -588,6 +589,10 @@
 			this.menuItemSiteProperties.Size = new System.Drawing.Size(159, 22);
 			this.menuItemSiteProperties.Text = "Site prop&erties";
 			this.menuItemSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
+			// 
+			// columnHeaderState
+			// 
+			this.columnHeaderState.Text = "State";
 			// 
 			// ControlSlice
 			// 
@@ -671,5 +676,6 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemSiteProperties;
 		private System.Windows.Forms.ToolStripMenuItem buttonNodeProperties;
 		private System.Windows.Forms.ToolStripMenuItem buttonSiteProperties;
+		private System.Windows.Forms.ColumnHeader columnHeaderState;
 	}
 }

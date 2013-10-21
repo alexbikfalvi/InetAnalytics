@@ -55,6 +55,7 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 		private readonly FormExport formExport = new FormExport();
+		private readonly FormExportMap formExportMap = new FormExportMap();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -676,61 +677,6 @@ namespace YtAnalytics.Controls.PlanetLab
 			}
 		}
 
-		///// <summary>
-		///// An event handler called when exporting the list of sites IP addresses.
-		///// </summary>
-		///// <param name="sender">The sender objects.</param>
-		///// <param name="e">The event arguments.</param>
-		//private void OnExportListIp(object sender, EventArgs e)
-		//{
-		//	try
-		//	{
-		//		// Create the CSV file.
-		//		using (FileStream file = new FileStream(@"c:\Users\Alex\Desktop\sites.csv", FileMode.Create))
-		//		{
-		//			// Create a stream text writer.
-		//			using (StreamWriter writer = new StreamWriter(file, Encoding.UTF8))
-		//			{
-		//				this.crawler.Config.PlanetLab.Sites.Lock();
-		//				try
-		//				{
-		//					foreach (PlSite site in this.crawler.Config.PlanetLab.Sites)
-		//					{
-		//						if (site.NodeIds.Length > 0)
-		//						{
-		//							PlNode node = this.crawler.Config.PlanetLab.DbNodes.Find(site.NodeIds[0]);
-		//							if (null != node)
-		//							{
-		//								string addr = string.Empty;
-		//								try
-		//								{
-		//									// Get the node IP.
-		//									IPAddress[] addresses = Dns.GetHostEntry(node.Hostname).AddressList;
-		//									addr = addresses.Length > 0 ? addresses[0].ToString() : string.Empty;
-		//								}
-		//								catch { }
-
-		//								writer.WriteLine("{0},\"{1}\",{2},{3},{4},{5}",
-		//									site.Id, site.Name, site.Url, node.Id, node.Hostname, addr
-		//									);
-		//							}
-		//						}
-		//					}
-		//				}
-		//				finally
-		//				{
-		//					this.crawler.Config.PlanetLab.Sites.Unlock();
-		//				}
-		//			}
-		//		}
-		//	}
-		//	catch (Exception exception)
-		//	{
-		//		// If an exception occurs, show an error message.
-		//		MessageBox.Show(this, "Exporting the data failed. {0}".FormatWith(exception.Message), "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		//	}
-		//}
-
 		/// <summary>
 		/// An event handler called when exporting the sites map.
 		/// </summary>
@@ -738,7 +684,8 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnExportMap(object sender, EventArgs e)
 		{
-			// To do.
+			// Show the export map dialog.
+			this.formExportMap.ShowDialog(this, this.mapControl);
 		}
 	}
 }

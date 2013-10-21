@@ -38,13 +38,16 @@
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.buttonSelectAll = new System.Windows.Forms.Button();
 			this.buttonClearAll = new System.Windows.Forms.Button();
+			this.labelTitle = new System.Windows.Forms.Label();
+			this.pictureBox = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
 			// 
 			this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonCancel.Location = new System.Drawing.Point(297, 327);
+			this.buttonCancel.Location = new System.Drawing.Point(297, 427);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
 			this.buttonCancel.TabIndex = 4;
@@ -54,7 +57,7 @@
 			// labelText
 			// 
 			this.labelText.AutoSize = true;
-			this.labelText.Location = new System.Drawing.Point(12, 9);
+			this.labelText.Location = new System.Drawing.Point(17, 71);
 			this.labelText.Name = "labelText";
 			this.labelText.Size = new System.Drawing.Size(269, 13);
 			this.labelText.TabIndex = 0;
@@ -64,7 +67,7 @@
 			// 
 			this.checkBoxHeaders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.checkBoxHeaders.AutoSize = true;
-			this.checkBoxHeaders.Location = new System.Drawing.Point(12, 300);
+			this.checkBoxHeaders.Location = new System.Drawing.Point(12, 400);
 			this.checkBoxHeaders.Name = "checkBoxHeaders";
 			this.checkBoxHeaders.Size = new System.Drawing.Size(86, 17);
 			this.checkBoxHeaders.TabIndex = 2;
@@ -76,7 +79,7 @@
 			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonSave.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonSave.Enabled = false;
-			this.buttonSave.Location = new System.Drawing.Point(216, 327);
+			this.buttonSave.Location = new System.Drawing.Point(216, 427);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(75, 23);
 			this.buttonSave.TabIndex = 3;
@@ -96,10 +99,10 @@
 			this.listHeaders.GridLines = true;
 			this.listHeaders.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listHeaders.HideSelection = false;
-			this.listHeaders.Location = new System.Drawing.Point(15, 54);
+			this.listHeaders.Location = new System.Drawing.Point(15, 116);
 			this.listHeaders.MultiSelect = false;
 			this.listHeaders.Name = "listHeaders";
-			this.listHeaders.Size = new System.Drawing.Size(357, 240);
+			this.listHeaders.Size = new System.Drawing.Size(357, 278);
 			this.listHeaders.TabIndex = 5;
 			this.listHeaders.UseCompatibleStateImageBehavior = false;
 			this.listHeaders.View = System.Windows.Forms.View.Details;
@@ -123,7 +126,7 @@
 			// buttonSelectAll
 			// 
 			this.buttonSelectAll.Enabled = false;
-			this.buttonSelectAll.Location = new System.Drawing.Point(15, 25);
+			this.buttonSelectAll.Location = new System.Drawing.Point(15, 87);
 			this.buttonSelectAll.Name = "buttonSelectAll";
 			this.buttonSelectAll.Size = new System.Drawing.Size(75, 23);
 			this.buttonSelectAll.TabIndex = 6;
@@ -134,7 +137,7 @@
 			// buttonClearAll
 			// 
 			this.buttonClearAll.Enabled = false;
-			this.buttonClearAll.Location = new System.Drawing.Point(96, 25);
+			this.buttonClearAll.Location = new System.Drawing.Point(96, 87);
 			this.buttonClearAll.Name = "buttonClearAll";
 			this.buttonClearAll.Size = new System.Drawing.Size(75, 23);
 			this.buttonClearAll.TabIndex = 7;
@@ -142,12 +145,33 @@
 			this.buttonClearAll.UseVisualStyleBackColor = true;
 			this.buttonClearAll.Click += new System.EventHandler(this.OnClearAll);
 			// 
+			// labelTitle
+			// 
+			this.labelTitle.AutoSize = true;
+			this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelTitle.Location = new System.Drawing.Point(75, 34);
+			this.labelTitle.Name = "labelTitle";
+			this.labelTitle.Size = new System.Drawing.Size(167, 20);
+			this.labelTitle.TabIndex = 8;
+			this.labelTitle.Text = "Export PlanetLab data";
+			// 
+			// pictureBox
+			// 
+			this.pictureBox.Image = global::YtAnalytics.Resources.Export_48;
+			this.pictureBox.Location = new System.Drawing.Point(20, 20);
+			this.pictureBox.Name = "pictureBox";
+			this.pictureBox.Size = new System.Drawing.Size(48, 48);
+			this.pictureBox.TabIndex = 9;
+			this.pictureBox.TabStop = false;
+			// 
 			// FormExport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.buttonCancel;
-			this.ClientSize = new System.Drawing.Size(384, 362);
+			this.ClientSize = new System.Drawing.Size(384, 462);
+			this.Controls.Add(this.labelTitle);
+			this.Controls.Add(this.pictureBox);
 			this.Controls.Add(this.buttonClearAll);
 			this.Controls.Add(this.buttonSelectAll);
 			this.Controls.Add(this.listHeaders);
@@ -160,7 +184,8 @@
 			this.Name = "FormExport";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.Text = "Export to CSV File";
+			this.Text = "Export PlanetLab Data";
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -178,5 +203,7 @@
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.Button buttonSelectAll;
 		private System.Windows.Forms.Button buttonClearAll;
+		private System.Windows.Forms.Label labelTitle;
+		private System.Windows.Forms.PictureBox pictureBox;
 	}
 }
