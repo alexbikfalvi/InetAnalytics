@@ -16,6 +16,8 @@
 			// If disposing the managed resources.
 			if (disposing)
 			{
+				// Dispose the tasks.
+				this.OnDisposeTasks();
 				// Dispose the nodes.
 				this.OnDisposeNodes();
 				// Remove the slice event handler.

@@ -100,6 +100,8 @@
 			this.console.Name = "console";
 			this.console.Size = new System.Drawing.Size(598, 198);
 			this.console.TabIndex = 1;
+			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
+			this.console.Cancel += new System.EventHandler(this.OnCancelCommand);
 			// 
 			// toolStrip1
 			// 

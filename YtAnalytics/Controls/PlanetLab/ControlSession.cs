@@ -179,12 +179,13 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Disconnects the console from the current SSH server.
 		/// </summary>
-		public void Disconnect()
+		/// <param name="wait">The event wait handle.</param>
+		public void Disconnect(EventWaitHandle wait = null)
 		{
 			try
 			{
 				// Disconnect from the PlanetLab node.
-				base.Disconnect();
+				base.Disconnect(wait);
 			}
 			catch (SshException exception)
 			{
@@ -263,8 +264,9 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventLevel.Verbose,
 				LogEventType.Error,
 				ControlSession.logSource,
-				"Connecting to the PlanetLab node \'{0}\' failed.",
-				new object[] { info.Host }));
+				"Connecting to the PlanetLab node \'{0}\' failed. {1}",
+				new object[] { info.Host, exception.Message },
+				exception));
 			// Raise the connect failed event.
 			if (null != this.ConnectFailed) this.ConnectFailed(this, new PlExceptionEventArgs<PlNode>(this.node, exception));
 		}
@@ -327,7 +329,8 @@ namespace YtAnalytics.Controls.PlanetLab
 				LogEventType.Error,
 				ControlSession.logSource,
 				"The client connected to the PlanetLab node \'{0}\' received an error. {1}",
-				new object[] { info.Host, exception.Message }));
+				new object[] { info.Host, exception.Message },
+				exception));
 		}
 
 		/// <summary>

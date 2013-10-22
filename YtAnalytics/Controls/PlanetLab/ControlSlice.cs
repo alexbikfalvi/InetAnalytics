@@ -149,7 +149,8 @@ namespace YtAnalytics.Controls.PlanetLab
 
 		private Control.ControlCollection controls = null;
 
-		private TreeNode treeNode = null;
+		private TreeNode treeNodeSlice = null;
+		private TreeNode treeNodeTasks = null;
 
 		private readonly object pendingSync = new object();
 		private readonly List<int> pendingNodes = new List<int>();
@@ -229,7 +230,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.controls = controls;
 
 			// Set the tree node.
-			this.treeNode = treeNode;
+			this.treeNodeSlice = treeNode;
 
 			// Set the slice configuration.
 			this.config = this.crawler.Config.PlanetLab.GetSliceConfiguration(this.slice);
@@ -239,6 +240,9 @@ namespace YtAnalytics.Controls.PlanetLab
 
 			// Update the information of the PlanetLab slice.
 			this.OnUpdateSlice();
+
+			// Create the tasks.
+			this.OnCreateTasks();
 		}
 
 		// Protected methods.
@@ -515,6 +519,9 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.menuItemNodeProperties.Enabled = false;
 			this.menuItemSiteProperties.Enabled = false;
 
+			// Clear the map markers.
+			this.mapControl.Markers.Clear();
+
 			// For all node items.
 			foreach (ListViewItem item in this.listViewNodes.Items)
 			{
@@ -534,19 +541,18 @@ namespace YtAnalytics.Controls.PlanetLab
 				{
 					info.Marker.Dispose();
 				}
-				// Dispose the control.
+				// Close the control.
 				if (info.ConsoleControl != null)
 				{
-					// Dispose the control.
-					info.ConsoleControl.Dispose();
-					// Remove the control event handlers.
+					// Get the console control.
+					ControlSession control = info.ConsoleControl;
+					// Close the control.
+					this.OnConsoleClose(item);
 				}
 			}
 
 			// Clear the list.
 			this.listViewNodes.Items.Clear();
-			// Clear the map markers.
-			this.mapControl.Markers.Clear();
 		}
 
 		/// <summary>
@@ -572,6 +578,14 @@ namespace YtAnalytics.Controls.PlanetLab
 				if (info.Marker != null)
 				{
 					info.Marker.Dispose();
+				}
+				// Close the control.
+				if (info.ConsoleControl != null)
+				{
+					// Get the console control.
+					ControlSession control = info.ConsoleControl;
+					// Close the control.
+					this.OnConsoleClose(item);
 				}
 			}
 		}
@@ -1660,7 +1674,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			TreeNode node = new TreeNode(info.Node.Hostname);
 			node.ImageKey = "GlobeConsole";
 			node.SelectedImageKey = "GlobeConsole";
-			this.treeNode.Nodes.Add(node);
+			this.treeNodeSlice.Nodes.Add(node);
 
 			// Create a new session control.
 			ControlSession control = new ControlSession();
@@ -1773,6 +1787,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Call the state changed method.
 			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
 			{
+				// Do nothing.
 			}
 		}
 
@@ -1788,6 +1803,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Call the state changed method.
 			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
 			{
+				// Do nothing.
 			}
 		}
 
@@ -1803,6 +1819,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Call the state changed method.
 			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
 			{
+				// Close the console.
+				this.OnConsoleClose(item);
 			}
 		}
 
@@ -1818,6 +1836,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Call the state changed method.
 			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
 			{
+				// Do nothing.
 			}
 		}
 
@@ -1833,32 +1852,59 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Call the state changed method.
 			if ((item = this.OnConsoleStateChanged(e.Object)) != null)
 			{
-				// Get the node info.
-				NodeInfo info = item.Tag as NodeInfo;
-
-				// Switch to the specified node.
-				if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(this.treeNode));
-
-				// Remove the control event handlers.
-				info.ConsoleControl.Connecting -= this.OnConsoleConnecting;
-				info.ConsoleControl.ConnectSucceeded -= this.OnConsoleConnectSucceeded;
-				info.ConsoleControl.ConnectFailed -= this.OnConsoleConnectFailed;
-				info.ConsoleControl.Disconnecting -= this.OnConsoleDisconnecting;
-				info.ConsoleControl.Disconnected -= this.OnControlDisconnected;
-
-				// Remove the control.
-				this.controls.Remove(info.ConsoleControl);
-
-				// Remove the tree node.
-				this.treeNode.Nodes.Remove(info.ConsoleNode);
-
-				// Dispose the control.
-				info.ConsoleControl.Dispose();
-
-				// Update the node information.
-				info.ConsoleControl = null;
-				info.ConsoleNode = null;
+				// Close the console.
+				this.OnConsoleClose(item);
 			}
+		}
+
+		/// <summary>
+		/// A method called when the closing the console corresponding to the specified list view item.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		private void OnConsoleClose(ListViewItem item)
+		{
+			// Get the node info.
+			NodeInfo info = item.Tag as NodeInfo;
+
+			// Switch to the specified node.
+			if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(this.treeNodeSlice));
+
+			// Remove the control event handlers.
+			info.ConsoleControl.Connecting -= this.OnConsoleConnecting;
+			info.ConsoleControl.ConnectSucceeded -= this.OnConsoleConnectSucceeded;
+			info.ConsoleControl.ConnectFailed -= this.OnConsoleConnectFailed;
+			info.ConsoleControl.Disconnecting -= this.OnConsoleDisconnecting;
+			info.ConsoleControl.Disconnected -= this.OnControlDisconnected;
+
+			// Remove the control.
+			this.controls.Remove(info.ConsoleControl);
+
+			// Remove the tree node.
+			this.treeNodeSlice.Nodes.Remove(info.ConsoleNode);
+
+			// Dispose the control.
+			info.ConsoleControl.Dispose();
+
+			// Update the node information.
+			info.ConsoleControl = null;
+			info.ConsoleNode = null;
+		}
+
+		/// <summary>
+		/// A method called when creating the tasks.
+		/// </summary>
+		private void OnCreateTasks()
+		{
+			// Create the tasks tree node.
+			//this.treeNodeTasks = new TreeNode(
+		}
+
+		/// <summary>
+		/// A method called when disposing the tasks.
+		/// </summary>
+		private void OnDisposeTasks()
+		{
+			// Delete the tasks tree node.
 		}
 	}
 }

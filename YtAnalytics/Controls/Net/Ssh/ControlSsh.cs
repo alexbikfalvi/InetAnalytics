@@ -113,7 +113,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 					if (null != this.client)
 					{
 						// Disconnect the client and wait for the operation to complete.
-						try { this.Disconnect(wait); }
+						try { this.Disconnect(wait, true); }
 						catch { }
 					}
 					else
@@ -186,18 +186,18 @@ namespace YtAnalytics.Controls.Net.Ssh
 					try
 					{
 						// Call the connecting action.
-						this.OnConnectingInternal();
+						this.OnConnectingInternal(false);
 
 						// Connect to the server.
 						this.client.Connect();
 
 						// Call the connect succeeded action.
-						this.OnConnectSucceededInternal();
+						this.OnConnectSucceededInternal(false);
 					}
 					catch (Exception exception)
 					{
 						// Call the connect failed action.
-						this.OnConnectFailedInternal(exception);
+						this.OnConnectFailedInternal(exception, false);
 					}
 					finally
 					{
@@ -212,9 +212,16 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// Disconnects the current client from the SSH server.
 		/// </summary>
 		/// <param name="wait">The event wait handle for synchronous operation.</param>
-		/// <returns>A wait handle that will signal the completion of the asynchronous operation.</returns>
-		protected void Disconnect(EventWaitHandle wait = null)
+		/// <param name="silent">Indicates whether the operation is silent, without displaying a message. If the opeation is silent,
+		/// the method must be called on the UI thread.</param>
+		protected void Disconnect(EventWaitHandle wait = null, bool silent = false)
 		{
+			// If the operation is silent, it must be called on the UI thread.
+			if (silent && this.InvokeRequired)
+			{
+				throw new InvalidOperationException("A silent operation must be called on the UI thread.");
+			}
+
 			// Synchronize access to the SSH client.
 			lock (this.sync)
 			{
@@ -236,60 +243,71 @@ namespace YtAnalytics.Controls.Net.Ssh
 				}
 			}
 
-			// Disconnect from the SSH server on the thread pool.
-			ThreadPool.QueueUserWorkItem((object state) =>
-			{
-				lock (this.sync)
+			// Create the disconnect action.
+			WaitCallback action = (object state) =>
 				{
-					try
+					lock (this.sync)
 					{
 						try
 						{
-							// Call the event handler.
-							this.OnDisconnectingInternal();
-
-							// Lock the commands.
-							this.commands.Lock();
-
 							try
 							{
-								// Cancel all executing commands.
-								foreach (SshCommand command in this.commands)
+								// Call the event handler.
+								this.OnDisconnectingInternal(silent);
+
+								// Lock the commands.
+								this.commands.Lock();
+
+								try
 								{
-									// Try and cancel all asynchronous commands.
-									try
+									// Cancel all executing commands.
+									foreach (SshCommand command in this.commands)
 									{
-										command.CancelAsync();
+										// Try and cancel all asynchronous commands.
+										try
+										{
+											command.CancelAsync();
+										}
+										catch (Exception exception)
+										{
+											this.OnCommandFailedInternal(command, exception.Message);
+										}
 									}
-									catch (Exception exception)
-									{
-										this.OnCommandFailedInternal(command, exception.Message);
-									}
+									// Clear the commands.
+									this.commands.Clear();
 								}
-								// Clear the commands.
-								this.commands.Clear();
+								finally
+								{
+									this.commands.Unlock();
+								}
+
+								// Disconnect the client.
+								this.client.Disconnect();
 							}
 							finally
 							{
-								this.commands.Unlock();
+								// Call the event handler.
+								this.OnDisconnectedInternal(silent);
 							}
-
-							// Disconnect the client.
-							this.client.Disconnect();
 						}
 						finally
 						{
-							// Call the event handler.
-							this.OnDisconnectedInternal();
+							// Signal the wait handle.
+							if (null != wait) wait.Set();
 						}
 					}
-					finally
-					{
-						// Signal the wait handle.
-						if (null != wait) wait.Set();
-					}
-				}
-			});
+				};
+
+			// If silent.
+			if (silent)
+			{
+				action(null);
+			}
+			else
+			{
+				// Disconnect from the SSH server on the thread pool.
+				ThreadPool.QueueUserWorkItem(action);
+			}
 		}
 
 		/// <summary>
@@ -478,60 +496,90 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <summary>
 		/// An action called when connecting the client.
 		/// </summary>
-		private void OnConnectingInternal()
+		/// <param name="silent">Indicates whether the operation is silent.</param>
+		private void OnConnectingInternal(bool silent)
 		{
 			// Change the client state to connecting.
 			this.state = ClientState.Connecting;
 			// Save the client connection info.
 			ConnectionInfo info = this.client.ConnectionInfo;
-			// Show a connecting message.
-			this.ShowMessage(
-				Resources.ServerBusy_32, "Connecting", "Connecting to the SSH server \'{0}\'".FormatWith(this.client.ConnectionInfo.Host), true, -1,
-				(object[] parameters) =>
-				{
-					// Call the event handler.
-					this.OnConnecting(info);
-				});
+			// If the operation is slient.
+			if (silent)
+			{
+				// Call the event handler.
+				this.OnConnecting(info);
+			}
+			else
+			{
+				// Show a connecting message.
+				this.ShowMessage(
+					Resources.ServerBusy_32, "Connecting", "Connecting to the SSH server \'{0}\'".FormatWith(this.client.ConnectionInfo.Host), true, -1,
+					(object[] parameters) =>
+					{
+						// Call the event handler.
+						this.OnConnecting(info);
+					});
+			}
 		}
 
 		/// <summary>
 		/// An action called when connecting the client has succeeded.
 		/// </summary>
-		private void OnConnectSucceededInternal()
+		/// <param name="silent">Indicates whether the operation is silent.</param>
+		private void OnConnectSucceededInternal(bool silent)
 		{
 			// Change the client state to connected.
 			this.state = ClientState.Connected;
 			// Save the client connection info.
 			ConnectionInfo info = this.client.ConnectionInfo;
-			// Show a message.
-			this.ShowMessage(
-				Resources.ServerSuccess_32, "Connecting Succeeded", "Connecting to the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
-				false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-				(object[] parameters) =>
-				{
-					// Call the event handler.
-					this.OnConnectSucceeded(info);
-				});
+			// If the operation is slient.
+			if (silent)
+			{
+				// Call the event handler.
+				this.OnConnectSucceeded(info);
+			}
+			else
+			{
+				// Show a message.
+				this.ShowMessage(
+					Resources.ServerSuccess_32, "Connecting Succeeded", "Connecting to the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
+					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					(object[] parameters) =>
+					{
+						// Call the event handler.
+						this.OnConnectSucceeded(info);
+					});
+			}
 		}
 
 		/// <summary>
 		/// An action called when connecting the client has failed.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
-		private void OnConnectFailedInternal(Exception exception)
+		/// <param name="silent">Indicates whether the operation is silent.</param>
+		private void OnConnectFailedInternal(Exception exception, bool silent)
 		{
 			// Change the state.
 			this.state = ClientState.Disconnected;
 			// Save the client connection info.
 			ConnectionInfo info = this.client.ConnectionInfo;
-			// Show a message.
-			this.ShowMessage(Resources.ServerError_32, "Connecting Failed", "Connecting to the SSH sever \'{0}\' failed. {1}".FormatWith(this.client.ConnectionInfo.Host, exception.Message),
-				false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-				(object[] parameters) =>
-				{
-					// Call the event handler.
-					this.OnConnectFailed(info, exception);
-				});
+			// If the operation is slient.
+			if (silent)
+			{
+				// Call the event handler.
+				this.OnConnectFailed(info, exception);
+			}
+			else
+			{
+				// Show a message.
+				this.ShowMessage(Resources.ServerError_32, "Connecting Failed", "Connecting to the SSH sever \'{0}\' failed. {1}".FormatWith(this.client.ConnectionInfo.Host, exception.Message),
+					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					(object[] parameters) =>
+					{
+						// Call the event handler.
+						this.OnConnectFailed(info, exception);
+					});
+			}
 			// Dispose the clinet.
 			this.client.Dispose();
 			this.client = null;
@@ -540,40 +588,60 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <summary>
 		/// An action called when the client is disconnecting.
 		/// </summary>
-		private void OnDisconnectingInternal()
+		/// <param name="silent">Indicates whether the operation is silent.</param>
+		private void OnDisconnectingInternal(bool silent)
 		{
 			// Change the state.
 			this.state = ClientState.Disconnecting;
 			// Save the client connection info.
 			ConnectionInfo info = this.client.ConnectionInfo;
-			// Show a disconnecting message.
-			this.ShowMessage(
-				Resources.ServerBusy_32, "Disconnecting", "Disconnecting from the SSH server \'{0}\'".FormatWith(this.client.ConnectionInfo.Host), true, -1,
-				(object[] parameters) =>
-				{
-					// Call the event handler.
-					this.OnDisconnecting(info);
-				});
+			// If the operation is slient.
+			if (silent)
+			{
+				// Call the event handler.
+				this.OnDisconnecting(info);
+			}
+			else
+			{
+				// Show a disconnecting message.
+				this.ShowMessage(
+					Resources.ServerBusy_32, "Disconnecting", "Disconnecting from the SSH server \'{0}\'".FormatWith(this.client.ConnectionInfo.Host), true, -1,
+					(object[] parameters) =>
+					{
+						// Call the event handler.
+						this.OnDisconnecting(info);
+					});
+			}
 		}
 
 		/// <summary>
 		/// An action called when the client is disconnected.
 		/// </summary>
-		private void OnDisconnectedInternal()
+		/// <param name="silent">Indicates whether the operation is silent.</param>
+		private void OnDisconnectedInternal(bool silent)
 		{
 			// Change the state.
 			this.state = ClientState.Disconnected;
 			// Save the client connection info.
 			ConnectionInfo info = this.client.ConnectionInfo;
-			// Show a message.
-			this.ShowMessage(
-				Resources.ServerSuccess_32, "Disconnecting Succeeded", "Disconnecting from the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
-				false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
-				(object[] parameters) =>
-				{
-					// Call the event handler.
-					this.OnDisconnected(info);
-				});
+			// If the operation is slient.
+			if (silent)
+			{
+				// Call the event handler.
+				this.OnDisconnected(info);
+			}
+			else
+			{
+				// Show a message.
+				this.ShowMessage(
+					Resources.ServerSuccess_32, "Disconnecting Succeeded", "Disconnecting from the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
+					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					(object[] parameters) =>
+					{
+						// Call the event handler.
+						this.OnDisconnected(info);
+					});
+			}
 			// Dispose the clinet.
 			this.client.Dispose();
 			this.client = null;
