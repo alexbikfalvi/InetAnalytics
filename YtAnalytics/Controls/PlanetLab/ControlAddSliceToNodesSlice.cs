@@ -215,8 +215,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Begin the PlanetLab sites request.
 			this.BeginRequest(
 				this.requestSlices,
-				CrawlerStatic.PlanetLabUsername,
-				CrawlerStatic.PlanetLabPassword,
+				CrawlerConfig.Static.PlanetLabUsername,
+				CrawlerConfig.Static.PlanetLabPassword,
 				null,
 				this.requestStateSlices);
 		}
@@ -248,8 +248,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Begin the PlanetLab nodes request.
 			this.BeginRequest(
 				this.requestNodes,
-				CrawlerStatic.PlanetLabUsername,
-				CrawlerStatic.PlanetLabPassword,
+				CrawlerConfig.Static.PlanetLabUsername,
+				CrawlerConfig.Static.PlanetLabPassword,
 				PlNode.GetFilter(PlNode.Fields.NodeId, slice.NodeIds),
 				this.requestStateNodes);
 		}

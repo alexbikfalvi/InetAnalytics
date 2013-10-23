@@ -209,7 +209,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.tabControl.Visible = false;
 
 			// Begin a new nodes request for the specified node.
-			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlNode.GetFilter(PlNode.Fields.NodeId, id));
+			this.BeginRequest(this.request, CrawlerConfig.Static.PlanetLabUsername, CrawlerConfig.Static.PlanetLabPassword, PlNode.GetFilter(PlNode.Fields.NodeId, id));
 		}
 
 		/// <summary>

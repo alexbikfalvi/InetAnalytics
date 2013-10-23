@@ -253,7 +253,7 @@ namespace YtAnalytics.Controls.Database
 									// Show a success message.
 									this.ShowMessage(Resources.DatabaseSuccess_48, "Database", query.MessageFinishSuccess, false);
 									// Wait.
-									Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+									Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 									// Hide the message.
 									this.HideMessage();
 									// Call the completion method, depending on the type of data.
@@ -276,7 +276,7 @@ namespace YtAnalytics.Controls.Database
 										new object[] { server.Name, exception.Message },
 										exception);
 									// Wait.
-									Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+									Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 									// Hide the message.
 									this.HideMessage();
 									// Call the completion method.
@@ -298,7 +298,7 @@ namespace YtAnalytics.Controls.Database
 							new object[] { server.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.
@@ -318,7 +318,7 @@ namespace YtAnalytics.Controls.Database
 							new object[] { server.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.
@@ -340,7 +340,7 @@ namespace YtAnalytics.Controls.Database
 					new object[] { server.Name, exception.Message },
 					exception);
 				// Wait.
-				Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+				Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 				// Hide the message.
 				this.HideMessage();
 				// Call the completion method.

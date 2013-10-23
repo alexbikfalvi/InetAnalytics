@@ -31,6 +31,54 @@ namespace YtCrawler
 	/// </summary>
 	public sealed class CrawlerConfig : IDisposable
 	{
+		/// <summary>
+		/// A class representing the static configuration.
+		/// </summary>
+		public sealed class StaticConfig
+		{
+			public string YouTubeUsername { get; internal set; }
+
+			public SecureString YouTubePassword { get; internal set; }
+
+			public string YouTubeCategoriesFileName { get; internal set; }
+
+			public SecureString YouTubeV2ApiKey { get; internal set; }
+
+			public string LogFileName { get; internal set; }
+
+			public string DatabaseLogFileName { get; internal set; }
+
+			public string CommentsVideosFileName { get; internal set; }
+
+			public string CommentsUsersFileName { get; internal set; }
+
+			public string CommentsPlaylistsFileName { get; internal set; }
+
+			public TimeSpan ConsoleMessageCloseDelay { get; internal set; }
+
+			public int ConsoleSideMenuVisibleItems { get; internal set; }
+
+			public int ConsoleSideMenuSelectedItem { get; internal set; }
+
+			public int[] ConsoleSideMenuSelectedNode { get; internal set; }
+
+			public string PlanetLabUsername { get; internal set; }
+
+			public SecureString PlanetLabPassword { get; internal set; }
+
+			public int PlanetLabPersonId { get; internal set; }
+
+			public string PlanetLabSitesFileName { get; internal set; }
+
+			public string PlanetLabNodesFileName { get; internal set; }
+
+			public string PlanetLabSlicesFileName { get; internal set; }
+
+			public string PlanetLabLocalPersonsFileName { get; internal set; }
+
+			public string PlanetLabLocalSlicesFileName { get; internal set; }
+		}
+
 		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
 		internal static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
 
@@ -39,6 +87,15 @@ namespace YtCrawler
 		private string root;
 		private DbConfig dbConfig;
 		private PlConfig plConfig;
+
+		/// <summary>
+		/// Static constructor.
+		/// </summary>
+		static CrawlerConfig()
+		{
+			// Create the static configuration.
+			CrawlerConfig.Static = new StaticConfig();
+		}
 
 		/// <summary>
 		/// Creates a new crawler configuration based on the specified root registry key.
@@ -58,23 +115,28 @@ namespace YtCrawler
 			this.plConfig = new PlConfig(this.rootKey, this.rootPath + @"\PlanetLab");
 
 			// Initialize the static configuration.
-			CrawlerStatic.YouTubeUsername = this.YouTubeUsername;
-			CrawlerStatic.YouTubePassword = this.YouTubePassword;
-			CrawlerStatic.YouTubeCategoriesFileName = this.YouTubeCategoriesFileName;
-			CrawlerStatic.YouTubeV2ApiKey = this.YouTubeV2ApiKey;
-			CrawlerStatic.LogFileName = this.LogFileName;
-			CrawlerStatic.DatabaseLogFileName = this.DatabaseLogFileName;
-			CrawlerStatic.CommentsVideosFileName = this.CommentsVideosFileName;
-			CrawlerStatic.CommentsUsersFileName = this.CommentsUsersFileName;
-			CrawlerStatic.CommentsPlaylistsFileName = this.CommentsVideosFileName;
-			CrawlerStatic.ConsoleMessageCloseDelay = this.ConsoleMessageCloseDelay;
-			CrawlerStatic.ConsoleSideMenuVisibleItems = this.ConsoleSideMenuVisibleItems;
-			CrawlerStatic.ConsoleSideMenuSelectedItem = this.ConsoleSideMenuSelectedItem;
-			CrawlerStatic.ConsoleSideMenuSelectedNode = this.ConsoleSideMenuSelectedNode;
-			CrawlerStatic.PlanetLabUsername = this.PlanetLab.Username;
-			CrawlerStatic.PlanetLabPassword = this.PlanetLab.Password;
-			CrawlerStatic.PlanetLabSitesFileName = this.PlanetLab.SitesFileName;
+			CrawlerConfig.Static.YouTubeUsername = this.YouTubeUsername;
+			CrawlerConfig.Static.YouTubePassword = this.YouTubePassword;
+			CrawlerConfig.Static.YouTubeCategoriesFileName = this.YouTubeCategoriesFileName;
+			CrawlerConfig.Static.YouTubeV2ApiKey = this.YouTubeV2ApiKey;
+			CrawlerConfig.Static.LogFileName = this.LogFileName;
+			CrawlerConfig.Static.DatabaseLogFileName = this.DatabaseLogFileName;
+			CrawlerConfig.Static.CommentsVideosFileName = this.CommentsVideosFileName;
+			CrawlerConfig.Static.CommentsUsersFileName = this.CommentsUsersFileName;
+			CrawlerConfig.Static.CommentsPlaylistsFileName = this.CommentsVideosFileName;
+			CrawlerConfig.Static.ConsoleMessageCloseDelay = this.ConsoleMessageCloseDelay;
+			CrawlerConfig.Static.ConsoleSideMenuVisibleItems = this.ConsoleSideMenuVisibleItems;
+			CrawlerConfig.Static.ConsoleSideMenuSelectedItem = this.ConsoleSideMenuSelectedItem;
+			CrawlerConfig.Static.ConsoleSideMenuSelectedNode = this.ConsoleSideMenuSelectedNode;
+			CrawlerConfig.Static.PlanetLabUsername = this.PlanetLab.Username;
+			CrawlerConfig.Static.PlanetLabPassword = this.PlanetLab.Password;
+			CrawlerConfig.Static.PlanetLabSitesFileName = this.PlanetLab.SitesFileName;
 		}
+
+		/// <summary>
+		/// Gets the static configuration.
+		/// </summary>
+		public static StaticConfig Static { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the YouTube account name.
@@ -88,7 +150,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + @"\YouTube", "UserName", value);
-				CrawlerStatic.YouTubeUsername = value;
+				CrawlerConfig.Static.YouTubeUsername = value;
 			}
 		}
 
@@ -104,7 +166,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetSecureString(this.root + @"\YouTube", "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-				CrawlerStatic.YouTubePassword = value;
+				CrawlerConfig.Static.YouTubePassword = value;
 			}
 		}
 
@@ -120,7 +182,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + @"\YouTube\V2", "CategoriesFileName", value);
-				CrawlerStatic.YouTubeCategoriesFileName = value;
+				CrawlerConfig.Static.YouTubeCategoriesFileName = value;
 			}
 		}
 
@@ -136,7 +198,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetSecureString(this.root + @"\YouTube\V2", "ApiKey", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-				CrawlerStatic.YouTubeV2ApiKey = value;
+				CrawlerConfig.Static.YouTubeV2ApiKey = value;
 			}
 		}
 
@@ -152,7 +214,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "FileName", value);
-				CrawlerStatic.LogFileName = value;
+				CrawlerConfig.Static.LogFileName = value;
 			}
 		}
 
@@ -168,7 +230,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "DatabaseFileName", value);
-				CrawlerStatic.DatabaseLogFileName = value;
+				CrawlerConfig.Static.DatabaseLogFileName = value;
 			}
 		}
 
@@ -184,7 +246,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + @"\Comments", "VideosFileName", value);
-				CrawlerStatic.CommentsVideosFileName = value;
+				CrawlerConfig.Static.CommentsVideosFileName = value;
 			}
 		}
 
@@ -200,7 +262,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + @"\Comments", "UsersFileName", value);
-				CrawlerStatic.CommentsUsersFileName = value;
+				CrawlerConfig.Static.CommentsUsersFileName = value;
 			}
 		}
 
@@ -216,7 +278,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root + @"\Comments", "PlaylistsFileName", value);
-				CrawlerStatic.CommentsPlaylistsFileName = value;
+				CrawlerConfig.Static.CommentsPlaylistsFileName = value;
 			}
 		}
 
@@ -232,7 +294,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetTimeSpan(this.root + @"\Console", "MessageCloseDelay", value);
-				CrawlerStatic.ConsoleMessageCloseDelay = value;
+				CrawlerConfig.Static.ConsoleMessageCloseDelay = value;
 			}
 		}
 
@@ -248,7 +310,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetInteger(this.root + @"\Console", "SideMenuVisibleItems", value);
-				CrawlerStatic.ConsoleSideMenuVisibleItems = value;
+				CrawlerConfig.Static.ConsoleSideMenuVisibleItems = value;
 			}
 		}
 
@@ -264,7 +326,7 @@ namespace YtCrawler
 			set
 			{
 				DotNetApi.Windows.Registry.SetInteger(this.root + @"\Console", "SideMenuSelectedItem", value);
-				CrawlerStatic.ConsoleSideMenuSelectedItem = value;
+				CrawlerConfig.Static.ConsoleSideMenuSelectedItem = value;
 			}
 		}
 
@@ -281,7 +343,7 @@ namespace YtCrawler
 			{
 				if (null == value) return;
 				DotNetApi.Windows.Registry.SetInt32Array(this.root + @"\Console", "SideMenuSelectedNode", value);
-				CrawlerStatic.ConsoleSideMenuSelectedNode = value;
+				CrawlerConfig.Static.ConsoleSideMenuSelectedNode = value;
 			}
 		}
 

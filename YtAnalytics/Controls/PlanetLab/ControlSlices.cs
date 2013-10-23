@@ -474,7 +474,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnRefresh(object sender, EventArgs e)
 		{
 			// If there is no validated PlanetLab person account, show a message and return.
-			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			if (-1 == CrawlerConfig.Static.PlanetLabPersonId)
 			{
 				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -553,7 +553,7 @@ namespace YtAnalytics.Controls.PlanetLab
 							XmlRpcArray array = member.Value.Value as XmlRpcArray;
 							if (null == array) return false;
 
-							return array.Contains(CrawlerStatic.PlanetLabPersonId);
+							return array.Contains(CrawlerConfig.Static.PlanetLabPersonId);
 						}));
 
 					// Log
@@ -720,7 +720,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnAddToNodesLocation(object sender, EventArgs e)
 		{
 			// If there is no validated PlanetLab person account, show a message and return.
-			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			if (-1 == CrawlerConfig.Static.PlanetLabPersonId)
 			{
 				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -748,7 +748,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnAddToNodesState(object sender, EventArgs e)
 		{
 			// If there is no validated PlanetLab person account, show a message and return.
-			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			if (-1 == CrawlerConfig.Static.PlanetLabPersonId)
 			{
 				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -776,7 +776,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnAddToNodesSlice(object sender, EventArgs e)
 		{
 			// If there is no validated PlanetLab person account, show a message and return.
-			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			if (-1 == CrawlerConfig.Static.PlanetLabPersonId)
 			{
 				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -1092,7 +1092,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private void OnRemoveFromNodes(object sender, EventArgs e)
 		{
 			// If there is no validated PlanetLab person account, show a message and return.
-			if (-1 == CrawlerStatic.PlanetLabPersonId)
+			if (-1 == CrawlerConfig.Static.PlanetLabPersonId)
 			{
 				MessageBox.Show(this, "You must set and validate a PlanetLab account in the settings page before configuring the PlanetLab slices.", "PlanetLab Account Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;

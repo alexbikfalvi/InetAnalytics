@@ -212,7 +212,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Clear the slices list.
 			this.listView.Items.Clear();
 			// Begin the PlanetLab request.
-			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword);
+			this.BeginRequest(this.request, CrawlerConfig.Static.PlanetLabUsername, CrawlerConfig.Static.PlanetLabPassword);
 		}
 
 		/// <summary>

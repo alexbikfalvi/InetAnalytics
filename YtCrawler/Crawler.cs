@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012 Alex Bikfalvi
+ * Copyright (C) 2012-2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ namespace YtCrawler
 		private DbServers servers;
 		private Spiders spiders;
 		private Testing.Testing testing;
+		private readonly static CrawlerNetwork network = new CrawlerNetwork();
 
 		/// <summary>
 		/// Creates a new crawer global object, based on a configuration from the specified root registry key.
@@ -77,16 +78,7 @@ namespace YtCrawler
 			this.testing = new Testing.Testing(rootKey, rootPath);
 		}
 
-		/// <summary>
-		/// A method called when the object is disposed.
-		/// </summary>
-		public void Dispose()
-		{
-			// Call the dispose event handler.
-			this.Dispose(true);
-			// Suppress the finalizer.
-			GC.SuppressFinalize(this);
-		}
+		// Public properties.
 
 		/// <summary>
 		/// Returns the crawler configuration.
@@ -132,6 +124,24 @@ namespace YtCrawler
 		/// Returns the crawler testing configuration.
 		/// </summary>
 		public Testing.Testing Testing { get { return this.testing; } }
+
+		/// <summary>
+		/// Gets the network information.
+		/// </summary>
+		public static CrawlerNetwork Network { get { return Crawler.network; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// A method called when the object is disposed.
+		/// </summary>
+		public void Dispose()
+		{
+			// Call the dispose event handler.
+			this.Dispose(true);
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
+		}
 
 		// Private methods.
 

@@ -110,7 +110,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.tabControl.Visible = false;
 
 			// Begin a new sites request for the specified site.
-			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlKey.GetFilter(PlKey.Fields.KeyId, id));
+			this.BeginRequest(this.request, CrawlerConfig.Static.PlanetLabUsername, CrawlerConfig.Static.PlanetLabPassword, PlKey.GetFilter(PlKey.Fields.KeyId, id));
 		}
 
 		/// <summary>

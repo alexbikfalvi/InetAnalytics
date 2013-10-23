@@ -122,7 +122,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.tabControl.Visible = false;
 
 			// Begin a new addresses request for the specified address.
-			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlAddress.GetFilter(PlAddress.Fields.AddressId, id));
+			this.BeginRequest(this.request, CrawlerConfig.Static.PlanetLabUsername, CrawlerConfig.Static.PlanetLabPassword, PlAddress.GetFilter(PlAddress.Fields.AddressId, id));
 		}
 
 		/// <summary>

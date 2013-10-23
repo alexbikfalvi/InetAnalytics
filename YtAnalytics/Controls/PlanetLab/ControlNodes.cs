@@ -457,8 +457,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
 				this.request,
-				CrawlerStatic.PlanetLabUsername,
-				CrawlerStatic.PlanetLabPassword);
+				CrawlerConfig.Static.PlanetLabUsername,
+				CrawlerConfig.Static.PlanetLabPassword);
 		}
 
 		/// <summary>

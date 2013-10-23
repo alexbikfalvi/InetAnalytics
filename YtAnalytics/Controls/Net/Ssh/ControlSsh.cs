@@ -337,7 +337,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 					// Show a disconnected message.
 					this.ShowMessage(
 						Resources.ServerBusy_32, "Connection Failed", "The connection to the SSH server \'{0}\' failed unexpectedly.".FormatWith(this.client.ConnectionInfo.Host),
-						false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+						false, (int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 						{
 							// Call the disconnecting event handler.
@@ -543,7 +543,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// Show a message.
 				this.ShowMessage(
 					Resources.ServerSuccess_32, "Connecting Succeeded", "Connecting to the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
-					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					false, (int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the event handler.
@@ -573,7 +573,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 			{
 				// Show a message.
 				this.ShowMessage(Resources.ServerError_32, "Connecting Failed", "Connecting to the SSH sever \'{0}\' failed. {1}".FormatWith(this.client.ConnectionInfo.Host, exception.Message),
-					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					false, (int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the event handler.
@@ -635,7 +635,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 				// Show a message.
 				this.ShowMessage(
 					Resources.ServerSuccess_32, "Disconnecting Succeeded", "Disconnecting from the SSH sever \'{0}\' completed successfully.".FormatWith(this.client.ConnectionInfo.Host),
-					false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+					false, (int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the event handler.
@@ -729,7 +729,7 @@ namespace YtAnalytics.Controls.Net.Ssh
 					// Show a disconnected message.
 					this.ShowMessage(
 						Resources.ServerBusy_32, "Connection Failed", "The connection to the SSH server \'{0}\' failed.".FormatWith(this.client.ConnectionInfo.Host),
-						false, (int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+						false, (int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 						{
 							// Call the disconnecting event handler.

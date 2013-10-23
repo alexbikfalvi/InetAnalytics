@@ -46,6 +46,7 @@
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\CommentsList.cs" />
     <Compile Include="CrawlerException.cs" />
+    <Compile Include="CrawlerNetwork.cs" />
     <Compile Include="Database\DbIdEventArgs.cs" />
     <Compile Include="Database\DbPrimaryServerChangedEventArgs.cs" />
     <Compile Include="Database\DbServerDatabaseChangedEventArgs.cs" />
@@ -57,7 +58,6 @@
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />
     <Compile Include="Spider\SpiderEventArgs.cs" />
     <Compile Include="Status\Status.cs" />
-    <Compile Include="CrawlerStatic.cs" />
     <Compile Include="Database\Data\DbObject.cs" />
     <Compile Include="Database\Data\DbObjectColumn.cs" />
     <Compile Include="Database\Data\DbObjectDatabase.cs" />
@@ -110,6 +110,10 @@
     <Compile Include="Status\StatusMessageEventArgs.cs" />
     <Compile Include="Status\StatusHandler.cs" />
     <Compile Include="Status\StatusMessage.cs" />
+    <Compile Include="Tasks\CrawlerTask.cs" />
+    <Compile Include="Tasks\CrawlerTaskEventArgs.cs" />
+    <Compile Include="Tasks\CrawlerTaskException.cs" />
+    <Compile Include="Tasks\CrawlerTasks.cs" />
     <Compile Include="Testing\Testing.cs" />
     <Compile Include="Testing\TestingSshRequest.cs" />
     <Compile Include="Testing\TestingWebRequest.cs" />

@@ -113,7 +113,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.tabControl.Visible = false;
 
 			// Begin a new tags request for the specified tag.
-			this.BeginRequest(this.request, CrawlerStatic.PlanetLabUsername, CrawlerStatic.PlanetLabPassword, PlSliceTag.GetFilter(PlSliceTag.Fields.SliceTagId, id));
+			this.BeginRequest(this.request, CrawlerConfig.Static.PlanetLabUsername, CrawlerConfig.Static.PlanetLabPassword, PlSliceTag.GetFilter(PlSliceTag.Fields.SliceTagId, id));
 		}
 
 		/// <summary>

@@ -501,7 +501,7 @@ namespace YtAnalytics.Controls.Database
 								// Show a success message.
 								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", "Executing query on the database server \'{0}\' completed successfully.".FormatWith(this.server.Name), false);
 								// Wait.
-								Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 								// Hide the message.
 								this.HideMessage();
 								// Call the completion method.
@@ -522,7 +522,7 @@ namespace YtAnalytics.Controls.Database
 									new object[] { this.server.Name, exception.Message },
 									exception);
 								// Wait.
-								Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 								// Hide the message.
 								this.HideMessage();
 								// Call the completion method.
@@ -545,7 +545,7 @@ namespace YtAnalytics.Controls.Database
 							new object[] { this.server.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.
@@ -568,7 +568,7 @@ namespace YtAnalytics.Controls.Database
 					new object[] { this.server.Name, exception.Message },
 					exception);
 				// Wait.
-				Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+				Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 				// Hide the message.
 				this.HideMessage();
 				// Call the completion method.

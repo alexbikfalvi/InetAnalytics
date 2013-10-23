@@ -1,4 +1,6 @@
-﻿namespace YtAnalytics.Forms
+﻿using YtCrawler;
+
+namespace YtAnalytics.Forms
 {
 	partial class FormMain
 	{
@@ -13,9 +15,17 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			// If disposing the managed resources.
+			if (disposing)
 			{
-				components.Dispose();
+				// Remove the network availability event handler.
+				Crawler.Network.NetworkChanged -= this.OnNetworkStatusChanged;
+
+				// Dispose the components.
+				if (components != null)
+				{
+					components.Dispose();
+				}
 			}
 			base.Dispose(disposing);
 		}
@@ -68,6 +78,7 @@
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
+			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -109,7 +120,8 @@
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabelLeft,
             this.statusLabelMiddle,
-            this.statusLabelRight});
+            this.statusLabelRight,
+            this.statusLabelConnection});
 			this.statusStrip.Location = new System.Drawing.Point(0, 0);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Size = new System.Drawing.Size(1008, 22);
@@ -126,7 +138,7 @@
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(938, 17);
+			this.statusLabelMiddle.Size = new System.Drawing.Size(789, 17);
 			this.statusLabelMiddle.Spring = true;
 			// 
 			// statusLabelRight
@@ -269,8 +281,9 @@
 			this.imageList.Images.SetKeyName(43, "GlobeObject");
 			this.imageList.Images.SetKeyName(44, "GlobeConsole");
 			this.imageList.Images.SetKeyName(45, "GlobeNode");
-			this.imageList.Images.SetKeyName(46, "TestGlobeGoto");
-			this.imageList.Images.SetKeyName(47, "TestConnectGoto");
+			this.imageList.Images.SetKeyName(46, "GlobeTask");
+			this.imageList.Images.SetKeyName(47, "TestGlobeGoto");
+			this.imageList.Images.SetKeyName(48, "TestConnectGoto");
 			// 
 			// controlSideConfiguration
 			// 
@@ -562,6 +575,13 @@
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
+			// statusLabelConnection
+			// 
+			this.statusLabelConnection.Image = global::YtAnalytics.Resources.ConnectionSuccess_16;
+			this.statusLabelConnection.Name = "statusLabelConnection";
+			this.statusLabelConnection.Size = new System.Drawing.Size(81, 17);
+			this.statusLabelConnection.Text = "Connected";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -634,6 +654,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelLeft;
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelMiddle;
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelRight;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelConnection;
 	}
 }
 

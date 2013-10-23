@@ -242,7 +242,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						"PlanetLab Update",
 						"Refreshing the PlanetLab information failed. {0}".FormatWith(exception.Message),
 						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 						(object[] param) =>
 							{
 								// Call the request exception event handler.
@@ -395,7 +395,7 @@ namespace YtAnalytics.Controls.PlanetLab
 							"PlanetLab Update",
 							"Refreshing the PlanetLab information completed successfully.",
 							false,
-							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 							(object[] parameters) =>
 								{
 									// Call the complete request event handler.
@@ -412,7 +412,7 @@ namespace YtAnalytics.Controls.PlanetLab
 							"PlanetLab Error",
 							"Refreshing the PlanetLab information has failed (RPC code {0} {1})".FormatWith(response.Fault.FaultCode, response.Fault.FaultString),
 							false,
-							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 							(object[] paremeters) =>
 								{
 									// Call the complete request event handler.
@@ -452,7 +452,7 @@ namespace YtAnalytics.Controls.PlanetLab
 							"PlanetLab Update",
 							"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 							false,
-							(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 							(object[] parameters) =>
 								{
 									// Call the exception handler.
@@ -474,7 +474,7 @@ namespace YtAnalytics.Controls.PlanetLab
 						"PlanetLab Update",
 						"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 						false,
-						(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 							{
 								// Call the exception handler.

@@ -106,13 +106,13 @@ namespace YtCrawler.PlanetLab
 			catch { }
 
 			// Initialize the static configuration.
-			CrawlerStatic.PlanetLabUsername = this.Username;
-			CrawlerStatic.PlanetLabPassword = this.Password;
-			CrawlerStatic.PlanetLabPersonId = this.PersonId;
-			CrawlerStatic.PlanetLabSitesFileName = this.SitesFileName;
-			CrawlerStatic.PlanetLabNodesFileName = this.NodesFileName;
-			CrawlerStatic.PlanetLabLocalPersonsFileName = this.LocalPersonsFileName;
-			CrawlerStatic.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
+			CrawlerConfig.Static.PlanetLabUsername = this.Username;
+			CrawlerConfig.Static.PlanetLabPassword = this.Password;
+			CrawlerConfig.Static.PlanetLabPersonId = this.PersonId;
+			CrawlerConfig.Static.PlanetLabSitesFileName = this.SitesFileName;
+			CrawlerConfig.Static.PlanetLabNodesFileName = this.NodesFileName;
+			CrawlerConfig.Static.PlanetLabLocalPersonsFileName = this.LocalPersonsFileName;
+			CrawlerConfig.Static.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
 		}
 
 		// Public properties.
@@ -159,7 +159,7 @@ namespace YtCrawler.PlanetLab
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root, "SitesFileName", value);
-				CrawlerStatic.PlanetLabSitesFileName = value;
+				CrawlerConfig.Static.PlanetLabSitesFileName = value;
 			}
 		}
 		/// <summary>
@@ -174,7 +174,7 @@ namespace YtCrawler.PlanetLab
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root, "NodesFileName", value);
-				CrawlerStatic.PlanetLabNodesFileName = value;
+				CrawlerConfig.Static.PlanetLabNodesFileName = value;
 			}
 		}
 		/// <summary>
@@ -189,7 +189,7 @@ namespace YtCrawler.PlanetLab
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root, "SlicesFileName", value);
-				CrawlerStatic.PlanetLabSlicesFileName = value;
+				CrawlerConfig.Static.PlanetLabSlicesFileName = value;
 			}
 		}
 		/// <summary>
@@ -204,7 +204,7 @@ namespace YtCrawler.PlanetLab
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root, "LocalPersonsFileName", value);
-				CrawlerStatic.PlanetLabLocalPersonsFileName = value;
+				CrawlerConfig.Static.PlanetLabLocalPersonsFileName = value;
 			}
 		}
 		/// <summary>
@@ -219,7 +219,7 @@ namespace YtCrawler.PlanetLab
 			set
 			{
 				DotNetApi.Windows.Registry.SetString(this.root, "LocalSlicesFileName", value);
-				CrawlerStatic.PlanetLabLocalSlicesFileName = value;
+				CrawlerConfig.Static.PlanetLabLocalSlicesFileName = value;
 			}
 		}
 		/// <summary>
@@ -301,17 +301,17 @@ namespace YtCrawler.PlanetLab
 		{
 			// Save the username.
 			DotNetApi.Windows.Registry.SetString(this.root, "UserName", username);
-			CrawlerStatic.PlanetLabUsername = username;
+			CrawlerConfig.Static.PlanetLabUsername = username;
 			// Save the password.
 			DotNetApi.Windows.Registry.SetSecureString(this.root, "Password", password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-			CrawlerStatic.PlanetLabPassword = password;
+			CrawlerConfig.Static.PlanetLabPassword = password;
 			// Save the persons.
 			this.LocalPersons.CopyFrom(persons);
 			try { this.LocalPersons.SaveToFile(this.LocalPersonsFileName); }
 			catch { }
 			// Save the person.
 			DotNetApi.Windows.Registry.SetInteger(this.root, "PersonId", person);
-			CrawlerStatic.PlanetLabPersonId = person;
+			CrawlerConfig.Static.PlanetLabPersonId = person;
 		}
 
 		/// <summary>

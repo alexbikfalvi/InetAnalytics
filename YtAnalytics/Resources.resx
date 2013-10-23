@@ -2577,4 +2577,112 @@ Female, 45-54 years
   <data name="Map_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Map_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GlobeTask_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTask_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeTask_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTask_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeTask_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTask_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeTask_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeTask_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLarge_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLarge_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLarge_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLarge_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLarge_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLarge_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLarge_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLarge_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptMedium_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptMedium_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptMedium_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptMedium_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptMedium_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptMedium_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptMedium_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptMedium_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSmall_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSmall_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSmall_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSmall_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSmall_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSmall_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSmall_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSmall_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskSmall_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskSmall_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskSmall_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskSmall_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskSmall_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskSmall_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskSmall_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskSmall_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Task_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Task_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Task_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Task_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Task_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Task_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Task_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Task_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionError_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionError_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionError_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionError_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionSuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionSuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionSuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionSuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionWarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionWarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionWarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

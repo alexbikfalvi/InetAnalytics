@@ -140,6 +140,9 @@ namespace YtAnalytics.Forms
 		// Forms.
 		private readonly FormAbout formAbout = new FormAbout();
 
+		// Delegates.
+		private readonly EventHandler actionNetworkStatusChanged;
+
 		/// <summary>
 		/// Constructor for main form window.
 		/// </summary>
@@ -550,6 +553,13 @@ namespace YtAnalytics.Forms
 			{
 				this.sideMenu.SelectedItem.Control.SetSelected(this.crawler.Config.ConsoleSideMenuSelectedNode);
 			}
+
+			// Create the network status changed event handler.
+			this.actionNetworkStatusChanged = new EventHandler(this.OnNetworkStatusChanged);
+			// Set the network availability event handler.
+			Crawler.Network.NetworkChanged += this.actionNetworkStatusChanged;
+			// Update the network status.
+			this.OnNetworkStatusChanged(this, EventArgs.Empty);
 
 			// Set the font.
 			Window.SetFont(this);
@@ -1101,6 +1111,38 @@ namespace YtAnalytics.Forms
 		{
 			// Refresh the log.
 			this.controlLog.DateRefresh(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the network status has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNetworkStatusChanged(object sender, EventArgs e)
+		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(this.actionNetworkStatusChanged, new object[] { sender, e });
+			else
+			{
+				if (Crawler.Network.IsNetworkAvaialable)
+				{
+					if (Crawler.Network.IsInternetAvailable)
+					{
+						this.statusLabelConnection.Image = Resources.ConnectionSuccess_16;
+						this.statusLabelConnection.Text = "Connected to Internet";
+					}
+					else
+					{
+						this.statusLabelConnection.Image = Resources.ConnectionWarning_16;
+						this.statusLabelConnection.Text = "Connected to local network";
+					}
+				}
+				else
+				{
+					this.statusLabelConnection.Image = Resources.ConnectionError_16;
+					this.statusLabelConnection.Text = "Not connected";
+				}
+			}
 		}
 	}
 }

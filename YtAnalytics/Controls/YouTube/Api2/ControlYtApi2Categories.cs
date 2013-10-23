@@ -102,7 +102,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 								"Video Categories",
 								"Refreshing the list of YouTube categories completed successfully.",
 								false,
-								(int)CrawlerStatic.ConsoleMessageCloseDelay.TotalMilliseconds,
+								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
 								this.OnUpdateList
 								);
 							// Log
@@ -135,7 +135,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							// Set the asynchronous result to null.
 							this.asyncResult = null;
 							// Delay the closing of the user message.
-							Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+							Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 							// Hide the progress message.
 							this.HideMessage((object[] parameters) =>
 							{
@@ -158,7 +158,7 @@ namespace YtAnalytics.Controls.YouTube.Api2
 				ThreadPool.QueueUserWorkItem((object state) =>
 					{
 						// Delay the closing of the user message.
-						Thread.Sleep(CrawlerStatic.ConsoleMessageCloseDelay);
+						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
 						// Hide the progress message.
 						this.HideMessage((object[] parameters) =>
 						{

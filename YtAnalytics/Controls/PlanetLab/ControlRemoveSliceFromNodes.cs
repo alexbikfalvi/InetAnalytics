@@ -261,8 +261,8 @@ namespace YtAnalytics.Controls.PlanetLab
 			// Begin the PlanetLab request.
 			this.BeginRequest(
 				this.request,
-				CrawlerStatic.PlanetLabUsername,
-				CrawlerStatic.PlanetLabPassword,
+				CrawlerConfig.Static.PlanetLabUsername,
+				CrawlerConfig.Static.PlanetLabPassword,
 				PlSlice.GetFilter(PlSlice.Fields.SliceId, this.slice.Id));
 		}
 
