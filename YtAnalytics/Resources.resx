@@ -2685,4 +2685,64 @@ Female, 45-54 years
   <data name="ConnectionWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ConnectionWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ConnectionQuestion_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionQuestion_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionQuestion_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionQuestion_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionQuestion_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionQuestion_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionQuestion_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionQuestion_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockLarge_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockLarge_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockLarge_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockLarge_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockLarge_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockLarge_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockLarge_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockLarge_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockMedium_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockMedium_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockMedium_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockMedium_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockMedium_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockMedium_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockMedium_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockMedium_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockNew_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockNew_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockNew_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockNew_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockNew_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockNew_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockNew_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockNew_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockSmall_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockSmall_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockSmall_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockSmall_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockSmall_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockSmall_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClockSmall_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ClockSmall_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

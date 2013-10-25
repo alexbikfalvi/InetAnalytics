@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,16 +27,16 @@ using DotNetApi.Windows;
 namespace YtAnalytics.Forms.PlanetLab
 {
 	/// <summary>
-	/// A form dialog allowing the selection of a PlanetLab slice.
+	/// A form dialog allowing the renewal of a PlanetLab slice.
 	/// </summary>
-	public sealed partial class FormAddSlice : Form
+	public sealed partial class FormRenewSlice : Form
 	{
 		private bool canClose = true;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddSlice()
+		public FormRenewSlice()
 		{
 			InitializeComponent();
 
@@ -57,13 +57,14 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// Opens the modal dialog to select a PlanetLab object.
 		/// </summary>
 		/// <param name="config">The crawler configuration.</param>
+		/// <param name="slice">The PlanetLab slice.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(CrawlerConfig config)
+		public DialogResult ShowDialog(CrawlerConfig config, PlSlice slice)
 		{
 			// Reset the result.
 			this.Result = null;
 			// Refresh the results list.
-			this.control.Refresh(config);
+			this.control.Refresh(config, slice);
 			// Show the dialog.
 			return base.ShowDialog();
 		}
@@ -73,13 +74,14 @@ namespace YtAnalytics.Forms.PlanetLab
 		/// </summary>
 		/// <param name="owner">The window owner.</param>
 		/// <param name="config">The crawler configuration.</param>
+		/// <param name="slice">The PlanetLab slice.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, CrawlerConfig config)
+		public DialogResult ShowDialog(IWin32Window owner, CrawlerConfig config, PlSlice slice)
 		{
 			// Reset the result.
 			this.Result = null;
 			// Refresh the results list.
-			this.control.Refresh(config);
+			this.control.Refresh(config, slice);
 			// Show the dialog.
 			return base.ShowDialog(owner);
 		}
@@ -87,7 +89,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		// Private methods.
 
 		/// <summary>
-		/// An event handler called when starting to refresh the list of PlanetLab objects.
+		/// An event handler called when starting a PlanetLab request.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
@@ -97,7 +99,7 @@ namespace YtAnalytics.Forms.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when finishing to refresh the list of PlanetLab objects.
+		/// An event handler called when finishing to a PlanetLab request.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
@@ -107,11 +109,11 @@ namespace YtAnalytics.Forms.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects a PlanetLab slice.
+		/// An event handler called when the user renewes a PlanetLab slice.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnSelected(object sender, PlObjectEventArgs<PlSlice> e)
+		private void OnRenewed(object sender, PlObjectEventArgs<PlSlice> e)
 		{
 			// Set the result.
 			this.Result = e.Object;

@@ -48,6 +48,7 @@
 			this.listViewNodes = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.panel = new System.Windows.Forms.Panel();
@@ -77,6 +78,7 @@
 			this.buttonRemoveFromNodes = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSetKey = new System.Windows.Forms.ToolStripButton();
+			this.buttonRenew = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
 			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
@@ -95,7 +97,6 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.columnHeaderState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -183,6 +184,10 @@
 			// 
 			this.columnHeaderHostname.Text = "Hostname";
 			this.columnHeaderHostname.Width = 120;
+			// 
+			// columnHeaderState
+			// 
+			this.columnHeaderState.Text = "State";
 			// 
 			// imageList
 			// 
@@ -361,6 +366,7 @@
             this.buttonRemoveFromNodes,
             this.toolStripSeparator1,
             this.buttonSetKey,
+            this.buttonRenew,
             this.toolStripSeparator2,
             this.buttonConnect,
             this.buttonDisconnect,
@@ -459,6 +465,15 @@
 			this.buttonSetKey.Size = new System.Drawing.Size(64, 22);
 			this.buttonSetKey.Text = "Set &key";
 			this.buttonSetKey.Click += new System.EventHandler(this.OnSetKey);
+			// 
+			// buttonRenew
+			// 
+			this.buttonRenew.Image = global::YtAnalytics.Resources.ClockNew_16;
+			this.buttonRenew.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRenew.Name = "buttonRenew";
+			this.buttonRenew.Size = new System.Drawing.Size(62, 22);
+			this.buttonRenew.Text = "Rene&w";
+			this.buttonRenew.Click += new System.EventHandler(this.OnRenew);
 			// 
 			// toolStripSeparator2
 			// 
@@ -592,10 +607,6 @@
 			this.menuItemSiteProperties.Text = "Site prop&erties";
 			this.menuItemSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
 			// 
-			// columnHeaderState
-			// 
-			this.columnHeaderState.Text = "State";
-			// 
 			// ControlSlice
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -679,5 +690,6 @@
 		private System.Windows.Forms.ToolStripMenuItem buttonNodeProperties;
 		private System.Windows.Forms.ToolStripMenuItem buttonSiteProperties;
 		private System.Windows.Forms.ColumnHeader columnHeaderState;
+		private System.Windows.Forms.ToolStripButton buttonRenew;
 	}
 }

@@ -253,6 +253,12 @@
     <Compile Include="Controls\PlanetLab\ControlNodes.Designer.cs">
       <DependentUpon>ControlNodes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlRenewSlice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlRenewSlice.Designer.cs">
+      <DependentUpon>ControlRenewSlice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -574,6 +580,12 @@
     <Compile Include="Forms\FormText.Designer.cs">
       <DependentUpon>FormText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormRenewSlice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormRenewSlice.Designer.cs">
+      <DependentUpon>FormRenewSlice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormExportMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -873,6 +885,9 @@
       <DependentUpon>ControlNodes.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlRenewSlice.resx">
+      <DependentUpon>ControlRenewSlice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
       <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -1030,6 +1045,9 @@
     <EmbeddedResource Include="Forms\FormText.resx">
       <DependentUpon>FormText.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormRenewSlice.resx">
+      <DependentUpon>FormRenewSlice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormExportMap.resx">
       <DependentUpon>FormExportMap.cs</DependentUpon>
     </EmbeddedResource>
@@ -1159,6 +1177,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ClockSmall_48.png" />
+    <None Include="Resources\ClockSmall_32.png" />
+    <None Include="Resources\ClockSmall_24.png" />
+    <None Include="Resources\ClockSmall_16.png" />
+    <None Include="Resources\ClockNew_48.png" />
+    <None Include="Resources\ClockNew_32.png" />
+    <None Include="Resources\ClockNew_24.png" />
+    <None Include="Resources\ClockNew_16.png" />
+    <None Include="Resources\ClockMedium_48.png" />
+    <None Include="Resources\ClockMedium_32.png" />
+    <None Include="Resources\ClockMedium_24.png" />
+    <None Include="Resources\ClockMedium_16.png" />
+    <None Include="Resources\ClockLarge_48.png" />
+    <None Include="Resources\ClockLarge_32.png" />
+    <None Include="Resources\ClockLarge_24.png" />
+    <None Include="Resources\ClockLarge_16.png" />
+    <None Include="Resources\ConnectionQuestion_48.png" />
+    <None Include="Resources\ConnectionQuestion_32.png" />
+    <None Include="Resources\ConnectionQuestion_24.png" />
+    <None Include="Resources\ConnectionQuestion_16.png" />
     <None Include="Resources\ConnectionWarning_48.png" />
     <None Include="Resources\ConnectionWarning_32.png" />
     <None Include="Resources\ConnectionWarning_24.png" />

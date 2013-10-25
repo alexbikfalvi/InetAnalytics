@@ -169,6 +169,7 @@ namespace YtAnalytics.Controls.PlanetLab
 		private readonly FormAddSliceToNodesLocation formAddSliceToNodesLocation = new FormAddSliceToNodesLocation();
 		private readonly FormAddSliceToNodesState formAddSliceToNodesState = new FormAddSliceToNodesState();
 		private readonly FormAddSliceToNodesSlice formAddSliceToNodesSlice = new FormAddSliceToNodesSlice();
+		private readonly FormRenewSlice formRenewSlice = new FormRenewSlice();
 
 		private readonly RequestState requestStateGetSlice;
 
@@ -1537,7 +1538,23 @@ namespace YtAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnShowKey(object sender, LinkLabelLinkClickedEventArgs e)
 		{
+			// Show the slice key.
 			this.formText.ShowDialog(this, "Slice Private Key", this.config.Key != null ? Encoding.UTF8.GetString(this.config.Key).Replace("\n", Environment.NewLine) : string.Empty);
+		}
+
+		/// <summary>
+		/// An event handler called when renewing the slice.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRenew(object sender, EventArgs e)
+		{
+			// Show the slice renewal dialog.
+			if (this.formRenewSlice.ShowDialog(this, this.crawler.Config, this.slice) == DialogResult.OK)
+			{
+				// Refresh the slice information.
+				this.OnRefreshSlice();
+			}
 		}
 
 		/// <summary>

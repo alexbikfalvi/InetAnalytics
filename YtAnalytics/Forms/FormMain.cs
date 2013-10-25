@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
 using Microsoft.Win32;
@@ -1124,24 +1125,36 @@ namespace YtAnalytics.Forms
 			if (this.InvokeRequired) this.Invoke(this.actionNetworkStatusChanged, new object[] { sender, e });
 			else
 			{
-				if (Crawler.Network.IsNetworkAvaialable)
+				// Update the connecton status label.
+				switch (Crawler.Network.IsInternetAvailable)
 				{
-					if (Crawler.Network.IsInternetAvailable)
-					{
+					case CrawlerNetwork.AvailabilityStatus.Unknown:
+						this.statusLabelConnection.Image = Resources.ConnectionQuestion_16;
+						this.statusLabelConnection.Text = "Connectivity unknown";
+						break;
+					case CrawlerNetwork.AvailabilityStatus.Success:
 						this.statusLabelConnection.Image = Resources.ConnectionSuccess_16;
 						this.statusLabelConnection.Text = "Connected to Internet";
-					}
-					else
-					{
+						break;
+					case CrawlerNetwork.AvailabilityStatus.Warning:
 						this.statusLabelConnection.Image = Resources.ConnectionWarning_16;
 						this.statusLabelConnection.Text = "Connected to local network";
-					}
+						break;
+					case CrawlerNetwork.AvailabilityStatus.Fail:
+						this.statusLabelConnection.Image = Resources.ConnectionError_16;
+						this.statusLabelConnection.Text = "Not connected";
+						break;
 				}
-				else
-				{
-					this.statusLabelConnection.Image = Resources.ConnectionError_16;
-					this.statusLabelConnection.Text = "Not connected";
-				}
+				// Set the label tooltip.
+				this.statusLabelConnection.ToolTipText = "ICMP connectivity: {0}{1}HTTP connectivity: {2}{3}HTTPS connectivity: {4}{5}{6}Connectivity last checked at {7}".FormatWith(
+					Crawler.Network.IsInternetIcmpAvailable ? "Yes" : "No",
+					Environment.NewLine,
+					Crawler.Network.IsInternetHttpAvailable ? "Yes" : "No",
+					Environment.NewLine,
+					Crawler.Network.IsInternetHttpsAvailable ? "Yes" : "No",
+					Environment.NewLine,
+					Environment.NewLine,
+					Crawler.Network.InternetAvailableLastUpdated.ToLongTimeString());
 			}
 		}
 	}

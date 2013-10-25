@@ -20,7 +20,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Timers;
+using System.Threading;
 
 namespace YtCrawler
 {
@@ -29,14 +29,35 @@ namespace YtCrawler
 	/// </summary>
 	public sealed class CrawlerNetwork
 	{
-		private static readonly string internetIcmpHost = "8.8.8.8";
-		private static readonly string internetHttpHost = "http://www.google.com";
-		private const double timerInterval = 10000.0;
-		
-		private bool internetAvailable = false;
-		private readonly Timer timer = new Timer(CrawlerNetwork.timerInterval);
+		/// <summary>
+		/// An enumeration representing the availability status.
+		/// </summary>
+		public enum AvailabilityStatus
+		{
+			Unknown = 0,
+			Success = 1,
+			Warning = 2,
+			Fail = 3
+		}
+
+		private static readonly object sync = new object();
+
+		private bool timerEnabled = true;
+		private TimeSpan timerInterval = new TimeSpan(0, 1, 0);
+
+		private string internetIcmpHost = "8.8.8.8";
+		private string internetHttpHost = "http://www.google.com";
+		private string internetHttpsHost = "https://www.google.com";
+
+		private readonly Timer timer;
 		private readonly Ping ping = new Ping();
 		private readonly WebClient web = new WebClient();
+
+		private AvailabilityStatus internetAvailable = AvailabilityStatus.Unknown;
+		private bool internetAvailableIcmp = false;
+		private bool internetAvailableHttp = false;
+		private bool internetAvailableHttps = false;
+		private DateTime internetAvailableLastUpdated = DateTime.MinValue;
 
 		/// <summary>
 		/// Creates a new crawler network instance.
@@ -47,22 +68,81 @@ namespace YtCrawler
 			NetworkChange.NetworkAddressChanged += this.OnNetworkAddressChanged;
 			NetworkChange.NetworkAvailabilityChanged += this.OnNetworkAvailabilityChanged;
 
-			// Create the network availability timer.
-			this.timer.Elapsed += this.OnTimerElapsed;
-			this.timer.Enabled = true;
+			// Create the network timer.
+			this.timer = new Timer((object state) =>
+				{
+					// Synchronize the timer.
+					lock (CrawlerNetwork.sync)
+					{
+						// Check the network availability.
+						this.OnUpdateInternetAvialability();
+					}
+				},
+				null, 0, (long)this.timerInterval.TotalMilliseconds);
 		}
 
 		// Public properties.
 
 		/// <summary>
-		/// Returns whether the network connection is available.
+		/// Gets or sets whether the timer is enabled.
 		/// </summary>
-		public bool IsNetworkAvaialable { get { return NetworkInterface.GetIsNetworkAvailable(); } }
-
+		public bool TimerEnabled
+		{
+			get { return this.timerEnabled; }
+			set { this.OnSetTimerEnabled(value); }
+		}
 		/// <summary>
-		/// Returns whether the internet is available.
+		/// Gets or sets the timer interval.
 		/// </summary>
-		public bool IsInternetAvailable { get { return this.internetAvailable; } }
+		public TimeSpan TimerInterval
+		{
+			get { return this.timerInterval; }
+			set { this.OnSetTimerInterval(value); }
+		}
+		/// <summary>
+		/// Gets or sets the Internet ICMP host.
+		/// </summary>
+		public string InternetIcmpHost
+		{
+			get { return this.internetIcmpHost; }
+			set { this.internetIcmpHost = value; }
+		}
+		/// <summary>
+		/// Gets or sets the Internet HTTP host.
+		/// </summary>
+		public string InternetHttpHost
+		{
+			get { return this.internetHttpHost; }
+			set { this.internetHttpHost = value; }
+		}
+		/// <summary>
+		/// Gets or sets the Internet HTTPS host.
+		/// </summary>
+		public string InternetHttpsHost
+		{
+			get { return this.internetHttpsHost; }
+			set { this.internetHttpsHost = value; }
+		}
+		/// <summary>
+		/// Returns whether the Internet is available.
+		/// </summary>
+		public AvailabilityStatus IsInternetAvailable { get { return this.internetAvailable; } }
+		/// <summary>
+		/// Returns whether the Internet ICMP is available.
+		/// </summary>
+		public bool IsInternetIcmpAvailable { get { return this.internetAvailableIcmp; } }
+		/// <summary>
+		/// Returns whether the Internet HTTP is available.
+		/// </summary>
+		public bool IsInternetHttpAvailable { get { return this.internetAvailableHttp; } }
+		/// <summary>
+		/// Returns whether the Internet HTTPS is available.
+		/// </summary>
+		public bool IsInternetHttpsAvailable { get { return this.internetAvailableHttps; } }
+		/// <summary>
+		/// Returns the date-time when the Internet availability was last updated.
+		/// </summary>
+		public DateTime InternetAvailableLastUpdated { get { return this.internetAvailableLastUpdated; } }
 
 		// Public events.
 
@@ -74,12 +154,52 @@ namespace YtCrawler
 		// Private methods.
 
 		/// <summary>
+		/// A method called to set whether the timer is enabled.
+		/// </summary>
+		/// <param name="enabled"><b>True</b> if the timer is enabled, <b>false</b> otherwise.</param>
+		private void OnSetTimerEnabled(bool enabled)
+		{
+			// Set the timer enabled.
+			this.timerEnabled = enabled;
+			// Update the timer.
+			if (this.timerEnabled)
+			{
+				this.timer.Change(TimeSpan.FromTicks(0), this.timerInterval);
+			}
+			else
+			{
+				this.timer.Change(Timeout.Infinite, Timeout.Infinite);
+			}
+		}
+
+		/// <summary>
+		/// A method called to set the timer interval.
+		/// </summary>
+		/// <param name="interval">The timer interval.</param>
+		private void OnSetTimerInterval(TimeSpan interval)
+		{
+			// Set the timer interval.
+			this.timerInterval = interval;
+			// Update the timer.
+			if (this.timerEnabled)
+			{
+				this.timer.Change(TimeSpan.FromTicks(0), this.timerInterval);
+			}
+			else
+			{
+				this.timer.Change(Timeout.Infinite, Timeout.Infinite);
+			}
+		}
+
+		/// <summary>
 		/// A method called when the network address has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnNetworkAddressChanged(object sender, EventArgs e)
 		{
+			// Update the Internet availability.
+
 			// Raise the network changed event.
 			if (null != this.NetworkChanged) this.NetworkChanged(sender, e);
 		}
@@ -96,58 +216,89 @@ namespace YtCrawler
 		}
 
 		/// <summary>
-		/// An event handler called when the timer has elapsed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-		{
-			// Update the network availability.
-			this.OnUpdateInternetAvialability();
-		}
-
-		/// <summary>
 		/// Updates the Internet avialability.
 		/// </summary>
 		private void OnUpdateInternetAvialability()
 		{
-			bool available;
+			// The Internet availability.
+			AvailabilityStatus internetAvailable;
 
-			// Check the ICMP connectivity.
-			if (!(available = this.OnUpdateInternetAvailabilityIcmp()))
+			// If the network is available.
+			if (NetworkInterface.GetIsNetworkAvailable())
 			{
+				// Check the ICMP connectivity.
+				this.internetAvailableIcmp = this.OnUpdateInternetAvailabilityIcmp();
 				// Check the HTTP connectivity.
-				available = this.OnUpdateInternetAvailabilityHttp();
+				this.internetAvailableHttp = this.OnUpdateInternetAvailabilityHttp();
+				// Check the HTTPs connectivity.
+				this.internetAvailableHttps = this.OnUpdateInternetAvailabilityHttps();
+				
+				// Update the Internet availability.
+				internetAvailable =
+					this.internetAvailableIcmp || this.internetAvailableHttp || this.internetAvailableHttps ? AvailabilityStatus.Success : AvailabilityStatus.Warning;
+			}
+			else
+			{
+				internetAvailable = AvailabilityStatus.Fail;
 			}
 
+			// Set the last updated.
+			this.internetAvailableLastUpdated = DateTime.Now;
+
 			// If the availability has changed.
-			if (this.internetAvailable != available)
+			if (this.internetAvailable != internetAvailable)
 			{
 				// Change the Internet availability.
-				this.internetAvailable = available;
+				this.internetAvailable = internetAvailable;
 				// Raise the event.
 				if (null != this.NetworkChanged) this.NetworkChanged(this, EventArgs.Empty);
 			}
 		}
 
+		/// <summary>
+		/// A methods that checks the ICMP connnectivity.
+		/// </summary>
+		/// <returns><b>True</b> if the Internet is available on the specified protocol, <b>false</b> otherwise.</returns>
 		private bool OnUpdateInternetAvailabilityIcmp()
 		{
 			try
 			{
 				// Ping the default host.
-				PingReply reply = this.ping.Send(CrawlerNetwork.internetIcmpHost);
+				PingReply reply = this.ping.Send(this.internetIcmpHost);
 				return reply.Status == IPStatus.Success;
 			}
 			catch { }
 			return false;
 		}
 
+		/// <summary>
+		/// A methods that checks the HTTP connnectivity.
+		/// </summary>
+		/// <returns><b>True</b> if the Internet is available on the specified protocol, <b>false</b> otherwise.</returns>
 		private bool OnUpdateInternetAvailabilityHttp()
 		{
 			try
 			{
 				// Open an HTTP connection to the default host.
-				using (Stream stream = this.web.OpenRead(CrawlerNetwork.internetHttpHost))
+				using (Stream stream = this.web.OpenRead(this.internetHttpHost))
+				{
+					return true;
+				}
+			}
+			catch { }
+			return false;
+		}
+
+		/// <summary>
+		/// A methods that checks the HTTPS connnectivity.
+		/// </summary>
+		/// <returns><b>True</b> if the Internet is available on the specified protocol, <b>false</b> otherwise.</returns>
+		private bool OnUpdateInternetAvailabilityHttps()
+		{
+			try
+			{
+				// Open an HTTPS connection to the default host.
+				using (Stream stream = this.web.OpenRead(this.internetHttpsHost))
 				{
 					return true;
 				}

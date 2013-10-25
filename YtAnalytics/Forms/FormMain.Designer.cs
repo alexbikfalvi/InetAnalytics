@@ -45,9 +45,9 @@ namespace YtAnalytics.Forms
 			this.statusLabelLeft = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelMiddle = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
-			this.controlSideLog = new YtAnalytics.Controls.ControlSideCalendar();
 			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
@@ -62,7 +62,6 @@ namespace YtAnalytics.Forms
 			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -78,7 +77,8 @@ namespace YtAnalytics.Forms
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
+			this.controlSideLog = new YtAnalytics.Controls.ControlSideCalendar();
+			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -124,6 +124,7 @@ namespace YtAnalytics.Forms
             this.statusLabelConnection});
 			this.statusStrip.Location = new System.Drawing.Point(0, 0);
 			this.statusStrip.Name = "statusStrip";
+			this.statusStrip.ShowItemToolTips = true;
 			this.statusStrip.Size = new System.Drawing.Size(1008, 22);
 			this.statusStrip.TabIndex = 0;
 			// 
@@ -138,7 +139,7 @@ namespace YtAnalytics.Forms
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(789, 17);
+			this.statusLabelMiddle.Size = new System.Drawing.Size(826, 17);
 			this.statusLabelMiddle.Spring = true;
 			// 
 			// statusLabelRight
@@ -146,6 +147,13 @@ namespace YtAnalytics.Forms
 			this.statusLabelRight.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.statusLabelRight.Name = "statusLabelRight";
 			this.statusLabelRight.Size = new System.Drawing.Size(0, 17);
+			// 
+			// statusLabelConnection
+			// 
+			this.statusLabelConnection.Image = global::YtAnalytics.Resources.ConnectionSuccess_16;
+			this.statusLabelConnection.Name = "statusLabelConnection";
+			this.statusLabelConnection.Size = new System.Drawing.Size(81, 17);
+			this.statusLabelConnection.Text = "Connected";
 			// 
 			// splitContainer
 			// 
@@ -198,19 +206,6 @@ namespace YtAnalytics.Forms
 			this.sideMenu.Size = new System.Drawing.Size(244, 682);
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.VisibleItems = 7;
-			// 
-			// controlSideLog
-			// 
-			this.controlSideLog.AutoScroll = true;
-			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
-			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(244, 262);
-			this.controlSideLog.TabIndex = 2;
-			this.controlSideLog.Visible = false;
-			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideComments
 			// 
@@ -447,14 +442,6 @@ namespace YtAnalytics.Forms
 			this.sideMenuItemConfiguration.Index = -1;
 			this.sideMenuItemConfiguration.Text = "Configuration";
 			// 
-			// sideMenuItemLog
-			// 
-			this.sideMenuItemLog.Control = this.controlSideLog;
-			this.sideMenuItemLog.ImageLarge = global::YtAnalytics.Resources.Log_32;
-			this.sideMenuItemLog.ImageSmall = global::YtAnalytics.Resources.Log_16;
-			this.sideMenuItemLog.Index = -1;
-			this.sideMenuItemLog.Text = "Log";
-			// 
 			// sideMenuItemComments
 			// 
 			this.sideMenuItemComments.Control = this.controlSideComments;
@@ -575,12 +562,26 @@ namespace YtAnalytics.Forms
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
-			// statusLabelConnection
+			// controlSideLog
 			// 
-			this.statusLabelConnection.Image = global::YtAnalytics.Resources.ConnectionSuccess_16;
-			this.statusLabelConnection.Name = "statusLabelConnection";
-			this.statusLabelConnection.Size = new System.Drawing.Size(81, 17);
-			this.statusLabelConnection.Text = "Connected";
+			this.controlSideLog.AutoScroll = true;
+			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
+			this.controlSideLog.Name = "controlSideLog";
+			this.controlSideLog.Size = new System.Drawing.Size(244, 262);
+			this.controlSideLog.TabIndex = 2;
+			this.controlSideLog.Visible = false;
+			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
+			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// sideMenuItemLog
+			// 
+			this.sideMenuItemLog.Control = this.controlSideLog;
+			this.sideMenuItemLog.ImageLarge = global::YtAnalytics.Resources.Log_32;
+			this.sideMenuItemLog.ImageSmall = global::YtAnalytics.Resources.Log_16;
+			this.sideMenuItemLog.Index = -1;
+			this.sideMenuItemLog.Text = "Log";
 			// 
 			// FormMain
 			// 

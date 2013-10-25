@@ -114,6 +114,7 @@
     <Compile Include="Tasks\CrawlerTaskEventArgs.cs" />
     <Compile Include="Tasks\CrawlerTaskException.cs" />
     <Compile Include="Tasks\CrawlerTasks.cs" />
+    <Compile Include="Tasks\CrawlerTaskSchedule.cs" />
     <Compile Include="Testing\Testing.cs" />
     <Compile Include="Testing\TestingSshRequest.cs" />
     <Compile Include="Testing\TestingWebRequest.cs" />
