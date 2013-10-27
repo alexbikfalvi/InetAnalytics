@@ -181,83 +181,92 @@ namespace YtAnalytics.Controls.YouTube.Web
 		/// <param name="result">The </param>
 		private void Callback(IAsyncResult result)
 		{
-			if (this.InvokeRequired)
-				this.Invoke(new AsyncCallback(this.Callback), new object[] { result });
-			else
-			{
-				try
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					this.statistics = this.request.End(result);
-					this.statisticsVideo = this.textBox.Text;
-
-					this.menuItemViews.Enabled = this.statistics.ViewsHistory != null;
-					this.menuItemLikes.Enabled = this.statistics.LikesHistory != null;
-					this.menuItemDislikes.Enabled = this.statistics.DislikesHistory != null;
-					this.menuItemFavorites.Enabled = this.statistics.FavoritesHistory != null;
-					this.menuItemComments.Enabled = this.statistics.CommentsHistory != null;
-					this.menuItemPopularity.Enabled = this.statistics.ViewsHistory != null;
-
-					this.buttonComment.Enabled = true;
-
-					if (this.statistics.ViewsHistory != null)
+					try
 					{
-						this.OnChartViewsCount(null, null);
-					}
+						this.statistics = this.request.End(result);
+						this.statisticsVideo = this.textBox.Text;
 
-					// Compute the event type.
-					LogEventType eventType = (this.statistics.ViewsHistory.DiscoveryExceptions.Count == 0) ? LogEventType.Success : LogEventType.SuccessWarning;
-					string eventMessage = eventType == LogEventType.Success ?
-						"The request for the web statistics of the video \'{0}\' completed successfully." :
-						"The request for the web statistics of the video \'{0}\' completed partially successfully. However, some errors have occurred.";
+						this.menuItemViews.Enabled = this.statistics.ViewsHistory != null;
+						this.menuItemLikes.Enabled = this.statistics.LikesHistory != null;
+						this.menuItemDislikes.Enabled = this.statistics.DislikesHistory != null;
+						this.menuItemFavorites.Enabled = this.statistics.FavoritesHistory != null;
+						this.menuItemComments.Enabled = this.statistics.CommentsHistory != null;
+						this.menuItemPopularity.Enabled = this.statistics.ViewsHistory != null;
 
-					// If there are failures, create a new subevent list.
-					List<LogEvent> subevents = null;
-					if (this.statistics.ViewsHistory.DiscoveryExceptions.Count != 0)
-					{
-						subevents = new List<LogEvent>();
-						foreach (AjaxException exception in this.statistics.ViewsHistory.DiscoveryExceptions)
+						this.buttonComment.Enabled = true;
+
+						if (this.statistics.ViewsHistory != null)
 						{
-							subevents.Add(new LogEvent(
-								LogEventLevel.Important,
-								LogEventType.Error,
-								DateTime.MinValue,
-								ControlWebStatistics.logSource,
-								"Parsing of a views history discovery event has failed.",
-								null,
-								exception));
+							this.OnChartViewsCount(null, null);
 						}
-					}
 
-					// Log
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Verbose,
-						eventType,
-						ControlWebStatistics.logSource,
-						eventMessage,
-						new object[] { this.textBox.Text },
-						null,
-						subevents));
-				}
-				catch (AjaxRequestException exception)
-				{
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Normal,
-						LogEventType.Warning,
-						ControlWebStatistics.logSource,
-						"The web statistics for the video \'{0}\' are not available. {1}",
-						new object[] { this.textBox.Text, exception.Message },
-						exception));
-				}
-				catch (WebException exception)
-				{
-					if (exception.Status == WebExceptionStatus.RequestCanceled)
+						// Compute the event type.
+						LogEventType eventType = (this.statistics.ViewsHistory.DiscoveryExceptions.Count == 0) ? LogEventType.Success : LogEventType.SuccessWarning;
+						string eventMessage = eventType == LogEventType.Success ?
+							"The request for the web statistics of the video \'{0}\' completed successfully." :
+							"The request for the web statistics of the video \'{0}\' completed partially successfully. However, some errors have occurred.";
+
+						// If there are failures, create a new subevent list.
+						List<LogEvent> subevents = null;
+						if (this.statistics.ViewsHistory.DiscoveryExceptions.Count != 0)
+						{
+							subevents = new List<LogEvent>();
+							foreach (AjaxException exception in this.statistics.ViewsHistory.DiscoveryExceptions)
+							{
+								subevents.Add(new LogEvent(
+									LogEventLevel.Important,
+									LogEventType.Error,
+									DateTime.MinValue,
+									ControlWebStatistics.logSource,
+									"Parsing of a views history discovery event has failed.",
+									null,
+									exception));
+							}
+						}
+
+						// Log
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
-							LogEventType.Canceled,
+							eventType,
 							ControlWebStatistics.logSource,
-							"The request for the web statistics of the video \'{0}\' has been canceled.",
-							new object[] { this.textBox.Text }));
-					else
+							eventMessage,
+							new object[] { this.textBox.Text },
+							null,
+							subevents));
+					}
+					catch (AjaxRequestException exception)
+					{
+						this.log.Add(this.crawler.Log.Add(
+							LogEventLevel.Normal,
+							LogEventType.Warning,
+							ControlWebStatistics.logSource,
+							"The web statistics for the video \'{0}\' are not available. {1}",
+							new object[] { this.textBox.Text, exception.Message },
+							exception));
+					}
+					catch (WebException exception)
+					{
+						if (exception.Status == WebExceptionStatus.RequestCanceled)
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Verbose,
+								LogEventType.Canceled,
+								ControlWebStatistics.logSource,
+								"The request for the web statistics of the video \'{0}\' has been canceled.",
+								new object[] { this.textBox.Text }));
+						else
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								ControlWebStatistics.logSource,
+								"The request for the web statistics of the video \'{0}\' failed. {1}",
+								new object[] { this.textBox.Text, exception.Message },
+								exception));
+					}
+					catch (Exception exception)
+					{
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
@@ -265,24 +274,14 @@ namespace YtAnalytics.Controls.YouTube.Web
 							"The request for the web statistics of the video \'{0}\' failed. {1}",
 							new object[] { this.textBox.Text, exception.Message },
 							exception));
-				}
-				catch (Exception exception)
-				{
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Important,
-						LogEventType.Error,
-						ControlWebStatistics.logSource,
-						"The request for the web statistics of the video \'{0}\' failed. {1}",
-						new object[] { this.textBox.Text, exception.Message },
-						exception));
-				}
-				finally
-				{
-					this.buttonStart.Enabled = true;
-					this.buttonStop.Enabled = false;
-					this.textBox.Enabled = true;
-				}
-			}
+					}
+					finally
+					{
+						this.buttonStart.Enabled = true;
+						this.buttonStop.Enabled = false;
+						this.textBox.Enabled = true;
+					}
+				});
 		}
 
 		/// <summary>

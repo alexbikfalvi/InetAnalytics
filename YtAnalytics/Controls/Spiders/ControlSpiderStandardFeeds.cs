@@ -40,14 +40,6 @@ namespace YtAnalytics.Controls.Spiders
 
 		private Crawler crawler;
 
-		private SpiderEventHandler delegateSpiderStateChanged;
-		private SpiderEventHandler delegateSpiderCrawlStarted;
-		private SpiderEventHandler delegateSpiderCrawlFinished;
-		private SpiderInfoEventHandler<SpiderStandardFeeds.CrawlInfo> delegateFeedsCrawlStarted;
-		private SpiderInfoEventHandler<SpiderStandardFeeds.CrawlInfo> delegateFeedsCrawlFinished;
-		private SpiderInfoEventHandler<SpiderStandardFeeds.FeedStartedInfo> delegateFeedCrawlStarted;
-		private SpiderInfoEventHandler<SpiderStandardFeeds.FeedFinishedInfo> delegateFeedCrawlFinished;
-
 		private IAsyncResult crawlResult = null;
 
 		private ProgressItem[] progressItems = new ProgressItem[YouTubeUri.StandardFeedNames.Length];
@@ -65,15 +57,6 @@ namespace YtAnalytics.Controls.Spiders
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Create the delegates.
-			this.delegateSpiderStateChanged = new SpiderEventHandler(this.OnSpiderStateChanged);
-			this.delegateSpiderCrawlStarted = new SpiderEventHandler(this.OnSpiderCrawlStarted);
-			this.delegateSpiderCrawlFinished = new SpiderEventHandler(this.OnSpiderCrawlFinished);
-			this.delegateFeedsCrawlStarted = new SpiderInfoEventHandler<SpiderStandardFeeds.CrawlInfo>(this.OnFeedsCrawlStarted);
-			this.delegateFeedsCrawlFinished = new SpiderInfoEventHandler<SpiderStandardFeeds.CrawlInfo>(this.OnFeedsCrawlFinished);
-			this.delegateFeedCrawlStarted = new SpiderInfoEventHandler<SpiderStandardFeeds.FeedStartedInfo>(this.OnFeedCrawlStarted);
-			this.delegateFeedCrawlFinished = new SpiderInfoEventHandler<SpiderStandardFeeds.FeedFinishedInfo>(this.OnFeedCrawlFinished);
 
 			// Initialize the progress list box.
 			for (int index = 0; index < YouTubeUri.StandardFeedNames.Length; index++)
@@ -104,13 +87,13 @@ namespace YtAnalytics.Controls.Spiders
 			this.buttonFeeds.Enabled = this.crawler.Spiders.StandardFeeds.State == Spider.CrawlState.Stopped;
 
 			// Create the event handlers.
-			this.crawler.Spiders.StandardFeeds.StateChanged += this.delegateSpiderStateChanged;
-			this.crawler.Spiders.StandardFeeds.CrawlStarted += this.delegateSpiderCrawlStarted;
-			this.crawler.Spiders.StandardFeeds.CrawlFinished += this.delegateSpiderCrawlFinished;
-			this.crawler.Spiders.StandardFeeds.FeedsCrawlStarted += this.delegateFeedsCrawlStarted;
-			this.crawler.Spiders.StandardFeeds.FeedsCrawlFinished += this.delegateFeedsCrawlFinished;
-			this.crawler.Spiders.StandardFeeds.FeedCrawlStarted += this.delegateFeedCrawlStarted;
-			this.crawler.Spiders.StandardFeeds.FeedCrawlFinished += this.delegateFeedCrawlFinished;
+			this.crawler.Spiders.StandardFeeds.StateChanged += this.OnSpiderStateChanged;
+			this.crawler.Spiders.StandardFeeds.CrawlStarted += this.OnSpiderCrawlStarted;
+			this.crawler.Spiders.StandardFeeds.CrawlFinished += this.OnSpiderCrawlFinished;
+			this.crawler.Spiders.StandardFeeds.FeedsCrawlStarted += this.OnFeedsCrawlStarted;
+			this.crawler.Spiders.StandardFeeds.FeedsCrawlFinished += this.OnFeedsCrawlFinished;
+			this.crawler.Spiders.StandardFeeds.FeedCrawlStarted += this.OnFeedCrawlStarted;
+			this.crawler.Spiders.StandardFeeds.FeedCrawlFinished += this.OnFeedCrawlFinished;
 
 			// Initialize the progress list box and checked list.
 			for (int index = 0; index < YouTubeUri.StandardFeedNames.Length; index++)
@@ -181,16 +164,14 @@ namespace YtAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnSpiderStateChanged(object sender, SpiderEventArgs e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateSpiderStateChanged, new object[] { sender, e });
-				return;
-			}
-			// Change the button state.
-			this.buttonStart.Enabled = e.Spider.State == Spider.CrawlState.Stopped;
-			this.buttonStop.Enabled = e.Spider.State == Spider.CrawlState.Running;
-			this.buttonFeeds.Enabled = e.Spider.State == Spider.CrawlState.Stopped;
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Change the button state.
+					this.buttonStart.Enabled = e.Spider.State == Spider.CrawlState.Stopped;
+					this.buttonStop.Enabled = e.Spider.State == Spider.CrawlState.Running;
+					this.buttonFeeds.Enabled = e.Spider.State == Spider.CrawlState.Stopped;
+				});
 		}
 
 		/// <summary>
@@ -200,16 +181,14 @@ namespace YtAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnSpiderCrawlStarted(object sender, SpiderEventArgs e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateSpiderCrawlStarted, new object[] { sender, e });
-				return;
-			}
-			// Set the progress.
-			//this.progressBox.Progress.Reset();
-			//this.progressBar.Value = 0;
-			//this.labelProgress.Text = "Started.";
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Set the progress.
+					//this.progressBox.Progress.Reset();
+					//this.progressBar.Value = 0;
+					//this.labelProgress.Text = "Started.";
+				});
 		}
 
 		/// <summary>
@@ -219,15 +198,13 @@ namespace YtAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnSpiderCrawlFinished(object sender, SpiderEventArgs e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateSpiderCrawlFinished, new object[] { sender, e });
-				return;
-			}
-			// Set the prgress.
-			//this.progressBar.Value = this.progressBar.Maximum;
-			//this.labelProgress.Text = "Finished.";
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Set the prgress.
+					//this.progressBar.Value = this.progressBar.Maximum;
+					//this.labelProgress.Text = "Finished.";
+				});
 		}
 
 		/// <summary>
@@ -237,30 +214,28 @@ namespace YtAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnFeedsCrawlStarted(object sender, SpiderInfoEventArgs<SpiderStandardFeeds.CrawlInfo> e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateFeedsCrawlStarted, new object[] { sender, e });
-				return;
-			}
-			// Set the progress bar.
-			//this.progressBar.Maximum = feeds.Count;
-			//this.labelProgress.Text = "Crawling {0} standard feeds.".FormatWith(feeds.Count);
-			// Suspend the list box progress events.
-			this.progressListBox.SuspendProgressEvents();
-			// Reset the progress items count.
-			foreach (ProgressItem item in this.progressItems)
-			{
-				item.Progress.Count = 0;
-			}
-			// Update the progress list box.
-			foreach (KeyValuePair<string, DbObjectStandardFeed> feed in e.Info.Feeds)
-			{
-				// Increment the progress count for each feed.
-				this.progressItems[feed.Value.FeedId].Progress.Count++;
-			}
-			// Resume the list box progress events.
-			this.progressListBox.ResumeProgressEvents();
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Set the progress bar.
+					//this.progressBar.Maximum = feeds.Count;
+					//this.labelProgress.Text = "Crawling {0} standard feeds.".FormatWith(feeds.Count);
+					// Suspend the list box progress events.
+					this.progressListBox.SuspendProgressEvents();
+					// Reset the progress items count.
+					foreach (ProgressItem item in this.progressItems)
+					{
+						item.Progress.Count = 0;
+					}
+					// Update the progress list box.
+					foreach (KeyValuePair<string, DbObjectStandardFeed> feed in e.Info.Feeds)
+					{
+						// Increment the progress count for each feed.
+						this.progressItems[feed.Value.FeedId].Progress.Count++;
+					}
+					// Resume the list box progress events.
+					this.progressListBox.ResumeProgressEvents();
+				});
 		}
 
 		/// <summary>
@@ -270,15 +245,13 @@ namespace YtAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnFeedsCrawlFinished(object sender, SpiderInfoEventArgs<SpiderStandardFeeds.CrawlInfo> e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateFeedsCrawlFinished, new object[] { sender, e });
-				return;
-			}
-			// Set the progress bar.
-			//this.progressBar.Value = feeds.Count;
-			//this.labelProgress.Text = "Crawling {0} standard feeds finished.".FormatWith(feeds.Count);
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Set the progress bar.
+					//this.progressBar.Value = feeds.Count;
+					//this.labelProgress.Text = "Crawling {0} standard feeds finished.".FormatWith(feeds.Count);
+				});
 		}
 
 		/// <summary>
@@ -288,15 +261,12 @@ namespace YtAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnFeedCrawlStarted(object sender, SpiderInfoEventArgs<SpiderStandardFeeds.FeedStartedInfo> e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateFeedCrawlStarted, new object[] { sender, e });
-				return;
-			}
-
-			// Update the progress label.
-			//this.labelProgress.Text = "Crawling feed {0} of {1} started.".FormatWith(index, count);			
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Update the progress label.
+					//this.labelProgress.Text = "Crawling feed {0} of {1} started.".FormatWith(index, count);			
+				});
 		}
 
 		/// <summary>
@@ -306,12 +276,10 @@ namespace YtAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnFeedCrawlFinished(object sender, SpiderInfoEventArgs<SpiderStandardFeeds.FeedFinishedInfo> e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.delegateFeedCrawlFinished, new object[] { sender, e });
-				return;
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+				});
 		}
 
 		/// <summary>

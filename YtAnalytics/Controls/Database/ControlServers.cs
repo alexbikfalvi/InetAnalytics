@@ -276,24 +276,23 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnServerAdded(object sender, DbServerEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerAdded), new object[] { sender, e });
-			else
-			{
-				// Add the server.
-				this.AddServer(e.Server);
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Add the server.
+					this.AddServer(e.Server);
 
-				// Log the change.
-				this.log.Add(this.crawler.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Success,
-					ControlServers.logSource,
-					"Database server with ID \'{0}\' and name \'{1}\' added. The server is {2}.",
-					new object[] { e.Server.Id, e.Server.Name, this.crawler.Servers.IsPrimary(e.Server) ? "primary" : "backup" }));
+					// Log the change.
+					this.log.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlServers.logSource,
+						"Database server with ID \'{0}\' and name \'{1}\' added. The server is {2}.",
+						new object[] { e.Server.Id, e.Server.Name, this.crawler.Servers.IsPrimary(e.Server) ? "primary" : "backup" }));
 
-				// Hide the message.
-				this.HideMessage();
-			}
+					// Hide the message.
+					this.HideMessage();
+				});
 		}
 
 		/// <summary>
@@ -303,21 +302,20 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnServerRemoved(object sender, DbIdEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbIdEventHandler(this.OnServerRemoved), new object[] { sender, e });
-			else
-			{
-				// Remove the server.
-				this.RemoveServer(e.Id);
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Remove the server.
+					this.RemoveServer(e.Id);
 
-				// Log the change.
-				this.log.Add(this.crawler.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Success,
-					ControlServers.logSource,
-					"Database server with ID \'{0}\' was removed.",
-					new object[] { e.Id }));
-			}
+					// Log the change.
+					this.log.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlServers.logSource,
+						"Database server with ID \'{0}\' was removed.",
+						new object[] { e.Id }));
+				});
 		}
 
 		/// <summary>
@@ -327,23 +325,22 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnServerChanged(object sender, DbServerEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerEventHandler(this.OnServerChanged), new object[] { sender, e });
-			else
-			{
-				// Update the server information.
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Update the server information.
 
-				// Get the controls corresponding to this server.
-				ServerControls controls = this.items[e.Server.Id];
-				// Update the server information.
-				controls.Item.SubItems[0].Text = e.Server.Name;
-				controls.Item.SubItems[2].Text = e.Server.State.ToString();
-				controls.Item.SubItems[3].Text = e.Server.Version;
-				controls.Node.Text = this.GetServerTreeName(e.Server);
+					// Get the controls corresponding to this server.
+					ServerControls controls = this.items[e.Server.Id];
+					// Update the server information.
+					controls.Item.SubItems[0].Text = e.Server.Name;
+					controls.Item.SubItems[2].Text = e.Server.State.ToString();
+					controls.Item.SubItems[3].Text = e.Server.Version;
+					controls.Node.Text = this.GetServerTreeName(e.Server);
 
-				// Call the selected item change event to update the buttons.
-				this.OnServerSelectionChanged(this, e);
-			}
+					// Call the selected item change event to update the buttons.
+					this.OnServerSelectionChanged(this, e);
+				});
 		}
 
 		/// <summary>
@@ -353,28 +350,27 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		void OnServerStateChanged(object sender, DbServerStateEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { sender, e });
-			else
-			{
-				// If there are no controls for this server, ignore the event.
-				if (!this.items.ContainsKey(e.Server.Id)) return;
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// If there are no controls for this server, ignore the event.
+					if (!this.items.ContainsKey(e.Server.Id)) return;
 
-				// Get the controls corresponding to this server.
-				ServerControls controls = this.items[e.Server.Id];
+					// Get the controls corresponding to this server.
+					ServerControls controls = this.items[e.Server.Id];
 
-				// Update the list view item.
-				controls.Item.SubItems[2].Text = e.Server.State.ToString();
-				controls.Item.SubItems[3].Text = e.Server.Version;
-				controls.Item.ImageKey = ControlServers.imageKeys[(int)e.Server.State];
+					// Update the list view item.
+					controls.Item.SubItems[2].Text = e.Server.State.ToString();
+					controls.Item.SubItems[3].Text = e.Server.Version;
+					controls.Item.ImageKey = ControlServers.imageKeys[(int)e.Server.State];
 
-				// Update the tree node.
-				controls.Node.ImageKey = ControlServers.imageKeys[(int)e.Server.State];
-				controls.Node.SelectedImageKey = ControlServers.imageKeys[(int)e.Server.State];
+					// Update the tree node.
+					controls.Node.ImageKey = ControlServers.imageKeys[(int)e.Server.State];
+					controls.Node.SelectedImageKey = ControlServers.imageKeys[(int)e.Server.State];
 
-				// Call the selected item change event to update the buttons.
-				this.OnServerSelectionChanged(this, e);
-			}
+					// Call the selected item change event to update the buttons.
+					this.OnServerSelectionChanged(this, e);
+				});
 		}
 
 		/// <summary>
@@ -384,46 +380,45 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnPrimaryServerChanged(object sender, DbPrimaryServerChangedEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbPrimaryServerChangedEventHandler(this.OnPrimaryServerChanged), new object[] { sender, e });
-			else
-			{
-				// Update the old primary server, if not null.
-				if (null != e.OldPrimary)
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					if (this.items.ContainsKey(e.OldPrimary.Id))
+					// Update the old primary server, if not null.
+					if (null != e.OldPrimary)
 					{
-						ServerControls controls = this.items[e.OldPrimary.Id];
-						controls.Item.SubItems[1].Text = "Backup";
-						controls.Node.Text = this.GetServerTreeName(e.OldPrimary);
+						if (this.items.ContainsKey(e.OldPrimary.Id))
+						{
+							ServerControls controls = this.items[e.OldPrimary.Id];
+							controls.Item.SubItems[1].Text = "Backup";
+							controls.Node.Text = this.GetServerTreeName(e.OldPrimary);
+						}
 					}
-				}
 
-				// Update the new primary server, if not null.
-				if (null != e.NewPrimary)
-				{
-					if (this.items.ContainsKey(e.NewPrimary.Id))
+					// Update the new primary server, if not null.
+					if (null != e.NewPrimary)
 					{
-						ServerControls controls = this.items[e.NewPrimary.Id];
-						controls.Item.SubItems[1].Text = "Primary";
-						controls.Node.Text = this.GetServerTreeName(e.NewPrimary);
+						if (this.items.ContainsKey(e.NewPrimary.Id))
+						{
+							ServerControls controls = this.items[e.NewPrimary.Id];
+							controls.Item.SubItems[1].Text = "Primary";
+							controls.Node.Text = this.GetServerTreeName(e.NewPrimary);
+						}
 					}
-				}
 
-				// Call the selected item change event to update the buttons.
-				this.OnServerSelectionChanged(this, EventArgs.Empty);
+					// Call the selected item change event to update the buttons.
+					this.OnServerSelectionChanged(this, EventArgs.Empty);
 
-				// Log the change.
-				this.log.Add(this.crawler.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
-					ControlServers.logSource,
-					"Primary database server has changed from \'{0}\' to \'{1}\'.",
-					new object[] {
-						e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
-						e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
-					}));
-			}
+					// Log the change.
+					this.log.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						ControlServers.logSource,
+						"Primary database server has changed from \'{0}\' to \'{1}\'.",
+						new object[] {
+							e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
+							e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
+						}));
+				});
 		}
 
 		/// <summary>
@@ -551,23 +546,22 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="state">The asynchronous state.</param>
 		private void OnRemoveComplete(DbServerAsyncState state)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnRemoveComplete), new object[] { state });
-			else
-			{
-				// Hide the message.
-				this.HideMessage();
-				// If the exception is not null, display an error message to the user.
-				if (state.Exception != null)
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					MessageBox.Show(
-						this,
-						state.Exception.Message,
-						"Database Server Removal Failed",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error);
-				}
-			}
+					// Hide the message.
+					this.HideMessage();
+					// If the exception is not null, display an error message to the user.
+					if (state.Exception != null)
+					{
+						MessageBox.Show(
+							this,
+							state.Exception.Message,
+							"Database Server Removal Failed",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error);
+					}
+				});
 		}
 
 		/// <summary>
@@ -729,12 +723,11 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		void OnEventLogged(object sender, LogEventArgs e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { sender, e });
-			else
-			{
-				this.log.Add(e.Event);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.log.Add(e.Event);
+				});
 		}
 	}
 }

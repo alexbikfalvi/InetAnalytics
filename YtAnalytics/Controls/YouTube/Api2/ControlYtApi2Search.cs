@@ -223,86 +223,95 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="result">The asynchronous result.</param>
 		private void Callback(IAsyncResult result)
 		{
-			if (this.InvokeRequired)
-				this.Invoke(new AsyncCallback(this.Callback), new object[] { result });
-			else
-			{
-				try
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// Complete the request
-					this.feed = this.request.End(result);
-
-					// Add the new items to the list view.
-					foreach (Video video in feed.Entries)
+					try
 					{
-						this.videoList.Add(video);
-					}
+						// Complete the request
+						this.feed = this.request.End(result);
 
-					// Update the page information.
-					this.videoList.CountStart = feed.Entries.Count > 0 ? feed.SearchStartIndex : 0;
-					this.videoList.CountPerPage = feed.Entries.Count;
-					this.videoList.CountTotal = feed.SearchTotalResults;
-
-					// Set the navigation buttons state.
-					this.videoList.Previous = feed.Links.Previous != null;
-					this.videoList.Next = feed.Links.Next != null;
-
-					// Compute the event type.
-					LogEventType eventType = (this.feed.FailuresAtom.Count == 0) && (this.feed.FailuresEntry.Count == 0) ?
-						LogEventType.Success : LogEventType.SuccessWarning;
-					string eventMessage = eventType == LogEventType.Success ?
-						"The request for videos feed with search query \'{0}\' completed successfully." :
-						"The request for videos feed with search query \'{0}\' completed partially successfully. However, some errors have occurred.";
-
-					// If there are failures, create a new subevent list.
-					List<LogEvent> subevents = null;
-					if ((this.feed.FailuresAtom.Count != 0) || (this.feed.FailuresEntry.Count != 0))
-					{
-						subevents = new List<LogEvent>();
-						foreach (AtomException exception in this.feed.FailuresAtom)
+						// Add the new items to the list view.
+						foreach (Video video in feed.Entries)
 						{
-							subevents.Add(new LogEvent(
-								LogEventLevel.Important,
-								LogEventType.Error,
-								DateTime.MinValue,
-								ControlYtApi2Search.logSource,
-								"Parsing of YouTube API version 2 atom XML failed.",
-								null,
-								exception));
+							this.videoList.Add(video);
 						}
-						foreach (YouTubeAtomException exception in this.feed.FailuresEntry)
-						{
-							subevents.Add(new LogEvent(
-								LogEventLevel.Important,
-								LogEventType.Error,
-								DateTime.MinValue,
-								ControlYtApi2Search.logSource,
-								"Converting atom to YouTube API version 2 video entry failed.",
-								null,
-								exception));
-						}
-					}
 
-					// Log
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Verbose,
-						eventType,
-						ControlYtApi2Search.logSource,
-						eventMessage,
-						new object[] { this.textBoxSearch.Text, this.linkLabel.Text },
-						null,
-						subevents));
-				}
-				catch (WebException exception)
-				{
-					if (exception.Status == WebExceptionStatus.RequestCanceled)
+						// Update the page information.
+						this.videoList.CountStart = feed.Entries.Count > 0 ? feed.SearchStartIndex : 0;
+						this.videoList.CountPerPage = feed.Entries.Count;
+						this.videoList.CountTotal = feed.SearchTotalResults;
+
+						// Set the navigation buttons state.
+						this.videoList.Previous = feed.Links.Previous != null;
+						this.videoList.Next = feed.Links.Next != null;
+
+						// Compute the event type.
+						LogEventType eventType = (this.feed.FailuresAtom.Count == 0) && (this.feed.FailuresEntry.Count == 0) ?
+							LogEventType.Success : LogEventType.SuccessWarning;
+						string eventMessage = eventType == LogEventType.Success ?
+							"The request for videos feed with search query \'{0}\' completed successfully." :
+							"The request for videos feed with search query \'{0}\' completed partially successfully. However, some errors have occurred.";
+
+						// If there are failures, create a new subevent list.
+						List<LogEvent> subevents = null;
+						if ((this.feed.FailuresAtom.Count != 0) || (this.feed.FailuresEntry.Count != 0))
+						{
+							subevents = new List<LogEvent>();
+							foreach (AtomException exception in this.feed.FailuresAtom)
+							{
+								subevents.Add(new LogEvent(
+									LogEventLevel.Important,
+									LogEventType.Error,
+									DateTime.MinValue,
+									ControlYtApi2Search.logSource,
+									"Parsing of YouTube API version 2 atom XML failed.",
+									null,
+									exception));
+							}
+							foreach (YouTubeAtomException exception in this.feed.FailuresEntry)
+							{
+								subevents.Add(new LogEvent(
+									LogEventLevel.Important,
+									LogEventType.Error,
+									DateTime.MinValue,
+									ControlYtApi2Search.logSource,
+									"Converting atom to YouTube API version 2 video entry failed.",
+									null,
+									exception));
+							}
+						}
+
+						// Log
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
-							LogEventType.Canceled,
+							eventType,
 							ControlYtApi2Search.logSource,
-							"The request for videos feed with search query \'{0}\' has been canceled.",
-							new object[] { this.textBoxSearch.Text, this.linkLabel.Text }));
-					else
+							eventMessage,
+							new object[] { this.textBoxSearch.Text, this.linkLabel.Text },
+							null,
+							subevents));
+					}
+					catch (WebException exception)
+					{
+						if (exception.Status == WebExceptionStatus.RequestCanceled)
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Verbose,
+								LogEventType.Canceled,
+								ControlYtApi2Search.logSource,
+								"The request for videos feed with search query \'{0}\' has been canceled.",
+								new object[] { this.textBoxSearch.Text, this.linkLabel.Text }));
+						else
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								ControlYtApi2Search.logSource,
+								"The request for videos feed with search query \'{0}\' failed. {1}",
+								new object[] { this.textBoxSearch.Text, exception.Message, this.linkLabel.Text },
+								exception));
+					}
+					catch (Exception exception)
+					{
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
@@ -310,24 +319,14 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							"The request for videos feed with search query \'{0}\' failed. {1}",
 							new object[] { this.textBoxSearch.Text, exception.Message, this.linkLabel.Text },
 							exception));
-				}
-				catch (Exception exception)
-				{
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Important,
-						LogEventType.Error,
-						ControlYtApi2Search.logSource,
-						"The request for videos feed with search query \'{0}\' failed. {1}",
-						new object[] { this.textBoxSearch.Text, exception.Message, this.linkLabel.Text },
-						exception));
-				}
-				finally
-				{
-					this.buttonStart.Enabled = true;
-					this.buttonStop.Enabled = false;
-					this.textBoxSearch.Enabled = true;
-				}
-			}
+					}
+					finally
+					{
+						this.buttonStart.Enabled = true;
+						this.buttonStop.Enabled = false;
+						this.textBoxSearch.Enabled = true;
+					}
+				});
 		}
 
 		/// <summary>

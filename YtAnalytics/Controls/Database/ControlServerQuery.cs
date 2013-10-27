@@ -97,15 +97,14 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnServerStateChanged(object sender, DbServerStateEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { sender, e });
-			else
-			{
-				this.buttonConnect.Enabled =
-					(this.server.State == DbServer.ServerState.Disconnected) ||
-					(this.server.State == DbServer.ServerState.Failed);
-				this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.buttonConnect.Enabled =
+						(this.server.State == DbServer.ServerState.Disconnected) ||
+						(this.server.State == DbServer.ServerState.Failed);
+					this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
+				});
 		}
 
 		/// <summary>
@@ -147,92 +146,91 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="asyncState">The asynchronous state.</param>
 		private void OnConnected(DbServerAsyncState asyncState)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnConnected), new object[] { asyncState });
-			else
-			{
-				// Enable the tool strip.
-				this.toolStrip.Enabled = true;
-				// Hide the connecting message.
-				this.HideMessage();
-				// Check if an exception occurred.
-				if (asyncState.Exception != null)
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// If this a database exception.
-					if (asyncState.Exception.IsDb)
+					// Enable the tool strip.
+					this.toolStrip.Enabled = true;
+					// Hide the connecting message.
+					this.HideMessage();
+					// Check if an exception occurred.
+					if (asyncState.Exception != null)
 					{
-						// Check the error type.
-						switch (asyncState.Exception.DbType)
+						// If this a database exception.
+						if (asyncState.Exception.IsDb)
 						{
-							case DbException.Type.LoginPasswordExpired:
-								if (DialogResult.Yes == MessageBox.Show(
-									this,
-									"The login password for the database server \'{0}\' has expired. Do you wish to change the password now?".FormatWith(asyncState.Server.Name),
-									"Login Password Expired",
-									MessageBoxButtons.YesNo,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button2
-									))
-								{
-									// Change password.
-									this.OnChangePassword(null, null);
-								}
-								break;
-							case DbException.Type.LoginPasswordMustChange:
-								if (DialogResult.Yes == MessageBox.Show(
-									this,
-									"To connect to the database server \'{0}\' you must change the password before the first login. Do you wish to change the password now?".FormatWith(asyncState.Server.Name),
-									"Must Change Password",
-									MessageBoxButtons.YesNo,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button2
-									))
-								{
-									// Change password.
-									this.OnChangePassword(null, null);
-								}
-								break;
-							default:
-								// Display an error message.
-								MessageBox.Show(
-									this,
-									"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
-									"Connecting to Database Failed",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Error
-									);
-								break;
+							// Check the error type.
+							switch (asyncState.Exception.DbType)
+							{
+								case DbException.Type.LoginPasswordExpired:
+									if (DialogResult.Yes == MessageBox.Show(
+										this,
+										"The login password for the database server \'{0}\' has expired. Do you wish to change the password now?".FormatWith(asyncState.Server.Name),
+										"Login Password Expired",
+										MessageBoxButtons.YesNo,
+										MessageBoxIcon.Question,
+										MessageBoxDefaultButton.Button2
+										))
+									{
+										// Change password.
+										this.OnChangePassword(null, null);
+									}
+									break;
+								case DbException.Type.LoginPasswordMustChange:
+									if (DialogResult.Yes == MessageBox.Show(
+										this,
+										"To connect to the database server \'{0}\' you must change the password before the first login. Do you wish to change the password now?".FormatWith(asyncState.Server.Name),
+										"Must Change Password",
+										MessageBoxButtons.YesNo,
+										MessageBoxIcon.Question,
+										MessageBoxDefaultButton.Button2
+										))
+									{
+										// Change password.
+										this.OnChangePassword(null, null);
+									}
+									break;
+								default:
+									// Display an error message.
+									MessageBox.Show(
+										this,
+										"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
+										"Connecting to Database Failed",
+										MessageBoxButtons.OK,
+										MessageBoxIcon.Error
+										);
+									break;
+							}
+						}
+						else
+						{
+							// Display an error message.
+							MessageBox.Show(
+								this,
+								"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
+								"Connecting to Database Failed",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error
+								);
 						}
 					}
+					// Else, process the user state.
 					else
 					{
-						// Display an error message.
-						MessageBox.Show(
-							this,
-							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
-					}
-				}
-				// Else, process the user state.
-				else
-				{
-					// If there exists a user asynchronous state.
-					if (asyncState.AsyncState != null)
-					{
-						// If the user state is an event handler, call that event handler.
-						if (asyncState.AsyncState is EventHandler)
+						// If there exists a user asynchronous state.
+						if (asyncState.AsyncState != null)
 						{
-							// Get the event handler.
-							EventHandler handler = asyncState.AsyncState as EventHandler;
-							// Call the event handler.
-							handler(this, EventArgs.Empty);
+							// If the user state is an event handler, call that event handler.
+							if (asyncState.AsyncState is EventHandler)
+							{
+								// Get the event handler.
+								EventHandler handler = asyncState.AsyncState as EventHandler;
+								// Call the event handler.
+								handler(this, EventArgs.Empty);
+							}
 						}
 					}
-				}
-			}
+				});
 		}
 
 		/// <summary>
@@ -270,41 +268,40 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="asyncState">The asynchronous state.</param>
 		private void OnDisconnected(DbServerAsyncState asyncState)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnDisconnected), new object[] { asyncState });
-			else
-			{
-				// Hide the connecting message.
-				this.HideMessage();
-				// Check if an exception occurred.
-				if (asyncState.Exception != null)
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// If this a database exception.
-					if (asyncState.Exception.IsDb)
+					// Hide the connecting message.
+					this.HideMessage();
+					// Check if an exception occurred.
+					if (asyncState.Exception != null)
 					{
-						// Display a database error message.
-						MessageBox.Show(
-							this,
-							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
+						// If this a database exception.
+						if (asyncState.Exception.IsDb)
+						{
+							// Display a database error message.
+							MessageBox.Show(
+								this,
+								"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
+								"Connecting to Database Failed",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error
+								);
+						}
+						else
+						{
+							// Display a generic error message.
+							MessageBox.Show(
+								this,
+								"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
+								"Connecting to Database Failed",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error
+								);
+						}
 					}
-					else
-					{
-						// Display a generic error message.
-						MessageBox.Show(
-							this,
-							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
-					}
-				}
-				// Else, do nothing.
-			}
+					// Else, do nothing.
+				});
 		}
 
 		/// <summary>
@@ -356,50 +353,49 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="asyncState"></param>
 		private void OnPasswordChangeCompleted(DbServerAsyncState asyncState)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerCallback(this.OnPasswordChangeCompleted), new object[] { asyncState });
-			else
-			{
-				// Hide the connecting message.
-				this.HideMessage();
-				// Check if an exception occurred.
-				if (asyncState.Exception != null)
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// If this a database exception.
-					if (asyncState.Exception.IsDb)
+					// Hide the connecting message.
+					this.HideMessage();
+					// Check if an exception occurred.
+					if (asyncState.Exception != null)
 					{
-						// Display a database error message.
-						MessageBox.Show(
-							this,
-							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
-							"Connecting to Database Failed",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
+						// If this a database exception.
+						if (asyncState.Exception.IsDb)
+						{
+							// Display a database error message.
+							MessageBox.Show(
+								this,
+								"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.DbMessage),
+								"Connecting to Database Failed",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error
+								);
+						}
+						else
+						{
+							// Display a generic error message.
+							MessageBox.Show(
+								this,
+								"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
+								"Connecting to Database Failed",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error
+								);
+						}
 					}
+					// Else, show a notification message.
 					else
 					{
-						// Display a generic error message.
 						MessageBox.Show(
 							this,
-							"Connecting to the database server \'{0}\' failed. {1}".FormatWith(asyncState.Server.Name, asyncState.Exception.Message),
-							"Connecting to Database Failed",
+							"The database server password has been changed successfully.",
+							"Server Password Changed",
 							MessageBoxButtons.OK,
-							MessageBoxIcon.Error
-							);
+							MessageBoxIcon.Information);
 					}
-				}
-				// Else, show a notification message.
-				else
-				{
-					MessageBox.Show(
-						this,
-						"The database server password has been changed successfully.",
-						"Server Password Changed",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Information);
-				}
-			}
+				});
 		}
 
 		/// <summary>
@@ -420,92 +416,111 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
-			// Call this handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(new EventHandler(this.OnStart), new object[] { sender, e });
-				return;
-			}
-
-			// If the database server is not connected, first connect to the database.
-			if (this.server.State != DbServer.ServerState.Connected)
-			{
-				// Show a connecting message.
-				this.ShowMessage(Resources.Connect_48, "Database", "Connecting to the database server \'{0}\'...".FormatWith(this.server.Name));
-				try
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// Connect asynchronously to the database server, and add this method as a handler.
-					this.server.Open(this.OnConnected, new EventHandler(this.OnStart));
-				}
-				catch (Exception exception)
-				{
-					// If an exception occurs, hide the connecting message.
-					this.HideMessage();
-					// Display an error message box to the user.
-					MessageBox.Show(
-						this,
-						"Connecting to the database server \'{0}\' failed. {1}".FormatWith(this.server.Name, exception.Message),
-						"Connecting to Database Failed",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error
-						);
-				}
-				return;
-			}
+					// If the database server is not connected, first connect to the database.
+					if (this.server.State != DbServer.ServerState.Connected)
+					{
+						// Show a connecting message.
+						this.ShowMessage(Resources.Connect_48, "Database", "Connecting to the database server \'{0}\'...".FormatWith(this.server.Name));
+						try
+						{
+							// Connect asynchronously to the database server, and add this method as a handler.
+							this.server.Open(this.OnConnected, new EventHandler(this.OnStart));
+						}
+						catch (Exception exception)
+						{
+							// If an exception occurs, hide the connecting message.
+							this.HideMessage();
+							// Display an error message box to the user.
+							MessageBox.Show(
+								this,
+								"Connecting to the database server \'{0}\' failed. {1}".FormatWith(this.server.Name, exception.Message),
+								"Connecting to Database Failed",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error
+								);
+						}
+						return;
+					}
 
-			// Refresh the list of databases.
+					// Refresh the list of databases.
 
-			// Create a new database command for the list of server databases.
-			try
-			{
-				// Clear the result table.
-				this.dataGrid.Rows.Clear();
-				this.dataGrid.Columns.Clear();
-				// Disable the start button.
-				this.buttonStart.Enabled = false;
-				// Enable the stop button.
-				this.buttonStop.Enabled = true;
-				// Disable the query code box.
-				this.codeBox.Enabled = false;
-				// Set the command to null.
-				this.command = null;
-				// Show a connecting message.
-				this.ShowMessage(Resources.DatabaseBusy_48, "Database", "Executing query on the database server \'{0}\'...".FormatWith(this.server.Name));
-				// Create the command.
-				this.command = this.server.CreateCommand(DbQuery.Create(this.codeBox.Text));
-				// Execute the command.
-				command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
-				{
+					// Create a new database command for the list of server databases.
 					try
 					{
-						// Throw the command exception, if any.
-						if (commandResult.Exception != null) throw commandResult.Exception;
-						// Read the results table.
-						reader.Read(null, (DbAsyncResult readerResult, DbDataRaw result) =>
+						// Clear the result table.
+						this.dataGrid.Rows.Clear();
+						this.dataGrid.Columns.Clear();
+						// Disable the start button.
+						this.buttonStart.Enabled = false;
+						// Enable the stop button.
+						this.buttonStop.Enabled = true;
+						// Disable the query code box.
+						this.codeBox.Enabled = false;
+						// Set the command to null.
+						this.command = null;
+						// Show a connecting message.
+						this.ShowMessage(Resources.DatabaseBusy_48, "Database", "Executing query on the database server \'{0}\'...".FormatWith(this.server.Name));
+						// Create the command.
+						this.command = this.server.CreateCommand(DbQuery.Create(this.codeBox.Text));
+						// Execute the command.
+						command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
 						{
 							try
 							{
-								// Throw the reader exception, if any.
-								if (readerResult.Exception != null)
+								// Throw the command exception, if any.
+								if (commandResult.Exception != null) throw commandResult.Exception;
+								// Read the results table.
+								reader.Read(null, (DbAsyncResult readerResult, DbDataRaw result) =>
 								{
-									reader.Close();
-									throw readerResult.Exception;
-								}
-								// Get the number of records affected.
-								int recordsAffected = reader.RecordsAffected;
-								// Close the reader.
-								reader.Close();
-								// Dispose and reset the command.
-								this.command.Dispose();
-								this.command = null;
-								// Show a success message.
-								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", "Executing query on the database server \'{0}\' completed successfully.".FormatWith(this.server.Name), false);
-								// Wait.
-								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
-								// Hide the message.
-								this.HideMessage();
-								// Call the completion method.
-								this.OnQuerySuccess(result, recordsAffected);
+									try
+									{
+										// Throw the reader exception, if any.
+										if (readerResult.Exception != null)
+										{
+											reader.Close();
+											throw readerResult.Exception;
+										}
+										// Get the number of records affected.
+										int recordsAffected = reader.RecordsAffected;
+										// Close the reader.
+										reader.Close();
+										// Dispose and reset the command.
+										this.command.Dispose();
+										this.command = null;
+										// Show a success message.
+										this.ShowMessage(Resources.DatabaseSuccess_48, "Database", "Executing query on the database server \'{0}\' completed successfully.".FormatWith(this.server.Name), false);
+										// Wait.
+										Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+										// Hide the message.
+										this.HideMessage();
+										// Call the completion method.
+										this.OnQuerySuccess(result, recordsAffected);
+									}
+									catch (Exception exception)
+									{
+										// Dispose and reset the command.
+										this.command.Dispose();
+										this.command = null;
+										// Show an error message.
+										this.ShowMessage(Resources.DatabaseError_48, "Database", "Executing query on the database server \'{0}\' failed.".FormatWith(this.server.Name), false);
+										// Log the event.
+										this.server.LogEvent(
+											LogEventLevel.Important,
+											LogEventType.Error,
+											"Executing query on the database server \'{0}\' failed. {1}",
+											new object[] { this.server.Name, exception.Message },
+											exception);
+										// Wait.
+										Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+										// Hide the message.
+										this.HideMessage();
+										// Call the completion method.
+										this.OnQueryFail(exception);
+									}
+								});
 							}
 							catch (Exception exception)
 							{
@@ -552,28 +567,6 @@ namespace YtAnalytics.Controls.Database
 						this.OnQueryFail(exception);
 					}
 				});
-			}
-			catch (Exception exception)
-			{
-				// Dispose and reset the command.
-				this.command.Dispose();
-				this.command = null;
-				// Show an error message.
-				this.ShowMessage(Resources.DatabaseError_48, "Database", "Executing query on the database server \'{0}\' failed.".FormatWith(this.server.Name), false);
-				// Log the event.
-				this.server.LogEvent(
-					LogEventLevel.Important,
-					LogEventType.Error,
-					"Executing query on the database server \'{0}\' failed. {1}",
-					new object[] { this.server.Name, exception.Message },
-					exception);
-				// Wait.
-				Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
-				// Hide the message.
-				this.HideMessage();
-				// Call the completion method.
-				this.OnQueryFail(exception);
-			}
 		}
 
 		/// <summary>
@@ -583,42 +576,41 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="recordsAffected">The number of records affected by the query.</param>
 		private void OnQuerySuccess(DbDataRaw table, int recordsAffected)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ResultAction(this.OnQuerySuccess), new object[] { table, recordsAffected });
-			else
-			{
-				// Enable the start button.
-				this.buttonStart.Enabled = true;
-				// Disable the stop button.
-				this.buttonStop.Enabled = false;
-				// Disable the query code box.
-				this.codeBox.Enabled = true;
-				// Display the table data.
-				
-				// If the table has any data.
-				if (table.HasData)
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// Add the table columns.
-					foreach (string column in table.ColumnNames)
-					{
-						this.dataGrid.Columns.Add(column, column);
-					}
-					// Add the table rows.
-					for (int row = 0; row < table.RowCount; row++)
-					{
-						this.dataGrid.Rows.Add(table.GetRow(row));
-					}
+					// Enable the start button.
+					this.buttonStart.Enabled = true;
+					// Disable the stop button.
+					this.buttonStop.Enabled = false;
+					// Disable the query code box.
+					this.codeBox.Enabled = true;
+					// Display the table data.
 
-					// Update the status box.
-					this.statusLabel.Text = "Query completed successfully: {0} row{1} of data fetched.".FormatWith(table.RowCount.ToString(), table.RowCount.PluralSuffix());
-				}
-				else
-				{
-					if (recordsAffected >= 0) this.statusLabel.Text = "Query completed successfully: {0} data records changed.".FormatWith(recordsAffected);
-					else this.statusLabel.Text = "Query completed successfully.";
-				}
-				this.statusLabel.Image = Resources.Success_16;
-			}
+					// If the table has any data.
+					if (table.HasData)
+					{
+						// Add the table columns.
+						foreach (string column in table.ColumnNames)
+						{
+							this.dataGrid.Columns.Add(column, column);
+						}
+						// Add the table rows.
+						for (int row = 0; row < table.RowCount; row++)
+						{
+							this.dataGrid.Rows.Add(table.GetRow(row));
+						}
+
+						// Update the status box.
+						this.statusLabel.Text = "Query completed successfully: {0} row{1} of data fetched.".FormatWith(table.RowCount.ToString(), table.RowCount.PluralSuffix());
+					}
+					else
+					{
+						if (recordsAffected >= 0) this.statusLabel.Text = "Query completed successfully: {0} data records changed.".FormatWith(recordsAffected);
+						else this.statusLabel.Text = "Query completed successfully.";
+					}
+					this.statusLabel.Image = Resources.Success_16;
+				});
 		}
 
 		/// <summary>
@@ -627,20 +619,19 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="exception">The exception.</param>
 		private void OnQueryFail(Exception exception)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new ExceptionAction(this.OnQueryFail), new object[] { exception });
-			else
-			{
-				// Enable the start button.
-				this.buttonStart.Enabled = true;
-				// Disable the stop button.
-				this.buttonStop.Enabled = false;
-				// Disable the query code box.
-				this.codeBox.Enabled = true;
-				// Update the status box.
-				this.statusLabel.Text = "Query failed. {0}".FormatWith(exception.Message);
-				this.statusLabel.Image = Resources.Error_16;
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Enable the start button.
+					this.buttonStart.Enabled = true;
+					// Disable the stop button.
+					this.buttonStop.Enabled = false;
+					// Disable the query code box.
+					this.codeBox.Enabled = true;
+					// Update the status box.
+					this.statusLabel.Text = "Query failed. {0}".FormatWith(exception.Message);
+					this.statusLabel.Image = Resources.Error_16;
+				});
 		}
 
 		/// <summary>

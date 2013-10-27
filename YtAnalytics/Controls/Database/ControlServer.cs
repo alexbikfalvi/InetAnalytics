@@ -184,22 +184,21 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnServerStateChanged(object sender, DbServerStateEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbServerStateEventHandler(this.OnServerStateChanged), new object[] { sender, e });
-			else
-			{
-				this.buttonConnect.Enabled =
-					(this.server.State == DbServer.ServerState.Disconnected) ||
-					(this.server.State == DbServer.ServerState.Failed);
-				this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
-				this.buttonChangePassword.Enabled =
-					(this.server.State == DbServer.ServerState.Disconnected) ||
-					(this.server.State == DbServer.ServerState.Failed);
-				this.pictureBox.Image = ControlServer.images[(int)this.server.State];
-				this.tabControl.Enabled =
-					(this.server.State != DbServer.ServerState.Connecting) &&
-					(this.server.State != DbServer.ServerState.Disconnecting);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.buttonConnect.Enabled =
+						(this.server.State == DbServer.ServerState.Disconnected) ||
+						(this.server.State == DbServer.ServerState.Failed);
+					this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
+					this.buttonChangePassword.Enabled =
+						(this.server.State == DbServer.ServerState.Disconnected) ||
+						(this.server.State == DbServer.ServerState.Failed);
+					this.pictureBox.Image = ControlServer.images[(int)this.server.State];
+					this.tabControl.Enabled =
+						(this.server.State != DbServer.ServerState.Connecting) &&
+						(this.server.State != DbServer.ServerState.Disconnecting);
+				});
 		}
 
 		/// <summary>
@@ -317,23 +316,22 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnPrimaryServerChanged(object sender, DbPrimaryServerChangedEventArgs e)
 		{
-			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new DbPrimaryServerChangedEventHandler(this.OnPrimaryServerChanged), new object[] { sender, e });
-			else
-			{
-				this.buttonPrimary.Enabled = !this.crawler.Servers.IsPrimary(this.server);
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.buttonPrimary.Enabled = !this.crawler.Servers.IsPrimary(this.server);
 
-				// Log the change.
-				this.log.Add(this.crawler.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
-					ControlServer.logSource,
-					"Primary database server has changed from \'{0}\' to \'{1}\'.",
-					new object[] {
-						e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
-						e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
-					}));
-			}
+					// Log the change.
+					this.log.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						ControlServer.logSource,
+						"Primary database server has changed from \'{0}\' to \'{1}\'.",
+						new object[] {
+							e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
+							e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
+						}));
+				});
 		}
 
 		/// <summary>
@@ -395,13 +393,12 @@ namespace YtAnalytics.Controls.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnEventLogged(object sender, LogEventArgs e)
 		{
-			// Call this method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(new LogEventHandler(this.OnEventLogged), new object[] { sender, e });
-			else
-			{
-				// Log the event.
-				this.log.Add(e.Event);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Log the event.
+					this.log.Add(e.Event);
+				});
 		}
 
 		/// <summary>

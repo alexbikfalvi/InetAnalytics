@@ -51,25 +51,11 @@ namespace YtAnalytics.Controls.Net.Ssh
 		private SshClient client = null;
 		private readonly ConcurrentList<SshCommand> commands = new ConcurrentList<SshCommand>();
 
-		private Action<Exception> actionErrorOccurred;
-		private Action<HostKeyEventArgs> actionHostKeyReceived;
-		private Action<SshCommand> actionCommandBegin;
-		private Action<SshCommand, string> actionCommandData;
-		private Action<SshCommand, string> actionCommandSucceeded;
-		private Action<SshCommand, string> actionCommandFailed;
-
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
 		public ControlSsh()
 		{
-			// Create the delegates.
-			this.actionErrorOccurred = new Action<Exception>(this.OnErrorOccurredInternal);
-			this.actionHostKeyReceived = new Action<HostKeyEventArgs>(this.OnHostKeyReceivedInternal);
-			this.actionCommandBegin = new Action<SshCommand>(this.OnCommandBeginInternal);
-			this.actionCommandData = new Action<SshCommand, string>(this.OnCommandDataInternal);
-			this.actionCommandSucceeded = new Action<SshCommand, string>(this.OnCommandSucceededInternal);
-			this.actionCommandFailed = new Action<SshCommand, string>(this.OnCommandFailedInternal);
 		}
 
 		// Public properties.
@@ -674,15 +660,11 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="e">The event arguments.</param>
 		private void OnSshErrorOccurred(object sender, ExceptionEventArgs e)
 		{
-			// Call the event handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.actionErrorOccurred, new object[] { e.Exception });
-			}
-			else
-			{
-				this.OnErrorOccurredInternal(e.Exception);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.OnErrorOccurredInternal(e.Exception);
+				});
 
 			// Synchronize access to the SSH client.
 			lock (this.sync)
@@ -751,15 +733,11 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="e">The event arguments.</param>
 		private void OnSshHostKeyReceived(object sender, HostKeyEventArgs e)
 		{
-			// Call the event handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.actionHostKeyReceived, new object[] { e });
-			}
-			else
-			{
-				this.OnHostKeyReceivedInternal(e);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.OnHostKeyReceivedInternal(e);
+				});
 		}
 
 		/// <summary>
@@ -768,15 +746,11 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="command">The command.</param>
 		private void OnCommandBeginInternal(SshCommand command)
 		{
-			// Call the event handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.actionCommandBegin, new object[] { command });
-			}
-			else
-			{
-				this.OnCommandBegin(command);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.OnCommandBegin(command);
+				});
 		}
 
 		/// <summary>
@@ -786,15 +760,11 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="data">The data.</param>
 		private void OnCommandDataInternal(SshCommand command, string data)
 		{
-			// Call the event handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.actionCommandData, new object[] { command, data });
-			}
-			else
-			{
-				this.OnCommandData(command, data);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.OnCommandData(command, data);
+				});
 		}
 
 		/// <summary>
@@ -845,15 +815,11 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="result">The result.</param>
 		private void OnCommandSucceededInternal(SshCommand command, string result)
 		{
-			// Call the event handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.actionCommandSucceeded, new object[] { command, result });
-			}
-			else
-			{
-				this.OnCommandSucceeded(command, result);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.OnCommandSucceeded(command, result);
+				});
 		}
 
 		/// <summary>
@@ -863,15 +829,11 @@ namespace YtAnalytics.Controls.Net.Ssh
 		/// <param name="error">The error.</param>
 		private void OnCommandFailedInternal(SshCommand command, string error)
 		{
-			// Call the event handler on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(this.actionCommandFailed, new object[] { command, error });
-			}
-			else
-			{
-				this.OnCommandFailed(command, error);
-			}
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					this.OnCommandFailed(command, error);
+				});
 		}
 	}
 }

@@ -215,54 +215,52 @@ namespace YtAnalytics.Controls.Log
 		/// <param name="argument">The update state.</param>
 		private void EndUpdateLog(object argument)
 		{
-			// Invoke the function on the UI thread.
-			if (this.InvokeRequired)
-				this.Invoke(new WaitCallback(this.EndUpdateLog), new object[] { argument });
-			else
-			{
-				ControlLogUpdateState state = argument as ControlLogUpdateState;
-
-				// If the state is not canceled.
-				if (!state.IsCanceled)
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// Complete the update.
-					state.Complete();
-					// Set the global state to null.
-					this.state = null;
-					// Hide the waiting message.
-					this.HideMessage();
-					this.listView.Enabled = true;
-					this.toolStrip.Enabled = true;
+					ControlLogUpdateState state = argument as ControlLogUpdateState;
 
-					// Set the list of events.
-					this.events = state.Events;
-
-					// Update the log list.
-					if (this.events != null)
+					// If the state is not canceled.
+					if (!state.IsCanceled)
 					{
-						// Add the events.
-						foreach (LogEvent evt in this.events)
-						{
-							// Create a list view item for each event.
-							ListViewItem item = new ListViewItem(
-								new string[] { evt.Timestamp.ToString(), evt.Source, evt.Message },
-								(int)evt.Type
-								);
-							item.Tag = evt;
-							item.IndentCount = evt.Indent;
-							evt.Tag = item;
+						// Complete the update.
+						state.Complete();
+						// Set the global state to null.
+						this.state = null;
+						// Hide the waiting message.
+						this.HideMessage();
+						this.listView.Enabled = true;
+						this.toolStrip.Enabled = true;
 
-							// Check whether this item should be in the log.
-							if ((this.listTypes[(int)evt.Type].State != CheckState.Checked) ||
-								(this.listLevels[(int)evt.Level].State != CheckState.Checked))
-								continue;
-							
-							// Add the event item to the list.
-							this.listView.Items.Add(item);
+						// Set the list of events.
+						this.events = state.Events;
+
+						// Update the log list.
+						if (this.events != null)
+						{
+							// Add the events.
+							foreach (LogEvent evt in this.events)
+							{
+								// Create a list view item for each event.
+								ListViewItem item = new ListViewItem(
+									new string[] { evt.Timestamp.ToString(), evt.Source, evt.Message },
+									(int)evt.Type
+									);
+								item.Tag = evt;
+								item.IndentCount = evt.Indent;
+								evt.Tag = item;
+
+								// Check whether this item should be in the log.
+								if ((this.listTypes[(int)evt.Type].State != CheckState.Checked) ||
+									(this.listLevels[(int)evt.Level].State != CheckState.Checked))
+									continue;
+
+								// Add the event item to the list.
+								this.listView.Items.Add(item);
+							}
 						}
-					}					
-				}
-			}
+					}
+				});
 		}
 
 		/// <summary>

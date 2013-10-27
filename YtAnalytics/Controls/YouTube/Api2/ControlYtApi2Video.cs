@@ -173,41 +173,53 @@ namespace YtAnalytics.Controls.YouTube.Api2
 		/// <param name="result">The asynchronous result.</param>
 		private void Callback(IAsyncResult result)
 		{
-			if (this.InvokeRequired)
-				this.Invoke(new AsyncCallback(this.Callback), new object[] { result });
-			else
-			{
-				try
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// Complete the request
-					Video video = this.request.End(result);
+					try
+					{
+						// Complete the request
+						Video video = this.request.End(result);
 
-					this.controlVideo.Video = video;
-					this.buttonView.Enabled = true;
-					this.buttonComment.Enabled = true;
-					this.menuItemAuthor.Enabled = this.controlVideo.Video.Author != null;
+						this.controlVideo.Video = video;
+						this.buttonView.Enabled = true;
+						this.buttonComment.Enabled = true;
+						this.menuItemAuthor.Enabled = this.controlVideo.Video.Author != null;
 
-					// Log
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Verbose,
-						LogEventType.Success,
-						ControlYtApi2Video.logSource,
-						"The request for video ID \'{0}\' completed successfully.",
-						new object[] { this.textBox.Text }));
-				}
-				catch (WebException exception)
-				{
-					// Set the video to null.
-					this.controlVideo.Video = null;
-					// Log the request result.
-					if (exception.Status == WebExceptionStatus.RequestCanceled)
+						// Log
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
-							LogEventType.Canceled,
+							LogEventType.Success,
 							ControlYtApi2Video.logSource,
-							"The request for video ID \'{0}\' has been canceled.",
+							"The request for video ID \'{0}\' completed successfully.",
 							new object[] { this.textBox.Text }));
-					else
+					}
+					catch (WebException exception)
+					{
+						// Set the video to null.
+						this.controlVideo.Video = null;
+						// Log the request result.
+						if (exception.Status == WebExceptionStatus.RequestCanceled)
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Verbose,
+								LogEventType.Canceled,
+								ControlYtApi2Video.logSource,
+								"The request for video ID \'{0}\' has been canceled.",
+								new object[] { this.textBox.Text }));
+						else
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								ControlYtApi2Video.logSource,
+								"The request for video ID \'{0}\' failed. {1}",
+								new object[] { this.textBox.Text, exception.Message },
+								exception));
+					}
+					catch (Exception exception)
+					{
+						// Set the video to null.
+						this.controlVideo.Video = null;
+						// Log the request result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
@@ -215,27 +227,14 @@ namespace YtAnalytics.Controls.YouTube.Api2
 							"The request for video ID \'{0}\' failed. {1}",
 							new object[] { this.textBox.Text, exception.Message },
 							exception));
-				}
-				catch (Exception exception)
-				{
-					// Set the video to null.
-					this.controlVideo.Video = null;
-					// Log the request result.
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Important,
-						LogEventType.Error,
-						ControlYtApi2Video.logSource,
-						"The request for video ID \'{0}\' failed. {1}",
-						new object[] { this.textBox.Text, exception.Message },
-						exception));
-				}
-				finally
-				{
-					this.buttonStart.Enabled = true;
-					this.buttonStop.Enabled = false;
-					this.textBox.Enabled = true;
-				}
-			}
+					}
+					finally
+					{
+						this.buttonStart.Enabled = true;
+						this.buttonStop.Enabled = false;
+						this.textBox.Enabled = true;
+					}
+				});
 		}
 
 		/// <summary>

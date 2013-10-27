@@ -43,8 +43,6 @@ namespace YtAnalytics.Controls.YouTube
 		private readonly List<Image> thumbnails = new List<Image>();
 		private readonly object sync = new object();
 
-		private WaitCallback delegateThumbnailUpdateCompleted;
-
 		private readonly FormImage formImage = new FormImage();
 
 		private static readonly string notAvailable = "(not available)";
@@ -58,9 +56,7 @@ namespace YtAnalytics.Controls.YouTube
 			// Set the current video to null.
 			this.Video = null;
 			// Create event handler for the web client.
-			this.web.DownloadDataCompleted += DownloadThumbnailCompleted;
-			// Create a delegate for the completion of thumbnail updates.
-			this.delegateThumbnailUpdateCompleted = new WaitCallback(this.UpdateThumbnailsCompleted);
+			this.web.DownloadDataCompleted += this.DownloadThumbnailCompleted;
 		}
 
 		/// <summary>
@@ -315,35 +311,34 @@ namespace YtAnalytics.Controls.YouTube
 		/// <param name="status">The user state.</param>
 		void UpdateThumbnailsCompleted(object status)
 		{
-			// Invoke the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(this.delegateThumbnailUpdateCompleted, new object[] { status });
-			else
-			{
-				// Get the video.
-				Video video = status as Video;
-
-				// Clear the thumbnails list box.
-				this.imageListBoxThumbnails.Items.Clear();
-
-				if ((video == this.video) && (this.thumbnails.Count > 0))
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					if (thumbnails[0] != null)
-					{
-						this.pictureBox.Image = this.thumbnails[0];
-						this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-					}
+					// Get the video.
+					Video video = status as Video;
 
-					for (int index = 0; (index < video.Thumbnails.Count) && (index < this.thumbnails.Count); index++)
+					// Clear the thumbnails list box.
+					this.imageListBoxThumbnails.Items.Clear();
+
+					if ((video == this.video) && (this.thumbnails.Count > 0))
 					{
-						this.imageListBoxThumbnails.AddItem("{0} ({1})".FormatWith(video.Thumbnails[index].Name, video.Thumbnails[index].Url.ToString()), this.thumbnails[index]);
+						if (thumbnails[0] != null)
+						{
+							this.pictureBox.Image = this.thumbnails[0];
+							this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+						}
+
+						for (int index = 0; (index < video.Thumbnails.Count) && (index < this.thumbnails.Count); index++)
+						{
+							this.imageListBoxThumbnails.AddItem("{0} ({1})".FormatWith(video.Thumbnails[index].Name, video.Thumbnails[index].Url.ToString()), this.thumbnails[index]);
+						}
 					}
-				}
-				else
-				{
-					this.pictureBox.Image = Resources.FileVideo_48;
-					this.pictureBox.SizeMode = PictureBoxSizeMode.Normal;
-				}
-			}
+					else
+					{
+						this.pictureBox.Image = Resources.FileVideo_48;
+						this.pictureBox.SizeMode = PictureBoxSizeMode.Normal;
+					}
+				});
 		}
 
 		/// <summary>

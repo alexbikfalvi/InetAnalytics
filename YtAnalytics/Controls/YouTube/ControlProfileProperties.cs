@@ -39,8 +39,6 @@ namespace YtAnalytics.Controls.YouTube
 		private Image thumbnail = null;
 		private readonly object sync = new object();
 
-		private WaitCallback delegateThumbnailUpdateCompleted;
-
 		private readonly FormImage formImage = new FormImage();
 
 		private static readonly string notAvailable = "(not available)";
@@ -54,9 +52,7 @@ namespace YtAnalytics.Controls.YouTube
 			// Set the current video to null.
 			this.Profile = null;
 			// Create event handler for the web client.
-			this.web.DownloadDataCompleted += DownloadThumbnailCompleted;
-			// Create a delegate for the completion of thumbnail updates.
-			this.delegateThumbnailUpdateCompleted = new WaitCallback(this.UpdateThumbnailsCompleted);
+			this.web.DownloadDataCompleted += this.DownloadThumbnailCompleted;
 		}
 
 		/// <summary>
@@ -275,28 +271,27 @@ namespace YtAnalytics.Controls.YouTube
 		/// <param name="status">The user state.</param>
 		void UpdateThumbnailsCompleted(object status)
 		{
-			// Invoke the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(this.delegateThumbnailUpdateCompleted, new object[] { status });
-			else
-			{
-				// Get the profile.
-				Profile profile = status as Profile;
-
-				// Clear the thumbnails list box.
-				this.imageListBoxThumbnails.Items.Clear();
-
-				if ((profile == this.profile) && (this.thumbnail != null))
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					this.pictureBox.Image = this.thumbnail;
-					this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-					this.imageListBoxThumbnails.AddItem(string.Format("{0} ({1})", profile.Thumbnail.Name, profile.Thumbnail.Url.ToString()), this.thumbnail);
-				}
-				else
-				{
-					this.pictureBox.Image = Resources.FileUser_48;
-					this.pictureBox.SizeMode = PictureBoxSizeMode.Normal;
-				}
-			}
+					// Get the profile.
+					Profile profile = status as Profile;
+
+					// Clear the thumbnails list box.
+					this.imageListBoxThumbnails.Items.Clear();
+
+					if ((profile == this.profile) && (this.thumbnail != null))
+					{
+						this.pictureBox.Image = this.thumbnail;
+						this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+						this.imageListBoxThumbnails.AddItem(string.Format("{0} ({1})", profile.Thumbnail.Name, profile.Thumbnail.Url.ToString()), this.thumbnail);
+					}
+					else
+					{
+						this.pictureBox.Image = Resources.FileUser_48;
+						this.pictureBox.SizeMode = PictureBoxSizeMode.Normal;
+					}
+				});
 		}
 
 		/// <summary>

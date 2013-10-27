@@ -214,60 +214,73 @@ namespace YtAnalytics.Controls.Testing
 		/// <param name="result">The asynchronous result.</param>
 		private void Callback(IAsyncResult result)
 		{
-			if (this.InvokeRequired)
-				this.Invoke(new AsyncCallback(this.Callback), new object[] { result });
-			else
-			{
-				try
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// Complete the request, and get the asynchronous web result.
-					AsyncWebResult asyncResult = this.request.End(result);
-
-					// Get the encoding for the received response.
-					Encoding encoding = Encoding.GetEncoding(asyncResult.Response.CharacterSet);
-
-					// Display the response data.
-					this.textBoxResponseData.Text = (null != asyncResult.ReceiveData.Data) ? encoding.GetString(asyncResult.ReceiveData.Data) : string.Empty;
-
-					// Display the response headers.
-					foreach (string header in asyncResult.Response.Headers)
+					try
 					{
-						ListViewItem item = new ListViewItem(new string[] { header, asyncResult.Response.Headers[header] });
-						item.ImageIndex = 0;
-						this.listViewResponseHeaders.Items.Add(item);
-					}
+						// Complete the request, and get the asynchronous web result.
+						AsyncWebResult asyncResult = this.request.End(result);
 
-					// Update the status label.
-					this.status.Send(
-						"The HTTP request for the web URL completed successfully.",
-						"{0} bytes of data received".FormatWith(asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
-						Resources.Success_16); 
-					// Log the result.
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Verbose,
-						LogEventType.Success,
-						ControlTestingWebRequest.logSource,
-						"The HTTP request for the web URL \'{0}\' completed successfully.",
-						new object[] { this.textBoxUrl.Text }));
-				}
-				catch (WebException exception)
-				{
-					if (exception.Status == WebExceptionStatus.RequestCanceled)
-					{
+						// Get the encoding for the received response.
+						Encoding encoding = Encoding.GetEncoding(asyncResult.Response.CharacterSet);
+
+						// Display the response data.
+						this.textBoxResponseData.Text = (null != asyncResult.ReceiveData.Data) ? encoding.GetString(asyncResult.ReceiveData.Data) : string.Empty;
+
+						// Display the response headers.
+						foreach (string header in asyncResult.Response.Headers)
+						{
+							ListViewItem item = new ListViewItem(new string[] { header, asyncResult.Response.Headers[header] });
+							item.ImageIndex = 0;
+							this.listViewResponseHeaders.Items.Add(item);
+						}
+
 						// Update the status label.
-						this.status.Send("The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
+						this.status.Send(
+							"The HTTP request for the web URL completed successfully.",
+							"{0} bytes of data received".FormatWith(asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
+							Resources.Success_16);
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
-							LogEventType.Canceled,
+							LogEventType.Success,
 							ControlTestingWebRequest.logSource,
-							"The HTTP request for the web URL \'{0}\' has been canceled.",
+							"The HTTP request for the web URL \'{0}\' completed successfully.",
 							new object[] { this.textBoxUrl.Text }));
 					}
-					else
+					catch (WebException exception)
+					{
+						if (exception.Status == WebExceptionStatus.RequestCanceled)
+						{
+							// Update the status label.
+							this.status.Send("The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
+							// Log the result.
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Verbose,
+								LogEventType.Canceled,
+								ControlTestingWebRequest.logSource,
+								"The HTTP request for the web URL \'{0}\' has been canceled.",
+								new object[] { this.textBoxUrl.Text }));
+						}
+						else
+						{
+							// Update the status label.
+							this.status.Send("The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+							// Log the result.
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								ControlTestingWebRequest.logSource,
+								"The HTTP request for the web URL \'{0}\' failed. {1}",
+								new object[] { this.textBoxUrl.Text, exception.Message },
+								exception));
+						}
+					}
+					catch (Exception exception)
 					{
 						// Update the status label.
-						this.status.Send("The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+						this.status.Send("The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,
@@ -277,29 +290,15 @@ namespace YtAnalytics.Controls.Testing
 							new object[] { this.textBoxUrl.Text, exception.Message },
 							exception));
 					}
-				}
-				catch (Exception exception)
-				{
-					// Update the status label.
-					this.status.Send("The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
-					// Log the result.
-					this.log.Add(this.crawler.Log.Add(
-						LogEventLevel.Important,
-						LogEventType.Error,
-						ControlTestingWebRequest.logSource,
-						"The HTTP request for the web URL \'{0}\' failed. {1}",
-						new object[] { this.textBoxUrl.Text, exception.Message },
-						exception));
-				}
-				finally
-				{
-					// Change the controls state.
-					this.OnEnableControls();
-					// Change the buttons state.
-					this.buttonStart.Enabled = true;
-					this.buttonStop.Enabled = false;
-				}
-			}
+					finally
+					{
+						// Change the controls state.
+						this.OnEnableControls();
+						// Change the buttons state.
+						this.buttonStart.Enabled = true;
+						this.buttonStop.Enabled = false;
+					}
+				});
 		}
 
 		/// <summary>

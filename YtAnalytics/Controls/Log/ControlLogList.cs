@@ -42,22 +42,20 @@ namespace YtAnalytics.Controls.Log
 		/// <param name="evt">The event.</param>
 		public void Add(LogEvent evt)
 		{
-			// Invoke this method on the UI thread.
-			if (this.InvokeRequired)
-			{
-				this.Invoke(new AddEventAction(this.Add), new object[] { evt });
-				return;
-			}
-			// Create a new list view menu item.
-			ListViewItem item = new ListViewItem(new string[] { DateTime.Now.ToString(), evt.Message }, (int)evt.Type);
-			item.Tag = evt;
-			if (this.listView.Items.Count > this.MaximumItems)
-				this.listView.Items.RemoveAt(0);
-			this.listView.Items.Add(item);
-			this.listView.EnsureVisible(this.listView.Items.Count - 1);
-			// If the clear button is disabled, enable the button.
-			if (!this.buttonClear.Enabled)
-				this.buttonClear.Enabled = true;
+			// Execute the code on the UI thread.
+			this.Invoke(() =>
+				{
+					// Create a new list view menu item.
+					ListViewItem item = new ListViewItem(new string[] { DateTime.Now.ToString(), evt.Message }, (int)evt.Type);
+					item.Tag = evt;
+					if (this.listView.Items.Count > this.MaximumItems)
+						this.listView.Items.RemoveAt(0);
+					this.listView.Items.Add(item);
+					this.listView.EnsureVisible(this.listView.Items.Count - 1);
+					// If the clear button is disabled, enable the button.
+					if (!this.buttonClear.Enabled)
+						this.buttonClear.Enabled = true;
+				});
 		}
 
 		/// <summary>
