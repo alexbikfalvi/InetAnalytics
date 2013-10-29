@@ -267,17 +267,29 @@ namespace YtCrawler.PlanetLab
 		public void Dispose()
 		{
 			// Save the PlanetLab sites.
-			try { this.Sites.SaveToFile(this.SitesFileName); }
-			catch { }
+			if (this.Sites.IsDirty)
+			{
+				try { this.Sites.SaveToFile(this.SitesFileName); }
+				catch { }
+			}
 			// Save the PlanetLab nodes.
-			try { this.Nodes.SaveToFile(this.NodesFileName); }
-			catch { }
+			if (this.Nodes.IsDirty)
+			{
+				try { this.Nodes.SaveToFile(this.NodesFileName); }
+				catch { }
+			}
 			// Save the PlanetLab slices.
-			try { this.Slices.SaveToFile(this.SlicesFileName); }
-			catch { }
+			if (this.Slices.IsDirty)
+			{
+				try { this.Slices.SaveToFile(this.SlicesFileName); }
+				catch { }
+			}
 			// Save the PlanetLab local slices.
-			try { this.LocalSlices.SaveToFile(this.LocalSlicesFileName); }
-			catch { }
+			if (this.LocalSlices.IsDirty)
+			{
+				try { this.LocalSlices.SaveToFile(this.LocalSlicesFileName); }
+				catch { }
+			}
 			// Dispose the slices configuration.
 			foreach (PlConfigSlice configSlice in this.configSlices.Values)
 			{
@@ -306,7 +318,9 @@ namespace YtCrawler.PlanetLab
 			DotNetApi.Windows.Registry.SetSecureString(this.root, "Password", password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			CrawlerConfig.Static.PlanetLabPassword = password;
 			// Save the persons.
-			this.LocalPersons.CopyFrom(persons);
+			persons.Lock();
+			try { this.LocalPersons.CopyFrom(persons); }
+			catch { persons.Unlock(); }
 			try { this.LocalPersons.SaveToFile(this.LocalPersonsFileName); }
 			catch { }
 			// Save the person.

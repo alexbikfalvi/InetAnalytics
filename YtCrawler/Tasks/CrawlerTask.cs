@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace YtCrawler.Tasks
@@ -38,6 +39,8 @@ namespace YtCrawler.Tasks
 		private readonly object sync = new object();
 		private TaskState state = TaskState.Stopped;
 
+		private readonly Dictionary<Guid, CrawlerSchedule> schedules = new Dictionary<Guid, CrawlerSchedule>();
+
 		/// <summary>
 		/// Creates a new crawler task instance.
 		/// </summary>
@@ -55,6 +58,10 @@ namespace YtCrawler.Tasks
 		/// </summary>
 		public Guid Id { get; private set; }
 		/// <summary>
+		/// Gets the task synchronization object.
+		/// </summary>
+		public object Sync { get { return this.sync; } }
+		/// <summary>
 		/// Gets or sets the task 
 		/// </summary>
 		public string Name { get; private set; }
@@ -66,6 +73,10 @@ namespace YtCrawler.Tasks
 		/// Gets the task state.
 		/// </summary>
 		public TaskState State { get { lock (this.sync) { return this.state; } } }
+		/// <summary>
+		/// Gets the schedules collection.
+		/// </summary>
+		public ICollection<KeyValuePair<Guid, CrawlerSchedule>> Schedules { get { return schedules; } }
 
 		// Public events.
 
@@ -77,6 +88,14 @@ namespace YtCrawler.Tasks
 		/// An event raised when the task has been stopped.
 		/// </summary>
 		public event CrawlerTaskEventHandler Stopped;
+		/// <summary>
+		/// An event raised when a schedule has been added to the task.
+		/// </summary>
+		public event CrawlerScheduleEventHandler ScheduleAdded;
+		/// <summary>
+		/// An event raised when a schedule has been removed from a task.
+		/// </summary>
+		public event CrawlerScheduleEventHandler ScheduleRemoved;
 
 		// Public methods.
 

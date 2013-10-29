@@ -23,7 +23,7 @@ namespace YtCrawler.Tasks
 	/// <summary>
 	/// A class representing the crawler task schedule.
 	/// </summary>
-	public abstract class CrawlerTaskSchedule
+	public abstract class CrawlerSchedule
 	{
 		/// <summary>
 		/// An enumeration representing the schedule type.
@@ -63,8 +63,11 @@ namespace YtCrawler.Tasks
 		/// <param name="task">The task.</param>
 		/// <param name="type">The schedule type.</param>
 		/// <param name="startTime">The start time.</param>
-		public CrawlerTaskSchedule(CrawlerTask task, ScheduleType type, DateTime startTime)
+		public CrawlerSchedule(CrawlerTask task, ScheduleType type, DateTime startTime)
 		{
+			// The identifier.
+			this.Id = Guid.NewGuid();
+
 			// The task.
 			this.task = task;
 
@@ -72,25 +75,25 @@ namespace YtCrawler.Tasks
 			this.type = type;
 
 			// The start time.
-			this.StartTime = startTime;
-			this.UseUniversalStartTime = false;
+			this.startTime = startTime;
+			this.useUniversalStartTime = false;
 
 			// Task enabled.
-			this.Enabled = true;
+			this.enabled = true;
 
 			// Settings.
-			this.DelayEnabled = false;
-			this.DelayMaximumInterval = TimeSpan.FromHours(1.0);
-			this.RepeatEnabled = false;
-			this.RepeatInterval = TimeSpan.FromHours(1.0);
-			this.RepeatDuration = TimeSpan.FromDays(1.0);
-			this.StopAfterRepeatEnabled = false;
-			this.StopEnabled = false;
-			this.StopInterval = TimeSpan.FromDays(3.0);
-			this.ExpiresEnabled = false;
-			this.ExpiresTime = startTime.AddYears(1);
+			this.delayEnabled = false;
+			this.delayMaximumInterval = TimeSpan.FromHours(1.0);
+			this.repeatEnabled = false;
+			this.repeatInterval = TimeSpan.FromHours(1.0);
+			this.repeatDuration = TimeSpan.FromDays(1.0);
+			this.stopAfterRepeatEnabled = false;
+			this.stopEnabled = false;
+			this.stopInterval = TimeSpan.FromDays(3.0);
+			this.expiresEnabled = false;
+			this.expiresTime = startTime.AddYears(1);
 
-
+			// Compute the schedule.
 		}
 
 		// Public events.
@@ -98,14 +101,22 @@ namespace YtCrawler.Tasks
 		/// <summary>
 		/// An event raised when the schedule enabled state has changed.
 		/// </summary>
-		public event CrawlerTaskEventHandler EnabledChanged;
+		public event CrawlerScheduleEventHandler EnabledChanged;
 		/// <summary>
 		/// An event raised when the schdule time has changed.
 		/// </summary>
-		public event CrawlerTaskEventHandler ScheduleChanged;
+		public event CrawlerScheduleEventHandler ScheduleChanged;
+		/// <summary>
+		/// An event raised when the schedule expiration has changed.
+		/// </summary>
+		public event CrawlerScheduleEventHandler ExpiresChanged;
 
 		// Public properties.
 
+		/// <summary>
+		/// Gets the schedule identifier.
+		/// </summary>
+		public Guid Id { get; private set; }
 		/// <summary>
 		/// Gets the schedule type.
 		/// </summary>
@@ -223,6 +234,25 @@ namespace YtCrawler.Tasks
 			set { this.OnSetUseUniversalExpiresTime(value); }
 		}
 
+		// Internal properties.
+
+		/// <summary>
+		/// Gets or sets the core schedule.
+		/// </summary>
+		internal CrawlerTrigger CoreTrigger { get; set; }
+		/// <summary>
+		/// Gets or sets the repeat schedule.
+		/// </summary>
+		internal CrawlerTrigger RepeatTrigger { get; set; }
+		/// <summary>
+		/// Gets or sets the stop schedule.
+		/// </summary>
+		internal CrawlerTrigger StopTrigger { get; set; }
+		/// <summary>
+		/// Gets or sets the expires schedule.
+		/// </summary>
+		internal CrawlerTrigger ExpiresTrigger { get; set; }
+
 		// Private methods.
 
 		/// <summary>
@@ -233,6 +263,8 @@ namespace YtCrawler.Tasks
 		{
 			// Set the value.
 			this.startTime = value;
+			// Raise the schedule changed event.
+			if (null != this.ScheduleChanged) this.ScheduleChanged(this, new CrawlerScheduleEventArgs(this));
 		}
 
 		/// <summary>
