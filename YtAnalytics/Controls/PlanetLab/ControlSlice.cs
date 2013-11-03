@@ -357,7 +357,7 @@ namespace YtAnalytics.Controls.PlanetLab
 							if (null != site)
 							{
 								// Add a site event handler.
-								site.Changed += OnSiteChanged;
+								site.Changed += this.OnSiteChanged;
 							}
 							else
 							{
@@ -1692,6 +1692,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			node.ImageKey = "GlobeConsole";
 			node.SelectedImageKey = "GlobeConsole";
 			this.treeNodeSlice.Nodes.Add(node);
+			this.treeNodeSlice.ExpandAll();
 
 			// Create a new session control.
 			ControlSession control = new ControlSession();
@@ -1917,6 +1918,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			this.treeNodeTasks.ImageKey = "GlobeTasks";
 			this.treeNodeTasks.SelectedImageKey = "GlobeTasks";
 			this.treeNodeSlice.Nodes.Add(this.treeNodeTasks);
+			this.treeNodeSlice.ExpandAll();
 		}
 
 		/// <summary>

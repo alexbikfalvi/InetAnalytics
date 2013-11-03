@@ -436,6 +436,7 @@ namespace YtAnalytics.Controls.PlanetLab
 			node.ImageKey = "GlobeObject";
 			node.SelectedImageKey = "GlobeObject";
 			this.treeNode.Nodes.Add(node);
+			this.treeNode.ExpandAll();
 
 			// Create a new control.
 			ControlSlice control = new ControlSlice();
