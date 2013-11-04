@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using YtCrawler.Tasks.Triggers;
 
 namespace YtCrawler.Tasks
 {
@@ -35,11 +36,39 @@ namespace YtCrawler.Tasks
 			Stopped = 0,
 			Started = 1
 		}
+		/// <summary>
+		/// The policy for executing a running task.
+		/// </summary>
+		public enum RunningTaskPolicy
+		{
+			Ignore = 0,
+			Parallel = 1,
+			Queue = 2,
+			Stop = 3
+		}
+		/// <summary>
+		/// A structure representing the running task information.
+		/// </summary>
+		public struct RunningTaskState
+		{
+			public CancellationTokenSource CancellationSource { get; private set; }
+			//public WaitHandle 
+		}
 
 		private readonly object sync = new object();
 		private TaskState state = TaskState.Stopped;
 
 		private readonly Dictionary<Guid, CrawlerSchedule> schedules = new Dictionary<Guid, CrawlerSchedule>();
+
+		private readonly CrawlerTriggerTask triggerRestart;
+
+		private readonly CrawlerTaskEventArgs args;
+
+		private bool restartAfterFailureEnabled;
+		private int restartAfterFailureCount;
+		private TimeSpan restartAfterFailureInterval;
+
+
 
 		/// <summary>
 		/// Creates a new crawler task instance.
@@ -49,6 +78,8 @@ namespace YtCrawler.Tasks
 		{
 			this.Id = Guid.NewGuid();
 			this.Name = name;
+
+			this.args = new CrawlerTaskEventArgs(this);
 		}
 
 		// Public properties.
@@ -89,6 +120,14 @@ namespace YtCrawler.Tasks
 		/// </summary>
 		public event CrawlerTaskEventHandler Stopped;
 		/// <summary>
+		/// An event raised when the execution of the current task has started.
+		/// </summary>
+		public event CrawlerTaskEventHandler ExecuteStarted;
+		/// <summary>
+		/// An event raised when the execution of the current task has finished.
+		/// </summary>
+		public event CrawlerTaskEventHandler ExecuteFinished;
+		/// <summary>
 		/// An event raised when a schedule has been added to the task.
 		/// </summary>
 		public event CrawlerScheduleEventHandler ScheduleAdded;
@@ -124,7 +163,7 @@ namespace YtCrawler.Tasks
 							// Call the event handler.
 							this.OnStarted();
 							// Raise the event.
-							if (null != this.Started) this.Started(this, new CrawlerTaskEventArgs(this));
+							if (null != this.Started) this.Started(this, this.args);
 							// Set the wait handle.
 							if (null != wait) wait.Set();
 							// Call the callback method.
@@ -159,7 +198,7 @@ namespace YtCrawler.Tasks
 						// Call the event handler.
 						this.OnStopped();
 						// Raise the event.
-						if (null != this.Stopped) this.Stopped(this, new CrawlerTaskEventArgs(this));
+						if (null != this.Stopped) this.Stopped(this, this.args);
 						// Set the wait handle.
 						if (null != wait) wait.Set();
 						// Call the callback method.
@@ -169,20 +208,60 @@ namespace YtCrawler.Tasks
 			}
 		}
 
+		/// <summary>
+		/// Executes the task.
+		/// </summary>
+		/// <param name="time">The scheduled time.</param>
+		public void Execute(DateTime time)
+		{
+			// Synchronize the task.
+			lock (this.sync)
+			{
+				// Check the state.
+				if (this.state != TaskState.Started) throw new CrawlerTaskException("The crawler task is not in the started state.");
+
+				// Raise the event.
+				if (null != this.Stopped) this.Stopped(this, this.args);
+
+				// Execute the event handler on the thread pool.
+				ThreadPool.QueueUserWorkItem((object state) =>
+					{
+						// Create a cancellation token source.
+						using (CancellationTokenSource cancellationSource = new CancellationTokenSource())
+						{
+							// Create a 
+
+							// Synchronize the task.
+
+							try
+							{
+								// Call the task handler.
+								this.OnExecute(cancellationSource.Token);
+							}
+							catch (Exception exception)
+							{
+							}
+						}
+					});
+			}
+		}
+
 		// Protected methods.
 
 		/// <summary>
 		/// A method called when the task is started.
 		/// </summary>
-		protected virtual void OnStarted()
-		{
-		}
+		protected abstract void OnStarted();
 
 		/// <summary>
 		/// A method called when the task is stopped.
 		/// </summary>
-		protected virtual void OnStopped()
-		{
-		}
+		protected abstract void OnStopped();
+
+		/// <summary>
+		/// A method called when the task is executed.
+		/// </summary>
+		/// <param name="cancel">The cancellation token.</param>
+		protected abstract void OnExecute(CancellationToken cancel);
 	}
 }

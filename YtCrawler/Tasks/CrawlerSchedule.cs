@@ -17,6 +17,7 @@
  */
 
 using System;
+using YtCrawler.Tasks.Triggers;
 
 namespace YtCrawler.Tasks
 {
@@ -56,7 +57,6 @@ namespace YtCrawler.Tasks
 		private DateTime expiresTime;
 		private bool useUniversalExpiresTime;
 
-
 		/// <summary>
 		/// Creates a new task schedule instance.
 		/// </summary>
@@ -93,7 +93,7 @@ namespace YtCrawler.Tasks
 			this.expiresEnabled = false;
 			this.expiresTime = startTime.AddYears(1);
 
-			// Compute the schedule.
+			// Create the triggers.
 		}
 
 		// Public events.
@@ -117,6 +117,10 @@ namespace YtCrawler.Tasks
 		/// Gets the schedule identifier.
 		/// </summary>
 		public Guid Id { get; private set; }
+		/// <summary>
+		/// Gets the schedule task.
+		/// </summary>
+		public CrawlerTask Task { get { return this.task; } }
 		/// <summary>
 		/// Gets the schedule type.
 		/// </summary>

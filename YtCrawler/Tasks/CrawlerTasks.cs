@@ -21,18 +21,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using DotNetApi;
+using YtCrawler.Tasks.Triggers;
 
 namespace YtCrawler.Tasks
 {
 	/// <summary>
 	/// A class representing the crawler tasks, scheduled or background.
 	/// </summary>
-	public sealed class CrawlerTasks
+	public sealed class CrawlerTasks : ICrawlerTasks
 	{
 		private object sync = new object();
 
 		private readonly Dictionary<Guid, CrawlerTask> tasks = new Dictionary<Guid, CrawlerTask>();
-		private readonly SortedDictionary<DateTime, CrawlerTrigger> triggers = new SortedDictionary<DateTime, CrawlerTrigger>();
+		private readonly SortedDictionary<DateTime, CrawlerTrigger> timeline = new SortedDictionary<DateTime, CrawlerTrigger>();
 
 		private readonly Timer timer;
 		private CrawlerTrigger timerTrigger = null;
@@ -70,6 +71,10 @@ namespace YtCrawler.Tasks
 
 				// Add the task to the tasks list.
 				this.tasks.Add(task.Id, task);
+
+				// Add the task event handlers.
+				task.ScheduleAdded += this.OnTaskScheduleAdded;
+				task.ScheduleRemoved += this.OnTaskScheduleRemoved;
 			}
 		}
 
@@ -81,43 +86,32 @@ namespace YtCrawler.Tasks
 		{
 		}
 
-		// Private methods.
+		// Internal methods.
 
 		/// <summary>
-		/// Adds a schedule for the specified task.
-		/// </summary>
-		/// <param name="task"></param>
-		private void OnAdd(CrawlerTask task)
-		{
-		}
-
-		private void OnRemove(CrawlerTask task)
-		{
-		}
-
-		/// <summary>
-		/// A method called when adding a new trigger.
+		/// Adds a new trigger to the tasks timeline.
 		/// </summary>
 		/// <param name="trigger">The trigger.</param>
-		private void OnAddTrigger(CrawlerTrigger trigger)
+		/// <param name="timestamp">The timeline timestamp.</param>
+		internal void OnAddTrigger(CrawlerTrigger trigger, out DateTime timestamp)
 		{
 			// Synchronize access.
 			lock (this.sync)
 			{
-				// If the triggers list is empty.
-				if (this.triggers.Count == 0)
+				// If the timeline is empty.
+				if (this.timeline.Count == 0)
 				{
-					// Add the trigger to the triggers list.
-					this.OnAddTriggerSafe(trigger);
+					// Add the trigger to the timeline.
+					this.OnAddTriggerSafe(trigger, out timestamp);
 					// Update the timer.
 					this.OnUpdateTimer(trigger);
 				}
 				else
 				{
 					// The first trigger.
-					KeyValuePair<DateTime, CrawlerTrigger> first = this.triggers.First();
+					KeyValuePair<DateTime, CrawlerTrigger> first = this.timeline.First();
 					// Add the trigger to the triggers list.
-					this.OnAddTriggerSafe(trigger);
+					this.OnAddTriggerSafe(trigger, out timestamp);
 					// If the timestamp of the current schedule is smaller than the timestamp of the first schedule.
 					if (trigger.Timestamp < first.Key)
 					{
@@ -129,57 +123,28 @@ namespace YtCrawler.Tasks
 		}
 
 		/// <summary>
-		/// Adds the specified trigger to the triggers list.
+		/// Removes a trigger from the tasks timeline.
 		/// </summary>
 		/// <param name="trigger">The trigger.</param>
-		private void OnAddTriggerSafe(CrawlerTrigger trigger)
-		{
-			// Synchronize access.
-			lock (this.sync)
-			{
-				// Get the trigger timestamp.
-				DateTime timestamp = trigger.Timestamp;
-				// If the timestamp exists.
-				while (this.triggers.ContainsKey(timestamp))
-				{
-					// Increment the timestamp.
-					timestamp.AddTicks(1);
-				}
-				// If the timestamp has changed.
-				if (timestamp != trigger.Timestamp)
-				{
-					// Update the trigger timestamp.
-					trigger.Timestamp = timestamp;
-				}
-
-				// Add the trigger.
-				this.triggers.Add(timestamp, trigger);
-			}
-		}
-
-		/// <summary>
-		/// A method called when removing a trigger.
-		/// </summary>
-		/// <param name="trigger">The trigger.</param>
-		private void OnRemoveTrigger(CrawlerTrigger trigger)
+		internal void OnRemoveTrigger(CrawlerTrigger trigger)
 		{
 			// Synchronize access.
 			lock (this.sync)
 			{
 				// Check the trigger list is not empty.
-				if (this.triggers.Count == 0) throw new InvalidOperationException("Internal task scheduler exception: cannot remove a trigger because the trigger list is empty.");
+				if (this.timeline.Count == 0) throw new InvalidOperationException("Internal task scheduler exception: cannot remove a trigger because the trigger list is empty.");
 
 				// Get the first trigger.
-				KeyValuePair<DateTime, CrawlerTrigger> first = this.triggers.First();
+				KeyValuePair<DateTime, CrawlerTrigger> first = this.timeline.First();
 
 				// Remove the trigger.
-				if (!this.triggers.Remove(trigger.Timestamp)) throw new InvalidOperationException("Internal task schedule exception: cannot remove a trigger because it could not be found.");
+				if (!this.timeline.Remove(trigger.Timestamp)) throw new InvalidOperationException("Internal task schedule exception: cannot remove a trigger because it could not be found.");
 
 				// If the trigger is the first trigger.
 				if (object.ReferenceEquals(first.Value, trigger))
 				{
 					// If the trigger list is empty.
-					if (this.triggers.Count == 0)
+					if (this.timeline.Count == 0)
 					{
 						// Disable the timer.
 						this.timer.Change(Timeout.Infinite, Timeout.Infinite);
@@ -187,11 +152,55 @@ namespace YtCrawler.Tasks
 					else
 					{
 						// Get the next trigger.
-						KeyValuePair<DateTime, CrawlerTrigger> next = this.triggers.First();
+						KeyValuePair<DateTime, CrawlerTrigger> next = this.timeline.First();
 						// Update the timer.
 						this.OnUpdateTimer(next.Value);
 					}
 				}
+			}
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// An event handler called when a task has added a schedule.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTaskScheduleAdded(object sender, CrawlerScheduleEventArgs e)
+		{
+		}
+
+		/// <summary>
+		/// An event handler called when a task has removed a schedule.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTaskScheduleRemoved(object sender, CrawlerScheduleEventArgs e)
+		{
+		}
+
+		/// <summary>
+		/// Adds the specified trigger to the timeline.
+		/// </summary>
+		/// <param name="trigger">The trigger.</param>
+		/// <param name="timestamp">The timeline timestamp.</param>
+		private void OnAddTriggerSafe(CrawlerTrigger trigger, out DateTime timestamp)
+		{
+			// Synchronize access.
+			lock (this.sync)
+			{
+				// Get the trigger timestamp.
+				timestamp = trigger.Timestamp;
+				// If the timestamp exists.
+				while (this.timeline.ContainsKey(timestamp))
+				{
+					// Increment the timestamp.
+					timestamp.AddTicks(1);
+				}
+
+				// Add the trigger.
+				this.timeline.Add(timestamp, trigger);
 			}
 		}
 
@@ -208,25 +217,25 @@ namespace YtCrawler.Tasks
 			lock (this.sync)
 			{
 				// If the trigger list is empty, do nothing.
-				if (this.triggers.Count == 0) return;
+				if (this.timeline.Count == 0) return;
 
 				// Get the first trigger.
-				first = this.triggers.First();
+				first = this.timeline.First();
 
 				// Check the timer has been triggered for the current timer trigger. Otherwise, return.
 				if (!object.ReferenceEquals(this.timerTrigger, first.Value)) return;
 
 				// Remove the first trigger from the list.
-				if (!this.triggers.Remove(first.Key)) throw new InvalidOperationException("Internal task scheduler exception: cannot remove an existing trigger.");
+				if (!this.timeline.Remove(first.Key)) throw new InvalidOperationException("Internal task scheduler exception: cannot remove an existing trigger.");
 
 				// Set the current timer trigger to null.
 				this.timerTrigger = null;
 
 				// If the trigger list is not empty.
-				if (this.triggers.Count > 0)
+				if (this.timeline.Count > 0)
 				{
 					// Get the next trigger.
-					KeyValuePair<DateTime, CrawlerTrigger> next = this.triggers.First();
+					KeyValuePair<DateTime, CrawlerTrigger> next = this.timeline.First();
 					// Update the timer.
 					this.OnUpdateTimer(next.Value);
 				}
@@ -258,7 +267,7 @@ namespace YtCrawler.Tasks
 				// Set the current trigger.
 				this.timerTrigger = trigger;
 				// If the trigger timestamp does not meet the minimum trigger delay.
-				if (now + this.minimumTriggerDelay > trigger.Timestamp)
+				if (now + this.minimumTriggerDelay > trigger.CurrentTime)
 				{
 					// Disable the timer.
 					this.timer.Change(Timeout.Infinite, Timeout.Infinite);
@@ -268,7 +277,7 @@ namespace YtCrawler.Tasks
 				else
 				{
 					// Update the timer.
-					this.timer.Change((long)trigger.Timestamp.Subtract(now).TotalMilliseconds, Timeout.Infinite);
+					this.timer.Change((long)trigger.CurrentTime.Subtract(now).TotalMilliseconds, Timeout.Infinite);
 				}
 			}
 		}

@@ -115,11 +115,22 @@ namespace YtAnalytics.Controls.Database
 		// Protected methods.
 
 		/// <summary>
-		/// A method called when connecting to the database server has failed.
+		/// A method called when connecting to the database server succeeded.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		protected override void OnConnectSucceeded(DbServer server)
+		{
+			// Enable the refresh database button.
+			this.buttonDatabaseRefresh.Enabled = true;
+		}
+
+		/// <summary>
+		/// A method called when connecting to the database server failed.
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		protected override void OnConnectFailed(DbServer server)
 		{
+			// Disable the refresh database button.
 			this.buttonDatabaseRefresh.Enabled = false;
 		}
 

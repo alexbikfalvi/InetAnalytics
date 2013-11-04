@@ -116,7 +116,12 @@
     <Compile Include="Tasks\CrawlerTaskException.cs" />
     <Compile Include="Tasks\CrawlerTasks.cs" />
     <Compile Include="Tasks\CrawlerSchedule.cs" />
-    <Compile Include="Tasks\CrawlerTrigger.cs" />
+    <Compile Include="Tasks\ICrawlerTasks.cs" />
+    <Compile Include="Tasks\Triggers\CrawlerTrigger.cs" />
+    <Compile Include="Tasks\CrawlerTriggerEventHandler.cs" />
+    <Compile Include="Tasks\Triggers\CrawlerTriggerSchedule.cs" />
+    <Compile Include="Tasks\Triggers\CrawlerTriggerTask.cs" />
+    <Compile Include="Tasks\Triggers\CrawlerTriggerTaskRestart.cs" />
     <Compile Include="Testing\Testing.cs" />
     <Compile Include="Testing\TestingSshRequest.cs" />
     <Compile Include="Testing\TestingWebRequest.cs" />
