@@ -30,7 +30,7 @@ using DotNetApi.Windows.Controls;
 namespace InetAnalytics.Controls.Spiders
 {
 	/// <summary>
-	/// A class displaying the list of feeds for the YouTube API version 2.
+	/// A control displaying the spiders information.
 	/// </summary>
 	public partial class ControlSpiderInfo : ThreadSafeControl
 	{

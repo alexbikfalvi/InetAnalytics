@@ -7,8 +7,8 @@
     <ProjectGuid>{6740E3FF-81AD-4CDF-8A61-F471D13EE38F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YtAnalytics</RootNamespace>
-    <AssemblyName>YtAnalytics</AssemblyName>
+    <RootNamespace>InetAnalytics</RootNamespace>
+    <AssemblyName>InetAnalytics</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -1177,6 +1177,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ServersVideo_48.png" />
+    <None Include="Resources\ServersVideo_32.png" />
+    <None Include="Resources\ServersVideo_24.png" />
+    <None Include="Resources\ServersVideo_16.png" />
     <None Include="Resources\ClockSmall_48.png" />
     <None Include="Resources\ClockSmall_32.png" />
     <None Include="Resources\ClockSmall_24.png" />

@@ -7,8 +7,8 @@
     <ProjectGuid>{6E2D7303-FFAB-4732-86F5-8BB0F7CD8276}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YtApi</RootNamespace>
-    <AssemblyName>YtApi</AssemblyName>
+    <RootNamespace>InetApi</RootNamespace>
+    <AssemblyName>InetApi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

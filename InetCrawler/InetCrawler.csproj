@@ -7,8 +7,8 @@
     <ProjectGuid>{A9792D30-2043-4CF9-9578-991288B0FB9E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YtCrawler</RootNamespace>
-    <AssemblyName>YtCrawler</AssemblyName>
+    <RootNamespace>InetCrawler</RootNamespace>
+    <AssemblyName>InetCrawler</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

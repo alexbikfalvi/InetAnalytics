@@ -72,7 +72,7 @@
 			this.labelDescription.Name = "labelDescription";
 			this.labelDescription.Size = new System.Drawing.Size(393, 13);
 			this.labelDescription.TabIndex = 4;
-			this.labelDescription.Text = "You can use the PlanetLab project to perform distributed YouTube measurements.";
+			this.labelDescription.Text = "You can use the PlanetLab project to perform distributed Internet measurements.";
 			// 
 			// labelTitle
 			// 

@@ -28,8 +28,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using InetApi.YouTube.Api.V2;
-using InetApi.YouTube.Api.V2.Data;
 using InetCrawler;
 using InetCrawler.Database;
 using InetCrawler.Log;
@@ -41,7 +39,7 @@ using DotNetApi.Windows.Controls;
 namespace InetAnalytics.Controls.Database
 {
 	/// <summary>
-	/// A class representing the control to browse the video entry in the YouTube API version 2.
+	/// A class representing the database servers control.
 	/// </summary>
 	public partial class ControlServers : ControlDatabase
 	{

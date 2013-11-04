@@ -60,9 +60,9 @@
 			this.labelTitle.Name = "labelTitle";
 			this.labelTitle.Size = new System.Drawing.Size(355, 64);
 			this.labelTitle.TabIndex = 1;
-			this.labelTitle.Text = "YouTube Analytics has crashed due to an unhandled exception.\r\n\r\nUnfortunately, yo" +
-    "ur work may be lost, but you can report back to the developer with the informati" +
-    "on below to fix the problem.";
+			this.labelTitle.Text = "Internet Analytics has crashed due to an unhandled exception.\r\n\r\nUnfortunately, y" +
+    "our work may be lost, but you can report back to the developer with the informat" +
+    "ion below to fix the problem.";
 			// 
 			// labelType
 			// 
@@ -185,7 +185,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FormCrash";
-			this.Text = "YouTube Analytics Crashed";
+			this.Text = "Internet Analytics Crashed";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

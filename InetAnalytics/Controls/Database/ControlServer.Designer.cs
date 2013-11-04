@@ -363,8 +363,8 @@
 			this.labelDatabaseTitle.Name = "labelDatabaseTitle";
 			this.labelDatabaseTitle.Size = new System.Drawing.Size(707, 32);
 			this.labelDatabaseTitle.TabIndex = 0;
-			this.labelDatabaseTitle.Text = "Use this tab to select the SQL database you want to use for storing the YouTube d" +
-    "ata.";
+			this.labelDatabaseTitle.Text = "Use this tab to select the SQL database you want to use for storing the Internet " +
+    "data objects.";
 			this.labelDatabaseTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// pictureBoxDatabase
@@ -425,9 +425,19 @@
 			this.listViewTables.SmallImageList = this.imageListSmall;
 			this.listViewTables.TabIndex = 7;
 			this.listViewTables.UseCompatibleStateImageBehavior = false;
-			this.listViewTables.View = System.Windows.Forms.View.Tile;
+			this.listViewTables.View = System.Windows.Forms.View.Details;
 			this.listViewTables.ItemActivate += new System.EventHandler(this.OnTableProperties);
 			this.listViewTables.SelectedIndexChanged += new System.EventHandler(this.OnTableSelectionChanged);
+			// 
+			// columnHeaderTableName
+			// 
+			this.columnHeaderTableName.Text = "Name";
+			this.columnHeaderTableName.Width = 240;
+			// 
+			// columnHeaderTableFields
+			// 
+			this.columnHeaderTableFields.Text = "Fields";
+			this.columnHeaderTableFields.Width = 120;
 			// 
 			// imageListLarge
 			// 
@@ -455,8 +465,8 @@
 			this.labelTablesTitle.Name = "labelTablesTitle";
 			this.labelTablesTitle.Size = new System.Drawing.Size(707, 32);
 			this.labelTablesTitle.TabIndex = 2;
-			this.labelTablesTitle.Text = "Use this tab to configure the SQL tables storing the YouTube data. Select one of " +
-    "the available tables, and map it to a database tables.";
+			this.labelTablesTitle.Text = "Use this tab to configure the SQL tables storing the Internet objects data. Selec" +
+    "t one of the available tables, and map it to a database tables.";
 			this.labelTablesTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// pictureBoxTables

@@ -30,7 +30,7 @@ using DotNetApi.Windows.Controls;
 namespace InetAnalytics.Controls.Comments
 {
 	/// <summary>
-	/// A control that displays the feed types available in the YouTube API version 2.
+	/// A control that displays the comments information.
 	/// </summary>
 	public partial class ControlCommentsInfo : ThreadSafeControl
 	{

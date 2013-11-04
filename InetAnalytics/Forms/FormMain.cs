@@ -51,37 +51,35 @@ namespace InetAnalytics.Forms
 		private Crawler crawler;
 
 		// Tree view nodes.
-		private TreeNode treeNodeBrowserApi2;
-		private TreeNode treeNodeBrowserApi2VideosFeedsInfo;
-		private TreeNode treeNodeBrowserApi2Video;
-		private TreeNode treeNodeBrowserApi2VideoComments;
-		private TreeNode treeNodeBrowserApi2SearchFeed;
-		private TreeNode treeNodeBrowserApi2StandardFeed;
-		private TreeNode treeNodeBrowserApi2RelatedVideosFeed;
-		private TreeNode treeNodeBrowserApi2ResponseVideosFeed;
-		private TreeNode treeNodeBrowserApi2UserFeedsInfo;
-		private TreeNode treeNodeBrowserApi2User;
-		private TreeNode treeNodeBrowserApi2UploadsFeed;
-		private TreeNode treeNodeBrowserApi2FavoritesFeed;
-		private TreeNode treeNodeBrowserApi2Playlists;
-		private TreeNode treeNodeBrowserApi2PlaylistFeed;
-		private TreeNode treeNodeBrowserApi2VideoCategories;
-
-		private TreeNode treeNodeBrowserApi3;
-		private TreeNode treeNodeBrowserApi3Videos;
-
-		private TreeNode treeNodeBrowserWeb;
-		private TreeNode treeNodeBrowserWebVideos;
+		private TreeNode treeNodePlanetLab;
+		private TreeNode treeNodePlanetLabSites;
+		private TreeNode treeNodePlanetLabNodes;
+		private TreeNode treeNodePlanetLabSlices;
 
 		private TreeNode treeNodeDatabaseServers;
 
 		private TreeNode treeNodeSpidersLocal;
 		private TreeNode treeNodeSpiderStandardFeeds;
 
-		private TreeNode treeNodePlanetLab;
-		private TreeNode treeNodePlanetLabSites;
-		private TreeNode treeNodePlanetLabNodes;
-		private TreeNode treeNodePlanetLabSlices;
+		private TreeNode treeNodeYouTubeApi2;
+		private TreeNode treeNodeYouTubeApi2VideosFeedsInfo;
+		private TreeNode treeNodeYouTubeApi2Video;
+		private TreeNode treeNodeYouTubeApi2VideoComments;
+		private TreeNode treeNodeYouTubeApi2SearchFeed;
+		private TreeNode treeNodeYouTubeApi2StandardFeed;
+		private TreeNode treeNodeYouTubeApi2RelatedVideosFeed;
+		private TreeNode treeNodeYouTubeApi2ResponseVideosFeed;
+		private TreeNode treeNodeYouTubeApi2UserFeedsInfo;
+		private TreeNode treeNodeYouTubeApi2User;
+		private TreeNode treeNodeYouTubeApi2UploadsFeed;
+		private TreeNode treeNodeYouTubeApi2FavoritesFeed;
+		private TreeNode treeNodeYouTubeApi2Playlists;
+		private TreeNode treeNodeYouTubeApi2PlaylistFeed;
+		private TreeNode treeNodeYouTubeApi2VideoCategories;
+		private TreeNode treeNodeYouTubeApi3;
+		private TreeNode treeNodeYouTubeApi3Videos;
+		private TreeNode treeNodeYouTubeWeb;
+		private TreeNode treeNodeYouTubeWebVideos;
 
 		private TreeNode treeNodeTestingWebRequest;
 		private TreeNode treeNodeTestingSshRequest;
@@ -97,6 +95,17 @@ namespace InetAnalytics.Forms
 		private Control controlPanel = null;
 
 		// Panel controls.
+
+		private readonly ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
+		private readonly ControlSites controlPlanetLabSites = new ControlSites();
+		private readonly ControlNodes controlPlanetLabNodes = new ControlNodes();
+		private readonly ControlSlices controlPlanetLabSlices = new ControlSlices();
+
+		private readonly ControlServers controlDatabaseServers = new ControlServers();
+
+		private readonly ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
+		private readonly ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
+
 		private readonly ControlYtApi2Info controlYtApi2 = new ControlYtApi2Info();
 		private readonly ControlYtApi2VideosFeedsInfo controlYtApi2VideosFeedsInfo = new ControlYtApi2VideosFeedsInfo();
 		private readonly ControlYtApi2Video controlYtApi2Video = new ControlYtApi2Video();
@@ -113,18 +122,8 @@ namespace InetAnalytics.Forms
 		private readonly ControlYtApi2VideosFeed controlYtApi2FavoritesFeed = new ControlYtApi2VideosFeed();
 		private readonly ControlYtApi2Categories controlYtApi2Categories = new ControlYtApi2Categories();
 		private readonly ControlYtApi3Info controlYtApi3 = new ControlYtApi3Info();
-		private readonly ControlWeb controlWeb = new ControlWeb();
-		private readonly ControlWebStatistics controlWebStatistics = new ControlWebStatistics();
-
-		private readonly ControlServers controlDatabaseServers = new ControlServers();
-
-		private readonly ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
-		private readonly ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
-
-		private readonly ControlPlanetLabInfo controlPlanetLab = new ControlPlanetLabInfo();
-		private readonly ControlSites controlPlanetLabSites = new ControlSites();
-		private readonly ControlNodes controlPlanetLabNodes = new ControlNodes();
-		private readonly ControlSlices controlPlanetLabSlices = new ControlSlices();
+		private readonly ControlWeb controlYtWeb = new ControlWeb();
+		private readonly ControlWebStatistics controlYtWebStatistics = new ControlWebStatistics();
 
 		private readonly ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
 		private readonly ControlTestingSshRequest controlTestingSshRequest = new ControlTestingSshRequest();
@@ -156,115 +155,6 @@ namespace InetAnalytics.Forms
 			this.crawler = crawler;
 
 			// Create the tree view items.
-			this.treeNodeBrowserApi2VideoComments = new TreeNode("Comments",
-				this.imageList.Images.IndexOfKey("FolderClosedComment"),
-				this.imageList.Images.IndexOfKey("FolderOpenComment"));
-			this.treeNodeBrowserApi2Video = new TreeNode("Video",
-				this.imageList.Images.IndexOfKey("FileVideo"),
-				this.imageList.Images.IndexOfKey("FileVideo"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi2VideoComments
-				});
-			this.treeNodeBrowserApi2SearchFeed = new TreeNode("Search",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi2StandardFeed = new TreeNode("Standard feeds",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi2RelatedVideosFeed = new TreeNode("Related videos feed",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi2ResponseVideosFeed = new TreeNode("Response videos feed",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi2VideosFeedsInfo = new TreeNode("Global videos",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi2Video,
-					this.treeNodeBrowserApi2SearchFeed,
-					this.treeNodeBrowserApi2StandardFeed,
-					this.treeNodeBrowserApi2RelatedVideosFeed,
-					this.treeNodeBrowserApi2ResponseVideosFeed
-				});
-
-			this.treeNodeBrowserApi2UploadsFeed = new TreeNode("Uploads feed",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi2PlaylistFeed = new TreeNode("Playlist feed",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi2Playlists = new TreeNode("Playlists",
-				this.imageList.Images.IndexOfKey("FolderClosedPlay"),
-				this.imageList.Images.IndexOfKey("FolderOpenPlay"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi2PlaylistFeed
-				});
-			this.treeNodeBrowserApi2FavoritesFeed = new TreeNode("Favorites feed",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi2User = new TreeNode("User",
-				this.imageList.Images.IndexOfKey("FileUser"),
-				this.imageList.Images.IndexOfKey("FileUser"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi2UploadsFeed,
-					this.treeNodeBrowserApi2FavoritesFeed,
-					this.treeNodeBrowserApi2Playlists
-				});
-			this.treeNodeBrowserApi2UserFeedsInfo = new TreeNode("User videos",
-				this.imageList.Images.IndexOfKey("FolderClosedUser"),
-				this.imageList.Images.IndexOfKey("FolderOpenUser"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi2User
-				});
-
-			this.treeNodeBrowserApi2VideoCategories = new TreeNode("Video categories",
-				this.imageList.Images.IndexOfKey("Categories"),
-				this.imageList.Images.IndexOfKey("Categories"));
-
-			this.treeNodeBrowserApi2 = new TreeNode("YouTube API version 2",
-				this.imageList.Images.IndexOfKey("ServerBrowse"),
-				this.imageList.Images.IndexOfKey("ServerBrowse"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi2VideosFeedsInfo,
-					this.treeNodeBrowserApi2UserFeedsInfo,
-					this.treeNodeBrowserApi2VideoCategories
-				});
-
-			this.treeNodeBrowserApi3Videos = new TreeNode("Videos",
-				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
-				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
-			this.treeNodeBrowserApi3 = new TreeNode("YouTube API version 3",
-				this.imageList.Images.IndexOfKey("ServerBrowse"),
-				this.imageList.Images.IndexOfKey("ServerBrowse"),
-				new TreeNode[] {
-					this.treeNodeBrowserApi3Videos
-				});
-
-			this.treeNodeBrowserWebVideos = new TreeNode("Videos",
-				this.imageList.Images.IndexOfKey("FileGraphLine"),
-				this.imageList.Images.IndexOfKey("FileGraphLine"));
-			this.treeNodeBrowserWeb = new TreeNode("YouTube Web",
-				this.imageList.Images.IndexOfKey("GlobeBrowse"),
-				this.imageList.Images.IndexOfKey("GlobeBrowse"),
-				new TreeNode[] {
-					this.treeNodeBrowserWebVideos
-				});
-
-			this.treeNodeDatabaseServers = new TreeNode("Servers",
-				this.imageList.Images.IndexOfKey("ServersDatabase"),
-				this.imageList.Images.IndexOfKey("ServersDatabase"));
-
-			this.treeNodeSpiderStandardFeeds = new TreeNode("Standard feeds",
-				this.imageList.Images.IndexOfKey("Cube"),
-				this.imageList.Images.IndexOfKey("Cube"));
-			this.treeNodeSpidersLocal = new TreeNode("Local spiders",
-				this.imageList.Images.IndexOfKey("ServerCube"),
-				this.imageList.Images.IndexOfKey("ServerCube"),
-				new TreeNode[] {
-					this.treeNodeSpiderStandardFeeds
-				});
-
 			this.treeNodePlanetLabSites = new TreeNode("Sites",
 				this.imageList.Images.IndexOfKey("FolderClosedGlobe"),
 				this.imageList.Images.IndexOfKey("FolderOpenGlobe"));
@@ -281,6 +171,110 @@ namespace InetAnalytics.Forms
 					this.treeNodePlanetLabSites,
 					this.treeNodePlanetLabNodes,
 					this.treeNodePlanetLabSlices
+				});
+
+			this.treeNodeDatabaseServers = new TreeNode("Servers",
+				this.imageList.Images.IndexOfKey("ServersDatabase"),
+				this.imageList.Images.IndexOfKey("ServersDatabase"));
+
+			this.treeNodeSpiderStandardFeeds = new TreeNode("Standard feeds",
+				this.imageList.Images.IndexOfKey("Cube"),
+				this.imageList.Images.IndexOfKey("Cube"));
+			this.treeNodeSpidersLocal = new TreeNode("Local spiders",
+				this.imageList.Images.IndexOfKey("ServerCube"),
+				this.imageList.Images.IndexOfKey("ServerCube"),
+				new TreeNode[] {
+					this.treeNodeSpiderStandardFeeds
+				});
+
+			this.treeNodeYouTubeApi2VideoComments = new TreeNode("Comments",
+				this.imageList.Images.IndexOfKey("FolderClosedComment"),
+				this.imageList.Images.IndexOfKey("FolderOpenComment"));
+			this.treeNodeYouTubeApi2Video = new TreeNode("Video",
+				this.imageList.Images.IndexOfKey("FileVideo"),
+				this.imageList.Images.IndexOfKey("FileVideo"),
+				new TreeNode[] {
+					this.treeNodeYouTubeApi2VideoComments
+				});
+			this.treeNodeYouTubeApi2SearchFeed = new TreeNode("Search",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi2StandardFeed = new TreeNode("Standard feeds",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi2RelatedVideosFeed = new TreeNode("Related videos feed",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi2ResponseVideosFeed = new TreeNode("Response videos feed",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi2VideosFeedsInfo = new TreeNode("Global videos",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"),
+				new TreeNode[] {
+					this.treeNodeYouTubeApi2Video,
+					this.treeNodeYouTubeApi2SearchFeed,
+					this.treeNodeYouTubeApi2StandardFeed,
+					this.treeNodeYouTubeApi2RelatedVideosFeed,
+					this.treeNodeYouTubeApi2ResponseVideosFeed
+				});
+			this.treeNodeYouTubeApi2UploadsFeed = new TreeNode("Uploads feed",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi2PlaylistFeed = new TreeNode("Playlist feed",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi2Playlists = new TreeNode("Playlists",
+				this.imageList.Images.IndexOfKey("FolderClosedPlay"),
+				this.imageList.Images.IndexOfKey("FolderOpenPlay"),
+				new TreeNode[] {
+					this.treeNodeYouTubeApi2PlaylistFeed
+				});
+			this.treeNodeYouTubeApi2FavoritesFeed = new TreeNode("Favorites feed",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi2User = new TreeNode("User",
+				this.imageList.Images.IndexOfKey("FileUser"),
+				this.imageList.Images.IndexOfKey("FileUser"),
+				new TreeNode[] {
+					this.treeNodeYouTubeApi2UploadsFeed,
+					this.treeNodeYouTubeApi2FavoritesFeed,
+					this.treeNodeYouTubeApi2Playlists
+				});
+			this.treeNodeYouTubeApi2UserFeedsInfo = new TreeNode("User videos",
+				this.imageList.Images.IndexOfKey("FolderClosedUser"),
+				this.imageList.Images.IndexOfKey("FolderOpenUser"),
+				new TreeNode[] {
+					this.treeNodeYouTubeApi2User
+				});
+			this.treeNodeYouTubeApi2VideoCategories = new TreeNode("Video categories",
+				this.imageList.Images.IndexOfKey("Categories"),
+				this.imageList.Images.IndexOfKey("Categories"));
+			this.treeNodeYouTubeApi2 = new TreeNode("YouTube API version 2",
+				this.imageList.Images.IndexOfKey("ServerBrowse"),
+				this.imageList.Images.IndexOfKey("ServerBrowse"),
+				new TreeNode[] {
+					this.treeNodeYouTubeApi2VideosFeedsInfo,
+					this.treeNodeYouTubeApi2UserFeedsInfo,
+					this.treeNodeYouTubeApi2VideoCategories
+				});
+			this.treeNodeYouTubeApi3Videos = new TreeNode("Videos",
+				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
+				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
+			this.treeNodeYouTubeApi3 = new TreeNode("YouTube API version 3",
+				this.imageList.Images.IndexOfKey("ServerBrowse"),
+				this.imageList.Images.IndexOfKey("ServerBrowse"),
+				new TreeNode[] {
+					this.treeNodeYouTubeApi3Videos
+				});
+			this.treeNodeYouTubeWebVideos = new TreeNode("Videos",
+				this.imageList.Images.IndexOfKey("FileGraphLine"),
+				this.imageList.Images.IndexOfKey("FileGraphLine"));
+			this.treeNodeYouTubeWeb = new TreeNode("YouTube Web",
+				this.imageList.Images.IndexOfKey("GlobeBrowse"),
+				this.imageList.Images.IndexOfKey("GlobeBrowse"),
+				new TreeNode[] {
+					this.treeNodeYouTubeWebVideos
 				});
 
 			this.treeNodeTestingWebRequest = new TreeNode("Web request",
@@ -313,6 +307,13 @@ namespace InetAnalytics.Forms
 				});
 
 			// Add the panel controls to the split container.
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLab);
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSites);
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabNodes);
+			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSlices);
+			this.splitContainer.Panel2.Controls.Add(this.controlDatabaseServers);
+			this.splitContainer.Panel2.Controls.Add(this.controlSpiderInfo);
+			this.splitContainer.Panel2.Controls.Add(this.controlSpiderStandardFeeds);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2VideosFeedsInfo);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Video);
@@ -329,15 +330,8 @@ namespace InetAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2PlaylistFeed);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2Categories);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi3);
-			this.splitContainer.Panel2.Controls.Add(this.controlWeb);
-			this.splitContainer.Panel2.Controls.Add(this.controlWebStatistics);
-			this.splitContainer.Panel2.Controls.Add(this.controlDatabaseServers);
-			this.splitContainer.Panel2.Controls.Add(this.controlSpiderInfo);
-			this.splitContainer.Panel2.Controls.Add(this.controlSpiderStandardFeeds);
-			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLab);
-			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSites);
-			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabNodes);
-			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSlices);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtWeb);
+			this.splitContainer.Panel2.Controls.Add(this.controlYtWebStatistics);
 			this.splitContainer.Panel2.Controls.Add(this.controlTestingWebRequest);
 			this.splitContainer.Panel2.Controls.Add(this.controlTestingSshRequest);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
@@ -348,35 +342,34 @@ namespace InetAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlCommentsPlaylists);
 
 			// Add the panel controls as tags.
-			this.treeNodeBrowserApi2.Tag = this.controlYtApi2;
-			this.treeNodeBrowserApi2VideosFeedsInfo.Tag = this.controlYtApi2VideosFeedsInfo;
-			this.treeNodeBrowserApi2Video.Tag = this.controlYtApi2Video;
-			this.treeNodeBrowserApi2VideoComments.Tag = this.controlYtApi2CommentsFeed;
-			this.treeNodeBrowserApi2SearchFeed.Tag = this.controlYtApi2Search;
-			this.treeNodeBrowserApi2StandardFeed.Tag = this.controlYtApi2StandardFeed;
-			this.treeNodeBrowserApi2RelatedVideosFeed.Tag = this.controlYtApi2RelatedFeed;
-			this.treeNodeBrowserApi2ResponseVideosFeed.Tag = this.controlYtApi2ResponseFeed;
-			this.treeNodeBrowserApi2UserFeedsInfo.Tag = this.controlYtApi2UserFeedInfo;
-			this.treeNodeBrowserApi2User.Tag = this.controlYtApi2Profile;
-			this.treeNodeBrowserApi2UploadsFeed.Tag = this.controlYtApi2UploadsFeed;
-			this.treeNodeBrowserApi2Playlists.Tag = this.controlYtApi2PlaylistsFeed;
-			this.treeNodeBrowserApi2FavoritesFeed.Tag = this.controlYtApi2FavoritesFeed;
-			this.treeNodeBrowserApi2PlaylistFeed.Tag = this.controlYtApi2PlaylistFeed;
-			this.treeNodeBrowserApi2VideoCategories.Tag = this.controlYtApi2Categories;
-
-			this.treeNodeBrowserApi3.Tag = this.controlYtApi3;
-			this.treeNodeBrowserWeb.Tag = this.controlWeb;
-			this.treeNodeBrowserWebVideos.Tag = this.controlWebStatistics;
+			this.treeNodePlanetLab.Tag = this.controlPlanetLab;
+			this.treeNodePlanetLabSites.Tag = this.controlPlanetLabSites;
+			this.treeNodePlanetLabNodes.Tag = this.controlPlanetLabNodes;
+			this.treeNodePlanetLabSlices.Tag = this.controlPlanetLabSlices;
 
 			this.treeNodeDatabaseServers.Tag = this.controlDatabaseServers;
 
 			this.treeNodeSpidersLocal.Tag = this.controlSpiderInfo;
 			this.treeNodeSpiderStandardFeeds.Tag = this.controlSpiderStandardFeeds;
 
-			this.treeNodePlanetLab.Tag = this.controlPlanetLab;
-			this.treeNodePlanetLabSites.Tag = this.controlPlanetLabSites;
-			this.treeNodePlanetLabNodes.Tag = this.controlPlanetLabNodes;
-			this.treeNodePlanetLabSlices.Tag = this.controlPlanetLabSlices;
+			this.treeNodeYouTubeApi2.Tag = this.controlYtApi2;
+			this.treeNodeYouTubeApi2VideosFeedsInfo.Tag = this.controlYtApi2VideosFeedsInfo;
+			this.treeNodeYouTubeApi2Video.Tag = this.controlYtApi2Video;
+			this.treeNodeYouTubeApi2VideoComments.Tag = this.controlYtApi2CommentsFeed;
+			this.treeNodeYouTubeApi2SearchFeed.Tag = this.controlYtApi2Search;
+			this.treeNodeYouTubeApi2StandardFeed.Tag = this.controlYtApi2StandardFeed;
+			this.treeNodeYouTubeApi2RelatedVideosFeed.Tag = this.controlYtApi2RelatedFeed;
+			this.treeNodeYouTubeApi2ResponseVideosFeed.Tag = this.controlYtApi2ResponseFeed;
+			this.treeNodeYouTubeApi2UserFeedsInfo.Tag = this.controlYtApi2UserFeedInfo;
+			this.treeNodeYouTubeApi2User.Tag = this.controlYtApi2Profile;
+			this.treeNodeYouTubeApi2UploadsFeed.Tag = this.controlYtApi2UploadsFeed;
+			this.treeNodeYouTubeApi2Playlists.Tag = this.controlYtApi2PlaylistsFeed;
+			this.treeNodeYouTubeApi2FavoritesFeed.Tag = this.controlYtApi2FavoritesFeed;
+			this.treeNodeYouTubeApi2PlaylistFeed.Tag = this.controlYtApi2PlaylistFeed;
+			this.treeNodeYouTubeApi2VideoCategories.Tag = this.controlYtApi2Categories;
+			this.treeNodeYouTubeApi3.Tag = this.controlYtApi3;
+			this.treeNodeYouTubeWeb.Tag = this.controlYtWeb;
+			this.treeNodeYouTubeWebVideos.Tag = this.controlYtWebStatistics;
 
 			this.treeNodeTestingWebRequest.Tag = this.controlTestingWebRequest;
 			this.treeNodeTestingSshRequest.Tag = this.controlTestingSshRequest;
@@ -389,15 +382,15 @@ namespace InetAnalytics.Forms
 			this.treeNodeCommentsPlaylists.Tag = this.controlCommentsPlaylists;
 
 			// Add the tree nodes to the side panel tree views.
-			this.controlSideBrowser.Nodes.AddRange(
-				new TreeNode[] {
-					this.treeNodeBrowserApi2,
-					this.treeNodeBrowserApi3,
-					this.treeNodeBrowserWeb
-				});
+			this.controlSidePlanetLab.Nodes.Add(this.treeNodePlanetLab);
 			this.controlSideDatabase.Nodes.Add(this.treeNodeDatabaseServers);
 			this.controlSideSpiders.Nodes.Add(this.treeNodeSpidersLocal);
-			this.controlSidePlanetLab.Nodes.Add(this.treeNodePlanetLab);
+			this.controlSideYouTube.Nodes.AddRange(
+				new TreeNode[] {
+					this.treeNodeYouTubeApi2,
+					this.treeNodeYouTubeApi3,
+					this.treeNodeYouTubeWeb
+				});
 			this.controlSideTesting.Nodes.AddRange(
 				new TreeNode[] {
 					this.treeNodeTestingWebRequest,
@@ -409,16 +402,21 @@ namespace InetAnalytics.Forms
 			// Set the control event handlers.
 			this.crawler.Status.Message += this.OnStatusMessage;
 
-			this.controlYtApi2.VideosGlobalClick += this.BrowserApi2VideosFeedsInfoClick;
-			this.controlYtApi2.VideosUserClick += this.BrowserApi2UserFeedsInfoClick;
-			this.controlYtApi2.CategoriesClick += this.BrowserApi2VideoCategoriesClick;
+			this.controlPlanetLab.ClickSites += this.PlanetLabSitesClick;
+			this.controlPlanetLab.ClickSlices += this.PlanetLabSlicesClick;
+			this.controlPlanetLabSlices.SliceAdded += this.PlanetLabSliceAdded;
+			this.controlPlanetLabSlices.SliceRemoved += this.PlanetLabSliceRemoved;
 
-			this.controlYtApi2VideosFeedsInfo.VideoClick += this.BrowserApi2VideoClick;
-			this.controlYtApi2VideosFeedsInfo.VideoCommentsClick += this.BrowserApi2VideoCommentsClick;
-			this.controlYtApi2VideosFeedsInfo.SearchFeedClick += this.BrowserApi2SearchFeedClick;
-			this.controlYtApi2VideosFeedsInfo.StandardFeedClick += this.BrowserApi2StandardFeedClick;
-			this.controlYtApi2VideosFeedsInfo.RelatedVideosFeedClick += this.BrowserApi2RelatedVideosFeedClick;
-			this.controlYtApi2VideosFeedsInfo.ResponseVideosFeedClick += this.BrowserApi2ResponseVideosFeedClick;
+			this.controlYtApi2.VideosGlobalClick += this.YouTubeApi2VideosFeedsInfoClick;
+			this.controlYtApi2.VideosUserClick += this.YouTubeApi2UserFeedsInfoClick;
+			this.controlYtApi2.CategoriesClick += this.YouTubeApi2VideoCategoriesClick;
+
+			this.controlYtApi2VideosFeedsInfo.VideoClick += this.YouTubeApi2VideoClick;
+			this.controlYtApi2VideosFeedsInfo.VideoCommentsClick += this.YouTubeApi2VideoCommentsClick;
+			this.controlYtApi2VideosFeedsInfo.SearchFeedClick += this.YouTubeApi2SearchFeedClick;
+			this.controlYtApi2VideosFeedsInfo.StandardFeedClick += this.YouTubeApi2StandardFeedClick;
+			this.controlYtApi2VideosFeedsInfo.RelatedVideosFeedClick += this.YouTubeApi2RelatedVideosFeedClick;
+			this.controlYtApi2VideosFeedsInfo.ResponseVideosFeedClick += this.YouTubeApi2ResponseVideosFeedClick;
 
 			this.controlYtApi2Video.ViewVideoCommentsInApiV2 += this.ViewVideoCommentsInApiV2;
 			this.controlYtApi2Video.ViewAuthorInApiV2 += this.ViewApiV2User;
@@ -455,11 +453,11 @@ namespace InetAnalytics.Forms
 			this.controlYtApi2ResponseFeed.ViewVideoInWeb += this.ViewVideoInWeb;
 			this.controlYtApi2ResponseFeed.Comment += this.OnCommentVideo;
 
-			this.controlYtApi2UserFeedInfo.UserClick += this.BrowserApi2UserClick;
-			this.controlYtApi2UserFeedInfo.UploadsFeedClick += this.BrowserApi2UserUploadsClick;
-			this.controlYtApi2UserFeedInfo.FavoritesFeedClick += this.BrowserApi2UserFavoritesClick;
-			this.controlYtApi2UserFeedInfo.PlaylistsFeedClick += this.BrowserApi2UserPlaylistsClick;
-			this.controlYtApi2UserFeedInfo.PlaylistFeedClick += this.BrowserApi2PlaylistVideosClick;
+			this.controlYtApi2UserFeedInfo.UserClick += this.YouTubeApi2UserClick;
+			this.controlYtApi2UserFeedInfo.UploadsFeedClick += this.YouTubeApi2UserUploadsClick;
+			this.controlYtApi2UserFeedInfo.FavoritesFeedClick += this.YouTubeApi2UserFavoritesClick;
+			this.controlYtApi2UserFeedInfo.PlaylistsFeedClick += this.YouTubeApi2UserPlaylistsClick;
+			this.controlYtApi2UserFeedInfo.PlaylistFeedClick += this.YouTubeApi2PlaylistVideosClick;
 
 			this.controlYtApi2Profile.ViewUserUploadsInApiV2 += this.ViewApiV2UploadedVideos;
 			this.controlYtApi2Profile.ViewUserFavoritesInApiV2 += this.ViewApiV2FavoritedVideos;
@@ -491,22 +489,23 @@ namespace InetAnalytics.Forms
 			this.controlYtApi2PlaylistFeed.ViewVideoInWeb += this.ViewVideoInWeb;
 			this.controlYtApi2PlaylistFeed.Comment += this.OnCommentVideo;
 
-			this.controlWeb.ClickVideoStatistics += this.BrowserWebVideosClick;
+			this.controlYtWeb.ClickVideoStatistics += this.YouTubeWebVideosClick;
 
-			this.controlWebStatistics.Comment += this.OnCommentVideo;
+			this.controlYtWebStatistics.Comment += this.OnCommentVideo;
 
-			this.controlPlanetLab.ClickSites += this.PlanetLabSitesClick;
-			this.controlPlanetLab.ClickSlices += this.PlanetLabSlicesClick;
-			this.controlPlanetLabSlices.SliceAdded += this.PlanetLabSliceAdded;
-			this.controlPlanetLabSlices.SliceRemoved += this.PlanetLabSliceRemoved;
+			this.controlSpiderInfo.StandardFeedsClick += this.YouTubeSpiderStandardFeedsClick;
 
-			this.controlSpiderInfo.StandardFeedsClick += this.BrowserSpiderStandardFeedsClick;
-
-			this.controlCommentsInfo.ClickVideos += this.BrowserCommentsVideosClick;
-			this.controlCommentsInfo.ClickUsers += this.BrowserCommentsUsersClick;
-			this.controlCommentsInfo.ClickPlaylists += this.BrowserCommentsPlaylistsClick;
+			this.controlCommentsInfo.ClickVideos += this.YouTubeCommentsVideosClick;
+			this.controlCommentsInfo.ClickUsers += this.YouTubeCommentsUsersClick;
+			this.controlCommentsInfo.ClickPlaylists += this.YouTubeCommentsPlaylistsClick;
 
 			// Initialize the controls.
+			this.controlPlanetLab.Initialize(this.crawler);
+			this.controlPlanetLabSites.Initialize(this.crawler);
+			this.controlPlanetLabNodes.Initialize(this.crawler);
+			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls, this.imageList);
+			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
+			this.controlSpiderStandardFeeds.Initialize(this.crawler);
 			this.controlYtApi2Video.Initialize(this.crawler);
 			this.controlYtApi2CommentsFeed.Initialize(this.crawler);
 			this.controlYtApi2StandardFeed.Initialize(this.crawler);
@@ -519,16 +518,10 @@ namespace InetAnalytics.Forms
 			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "favorites video feed", "user", "APIv2 Favorites Videos Feed");
 			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "playlist video feed", "user", "APIv2 Playlist Videos Feed");
 			this.controlYtApi2Categories.Initialize(this.crawler);
-			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
-			this.controlSpiderStandardFeeds.Initialize(this.crawler);
-			this.controlPlanetLab.Initialize(this.crawler);
-			this.controlPlanetLabSites.Initialize(this.crawler);
-			this.controlPlanetLabNodes.Initialize(this.crawler);
-			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlTestingWebRequest.Initialize(this.crawler);
 			this.controlTestingSshRequest.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
-			this.controlWebStatistics.Initialize(this.crawler);
+			this.controlYtWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
 			this.controlCommentsVideos.Initialize(this.crawler.Comments.Videos, InetCrawler.Comments.Comment.CommentType.Video);
 			this.controlCommentsUsers.Initialize(this.crawler.Comments.Users, InetCrawler.Comments.Comment.CommentType.User);
@@ -538,10 +531,10 @@ namespace InetAnalytics.Forms
 			this.controlPanel = this.labelNotAvailable;
 
 			// Initialize the side controls.
-			this.controlSideBrowser.Initialize();
+			this.controlSidePlanetLab.Initialize();
 			this.controlSideDatabase.Initialize();
 			this.controlSideSpiders.Initialize();
-			this.controlSidePlanetLab.Initialize();
+			this.controlSideYouTube.Initialize();
 			this.controlSideTesting.Initialize();
 			this.controlSideLog.Initialize();
 			this.controlSideConfiguration.Initialize();
@@ -654,335 +647,6 @@ namespace InetAnalytics.Forms
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the videos feeds information page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2VideosFeedsInfoClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideosFeedsInfo;
-		}
-		
-		/// <summary>
-		/// An event handler called when the user selects the user feeds information page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2UserFeedsInfoClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UserFeedsInfo;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the video categories page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2VideoCategoriesClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoCategories;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the video page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2VideoClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the video comments page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2VideoCommentsClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the search feed page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2SearchFeedClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2SearchFeed;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the standard feed page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2StandardFeedClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2StandardFeed;
-		}
-
-		/// <summary>
-		/// An event handler called when user selects the related videos feed page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2RelatedVideosFeedClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the response videos feed page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2ResponseVideosFeedClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the user page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2UserClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2User;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the user uploads page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2UserUploadsClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the user favorites page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2UserFavoritesClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the user playlists page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2UserPlaylistsClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the playlist videos page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserApi2PlaylistVideosClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the web videos page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserWebVideosClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the standard feeds spider page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserSpiderStandardFeedsClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemSpiders;
-			this.controlSideSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the videos comments page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserCommentsVideosClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemComments;
-			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the users comments page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserCommentsUsersClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemComments;
-			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the playlists comments page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void BrowserCommentsPlaylistsClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemComments;
-			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view video in APIv2 page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewVideoInApiV2(object sender, VideoEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Video;
-			this.controlYtApi2Video.View(e.Video);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view video comment in APIv2 page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewVideoCommentsInApiV2(object sender, StringEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2VideoComments;
-			this.controlYtApi2CommentsFeed.View(e.Value);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view related videos in APIv2 page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewRelatedVideosInApiV2(object sender, VideoEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2RelatedVideosFeed;
-			this.controlYtApi2RelatedFeed.View(e.Video.Id);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view response videos in APIv2 page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewResponseVideosInApiV2(object sender, VideoEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2ResponseVideosFeed;
-			this.controlYtApi2ResponseFeed.View(e.Video.Id);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view user in APIv2 page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2User(object sender, StringEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2User;
-			this.controlYtApi2Profile.View(e.Value);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view uploaded videos in APIv2 page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2UploadedVideos(object sender, ProfileEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2UploadsFeed;
-			this.controlYtApi2UploadsFeed.View(e.Profile.Id);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view favorited videos page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2FavoritedVideos(object sender, ProfileEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2FavoritesFeed;
-			this.controlYtApi2FavoritesFeed.View(e.Profile.Id);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the playlists page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Playlists(object sender, ProfileEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2Playlists;
-			this.controlYtApi2PlaylistsFeed.View(e.Profile.Id);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the playlist page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Playlist(object sender, StringEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserApi2PlaylistFeed;
-			this.controlYtApi2PlaylistFeed.View(e.Value);
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects to view video web information page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void ViewVideoInWeb(object sender, VideoEventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemBrowser;
-			this.controlSideBrowser.SelectedNode = this.treeNodeBrowserWebVideos;
-			this.controlWebStatistics.View(e.Video.Id);
-		}
-
-		/// <summary>
 		/// An event handler called when the user selects the PlanetLab sites page.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -1034,6 +698,335 @@ namespace InetAnalytics.Forms
 		private void PlanetLabConsoleSelected(object sender, PageSelectionEventArgs e)
 		{
 			this.controlSidePlanetLab.SelectedNode = e.Node;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the videos feeds information page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2VideosFeedsInfoClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideosFeedsInfo;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the user feeds information page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2UserFeedsInfoClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2UserFeedsInfo;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the video categories page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2VideoCategoriesClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideoCategories;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the video page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2VideoClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Video;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the video comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2VideoCommentsClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideoComments;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the search feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2SearchFeedClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2SearchFeed;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the standard feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2StandardFeedClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2StandardFeed;
+		}
+
+		/// <summary>
+		/// An event handler called when user selects the related videos feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2RelatedVideosFeedClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2RelatedVideosFeed;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the response videos feed page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2ResponseVideosFeedClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2ResponseVideosFeed;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the user page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2UserClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2User;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the user uploads page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2UserUploadsClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2UploadsFeed;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the user favorites page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2UserFavoritesClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2FavoritesFeed;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the user playlists page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2UserPlaylistsClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Playlists;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the playlist videos page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeApi2PlaylistVideosClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2PlaylistFeed;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the web videos page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeWebVideosClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeWebVideos;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the standard feeds spider page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeSpiderStandardFeedsClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemSpiders;
+			this.controlSideSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the videos comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeCommentsVideosClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the users comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeCommentsUsersClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the playlists comments page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void YouTubeCommentsPlaylistsClick(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemComments;
+			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view video in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewVideoInApiV2(object sender, VideoEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Video;
+			this.controlYtApi2Video.View(e.Video);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view video comment in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewVideoCommentsInApiV2(object sender, StringEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideoComments;
+			this.controlYtApi2CommentsFeed.View(e.Value);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view related videos in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewRelatedVideosInApiV2(object sender, VideoEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2RelatedVideosFeed;
+			this.controlYtApi2RelatedFeed.View(e.Video.Id);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view response videos in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewResponseVideosInApiV2(object sender, VideoEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2ResponseVideosFeed;
+			this.controlYtApi2ResponseFeed.View(e.Video.Id);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view user in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewApiV2User(object sender, StringEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2User;
+			this.controlYtApi2Profile.View(e.Value);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view uploaded videos in APIv2 page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewApiV2UploadedVideos(object sender, ProfileEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2UploadsFeed;
+			this.controlYtApi2UploadsFeed.View(e.Profile.Id);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view favorited videos page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewApiV2FavoritedVideos(object sender, ProfileEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2FavoritesFeed;
+			this.controlYtApi2FavoritesFeed.View(e.Profile.Id);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the playlists page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewApiV2Playlists(object sender, ProfileEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Playlists;
+			this.controlYtApi2PlaylistsFeed.View(e.Profile.Id);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the playlist page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewApiV2Playlist(object sender, StringEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2PlaylistFeed;
+			this.controlYtApi2PlaylistFeed.View(e.Value);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects to view video web information page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void ViewVideoInWeb(object sender, VideoEventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
+			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeWebVideos;
+			this.controlYtWebStatistics.View(e.Video.Id);
 		}
 
 		/// <summary>

@@ -31,9 +31,9 @@
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.labelDescription = new System.Windows.Forms.Label();
-			this.linkLabelStandardFeeds = new System.Windows.Forms.LinkLabel();
-			this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
+			this.linkLabelYtStandardFeeds = new System.Windows.Forms.LinkLabel();
 			this.labelStandardFeeds = new System.Windows.Forms.Label();
+			this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
 			this.SuspendLayout();
@@ -48,7 +48,7 @@
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel.Controls.Add(this.labelTitle, 0, 0);
 			this.tableLayoutPanel.Controls.Add(this.labelDescription, 0, 1);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelStandardFeeds, 0, 2);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelYtStandardFeeds, 0, 2);
 			this.tableLayoutPanel.Controls.Add(this.labelStandardFeeds, 1, 2);
 			this.tableLayoutPanel.Location = new System.Drawing.Point(74, 20);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -78,22 +78,33 @@
 			this.labelDescription.Location = new System.Drawing.Point(3, 30);
 			this.labelDescription.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
 			this.labelDescription.Name = "labelDescription";
-			this.labelDescription.Size = new System.Drawing.Size(464, 39);
+			this.labelDescription.Size = new System.Drawing.Size(419, 39);
 			this.labelDescription.TabIndex = 4;
 			this.labelDescription.Text = "The spiders are automated tools that allow you to collect or crawl data from the " +
-    "YouTube service.\r\n\r\nTo begin, select a spider below:";
+    "Internet.\r\n\r\nTo begin, select a spider below:";
 			// 
-			// linkLabelStandardFeeds
+			// linkLabelYtStandardFeeds
 			// 
-			this.linkLabelStandardFeeds.AutoSize = true;
-			this.linkLabelStandardFeeds.Location = new System.Drawing.Point(3, 75);
-			this.linkLabelStandardFeeds.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelStandardFeeds.Name = "linkLabelStandardFeeds";
-			this.linkLabelStandardFeeds.Size = new System.Drawing.Size(79, 13);
-			this.linkLabelStandardFeeds.TabIndex = 12;
-			this.linkLabelStandardFeeds.TabStop = true;
-			this.linkLabelStandardFeeds.Text = "Standard feeds";
-			this.linkLabelStandardFeeds.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnStandardFeedsClick);
+			this.linkLabelYtStandardFeeds.AutoSize = true;
+			this.linkLabelYtStandardFeeds.Location = new System.Drawing.Point(3, 75);
+			this.linkLabelYtStandardFeeds.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelYtStandardFeeds.Name = "linkLabelYtStandardFeeds";
+			this.linkLabelYtStandardFeeds.Size = new System.Drawing.Size(124, 13);
+			this.linkLabelYtStandardFeeds.TabIndex = 12;
+			this.linkLabelYtStandardFeeds.TabStop = true;
+			this.linkLabelYtStandardFeeds.Text = "YouTube standard feeds";
+			this.linkLabelYtStandardFeeds.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnStandardFeedsClick);
+			// 
+			// labelStandardFeeds
+			// 
+			this.labelStandardFeeds.AutoSize = true;
+			this.labelStandardFeeds.Location = new System.Drawing.Point(133, 75);
+			this.labelStandardFeeds.Margin = new System.Windows.Forms.Padding(3);
+			this.labelStandardFeeds.Name = "labelStandardFeeds";
+			this.labelStandardFeeds.Size = new System.Drawing.Size(481, 13);
+			this.labelStandardFeeds.TabIndex = 13;
+			this.labelStandardFeeds.Text = "Queries all standard feeds in the YouTuve API version 2, and determines which fee" +
+    "ds are browsable.\r\n";
 			// 
 			// pictureBoxIcon
 			// 
@@ -103,17 +114,6 @@
 			this.pictureBoxIcon.Size = new System.Drawing.Size(48, 48);
 			this.pictureBoxIcon.TabIndex = 6;
 			this.pictureBoxIcon.TabStop = false;
-			// 
-			// labelStandardFeeds
-			// 
-			this.labelStandardFeeds.AutoSize = true;
-			this.labelStandardFeeds.Location = new System.Drawing.Point(88, 75);
-			this.labelStandardFeeds.Margin = new System.Windows.Forms.Padding(3);
-			this.labelStandardFeeds.Name = "labelStandardFeeds";
-			this.labelStandardFeeds.Size = new System.Drawing.Size(481, 13);
-			this.labelStandardFeeds.TabIndex = 13;
-			this.labelStandardFeeds.Text = "Queries all standard feeds in the YouTuve API version 2, and determines which fee" +
-    "ds are browsable.\r\n";
 			// 
 			// ControlSpiderInfo
 			// 
@@ -136,7 +136,7 @@
 		private System.Windows.Forms.Label labelTitle;
 		private System.Windows.Forms.Label labelDescription;
 		private System.Windows.Forms.PictureBox pictureBoxIcon;
-		private System.Windows.Forms.LinkLabel linkLabelStandardFeeds;
+		private System.Windows.Forms.LinkLabel linkLabelYtStandardFeeds;
 		private System.Windows.Forms.Label labelStandardFeeds;
 	}
 }

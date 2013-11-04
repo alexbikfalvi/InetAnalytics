@@ -29,12 +29,12 @@
 		private void InitializeComponent()
 		{
 			this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
-			this.linkLabelVideos = new System.Windows.Forms.LinkLabel();
+			this.linkLabelYtVideos = new System.Windows.Forms.LinkLabel();
 			this.labelDescription = new System.Windows.Forms.Label();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-			this.linkLabelUsers = new System.Windows.Forms.LinkLabel();
-			this.linkLabelPlaylists = new System.Windows.Forms.LinkLabel();
+			this.linkLabelYtPlaylists = new System.Windows.Forms.LinkLabel();
+			this.linkLabelYtUsers = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.SuspendLayout();
@@ -48,17 +48,17 @@
 			this.pictureBoxIcon.TabIndex = 0;
 			this.pictureBoxIcon.TabStop = false;
 			// 
-			// linkLabelVideos
+			// linkLabelYtVideos
 			// 
-			this.linkLabelVideos.AutoSize = true;
-			this.linkLabelVideos.Location = new System.Drawing.Point(3, 75);
-			this.linkLabelVideos.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelVideos.Name = "linkLabelVideos";
-			this.linkLabelVideos.Size = new System.Drawing.Size(39, 13);
-			this.linkLabelVideos.TabIndex = 5;
-			this.linkLabelVideos.TabStop = true;
-			this.linkLabelVideos.Text = "Videos";
-			this.linkLabelVideos.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnVideosClick);
+			this.linkLabelYtVideos.AutoSize = true;
+			this.linkLabelYtVideos.Location = new System.Drawing.Point(3, 75);
+			this.linkLabelYtVideos.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelYtVideos.Name = "linkLabelYtVideos";
+			this.linkLabelYtVideos.Size = new System.Drawing.Size(85, 13);
+			this.linkLabelYtVideos.TabIndex = 5;
+			this.linkLabelYtVideos.TabStop = true;
+			this.linkLabelYtVideos.Text = "YouTube videos";
+			this.linkLabelYtVideos.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnVideosClick);
 			// 
 			// labelDescription
 			// 
@@ -66,11 +66,11 @@
 			this.labelDescription.Location = new System.Drawing.Point(3, 30);
 			this.labelDescription.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
 			this.labelDescription.Name = "labelDescription";
-			this.labelDescription.Size = new System.Drawing.Size(589, 39);
+			this.labelDescription.Size = new System.Drawing.Size(561, 39);
 			this.labelDescription.TabIndex = 4;
-			this.labelDescription.Text = "You may use comments to annotate YouTube analytics objects, such as videos, and u" +
-    "se them as reminders for later analyis.\r\n\r\nCurrently, you may add comment for th" +
-    "e following objects.";
+			this.labelDescription.Text = "You may use comments to annotate Internet data objects, such as videos, and use t" +
+    "hem as reminders for later analyis.\r\n\r\nCurrently, you may add comment for the fo" +
+    "llowing objects.";
 			// 
 			// labelTitle
 			// 
@@ -90,10 +90,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel.ColumnCount = 1;
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel.Controls.Add(this.linkLabelPlaylists, 0, 4);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelUsers, 0, 3);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelYtPlaylists, 0, 4);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelYtUsers, 0, 3);
 			this.tableLayoutPanel.Controls.Add(this.labelTitle, 0, 0);
-			this.tableLayoutPanel.Controls.Add(this.linkLabelVideos, 0, 2);
+			this.tableLayoutPanel.Controls.Add(this.linkLabelYtVideos, 0, 2);
 			this.tableLayoutPanel.Controls.Add(this.labelDescription, 0, 1);
 			this.tableLayoutPanel.Location = new System.Drawing.Point(74, 20);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -106,29 +106,29 @@
 			this.tableLayoutPanel.Size = new System.Drawing.Size(885, 387);
 			this.tableLayoutPanel.TabIndex = 5;
 			// 
-			// linkLabelUsers
+			// linkLabelYtPlaylists
 			// 
-			this.linkLabelUsers.AutoSize = true;
-			this.linkLabelUsers.Location = new System.Drawing.Point(3, 94);
-			this.linkLabelUsers.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelUsers.Name = "linkLabelUsers";
-			this.linkLabelUsers.Size = new System.Drawing.Size(34, 13);
-			this.linkLabelUsers.TabIndex = 6;
-			this.linkLabelUsers.TabStop = true;
-			this.linkLabelUsers.Text = "Users";
-			this.linkLabelUsers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnUsersClick);
+			this.linkLabelYtPlaylists.AutoSize = true;
+			this.linkLabelYtPlaylists.Location = new System.Drawing.Point(3, 113);
+			this.linkLabelYtPlaylists.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelYtPlaylists.Name = "linkLabelYtPlaylists";
+			this.linkLabelYtPlaylists.Size = new System.Drawing.Size(90, 13);
+			this.linkLabelYtPlaylists.TabIndex = 7;
+			this.linkLabelYtPlaylists.TabStop = true;
+			this.linkLabelYtPlaylists.Text = "YouTube playlists";
+			this.linkLabelYtPlaylists.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnPlaylistsClick);
 			// 
-			// linkLabelPlaylists
+			// linkLabelYtUsers
 			// 
-			this.linkLabelPlaylists.AutoSize = true;
-			this.linkLabelPlaylists.Location = new System.Drawing.Point(3, 113);
-			this.linkLabelPlaylists.Margin = new System.Windows.Forms.Padding(3);
-			this.linkLabelPlaylists.Name = "linkLabelPlaylists";
-			this.linkLabelPlaylists.Size = new System.Drawing.Size(44, 13);
-			this.linkLabelPlaylists.TabIndex = 7;
-			this.linkLabelPlaylists.TabStop = true;
-			this.linkLabelPlaylists.Text = "Playlists";
-			this.linkLabelPlaylists.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnPlaylistsClick);
+			this.linkLabelYtUsers.AutoSize = true;
+			this.linkLabelYtUsers.Location = new System.Drawing.Point(3, 94);
+			this.linkLabelYtUsers.Margin = new System.Windows.Forms.Padding(3);
+			this.linkLabelYtUsers.Name = "linkLabelYtUsers";
+			this.linkLabelYtUsers.Size = new System.Drawing.Size(79, 13);
+			this.linkLabelYtUsers.TabIndex = 6;
+			this.linkLabelYtUsers.TabStop = true;
+			this.linkLabelYtUsers.Text = "YouTube users";
+			this.linkLabelYtUsers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnUsersClick);
 			// 
 			// ControlCommentsInfo
 			// 
@@ -148,11 +148,11 @@
 		#endregion
 
 		private System.Windows.Forms.PictureBox pictureBoxIcon;
-		private System.Windows.Forms.LinkLabel linkLabelVideos;
+		private System.Windows.Forms.LinkLabel linkLabelYtVideos;
 		private System.Windows.Forms.Label labelDescription;
 		private System.Windows.Forms.Label labelTitle;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-		private System.Windows.Forms.LinkLabel linkLabelPlaylists;
-		private System.Windows.Forms.LinkLabel linkLabelUsers;
+		private System.Windows.Forms.LinkLabel linkLabelYtPlaylists;
+		private System.Windows.Forms.LinkLabel linkLabelYtUsers;
 	}
 }

@@ -37,9 +37,9 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.ErrorImage")));
+			this.pictureBox.ErrorImage = null;
 			this.pictureBox.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox.Image")));
-			this.pictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.InitialImage")));
+			this.pictureBox.InitialImage = null;
 			this.pictureBox.Location = new System.Drawing.Point(42, 12);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(250, 100);

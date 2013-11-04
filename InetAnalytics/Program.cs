@@ -26,7 +26,7 @@ using InetCrawler;
 namespace InetAnalytics
 {
 	/// <summary>
-	/// A class representing the YouTube Analytics program.
+	/// A class representing the Internet Analytics program.
 	/// </summary>
 	static class Program
 	{
