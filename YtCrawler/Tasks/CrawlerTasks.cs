@@ -51,11 +51,24 @@ namespace YtCrawler.Tasks
 			this.timer = new Timer(this.OnTrigger);
 		}
 
+		// Public events.
+
 		/// <summary>
-		/// Adds a new task to the tasks list.
+		/// An event raised when a task has been added.
 		/// </summary>
-		/// <param name="task">The task.</param>
-		public void Add(CrawlerTask task)
+		public event CrawlerTaskEventHandler TaskAdded;
+		/// <summary>
+		/// An event raised when a task has been removed.
+		/// </summary>
+		public event CrawlerTaskEventHandler TaskRemoved;
+
+		// Public methods.
+
+		/// <summary>
+		/// Adds a task to the tasks list.
+		/// </summary>
+		/// <param name="task"></param>
+		public void AddTask(CrawlerTask task)
 		{
 			// Validate the argument.
 			if (null == task) throw new ArgumentNullException("task");
@@ -76,24 +89,58 @@ namespace YtCrawler.Tasks
 				task.ScheduleAdded += this.OnTaskScheduleAdded;
 				task.ScheduleRemoved += this.OnTaskScheduleRemoved;
 			}
+
+			// Raise the event.
+			if (null != this.TaskAdded) this.TaskAdded(this, new CrawlerTaskEventArgs(task));
 		}
 
 		/// <summary>
-		/// Removes the task from the tasks list.
+		/// Removes a task from the tasks list.
 		/// </summary>
 		/// <param name="task">The task.</param>
-		public void Remove(CrawlerTask task)
+		public void RemoveTask(CrawlerTask task)
 		{
+			// Validate the argument.
+			if (null == task) throw new ArgumentNullException("task");
+
+			// Cancel the task execution.
+
 		}
 
-		// Internal methods.
+		/// <summary>
+		/// Removes the task from the tasks list asynchronously.
+		/// </summary>
+		/// <param name="task">The task.</param>
+		/// <param name="callback">A method called when the removal has completed.</param>
+		public void RemoveTask(CrawlerTask task, CrawlerTaskCallback callback)
+		{
+			// Validate the arguments.
+			if (null != task) throw new ArgumentNullException("task");
+			if (null != callback) throw new ArgumentNullException("callback");
+
+			// Call the remove task handler on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				try
+				{
+					// Call the remove the task handler.
+					this.RemoveTask(task);
+				}
+				catch { } // Catch all exceptions
+				finally
+				{
+					// Execute the callback method.
+					callback(task);
+				}
+			});
+		}
 
 		/// <summary>
 		/// Adds a new trigger to the tasks timeline.
 		/// </summary>
 		/// <param name="trigger">The trigger.</param>
 		/// <param name="timestamp">The timeline timestamp.</param>
-		internal void OnAddTrigger(CrawlerTrigger trigger, out DateTime timestamp)
+		public void AddTrigger(CrawlerTrigger trigger, out DateTime timestamp)
 		{
 			// Synchronize access.
 			lock (this.sync)
@@ -126,7 +173,7 @@ namespace YtCrawler.Tasks
 		/// Removes a trigger from the tasks timeline.
 		/// </summary>
 		/// <param name="trigger">The trigger.</param>
-		internal void OnRemoveTrigger(CrawlerTrigger trigger)
+		public void RemoveTrigger(CrawlerTrigger trigger)
 		{
 			// Synchronize access.
 			lock (this.sync)
@@ -242,15 +289,7 @@ namespace YtCrawler.Tasks
 			}
 
 			// Execute the current trigger.
-			this.OnExecute(first.Value);
-		}
-
-		/// <summary>
-		/// A method called when executing a trigger.
-		/// </summary>
-		/// <param name="trigger">The trigger.</param>
-		private void OnExecute(CrawlerTrigger trigger)
-		{
+			first.Value.Execute();
 		}
 
 		/// <summary>
@@ -267,7 +306,7 @@ namespace YtCrawler.Tasks
 				// Set the current trigger.
 				this.timerTrigger = trigger;
 				// If the trigger timestamp does not meet the minimum trigger delay.
-				if (now + this.minimumTriggerDelay > trigger.CurrentTime)
+				if (now + this.minimumTriggerDelay > trigger.Timestamp)
 				{
 					// Disable the timer.
 					this.timer.Change(Timeout.Infinite, Timeout.Infinite);
@@ -277,7 +316,7 @@ namespace YtCrawler.Tasks
 				else
 				{
 					// Update the timer.
-					this.timer.Change((long)trigger.CurrentTime.Subtract(now).TotalMilliseconds, Timeout.Infinite);
+					this.timer.Change((long)trigger.Timestamp.Subtract(now).TotalMilliseconds, Timeout.Infinite);
 				}
 			}
 		}

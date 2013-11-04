@@ -13,12 +13,18 @@ namespace YtCrawler.Tasks
 		/// </summary>
 		/// <param name="trigger">The trigger.</param>
 		/// <param name="timestamp">The timeline timestamp.</param>
-		void OnAddTrigger(CrawlerTrigger trigger, out DateTime timestamp);
+		void AddTrigger(CrawlerTrigger trigger, out DateTime timestamp);
 		
 		/// <summary>
 		/// Removes a trigger from the tasks timeline.
 		/// </summary>
 		/// <param name="trigger">The trigger.</param>
-		void OnRemoveTrigger(CrawlerTrigger trigger);
+		void RemoveTrigger(CrawlerTrigger trigger);
+
+		/// <summary>
+		/// Removes a task from the tasks list.
+		/// </summary>
+		/// <param name="task">The task.</param>
+		void RemoveTask(CrawlerTask task);
 	}
 }

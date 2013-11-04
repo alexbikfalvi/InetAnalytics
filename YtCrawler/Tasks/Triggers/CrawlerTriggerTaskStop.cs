@@ -21,13 +21,12 @@ using System;
 namespace YtCrawler.Tasks.Triggers
 {
 	/// <summary>
-	/// A class representing a crawler task restart trigger.
+	/// A class representing a crawler task stop trigger.
 	/// </summary>
-	public sealed class CrawlerTriggerTaskRestart : CrawlerTriggerTask
+	public sealed class CrawlerTriggerTaskStop : CrawlerTriggerTask
 	{
+		private readonly CrawlerTask.RunningTaskState state;
 		private TimeSpan interval;
-		private uint maximum;
-		private uint count;
 
 		/// <summary>
 		/// Creates a new trigger instance.
@@ -35,13 +34,11 @@ namespace YtCrawler.Tasks.Triggers
 		/// <param name="tasks">The tasks handler.</param>
 		/// <param name="task">The task.</param>
 		/// <param name="interval">The delay interval to a restart after a failure.</param>
-		/// <param name="maximum">The maximum number of restarts.</param>
-		public CrawlerTriggerTaskRestart(ICrawlerTasks tasks, CrawlerTask task, TimeSpan interval, uint maximum)
+		public CrawlerTriggerTaskStop(ICrawlerTasks tasks, CrawlerTask task, CrawlerTask.RunningTaskState state, TimeSpan interval)
 			: base(tasks, task)
 		{
+			this.state = state;
 			this.interval = interval;
-			this.maximum = maximum;
-			this.count = 0;
 		}
 
 		// Public properties.
@@ -54,59 +51,6 @@ namespace YtCrawler.Tasks.Triggers
 			get { return this.interval; }
 			set { this.OnIntervalSet(value); }
 		}
-		/// <summary>
-		/// Gets or sets the maximum restart count.
-		/// </summary>
-		public uint Maximum
-		{
-			get { return this.maximum; }
-			set { this.OnMaximumSet(value); }
-		}
-		/// <summary>
-		/// Gets or sets the current restart count.
-		/// </summary>
-		public uint Count
-		{
-			get { return this.count; }
-		}
-
-		// Public methods.
-
-		/// <summary>
-		/// Reschedules the current trigger if the current count is less than the maximum count. Otherwise, it resets the current count.
-		/// The schedule time is the current time plus the delay interval.
-		/// </summary>
-		public void Reschedule()
-		{
-			lock (this.Sync)
-			{
-				// If the counter is less than the maximum value.
-				if (this.count < this.maximum)
-				{
-					// Enable the trigger.
-					this.Enable(DateTime.Now + this.interval);
-					// Increment the count.
-					this.count++;
-				}
-				else
-				{
-					// Reset the counter.
-					this.count = 0;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Resets the trigger.
-		/// </summary>
-		public void Reset()
-		{
-			// Reset the counter.
-			lock (this.Sync)
-			{
-				this.count = 0;
-			}
-		}
 
 		// Protected methods.
 
@@ -115,8 +59,8 @@ namespace YtCrawler.Tasks.Triggers
 		/// </summary>
 		protected override void OnExecute()
 		{
-			// Execute the task.
-			this.Task.Execute(this.Timestamp);
+			// Stops the task execution.
+			this.Task.Cancel(this.state);
 		}
 
 		// Private methods.
@@ -138,19 +82,6 @@ namespace YtCrawler.Tasks.Triggers
 
 				// Set the new value.
 				this.interval = value;
-			}
-		}
-
-		/// <summary>
-		/// Sets the maximum delay count.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		private void OnMaximumSet(uint value)
-		{
-			lock (this.Sync)
-			{
-				// Set the new value.
-				this.maximum = value;
 			}
 		}
 	}

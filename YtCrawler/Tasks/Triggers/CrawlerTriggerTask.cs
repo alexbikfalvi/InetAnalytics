@@ -38,5 +38,12 @@ namespace YtCrawler.Tasks.Triggers
 			// Set the task.
 			this.task = task;
 		}
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets the crawler task.
+		/// </summary>
+		public CrawlerTask Task { get { return this.task; } }
 	}
 }

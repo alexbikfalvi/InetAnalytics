@@ -24,6 +24,12 @@ using YtCrawler.Tasks.Triggers;
 namespace YtCrawler.Tasks
 {
 	/// <summary>
+	/// A delegate used for task asynchronous operations.
+	/// </summary>
+	/// <param name="task">The crawler task.</param>
+	public delegate void CrawlerTaskCallback(CrawlerTask task);
+
+	/// <summary>
 	/// An abstract class representing a crawler task.
 	/// </summary>
 	public abstract class CrawlerTask
@@ -49,7 +55,7 @@ namespace YtCrawler.Tasks
 		/// <summary>
 		/// A structure representing the running task information.
 		/// </summary>
-		public struct RunningTaskState
+		public sealed class RunningTaskState
 		{
 			public CancellationTokenSource CancellationSource { get; private set; }
 			//public WaitHandle 
@@ -60,26 +66,36 @@ namespace YtCrawler.Tasks
 
 		private readonly Dictionary<Guid, CrawlerSchedule> schedules = new Dictionary<Guid, CrawlerSchedule>();
 
-		private readonly CrawlerTriggerTask triggerRestart;
-
 		private readonly CrawlerTaskEventArgs args;
 
-		private bool restartAfterFailureEnabled;
-		private int restartAfterFailureCount;
-		private TimeSpan restartAfterFailureInterval;
+		private readonly CrawlerTriggerTaskRestart triggerRestart;
 
+		private bool restartAfterFailureEnabled = false;
+		private TimeSpan restartAfterFailureInterval = TimeSpan.FromMinutes(1.0);
+		private uint restartAfterFailureMaximum = 3;
 
+		private bool stopEnabled = false;
+		private TimeSpan stopInterval = TimeSpan.FromDays(3.0);
+
+		private bool deleteEnabled = false;
+		private TimeSpan deleteInterval = TimeSpan.FromDays(30.0);
 
 		/// <summary>
 		/// Creates a new crawler task instance.
 		/// </summary>
+		/// <param name="tasks">The tasks handler.</param>
 		/// <param name="name">The task name.</param>
-		public CrawlerTask(string name)
+		public CrawlerTask(ICrawlerTasks tasks, string name)
 		{
+			// Set the task properties.
 			this.Id = Guid.NewGuid();
 			this.Name = name;
 
+			// Create the task event arguments.
 			this.args = new CrawlerTaskEventArgs(this);
+
+			// Create the task triggers.
+			this.triggerRestart = new CrawlerTriggerTaskRestart(tasks, this, this.restartAfterFailureInterval, this.restartAfterFailureMaximum);
 		}
 
 		// Public properties.
@@ -229,7 +245,7 @@ namespace YtCrawler.Tasks
 						// Create a cancellation token source.
 						using (CancellationTokenSource cancellationSource = new CancellationTokenSource())
 						{
-							// Create a 
+							// Create a running task state.
 
 							// Synchronize the task.
 
@@ -244,6 +260,28 @@ namespace YtCrawler.Tasks
 						}
 					});
 			}
+		}
+
+		/// <summary>
+		/// Cancels the task execution.
+		/// </summary>
+		/// <param name="state">The running task state.</param>
+		public void Cancel(RunningTaskState state)
+		{
+
+		}
+
+		/// <summary>
+		/// Cancels the execution of all task events.
+		/// </summary>
+		public void CancelAll()
+		{
+
+		}
+
+		public void CancelAllAsync(WaitHandle wait)
+		{
+
 		}
 
 		// Protected methods.

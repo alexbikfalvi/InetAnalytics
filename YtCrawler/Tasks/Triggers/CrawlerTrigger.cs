@@ -23,14 +23,14 @@ namespace YtCrawler.Tasks.Triggers
 	/// <summary>
 	/// A class representing a crawler trigger.
 	/// </summary>
-	internal abstract class CrawlerTrigger
+	public abstract class CrawlerTrigger
 	{
 		private readonly ICrawlerTasks tasks = null;
 
 		private bool enabled = false;
 		private DateTime timestamp;
 
-		public readonly object sync = new object();
+		private readonly object sync = new object();
 
 		/// <summary>
 		/// Creates a new trigger instance.
@@ -61,12 +61,30 @@ namespace YtCrawler.Tasks.Triggers
 			get { return this.timestamp; }
 		}
 
+		// Protected properties.
+
+		/// <summary>
+		/// Gets the synchronization object.
+		/// </summary>
+		protected object Sync { get { return this.sync; } }
+
 		// Public methods.
 		
 		/// <summary>
-		/// Executes the current trigger.
+		/// Executes the current trigger and disables the trigger state.
 		/// </summary>
-		public abstract void Execute();
+		public void Execute()
+		{
+			lock (this.sync)
+			{
+				// If the trigger is disabled, throw an exception.
+				if (!this.enabled) throw new InvalidOperationException("Cannot disable a trigger because the trigger is already disabled.");
+				// Disable the trigger.
+				this.enabled = false;
+			}
+			// Call the execute handler.
+			this.OnExecute();
+		}
 		
 		/// <summary>
 		/// Enables the trigger for the specified timestamp.
@@ -85,7 +103,7 @@ namespace YtCrawler.Tasks.Triggers
 				this.timestamp = timestamp;
 
 				// Add the trigger to the tasks timeline.
-				this.tasks.OnAddTrigger(this, out timestamp);
+				this.tasks.AddTrigger(this, out timestamp);
 
 				// If the trigger timestamp has changed.
 				if (this.timestamp != timestamp)
@@ -110,7 +128,7 @@ namespace YtCrawler.Tasks.Triggers
 				this.enabled = false;
 
 				// Remove the trigger from the tasks timeline.
-				this.tasks.OnRemoveTrigger(this);
+				this.tasks.RemoveTrigger(this);
 			}
 		}
 
@@ -126,13 +144,13 @@ namespace YtCrawler.Tasks.Triggers
 				if (!this.enabled) throw new InvalidOperationException("Cannot change a trigger because the trigger is disabled.");
 
 				// Remove the trigger.
-				this.tasks.OnRemoveTrigger(this);
+				this.tasks.RemoveTrigger(this);
 
 				// Set the new timestamp.
 				this.timestamp = timestamp;
 
 				// Add the trigger.
-				this.tasks.OnAddTrigger(this, out timestamp);
+				this.tasks.AddTrigger(this, out timestamp);
 
 				// If the trigger timestamp has changed.
 				if (this.timestamp != timestamp)
@@ -142,5 +160,9 @@ namespace YtCrawler.Tasks.Triggers
 				}
 			}
 		}
+
+		// Protected methods.
+
+		protected abstract void OnExecute();
 	}
 }
