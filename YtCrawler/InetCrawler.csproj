@@ -135,10 +135,6 @@
       <Project>{8d8a9a27-a8ca-4a27-95e5-c2246bdabc85}</Project>
       <Name>PlanetLab</Name>
     </ProjectReference>
-    <ProjectReference Include="..\YtApi\YtApi.csproj">
-      <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
-      <Name>YtApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
