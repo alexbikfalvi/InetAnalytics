@@ -1,0 +1,2011 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6740E3FF-81AD-4CDF-8A61-F471D13EE38F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YtAnalytics</RootNamespace>
+    <AssemblyName>YtAnalytics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>BB7ABB1457C48D5CFDCB249919EAF406D62F2CBB</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\ControlConsole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlConsole.Designer.cs">
+      <DependentUpon>ControlConsole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServerProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
+      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Net\Ssh\ControlSsh.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSlice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSlice.Designer.cs">
+      <DependentUpon>ControlAddSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlExportNodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlExportNodes.Designer.cs">
+      <DependentUpon>ControlExportNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlRequest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlObjectProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSiteProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSiteProperties.Designer.cs">
+      <DependentUpon>ControlSiteProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSites.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSites.Designer.cs">
+      <DependentUpon>ControlSites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabInfo.Designer.cs">
+      <DependentUpon>ControlPlanetLabInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabSettings.Designer.cs">
+      <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeProperties.Designer.cs">
+      <DependentUpon>ControlNodeProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPcuProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPcuProperties.Designer.cs">
+      <DependentUpon>ControlPcuProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPersonProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPersonProperties.Designer.cs">
+      <DependentUpon>ControlPersonProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceProperties.Designer.cs">
+      <DependentUpon>ControlSliceProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressProperties.Designer.cs">
+      <DependentUpon>ControlAddressProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceTagProperties.Designer.cs">
+      <DependentUpon>ControlInterfaceTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeTagProperties.Designer.cs">
+      <DependentUpon>ControlNodeTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPersonTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPersonTagProperties.Designer.cs">
+      <DependentUpon>ControlPersonTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSiteTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSiteTagProperties.Designer.cs">
+      <DependentUpon>ControlSiteTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceTagProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceTagProperties.Designer.cs">
+      <DependentUpon>ControlSliceTagProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlInterfaceProperties.Designer.cs">
+      <DependentUpon>ControlInterfaceProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeGroupProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodeGroupProperties.Designer.cs">
+      <DependentUpon>ControlNodeGroupProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlConfigurationFileProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlConfigurationFileProperties.Designer.cs">
+      <DependentUpon>ControlConfigurationFileProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlKeyProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlKeyProperties.Designer.cs">
+      <DependentUpon>ControlKeyProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressTypeProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddressTypeProperties.Designer.cs">
+      <DependentUpon>ControlAddressTypeProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSlices.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSlices.Designer.cs">
+      <DependentUpon>ControlSlices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodesLocation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodesLocation.Designer.cs">
+      <DependentUpon>ControlAddSliceToNodesLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlRemoveSliceFromNodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlRemoveSliceFromNodes.Designer.cs">
+      <DependentUpon>ControlRemoveSliceFromNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodesState.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodesState.Designer.cs">
+      <DependentUpon>ControlAddSliceToNodesState.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSlice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSlice.Designer.cs">
+      <DependentUpon>ControlSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodesSlice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddSliceToNodesSlice.Designer.cs">
+      <DependentUpon>ControlAddSliceToNodesSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSession.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSession.Designer.cs">
+      <DependentUpon>ControlSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlNodes.Designer.cs">
+      <DependentUpon>ControlNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlRenewSlice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlRenewSlice.Designer.cs">
+      <DependentUpon>ControlRenewSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Spiders\ControlSpiderInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Spiders\ControlSpiderInfo.Designer.cs">
+      <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Net\ControlHttpAddRequestHeader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Net\ControlHttpAddRequestHeader.Designer.cs">
+      <DependentUpon>ControlHttpAddRequestHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Net\ControlHttpHeaderProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Net\ControlHttpHeaderProperties.Designer.cs">
+      <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingWebRequest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingWebRequest.Designer.cs">
+      <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingSshRequest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Testing\ControlTestingSshRequest.Designer.cs">
+      <DependentUpon>ControlTestingSshRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlCommentProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlCommentProperties.Designer.cs">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlComments.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlComments.Designer.cs">
+      <DependentUpon>ControlComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlAddComment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlAddComment.Designer.cs">
+      <DependentUpon>ControlAddComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlExceptionProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlExceptionProperties.Designer.cs">
+      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLog.Designer.cs">
+      <DependentUpon>ControlLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlSettings.Designer.cs">
+      <DependentUpon>ControlSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSideCalendar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlSideCalendar.Designer.cs">
+      <DependentUpon>ControlSideCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogEventProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogEventProperties.Designer.cs">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogList.Designer.cs">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlVideoProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlVideoProperties.Designer.cs">
+      <DependentUpon>ControlVideoProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlVideoList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlVideoList.Designer.cs">
+      <DependentUpon>ControlVideoList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Web\ControlWebStatistics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Web\ControlWebStatistics.Designer.cs">
+      <DependentUpon>ControlWebStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Info.Designer.cs">
+      <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Video.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Video.Designer.cs">
+      <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.Designer.cs">
+      <DependentUpon>ControlYtApi2VideosFeedsInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api3\ControlYtApi3Info.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api3\ControlYtApi3Info.Designer.cs">
+      <DependentUpon>ControlYtApi3Info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Search.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Search.Designer.cs">
+      <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlDiscoveryProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlDiscoveryProperties.Designer.cs">
+      <DependentUpon>ControlDiscoveryProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlCommentProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlCommentProperties.Designer.cs">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Web\ControlWeb.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Web\ControlWeb.Designer.cs">
+      <DependentUpon>ControlWeb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlCommentsInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Comments\ControlCommentsInfo.Designer.cs">
+      <DependentUpon>ControlCommentsInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlProfileProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlProfileProperties.Designer.cs">
+      <DependentUpon>ControlProfileProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Profile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Profile.Designer.cs">
+      <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlCommentList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlCommentList.Designer.cs">
+      <DependentUpon>ControlCommentList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlPlaylistProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlPlaylistProperties.Designer.cs">
+      <DependentUpon>ControlPlaylistProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlPlaylistList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlPlaylistList.Designer.cs">
+      <DependentUpon>ControlPlaylistList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.Designer.cs">
+      <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.Designer.cs">
+      <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServers.Designer.cs">
+      <DependentUpon>ControlServers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlAddServer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlAddServer.Designer.cs">
+      <DependentUpon>ControlAddServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlChangePassword.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlChangePassword.Designer.cs">
+      <DependentUpon>ControlChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServer.Designer.cs">
+      <DependentUpon>ControlServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlDatabaseProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlDatabaseProperties.Designer.cs">
+      <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServerQuery.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlServerQuery.Designer.cs">
+      <DependentUpon>ControlServerQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\Api2\ControlYtApi2Categories.Designer.cs">
+      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlCategoryProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\YouTube\ControlCategoryProperties.Designer.cs">
+      <DependentUpon>ControlCategoryProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlTableProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlTableProperties.Designer.cs">
+      <DependentUpon>ControlTableProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
+      <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlObjectProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlObjectProperties.Designer.cs">
+      <DependentUpon>ControlObjectProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlRelationshipProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlRelationshipProperties.Designer.cs">
+      <DependentUpon>ControlRelationshipProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlFieldProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlFieldProperties.Designer.cs">
+      <DependentUpon>ControlFieldProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlCompareFields.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlCompareFields.Designer.cs">
+      <DependentUpon>ControlCompareFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
+      <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\ArrayEventArgs.cs" />
+    <Compile Include="Events\CommentEventArgs.cs" />
+    <Compile Include="Events\ControlEventArgs.cs" />
+    <Compile Include="Events\PageSelectionEventArgs.cs" />
+    <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
+    <Compile Include="Events\PasswordChangedEventArgs.cs" />
+    <Compile Include="Events\ProfileEventArgs.cs" />
+    <Compile Include="Events\StringEventArgs.cs" />
+    <Compile Include="Events\VideoEventArgs.cs" />
+    <Compile Include="Forms\FormText.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormText.Designer.cs">
+      <DependentUpon>FormText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormRenewSlice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormRenewSlice.Designer.cs">
+      <DependentUpon>FormRenewSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportMap.Designer.cs">
+      <DependentUpon>FormExportMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportNodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExportNodes.Designer.cs">
+      <DependentUpon>FormExportNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormExport.Designer.cs">
+      <DependentUpon>FormExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesSlice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesSlice.Designer.cs">
+      <DependentUpon>FormAddSliceToNodesSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesState.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesState.Designer.cs">
+      <DependentUpon>FormAddSliceToNodesState.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormRemoveSliceFromNodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormRemoveSliceFromNodes.Designer.cs">
+      <DependentUpon>FormRemoveSliceFromNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSliceToNodesLocation.Designer.cs">
+      <DependentUpon>FormAddSliceToNodesLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSlice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddSlice.Designer.cs">
+      <DependentUpon>FormAddSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormObjectProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormObjectProperties.Designer.cs">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Net\FormHttpHeaderProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Net\FormHttpHeaderProperties.Designer.cs">
+      <DependentUpon>FormHttpHeaderProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Net\FormHttpAddRequestHeader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Net\FormHttpAddRequestHeader.Designer.cs">
+      <DependentUpon>FormHttpAddRequestHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormCompareFields.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormCompareFields.Designer.cs">
+      <DependentUpon>FormCompareFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormFieldProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormFieldProperties.Designer.cs">
+      <DependentUpon>FormFieldProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormRelationshipProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormRelationshipProperties.Designer.cs">
+      <DependentUpon>FormRelationshipProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormObjectProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormObjectProperties.Designer.cs">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormDatabaseSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormDatabaseSelect.Designer.cs">
+      <DependentUpon>FormDatabaseSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormTableProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormTableProperties.Designer.cs">
+      <DependentUpon>FormTableProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormDatabaseProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormDatabaseProperties.Designer.cs">
+      <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormChangePassword.Designer.cs">
+      <DependentUpon>FormChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormServerProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormServerProperties.Designer.cs">
+      <DependentUpon>FormServerProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Database\FormAddServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormAddServer.Designer.cs">
+      <DependentUpon>FormAddServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\YouTube\FormPlaylistProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\YouTube\FormPlaylistProperties.Designer.cs">
+      <DependentUpon>FormPlaylistProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Comments\FormCommentProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Comments\FormCommentProperties.Designer.cs">
+      <DependentUpon>FormCommentProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Comments\FormAddComment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Comments\FormAddComment.Designer.cs">
+      <DependentUpon>FormAddComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCrash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCrash.Designer.cs">
+      <DependentUpon>FormCrash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\YouTube\FormDiscoveryProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\YouTube\FormDiscoveryProperties.Designer.cs">
+      <DependentUpon>FormDiscoveryProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormExceptionProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormExceptionProperties.Designer.cs">
+      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormImage.Designer.cs">
+      <DependentUpon>FormImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\YouTube\FormVideoProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\YouTube\FormVideoProperties.Designer.cs">
+      <DependentUpon>FormVideoProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Log\FormEventProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Log\FormEventProperties.Designer.cs">
+      <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls\ControlConsole.resx">
+      <DependentUpon>ControlConsole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
+      <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddSlice.resx">
+      <DependentUpon>ControlAddSlice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlExportNodes.resx">
+      <DependentUpon>ControlExportNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlRequest.resx">
+      <DependentUpon>ControlRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSiteProperties.resx">
+      <DependentUpon>ControlSiteProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSites.resx">
+      <DependentUpon>ControlSites.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabInfo.resx">
+      <DependentUpon>ControlPlanetLabInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabSettings.resx">
+      <DependentUpon>ControlPlanetLabSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodeProperties.resx">
+      <DependentUpon>ControlNodeProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPcuProperties.resx">
+      <DependentUpon>ControlPcuProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPersonProperties.resx">
+      <DependentUpon>ControlPersonProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSliceProperties.resx">
+      <DependentUpon>ControlSliceProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddressProperties.resx">
+      <DependentUpon>ControlAddressProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlInterfaceTagProperties.resx">
+      <DependentUpon>ControlInterfaceTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodeTagProperties.resx">
+      <DependentUpon>ControlNodeTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPersonTagProperties.resx">
+      <DependentUpon>ControlPersonTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSiteTagProperties.resx">
+      <DependentUpon>ControlSiteTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSliceTagProperties.resx">
+      <DependentUpon>ControlSliceTagProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlInterfaceProperties.resx">
+      <DependentUpon>ControlInterfaceProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodeGroupProperties.resx">
+      <DependentUpon>ControlNodeGroupProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlConfigurationFileProperties.resx">
+      <DependentUpon>ControlConfigurationFileProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlKeyProperties.resx">
+      <DependentUpon>ControlKeyProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddressTypeProperties.resx">
+      <DependentUpon>ControlAddressTypeProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSlices.resx">
+      <DependentUpon>ControlSlices.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddSliceToNodesLocation.resx">
+      <DependentUpon>ControlAddSliceToNodesLocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlRemoveSliceFromNodes.resx">
+      <DependentUpon>ControlRemoveSliceFromNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddSliceToNodesState.resx">
+      <DependentUpon>ControlAddSliceToNodesState.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSlice.resx">
+      <DependentUpon>ControlSlice.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddSliceToNodesSlice.resx">
+      <DependentUpon>ControlAddSliceToNodesSlice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSession.resx">
+      <DependentUpon>ControlSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlNodes.resx">
+      <DependentUpon>ControlNodes.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlRenewSlice.resx">
+      <DependentUpon>ControlRenewSlice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Spiders\ControlSpiderInfo.resx">
+      <DependentUpon>ControlSpiderInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Net\ControlHttpAddRequestHeader.resx">
+      <DependentUpon>ControlHttpAddRequestHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Net\ControlHttpHeaderProperties.resx">
+      <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Testing\ControlTestingWebRequest.resx">
+      <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Testing\ControlTestingSshRequest.resx">
+      <DependentUpon>ControlTestingSshRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlCommentProperties.resx">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Comments\ControlComments.resx">
+      <DependentUpon>ControlComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Comments\ControlAddComment.resx">
+      <DependentUpon>ControlAddComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlExceptionProperties.resx">
+      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Log\ControlLog.resx">
+      <DependentUpon>ControlLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlSettings.resx">
+      <DependentUpon>ControlSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlSideCalendar.resx">
+      <DependentUpon>ControlSideCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Log\ControlLogEventProperties.resx">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlVideoProperties.resx">
+      <DependentUpon>ControlVideoProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlVideoList.resx">
+      <DependentUpon>ControlVideoList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Web\ControlWebStatistics.resx">
+      <DependentUpon>ControlWebStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Info.resx">
+      <DependentUpon>ControlYtApi2Info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Video.resx">
+      <DependentUpon>ControlYtApi2Video.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2StandardFeed.resx">
+      <DependentUpon>ControlYtApi2StandardFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2VideosFeedsInfo.resx">
+      <DependentUpon>ControlYtApi2VideosFeedsInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api3\ControlYtApi3Info.resx">
+      <DependentUpon>ControlYtApi3Info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Search.resx">
+      <DependentUpon>ControlYtApi2Search.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2VideosFeed.resx">
+      <DependentUpon>ControlYtApi2VideosFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlDiscoveryProperties.resx">
+      <DependentUpon>ControlDiscoveryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Comments\ControlCommentProperties.resx">
+      <DependentUpon>ControlCommentProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Web\ControlWeb.resx">
+      <DependentUpon>ControlWeb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Comments\ControlCommentsInfo.resx">
+      <DependentUpon>ControlCommentsInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2CommentsFeed.resx">
+      <DependentUpon>ControlYtApi2CommentsFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlProfileProperties.resx">
+      <DependentUpon>ControlProfileProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Profile.resx">
+      <DependentUpon>ControlYtApi2Profile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlCommentList.resx">
+      <DependentUpon>ControlCommentList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlPlaylistProperties.resx">
+      <DependentUpon>ControlPlaylistProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlPlaylistList.resx">
+      <DependentUpon>ControlPlaylistList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2PlaylistsFeed.resx">
+      <DependentUpon>ControlYtApi2PlaylistsFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.resx">
+      <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlServers.resx">
+      <DependentUpon>ControlServers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlAddServer.resx">
+      <DependentUpon>ControlAddServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlChangePassword.resx">
+      <DependentUpon>ControlChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlServer.resx">
+      <DependentUpon>ControlServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlDatabaseProperties.resx">
+      <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlServerQuery.resx">
+      <DependentUpon>ControlServerQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2Categories.resx">
+      <DependentUpon>ControlYtApi2Categories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\YouTube\ControlCategoryProperties.resx">
+      <DependentUpon>ControlCategoryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlTableProperties.resx">
+      <DependentUpon>ControlTableProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlDatabaseSelect.resx">
+      <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlObjectProperties.resx">
+      <DependentUpon>ControlObjectProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlRelationshipProperties.resx">
+      <DependentUpon>ControlRelationshipProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlFieldProperties.resx">
+      <DependentUpon>ControlFieldProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlCompareFields.resx">
+      <DependentUpon>ControlCompareFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Spiders\ControlSpiderStandardFeeds.resx">
+      <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormText.resx">
+      <DependentUpon>FormText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormRenewSlice.resx">
+      <DependentUpon>FormRenewSlice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormExportMap.resx">
+      <DependentUpon>FormExportMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormExportNodes.resx">
+      <DependentUpon>FormExportNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormExport.resx">
+      <DependentUpon>FormExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesSlice.resx">
+      <DependentUpon>FormAddSliceToNodesSlice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesState.resx">
+      <DependentUpon>FormAddSliceToNodesState.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormRemoveSliceFromNodes.resx">
+      <DependentUpon>FormRemoveSliceFromNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSliceToNodesLocation.resx">
+      <DependentUpon>FormAddSliceToNodesLocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddSlice.resx">
+      <DependentUpon>FormAddSlice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormObjectProperties.resx">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Net\FormHttpHeaderProperties.resx">
+      <DependentUpon>FormHttpHeaderProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Net\FormHttpAddRequestHeader.resx">
+      <DependentUpon>FormHttpAddRequestHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormCompareFields.resx">
+      <DependentUpon>FormCompareFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormFieldProperties.resx">
+      <DependentUpon>FormFieldProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormRelationshipProperties.resx">
+      <DependentUpon>FormRelationshipProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormObjectProperties.resx">
+      <DependentUpon>FormObjectProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormDatabaseSelect.resx">
+      <DependentUpon>FormDatabaseSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormTableProperties.resx">
+      <DependentUpon>FormTableProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormDatabaseProperties.resx">
+      <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormChangePassword.resx">
+      <DependentUpon>FormChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormServerProperties.resx">
+      <DependentUpon>FormServerProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormAddServer.resx">
+      <DependentUpon>FormAddServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\YouTube\FormPlaylistProperties.resx">
+      <DependentUpon>FormPlaylistProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Comments\FormCommentProperties.resx">
+      <DependentUpon>FormCommentProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Comments\FormAddComment.resx">
+      <DependentUpon>FormAddComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCrash.resx">
+      <DependentUpon>FormCrash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\YouTube\FormDiscoveryProperties.resx">
+      <DependentUpon>FormDiscoveryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormExceptionProperties.resx">
+      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormImage.resx">
+      <DependentUpon>FormImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\YouTube\FormVideoProperties.resx">
+      <DependentUpon>FormVideoProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Log\FormEventProperties.resx">
+      <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+    <None Include="Resources\ClockSmall_48.png" />
+    <None Include="Resources\ClockSmall_32.png" />
+    <None Include="Resources\ClockSmall_24.png" />
+    <None Include="Resources\ClockSmall_16.png" />
+    <None Include="Resources\ClockNew_48.png" />
+    <None Include="Resources\ClockNew_32.png" />
+    <None Include="Resources\ClockNew_24.png" />
+    <None Include="Resources\ClockNew_16.png" />
+    <None Include="Resources\ClockMedium_48.png" />
+    <None Include="Resources\ClockMedium_32.png" />
+    <None Include="Resources\ClockMedium_24.png" />
+    <None Include="Resources\ClockMedium_16.png" />
+    <None Include="Resources\ClockLarge_48.png" />
+    <None Include="Resources\ClockLarge_32.png" />
+    <None Include="Resources\ClockLarge_24.png" />
+    <None Include="Resources\ClockLarge_16.png" />
+    <None Include="Resources\ConnectionQuestion_48.png" />
+    <None Include="Resources\ConnectionQuestion_32.png" />
+    <None Include="Resources\ConnectionQuestion_24.png" />
+    <None Include="Resources\ConnectionQuestion_16.png" />
+    <None Include="Resources\ConnectionWarning_48.png" />
+    <None Include="Resources\ConnectionWarning_32.png" />
+    <None Include="Resources\ConnectionWarning_24.png" />
+    <None Include="Resources\ConnectionWarning_16.png" />
+    <None Include="Resources\ConnectionSuccess_48.png" />
+    <None Include="Resources\ConnectionSuccess_32.png" />
+    <None Include="Resources\ConnectionSuccess_24.png" />
+    <None Include="Resources\ConnectionSuccess_16.png" />
+    <None Include="Resources\ConnectionError_48.png" />
+    <None Include="Resources\ConnectionError_32.png" />
+    <None Include="Resources\ConnectionError_24.png" />
+    <None Include="Resources\ConnectionError_16.png" />
+    <None Include="Resources\GlobeTask_48.png" />
+    <None Include="Resources\GlobeTask_32.png" />
+    <None Include="Resources\GlobeTask_24.png" />
+    <None Include="Resources\GlobeTask_16.png" />
+    <None Include="Resources\TaskSmall_48.png" />
+    <None Include="Resources\TaskSmall_32.png" />
+    <None Include="Resources\TaskSmall_24.png" />
+    <None Include="Resources\TaskSmall_16.png" />
+    <None Include="Resources\Task_48.png" />
+    <None Include="Resources\Task_32.png" />
+    <None Include="Resources\Task_24.png" />
+    <None Include="Resources\Task_16.png" />
+    <None Include="Resources\ScriptSmall_48.png" />
+    <None Include="Resources\ScriptSmall_32.png" />
+    <None Include="Resources\ScriptSmall_24.png" />
+    <None Include="Resources\ScriptSmall_16.png" />
+    <None Include="Resources\ScriptMedium_48.png" />
+    <None Include="Resources\ScriptMedium_32.png" />
+    <None Include="Resources\ScriptMedium_24.png" />
+    <None Include="Resources\ScriptMedium_16.png" />
+    <None Include="Resources\ScriptLarge_48.png" />
+    <None Include="Resources\ScriptLarge_32.png" />
+    <None Include="Resources\ScriptLarge_24.png" />
+    <None Include="Resources\ScriptLarge_16.png" />
+    <None Include="Resources\MapExport_48.png" />
+    <None Include="Resources\MapExport_32.png" />
+    <None Include="Resources\MapExport_24.png" />
+    <None Include="Resources\MapExport_16.png" />
+    <None Include="Resources\Map_48.png" />
+    <None Include="Resources\Map_32.png" />
+    <None Include="Resources\Map_24.png" />
+    <None Include="Resources\Map_16.png" />
+    <None Include="Resources\GlobeConsole_48.png" />
+    <None Include="Resources\GlobeConsole_32.png" />
+    <None Include="Resources\GlobeConsole_24.png" />
+    <None Include="Resources\GlobeConsole_16.png" />
+    <None Include="Resources\ConsoleDisconnect_48.png" />
+    <None Include="Resources\ConsoleDisconnect_32.png" />
+    <None Include="Resources\ConsoleDisconnect_24.png" />
+    <None Include="Resources\ConsoleDisconnect_16.png" />
+    <None Include="Resources\ConsoleConnect_48.png" />
+    <None Include="Resources\ConsoleConnect_32.png" />
+    <None Include="Resources\ConsoleConnect_24.png" />
+    <None Include="Resources\ConsoleConnect_16.png" />
+    <None Include="Resources\Console_48.png" />
+    <None Include="Resources\Console_32.png" />
+    <None Include="Resources\Console_24.png" />
+    <None Include="Resources\Console_16.png" />
+    <None Include="Resources\KeyVerticalCube_48.png" />
+    <None Include="Resources\KeyVerticalCube_32.png" />
+    <None Include="Resources\KeyVerticalCube_24.png" />
+    <None Include="Resources\KeyVerticalCube_16.png" />
+    <None Include="Resources\KeyVertical_48.png" />
+    <None Include="Resources\KeyVertical_32.png" />
+    <None Include="Resources\KeyVertical_24.png" />
+    <None Include="Resources\KeyVertical_16.png" />
+    <None Include="Resources\GlobeCanceled_48.png" />
+    <None Include="Resources\GlobeCanceled_32.png" />
+    <None Include="Resources\GlobeCanceled_24.png" />
+    <None Include="Resources\GlobeCanceled_16.png" />
+    <None Include="Resources\NodeLargeQuestion_48.png" />
+    <None Include="Resources\NodeLargeQuestion_32.png" />
+    <None Include="Resources\NodeLargeQuestion_24.png" />
+    <None Include="Resources\NodeLargeQuestion_16.png" />
+    <None Include="Resources\NodeLargeWarning_48.png" />
+    <None Include="Resources\NodeLargeWarning_32.png" />
+    <None Include="Resources\NodeLargeWarning_24.png" />
+    <None Include="Resources\NodeLargeWarning_16.png" />
+    <None Include="Resources\NodeLargeSuccess_48.png" />
+    <None Include="Resources\NodeLargeSuccess_32.png" />
+    <None Include="Resources\NodeLargeSuccess_24.png" />
+    <None Include="Resources\NodeLargeSuccess_16.png" />
+    <None Include="Resources\NodeLargeFloppy_48.png" />
+    <None Include="Resources\NodeLargeFloppy_32.png" />
+    <None Include="Resources\NodeLargeFloppy_24.png" />
+    <None Include="Resources\NodeLargeFloppy_16.png" />
+    <None Include="Resources\NodeLargeError_48.png" />
+    <None Include="Resources\NodeLargeError_32.png" />
+    <None Include="Resources\NodeLargeError_24.png" />
+    <None Include="Resources\NodeLargeError_16.png" />
+    <None Include="Resources\GlobeNode_48.png" />
+    <None Include="Resources\GlobeNode_32.png" />
+    <None Include="Resources\GlobeNode_24.png" />
+    <None Include="Resources\GlobeNode_16.png" />
+    <None Include="Resources\ObjectSmallRemove_48.png" />
+    <None Include="Resources\ObjectSmallRemove_32.png" />
+    <None Include="Resources\ObjectSmallRemove_24.png" />
+    <None Include="Resources\ObjectSmallRemove_16.png" />
+    <None Include="Resources\ObjectSmallAdd_48.png" />
+    <None Include="Resources\ObjectSmallAdd_32.png" />
+    <None Include="Resources\ObjectSmallAdd_24.png" />
+    <None Include="Resources\ObjectSmallAdd_16.png" />
+    <None Include="Resources\NodeSmall_48.png" />
+    <None Include="Resources\NodeSmall_32.png" />
+    <None Include="Resources\NodeSmall_24.png" />
+    <None Include="Resources\NodeSmall_16.png" />
+    <None Include="Resources\NodeRemove_48.png" />
+    <None Include="Resources\NodeRemove_32.png" />
+    <None Include="Resources\NodeRemove_24.png" />
+    <None Include="Resources\NodeRemove_16.png" />
+    <None Include="Resources\NodeMedium_48.png" />
+    <None Include="Resources\NodeMedium_32.png" />
+    <None Include="Resources\NodeMedium_24.png" />
+    <None Include="Resources\NodeMedium_16.png" />
+    <None Include="Resources\NodeLarge_48.png" />
+    <None Include="Resources\NodeLarge_32.png" />
+    <None Include="Resources\NodeLarge_24.png" />
+    <None Include="Resources\NodeLarge_16.png" />
+    <None Include="Resources\NodeAdd_48.png" />
+    <None Include="Resources\NodeAdd_32.png" />
+    <None Include="Resources\NodeAdd_24.png" />
+    <None Include="Resources\NodeAdd_16.png" />
+    <None Include="Resources\UserStar_48.png" />
+    <None Include="Resources\UserStar_32.png" />
+    <None Include="Resources\UserStar_24.png" />
+    <None Include="Resources\UserStar_16.png" />
+    <None Include="Resources\TestGlobeGoto_48.png" />
+    <None Include="Resources\TestGlobeGoto_32.png" />
+    <None Include="Resources\TestGlobeGoto_24.png" />
+    <None Include="Resources\TestGlobeGoto_16.png" />
+    <None Include="Resources\TestConnectGoto_48.png" />
+    <None Include="Resources\TestConnectGoto_32.png" />
+    <None Include="Resources\TestConnectGoto_24.png" />
+    <None Include="Resources\TestConnectGoto_16.png" />
+    <None Include="Resources\GlobeTag_48.png" />
+    <None Include="Resources\GlobeTag_32.png" />
+    <None Include="Resources\GlobeTag_24.png" />
+    <None Include="Resources\GlobeTag_16.png" />
+    <None Include="Resources\GlobeEnvelope_48.png" />
+    <None Include="Resources\GlobeEnvelope_32.png" />
+    <None Include="Resources\GlobeEnvelope_24.png" />
+    <None Include="Resources\GlobeEnvelope_16.png" />
+    <None Include="Resources\ServersGlobe_48.png" />
+    <None Include="Resources\ServersGlobe_32.png" />
+    <None Include="Resources\ServersGlobe_24.png" />
+    <None Include="Resources\ServersGlobe_16.png" />
+    <None Include="Resources\FolderOpenGlobe_48.png" />
+    <None Include="Resources\FolderOpenGlobe_32.png" />
+    <None Include="Resources\FolderOpenGlobe_24.png" />
+    <None Include="Resources\FolderOpenGlobe_16.png" />
+    <None Include="Resources\FolderClosedGlobe_48.png" />
+    <None Include="Resources\FolderClosedGlobe_32.png" />
+    <None Include="Resources\FolderClosedGlobe_24.png" />
+    <None Include="Resources\FolderClosedGlobe_16.png" />
+    <None Include="Resources\GlobeObject_48.png" />
+    <None Include="Resources\GlobeObject_32.png" />
+    <None Include="Resources\GlobeObject_24.png" />
+    <None Include="Resources\GlobeObject_16.png" />
+    <None Include="Resources\GlobeUser_48.png" />
+    <None Include="Resources\GlobeUser_32.png" />
+    <None Include="Resources\GlobeUser_24.png" />
+    <None Include="Resources\GlobeUser_16.png" />
+    <None Include="Resources\GlobePower_48.png" />
+    <None Include="Resources\GlobePower_32.png" />
+    <None Include="Resources\GlobePower_24.png" />
+    <None Include="Resources\GlobePower_16.png" />
+    <None Include="Resources\ObjectSmallId_48.png" />
+    <None Include="Resources\ObjectSmallId_32.png" />
+    <None Include="Resources\ObjectSmallId_24.png" />
+    <None Include="Resources\ObjectSmallId_16.png" />
+    <None Include="Resources\Busy_48.png" />
+    <None Include="Resources\Busy_32.png" />
+    <None Include="Resources\Busy_24.png" />
+    <None Include="Resources\Busy_16.png" />
+    <None Include="Resources\SchemaView_48.png" />
+    <None Include="Resources\SchemaView_32.png" />
+    <None Include="Resources\SchemaView_24.png" />
+    <None Include="Resources\SchemaView_16.png" />
+    <None Include="Resources\GlobeSettings_48.png" />
+    <None Include="Resources\GlobeSettings_32.png" />
+    <None Include="Resources\GlobeSettings_24.png" />
+    <None Include="Resources\GlobeSettings_16.png" />
+    <None Include="Resources\GlobeSchema_48.png" />
+    <None Include="Resources\GlobeSchema_32.png" />
+    <None Include="Resources\GlobeSchema_24.png" />
+    <None Include="Resources\GlobeSchema_16.png" />
+    <None Include="Resources\GlobeLab_48.png" />
+    <None Include="Resources\GlobeLab_32.png" />
+    <None Include="Resources\GlobeLab_24.png" />
+    <None Include="Resources\GlobeLab_16.png" />
+    <None Include="Resources\HeaderRemove_48.png" />
+    <None Include="Resources\HeaderRemove_32.png" />
+    <None Include="Resources\HeaderRemove_24.png" />
+    <None Include="Resources\HeaderRemove_16.png" />
+    <None Include="Resources\HeaderAdd_48.png" />
+    <None Include="Resources\HeaderAdd_32.png" />
+    <None Include="Resources\HeaderAdd_24.png" />
+    <None Include="Resources\HeaderAdd_16.png" />
+    <None Include="Resources\Header_48.png" />
+    <None Include="Resources\Header_32.png" />
+    <None Include="Resources\Header_24.png" />
+    <None Include="Resources\Header_16.png" />
+    <None Include="Resources\TestsLarge_48.png" />
+    <None Include="Resources\TestsLarge_32.png" />
+    <None Include="Resources\TestsLarge_24.png" />
+    <None Include="Resources\TestsLarge_16.png" />
+    <None Include="Resources\FileXmlWarning_48.png" />
+    <None Include="Resources\FileXmlWarning_32.png" />
+    <None Include="Resources\FileXmlWarning_24.png" />
+    <None Include="Resources\FileXmlWarning_16.png" />
+    <None Include="Resources\FileXmlSuccess_48.png" />
+    <None Include="Resources\FileXmlSuccess_32.png" />
+    <None Include="Resources\FileXmlSuccess_24.png" />
+    <None Include="Resources\FileXmlSuccess_16.png" />
+    <None Include="Resources\FileXmlQuestion_48.png" />
+    <None Include="Resources\FileXmlQuestion_32.png" />
+    <None Include="Resources\FileXmlQuestion_24.png" />
+    <None Include="Resources\FileXmlQuestion_16.png" />
+    <None Include="Resources\FileXmlError_48.png" />
+    <None Include="Resources\FileXmlError_32.png" />
+    <None Include="Resources\FileXmlError_24.png" />
+    <None Include="Resources\FileXmlError_16.png" />
+    <None Include="Resources\FieldCompare_48.png" />
+    <None Include="Resources\FieldCompare_32.png" />
+    <None Include="Resources\FieldCompare_24.png" />
+    <None Include="Resources\FieldCompare_16.png" />
+    <None Include="Resources\DatabaseCompare_48.png" />
+    <None Include="Resources\DatabaseCompare_32.png" />
+    <None Include="Resources\DatabaseCompare_24.png" />
+    <None Include="Resources\DatabaseCompare_16.png" />
+    <None Include="Resources\Relationship_48.png" />
+    <None Include="Resources\Relationship_32.png" />
+    <None Include="Resources\Relationship_24.png" />
+    <None Include="Resources\Relationship_16.png" />
+    <None Include="Resources\Object_48.png" />
+    <None Include="Resources\Object_32.png" />
+    <None Include="Resources\Object_24.png" />
+    <None Include="Resources\Object_16.png" />
+    <None Include="Resources\DatabaseRead_48.png" />
+    <None Include="Resources\DatabaseRead_32.png" />
+    <None Include="Resources\DatabaseRead_24.png" />
+    <None Include="Resources\DatabaseRead_16.png" />
+    <None Include="Resources\FieldWarning_48.png" />
+    <None Include="Resources\FieldWarning_32.png" />
+    <None Include="Resources\FieldWarning_24.png" />
+    <None Include="Resources\FieldWarning_16.png" />
+    <None Include="Resources\FieldSuccess_48.png" />
+    <None Include="Resources\FieldSuccess_32.png" />
+    <None Include="Resources\FieldSuccess_24.png" />
+    <None Include="Resources\FieldSuccess_16.png" />
+    <None Include="Resources\Field_48.png" />
+    <None Include="Resources\Field_32.png" />
+    <None Include="Resources\Field_24.png" />
+    <None Include="Resources\Field_16.png" />
+    <None Include="Resources\TableWarning_48.png" />
+    <None Include="Resources\TableWarning_32.png" />
+    <None Include="Resources\TableWarning_24.png" />
+    <None Include="Resources\TableWarning_16.png" />
+    <None Include="Resources\TableSuccess_48.png" />
+    <None Include="Resources\TableSuccess_32.png" />
+    <None Include="Resources\TableSuccess_24.png" />
+    <None Include="Resources\TableSuccess_16.png" />
+    <None Include="Resources\Table_48.png" />
+    <None Include="Resources\Table_32.png" />
+    <None Include="Resources\Table_24.png" />
+    <None Include="Resources\Table_16.png" />
+    <None Include="Resources\Category_48.png" />
+    <None Include="Resources\Category_32.png" />
+    <None Include="Resources\Category_24.png" />
+    <None Include="Resources\Category_16.png" />
+    <None Include="Resources\Cubes_48.png" />
+    <None Include="Resources\Cubes_32.png" />
+    <None Include="Resources\Cubes_24.png" />
+    <None Include="Resources\Cubes_16.png" />
+    <None Include="Resources\Cube_48.png" />
+    <None Include="Resources\Cube_32.png" />
+    <None Include="Resources\Cube_24.png" />
+    <None Include="Resources\Cube_16.png" />
+    <None Include="Resources\ServerCube_48.png" />
+    <None Include="Resources\ServerCube_32.png" />
+    <None Include="Resources\ServerCube_24.png" />
+    <None Include="Resources\ServerCube_16.png" />
+    <None Include="Resources\ServersCube_48.png" />
+    <None Include="Resources\ServersCube_32.png" />
+    <None Include="Resources\ServersCube_24.png" />
+    <None Include="Resources\ServersCube_16.png" />
+    <None Include="Resources\QueryStop_48.png" />
+    <None Include="Resources\QueryStop_32.png" />
+    <None Include="Resources\QueryStop_24.png" />
+    <None Include="Resources\QueryStop_16.png" />
+    <None Include="Resources\QueryStart_48.png" />
+    <None Include="Resources\QueryStart_32.png" />
+    <None Include="Resources\QueryStart_24.png" />
+    <None Include="Resources\QueryStart_16.png" />
+    <None Include="Resources\QueryDatabase_48.png" />
+    <None Include="Resources\QueryDatabase_32.png" />
+    <None Include="Resources\QueryDatabase_24.png" />
+    <None Include="Resources\QueryDatabase_16.png" />
+    <None Include="Resources\DatabaseStar_48.png" />
+    <None Include="Resources\DatabaseStar_32.png" />
+    <None Include="Resources\DatabaseStar_24.png" />
+    <None Include="Resources\DatabaseStar_16.png" />
+    <None Include="Resources\DatabaseWarning_48.png" />
+    <None Include="Resources\DatabaseWarning_32.png" />
+    <None Include="Resources\DatabaseWarning_24.png" />
+    <None Include="Resources\DatabaseWarning_16.png" />
+    <None Include="Resources\DatabaseSuccess_48.png" />
+    <None Include="Resources\DatabaseSuccess_32.png" />
+    <None Include="Resources\DatabaseSuccess_24.png" />
+    <None Include="Resources\DatabaseSuccess_16.png" />
+    <None Include="Resources\DatabaseError_48.png" />
+    <None Include="Resources\DatabaseError_32.png" />
+    <None Include="Resources\DatabaseError_24.png" />
+    <None Include="Resources\DatabaseError_16.png" />
+    <None Include="Resources\DatabaseBusy_48.png" />
+    <None Include="Resources\DatabaseBusy_32.png" />
+    <None Include="Resources\DatabaseBusy_24.png" />
+    <None Include="Resources\DatabaseBusy_16.png" />
+    <None Include="Resources\PasswordChange_48.png" />
+    <None Include="Resources\PasswordChange_32.png" />
+    <None Include="Resources\PasswordChange_24.png" />
+    <None Include="Resources\PasswordChange_16.png" />
+    <None Include="Resources\Database_48.png" />
+    <None Include="Resources\Database_32.png" />
+    <None Include="Resources\Database_24.png" />
+    <None Include="Resources\Database_16.png" />
+    <None Include="Resources\Calendar_48.png" />
+    <None Include="Resources\Calendar_32.png" />
+    <None Include="Resources\Calendar_24.png" />
+    <None Include="Resources\Calendar_16.png" />
+    <None Include="Resources\Password_48.png" />
+    <None Include="Resources\Password_32.png" />
+    <None Include="Resources\Password_24.png" />
+    <None Include="Resources\Password_16.png" />
+    <None Include="Resources\ServerBusy_48.png" />
+    <None Include="Resources\ServerBusy_32.png" />
+    <None Include="Resources\ServerBusy_24.png" />
+    <None Include="Resources\ServerBusy_16.png" />
+    <None Include="Resources\ServerDown_48.png" />
+    <None Include="Resources\ServerDown_32.png" />
+    <None Include="Resources\ServerDown_24.png" />
+    <None Include="Resources\ServerDown_16.png" />
+    <None Include="Resources\ServerUp_48.png" />
+    <None Include="Resources\ServerUp_32.png" />
+    <None Include="Resources\ServerUp_24.png" />
+    <None Include="Resources\ServerUp_16.png" />
+    <None Include="Resources\Disconnect_48.png" />
+    <None Include="Resources\Disconnect_32.png" />
+    <None Include="Resources\Disconnect_24.png" />
+    <None Include="Resources\Disconnect_16.png" />
+    <None Include="Resources\Connect_48.png" />
+    <None Include="Resources\Connect_32.png" />
+    <None Include="Resources\Connect_24.png" />
+    <None Include="Resources\Connect_16.png" />
+    <None Include="Resources\Star_48.png" />
+    <None Include="Resources\Star_32.png" />
+    <None Include="Resources\Star_24.png" />
+    <None Include="Resources\Star_16.png" />
+    <None Include="Resources\ServerStar_48.png" />
+    <None Include="Resources\ServerStar_32.png" />
+    <None Include="Resources\ServerStar_24.png" />
+    <None Include="Resources\ServerStar_16.png" />
+    <None Include="Resources\ServerWarning_48.png" />
+    <None Include="Resources\ServerWarning_32.png" />
+    <None Include="Resources\ServerWarning_24.png" />
+    <None Include="Resources\ServerWarning_16.png" />
+    <None Include="Resources\ServerSuccess_48.png" />
+    <None Include="Resources\ServerSuccess_32.png" />
+    <None Include="Resources\ServerSuccess_24.png" />
+    <None Include="Resources\ServerSuccess_16.png" />
+    <None Include="Resources\ServerError_48.png" />
+    <None Include="Resources\ServerError_32.png" />
+    <None Include="Resources\ServerError_24.png" />
+    <None Include="Resources\ServerError_16.png" />
+    <None Include="Resources\ServerInformation_48.png" />
+    <None Include="Resources\ServerInformation_32.png" />
+    <None Include="Resources\ServerInformation_24.png" />
+    <None Include="Resources\ServerInformation_16.png" />
+    <None Include="Resources\ServerRemove_48.png" />
+    <None Include="Resources\ServerRemove_32.png" />
+    <None Include="Resources\ServerRemove_24.png" />
+    <None Include="Resources\ServerRemove_16.png" />
+    <None Include="Resources\ServerAdd_48.png" />
+    <None Include="Resources\ServerAdd_32.png" />
+    <None Include="Resources\ServerAdd_24.png" />
+    <None Include="Resources\ServerAdd_16.png" />
+    <None Include="Resources\CommentRemove_48.png" />
+    <None Include="Resources\CommentRemove_32.png" />
+    <None Include="Resources\CommentRemove_24.png" />
+    <None Include="Resources\CommentRemove_16.png" />
+    <None Include="Resources\ServersDatabase_48.png" />
+    <None Include="Resources\ServersDatabase_32.png" />
+    <None Include="Resources\ServersDatabase_24.png" />
+    <None Include="Resources\ServersDatabase_16.png" />
+    <None Include="Resources\ServerDatabase_48.png" />
+    <None Include="Resources\ServerDatabase_32.png" />
+    <None Include="Resources\ServerDatabase_24.png" />
+    <None Include="Resources\ServerDatabase_16.png" />
+    <None Include="Resources\CommentPlay_48.png" />
+    <None Include="Resources\CommentPlay_32.png" />
+    <None Include="Resources\CommentPlay_24.png" />
+    <None Include="Resources\CommentPlay_16.png" />
+    <None Include="Resources\CommentUser_48.png" />
+    <None Include="Resources\CommentUser_32.png" />
+    <None Include="Resources\CommentUser_24.png" />
+    <None Include="Resources\CommentUser_16.png" />
+    <None Include="Resources\FilePlay_48.png" />
+    <None Include="Resources\FilePlay_32.png" />
+    <None Include="Resources\FilePlay_24.png" />
+    <None Include="Resources\FilePlay_16.png" />
+    <None Include="Resources\FolderOpenPlay_48.png" />
+    <None Include="Resources\FolderOpenPlay_32.png" />
+    <None Include="Resources\FolderOpenPlay_24.png" />
+    <None Include="Resources\FolderOpenPlay_16.png" />
+    <None Include="Resources\FolderClosedPlay_48.png" />
+    <None Include="Resources\FolderClosedPlay_32.png" />
+    <None Include="Resources\FolderClosedPlay_24.png" />
+    <None Include="Resources\FolderClosedPlay_16.png" />
+    <None Include="Resources\FileComment_48.png" />
+    <None Include="Resources\FileComment_32.png" />
+    <None Include="Resources\FileComment_24.png" />
+    <None Include="Resources\FileComment_16.png" />
+    <None Include="Resources\FolderOpenComment_48.png" />
+    <None Include="Resources\FolderOpenComment_32.png" />
+    <None Include="Resources\FolderOpenComment_24.png" />
+    <None Include="Resources\FolderOpenComment_16.png" />
+    <None Include="Resources\FolderClosedComment_48.png" />
+    <None Include="Resources\FolderClosedComment_32.png" />
+    <None Include="Resources\FolderClosedComment_24.png" />
+    <None Include="Resources\FolderClosedComment_16.png" />
+    <None Include="Resources\FolderOpenVideo_48.png" />
+    <None Include="Resources\FolderOpenVideo_32.png" />
+    <None Include="Resources\FolderOpenVideo_24.png" />
+    <None Include="Resources\FolderOpenVideo_16.png" />
+    <None Include="Resources\FolderOpenUser_48.png" />
+    <None Include="Resources\FolderOpenUser_32.png" />
+    <None Include="Resources\FolderOpenUser_24.png" />
+    <None Include="Resources\FolderOpenUser_16.png" />
+    <None Include="Resources\FolderClosedVideo_48.png" />
+    <None Include="Resources\FolderClosedVideo_32.png" />
+    <None Include="Resources\FolderClosedVideo_24.png" />
+    <None Include="Resources\FolderClosedVideo_16.png" />
+    <None Include="Resources\FolderClosedUser_48.png" />
+    <None Include="Resources\FolderClosedUser_32.png" />
+    <None Include="Resources\FolderClosedUser_24.png" />
+    <None Include="Resources\FolderClosedUser_16.png" />
+    <None Include="Resources\SaveAll_48.png" />
+    <None Include="Resources\SaveAll_32.png" />
+    <None Include="Resources\SaveAll_24.png" />
+    <None Include="Resources\SaveAll_16.png" />
+    <None Include="Resources\Import_48.png" />
+    <None Include="Resources\Import_32.png" />
+    <None Include="Resources\Import_24.png" />
+    <None Include="Resources\Import_16.png" />
+    <None Include="Resources\Export_48.png" />
+    <None Include="Resources\Export_32.png" />
+    <None Include="Resources\Export_24.png" />
+    <None Include="Resources\Export_16.png" />
+    <None Include="Resources\CommentVideo_48.png" />
+    <None Include="Resources\CommentVideo_32.png" />
+    <None Include="Resources\CommentVideo_24.png" />
+    <None Include="Resources\CommentVideo_16.png" />
+    <None Include="Resources\Comments_48.png" />
+    <None Include="Resources\Comments_32.png" />
+    <None Include="Resources\Comments_24.png" />
+    <None Include="Resources\Comments_16.png" />
+    <None Include="Resources\CommentAdd_48.png" />
+    <None Include="Resources\CommentAdd_32.png" />
+    <None Include="Resources\CommentAdd_24.png" />
+    <None Include="Resources\CommentAdd_16.png" />
+    <None Include="Resources\Comment_48.png" />
+    <None Include="Resources\Comment_32.png" />
+    <None Include="Resources\Comment_24.png" />
+    <None Include="Resources\Comment_16.png" />
+    <None Include="Resources\HotSpot_48.png" />
+    <None Include="Resources\HotSpot_32.png" />
+    <None Include="Resources\HotSpot_24.png" />
+    <None Include="Resources\HotSpot_16.png" />
+    <None Include="Resources\Copy_48.png" />
+    <None Include="Resources\Copy_32.png" />
+    <None Include="Resources\Copy_24.png" />
+    <None Include="Resources\Copy_16.png" />
+    <None Include="Resources\Properties_48.png" />
+    <None Include="Resources\Properties_32.png" />
+    <None Include="Resources\Properties_24.png" />
+    <None Include="Resources\Properties_16.png" />
+    <None Include="Resources\View_48.png" />
+    <None Include="Resources\View_32.png" />
+    <None Include="Resources\View_24.png" />
+    <None Include="Resources\View_16.png" />
+    <None Include="Resources\XmlNamespace_48.png" />
+    <None Include="Resources\XmlNamespace_32.png" />
+    <None Include="Resources\XmlNamespace_24.png" />
+    <None Include="Resources\XmlNamespace_16.png" />
+    <None Include="Resources\EventErrorWarning_48.png" />
+    <None Include="Resources\EventErrorWarning_32.png" />
+    <None Include="Resources\EventErrorWarning_24.png" />
+    <None Include="Resources\EventErrorWarning_16.png" />
+    <None Include="Resources\EventSuccessWarning_48.png" />
+    <None Include="Resources\EventSuccessWarning_32.png" />
+    <None Include="Resources\EventSuccessWarning_24.png" />
+    <None Include="Resources\EventSuccessWarning_16.png" />
+    <None Include="Resources\SuccessWarning_48.png" />
+    <None Include="Resources\SuccessWarning_32.png" />
+    <None Include="Resources\SuccessWarning_24.png" />
+    <None Include="Resources\SuccessWarning_16.png" />
+    <None Include="Resources\ErrorWarning_48.png" />
+    <None Include="Resources\ErrorWarning_32.png" />
+    <None Include="Resources\ErrorWarning_24.png" />
+    <None Include="Resources\ErrorWarning_16.png" />
+    <None Include="Resources\Filter_48.png" />
+    <None Include="Resources\Filter_32.png" />
+    <None Include="Resources\Filter_24.png" />
+    <None Include="Resources\Filter_16.png" />
+    <None Include="Resources\Categories_48.png" />
+    <None Include="Resources\Categories_32.png" />
+    <None Include="Resources\Categories_24.png" />
+    <None Include="Resources\Categories_16.png" />
+    <None Include="Resources\ConfigurationSettings_48.png" />
+    <None Include="Resources\ConfigurationSettings_32.png" />
+    <None Include="Resources\ConfigurationSettings_24.png" />
+    <None Include="Resources\ConfigurationSettings_16.png" />
+    <None Include="Resources\Configuration_48.png" />
+    <None Include="Resources\Configuration_32.png" />
+    <None Include="Resources\Configuration_24.png" />
+    <None Include="Resources\Configuration_16.png" />
+    <None Include="Resources\Settings_48.png" />
+    <None Include="Resources\Settings_32.png" />
+    <None Include="Resources\Settings_24.png" />
+    <None Include="Resources\Settings_16.png" />
+    <None Include="Resources\PlayStop_48.png" />
+    <None Include="Resources\PlayStop_32.png" />
+    <None Include="Resources\PlayStop_24.png" />
+    <None Include="Resources\PlayStop_16.png" />
+    <None Include="Resources\PlayPause_48.png" />
+    <None Include="Resources\PlayPause_32.png" />
+    <None Include="Resources\PlayPause_24.png" />
+    <None Include="Resources\PlayPause_16.png" />
+    <None Include="Resources\PlayStart_48.png" />
+    <None Include="Resources\PlayStart_32.png" />
+    <None Include="Resources\PlayStart_24.png" />
+    <None Include="Resources\PlayStart_16.png" />
+    <None Include="Resources\FileGraphLine_48.png" />
+    <None Include="Resources\FileGraphLine_32.png" />
+    <None Include="Resources\FileGraphLine_24.png" />
+    <None Include="Resources\FileGraphLine_16.png" />
+    <None Include="Resources\GraphLine_48.png" />
+    <None Include="Resources\GraphLine_32.png" />
+    <None Include="Resources\GraphLine_24.png" />
+    <None Include="Resources\GraphLine_16.png" />
+    <None Include="Resources\FileUser_48.png" />
+    <None Include="Resources\FileUser_32.png" />
+    <None Include="Resources\FileUser_24.png" />
+    <None Include="Resources\FileUser_16.png" />
+    <None Include="Resources\User_48.png" />
+    <None Include="Resources\User_32.png" />
+    <None Include="Resources\User_24.png" />
+    <None Include="Resources\User_16.png" />
+    <None Include="Resources\FolderOpenXml_48.png" />
+    <None Include="Resources\FolderOpenXml_32.png" />
+    <None Include="Resources\FolderOpenXml_24.png" />
+    <None Include="Resources\FolderOpenXml_16.png" />
+    <None Include="Resources\FolderOpen_48.png" />
+    <None Include="Resources\FolderOpen_32.png" />
+    <None Include="Resources\FolderOpen_24.png" />
+    <None Include="Resources\FolderOpen_16.png" />
+    <None Include="Resources\FolderClosedXml_48.png" />
+    <None Include="Resources\FolderClosedXml_32.png" />
+    <None Include="Resources\FolderClosedXml_24.png" />
+    <None Include="Resources\FolderClosedXml_16.png" />
+    <None Include="Resources\FolderClosed_48.png" />
+    <None Include="Resources\FolderClosed_32.png" />
+    <None Include="Resources\FolderClosed_24.png" />
+    <None Include="Resources\FolderClosed_16.png" />
+    <None Include="Resources\FileVideo_48.png" />
+    <None Include="Resources\FileVideo_32.png" />
+    <None Include="Resources\FileVideo_24.png" />
+    <None Include="Resources\FileVideo_16.png" />
+    <None Include="Resources\FileXml_48.png" />
+    <None Include="Resources\FileXml_32.png" />
+    <None Include="Resources\FileXml_24.png" />
+    <None Include="Resources\FileXml_16.png" />
+    <None Include="Resources\LogWarning_48.png" />
+    <None Include="Resources\LogWarning_32.png" />
+    <None Include="Resources\LogWarning_24.png" />
+    <None Include="Resources\LogWarning_16.png" />
+    <None Include="Resources\LogSuccess_48.png" />
+    <None Include="Resources\LogSuccess_32.png" />
+    <None Include="Resources\LogSuccess_24.png" />
+    <None Include="Resources\LogSuccess_16.png" />
+    <None Include="Resources\LogError_48.png" />
+    <None Include="Resources\LogError_32.png" />
+    <None Include="Resources\LogError_24.png" />
+    <None Include="Resources\LogError_16.png" />
+    <None Include="Resources\LogClock_48.png" />
+    <None Include="Resources\LogClock_32.png" />
+    <None Include="Resources\LogClock_24.png" />
+    <None Include="Resources\LogClock_16.png" />
+    <None Include="Resources\GlobeClock_48.png" />
+    <None Include="Resources\GlobeClock_32.png" />
+    <None Include="Resources\GlobeClock_24.png" />
+    <None Include="Resources\GlobeClock_16.png" />
+    <None Include="Resources\GlobeWarning_48.png" />
+    <None Include="Resources\GlobeWarning_32.png" />
+    <None Include="Resources\GlobeWarning_24.png" />
+    <None Include="Resources\GlobeWarning_16.png" />
+    <None Include="Resources\GlobeError_48.png" />
+    <None Include="Resources\GlobeError_32.png" />
+    <None Include="Resources\GlobeError_24.png" />
+    <None Include="Resources\GlobeError_16.png" />
+    <None Include="Resources\GlobeSuccess_48.png" />
+    <None Include="Resources\GlobeSuccess_32.png" />
+    <None Include="Resources\GlobeSuccess_24.png" />
+    <None Include="Resources\GlobeSuccess_16.png" />
+    <None Include="Resources\File_48.png" />
+    <None Include="Resources\File_32.png" />
+    <None Include="Resources\File_24.png" />
+    <None Include="Resources\File_16.png" />
+    <None Include="Resources\Start_48.png" />
+    <None Include="Resources\Start_32.png" />
+    <None Include="Resources\Start_24.png" />
+    <None Include="Resources\Start_16.png" />
+    <None Include="Resources\GlobeBrowse_48.png" />
+    <None Include="Resources\GlobeBrowse_32.png" />
+    <None Include="Resources\GlobeBrowse_24.png" />
+    <None Include="Resources\GlobeBrowse_16.png" />
+    <None Include="Resources\Refresh_48.png" />
+    <None Include="Resources\Refresh_32.png" />
+    <None Include="Resources\Refresh_24.png" />
+    <None Include="Resources\Refresh_16.png" />
+    <None Include="Resources\ArrowPrevious_48.png" />
+    <None Include="Resources\ArrowPrevious_32.png" />
+    <None Include="Resources\ArrowPrevious_24.png" />
+    <None Include="Resources\ArrowPrevious_16.png" />
+    <None Include="Resources\ArrowNext_48.png" />
+    <None Include="Resources\ArrowNext_32.png" />
+    <None Include="Resources\ArrowNext_24.png" />
+    <None Include="Resources\ArrowNext_16.png" />
+    <None Include="Resources\Dislike_48.png" />
+    <None Include="Resources\Dislike_32.png" />
+    <None Include="Resources\Dislike_24.png" />
+    <None Include="Resources\Dislike_16.png" />
+    <None Include="Resources\Like_48.png" />
+    <None Include="Resources\Like_32.png" />
+    <None Include="Resources\Like_24.png" />
+    <None Include="Resources\Like_16.png" />
+    <None Include="Resources\Warning_48.png" />
+    <None Include="Resources\Warning_32.png" />
+    <None Include="Resources\Warning_24.png" />
+    <None Include="Resources\Warning_16.png" />
+    <None Include="Resources\Success_48.png" />
+    <None Include="Resources\Success_32.png" />
+    <None Include="Resources\Success_24.png" />
+    <None Include="Resources\Success_16.png" />
+    <None Include="Resources\Stop_48.png" />
+    <None Include="Resources\Stop_32.png" />
+    <None Include="Resources\Stop_24.png" />
+    <None Include="Resources\Stop_16.png" />
+    <None Include="Resources\ServerWeb_48.png" />
+    <None Include="Resources\ServerWeb_32.png" />
+    <None Include="Resources\ServerWeb_24.png" />
+    <None Include="Resources\ServerWeb_16.png" />
+    <None Include="Resources\ServersBrowse_48.png" />
+    <None Include="Resources\ServersBrowse_32.png" />
+    <None Include="Resources\ServersBrowse_24.png" />
+    <None Include="Resources\ServersBrowse_16.png" />
+    <None Include="Resources\Servers_48.png" />
+    <None Include="Resources\Servers_32.png" />
+    <None Include="Resources\Servers_24.png" />
+    <None Include="Resources\Servers_16.png" />
+    <None Include="Resources\ServerBrowse_48.png" />
+    <None Include="Resources\ServerBrowse_32.png" />
+    <None Include="Resources\ServerBrowse_24.png" />
+    <None Include="Resources\ServerBrowse_16.png" />
+    <None Include="Resources\Server_48.png" />
+    <None Include="Resources\Server_32.png" />
+    <None Include="Resources\Server_24.png" />
+    <None Include="Resources\Server_16.png" />
+    <None Include="Resources\Question_48.png" />
+    <None Include="Resources\Question_32.png" />
+    <None Include="Resources\Question_24.png" />
+    <None Include="Resources\Question_16.png" />
+    <None Include="Resources\Message_48.png" />
+    <None Include="Resources\Message_32.png" />
+    <None Include="Resources\Message_24.png" />
+    <None Include="Resources\Message_16.png" />
+    <None Include="Resources\Log_48.png" />
+    <None Include="Resources\Log_32.png" />
+    <None Include="Resources\Log_24.png" />
+    <None Include="Resources\Log_16.png" />
+    <None Include="Resources\Information_48.png" />
+    <None Include="Resources\Information_32.png" />
+    <None Include="Resources\Information_24.png" />
+    <None Include="Resources\Information_16.png" />
+    <None Include="Resources\GraphBarColor_256.png" />
+    <None Include="Resources\GraphBarColor_128.png" />
+    <None Include="Resources\GraphBarColor_96.png" />
+    <None Include="Resources\GraphBarColor_64.png" />
+    <None Include="Resources\GraphBarColor_48.png" />
+    <None Include="Resources\GraphBarColor_32.png" />
+    <None Include="Resources\GraphBarColor_24.png" />
+    <None Include="Resources\GraphBarColor_16.png" />
+    <None Include="Resources\GraphBar_48.png" />
+    <None Include="Resources\GraphBar_32.png" />
+    <None Include="Resources\GraphBar_24.png" />
+    <None Include="Resources\GraphBar_16.png" />
+    <None Include="Resources\Globe_48.png" />
+    <None Include="Resources\Globe_32.png" />
+    <None Include="Resources\Globe_24.png" />
+    <None Include="Resources\Globe_16.png" />
+    <None Include="Resources\Find_48.png" />
+    <None Include="Resources\Find_32.png" />
+    <None Include="Resources\Find_24.png" />
+    <None Include="Resources\Find_16.png" />
+    <None Include="Resources\FilmstripWide_48.png" />
+    <None Include="Resources\FilmstripWide_32.png" />
+    <None Include="Resources\FilmstripWide_24.png" />
+    <None Include="Resources\FilmstripWide_16.png" />
+    <None Include="Resources\FilmstripNarrow_48.png" />
+    <None Include="Resources\FilmstripNarrow_32.png" />
+    <None Include="Resources\FilmstripNarrow_24.png" />
+    <None Include="Resources\FilmstripNarrow_16.png" />
+    <None Include="Resources\Exception_48.png" />
+    <None Include="Resources\Exception_32.png" />
+    <None Include="Resources\Exception_24.png" />
+    <None Include="Resources\Exception_16.png" />
+    <None Include="Resources\EventWarning_48.png" />
+    <None Include="Resources\EventWarning_32.png" />
+    <None Include="Resources\EventWarning_24.png" />
+    <None Include="Resources\EventWarning_16.png" />
+    <None Include="Resources\EventSuccess_48.png" />
+    <None Include="Resources\EventSuccess_32.png" />
+    <None Include="Resources\EventSuccess_24.png" />
+    <None Include="Resources\EventSuccess_16.png" />
+    <None Include="Resources\EventStop_48.png" />
+    <None Include="Resources\EventStop_32.png" />
+    <None Include="Resources\EventStop_24.png" />
+    <None Include="Resources\EventStop_16.png" />
+    <None Include="Resources\EventMessage_48.png" />
+    <None Include="Resources\EventMessage_32.png" />
+    <None Include="Resources\EventMessage_24.png" />
+    <None Include="Resources\EventMessage_16.png" />
+    <None Include="Resources\EventMagenta_48.png" />
+    <None Include="Resources\EventMagenta_32.png" />
+    <None Include="Resources\EventMagenta_24.png" />
+    <None Include="Resources\EventMagenta_16.png" />
+    <None Include="Resources\EventInformation_48.png" />
+    <None Include="Resources\EventInformation_32.png" />
+    <None Include="Resources\EventInformation_24.png" />
+    <None Include="Resources\EventInformation_16.png" />
+    <None Include="Resources\EventError_48.png" />
+    <None Include="Resources\EventError_32.png" />
+    <None Include="Resources\EventError_24.png" />
+    <None Include="Resources\EventError_16.png" />
+    <None Include="Resources\EventCanceled_48.png" />
+    <None Include="Resources\EventCanceled_32.png" />
+    <None Include="Resources\EventCanceled_24.png" />
+    <None Include="Resources\EventCanceled_16.png" />
+    <None Include="Resources\EventBrown_48.png" />
+    <None Include="Resources\EventBrown_32.png" />
+    <None Include="Resources\EventBrown_24.png" />
+    <None Include="Resources\EventBrown_16.png" />
+    <None Include="Resources\Error_48.png" />
+    <None Include="Resources\Error_32.png" />
+    <None Include="Resources\Error_24.png" />
+    <None Include="Resources\Error_16.png" />
+    <None Include="Resources\Canceled_48.png" />
+    <None Include="Resources\Canceled_32.png" />
+    <None Include="Resources\Canceled_24.png" />
+    <None Include="Resources\Canceled_16.png" />
+    <None Include="Resources\Book_48.png" />
+    <None Include="Resources\Book_32.png" />
+    <None Include="Resources\Book_24.png" />
+    <None Include="Resources\Book_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
+      <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
+      <Name>DotNetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DotNetApi\MapApi\MapApi.csproj">
+      <Project>{c5c1839c-4971-4781-b8fa-ff743e257a7e}</Project>
+      <Name>MapApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PlanetLab\PlanetLab\PlanetLab.csproj">
+      <Project>{8d8a9a27-a8ca-4a27-95e5-c2246bdabc85}</Project>
+      <Name>PlanetLab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Renci.SshNet\Renci.SshNet.csproj">
+      <Project>{2f5f8c90-0bd1-424f-997c-7bc6280919d1}</Project>
+      <Name>Renci.SshNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetApi\InetApi.csproj">
+      <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
+      <Name>InetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetCrawler\InetCrawler.csproj">
+      <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>
+      <Name>InetCrawler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
