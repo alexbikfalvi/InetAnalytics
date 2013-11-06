@@ -20,6 +20,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using DotNetApi.Windows.Themes;
 using InetAnalytics.Forms;
 using InetCrawler;
 
@@ -42,6 +43,8 @@ namespace InetAnalytics
 			Application.SetCompatibleTextRenderingDefault(false);
 			Program.formCrash = new FormCrash();
 			Application.ThreadException += Program.OnThreadException;
+
+			ToolStripManager.Renderer = new ToolStripProfessionalRenderer();
 			
 			try
 			{
