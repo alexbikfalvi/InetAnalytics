@@ -23,6 +23,7 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 using DotNetApi;
+using DotNetApi.IO;
 using DotNetApi.Windows;
 
 namespace InetCrawler.Testing
@@ -361,8 +362,12 @@ namespace InetCrawler.Testing
 								this.EncodeToBase64(this.UserAgentHeaderValue))),
 						headers)));
 
-			// Save the XML document to a file.
-			document.Save(fileName);
+			// Check the file directory exists.
+			if (Directory.EnsureFileDirectoryExists(fileName))
+			{
+				// Save the XML document to a file.
+				document.Save(fileName);
+			}
 		}
 
 		/// <summary>

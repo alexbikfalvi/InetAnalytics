@@ -272,8 +272,16 @@ namespace InetAnalytics.Controls.Comments
 			// If the user selects a file.
 			if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				// Save the comments.
-				this.comments.Save(this.saveFileDialog.FileName);
+				try
+				{
+					// Save the comments.
+					this.comments.Save(this.saveFileDialog.FileName);
+				}
+				catch (Exception exception)
+				{
+					// Show an error message.
+					MessageBox.Show(this, "Cannot save the comments to file. {0}".FormatWith(exception.Message), "Cannot Save File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 			}
 		}
 	}

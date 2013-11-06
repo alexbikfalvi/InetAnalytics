@@ -154,7 +154,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "SitesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\Sites.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root, "SitesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Sites.xml");
 			}
 			set
 			{
@@ -169,7 +169,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "NodesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\Nodes.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root, "NodesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Nodes.xml");
 			}
 			set
 			{
@@ -184,7 +184,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "SlicesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\Slices.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root, "SlicesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Slices.xml");
 			}
 			set
 			{
@@ -199,7 +199,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "LocalPersonsFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\LocalPersons.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root, "LocalPersonsFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\LocalPersons.xml");
 			}
 			set
 			{
@@ -214,7 +214,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "LocalSlicesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\PlanetLab\LocalSlices.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root, "LocalSlicesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\LocalSlices.xml");
 			}
 			set
 			{

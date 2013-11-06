@@ -60,14 +60,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelInfo.Location = new System.Drawing.Point(12, 63);
 			this.labelInfo.Name = "labelInfo";
-			this.labelInfo.Size = new System.Drawing.Size(310, 70);
+			this.labelInfo.Size = new System.Drawing.Size(380, 100);
 			this.labelInfo.TabIndex = 2;
 			// 
-			// FormMain
+			// FormSetup
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(334, 142);
+			this.ClientSize = new System.Drawing.Size(404, 172);
 			this.ControlBox = false;
 			this.Controls.Add(this.labelInfo);
 			this.Controls.Add(this.labelTitle);
@@ -75,7 +75,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "FormMain";
+			this.Name = "FormSetup";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "Internet Analytics Upgrade";

@@ -18,24 +18,24 @@
 
 using System;
 using DotNetApi;
-using DotNetApi.Windows;
+using DotNetApi.IO;
 
 namespace InetUpgrade.Actions
 {
 	/// <summary>
-	/// A class representing the registry upgrade action.
+	/// A class representing the files upgrade action.
 	/// </summary>
-	public sealed class UpgradeActionRegistry : UpgradeAction
+	public sealed class UpgradeActionFiles : UpgradeAction
 	{
 		private readonly string oldPath;
 		private readonly string newPath;
 
 		/// <summary>
-		/// Creates a new registry upgrade action instance.
+		/// Creates a new files upgrade action instance.
 		/// </summary>
 		/// <param name="oldPath">The old path.</param>
 		/// <param name="newPath">The new path.</param>
-		public UpgradeActionRegistry(string oldPath, string newPath)
+		public UpgradeActionFiles(string oldPath, string newPath)
 		{
 			this.oldPath = oldPath;
 			this.newPath = newPath;
@@ -47,7 +47,7 @@ namespace InetUpgrade.Actions
 		public override void Execute()
 		{
 			// Set a message.
-			this.OnProgress(@"Upgrading registry path...{0}{1}From: '{2}'{3}{4}To: '{5}'".FormatWith(
+			this.OnProgress(@"Upgrading user files...{0}{1}From: '{2}'{3}{4}To: '{5}'".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,
 				oldPath,
@@ -56,8 +56,19 @@ namespace InetUpgrade.Actions
 				newPath
 				));
 
-			// Move the registry key.
-			Registry.MoveKey(Registry.CurrentUser, oldPath, Registry.CurrentUser, newPath);
+			// Move the files.
+			Directory.Move(oldPath, newPath, Operations.DontOverwriteIgnoreErrors, (string srcPath, string dstPath) =>
+				{
+					// Set a message.
+					this.OnProgress(@"Upgrading user files...{0}{1}From: '{2}'{3}{4}To: '{5}'".FormatWith(
+						Environment.NewLine,
+						Environment.NewLine,
+						oldPath,
+						Environment.NewLine,
+						Environment.NewLine,
+						newPath
+						));
+				});
 		}
 	}
 }

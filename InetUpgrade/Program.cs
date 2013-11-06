@@ -62,6 +62,13 @@ namespace InetUpgrade
 							actions.Add(new UpgradeActionRegistry(arguments[++index], arguments[++index]));
 						}
 						break;
+					case "/files":
+						// Files upgrade action.
+						if (index + 2 < arguments.Length)
+						{
+							actions.Add(new UpgradeActionFiles(arguments[++index], arguments[++index]));
+						}
+						break;
 				}
 			}
 

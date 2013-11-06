@@ -71,8 +71,12 @@ namespace InetCrawler.Log
 						DateTime date = DateTime.Parse(xml.Root.Attribute(XName.Get("date")).Value, CultureInfo.InvariantCulture);
 						// Set the file name.
 						fileName = this.filePattern.FormatWith(date.Year, date.Month, date.Day);
-						// Save the XML file.
-						xml.Save(fileName);
+						// Check the file directory exists.
+						if (DotNetApi.IO.Directory.EnsureFileDirectoryExists(fileName))
+						{
+							// Save the XML file.
+							xml.Save(fileName);
+						}
 					}
 					catch (Exception) { }
 				}

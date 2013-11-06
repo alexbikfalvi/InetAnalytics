@@ -78,7 +78,12 @@ namespace InetCrawler.Comments
 		/// <param name="fileName">The file name.</param>
 		public void Save(string fileName)
 		{
-			this.document.Save(fileName);
+			// Ensure the file directory exists.
+			if (DotNetApi.IO.Directory.EnsureFileDirectoryExists(fileName))
+			{
+				// Save the comments to the file.
+				this.document.Save(fileName, SaveOptions.None);
+			}
 		}
 
 		/// <summary>

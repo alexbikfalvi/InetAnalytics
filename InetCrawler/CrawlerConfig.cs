@@ -36,6 +36,8 @@ namespace InetCrawler
 		/// </summary>
 		public sealed class StaticConfig
 		{
+			public string ApplicationFolder { get { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\Internet Analytics"; } }
+
 			public string YouTubeUsername { get; internal set; }
 
 			public SecureString YouTubePassword { get; internal set; }
@@ -115,6 +117,7 @@ namespace InetCrawler
 			this.plConfig = new PlConfig(this.rootKey, this.rootPath + @"\PlanetLab");
 
 			// Initialize the static configuration.
+
 			CrawlerConfig.Static.YouTubeUsername = this.YouTubeUsername;
 			CrawlerConfig.Static.YouTubePassword = this.YouTubePassword;
 			CrawlerConfig.Static.YouTubeCategoriesFileName = this.YouTubeCategoriesFileName;
@@ -177,7 +180,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\YouTube\V2", "CategoriesFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\YouTube\CategoriesV2.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\YouTube\V2", "CategoriesFileName", CrawlerConfig.Static.ApplicationFolder + @"\YouTube\CategoriesV2.xml");
 			}
 			set
 			{
@@ -209,7 +212,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "FileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\Log\YtLog-{0}-{1}-{2}.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "FileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-{0}-{1}-{2}.xml");
 			}
 			set
 			{
@@ -225,7 +228,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "DatabaseFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\Log\YtLog-Db-{0}-{1}-{2}-{3}.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "DatabaseFileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-Db-{0}-{1}-{2}-{3}.xml");
 			}
 			set
 			{
@@ -241,7 +244,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "VideosFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\Comments\Videos.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "VideosFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Videos.xml");
 			}
 			set
 			{
@@ -257,7 +260,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "UsersFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\Comments\Users.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "UsersFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Users.xml");
 			}
 			set
 			{
@@ -273,7 +276,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "PlaylistsFileName", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\YouTube Analytics\Comments\Playlists.xml");
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "PlaylistsFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Playlists.xml");
 			}
 			set
 			{

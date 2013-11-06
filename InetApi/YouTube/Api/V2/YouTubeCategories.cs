@@ -231,7 +231,12 @@ namespace InetApi.YouTube.Api.V2
 			// If the XML document is not null, save the XML document at the specified file.
 			if (null != this.xml)
 			{
-				this.xml.Save(fileName, SaveOptions.None);
+				// Check the file directory exists.
+				if (DotNetApi.IO.Directory.EnsureFileDirectoryExists(this.fileName))
+				{
+					// Save to file.
+					this.xml.Save(this.fileName, SaveOptions.None);
+				}
 			}
 		}
 

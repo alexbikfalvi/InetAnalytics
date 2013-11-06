@@ -42,11 +42,15 @@ namespace InetAnalytics
 			Application.SetCompatibleTextRenderingDefault(false);
 			Program.formCrash = new FormCrash();
 			Application.ThreadException += Program.OnThreadException;
+			
 			try
 			{
 				using (Crawler crawler = new Crawler(Registry.CurrentUser, Resources.ConfigRootPath))
 				{
-					Application.Run(new FormMain(crawler));
+					using (FormMain formMain = new FormMain(crawler))
+					{
+						Application.Run(formMain);
+					}
 				}
 			}
 			catch (Exception exception)

@@ -346,12 +346,12 @@
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
 		<row><td>DotNetApi.Primary_output</td><td>{2B332902-D40A-45EA-A346-ADB6AEEB6547}</td><td>INSTALLDIR</td><td>2</td><td/><td>dotnetapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>HtmlAgilityPack.Primary_output</td><td>{97622FAB-8BEE-41DB-9FF7-BD4D9680A13F}</td><td>INSTALLDIR</td><td>2</td><td/><td>htmlagilitypack.primary_outp</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td>{F5B82E9D-CDA9-4C57-B81C-089334CE6186}</td><td>ALEX_BIKFALVI1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{4F6A4C23-1652-46AF-8B7E-9FE771DFF532}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{E750AEBB-A069-48B4-AF83-8DA59F3A7409}</td><td>PLANETLAB</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{E6D6F4EA-5BAC-4ABA-98CD-448D2072B158}</td><td>COMMENTS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{C19CB5AF-FB35-44E0-AD83-1FCCE427FFC0}</td><td>LOG</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{1977DD2E-9CEB-4C88-A822-C9944CC31F8E}</td><td>YOUTUBE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{CE0819E2-579C-4178-92CF-4810849BC9E8}</td><td>INTERNET_ANALYTICS1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetAnalytics.Primary_output</td><td>{C072E757-1198-4DA5-8B70-316BC85A9C3E}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetanalytics.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetApi.Primary_output</td><td>{41045FA4-8427-43F7-BD69-644B991F40D1}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetCrawler.Primary_output</td><td>{625C5D43-9CEF-486E-A87B-36160B141B00}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetcrawler.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1068,9 +1068,9 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
-		<row><td>ALEX_BIKFALVI1</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>COMMENTS</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>INTERNET_ANALYTICS1</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>LOG</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>PLANETLAB</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>YOUTUBE</td><td>ISX_DEFAULTCOMPONENT5</td></row>
@@ -1094,7 +1094,7 @@
 		<row><td>SetARPINSTALLLOCATION</td><td>51</td><td>ARPINSTALLLOCATION</td><td>[INSTALLDIR]</td><td/><td/></row>
 		<row><td>SetAllUsersProfileNT</td><td>51</td><td>ALLUSERSPROFILE</td><td>[%SystemRoot]\Profiles\All Users</td><td/><td/></row>
 		<row><td>ShowMsiLog</td><td>226</td><td>SystemFolder</td><td>[SystemFolder]notepad.exe "[MsiLogFileLocation]"</td><td/><td>Shows Property-driven MSI Log</td></row>
-		<row><td>UpgradeTool</td><td>1106</td><td>inetupgrade.primary_output</td><td>/registry "Software\Alex Bikfalvi\YtAnalytics" "Software\Alex Bikfalvi\Internet Analytics"</td><td/><td/></row>
+		<row><td>UpgradeTool</td><td>1106</td><td>inetupgrade.primary_output</td><td>/registry "Software\Alex Bikfalvi\YtAnalytics" "Software\Alex Bikfalvi\Internet Analytics" /files "[AppDataFolder]Alex Bikfalvi\YouTube Analytics" "[AppDataFolder]Alex Bikfalvi\Internet Analytics"</td><td/><td/></row>
 		<row><td>setAllUsersProfile2K</td><td>51</td><td>ALLUSERSPROFILE</td><td>[%ALLUSERSPROFILE]</td><td/><td/></row>
 		<row><td>setUserProfileNT</td><td>51</td><td>USERPROFILE</td><td>[%USERPROFILE]</td><td/><td/></row>
 	</table>
@@ -1155,11 +1155,10 @@
 		<col def="I4">ISAttributes</col>
 		<col def="S255">ISFolderName</col>
 		<row><td>ALEX_BIKFALVI</td><td>ProgramFilesFolder</td><td>ALEXBI~1|Alex Bikfalvi</td><td/><td>0</td><td/></row>
-		<row><td>ALEX_BIKFALVI1</td><td>AppDataFolder</td><td>ALEXBI~1|Alex Bikfalvi</td><td/><td>0</td><td/></row>
 		<row><td>ALLUSERSPROFILE</td><td>TARGETDIR</td><td>.:ALLUSE~1|All Users</td><td/><td>0</td><td/></row>
 		<row><td>AdminToolsFolder</td><td>TARGETDIR</td><td>.:Admint~1|AdminTools</td><td/><td>0</td><td/></row>
 		<row><td>AppDataFolder</td><td>TARGETDIR</td><td>.:APPLIC~1|Application Data</td><td/><td>0</td><td/></row>
-		<row><td>COMMENTS</td><td>ALEX_BIKFALVI1</td><td>Comments</td><td/><td>0</td><td/></row>
+		<row><td>COMMENTS</td><td>INTERNET_ANALYTICS1</td><td>Comments</td><td/><td>0</td><td/></row>
 		<row><td>CommonAppDataFolder</td><td>TARGETDIR</td><td>.:Common~1|CommonAppData</td><td/><td>0</td><td/></row>
 		<row><td>CommonFiles64Folder</td><td>TARGETDIR</td><td>.:Common64</td><td/><td>0</td><td/></row>
 		<row><td>CommonFilesFolder</td><td>TARGETDIR</td><td>.:Common</td><td/><td>0</td><td/></row>
@@ -1170,15 +1169,16 @@
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
 		<row><td>INSTALLDIR</td><td>INTERNET_ANALYTICS</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>INTERNET_ANALYTICS</td><td>ALEX_BIKFALVI</td><td>INTERN~1|Internet Analytics</td><td/><td>0</td><td/></row>
+		<row><td>INTERNET_ANALYTICS1</td><td>AppDataFolder</td><td>INTERN~1|Internet Analytics</td><td/><td>0</td><td/></row>
 		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
 		<row><td>ISMyCompanyDir</td><td>ProgramFilesFolder</td><td>MYCOMP~1|My Company Name</td><td/><td>0</td><td/></row>
 		<row><td>ISMyProductDir</td><td>ISMyCompanyDir</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>ISYourDataBaseDir</td><td>INSTALLDIR</td><td>Database</td><td/><td>0</td><td/></row>
-		<row><td>LOG</td><td>ALEX_BIKFALVI1</td><td>Log</td><td/><td>0</td><td/></row>
+		<row><td>LOG</td><td>INTERNET_ANALYTICS1</td><td>Log</td><td/><td>0</td><td/></row>
 		<row><td>LocalAppDataFolder</td><td>TARGETDIR</td><td>.:LocalA~1|LocalAppData</td><td/><td>0</td><td/></row>
 		<row><td>MyPicturesFolder</td><td>TARGETDIR</td><td>.:MyPict~1|MyPictures</td><td/><td>0</td><td/></row>
 		<row><td>NetHoodFolder</td><td>TARGETDIR</td><td>.:NetHood</td><td/><td>0</td><td/></row>
-		<row><td>PLANETLAB</td><td>ALEX_BIKFALVI1</td><td>PLANET~1|PlanetLab</td><td/><td>0</td><td/></row>
+		<row><td>PLANETLAB</td><td>INTERNET_ANALYTICS1</td><td>PLANET~1|PlanetLab</td><td/><td>0</td><td/></row>
 		<row><td>PersonalFolder</td><td>TARGETDIR</td><td>.:Personal</td><td/><td>0</td><td/></row>
 		<row><td>PrimaryVolumePath</td><td>TARGETDIR</td><td>.:Primar~1|PrimaryVolumePath</td><td/><td>0</td><td/></row>
 		<row><td>PrintHoodFolder</td><td>TARGETDIR</td><td>.:PRINTH~1|PrintHood</td><td/><td>0</td><td/></row>
@@ -1198,7 +1198,7 @@
 		<row><td>USERPROFILE</td><td>TARGETDIR</td><td>.:USERPR~1|UserProfile</td><td/><td>0</td><td/></row>
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
-		<row><td>YOUTUBE</td><td>ALEX_BIKFALVI1</td><td>YouTube</td><td/><td>0</td><td/></row>
+		<row><td>YOUTUBE</td><td>INTERNET_ANALYTICS1</td><td>YouTube</td><td/><td>0</td><td/></row>
 		<row><td>newfolder1</td><td>ProgramMenuFolder</td><td>##ID_STRING10##</td><td/><td>1</td><td/></row>
 	</table>
 
@@ -1893,12 +1893,12 @@
 		<col key="yes" def="s72">Component_</col>
 		<row><td>AlwaysInstall</td><td>DotNetApi.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>HtmlAgilityPack.Primary_output</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT5</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>AlwaysInstall</td><td>InetAnalytics.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetApi.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetCrawler.Primary_output</td></row>
@@ -2072,12 +2072,12 @@
 		<col def="S0">Miscellaneous</col>
 		<row><td>DotNetApi.Primary_output</td><td/><td/><td>_1F6D5918_1BBF_44B3_9F18_3C6CCAAE5610_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>HtmlAgilityPack.Primary_output</td><td/><td/><td>_9107CCD1_2A9D_42BD_BF5C_853690DBE127_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_461762C3_F1CA_49BE_BEEE_D6699146B04B_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_2A01FF27_5513_43F3_9D50_EEC73D9DE89D_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_34A031C9_AD65_4B6A_B2D5_9A4ACAC63917_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_75BF8419_517F_4393_AB5D_763440B5B3C8_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_46CBF015_D3A0_410E_BF99_03E1107E10B3_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_5ED4E7FE_EDA5_467C_BF32_1002D3122AFA_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_12E748BC_03E2_4915_890D_35F38173D1CB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetAnalytics.Primary_output</td><td/><td/><td>_F3D3D295_7FEB_42C2_8710_8F3216FB8FCD_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetApi.Primary_output</td><td/><td/><td>_3512EB23_8EB2_42C3_8457_E274F133716A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetCrawler.Primary_output</td><td/><td/><td>_B8A492BB_15C4_42EC_AB2C_A8D7EEE71035_FILTER</td><td/><td/><td/><td/></row>
@@ -2467,7 +2467,7 @@
 		<row><td>DVD-18</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>15.83</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-5</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>4.38</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-9</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>7.95</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
-		<row><td>SingleImage</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>108573</td><td/><td/><td/><td>3</td></row>
+		<row><td>SingleImage</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>108573</td><td/><td/><td/><td>1</td></row>
 		<row><td>WebDeployment</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>4</td><td>1033</td><td>2</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>124941</td><td/><td/><td/><td>3</td></row>
 	</table>
 
@@ -2515,7 +2515,7 @@
 		<row><td>DVD-18</td><td>Express</td><td>0</td><td>http://</td><td>0</td><td>install</td><td>install</td><td>[LocalAppDataFolder]Downloaded Installations</td><td>0</td><td>http://www.installengine.com/Msiengine20</td><td>http://www.installengine.com/Msiengine20</td><td>0</td><td>http://www.installengine.com/cert05/isengine</td><td>0</td><td/><td/><td/><td>3</td><td>http://www.installengine.com/cert05/dotnetfx</td><td>0</td><td>1033</td><td/><td/><td/><td/><td/><td>3</td><td/><td>http://www.installengine.com/Msiengine30</td><td/></row>
 		<row><td>DVD-5</td><td>Express</td><td>0</td><td>http://</td><td>0</td><td>install</td><td>install</td><td>[LocalAppDataFolder]Downloaded Installations</td><td>0</td><td>http://www.installengine.com/Msiengine20</td><td>http://www.installengine.com/Msiengine20</td><td>0</td><td>http://www.installengine.com/cert05/isengine</td><td>0</td><td/><td/><td/><td>3</td><td>http://www.installengine.com/cert05/dotnetfx</td><td>0</td><td>1033</td><td/><td/><td/><td/><td/><td>3</td><td/><td>http://www.installengine.com/Msiengine30</td><td/></row>
 		<row><td>DVD-9</td><td>Express</td><td>0</td><td>http://</td><td>0</td><td>install</td><td>install</td><td>[LocalAppDataFolder]Downloaded Installations</td><td>0</td><td>http://www.installengine.com/Msiengine20</td><td>http://www.installengine.com/Msiengine20</td><td>0</td><td>http://www.installengine.com/cert05/isengine</td><td>0</td><td/><td/><td/><td>3</td><td>http://www.installengine.com/cert05/dotnetfx</td><td>0</td><td>1033</td><td/><td/><td/><td/><td/><td>3</td><td/><td>http://www.installengine.com/Msiengine30</td><td/></row>
-		<row><td>SingleImage</td><td>Express</td><td>0</td><td>http://</td><td>0</td><td>install</td><td>install</td><td>[LocalAppDataFolder]Downloaded Installations</td><td>1</td><td>http://www.installengine.com/Msiengine20</td><td>http://www.installengine.com/Msiengine20</td><td>0</td><td>http://www.installengine.com/cert05/isengine</td><td>0</td><td/><td/><td/><td>3</td><td>http://www.installengine.com/cert05/dotnetfx</td><td>0</td><td>1033</td><td/><td/><td/><td/><td/><td>3</td><td/><td>http://www.installengine.com/Msiengine30</td><td/></row>
+		<row><td>SingleImage</td><td>Express</td><td>0</td><td>http://</td><td>0</td><td>install</td><td>install</td><td>[LocalAppDataFolder]Downloaded Installations</td><td>2</td><td>http://www.installengine.com/Msiengine20</td><td>http://www.installengine.com/Msiengine20</td><td>0</td><td>http://www.installengine.com/cert05/isengine</td><td>0</td><td/><td/><td/><td>3</td><td>http://www.installengine.com/cert05/dotnetfx</td><td>0</td><td>1033</td><td/><td/><td/><td/><td/><td>3</td><td/><td>http://www.installengine.com/Msiengine30</td><td/></row>
 		<row><td>WebDeployment</td><td>Express</td><td>0</td><td>http://</td><td>0</td><td>setup</td><td>Default</td><td>[LocalAppDataFolder]Downloaded Installations</td><td>2</td><td>http://www.Installengine.com/Msiengine20</td><td>http://www.Installengine.com/Msiengine20</td><td>0</td><td>http://www.installengine.com/cert05/isengine</td><td>0</td><td/><td/><td/><td>3</td><td>http://www.installengine.com/cert05/dotnetfx</td><td>0</td><td>1033</td><td/><td/><td/><td/><td/><td>3</td><td/><td>http://www.installengine.com/Msiengine30</td><td/></row>
 	</table>
 
@@ -3812,10 +3812,10 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>765557679</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>765557679</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>765557679</td></row>
-		<row><td>ID_STRING10</td><td>1033</td><td>ALEXBI~1|Alex Bikfalvi</td><td>0</td><td/><td>765574575</td></row>
+		<row><td>ID_STRING10</td><td>1033</td><td>INTERN~1|Internet Analytics</td><td>0</td><td/><td>899774829</td></row>
 		<row><td>ID_STRING11</td><td>1033</td><td>INTERN~1|Internet Analytics</td><td>0</td><td/><td>765531599</td></row>
 		<row><td>ID_STRING12</td><td>1033</td><td>An analytics tool for Internet measurements.</td><td>0</td><td/><td>765533647</td></row>
-		<row><td>ID_STRING13</td><td>1033</td><td>UNISTA~1|Unistall Internet Analytics</td><td>0</td><td/><td>765556175</td></row>
+		<row><td>ID_STRING13</td><td>1033</td><td>UNINST~1|Uninstall Internet Analytics</td><td>0</td><td/><td>899793517</td></row>
 		<row><td>ID_STRING2</td><td>1033</td><td>Internet Analytics</td><td>0</td><td/><td>765537295</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>Alex Bikfalvi</td><td>0</td><td/><td>765541391</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>http://alex.bikfalvi.com</td><td>0</td><td/><td>765586447</td></row>
@@ -4069,7 +4069,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{7C81574D-ACC2-4A84-BCB7-4C254435AE42}</td></row>
 		<row><td>ISUSSignature</td><td>{FE436C65-CC55-412A-A2D9-AB1EDB3CCF50}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewShortcuts,viewRegistry,viewFileExtensions,viewEnvironmentVariables,viewServices,viewCustomActions,viewSupportFiles,viewUI</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewShortcuts,viewRegistry,viewFileExtensions,viewEnvironmentVariables,viewServices,viewCustomActions,viewSupportFiles,viewUI,viewRelease</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>

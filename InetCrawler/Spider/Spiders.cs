@@ -21,7 +21,7 @@ using System;
 namespace InetCrawler.Spider
 {
 	/// <summary>
-	/// The collection of spiders for the YouTube analytics program.
+	/// The collection of spiders for the Internet analytics program.
 	/// </summary>
 	public sealed class Spiders : IDisposable
 	{
