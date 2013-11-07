@@ -38,7 +38,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSlices));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listViewSlices = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -61,9 +61,9 @@
 			this.itemSelectNodesLocation = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemSelectNodesState = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemSelectNodesSlice = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttonRemoveFromNodes = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -83,10 +83,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -98,8 +97,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
-			this.splitContainer.Size = new System.Drawing.Size(800, 600);
-			this.splitContainer.SplitterDistance = 425;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(800, 578);
+			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// listViewSlices
@@ -119,7 +120,7 @@
 			this.listViewSlices.HideSelection = false;
 			this.listViewSlices.Location = new System.Drawing.Point(0, 25);
 			this.listViewSlices.Name = "listViewSlices";
-			this.listViewSlices.Size = new System.Drawing.Size(798, 398);
+			this.listViewSlices.Size = new System.Drawing.Size(800, 378);
 			this.listViewSlices.SmallImageList = this.imageList;
 			this.listViewSlices.TabIndex = 10;
 			this.listViewSlices.UseCompatibleStateImageBehavior = false;
@@ -178,7 +179,7 @@
             this.buttonRemoveFromNodes});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(798, 25);
+			this.toolStrip.Size = new System.Drawing.Size(800, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -263,7 +264,8 @@
             this.itemSelectNodesState,
             this.itemSelectNodesSlice});
 			this.contextMenuAddToNodes.Name = "contextMenuAddToNodes";
-			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 92);
+			this.contextMenuAddToNodes.OwnerItem = this.menuItemAddToNodes;
+			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 70);
 			// 
 			// itemSelectNodesLocation
 			// 
@@ -286,14 +288,6 @@
 			this.itemSelectNodesSlice.Text = "Select nodes by slice";
 			this.itemSelectNodesSlice.Click += new System.EventHandler(this.OnAddToNodesSlice);
 			// 
-			// menuItemAddToNodes
-			// 
-			this.menuItemAddToNodes.DropDown = this.contextMenuAddToNodes;
-			this.menuItemAddToNodes.Image = global::InetAnalytics.Resources.NodeAdd_16;
-			this.menuItemAddToNodes.Name = "menuItemAddToNodes";
-			this.menuItemAddToNodes.Size = new System.Drawing.Size(181, 22);
-			this.menuItemAddToNodes.Text = "&Add to nodes";
-			// 
 			// buttonRemoveFromNodes
 			// 
 			this.buttonRemoveFromNodes.Enabled = false;
@@ -309,8 +303,20 @@
 			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlLog.Location = new System.Drawing.Point(0, 0);
 			this.controlLog.Name = "controlLog";
-			this.controlLog.Size = new System.Drawing.Size(798, 169);
+			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.controlLog.ShowBorder = true;
+			this.controlLog.ShowTitle = true;
+			this.controlLog.Size = new System.Drawing.Size(800, 170);
 			this.controlLog.TabIndex = 0;
+			this.controlLog.Title = "Log";
+			// 
+			// menuItemAddToNodes
+			// 
+			this.menuItemAddToNodes.DropDown = this.contextMenuAddToNodes;
+			this.menuItemAddToNodes.Image = global::InetAnalytics.Resources.NodeAdd_16;
+			this.menuItemAddToNodes.Name = "menuItemAddToNodes";
+			this.menuItemAddToNodes.Size = new System.Drawing.Size(181, 22);
+			this.menuItemAddToNodes.Text = "&Add to nodes";
 			// 
 			// legendItemSuccess
 			// 
@@ -370,7 +376,10 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSlices";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "PlanetLab Slices";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel1.PerformLayout();
@@ -387,7 +396,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemPending;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemSuccess;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemFail;

@@ -38,6 +38,8 @@
 			this.numericMessageCloseDelay = new System.Windows.Forms.NumericUpDown();
 			this.labelMessageCloseDelay = new System.Windows.Forms.Label();
 			this.tabPageYouTube = new System.Windows.Forms.TabPage();
+			this.textBoxYtCategories = new System.Windows.Forms.TextBox();
+			this.labelYtCategories = new System.Windows.Forms.Label();
 			this.groupBoxYt2 = new System.Windows.Forms.GroupBox();
 			this.labelYt2Key = new System.Windows.Forms.Label();
 			this.textBoxYt2Key = new DotNetApi.Windows.Controls.SecureTextBox();
@@ -55,8 +57,6 @@
 			this.labelUserCommentsFile = new System.Windows.Forms.Label();
 			this.textBoxVideoCommentsFile = new System.Windows.Forms.TextBox();
 			this.labelVideoCommentsFile = new System.Windows.Forms.Label();
-			this.labelYtCategories = new System.Windows.Forms.Label();
-			this.textBoxYtCategories = new System.Windows.Forms.TextBox();
 			this.toolStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
@@ -72,9 +72,9 @@
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonSave,
             this.buttonUndo});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(600, 25);
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 0;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -107,10 +107,10 @@
 			this.tabControl.Controls.Add(this.tabPageYouTube);
 			this.tabControl.Controls.Add(this.tabPageLog);
 			this.tabControl.Controls.Add(this.tabPageComments);
-			this.tabControl.Location = new System.Drawing.Point(3, 28);
+			this.tabControl.Location = new System.Drawing.Point(4, 50);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(594, 369);
+			this.tabControl.Size = new System.Drawing.Size(592, 346);
 			this.tabControl.TabIndex = 1;
 			// 
 			// tabPageGeneral
@@ -120,7 +120,7 @@
 			this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabPageGeneral.Name = "tabPageGeneral";
 			this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGeneral.Size = new System.Drawing.Size(586, 343);
+			this.tabPageGeneral.Size = new System.Drawing.Size(584, 320);
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -164,10 +164,29 @@
 			this.tabPageYouTube.Location = new System.Drawing.Point(4, 22);
 			this.tabPageYouTube.Name = "tabPageYouTube";
 			this.tabPageYouTube.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageYouTube.Size = new System.Drawing.Size(586, 343);
+			this.tabPageYouTube.Size = new System.Drawing.Size(584, 341);
 			this.tabPageYouTube.TabIndex = 1;
 			this.tabPageYouTube.Text = "YouTube";
 			this.tabPageYouTube.UseVisualStyleBackColor = true;
+			// 
+			// textBoxYtCategories
+			// 
+			this.textBoxYtCategories.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxYtCategories.Location = new System.Drawing.Point(150, 124);
+			this.textBoxYtCategories.Name = "textBoxYtCategories";
+			this.textBoxYtCategories.ReadOnly = true;
+			this.textBoxYtCategories.Size = new System.Drawing.Size(424, 20);
+			this.textBoxYtCategories.TabIndex = 9;
+			// 
+			// labelYtCategories
+			// 
+			this.labelYtCategories.AutoSize = true;
+			this.labelYtCategories.Location = new System.Drawing.Point(16, 127);
+			this.labelYtCategories.Name = "labelYtCategories";
+			this.labelYtCategories.Size = new System.Drawing.Size(76, 13);
+			this.labelYtCategories.TabIndex = 8;
+			this.labelYtCategories.Text = "&Categories file:";
 			// 
 			// groupBoxYt2
 			// 
@@ -246,7 +265,7 @@
 			this.tabPageLog.Location = new System.Drawing.Point(4, 22);
 			this.tabPageLog.Name = "tabPageLog";
 			this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageLog.Size = new System.Drawing.Size(586, 343);
+			this.tabPageLog.Size = new System.Drawing.Size(584, 341);
 			this.tabPageLog.TabIndex = 2;
 			this.tabPageLog.Text = "Log";
 			this.tabPageLog.UseVisualStyleBackColor = true;
@@ -282,7 +301,7 @@
 			this.tabPageComments.Location = new System.Drawing.Point(4, 22);
 			this.tabPageComments.Name = "tabPageComments";
 			this.tabPageComments.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageComments.Size = new System.Drawing.Size(586, 343);
+			this.tabPageComments.Size = new System.Drawing.Size(584, 341);
 			this.tabPageComments.TabIndex = 3;
 			this.tabPageComments.Text = "Comments";
 			this.tabPageComments.UseVisualStyleBackColor = true;
@@ -345,25 +364,6 @@
 			this.labelVideoCommentsFile.TabIndex = 4;
 			this.labelVideoCommentsFile.Text = "&Video comments file:";
 			// 
-			// labelYtCategories
-			// 
-			this.labelYtCategories.AutoSize = true;
-			this.labelYtCategories.Location = new System.Drawing.Point(16, 127);
-			this.labelYtCategories.Name = "labelYtCategories";
-			this.labelYtCategories.Size = new System.Drawing.Size(76, 13);
-			this.labelYtCategories.TabIndex = 8;
-			this.labelYtCategories.Text = "&Categories file:";
-			// 
-			// textBoxYtCategories
-			// 
-			this.textBoxYtCategories.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxYtCategories.Location = new System.Drawing.Point(150, 124);
-			this.textBoxYtCategories.Name = "textBoxYtCategories";
-			this.textBoxYtCategories.ReadOnly = true;
-			this.textBoxYtCategories.Size = new System.Drawing.Size(424, 20);
-			this.textBoxYtCategories.TabIndex = 9;
-			// 
 			// ControlSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -372,7 +372,11 @@
 			this.Controls.Add(this.toolStrip);
 			this.Enabled = false;
 			this.Name = "ControlSettings";
+			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.ShowBorder = true;
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "Settings";
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.tabControl.ResumeLayout(false);

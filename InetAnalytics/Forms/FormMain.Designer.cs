@@ -46,9 +46,7 @@ namespace InetAnalytics.Forms
 			this.statusLabelMiddle = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +60,7 @@ namespace InetAnalytics.Forms
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
 			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
@@ -77,6 +76,7 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
 			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -84,12 +84,12 @@ namespace InetAnalytics.Forms
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer.SuspendLayout();
 			this.statusStrip.SuspendLayout();
+			this.menuStrip.SuspendLayout();
+			this.menuViewVideo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.menuStrip.SuspendLayout();
-			this.menuViewVideo.SuspendLayout();
 			this.sideMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -103,7 +103,8 @@ namespace InetAnalytics.Forms
 			// toolStripContainer.ContentPanel
 			// 
 			this.toolStripContainer.ContentPanel.Controls.Add(this.splitContainer);
-			this.toolStripContainer.ContentPanel.Padding = new System.Windows.Forms.Padding(4);
+			this.toolStripContainer.ContentPanel.Padding = new System.Windows.Forms.Padding(5);
+			this.toolStripContainer.ContentPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
 			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1008, 536);
 			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
@@ -140,7 +141,8 @@ namespace InetAnalytics.Forms
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(0, 17);
+			this.statusLabelMiddle.Size = new System.Drawing.Size(857, 17);
+			this.statusLabelMiddle.Spring = true;
 			// 
 			// statusLabelRight
 			// 
@@ -154,26 +156,6 @@ namespace InetAnalytics.Forms
 			this.statusLabelConnection.Name = "statusLabelConnection";
 			this.statusLabelConnection.Size = new System.Drawing.Size(81, 17);
 			this.statusLabelConnection.Text = "Connected";
-			// 
-			// splitContainer
-			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer.Location = new System.Drawing.Point(4, 4);
-			this.splitContainer.Name = "splitContainer";
-			// 
-			// splitContainer.Panel1
-			// 
-			this.splitContainer.Panel1.Controls.Add(this.sideMenu);
-			// 
-			// splitContainer.Panel2
-			// 
-			this.splitContainer.Panel2.Controls.Add(this.labelNotAvailable);
-			this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(4);
-			this.splitContainer.Size = new System.Drawing.Size(1000, 528);
-			this.splitContainer.SplitterDistance = 246;
-			this.splitContainer.TabIndex = 0;
 			// 
 			// imageList
 			// 
@@ -228,16 +210,6 @@ namespace InetAnalytics.Forms
 			this.imageList.Images.SetKeyName(46, "GlobeTask");
 			this.imageList.Images.SetKeyName(47, "TestGlobeGoto");
 			this.imageList.Images.SetKeyName(48, "TestConnectGoto");
-			// 
-			// labelNotAvailable
-			// 
-			this.labelNotAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labelNotAvailable.Location = new System.Drawing.Point(4, 4);
-			this.labelNotAvailable.Name = "labelNotAvailable";
-			this.labelNotAvailable.Size = new System.Drawing.Size(740, 518);
-			this.labelNotAvailable.TabIndex = 0;
-			this.labelNotAvailable.Text = "Feature not available";
-			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// menuStrip
 			// 
@@ -341,6 +313,26 @@ namespace InetAnalytics.Forms
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
+			// splitContainer
+			// 
+			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.splitContainer.Location = new System.Drawing.Point(5, 5);
+			this.splitContainer.Name = "splitContainer";
+			// 
+			// splitContainer.Panel1
+			// 
+			this.splitContainer.Panel1.Controls.Add(this.sideMenu);
+			// 
+			// splitContainer.Panel2
+			// 
+			this.splitContainer.Panel2.Controls.Add(this.labelNotAvailable);
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(998, 526);
+			this.splitContainer.SplitterDistance = 246;
+			this.splitContainer.SplitterWidth = 5;
+			this.splitContainer.TabIndex = 0;
+			// 
 			// sideMenu
 			// 
 			this.sideMenu.Controls.Add(this.controlSideLog);
@@ -356,9 +348,9 @@ namespace InetAnalytics.Forms
 			this.sideMenu.Items.AddRange(new DotNetApi.Windows.Controls.SideMenuItem[] {
             this.sideMenuItemPlanetLab,
             this.sideMenuItemDatabase,
-            this.sideMenuItemSpiders,
             this.sideMenuItemYouTube,
             this.sideMenuItemTesting,
+            this.sideMenuItemSpiders,
             this.sideMenuItemConfiguration,
             this.sideMenuItemLog,
             this.sideMenuItemComments});
@@ -366,10 +358,10 @@ namespace InetAnalytics.Forms
 			this.sideMenu.MinimizedItemWidth = 25;
 			this.sideMenu.MinimumPanelHeight = 50;
 			this.sideMenu.Name = "sideMenu";
-			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 28, 0, 440);
+			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 22, 0, 440);
 			this.sideMenu.SelectedIndex = 0;
 			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
-			this.sideMenu.Size = new System.Drawing.Size(244, 526);
+			this.sideMenu.Size = new System.Drawing.Size(246, 526);
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.VisibleItems = 8;
 			// 
@@ -382,12 +374,12 @@ namespace InetAnalytics.Forms
 			this.controlSideComments.ImageIndex = 0;
 			this.controlSideComments.ImageList = this.imageList;
 			this.controlSideComments.ItemHeight = 20;
-			this.controlSideComments.Location = new System.Drawing.Point(0, 28);
+			this.controlSideComments.Location = new System.Drawing.Point(0, 22);
 			this.controlSideComments.Name = "controlSideComments";
 			this.controlSideComments.SelectedImageIndex = 0;
 			this.controlSideComments.ShowLines = false;
 			this.controlSideComments.ShowRootLines = false;
-			this.controlSideComments.Size = new System.Drawing.Size(244, 58);
+			this.controlSideComments.Size = new System.Drawing.Size(246, 64);
 			this.controlSideComments.TabIndex = 3;
 			this.controlSideComments.Visible = false;
 			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -401,12 +393,12 @@ namespace InetAnalytics.Forms
 			this.controlSideConfiguration.ImageIndex = 0;
 			this.controlSideConfiguration.ImageList = this.imageList;
 			this.controlSideConfiguration.ItemHeight = 20;
-			this.controlSideConfiguration.Location = new System.Drawing.Point(0, 28);
+			this.controlSideConfiguration.Location = new System.Drawing.Point(0, 22);
 			this.controlSideConfiguration.Name = "controlSideConfiguration";
 			this.controlSideConfiguration.SelectedImageIndex = 0;
 			this.controlSideConfiguration.ShowLines = false;
 			this.controlSideConfiguration.ShowRootLines = false;
-			this.controlSideConfiguration.Size = new System.Drawing.Size(244, 58);
+			this.controlSideConfiguration.Size = new System.Drawing.Size(246, 64);
 			this.controlSideConfiguration.TabIndex = 1;
 			this.controlSideConfiguration.Visible = false;
 			this.controlSideConfiguration.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -420,12 +412,12 @@ namespace InetAnalytics.Forms
 			this.controlSideTesting.ImageIndex = 0;
 			this.controlSideTesting.ImageList = this.imageList;
 			this.controlSideTesting.ItemHeight = 20;
-			this.controlSideTesting.Location = new System.Drawing.Point(0, 28);
+			this.controlSideTesting.Location = new System.Drawing.Point(0, 22);
 			this.controlSideTesting.Name = "controlSideTesting";
 			this.controlSideTesting.SelectedImageIndex = 0;
 			this.controlSideTesting.ShowLines = false;
 			this.controlSideTesting.ShowRootLines = false;
-			this.controlSideTesting.Size = new System.Drawing.Size(244, 58);
+			this.controlSideTesting.Size = new System.Drawing.Size(246, 64);
 			this.controlSideTesting.TabIndex = 6;
 			this.controlSideTesting.Visible = false;
 			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -439,12 +431,12 @@ namespace InetAnalytics.Forms
 			this.controlSidePlanetLab.ImageIndex = 0;
 			this.controlSidePlanetLab.ImageList = this.imageList;
 			this.controlSidePlanetLab.ItemHeight = 20;
-			this.controlSidePlanetLab.Location = new System.Drawing.Point(0, 28);
+			this.controlSidePlanetLab.Location = new System.Drawing.Point(0, 22);
 			this.controlSidePlanetLab.Name = "controlSidePlanetLab";
 			this.controlSidePlanetLab.SelectedImageIndex = 0;
 			this.controlSidePlanetLab.ShowLines = false;
 			this.controlSidePlanetLab.ShowRootLines = false;
-			this.controlSidePlanetLab.Size = new System.Drawing.Size(244, 58);
+			this.controlSidePlanetLab.Size = new System.Drawing.Size(246, 64);
 			this.controlSidePlanetLab.TabIndex = 7;
 			this.controlSidePlanetLab.Visible = false;
 			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -458,12 +450,12 @@ namespace InetAnalytics.Forms
 			this.controlSideSpiders.ImageIndex = 0;
 			this.controlSideSpiders.ImageList = this.imageList;
 			this.controlSideSpiders.ItemHeight = 20;
-			this.controlSideSpiders.Location = new System.Drawing.Point(0, 28);
+			this.controlSideSpiders.Location = new System.Drawing.Point(0, 22);
 			this.controlSideSpiders.Name = "controlSideSpiders";
 			this.controlSideSpiders.SelectedImageIndex = 0;
 			this.controlSideSpiders.ShowLines = false;
 			this.controlSideSpiders.ShowRootLines = false;
-			this.controlSideSpiders.Size = new System.Drawing.Size(244, 58);
+			this.controlSideSpiders.Size = new System.Drawing.Size(246, 64);
 			this.controlSideSpiders.TabIndex = 5;
 			this.controlSideSpiders.Visible = false;
 			this.controlSideSpiders.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -477,12 +469,12 @@ namespace InetAnalytics.Forms
 			this.controlSideDatabase.ImageIndex = 0;
 			this.controlSideDatabase.ImageList = this.imageList;
 			this.controlSideDatabase.ItemHeight = 20;
-			this.controlSideDatabase.Location = new System.Drawing.Point(0, 28);
+			this.controlSideDatabase.Location = new System.Drawing.Point(0, 22);
 			this.controlSideDatabase.Name = "controlSideDatabase";
 			this.controlSideDatabase.SelectedImageIndex = 0;
 			this.controlSideDatabase.ShowLines = false;
 			this.controlSideDatabase.ShowRootLines = false;
-			this.controlSideDatabase.Size = new System.Drawing.Size(244, 58);
+			this.controlSideDatabase.Size = new System.Drawing.Size(246, 64);
 			this.controlSideDatabase.TabIndex = 4;
 			this.controlSideDatabase.Visible = false;
 			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -496,12 +488,12 @@ namespace InetAnalytics.Forms
 			this.controlSideYouTube.ImageIndex = 0;
 			this.controlSideYouTube.ImageList = this.imageList;
 			this.controlSideYouTube.ItemHeight = 20;
-			this.controlSideYouTube.Location = new System.Drawing.Point(0, 28);
+			this.controlSideYouTube.Location = new System.Drawing.Point(0, 22);
 			this.controlSideYouTube.Name = "controlSideYouTube";
 			this.controlSideYouTube.SelectedImageIndex = 0;
 			this.controlSideYouTube.ShowLines = false;
 			this.controlSideYouTube.ShowRootLines = false;
-			this.controlSideYouTube.Size = new System.Drawing.Size(244, 58);
+			this.controlSideYouTube.Size = new System.Drawing.Size(246, 64);
 			this.controlSideYouTube.TabIndex = 0;
 			this.controlSideYouTube.Visible = false;
 			this.controlSideYouTube.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
@@ -562,13 +554,23 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemComments.Index = -1;
 			this.sideMenuItemComments.Text = "Comments";
 			// 
+			// labelNotAvailable
+			// 
+			this.labelNotAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labelNotAvailable.Location = new System.Drawing.Point(0, 0);
+			this.labelNotAvailable.Name = "labelNotAvailable";
+			this.labelNotAvailable.Size = new System.Drawing.Size(747, 526);
+			this.labelNotAvailable.TabIndex = 0;
+			this.labelNotAvailable.Text = "Feature not available";
+			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// controlSideLog
 			// 
 			this.controlSideLog.AutoScroll = true;
 			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
+			this.controlSideLog.Location = new System.Drawing.Point(0, 22);
 			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(244, 58);
+			this.controlSideLog.Size = new System.Drawing.Size(246, 64);
 			this.controlSideLog.TabIndex = 2;
 			this.controlSideLog.Visible = false;
 			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
@@ -603,13 +605,13 @@ namespace InetAnalytics.Forms
 			this.toolStripContainer.PerformLayout();
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.menuViewVideo.ResumeLayout(false);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.menuStrip.ResumeLayout(false);
-			this.menuStrip.PerformLayout();
-			this.menuViewVideo.ResumeLayout(false);
 			this.sideMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -620,7 +622,7 @@ namespace InetAnalytics.Forms
 		private System.Windows.Forms.ToolStripContainer toolStripContainer;
 		private System.Windows.Forms.StatusStrip statusStrip;
 		private System.Windows.Forms.MenuStrip menuStrip;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private DotNetApi.Windows.Controls.SideMenu sideMenu;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripMenuItem menuItemFile;

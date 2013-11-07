@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.videoList = new InetAnalytics.Controls.YouTube.ControlVideoList();
 			this.viewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemApiV2Video = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,10 +62,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -77,8 +76,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 225;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// videoList
@@ -91,7 +92,7 @@
 			this.videoList.Name = "videoList";
 			this.videoList.Next = false;
 			this.videoList.Previous = false;
-			this.videoList.Size = new System.Drawing.Size(598, 141);
+			this.videoList.Size = new System.Drawing.Size(600, 121);
 			this.videoList.TabIndex = 1;
 			this.videoList.VideoContextMenu = this.viewMenu;
 			this.videoList.PreviousClick += new System.EventHandler(this.OnNavigatePrevious);
@@ -209,7 +210,7 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(598, 82);
+			this.panel.Size = new System.Drawing.Size(600, 82);
 			this.panel.TabIndex = 0;
 			// 
 			// textBoxId
@@ -218,7 +219,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxId.Location = new System.Drawing.Point(68, 4);
 			this.textBoxId.Name = "textBoxId";
-			this.textBoxId.Size = new System.Drawing.Size(335, 20);
+			this.textBoxId.Size = new System.Drawing.Size(337, 20);
 			this.textBoxId.TabIndex = 1;
 			this.textBoxId.TextChanged += new System.EventHandler(this.OnSearchChanged);
 			// 
@@ -227,7 +228,7 @@
 			this.checkBoxView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkBoxView.Appearance = System.Windows.Forms.Appearance.Button;
 			this.checkBoxView.Enabled = false;
-			this.checkBoxView.Location = new System.Drawing.Point(520, 28);
+			this.checkBoxView.Location = new System.Drawing.Point(522, 28);
 			this.checkBoxView.Name = "checkBoxView";
 			this.checkBoxView.Size = new System.Drawing.Size(75, 23);
 			this.checkBoxView.TabIndex = 4;
@@ -241,7 +242,7 @@
 			this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStart.Enabled = false;
 			this.buttonStart.Image = global::InetAnalytics.Resources.PlayStart_16;
-			this.buttonStart.Location = new System.Drawing.Point(439, 2);
+			this.buttonStart.Location = new System.Drawing.Point(441, 2);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
 			this.buttonStart.TabIndex = 2;
@@ -255,7 +256,7 @@
 			this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Image = global::InetAnalytics.Resources.PlayStop_16;
-			this.buttonStop.Location = new System.Drawing.Point(520, 2);
+			this.buttonStop.Location = new System.Drawing.Point(522, 2);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(75, 23);
 			this.buttonStop.TabIndex = 3;
@@ -296,17 +297,24 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(600, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
-			// ControlInetApi.YouTube2VideosFeed
+			// ControlYtApi2VideosFeed
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
-			this.Name = "ControlInetApi.YouTube2VideosFeed";
+			this.Name = "ControlYtApi2VideosFeed";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "YouTube Video Feed";
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
@@ -320,7 +328,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.Label labelId;

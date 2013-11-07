@@ -35,9 +35,9 @@
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.labelSlices = new System.Windows.Forms.Label();
 			this.labelSites = new System.Windows.Forms.Label();
-			this.settings = new InetAnalytics.Controls.PlanetLab.ControlPlanetLabSettings();
 			this.labelConfiguration = new System.Windows.Forms.Label();
 			this.linkLabelSlices = new System.Windows.Forms.LinkLabel();
+			this.settings = new InetAnalytics.Controls.PlanetLab.ControlPlanetLabSettings();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.SuspendLayout();
@@ -45,7 +45,7 @@
 			// pictureBoxIcon
 			// 
 			this.pictureBoxIcon.Image = global::InetAnalytics.Resources.GlobeLab_48;
-			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 20);
+			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 41);
 			this.pictureBoxIcon.Name = "pictureBoxIcon";
 			this.pictureBoxIcon.Size = new System.Drawing.Size(48, 48);
 			this.pictureBoxIcon.TabIndex = 0;
@@ -70,7 +70,7 @@
 			this.labelDescription.Location = new System.Drawing.Point(3, 30);
 			this.labelDescription.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
 			this.labelDescription.Name = "labelDescription";
-			this.labelDescription.Size = new System.Drawing.Size(393, 13);
+			this.labelDescription.Size = new System.Drawing.Size(385, 13);
 			this.labelDescription.TabIndex = 4;
 			this.labelDescription.Text = "You can use the PlanetLab project to perform distributed Internet measurements.";
 			// 
@@ -101,7 +101,7 @@
 			this.tableLayoutPanel.Controls.Add(this.settings, 0, 5);
 			this.tableLayoutPanel.Controls.Add(this.labelConfiguration, 0, 4);
 			this.tableLayoutPanel.Controls.Add(this.linkLabelSlices, 0, 3);
-			this.tableLayoutPanel.Location = new System.Drawing.Point(74, 20);
+			this.tableLayoutPanel.Location = new System.Drawing.Point(75, 42);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
 			this.tableLayoutPanel.RowCount = 6;
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -111,7 +111,7 @@
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(723, 577);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(721, 554);
 			this.tableLayoutPanel.TabIndex = 5;
 			// 
 			// labelSlices
@@ -133,17 +133,6 @@
 			this.labelSites.Size = new System.Drawing.Size(326, 13);
 			this.labelSites.TabIndex = 6;
 			this.labelSites.Text = "Visualize the PlanetLab sites available for distributed measurements.";
-			// 
-			// settings
-			// 
-			this.settings.AutoScroll = true;
-			this.tableLayoutPanel.SetColumnSpan(this.settings, 2);
-			this.settings.Crawler = null;
-			this.settings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.settings.Location = new System.Drawing.Point(3, 143);
-			this.settings.Name = "settings";
-			this.settings.Size = new System.Drawing.Size(717, 431);
-			this.settings.TabIndex = 8;
 			// 
 			// labelConfiguration
 			// 
@@ -168,6 +157,18 @@
 			this.linkLabelSlices.Text = "Slices";
 			this.linkLabelSlices.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnSlicesClick);
 			// 
+			// settings
+			// 
+			this.settings.AutoScroll = true;
+			this.tableLayoutPanel.SetColumnSpan(this.settings, 2);
+			this.settings.Crawler = null;
+			this.settings.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.settings.Location = new System.Drawing.Point(3, 143);
+			this.settings.Name = "settings";
+			this.settings.Size = new System.Drawing.Size(715, 408);
+			this.settings.TabIndex = 8;
+			this.settings.Title = "";
+			// 
 			// ControlPlanetLabInfo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -175,7 +176,11 @@
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
 			this.Name = "ControlPlanetLabInfo";
+			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.ShowBorder = true;
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "Settings";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();

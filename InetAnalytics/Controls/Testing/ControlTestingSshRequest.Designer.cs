@@ -36,7 +36,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingSshRequest));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panel = new System.Windows.Forms.Panel();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageAuthentication = new System.Windows.Forms.TabPage();
@@ -75,10 +75,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -89,8 +88,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 225;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// panel
@@ -107,7 +108,7 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(598, 223);
+			this.panel.Size = new System.Drawing.Size(600, 203);
 			this.panel.TabIndex = 0;
 			// 
 			// tabControl
@@ -120,7 +121,7 @@
 			this.tabControl.Location = new System.Drawing.Point(6, 30);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(508, 190);
+			this.tabControl.Size = new System.Drawing.Size(510, 170);
 			this.tabControl.TabIndex = 4;
 			// 
 			// tabPageAuthentication
@@ -138,7 +139,7 @@
 			this.tabPageAuthentication.Location = new System.Drawing.Point(4, 22);
 			this.tabPageAuthentication.Name = "tabPageAuthentication";
 			this.tabPageAuthentication.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageAuthentication.Size = new System.Drawing.Size(500, 164);
+			this.tabPageAuthentication.Size = new System.Drawing.Size(502, 144);
 			this.tabPageAuthentication.TabIndex = 0;
 			this.tabPageAuthentication.Text = "Authentication";
 			this.tabPageAuthentication.UseVisualStyleBackColor = true;
@@ -147,7 +148,7 @@
 			// 
 			this.buttonLoadKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonLoadKey.Enabled = false;
-			this.buttonLoadKey.Location = new System.Drawing.Point(419, 108);
+			this.buttonLoadKey.Location = new System.Drawing.Point(421, 108);
 			this.buttonLoadKey.Name = "buttonLoadKey";
 			this.buttonLoadKey.Size = new System.Drawing.Size(75, 23);
 			this.buttonLoadKey.TabIndex = 8;
@@ -175,7 +176,7 @@
 			this.textBoxKey.Name = "textBoxKey";
 			this.textBoxKey.ReadOnly = true;
 			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxKey.Size = new System.Drawing.Size(303, 50);
+			this.textBoxKey.Size = new System.Drawing.Size(305, 30);
 			this.textBoxKey.TabIndex = 7;
 			this.textBoxKey.WordWrap = false;
 			this.textBoxKey.TextChanged += new System.EventHandler(this.OnChanged);
@@ -214,7 +215,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUsername.Location = new System.Drawing.Point(110, 10);
 			this.textBoxUsername.Name = "textBoxUsername";
-			this.textBoxUsername.Size = new System.Drawing.Size(214, 20);
+			this.textBoxUsername.Size = new System.Drawing.Size(216, 20);
 			this.textBoxUsername.TabIndex = 1;
 			this.textBoxUsername.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
@@ -245,7 +246,7 @@
 			this.tabPageConsole.Controls.Add(this.console);
 			this.tabPageConsole.Location = new System.Drawing.Point(4, 22);
 			this.tabPageConsole.Name = "tabPageConsole";
-			this.tabPageConsole.Size = new System.Drawing.Size(500, 164);
+			this.tabPageConsole.Size = new System.Drawing.Size(502, 166);
 			this.tabPageConsole.TabIndex = 1;
 			this.tabPageConsole.Text = "Console";
 			this.tabPageConsole.UseVisualStyleBackColor = true;
@@ -256,7 +257,7 @@
 			this.console.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.console.Location = new System.Drawing.Point(0, 0);
 			this.console.Name = "console";
-			this.console.Size = new System.Drawing.Size(500, 164);
+			this.console.Size = new System.Drawing.Size(502, 166);
 			this.console.TabIndex = 0;
 			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
 			this.console.Cancel += new System.EventHandler(this.OnCancelCommand);
@@ -264,7 +265,7 @@
 			// buttonExport
 			// 
 			this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonExport.Location = new System.Drawing.Point(520, 169);
+			this.buttonExport.Location = new System.Drawing.Point(522, 149);
 			this.buttonExport.Name = "buttonExport";
 			this.buttonExport.Size = new System.Drawing.Size(75, 23);
 			this.buttonExport.TabIndex = 7;
@@ -274,7 +275,7 @@
 			// buttonImport
 			// 
 			this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonImport.Location = new System.Drawing.Point(520, 197);
+			this.buttonImport.Location = new System.Drawing.Point(522, 177);
 			this.buttonImport.Name = "buttonImport";
 			this.buttonImport.Size = new System.Drawing.Size(75, 23);
 			this.buttonImport.TabIndex = 8;
@@ -285,7 +286,7 @@
 			// 
 			this.buttonUndo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonUndo.Enabled = false;
-			this.buttonUndo.Location = new System.Drawing.Point(520, 60);
+			this.buttonUndo.Location = new System.Drawing.Point(522, 60);
 			this.buttonUndo.Name = "buttonUndo";
 			this.buttonUndo.Size = new System.Drawing.Size(75, 23);
 			this.buttonUndo.TabIndex = 6;
@@ -298,7 +299,7 @@
 			// 
 			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonSave.Enabled = false;
-			this.buttonSave.Location = new System.Drawing.Point(520, 31);
+			this.buttonSave.Location = new System.Drawing.Point(522, 31);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(75, 23);
 			this.buttonSave.TabIndex = 5;
@@ -313,7 +314,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxServer.Location = new System.Drawing.Point(79, 4);
 			this.textBoxServer.Name = "textBoxServer";
-			this.textBoxServer.Size = new System.Drawing.Size(354, 20);
+			this.textBoxServer.Size = new System.Drawing.Size(356, 20);
 			this.textBoxServer.TabIndex = 1;
 			this.textBoxServer.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
@@ -322,7 +323,7 @@
 			this.buttonConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonConnect.Enabled = false;
 			this.buttonConnect.Image = global::InetAnalytics.Resources.Connect_16;
-			this.buttonConnect.Location = new System.Drawing.Point(439, 2);
+			this.buttonConnect.Location = new System.Drawing.Point(441, 2);
 			this.buttonConnect.Name = "buttonConnect";
 			this.buttonConnect.Size = new System.Drawing.Size(75, 23);
 			this.buttonConnect.TabIndex = 2;
@@ -335,7 +336,7 @@
 			// 
 			this.buttonDisconnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonDisconnect.Enabled = false;
-			this.buttonDisconnect.Location = new System.Drawing.Point(520, 2);
+			this.buttonDisconnect.Location = new System.Drawing.Point(522, 2);
 			this.buttonDisconnect.Name = "buttonDisconnect";
 			this.buttonDisconnect.Size = new System.Drawing.Size(75, 23);
 			this.buttonDisconnect.TabIndex = 3;
@@ -358,8 +359,12 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(600, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
 			// imageList
 			// 
@@ -383,7 +388,10 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlTestingSshRequest";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "Secure Shell Testing";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
@@ -401,7 +409,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.ImageList imageList;

@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
+using DotNetApi.Windows.Themes;
 using Microsoft.Win32;
 using InetAnalytics.Controls;
 using InetAnalytics.Controls.Comments;
@@ -49,6 +50,9 @@ namespace InetAnalytics.Forms
 	{
 		// Crawler.
 		private Crawler crawler;
+
+		// Theme.
+		private readonly ThemeSettings themeSettings;
 
 		// Tree view nodes.
 		private TreeNode treeNodePlanetLab;
@@ -150,6 +154,9 @@ namespace InetAnalytics.Forms
 		{
 			// Initialize the component.
 			this.InitializeComponent();
+
+			// Get the theme settings.
+			this.themeSettings = ToolStripManager.Renderer is ThemeRenderer ? (ToolStripManager.Renderer as ThemeRenderer).Settings : ThemeSettings.Default;
 
 			// Initialize the crawler
 			this.crawler = crawler;
@@ -630,6 +637,10 @@ namespace InetAnalytics.Forms
 		/// <param name="e">The event arguments.</param>
 		private void OnStatusMessage(object sender, StatusMessageEventArgs e)
 		{
+			this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
+			this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+			this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+			this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 			if (e.Message.HasValue)
 			{
 				this.statusLabelLeft.Image = e.Message.Value.LeftImage;

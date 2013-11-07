@@ -88,6 +88,9 @@ namespace InetAnalytics.Controls.Database
 			// Set the tree node and the tree node tag.
 			this.treeNode = treeNode;
 
+			// Set the title.
+			this.Title = "Database Server ({0})".FormatWith(server.Name);
+
 			// Add the event handlers for the database server.
 			this.server.ServerChanged += this.OnServerChanged;
 			this.server.StateChanged += this.OnServerStateChanged;

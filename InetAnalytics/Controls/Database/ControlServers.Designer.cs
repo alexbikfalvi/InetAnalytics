@@ -41,7 +41,7 @@
 			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonChangePassword = new System.Windows.Forms.ToolStripButton();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -80,7 +80,7 @@
             this.buttonChangePassword});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(798, 25);
+			this.toolStrip.Size = new System.Drawing.Size(800, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// buttonAdd
@@ -159,10 +159,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -174,8 +173,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(800, 600);
-			this.splitContainer.SplitterDistance = 425;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(800, 578);
+			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
 			// listView
@@ -195,7 +196,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 25);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(798, 398);
+			this.listView.Size = new System.Drawing.Size(800, 378);
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
@@ -233,8 +234,12 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(798, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(800, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
 			// contextMenu
 			// 
@@ -311,7 +316,11 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlServers";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "Database Servers";
+			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
@@ -327,7 +336,7 @@
 		#endregion
 
 		private System.Windows.Forms.ToolStrip toolStrip;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderName;

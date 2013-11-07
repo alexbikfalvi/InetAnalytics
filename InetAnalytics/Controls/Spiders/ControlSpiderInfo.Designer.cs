@@ -50,14 +50,14 @@
 			this.tableLayoutPanel.Controls.Add(this.labelDescription, 0, 1);
 			this.tableLayoutPanel.Controls.Add(this.linkLabelYtStandardFeeds, 0, 2);
 			this.tableLayoutPanel.Controls.Add(this.labelStandardFeeds, 1, 2);
-			this.tableLayoutPanel.Location = new System.Drawing.Point(74, 20);
+			this.tableLayoutPanel.Location = new System.Drawing.Point(75, 42);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
 			this.tableLayoutPanel.RowCount = 4;
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel.Size = new System.Drawing.Size(723, 577);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(721, 554);
 			this.tableLayoutPanel.TabIndex = 7;
 			// 
 			// labelTitle
@@ -109,7 +109,7 @@
 			// pictureBoxIcon
 			// 
 			this.pictureBoxIcon.Image = global::InetAnalytics.Resources.Cubes_48;
-			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 20);
+			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 41);
 			this.pictureBoxIcon.Name = "pictureBoxIcon";
 			this.pictureBoxIcon.Size = new System.Drawing.Size(48, 48);
 			this.pictureBoxIcon.TabIndex = 6;
@@ -122,7 +122,11 @@
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
 			this.Name = "ControlSpiderInfo";
+			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.ShowBorder = true;
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "Spiders";
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();

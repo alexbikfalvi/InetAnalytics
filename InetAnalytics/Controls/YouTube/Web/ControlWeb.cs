@@ -32,7 +32,7 @@ namespace InetAnalytics.Controls.YouTube.Web
 	/// <summary>
 	/// A control that displays the feed types available in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlWeb : ThreadSafeControl
+	public partial class ControlWeb : ThemeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

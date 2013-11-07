@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlComments));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -47,9 +47,9 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonImport = new System.Windows.Forms.ToolStripButton();
 			this.buttonExport = new System.Windows.Forms.ToolStripButton();
-			this.controlComment = new InetAnalytics.Controls.Comments.ControlCommentProperties();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.controlComment = new InetAnalytics.Controls.Comments.ControlCommentProperties();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -60,9 +60,8 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -74,8 +73,9 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlComment);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 200;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 188;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// listView
@@ -94,7 +94,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 25);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(598, 173);
+			this.listView.Size = new System.Drawing.Size(600, 163);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 0;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -141,7 +141,7 @@
             this.buttonExport});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.Size = new System.Drawing.Size(600, 25);
 			this.toolStrip.TabIndex = 2;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -219,15 +219,6 @@
 			this.buttonExport.Text = "E&xport";
 			this.buttonExport.Click += new System.EventHandler(this.OnExport);
 			// 
-			// controlComment
-			// 
-			this.controlComment.Comment = null;
-			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlComment.Location = new System.Drawing.Point(0, 0);
-			this.controlComment.Name = "controlComment";
-			this.controlComment.Size = new System.Drawing.Size(598, 194);
-			this.controlComment.TabIndex = 0;
-			// 
 			// openFileDialog
 			// 
 			this.openFileDialog.Filter = "Comment XML file|*.xml";
@@ -239,6 +230,15 @@
 			this.saveFileDialog.Filter = "Comment XML file|*.xml";
 			this.saveFileDialog.Title = "Export Comment File";
 			// 
+			// controlComment
+			// 
+			this.controlComment.Comment = null;
+			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlComment.Location = new System.Drawing.Point(0, 0);
+			this.controlComment.Name = "controlComment";
+			this.controlComment.Size = new System.Drawing.Size(600, 185);
+			this.controlComment.TabIndex = 0;
+			// 
 			// ControlComments
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -246,6 +246,8 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlComments";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel1.PerformLayout();
@@ -261,7 +263,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private ControlCommentProperties controlComment;

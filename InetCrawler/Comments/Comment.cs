@@ -33,9 +33,9 @@ namespace InetCrawler.Comments
 	{
 		public enum CommentType
 		{
-			Video = 1,
-			User = 2,
-			Playlist = 3
+			Video = 0,
+			User = 1,
+			Playlist = 2
 		}
 
 		private CommentType type;

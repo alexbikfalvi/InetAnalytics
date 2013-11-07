@@ -43,8 +43,8 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSlice));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.splitContainerSlice = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.splitContainerSlice = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listViewNodes = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -113,10 +113,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -125,17 +124,19 @@
 			this.splitContainer.Panel1.Controls.Add(this.splitContainerSlice);
 			this.splitContainer.Panel1.Controls.Add(this.panel);
 			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
-			this.splitContainer.Size = new System.Drawing.Size(800, 600);
-			this.splitContainer.SplitterDistance = 425;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(800, 578);
+			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// splitContainerSlice
 			// 
-			this.splitContainerSlice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainerSlice.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerSlice.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.splitContainerSlice.Location = new System.Drawing.Point(0, 129);
@@ -148,8 +149,9 @@
 			// splitContainerSlice.Panel2
 			// 
 			this.splitContainerSlice.Panel2.Controls.Add(this.mapControl);
-			this.splitContainerSlice.Size = new System.Drawing.Size(800, 296);
+			this.splitContainerSlice.Size = new System.Drawing.Size(800, 274);
 			this.splitContainerSlice.SplitterDistance = 266;
+			this.splitContainerSlice.SplitterWidth = 5;
 			this.splitContainerSlice.TabIndex = 2;
 			// 
 			// listViewNodes
@@ -167,7 +169,7 @@
 			this.listViewNodes.Location = new System.Drawing.Point(0, 0);
 			this.listViewNodes.MultiSelect = false;
 			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(264, 294);
+			this.listViewNodes.Size = new System.Drawing.Size(266, 274);
 			this.listViewNodes.SmallImageList = this.imageList;
 			this.listViewNodes.TabIndex = 0;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
@@ -205,7 +207,7 @@
 			this.mapControl.Location = new System.Drawing.Point(0, 0);
 			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
 			this.mapControl.Name = "mapControl";
-			this.mapControl.Size = new System.Drawing.Size(528, 294);
+			this.mapControl.Size = new System.Drawing.Size(529, 274);
 			this.mapControl.TabIndex = 0;
 			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
 			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
@@ -531,8 +533,12 @@
 			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlLog.Location = new System.Drawing.Point(0, 0);
 			this.controlLog.Name = "controlLog";
-			this.controlLog.Size = new System.Drawing.Size(798, 169);
+			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.controlLog.ShowBorder = true;
+			this.controlLog.ShowTitle = true;
+			this.controlLog.Size = new System.Drawing.Size(800, 170);
 			this.controlLog.TabIndex = 0;
+			this.controlLog.Title = "Log";
 			// 
 			// legendItemSuccess
 			// 
@@ -614,6 +620,8 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSlice";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
@@ -637,7 +645,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemPending;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemSuccess;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemFail;
@@ -654,7 +662,7 @@
 		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesLocation;
 		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesState;
 		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesSlice;
-		private System.Windows.Forms.SplitContainer splitContainerSlice;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerSlice;
 		private DotNetApi.Windows.Controls.MapControl mapControl;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.Label labelMaxNodes;

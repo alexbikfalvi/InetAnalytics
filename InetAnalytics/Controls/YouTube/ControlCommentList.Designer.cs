@@ -42,9 +42,9 @@
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
 			this.labelVideosPerPage = new System.Windows.Forms.ToolStripLabel();
 			this.comboBoxCommentsPerPage = new System.Windows.Forms.ToolStripComboBox();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.panel = new System.Windows.Forms.Panel();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.controlComment = new InetAnalytics.Controls.YouTube.ControlCommentProperties();
+			this.panel = new System.Windows.Forms.Panel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -68,7 +68,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 0);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(294, 273);
+			this.listView.Size = new System.Drawing.Size(296, 275);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 4;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -158,7 +158,6 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.Location = new System.Drawing.Point(4, 0);
 			this.splitContainer.Name = "splitContainer";
@@ -172,7 +171,18 @@
 			this.splitContainer.Panel2.Controls.Add(this.controlComment);
 			this.splitContainer.Size = new System.Drawing.Size(592, 275);
 			this.splitContainer.SplitterDistance = 296;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 6;
+			// 
+			// controlComment
+			// 
+			this.controlComment.AutoScroll = true;
+			this.controlComment.Comment = null;
+			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlComment.Location = new System.Drawing.Point(0, 0);
+			this.controlComment.Name = "controlComment";
+			this.controlComment.Size = new System.Drawing.Size(291, 275);
+			this.controlComment.TabIndex = 0;
 			// 
 			// panel
 			// 
@@ -183,15 +193,6 @@
 			this.panel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.panel.Size = new System.Drawing.Size(600, 275);
 			this.panel.TabIndex = 7;
-			// 
-			// controlComment
-			// 
-			this.controlComment.Comment = null;
-			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlComment.Location = new System.Drawing.Point(0, 0);
-			this.controlComment.Name = "controlComment";
-			this.controlComment.Size = new System.Drawing.Size(290, 273);
-			this.controlComment.TabIndex = 0;
 			// 
 			// ControlCommentList
 			// 
@@ -225,7 +226,7 @@
 		private System.Windows.Forms.ToolStripComboBox comboBoxCommentsPerPage;
 		private System.Windows.Forms.ColumnHeader columnHeaderTime;
 		private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private System.Windows.Forms.ColumnHeader columnHeaderTitle;
 		private ControlCommentProperties controlComment;
 		private System.Windows.Forms.ImageList imageList;

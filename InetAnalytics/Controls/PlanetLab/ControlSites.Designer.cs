@@ -42,7 +42,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSites));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
@@ -87,9 +87,8 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -101,8 +100,9 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.listViewSites);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 275;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 259;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// mapControl
@@ -111,7 +111,7 @@
 			this.mapControl.Location = new System.Drawing.Point(0, 25);
 			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
 			this.mapControl.Name = "mapControl";
-			this.mapControl.Size = new System.Drawing.Size(598, 248);
+			this.mapControl.Size = new System.Drawing.Size(600, 234);
 			this.mapControl.TabIndex = 10;
 			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
 			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
@@ -132,7 +132,7 @@
             this.buttonExport});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.Size = new System.Drawing.Size(600, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -281,7 +281,7 @@
 			this.listViewSites.HideSelection = false;
 			this.listViewSites.Location = new System.Drawing.Point(0, 0);
 			this.listViewSites.Name = "listViewSites";
-			this.listViewSites.Size = new System.Drawing.Size(598, 119);
+			this.listViewSites.Size = new System.Drawing.Size(600, 114);
 			this.listViewSites.SmallImageList = this.imageList;
 			this.listViewSites.TabIndex = 0;
 			this.listViewSites.UseCompatibleStateImageBehavior = false;
@@ -376,7 +376,10 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSites";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "PlanetLab Sites";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel1.PerformLayout();
@@ -392,7 +395,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemPending;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemSuccess;
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemFail;

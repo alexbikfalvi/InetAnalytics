@@ -44,7 +44,7 @@ namespace InetAnalytics
 			Program.formCrash = new FormCrash();
 			Application.ThreadException += Program.OnThreadException;
 
-			ToolStripManager.Renderer = new ThemeRenderer(new BlueThemeColorTable());
+			ToolStripManager.Renderer = new ThemeRenderer(ThemeSettings.Blue);
 			
 			try
 			{

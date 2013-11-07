@@ -34,7 +34,7 @@ namespace InetAnalytics.Controls.Testing
 	/// <summary>
 	/// A control class for testing web request.
 	/// </summary>
-	public partial class ControlTestingWebRequest : ThreadSafeControl
+	public partial class ControlTestingWebRequest : ThemeControl
 	{
 		private static readonly string logSource = "Testing Web Request";
 

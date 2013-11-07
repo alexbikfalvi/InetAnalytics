@@ -33,8 +33,8 @@
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.splitContainerUp = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.splitContainerUp = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderTerm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderLabel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -84,10 +84,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -95,17 +94,19 @@
 			// 
 			this.splitContainer.Panel1.Controls.Add(this.splitContainerUp);
 			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(800, 600);
-			this.splitContainer.SplitterDistance = 425;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(800, 578);
+			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
 			// splitContainerUp
 			// 
-			this.splitContainerUp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainerUp.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerUp.Location = new System.Drawing.Point(0, 25);
 			this.splitContainerUp.Name = "splitContainerUp";
@@ -117,8 +118,9 @@
 			// splitContainerUp.Panel2
 			// 
 			this.splitContainerUp.Panel2.Controls.Add(this.controlCategory);
-			this.splitContainerUp.Size = new System.Drawing.Size(800, 400);
+			this.splitContainerUp.Size = new System.Drawing.Size(800, 378);
 			this.splitContainerUp.SplitterDistance = 450;
+			this.splitContainerUp.SplitterWidth = 5;
 			this.splitContainerUp.TabIndex = 7;
 			// 
 			// listView
@@ -137,7 +139,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 0);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(448, 398);
+			this.listView.Size = new System.Drawing.Size(450, 378);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 4;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -176,7 +178,7 @@
 			this.controlCategory.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlCategory.Location = new System.Drawing.Point(0, 0);
 			this.controlCategory.Name = "controlCategory";
-			this.controlCategory.Size = new System.Drawing.Size(344, 398);
+			this.controlCategory.Size = new System.Drawing.Size(345, 378);
 			this.controlCategory.TabIndex = 0;
 			// 
 			// log
@@ -184,8 +186,12 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(798, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(800, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
 			// ControlYtApi2Categories
 			// 
@@ -193,7 +199,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlYtApi2Categories";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "YouTube Video Categories";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
@@ -213,11 +222,11 @@
 		#endregion
 
 		private System.Windows.Forms.ToolStrip toolStrip;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.ToolStripButton buttonRefresh;
 		private System.Windows.Forms.ToolStripButton buttonCancel;
-		private System.Windows.Forms.SplitContainer splitContainerUp;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerUp;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderTerm;
 		private System.Windows.Forms.ColumnHeader columnHeaderLabel;

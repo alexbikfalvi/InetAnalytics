@@ -41,7 +41,7 @@
 			this.buttonBack = new System.Windows.Forms.Button();
 			this.wizard = new DotNetApi.Windows.Controls.WizardControl();
 			this.wizardPageSite = new DotNetApi.Windows.Controls.WizardPage();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.listViewSites = new System.Windows.Forms.ListView();
 			this.columnSiteId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -525,7 +525,7 @@
 		private DotNetApi.Windows.Controls.WizardPage wizardPageSite;
 		private DotNetApi.Windows.Controls.WizardPage wizardPageNode;
 		private System.Windows.Forms.Label labelSubtitle;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private DotNetApi.Windows.Controls.MapControl mapControl;
 		private System.Windows.Forms.ListView listViewSites;
 		private System.Windows.Forms.ColumnHeader columnSiteId;

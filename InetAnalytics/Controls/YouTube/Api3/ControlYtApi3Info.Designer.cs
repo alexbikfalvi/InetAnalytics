@@ -37,7 +37,7 @@
 			// 
 			this.labelTitle.AutoSize = true;
 			this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelTitle.Location = new System.Drawing.Point(74, 20);
+			this.labelTitle.Location = new System.Drawing.Point(75, 42);
 			this.labelTitle.Name = "labelTitle";
 			this.labelTitle.Size = new System.Drawing.Size(196, 20);
 			this.labelTitle.TabIndex = 3;
@@ -46,20 +46,24 @@
 			// pictureBoxIcon
 			// 
 			this.pictureBoxIcon.Image = global::InetAnalytics.Resources.ServerBrowse_48;
-			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 20);
+			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 41);
 			this.pictureBoxIcon.Name = "pictureBoxIcon";
 			this.pictureBoxIcon.Size = new System.Drawing.Size(48, 48);
 			this.pictureBoxIcon.TabIndex = 2;
 			this.pictureBoxIcon.TabStop = false;
 			// 
-			// ControlInetApi.YouTube3
+			// ControlYtApi3Info
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBoxIcon);
-			this.Name = "ControlInetApi.YouTube3";
-			this.Size = new System.Drawing.Size(962, 410);
+			this.Name = "ControlYtApi3Info";
+			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.ShowBorder = true;
+			this.ShowTitle = true;
+			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "YouTube API Version 3";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

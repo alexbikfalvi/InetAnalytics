@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlLog));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderTimestamp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -54,9 +54,8 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -68,8 +67,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlLogEvent);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 200;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 189;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
 			// listView
@@ -87,7 +88,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 25);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(598, 173);
+			this.listView.Size = new System.Drawing.Size(600, 164);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 0;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -132,7 +133,7 @@
             this.buttonCalendar});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.Size = new System.Drawing.Size(600, 25);
 			this.toolStrip.TabIndex = 2;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -194,8 +195,9 @@
 			// 
 			this.calendar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.calendar.Name = "calendar";
+			this.calendar.OwnerItem = this.buttonCalendar;
 			this.calendar.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
-			this.calendar.Size = new System.Drawing.Size(235, 167);
+			this.calendar.Size = new System.Drawing.Size(186, 160);
 			// 
 			// controlLogEvent
 			// 
@@ -203,8 +205,11 @@
 			this.controlLogEvent.Event = null;
 			this.controlLogEvent.Location = new System.Drawing.Point(0, 0);
 			this.controlLogEvent.Name = "controlLogEvent";
-			this.controlLogEvent.Size = new System.Drawing.Size(598, 194);
+			this.controlLogEvent.Padding = new System.Windows.Forms.Padding(1);
+			this.controlLogEvent.ShowBorder = true;
+			this.controlLogEvent.Size = new System.Drawing.Size(600, 184);
 			this.controlLogEvent.TabIndex = 0;
+			this.controlLogEvent.Title = "";
 			// 
 			// ControlLog
 			// 
@@ -212,7 +217,11 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlLog";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "Log";
+			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
@@ -226,7 +235,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private ControlLogEventProperties controlLogEvent;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderTimestamp;

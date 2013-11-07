@@ -37,7 +37,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlYtApi2PlaylistsFeed : ThreadSafeControl
+	public partial class ControlYtApi2PlaylistsFeed : ThemeControl
 	{
 		private static readonly string logSource = "APIv2 Playlists Feed";
 

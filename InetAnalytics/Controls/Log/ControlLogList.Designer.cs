@@ -60,9 +60,9 @@
 			this.listView.GridLines = true;
 			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(0, 25);
+			this.listView.Location = new System.Drawing.Point(1, 47);
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(600, 125);
+			this.listView.Size = new System.Drawing.Size(598, 102);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 0;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -105,9 +105,9 @@
             this.buttonClear,
             this.separator3,
             this.buttonProperties});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(600, 25);
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 1;
 			this.toolStrip.Text = "toolStrip";
 			// 
@@ -175,13 +175,13 @@
 			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemProperties});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(153, 48);
+			this.contextMenu.Size = new System.Drawing.Size(128, 26);
 			// 
 			// menuItemProperties
 			// 
 			this.menuItemProperties.Image = global::InetAnalytics.Resources.Properties_16;
 			this.menuItemProperties.Name = "menuItemProperties";
-			this.menuItemProperties.Size = new System.Drawing.Size(152, 22);
+			this.menuItemProperties.Size = new System.Drawing.Size(127, 22);
 			this.menuItemProperties.Text = "&Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
@@ -192,7 +192,11 @@
 			this.Controls.Add(this.listView);
 			this.Controls.Add(this.toolStrip);
 			this.Name = "ControlLogList";
+			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.ShowBorder = true;
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 150);
+			this.Title = "Log";
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenu.ResumeLayout(false);

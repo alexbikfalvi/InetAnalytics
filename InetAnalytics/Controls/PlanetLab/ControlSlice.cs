@@ -236,6 +236,9 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Set the slice configuration.
 			this.config = this.crawler.Config.PlanetLab.GetSliceConfiguration(this.slice);
 
+			// Set the title.
+			this.Title = "PlanetLab Slice ({0})".FormatWith(this.slice.Name);
+
 			// Enable the control.
 			this.Enabled = true;
 

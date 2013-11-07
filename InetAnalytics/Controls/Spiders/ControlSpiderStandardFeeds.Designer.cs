@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.progressListBox = new DotNetApi.Windows.Controls.ProgressListBox();
 			this.panel = new System.Windows.Forms.Panel();
 			this.progressBox = new DotNetApi.Windows.Controls.ProgressBox();
@@ -56,10 +56,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -71,8 +70,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 225;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// progressListBox
@@ -86,7 +87,7 @@
 			this.progressListBox.Location = new System.Drawing.Point(0, 82);
 			this.progressListBox.Name = "progressListBox";
 			this.progressListBox.ScrollAlwaysVisible = true;
-			this.progressListBox.Size = new System.Drawing.Size(598, 141);
+			this.progressListBox.Size = new System.Drawing.Size(600, 121);
 			this.progressListBox.TabIndex = 1;
 			// 
 			// panel
@@ -97,7 +98,7 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(598, 82);
+			this.panel.Size = new System.Drawing.Size(600, 82);
 			this.panel.TabIndex = 0;
 			// 
 			// progressBox
@@ -110,7 +111,7 @@
 			this.progressBox.Padding = new System.Windows.Forms.Padding(4);
 			this.progressBox.Progress = null;
 			this.progressBox.ProgressHeight = 12;
-			this.progressBox.Size = new System.Drawing.Size(598, 57);
+			this.progressBox.Size = new System.Drawing.Size(600, 57);
 			this.progressBox.TabIndex = 10;
 			// 
 			// toolStrip
@@ -122,7 +123,7 @@
             this.buttonFeeds});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.Size = new System.Drawing.Size(600, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -182,8 +183,12 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(600, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
 			// progressLegend
 			// 
@@ -226,7 +231,10 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSpiderStandardFeeds";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "Standard Feeds Spider";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
@@ -242,7 +250,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.LinkLabel linkLabel;

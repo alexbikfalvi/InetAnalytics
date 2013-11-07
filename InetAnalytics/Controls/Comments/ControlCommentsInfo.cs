@@ -32,7 +32,7 @@ namespace InetAnalytics.Controls.Comments
 	/// <summary>
 	/// A control that displays the comments information.
 	/// </summary>
-	public partial class ControlCommentsInfo : ThreadSafeControl
+	public partial class ControlCommentsInfo : ThemeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

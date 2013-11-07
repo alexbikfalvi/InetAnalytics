@@ -37,7 +37,7 @@ namespace InetAnalytics.Controls.YouTube.Web
 	/// <summary>
 	/// A control that displays the video statistics using the web data.
 	/// </summary>
-	public partial class ControlWebStatistics : ThreadSafeControl
+	public partial class ControlWebStatistics : ThemeControl
 	{
 		private static readonly string logSource = "Web Statistics";
 

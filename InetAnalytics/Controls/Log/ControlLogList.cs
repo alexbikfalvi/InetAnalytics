@@ -16,7 +16,7 @@ namespace InetAnalytics.Controls.Log
 	/// <summary>
 	/// A control representing an event log list.
 	/// </summary>
-	public partial class ControlLogList : ThreadSafeControl
+	public partial class ControlLogList : ThemeControl
 	{
 		private delegate void AddEventAction(LogEvent evt);
 

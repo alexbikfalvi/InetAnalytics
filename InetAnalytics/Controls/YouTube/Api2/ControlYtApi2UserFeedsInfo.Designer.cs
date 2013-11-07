@@ -60,7 +60,7 @@
 			this.tableLayoutPanel.Controls.Add(this.linkLabelUploadsFeed, 0, 4);
 			this.tableLayoutPanel.Controls.Add(this.linkLabelFavoritesFeed, 0, 5);
 			this.tableLayoutPanel.Controls.Add(this.labelDescription3, 0, 7);
-			this.tableLayoutPanel.Location = new System.Drawing.Point(74, 20);
+			this.tableLayoutPanel.Location = new System.Drawing.Point(75, 42);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
 			this.tableLayoutPanel.RowCount = 10;
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -73,7 +73,7 @@
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(723, 577);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(721, 554);
 			this.tableLayoutPanel.TabIndex = 7;
 			// 
 			// labelTitle
@@ -182,7 +182,7 @@
 			// pictureBoxIcon
 			// 
 			this.pictureBoxIcon.Image = global::InetAnalytics.Resources.FolderOpenUser_48;
-			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 20);
+			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 41);
 			this.pictureBoxIcon.Name = "pictureBoxIcon";
 			this.pictureBoxIcon.Size = new System.Drawing.Size(48, 48);
 			this.pictureBoxIcon.TabIndex = 6;
@@ -195,7 +195,11 @@
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
 			this.Name = "ControlYtApi2UserFeedsInfo";
+			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.ShowBorder = true;
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "YouTube User Video Feeds";
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();

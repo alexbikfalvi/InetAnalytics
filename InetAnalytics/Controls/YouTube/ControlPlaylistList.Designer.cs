@@ -42,7 +42,7 @@
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
 			this.labelPlaylistsPerPage = new System.Windows.Forms.ToolStripLabel();
 			this.comboBoxPerPage = new System.Windows.Forms.ToolStripComboBox();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.controlPlaylist = new InetAnalytics.Controls.YouTube.ControlPlaylistProperties();
 			this.panel = new System.Windows.Forms.Panel();
 			this.toolStrip.SuspendLayout();
@@ -68,7 +68,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 0);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(294, 273);
+			this.listView.Size = new System.Drawing.Size(296, 275);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 4;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -160,7 +160,6 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.Location = new System.Drawing.Point(4, 0);
 			this.splitContainer.Name = "splitContainer";
@@ -174,6 +173,7 @@
 			this.splitContainer.Panel2.Controls.Add(this.controlPlaylist);
 			this.splitContainer.Size = new System.Drawing.Size(592, 275);
 			this.splitContainer.SplitterDistance = 296;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 6;
 			// 
 			// controlPlaylist
@@ -183,7 +183,7 @@
 			this.controlPlaylist.Location = new System.Drawing.Point(0, 0);
 			this.controlPlaylist.Name = "controlPlaylist";
 			this.controlPlaylist.Playlist = null;
-			this.controlPlaylist.Size = new System.Drawing.Size(290, 273);
+			this.controlPlaylist.Size = new System.Drawing.Size(291, 275);
 			this.controlPlaylist.TabIndex = 0;
 			// 
 			// panel
@@ -228,7 +228,7 @@
 		private System.Windows.Forms.ToolStripComboBox comboBoxPerPage;
 		private System.Windows.Forms.ColumnHeader columnHeaderId;
 		private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private System.Windows.Forms.ColumnHeader columnHeaderTitle;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.Panel panel;

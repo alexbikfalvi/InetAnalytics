@@ -26,7 +26,7 @@ namespace InetAnalytics.Controls.PlanetLab
 	/// <summary>
 	/// A control that displays the PlanetLab introduction and configuration.
 	/// </summary>
-	public partial class ControlPlanetLabInfo : ThreadSafeControl
+	public partial class ControlPlanetLabInfo : ThemeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

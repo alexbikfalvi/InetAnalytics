@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingWebRequest));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panel = new System.Windows.Forms.Panel();
 			this.buttonExport = new System.Windows.Forms.Button();
 			this.buttonImport = new System.Windows.Forms.Button();
@@ -93,10 +93,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -107,8 +106,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 225;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// panel
@@ -125,13 +126,13 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(598, 223);
+			this.panel.Size = new System.Drawing.Size(600, 203);
 			this.panel.TabIndex = 0;
 			// 
 			// buttonExport
 			// 
 			this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonExport.Location = new System.Drawing.Point(520, 169);
+			this.buttonExport.Location = new System.Drawing.Point(522, 149);
 			this.buttonExport.Name = "buttonExport";
 			this.buttonExport.Size = new System.Drawing.Size(75, 23);
 			this.buttonExport.TabIndex = 7;
@@ -142,7 +143,7 @@
 			// buttonImport
 			// 
 			this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonImport.Location = new System.Drawing.Point(520, 197);
+			this.buttonImport.Location = new System.Drawing.Point(522, 177);
 			this.buttonImport.Name = "buttonImport";
 			this.buttonImport.Size = new System.Drawing.Size(75, 23);
 			this.buttonImport.TabIndex = 8;
@@ -154,7 +155,7 @@
 			// 
 			this.buttonUndo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonUndo.Enabled = false;
-			this.buttonUndo.Location = new System.Drawing.Point(520, 60);
+			this.buttonUndo.Location = new System.Drawing.Point(522, 60);
 			this.buttonUndo.Name = "buttonUndo";
 			this.buttonUndo.Size = new System.Drawing.Size(75, 23);
 			this.buttonUndo.TabIndex = 6;
@@ -176,7 +177,7 @@
 			this.tabControl.Location = new System.Drawing.Point(6, 30);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(508, 190);
+			this.tabControl.Size = new System.Drawing.Size(510, 170);
 			this.tabControl.TabIndex = 4;
 			// 
 			// tabPageGeneral
@@ -199,7 +200,7 @@
 			this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabPageGeneral.Name = "tabPageGeneral";
 			this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGeneral.Size = new System.Drawing.Size(500, 164);
+			this.tabPageGeneral.Size = new System.Drawing.Size(502, 144);
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -229,7 +230,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUserAgent.Location = new System.Drawing.Point(110, 167);
 			this.textBoxUserAgent.Name = "textBoxUserAgent";
-			this.textBoxUserAgent.Size = new System.Drawing.Size(214, 20);
+			this.textBoxUserAgent.Size = new System.Drawing.Size(182, 20);
 			this.textBoxUserAgent.TabIndex = 13;
 			this.textBoxUserAgent.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -250,7 +251,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxReferer.Location = new System.Drawing.Point(110, 141);
 			this.textBoxReferer.Name = "textBoxReferer";
-			this.textBoxReferer.Size = new System.Drawing.Size(214, 20);
+			this.textBoxReferer.Size = new System.Drawing.Size(182, 20);
 			this.textBoxReferer.TabIndex = 11;
 			this.textBoxReferer.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -282,7 +283,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxExpect.Location = new System.Drawing.Point(110, 115);
 			this.textBoxExpect.Name = "textBoxExpect";
-			this.textBoxExpect.Size = new System.Drawing.Size(214, 20);
+			this.textBoxExpect.Size = new System.Drawing.Size(182, 20);
 			this.textBoxExpect.TabIndex = 9;
 			this.textBoxExpect.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -292,7 +293,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxContentType.Location = new System.Drawing.Point(110, 63);
 			this.textBoxContentType.Name = "textBoxContentType";
-			this.textBoxContentType.Size = new System.Drawing.Size(214, 20);
+			this.textBoxContentType.Size = new System.Drawing.Size(182, 20);
 			this.textBoxContentType.TabIndex = 5;
 			this.textBoxContentType.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -313,7 +314,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAccept.Location = new System.Drawing.Point(110, 37);
 			this.textBoxAccept.Name = "textBoxAccept";
-			this.textBoxAccept.Size = new System.Drawing.Size(214, 20);
+			this.textBoxAccept.Size = new System.Drawing.Size(182, 20);
 			this.textBoxAccept.TabIndex = 3;
 			this.textBoxAccept.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -360,7 +361,7 @@
 			this.tabPageRequestHeaders.Location = new System.Drawing.Point(4, 22);
 			this.tabPageRequestHeaders.Name = "tabPageRequestHeaders";
 			this.tabPageRequestHeaders.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageRequestHeaders.Size = new System.Drawing.Size(500, 164);
+			this.tabPageRequestHeaders.Size = new System.Drawing.Size(502, 166);
 			this.tabPageRequestHeaders.TabIndex = 1;
 			this.tabPageRequestHeaders.Text = "Request headers";
 			this.tabPageRequestHeaders.UseVisualStyleBackColor = true;
@@ -380,7 +381,7 @@
 			this.listViewRequestHeaders.Location = new System.Drawing.Point(6, 6);
 			this.listViewRequestHeaders.MultiSelect = false;
 			this.listViewRequestHeaders.Name = "listViewRequestHeaders";
-			this.listViewRequestHeaders.Size = new System.Drawing.Size(407, 152);
+			this.listViewRequestHeaders.Size = new System.Drawing.Size(409, 154);
 			this.listViewRequestHeaders.SmallImageList = this.imageList;
 			this.listViewRequestHeaders.TabIndex = 0;
 			this.listViewRequestHeaders.UseCompatibleStateImageBehavior = false;
@@ -408,7 +409,7 @@
 			// 
 			this.buttonChangeHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonChangeHeader.Enabled = false;
-			this.buttonChangeHeader.Location = new System.Drawing.Point(419, 64);
+			this.buttonChangeHeader.Location = new System.Drawing.Point(421, 64);
 			this.buttonChangeHeader.Name = "buttonChangeHeader";
 			this.buttonChangeHeader.Size = new System.Drawing.Size(75, 23);
 			this.buttonChangeHeader.TabIndex = 3;
@@ -421,7 +422,7 @@
 			// 
 			this.buttonAddHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonAddHeader.Image = global::InetAnalytics.Resources.HeaderAdd_16;
-			this.buttonAddHeader.Location = new System.Drawing.Point(419, 6);
+			this.buttonAddHeader.Location = new System.Drawing.Point(421, 6);
 			this.buttonAddHeader.Name = "buttonAddHeader";
 			this.buttonAddHeader.Size = new System.Drawing.Size(75, 23);
 			this.buttonAddHeader.TabIndex = 1;
@@ -435,7 +436,7 @@
 			this.buttonRemoveHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonRemoveHeader.Enabled = false;
 			this.buttonRemoveHeader.Image = global::InetAnalytics.Resources.HeaderRemove_16;
-			this.buttonRemoveHeader.Location = new System.Drawing.Point(419, 35);
+			this.buttonRemoveHeader.Location = new System.Drawing.Point(421, 35);
 			this.buttonRemoveHeader.Name = "buttonRemoveHeader";
 			this.buttonRemoveHeader.Size = new System.Drawing.Size(75, 23);
 			this.buttonRemoveHeader.TabIndex = 2;
@@ -452,7 +453,7 @@
 			this.tabPageRequestData.Location = new System.Drawing.Point(4, 22);
 			this.tabPageRequestData.Name = "tabPageRequestData";
 			this.tabPageRequestData.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageRequestData.Size = new System.Drawing.Size(500, 164);
+			this.tabPageRequestData.Size = new System.Drawing.Size(502, 166);
 			this.tabPageRequestData.TabIndex = 2;
 			this.tabPageRequestData.Text = "Request data";
 			this.tabPageRequestData.UseVisualStyleBackColor = true;
@@ -465,7 +466,7 @@
 			this.comboBoxEncoding.FormattingEnabled = true;
 			this.comboBoxEncoding.Location = new System.Drawing.Point(64, 6);
 			this.comboBoxEncoding.Name = "comboBoxEncoding";
-			this.comboBoxEncoding.Size = new System.Drawing.Size(430, 21);
+			this.comboBoxEncoding.Size = new System.Drawing.Size(432, 21);
 			this.comboBoxEncoding.TabIndex = 1;
 			this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -487,7 +488,7 @@
 			this.textBoxRequestData.Location = new System.Drawing.Point(6, 33);
 			this.textBoxRequestData.Multiline = true;
 			this.textBoxRequestData.Name = "textBoxRequestData";
-			this.textBoxRequestData.Size = new System.Drawing.Size(488, 125);
+			this.textBoxRequestData.Size = new System.Drawing.Size(490, 127);
 			this.textBoxRequestData.TabIndex = 2;
 			this.textBoxRequestData.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -498,7 +499,7 @@
 			this.tabPageResponseHeaders.Location = new System.Drawing.Point(4, 22);
 			this.tabPageResponseHeaders.Name = "tabPageResponseHeaders";
 			this.tabPageResponseHeaders.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageResponseHeaders.Size = new System.Drawing.Size(500, 164);
+			this.tabPageResponseHeaders.Size = new System.Drawing.Size(502, 166);
 			this.tabPageResponseHeaders.TabIndex = 4;
 			this.tabPageResponseHeaders.Text = "Response headers";
 			this.tabPageResponseHeaders.UseVisualStyleBackColor = true;
@@ -507,7 +508,7 @@
 			// 
 			this.buttonViewHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonViewHeader.Enabled = false;
-			this.buttonViewHeader.Location = new System.Drawing.Point(419, 6);
+			this.buttonViewHeader.Location = new System.Drawing.Point(421, 6);
 			this.buttonViewHeader.Name = "buttonViewHeader";
 			this.buttonViewHeader.Size = new System.Drawing.Size(75, 23);
 			this.buttonViewHeader.TabIndex = 1;
@@ -531,7 +532,7 @@
 			this.listViewResponseHeaders.Location = new System.Drawing.Point(6, 6);
 			this.listViewResponseHeaders.MultiSelect = false;
 			this.listViewResponseHeaders.Name = "listViewResponseHeaders";
-			this.listViewResponseHeaders.Size = new System.Drawing.Size(407, 152);
+			this.listViewResponseHeaders.Size = new System.Drawing.Size(409, 154);
 			this.listViewResponseHeaders.SmallImageList = this.imageList;
 			this.listViewResponseHeaders.TabIndex = 0;
 			this.listViewResponseHeaders.UseCompatibleStateImageBehavior = false;
@@ -555,7 +556,7 @@
 			this.tabPageResponseData.Location = new System.Drawing.Point(4, 22);
 			this.tabPageResponseData.Name = "tabPageResponseData";
 			this.tabPageResponseData.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageResponseData.Size = new System.Drawing.Size(500, 164);
+			this.tabPageResponseData.Size = new System.Drawing.Size(502, 166);
 			this.tabPageResponseData.TabIndex = 3;
 			this.tabPageResponseData.Text = "Response data";
 			this.tabPageResponseData.UseVisualStyleBackColor = true;
@@ -571,14 +572,14 @@
 			this.textBoxResponseData.Name = "textBoxResponseData";
 			this.textBoxResponseData.ReadOnly = true;
 			this.textBoxResponseData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.textBoxResponseData.Size = new System.Drawing.Size(488, 152);
+			this.textBoxResponseData.Size = new System.Drawing.Size(490, 154);
 			this.textBoxResponseData.TabIndex = 0;
 			// 
 			// buttonSave
 			// 
 			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonSave.Enabled = false;
-			this.buttonSave.Location = new System.Drawing.Point(520, 31);
+			this.buttonSave.Location = new System.Drawing.Point(522, 31);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(75, 23);
 			this.buttonSave.TabIndex = 5;
@@ -593,7 +594,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUrl.Location = new System.Drawing.Point(79, 4);
 			this.textBoxUrl.Name = "textBoxUrl";
-			this.textBoxUrl.Size = new System.Drawing.Size(354, 20);
+			this.textBoxUrl.Size = new System.Drawing.Size(356, 20);
 			this.textBoxUrl.TabIndex = 1;
 			this.textBoxUrl.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -602,7 +603,7 @@
 			this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStart.Enabled = false;
 			this.buttonStart.Image = global::InetAnalytics.Resources.PlayStart_16;
-			this.buttonStart.Location = new System.Drawing.Point(439, 2);
+			this.buttonStart.Location = new System.Drawing.Point(441, 2);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
 			this.buttonStart.TabIndex = 2;
@@ -616,7 +617,7 @@
 			this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Image = global::InetAnalytics.Resources.PlayStop_16;
-			this.buttonStop.Location = new System.Drawing.Point(520, 2);
+			this.buttonStop.Location = new System.Drawing.Point(522, 2);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(75, 23);
 			this.buttonStop.TabIndex = 3;
@@ -639,8 +640,12 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(600, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
 			// saveFileDialog
 			// 
@@ -659,7 +664,10 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlTestingWebRequest";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "Web Request Testing";
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
@@ -681,7 +689,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.Button buttonStop;

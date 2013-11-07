@@ -31,12 +31,16 @@ namespace InetAnalytics.Controls.Comments
 	/// <summary>
 	/// A control displaying a list of comments.
 	/// </summary>
-	public partial class ControlComments : ThreadSafeControl
+	public partial class ControlComments : ThemeControl
 	{
 		private CommentsList comments;
 
 		private readonly FormAddComment formAdd = new FormAddComment();
 		private readonly FormCommentProperties formComment = new FormCommentProperties();
+
+		private static readonly string[] commentTypeHeader = { "Video", "User", "Playlist" };
+		private static readonly string[] commentTypeTitle = { "Video Comments", "User Comments", "Playlist Comments" };
+
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -60,11 +64,10 @@ namespace InetAnalytics.Controls.Comments
 			this.formAdd.CommentType = commentType;
 			this.Enabled = true;
 
-			switch (commentType)
+			if ((int)commentType < commentTypeHeader.Length)
 			{
-				case Comment.CommentType.Video: this.columnHeaderItem.Text = "Video"; break;
-				case Comment.CommentType.User: this.columnHeaderItem.Text = "User"; break;
-				case Comment.CommentType.Playlist: this.columnHeaderItem.Text = "Playlist"; break;
+				this.columnHeaderItem.Text = ControlComments.commentTypeHeader[(int)commentType];
+				this.Title = ControlComments.commentTypeTitle[(int)commentType];
 			}
 
 			// Populate the comments list.

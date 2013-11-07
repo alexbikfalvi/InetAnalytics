@@ -37,7 +37,7 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
 			this.buttonStop = new System.Windows.Forms.ToolStripButton();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.codeBox = new DotNetApi.Windows.Controls.CodeTextBox();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -62,7 +62,7 @@
             this.buttonStop});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(798, 25);
+			this.toolStrip.Size = new System.Drawing.Size(800, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// buttonConnect
@@ -112,9 +112,8 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -127,8 +126,9 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.dataGrid);
-			this.splitContainer.Size = new System.Drawing.Size(800, 600);
-			this.splitContainer.SplitterDistance = 300;
+			this.splitContainer.Size = new System.Drawing.Size(800, 578);
+			this.splitContainer.SplitterDistance = 289;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
 			// codeBox
@@ -139,7 +139,7 @@
 			this.codeBox.ForeColor = System.Drawing.Color.Blue;
 			this.codeBox.Location = new System.Drawing.Point(0, 25);
 			this.codeBox.Name = "codeBox";
-			this.codeBox.Size = new System.Drawing.Size(798, 251);
+			this.codeBox.Size = new System.Drawing.Size(800, 242);
 			this.codeBox.TabIndex = 2;
 			this.codeBox.Text = "";
 			this.codeBox.TextChanged += new System.EventHandler(this.OnQueryChanged);
@@ -148,9 +148,9 @@
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 276);
+			this.statusStrip.Location = new System.Drawing.Point(0, 267);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(798, 22);
+			this.statusStrip.Size = new System.Drawing.Size(800, 22);
 			this.statusStrip.SizingGrip = false;
 			this.statusStrip.TabIndex = 1;
 			// 
@@ -173,7 +173,7 @@
 			this.dataGrid.Name = "dataGrid";
 			this.dataGrid.ReadOnly = true;
 			this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dataGrid.Size = new System.Drawing.Size(798, 294);
+			this.dataGrid.Size = new System.Drawing.Size(800, 284);
 			this.dataGrid.TabIndex = 0;
 			this.dataGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnCellFormatting);
 			// 
@@ -190,7 +190,11 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlServerQuery";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "Server Query";
+			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
@@ -208,7 +212,7 @@
 		#endregion
 
 		private System.Windows.Forms.ToolStrip toolStrip;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton buttonConnect;
 		private System.Windows.Forms.ToolStripButton buttonDisconnect;

@@ -42,7 +42,7 @@
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonComment = new System.Windows.Forms.ToolStripButton();
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.controlProfile = new InetAnalytics.Controls.YouTube.ControlProfileProperties();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			this.toolStrip.SuspendLayout();
@@ -65,7 +65,7 @@
             this.buttonComment});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(798, 25);
+			this.toolStrip.Size = new System.Drawing.Size(800, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// label
@@ -174,10 +174,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -189,8 +188,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(800, 600);
-			this.splitContainer.SplitterDistance = 425;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(800, 578);
+			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
 			// controlProfile
@@ -199,7 +200,7 @@
 			this.controlProfile.Location = new System.Drawing.Point(0, 25);
 			this.controlProfile.Name = "controlProfile";
 			this.controlProfile.Profile = null;
-			this.controlProfile.Size = new System.Drawing.Size(798, 398);
+			this.controlProfile.Size = new System.Drawing.Size(800, 378);
 			this.controlProfile.TabIndex = 1;
 			// 
 			// log
@@ -207,16 +208,23 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(798, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(800, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
-			// ControlInetApi.YouTube2Profile
+			// ControlYtApi2Profile
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
-			this.Name = "ControlInetApi.YouTube2Profile";
+			this.Name = "ControlYtApi2Profile";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
+			this.Title = "YouTube User Profile";
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
@@ -235,7 +243,7 @@
 		private System.Windows.Forms.ToolStripTextBox textBox;
 		private System.Windows.Forms.ToolStripButton buttonStart;
 		private System.Windows.Forms.ToolStripButton buttonStop;
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripDropDownButton buttonView;

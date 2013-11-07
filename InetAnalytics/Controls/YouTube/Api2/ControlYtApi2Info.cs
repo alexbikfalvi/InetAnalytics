@@ -25,7 +25,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 	/// <summary>
 	/// A control that displays the feed types available in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2Info : ThreadSafeControl
+	public partial class ControlYtApi2Info : ThemeControl
 	{
 		/// <summary>
 		/// Creates a new control instance.

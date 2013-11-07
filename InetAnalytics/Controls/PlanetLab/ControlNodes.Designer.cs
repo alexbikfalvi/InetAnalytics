@@ -218,6 +218,7 @@
 			this.stateFilter.ListMinimumSize = new System.Drawing.Size(200, 200);
 			this.stateFilter.ListSize = new System.Drawing.Size(200, 200);
 			this.stateFilter.Name = "checkedListFilter";
+			this.stateFilter.OwnerItem = this.menuItemFilterState;
 			this.stateFilter.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
 			this.stateFilter.Size = new System.Drawing.Size(208, 205);
 			this.stateFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnStateFilterCheck);
@@ -294,7 +295,7 @@
             this.buttonClear,
             this.separator3,
             this.buttonExport});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 9;
@@ -317,9 +318,9 @@
 			this.listViewNodes.GridLines = true;
 			this.listViewNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listViewNodes.HideSelection = false;
-			this.listViewNodes.Location = new System.Drawing.Point(0, 25);
+			this.listViewNodes.Location = new System.Drawing.Point(1, 47);
 			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(598, 373);
+			this.listViewNodes.Size = new System.Drawing.Size(598, 352);
 			this.listViewNodes.SmallImageList = this.imageList;
 			this.listViewNodes.TabIndex = 0;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
@@ -368,12 +369,15 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.Controls.Add(this.listViewNodes);
 			this.Controls.Add(this.toolStrip);
 			this.Enabled = false;
 			this.Name = "ControlNodes";
-			this.Size = new System.Drawing.Size(598, 398);
+			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.ShowBorder = true;
+			this.ShowTitle = true;
+			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "PlanetLab Nodes";
 			this.Controls.SetChildIndex(this.toolStrip, 0);
 			this.Controls.SetChildIndex(this.listViewNodes, 0);
 			this.contextMenu.ResumeLayout(false);

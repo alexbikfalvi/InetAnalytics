@@ -29,7 +29,7 @@ using DotNetApi.Windows.Controls;
 
 namespace InetAnalytics.Controls.YouTube.Api3
 {
-	public partial class ControlYtApi3Info : ThreadSafeControl
+	public partial class ControlYtApi3Info : ThemeControl
 	{
 		public ControlYtApi3Info()
 		{

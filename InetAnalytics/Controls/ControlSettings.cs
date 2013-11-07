@@ -28,7 +28,7 @@ namespace InetAnalytics.Controls
 	/// <summary>
 	/// A control displaying the current configuration settings.
 	/// </summary>
-	public partial class ControlSettings : ThreadSafeControl
+	public partial class ControlSettings : ThemeControl
 	{
 		private Crawler crawler;
 

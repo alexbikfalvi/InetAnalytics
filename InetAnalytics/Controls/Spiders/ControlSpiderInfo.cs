@@ -32,7 +32,7 @@ namespace InetAnalytics.Controls.Spiders
 	/// <summary>
 	/// A control displaying the spiders information.
 	/// </summary>
-	public partial class ControlSpiderInfo : ThreadSafeControl
+	public partial class ControlSpiderInfo : ThemeControl
 	{
 		/// <summary>
 		/// Creates a new instance of the control.

@@ -30,10 +30,11 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2Search));
-			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.videoList = new InetAnalytics.Controls.YouTube.ControlVideoList();
 			this.viewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemApiV2Video = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemApiV2Author = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemApiV2Related = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemApiV2Response = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +54,6 @@
 			this.labelSearch = new System.Windows.Forms.Label();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.menuItemApiV2Author = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -64,10 +64,9 @@
 			// 
 			// splitContainer
 			// 
-			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(0, 22);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -79,8 +78,10 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 225;
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 378);
+			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
 			// videoList
@@ -93,7 +94,7 @@
 			this.videoList.Name = "videoList";
 			this.videoList.Next = false;
 			this.videoList.Previous = false;
-			this.videoList.Size = new System.Drawing.Size(598, 141);
+			this.videoList.Size = new System.Drawing.Size(600, 121);
 			this.videoList.TabIndex = 1;
 			this.videoList.VideoContextMenu = this.viewMenu;
 			this.videoList.PreviousClick += new System.EventHandler(this.OnNavigatePrevious);
@@ -117,7 +118,7 @@
             this.toolStripSeparator3,
             this.menuItemProperties});
 			this.viewMenu.Name = "viewMenu";
-			this.viewMenu.Size = new System.Drawing.Size(168, 220);
+			this.viewMenu.Size = new System.Drawing.Size(168, 198);
 			this.viewMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnViewMenuClosed);
 			// 
 			// menuItemApiV2Video
@@ -127,6 +128,14 @@
 			this.menuItemApiV2Video.Size = new System.Drawing.Size(167, 22);
 			this.menuItemApiV2Video.Text = "Video";
 			this.menuItemApiV2Video.Click += new System.EventHandler(this.OnViewApiV2Video);
+			// 
+			// menuItemApiV2Author
+			// 
+			this.menuItemApiV2Author.Image = global::InetAnalytics.Resources.FileUser_16;
+			this.menuItemApiV2Author.Name = "menuItemApiV2Author";
+			this.menuItemApiV2Author.Size = new System.Drawing.Size(167, 22);
+			this.menuItemApiV2Author.Text = "Author";
+			this.menuItemApiV2Author.Click += new System.EventHandler(this.OnViewApiV2Author);
 			// 
 			// menuItemApiV2Related
 			// 
@@ -203,7 +212,7 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(598, 82);
+			this.panel.Size = new System.Drawing.Size(600, 82);
 			this.panel.TabIndex = 0;
 			// 
 			// textBoxSearch
@@ -212,7 +221,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxSearch.Location = new System.Drawing.Point(53, 4);
 			this.textBoxSearch.Name = "textBoxSearch";
-			this.textBoxSearch.Size = new System.Drawing.Size(350, 20);
+			this.textBoxSearch.Size = new System.Drawing.Size(352, 20);
 			this.textBoxSearch.TabIndex = 1;
 			this.textBoxSearch.TextChanged += new System.EventHandler(this.OnSearchChanged);
 			// 
@@ -221,7 +230,7 @@
 			this.checkBoxView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkBoxView.Appearance = System.Windows.Forms.Appearance.Button;
 			this.checkBoxView.Enabled = false;
-			this.checkBoxView.Location = new System.Drawing.Point(520, 28);
+			this.checkBoxView.Location = new System.Drawing.Point(522, 28);
 			this.checkBoxView.Name = "checkBoxView";
 			this.checkBoxView.Size = new System.Drawing.Size(75, 23);
 			this.checkBoxView.TabIndex = 4;
@@ -235,7 +244,7 @@
 			this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStart.Enabled = false;
 			this.buttonStart.Image = global::InetAnalytics.Resources.PlayStart_16;
-			this.buttonStart.Location = new System.Drawing.Point(439, 2);
+			this.buttonStart.Location = new System.Drawing.Point(441, 2);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
 			this.buttonStart.TabIndex = 2;
@@ -249,7 +258,7 @@
 			this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Image = global::InetAnalytics.Resources.PlayStop_16;
-			this.buttonStop.Location = new System.Drawing.Point(520, 2);
+			this.buttonStop.Location = new System.Drawing.Point(522, 2);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(75, 23);
 			this.buttonStop.TabIndex = 3;
@@ -290,22 +299,18 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Size = new System.Drawing.Size(598, 169);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(600, 170);
 			this.log.TabIndex = 0;
+			this.log.Title = "Log";
 			// 
 			// imageList
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.imageList.Images.SetKeyName(0, "Video");
-			// 
-			// menuItemApiV2Author
-			// 
-			this.menuItemApiV2Author.Image = global::InetAnalytics.Resources.FileUser_16;
-			this.menuItemApiV2Author.Name = "menuItemApiV2Author";
-			this.menuItemApiV2Author.Size = new System.Drawing.Size(167, 22);
-			this.menuItemApiV2Author.Text = "Author";
-			this.menuItemApiV2Author.Click += new System.EventHandler(this.OnViewApiV2Author);
 			// 
 			// ControlYtApi2Search
 			// 
@@ -314,7 +319,10 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlYtApi2Search";
+			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
+			this.Title = "YouTube Video Search";
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
@@ -328,7 +336,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.Panel panel;
