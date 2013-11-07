@@ -47,24 +47,7 @@ namespace InetAnalytics.Forms
 			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
-			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
-			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideYouTube = new DotNetApi.Windows.Controls.SideTreeView();
-			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +62,23 @@ namespace InetAnalytics.Forms
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
+			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
+			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideYouTube = new DotNetApi.Windows.Controls.SideTreeView();
+			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
+			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -88,9 +88,9 @@ namespace InetAnalytics.Forms
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.sideMenu.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.menuViewVideo.SuspendLayout();
+			this.sideMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStripContainer
@@ -103,6 +103,7 @@ namespace InetAnalytics.Forms
 			// toolStripContainer.ContentPanel
 			// 
 			this.toolStripContainer.ContentPanel.Controls.Add(this.splitContainer);
+			this.toolStripContainer.ContentPanel.Padding = new System.Windows.Forms.Padding(4);
 			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1008, 536);
 			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
@@ -139,8 +140,7 @@ namespace InetAnalytics.Forms
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(857, 17);
-			this.statusLabelMiddle.Spring = true;
+			this.statusLabelMiddle.Size = new System.Drawing.Size(0, 17);
 			// 
 			// statusLabelRight
 			// 
@@ -160,7 +160,7 @@ namespace InetAnalytics.Forms
 			this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Location = new System.Drawing.Point(4, 4);
 			this.splitContainer.Name = "splitContainer";
 			// 
 			// splitContainer.Panel1
@@ -171,73 +171,9 @@ namespace InetAnalytics.Forms
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.labelNotAvailable);
 			this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(4);
-			this.splitContainer.Size = new System.Drawing.Size(1008, 536);
+			this.splitContainer.Size = new System.Drawing.Size(1000, 528);
 			this.splitContainer.SplitterDistance = 246;
 			this.splitContainer.TabIndex = 0;
-			// 
-			// sideMenu
-			// 
-			this.sideMenu.Controls.Add(this.controlSideLog);
-			this.sideMenu.Controls.Add(this.controlSideComments);
-			this.sideMenu.Controls.Add(this.controlSideConfiguration);
-			this.sideMenu.Controls.Add(this.controlSideTesting);
-			this.sideMenu.Controls.Add(this.controlSidePlanetLab);
-			this.sideMenu.Controls.Add(this.controlSideSpiders);
-			this.sideMenu.Controls.Add(this.controlSideDatabase);
-			this.sideMenu.Controls.Add(this.controlSideYouTube);
-			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.sideMenu.ItemHeight = 48;
-			this.sideMenu.Items.AddRange(new DotNetApi.Windows.Controls.SideMenuItem[] {
-            this.sideMenuItemPlanetLab,
-            this.sideMenuItemDatabase,
-            this.sideMenuItemSpiders,
-            this.sideMenuItemYouTube,
-            this.sideMenuItemTesting,
-            this.sideMenuItemConfiguration,
-            this.sideMenuItemLog,
-            this.sideMenuItemComments});
-			this.sideMenu.Location = new System.Drawing.Point(0, 0);
-			this.sideMenu.MinimizedItemWidth = 25;
-			this.sideMenu.MinimumPanelHeight = 50;
-			this.sideMenu.Name = "sideMenu";
-			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 28, 0, 440);
-			this.sideMenu.SelectedIndex = 0;
-			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
-			this.sideMenu.Size = new System.Drawing.Size(244, 534);
-			this.sideMenu.TabIndex = 0;
-			this.sideMenu.VisibleItems = 8;
-			// 
-			// controlSideLog
-			// 
-			this.controlSideLog.AutoScroll = true;
-			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
-			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(244, 66);
-			this.controlSideLog.TabIndex = 2;
-			this.controlSideLog.Visible = false;
-			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// controlSideComments
-			// 
-			this.controlSideComments.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideComments.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideComments.FullRowSelect = true;
-			this.controlSideComments.HideSelection = false;
-			this.controlSideComments.ImageIndex = 0;
-			this.controlSideComments.ImageList = this.imageList;
-			this.controlSideComments.ItemHeight = 20;
-			this.controlSideComments.Location = new System.Drawing.Point(0, 28);
-			this.controlSideComments.Name = "controlSideComments";
-			this.controlSideComments.SelectedImageIndex = 0;
-			this.controlSideComments.ShowLines = false;
-			this.controlSideComments.ShowRootLines = false;
-			this.controlSideComments.Size = new System.Drawing.Size(244, 66);
-			this.controlSideComments.TabIndex = 3;
-			this.controlSideComments.Visible = false;
-			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// imageList
 			// 
@@ -293,190 +229,12 @@ namespace InetAnalytics.Forms
 			this.imageList.Images.SetKeyName(47, "TestGlobeGoto");
 			this.imageList.Images.SetKeyName(48, "TestConnectGoto");
 			// 
-			// controlSideConfiguration
-			// 
-			this.controlSideConfiguration.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideConfiguration.FullRowSelect = true;
-			this.controlSideConfiguration.HideSelection = false;
-			this.controlSideConfiguration.ImageIndex = 0;
-			this.controlSideConfiguration.ImageList = this.imageList;
-			this.controlSideConfiguration.ItemHeight = 20;
-			this.controlSideConfiguration.Location = new System.Drawing.Point(0, 28);
-			this.controlSideConfiguration.Name = "controlSideConfiguration";
-			this.controlSideConfiguration.SelectedImageIndex = 0;
-			this.controlSideConfiguration.ShowLines = false;
-			this.controlSideConfiguration.ShowRootLines = false;
-			this.controlSideConfiguration.Size = new System.Drawing.Size(244, 66);
-			this.controlSideConfiguration.TabIndex = 1;
-			this.controlSideConfiguration.Visible = false;
-			this.controlSideConfiguration.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// controlSideTesting
-			// 
-			this.controlSideTesting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideTesting.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideTesting.FullRowSelect = true;
-			this.controlSideTesting.HideSelection = false;
-			this.controlSideTesting.ImageIndex = 0;
-			this.controlSideTesting.ImageList = this.imageList;
-			this.controlSideTesting.ItemHeight = 20;
-			this.controlSideTesting.Location = new System.Drawing.Point(0, 28);
-			this.controlSideTesting.Name = "controlSideTesting";
-			this.controlSideTesting.SelectedImageIndex = 0;
-			this.controlSideTesting.ShowLines = false;
-			this.controlSideTesting.ShowRootLines = false;
-			this.controlSideTesting.Size = new System.Drawing.Size(244, 66);
-			this.controlSideTesting.TabIndex = 6;
-			this.controlSideTesting.Visible = false;
-			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// controlSidePlanetLab
-			// 
-			this.controlSidePlanetLab.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSidePlanetLab.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSidePlanetLab.FullRowSelect = true;
-			this.controlSidePlanetLab.HideSelection = false;
-			this.controlSidePlanetLab.ImageIndex = 0;
-			this.controlSidePlanetLab.ImageList = this.imageList;
-			this.controlSidePlanetLab.ItemHeight = 20;
-			this.controlSidePlanetLab.Location = new System.Drawing.Point(0, 28);
-			this.controlSidePlanetLab.Name = "controlSidePlanetLab";
-			this.controlSidePlanetLab.SelectedImageIndex = 0;
-			this.controlSidePlanetLab.ShowLines = false;
-			this.controlSidePlanetLab.ShowRootLines = false;
-			this.controlSidePlanetLab.Size = new System.Drawing.Size(244, 66);
-			this.controlSidePlanetLab.TabIndex = 7;
-			this.controlSidePlanetLab.Visible = false;
-			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// controlSideSpiders
-			// 
-			this.controlSideSpiders.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideSpiders.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideSpiders.FullRowSelect = true;
-			this.controlSideSpiders.HideSelection = false;
-			this.controlSideSpiders.ImageIndex = 0;
-			this.controlSideSpiders.ImageList = this.imageList;
-			this.controlSideSpiders.ItemHeight = 20;
-			this.controlSideSpiders.Location = new System.Drawing.Point(0, 28);
-			this.controlSideSpiders.Name = "controlSideSpiders";
-			this.controlSideSpiders.SelectedImageIndex = 0;
-			this.controlSideSpiders.ShowLines = false;
-			this.controlSideSpiders.ShowRootLines = false;
-			this.controlSideSpiders.Size = new System.Drawing.Size(244, 66);
-			this.controlSideSpiders.TabIndex = 5;
-			this.controlSideSpiders.Visible = false;
-			this.controlSideSpiders.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// controlSideDatabase
-			// 
-			this.controlSideDatabase.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideDatabase.FullRowSelect = true;
-			this.controlSideDatabase.HideSelection = false;
-			this.controlSideDatabase.ImageIndex = 0;
-			this.controlSideDatabase.ImageList = this.imageList;
-			this.controlSideDatabase.ItemHeight = 20;
-			this.controlSideDatabase.Location = new System.Drawing.Point(0, 28);
-			this.controlSideDatabase.Name = "controlSideDatabase";
-			this.controlSideDatabase.SelectedImageIndex = 0;
-			this.controlSideDatabase.ShowLines = false;
-			this.controlSideDatabase.ShowRootLines = false;
-			this.controlSideDatabase.Size = new System.Drawing.Size(244, 66);
-			this.controlSideDatabase.TabIndex = 4;
-			this.controlSideDatabase.Visible = false;
-			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// controlSideYouTube
-			// 
-			this.controlSideYouTube.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideYouTube.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideYouTube.FullRowSelect = true;
-			this.controlSideYouTube.HideSelection = false;
-			this.controlSideYouTube.ImageIndex = 0;
-			this.controlSideYouTube.ImageList = this.imageList;
-			this.controlSideYouTube.ItemHeight = 20;
-			this.controlSideYouTube.Location = new System.Drawing.Point(0, 28);
-			this.controlSideYouTube.Name = "controlSideYouTube";
-			this.controlSideYouTube.SelectedImageIndex = 0;
-			this.controlSideYouTube.ShowLines = false;
-			this.controlSideYouTube.ShowRootLines = false;
-			this.controlSideYouTube.Size = new System.Drawing.Size(244, 66);
-			this.controlSideYouTube.TabIndex = 0;
-			this.controlSideYouTube.Visible = false;
-			this.controlSideYouTube.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// sideMenuItemPlanetLab
-			// 
-			this.sideMenuItemPlanetLab.Control = this.controlSidePlanetLab;
-			this.sideMenuItemPlanetLab.ImageLarge = global::InetAnalytics.Resources.GlobeLab_32;
-			this.sideMenuItemPlanetLab.ImageSmall = global::InetAnalytics.Resources.GlobeLab_16;
-			this.sideMenuItemPlanetLab.Index = -1;
-			this.sideMenuItemPlanetLab.Text = "PlanetLab";
-			// 
-			// sideMenuItemDatabase
-			// 
-			this.sideMenuItemDatabase.Control = this.controlSideDatabase;
-			this.sideMenuItemDatabase.ImageLarge = global::InetAnalytics.Resources.ServersDatabase_32;
-			this.sideMenuItemDatabase.ImageSmall = global::InetAnalytics.Resources.ServersDatabase_16;
-			this.sideMenuItemDatabase.Index = -1;
-			this.sideMenuItemDatabase.Text = "Database";
-			// 
-			// sideMenuItemSpiders
-			// 
-			this.sideMenuItemSpiders.Control = this.controlSideSpiders;
-			this.sideMenuItemSpiders.ImageLarge = global::InetAnalytics.Resources.ServersCube_32;
-			this.sideMenuItemSpiders.ImageSmall = global::InetAnalytics.Resources.ServersCube_16;
-			this.sideMenuItemSpiders.Index = -1;
-			this.sideMenuItemSpiders.Text = "Spiders";
-			// 
-			// sideMenuItemYouTube
-			// 
-			this.sideMenuItemYouTube.Control = this.controlSideYouTube;
-			this.sideMenuItemYouTube.ImageLarge = global::InetAnalytics.Resources.ServersVideo_32;
-			this.sideMenuItemYouTube.ImageSmall = global::InetAnalytics.Resources.ServersVideo_16;
-			this.sideMenuItemYouTube.Index = -1;
-			this.sideMenuItemYouTube.Text = "YouTube";
-			// 
-			// sideMenuItemTesting
-			// 
-			this.sideMenuItemTesting.Control = this.controlSideTesting;
-			this.sideMenuItemTesting.ImageLarge = global::InetAnalytics.Resources.TestsLarge_32;
-			this.sideMenuItemTesting.ImageSmall = global::InetAnalytics.Resources.TestsLarge_16;
-			this.sideMenuItemTesting.Index = -1;
-			this.sideMenuItemTesting.Text = "Testing";
-			// 
-			// sideMenuItemConfiguration
-			// 
-			this.sideMenuItemConfiguration.Control = this.controlSideConfiguration;
-			this.sideMenuItemConfiguration.ImageLarge = global::InetAnalytics.Resources.ConfigurationSettings_32;
-			this.sideMenuItemConfiguration.ImageSmall = global::InetAnalytics.Resources.ConfigurationSettings_16;
-			this.sideMenuItemConfiguration.Index = -1;
-			this.sideMenuItemConfiguration.Text = "Configuration";
-			// 
-			// sideMenuItemLog
-			// 
-			this.sideMenuItemLog.Control = this.controlSideLog;
-			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
-			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
-			this.sideMenuItemLog.Index = -1;
-			this.sideMenuItemLog.Text = "Log";
-			// 
-			// sideMenuItemComments
-			// 
-			this.sideMenuItemComments.Control = this.controlSideComments;
-			this.sideMenuItemComments.ImageLarge = global::InetAnalytics.Resources.Comments_32;
-			this.sideMenuItemComments.ImageSmall = global::InetAnalytics.Resources.Comments_16;
-			this.sideMenuItemComments.Index = -1;
-			this.sideMenuItemComments.Text = "Comments";
-			// 
 			// labelNotAvailable
 			// 
 			this.labelNotAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labelNotAvailable.Location = new System.Drawing.Point(4, 4);
 			this.labelNotAvailable.Name = "labelNotAvailable";
-			this.labelNotAvailable.Size = new System.Drawing.Size(748, 526);
+			this.labelNotAvailable.Size = new System.Drawing.Size(740, 518);
 			this.labelNotAvailable.TabIndex = 0;
 			this.labelNotAvailable.Text = "Feature not available";
 			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -583,6 +341,248 @@ namespace InetAnalytics.Forms
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
+			// sideMenu
+			// 
+			this.sideMenu.Controls.Add(this.controlSideLog);
+			this.sideMenu.Controls.Add(this.controlSideComments);
+			this.sideMenu.Controls.Add(this.controlSideConfiguration);
+			this.sideMenu.Controls.Add(this.controlSideTesting);
+			this.sideMenu.Controls.Add(this.controlSidePlanetLab);
+			this.sideMenu.Controls.Add(this.controlSideSpiders);
+			this.sideMenu.Controls.Add(this.controlSideDatabase);
+			this.sideMenu.Controls.Add(this.controlSideYouTube);
+			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.sideMenu.ItemHeight = 48;
+			this.sideMenu.Items.AddRange(new DotNetApi.Windows.Controls.SideMenuItem[] {
+            this.sideMenuItemPlanetLab,
+            this.sideMenuItemDatabase,
+            this.sideMenuItemSpiders,
+            this.sideMenuItemYouTube,
+            this.sideMenuItemTesting,
+            this.sideMenuItemConfiguration,
+            this.sideMenuItemLog,
+            this.sideMenuItemComments});
+			this.sideMenu.Location = new System.Drawing.Point(0, 0);
+			this.sideMenu.MinimizedItemWidth = 25;
+			this.sideMenu.MinimumPanelHeight = 50;
+			this.sideMenu.Name = "sideMenu";
+			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 28, 0, 440);
+			this.sideMenu.SelectedIndex = 0;
+			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
+			this.sideMenu.Size = new System.Drawing.Size(244, 526);
+			this.sideMenu.TabIndex = 0;
+			this.sideMenu.VisibleItems = 8;
+			// 
+			// controlSideComments
+			// 
+			this.controlSideComments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideComments.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideComments.FullRowSelect = true;
+			this.controlSideComments.HideSelection = false;
+			this.controlSideComments.ImageIndex = 0;
+			this.controlSideComments.ImageList = this.imageList;
+			this.controlSideComments.ItemHeight = 20;
+			this.controlSideComments.Location = new System.Drawing.Point(0, 28);
+			this.controlSideComments.Name = "controlSideComments";
+			this.controlSideComments.SelectedImageIndex = 0;
+			this.controlSideComments.ShowLines = false;
+			this.controlSideComments.ShowRootLines = false;
+			this.controlSideComments.Size = new System.Drawing.Size(244, 58);
+			this.controlSideComments.TabIndex = 3;
+			this.controlSideComments.Visible = false;
+			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideConfiguration
+			// 
+			this.controlSideConfiguration.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideConfiguration.FullRowSelect = true;
+			this.controlSideConfiguration.HideSelection = false;
+			this.controlSideConfiguration.ImageIndex = 0;
+			this.controlSideConfiguration.ImageList = this.imageList;
+			this.controlSideConfiguration.ItemHeight = 20;
+			this.controlSideConfiguration.Location = new System.Drawing.Point(0, 28);
+			this.controlSideConfiguration.Name = "controlSideConfiguration";
+			this.controlSideConfiguration.SelectedImageIndex = 0;
+			this.controlSideConfiguration.ShowLines = false;
+			this.controlSideConfiguration.ShowRootLines = false;
+			this.controlSideConfiguration.Size = new System.Drawing.Size(244, 58);
+			this.controlSideConfiguration.TabIndex = 1;
+			this.controlSideConfiguration.Visible = false;
+			this.controlSideConfiguration.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideTesting
+			// 
+			this.controlSideTesting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideTesting.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideTesting.FullRowSelect = true;
+			this.controlSideTesting.HideSelection = false;
+			this.controlSideTesting.ImageIndex = 0;
+			this.controlSideTesting.ImageList = this.imageList;
+			this.controlSideTesting.ItemHeight = 20;
+			this.controlSideTesting.Location = new System.Drawing.Point(0, 28);
+			this.controlSideTesting.Name = "controlSideTesting";
+			this.controlSideTesting.SelectedImageIndex = 0;
+			this.controlSideTesting.ShowLines = false;
+			this.controlSideTesting.ShowRootLines = false;
+			this.controlSideTesting.Size = new System.Drawing.Size(244, 58);
+			this.controlSideTesting.TabIndex = 6;
+			this.controlSideTesting.Visible = false;
+			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSidePlanetLab
+			// 
+			this.controlSidePlanetLab.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSidePlanetLab.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSidePlanetLab.FullRowSelect = true;
+			this.controlSidePlanetLab.HideSelection = false;
+			this.controlSidePlanetLab.ImageIndex = 0;
+			this.controlSidePlanetLab.ImageList = this.imageList;
+			this.controlSidePlanetLab.ItemHeight = 20;
+			this.controlSidePlanetLab.Location = new System.Drawing.Point(0, 28);
+			this.controlSidePlanetLab.Name = "controlSidePlanetLab";
+			this.controlSidePlanetLab.SelectedImageIndex = 0;
+			this.controlSidePlanetLab.ShowLines = false;
+			this.controlSidePlanetLab.ShowRootLines = false;
+			this.controlSidePlanetLab.Size = new System.Drawing.Size(244, 58);
+			this.controlSidePlanetLab.TabIndex = 7;
+			this.controlSidePlanetLab.Visible = false;
+			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideSpiders
+			// 
+			this.controlSideSpiders.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideSpiders.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideSpiders.FullRowSelect = true;
+			this.controlSideSpiders.HideSelection = false;
+			this.controlSideSpiders.ImageIndex = 0;
+			this.controlSideSpiders.ImageList = this.imageList;
+			this.controlSideSpiders.ItemHeight = 20;
+			this.controlSideSpiders.Location = new System.Drawing.Point(0, 28);
+			this.controlSideSpiders.Name = "controlSideSpiders";
+			this.controlSideSpiders.SelectedImageIndex = 0;
+			this.controlSideSpiders.ShowLines = false;
+			this.controlSideSpiders.ShowRootLines = false;
+			this.controlSideSpiders.Size = new System.Drawing.Size(244, 58);
+			this.controlSideSpiders.TabIndex = 5;
+			this.controlSideSpiders.Visible = false;
+			this.controlSideSpiders.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideDatabase
+			// 
+			this.controlSideDatabase.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideDatabase.FullRowSelect = true;
+			this.controlSideDatabase.HideSelection = false;
+			this.controlSideDatabase.ImageIndex = 0;
+			this.controlSideDatabase.ImageList = this.imageList;
+			this.controlSideDatabase.ItemHeight = 20;
+			this.controlSideDatabase.Location = new System.Drawing.Point(0, 28);
+			this.controlSideDatabase.Name = "controlSideDatabase";
+			this.controlSideDatabase.SelectedImageIndex = 0;
+			this.controlSideDatabase.ShowLines = false;
+			this.controlSideDatabase.ShowRootLines = false;
+			this.controlSideDatabase.Size = new System.Drawing.Size(244, 58);
+			this.controlSideDatabase.TabIndex = 4;
+			this.controlSideDatabase.Visible = false;
+			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideYouTube
+			// 
+			this.controlSideYouTube.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideYouTube.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideYouTube.FullRowSelect = true;
+			this.controlSideYouTube.HideSelection = false;
+			this.controlSideYouTube.ImageIndex = 0;
+			this.controlSideYouTube.ImageList = this.imageList;
+			this.controlSideYouTube.ItemHeight = 20;
+			this.controlSideYouTube.Location = new System.Drawing.Point(0, 28);
+			this.controlSideYouTube.Name = "controlSideYouTube";
+			this.controlSideYouTube.SelectedImageIndex = 0;
+			this.controlSideYouTube.ShowLines = false;
+			this.controlSideYouTube.ShowRootLines = false;
+			this.controlSideYouTube.Size = new System.Drawing.Size(244, 58);
+			this.controlSideYouTube.TabIndex = 0;
+			this.controlSideYouTube.Visible = false;
+			this.controlSideYouTube.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// sideMenuItemPlanetLab
+			// 
+			this.sideMenuItemPlanetLab.Control = this.controlSidePlanetLab;
+			this.sideMenuItemPlanetLab.ImageLarge = global::InetAnalytics.Resources.GlobeLab_32;
+			this.sideMenuItemPlanetLab.ImageSmall = global::InetAnalytics.Resources.GlobeLab_16;
+			this.sideMenuItemPlanetLab.Index = -1;
+			this.sideMenuItemPlanetLab.Text = "PlanetLab";
+			// 
+			// sideMenuItemDatabase
+			// 
+			this.sideMenuItemDatabase.Control = this.controlSideDatabase;
+			this.sideMenuItemDatabase.ImageLarge = global::InetAnalytics.Resources.ServersDatabase_32;
+			this.sideMenuItemDatabase.ImageSmall = global::InetAnalytics.Resources.ServersDatabase_16;
+			this.sideMenuItemDatabase.Index = -1;
+			this.sideMenuItemDatabase.Text = "Database";
+			// 
+			// sideMenuItemSpiders
+			// 
+			this.sideMenuItemSpiders.Control = this.controlSideSpiders;
+			this.sideMenuItemSpiders.ImageLarge = global::InetAnalytics.Resources.ServersCube_32;
+			this.sideMenuItemSpiders.ImageSmall = global::InetAnalytics.Resources.ServersCube_16;
+			this.sideMenuItemSpiders.Index = -1;
+			this.sideMenuItemSpiders.Text = "Spiders";
+			// 
+			// sideMenuItemYouTube
+			// 
+			this.sideMenuItemYouTube.Control = this.controlSideYouTube;
+			this.sideMenuItemYouTube.ImageLarge = global::InetAnalytics.Resources.ServersVideo_32;
+			this.sideMenuItemYouTube.ImageSmall = global::InetAnalytics.Resources.ServersVideo_16;
+			this.sideMenuItemYouTube.Index = -1;
+			this.sideMenuItemYouTube.Text = "YouTube";
+			// 
+			// sideMenuItemTesting
+			// 
+			this.sideMenuItemTesting.Control = this.controlSideTesting;
+			this.sideMenuItemTesting.ImageLarge = global::InetAnalytics.Resources.TestsLarge_32;
+			this.sideMenuItemTesting.ImageSmall = global::InetAnalytics.Resources.TestsLarge_16;
+			this.sideMenuItemTesting.Index = -1;
+			this.sideMenuItemTesting.Text = "Testing";
+			// 
+			// sideMenuItemConfiguration
+			// 
+			this.sideMenuItemConfiguration.Control = this.controlSideConfiguration;
+			this.sideMenuItemConfiguration.ImageLarge = global::InetAnalytics.Resources.ConfigurationSettings_32;
+			this.sideMenuItemConfiguration.ImageSmall = global::InetAnalytics.Resources.ConfigurationSettings_16;
+			this.sideMenuItemConfiguration.Index = -1;
+			this.sideMenuItemConfiguration.Text = "Configuration";
+			// 
+			// sideMenuItemComments
+			// 
+			this.sideMenuItemComments.Control = this.controlSideComments;
+			this.sideMenuItemComments.ImageLarge = global::InetAnalytics.Resources.Comments_32;
+			this.sideMenuItemComments.ImageSmall = global::InetAnalytics.Resources.Comments_16;
+			this.sideMenuItemComments.Index = -1;
+			this.sideMenuItemComments.Text = "Comments";
+			// 
+			// controlSideLog
+			// 
+			this.controlSideLog.AutoScroll = true;
+			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideLog.Location = new System.Drawing.Point(0, 28);
+			this.controlSideLog.Name = "controlSideLog";
+			this.controlSideLog.Size = new System.Drawing.Size(244, 58);
+			this.controlSideLog.TabIndex = 2;
+			this.controlSideLog.Visible = false;
+			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
+			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// sideMenuItemLog
+			// 
+			this.sideMenuItemLog.Control = this.controlSideLog;
+			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
+			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
+			this.sideMenuItemLog.Index = -1;
+			this.sideMenuItemLog.Text = "Log";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -607,10 +607,10 @@ namespace InetAnalytics.Forms
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.sideMenu.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
 			this.menuViewVideo.ResumeLayout(false);
+			this.sideMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
