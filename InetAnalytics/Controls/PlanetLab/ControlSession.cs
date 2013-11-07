@@ -110,6 +110,9 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Set the node.
 			this.node = node;
 
+			// Set the title.
+			this.Title = "Secure Shell Connection to {0}".FormatWith(node.Hostname);
+
 			// Set the slice configuration event handlers.
 			this.config.Changed += this.OnConfigurationChanged;
 			this.config.Disposed += this.OnConfigurationChanged;
