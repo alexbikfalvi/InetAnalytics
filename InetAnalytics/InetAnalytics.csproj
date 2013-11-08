@@ -85,6 +85,9 @@
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Net\NetworkStatusToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Net\Ssh\ControlSsh.cs">
       <SubType>UserControl</SubType>
     </Compile>

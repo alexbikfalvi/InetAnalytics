@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new node.
 			if (null == node)
 			{
-				this.Title = "Node unknown";
+				this.ObjectTitle = "Node unknown";
 				this.Message = "The node information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = node.Hostname;
+				this.ObjectTitle = node.Hostname;
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeNode_32;
 
@@ -204,7 +204,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for node {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -251,7 +251,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Node unknown";
+			this.ObjectTitle = "Node unknown";
 			this.Message = "An error occurred while requesting the node information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

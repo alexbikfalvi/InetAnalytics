@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new address type.
 			if (null == type)
 			{
-				this.Title = "Address type unknown";
+				this.ObjectTitle = "Address type unknown";
 				this.Message = "The address type information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = type.Name;
+				this.ObjectTitle = type.Name;
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeObject_32;
 
@@ -99,7 +99,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for address type {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -146,7 +146,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Address Type Unknown";
+			this.ObjectTitle = "Address Type Unknown";
 			this.Message = "An error occurred while requesting the address type information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

@@ -46,33 +46,35 @@
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressInfo = new DotNetApi.Windows.Controls.ProgressInfo();
+			this.panelSpider = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.panel.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.panelSpider.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.progressListBox);
-			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1.Controls.Add(this.panelSpider);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(600, 378);
-			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.Size = new System.Drawing.Size(600, 400);
+			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
@@ -84,10 +86,10 @@
 			this.progressListBox.FormattingEnabled = true;
 			this.progressListBox.IntegralHeight = false;
 			this.progressListBox.ItemHeight = 48;
-			this.progressListBox.Location = new System.Drawing.Point(0, 82);
+			this.progressListBox.Location = new System.Drawing.Point(1, 104);
 			this.progressListBox.Name = "progressListBox";
 			this.progressListBox.ScrollAlwaysVisible = true;
-			this.progressListBox.Size = new System.Drawing.Size(600, 121);
+			this.progressListBox.Size = new System.Drawing.Size(598, 120);
 			this.progressListBox.TabIndex = 1;
 			// 
 			// panel
@@ -96,9 +98,9 @@
 			this.panel.Controls.Add(this.toolStrip);
 			this.panel.Controls.Add(this.linkLabel);
 			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel.Location = new System.Drawing.Point(0, 0);
+			this.panel.Location = new System.Drawing.Point(1, 22);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(600, 82);
+			this.panel.Size = new System.Drawing.Size(598, 82);
 			this.panel.TabIndex = 0;
 			// 
 			// progressBox
@@ -111,7 +113,7 @@
 			this.progressBox.Padding = new System.Windows.Forms.Padding(4);
 			this.progressBox.Progress = null;
 			this.progressBox.ProgressHeight = 12;
-			this.progressBox.Size = new System.Drawing.Size(600, 57);
+			this.progressBox.Size = new System.Drawing.Size(598, 57);
 			this.progressBox.TabIndex = 10;
 			// 
 			// toolStrip
@@ -123,7 +125,7 @@
             this.buttonFeeds});
 			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(600, 25);
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -224,6 +226,20 @@
 			this.progressInfo.Default = 0;
 			this.progressInfo.Legend = this.progressLegend;
 			// 
+			// panelSpider
+			// 
+			this.panelSpider.Controls.Add(this.progressListBox);
+			this.panelSpider.Controls.Add(this.panel);
+			this.panelSpider.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelSpider.Location = new System.Drawing.Point(0, 0);
+			this.panelSpider.Name = "panelSpider";
+			this.panelSpider.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelSpider.ShowBorder = true;
+			this.panelSpider.ShowTitle = true;
+			this.panelSpider.Size = new System.Drawing.Size(600, 225);
+			this.panelSpider.TabIndex = 11;
+			this.panelSpider.Title = "Standard Feeds Spider";
+			// 
 			// ControlSpiderStandardFeeds
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -231,10 +247,7 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSpiderStandardFeeds";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
-			this.Title = "Standard Feeds Spider";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
@@ -244,6 +257,7 @@
 			this.panel.PerformLayout();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.panelSpider.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -268,5 +282,6 @@
 		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList checkedListFeeds;
 		private DotNetApi.Windows.Controls.ProgressBox progressBox;
 		private DotNetApi.Windows.Controls.ProgressInfo progressInfo;
+		private DotNetApi.Windows.Controls.ThemePanel panelSpider;
 	}
 }

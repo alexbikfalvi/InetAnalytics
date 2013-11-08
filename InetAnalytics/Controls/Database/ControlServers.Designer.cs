@@ -58,12 +58,14 @@
 			this.menuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.panelServers = new DotNetApi.Windows.Controls.ThemePanel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.contextMenu.SuspendLayout();
+			this.panelServers.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -78,9 +80,9 @@
             this.buttonDisconnect,
             this.toolStripSeparator5,
             this.buttonChangePassword});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(800, 25);
+			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// buttonAdd
@@ -161,21 +163,21 @@
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.listView);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.panelServers);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(800, 578);
-			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.Size = new System.Drawing.Size(800, 600);
+			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
@@ -193,10 +195,10 @@
 			this.listView.GridLines = true;
 			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(0, 25);
+			this.listView.Location = new System.Drawing.Point(1, 47);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(800, 378);
+			this.listView.Size = new System.Drawing.Size(798, 377);
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
@@ -310,25 +312,37 @@
 			this.menuItemProperties.Text = "Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
+			// panelServers
+			// 
+			this.panelServers.Controls.Add(this.listView);
+			this.panelServers.Controls.Add(this.toolStrip);
+			this.panelServers.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelServers.Location = new System.Drawing.Point(0, 0);
+			this.panelServers.Name = "panelServers";
+			this.panelServers.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelServers.ShowBorder = true;
+			this.panelServers.ShowTitle = true;
+			this.panelServers.Size = new System.Drawing.Size(800, 425);
+			this.panelServers.TabIndex = 2;
+			this.panelServers.Title = "Database Servers";
+			// 
 			// ControlServers
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlServers";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
-			this.Title = "Database Servers";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.contextMenu.ResumeLayout(false);
+			this.panelServers.ResumeLayout(false);
+			this.panelServers.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -362,5 +376,6 @@
 		private System.Windows.Forms.ToolStripButton buttonChangePassword;
 		private System.Windows.Forms.ToolStripMenuItem menuItemChangePassword;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+		private DotNetApi.Windows.Controls.ThemePanel panelServers;
 	}
 }

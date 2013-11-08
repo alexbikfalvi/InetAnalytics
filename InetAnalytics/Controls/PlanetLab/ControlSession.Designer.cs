@@ -43,9 +43,8 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSession));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.panel = new System.Windows.Forms.Panel();
 			this.console = new InetAnalytics.Controls.ControlConsole();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelHostname = new System.Windows.Forms.ToolStripLabel();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
@@ -54,68 +53,60 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.toolStrip.SuspendLayout();
 			this.panel.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
 			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(600, 378);
-			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.Size = new System.Drawing.Size(600, 400);
+			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
-			// 
-			// panel
-			// 
-			this.panel.Controls.Add(this.console);
-			this.panel.Controls.Add(this.toolStrip1);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 0);
-			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(600, 203);
-			this.panel.TabIndex = 0;
 			// 
 			// console
 			// 
 			this.console.ButtonImage = ((System.Drawing.Image)(resources.GetObject("console.ButtonImage")));
 			this.console.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.console.Location = new System.Drawing.Point(0, 25);
+			this.console.Location = new System.Drawing.Point(1, 47);
 			this.console.Name = "console";
-			this.console.Size = new System.Drawing.Size(600, 178);
+			this.console.Size = new System.Drawing.Size(598, 177);
 			this.console.TabIndex = 1;
 			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
 			this.console.Cancel += new System.EventHandler(this.OnCancelCommand);
 			// 
-			// toolStrip1
+			// toolStrip
 			// 
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelHostname,
             this.separator1,
             this.buttonConnect,
             this.buttonDisconnect});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(600, 25);
-			this.toolStrip1.TabIndex = 0;
-			this.toolStrip1.Text = "toolStrip1";
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Name = "toolStrip";
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.TabIndex = 0;
+			this.toolStrip.Text = "toolStrip1";
 			// 
 			// labelHostname
 			// 
@@ -174,6 +165,20 @@
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
 			// 
+			// panel
+			// 
+			this.panel.Controls.Add(this.console);
+			this.panel.Controls.Add(this.toolStrip);
+			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel.Location = new System.Drawing.Point(0, 0);
+			this.panel.Name = "panel";
+			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panel.ShowBorder = true;
+			this.panel.ShowTitle = true;
+			this.panel.Size = new System.Drawing.Size(600, 225);
+			this.panel.TabIndex = 2;
+			this.panel.Title = "Secure Shell";
+			// 
 			// ControlSession
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,18 +186,16 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSession";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.toolStrip.ResumeLayout(false);
+			this.toolStrip.PerformLayout();
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -201,16 +204,16 @@
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
-		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
 		private ControlConsole console;
-		private System.Windows.Forms.ToolStrip toolStrip1;
+		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ToolStripButton buttonConnect;
 		private System.Windows.Forms.ToolStripButton buttonDisconnect;
 		private System.Windows.Forms.ToolStripLabel labelHostname;
 		private System.Windows.Forms.ToolStripSeparator separator1;
+		private DotNetApi.Windows.Controls.ThemePanel panel;
 
 	}
 }

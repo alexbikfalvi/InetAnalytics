@@ -33,7 +33,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 	/// <summary>
 	/// A class representing the control to browse the video entry in the YouTube API version 2.
 	/// </summary>
-	public partial class ControlYtApi2Profile : ThemeControl
+	public partial class ControlYtApi2Profile : ThreadSafeControl
 	{
 		private static readonly string logSource = "APIv2 Profile Entry";
 

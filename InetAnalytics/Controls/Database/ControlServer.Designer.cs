@@ -80,6 +80,7 @@
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.panelServer = new DotNetApi.Windows.Controls.ThemePanel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -94,6 +95,7 @@
 			this.tabPageRelationships.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRelationships)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+			this.panelServer.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -107,9 +109,9 @@
             this.buttonChangePassword,
             this.toolStripSeparator3,
             this.buttonProperties});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(800, 25);
+			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// buttonConnect
@@ -179,21 +181,21 @@
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panel);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.panelServer);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(800, 578);
-			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.Size = new System.Drawing.Size(800, 600);
+			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
@@ -205,9 +207,9 @@
 			this.panel.Controls.Add(this.labelName);
 			this.panel.Controls.Add(this.pictureBox);
 			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 25);
+			this.panel.Location = new System.Drawing.Point(1, 47);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(800, 378);
+			this.panel.Size = new System.Drawing.Size(798, 377);
 			this.panel.TabIndex = 0;
 			// 
 			// tabControl
@@ -221,7 +223,7 @@
 			this.tabControl.Location = new System.Drawing.Point(10, 64);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(782, 305);
+			this.tabControl.Size = new System.Drawing.Size(780, 304);
 			this.tabControl.TabIndex = 2;
 			// 
 			// tabPageDatabase
@@ -238,7 +240,7 @@
 			this.tabPageDatabase.Location = new System.Drawing.Point(4, 22);
 			this.tabPageDatabase.Name = "tabPageDatabase";
 			this.tabPageDatabase.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageDatabase.Size = new System.Drawing.Size(774, 279);
+			this.tabPageDatabase.Size = new System.Drawing.Size(772, 278);
 			this.tabPageDatabase.TabIndex = 0;
 			this.tabPageDatabase.Text = "Database";
 			this.tabPageDatabase.UseVisualStyleBackColor = true;
@@ -247,7 +249,7 @@
 			// 
 			this.buttonDatabaseSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonDatabaseSelect.Enabled = false;
-			this.buttonDatabaseSelect.Location = new System.Drawing.Point(653, 111);
+			this.buttonDatabaseSelect.Location = new System.Drawing.Point(651, 111);
 			this.buttonDatabaseSelect.Name = "buttonDatabaseSelect";
 			this.buttonDatabaseSelect.Size = new System.Drawing.Size(95, 23);
 			this.buttonDatabaseSelect.TabIndex = 7;
@@ -271,7 +273,7 @@
 			this.listViewDatabases.Location = new System.Drawing.Point(155, 81);
 			this.listViewDatabases.MultiSelect = false;
 			this.listViewDatabases.Name = "listViewDatabases";
-			this.listViewDatabases.Size = new System.Drawing.Size(492, 192);
+			this.listViewDatabases.Size = new System.Drawing.Size(490, 191);
 			this.listViewDatabases.SmallImageList = this.imageListSmall;
 			this.listViewDatabases.TabIndex = 5;
 			this.listViewDatabases.UseCompatibleStateImageBehavior = false;
@@ -307,7 +309,7 @@
 			// 
 			this.buttonDatabaseRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonDatabaseRefresh.Image = global::InetAnalytics.Resources.Refresh_16;
-			this.buttonDatabaseRefresh.Location = new System.Drawing.Point(653, 82);
+			this.buttonDatabaseRefresh.Location = new System.Drawing.Point(651, 82);
 			this.buttonDatabaseRefresh.Name = "buttonDatabaseRefresh";
 			this.buttonDatabaseRefresh.Size = new System.Drawing.Size(95, 23);
 			this.buttonDatabaseRefresh.TabIndex = 6;
@@ -329,7 +331,7 @@
 			// 
 			this.buttonDatabaseProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonDatabaseProperties.Image = global::InetAnalytics.Resources.Properties_16;
-			this.buttonDatabaseProperties.Location = new System.Drawing.Point(653, 53);
+			this.buttonDatabaseProperties.Location = new System.Drawing.Point(651, 53);
 			this.buttonDatabaseProperties.Name = "buttonDatabaseProperties";
 			this.buttonDatabaseProperties.Size = new System.Drawing.Size(95, 23);
 			this.buttonDatabaseProperties.TabIndex = 3;
@@ -344,7 +346,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxDatabase.Location = new System.Drawing.Point(155, 55);
 			this.textBoxDatabase.Name = "textBoxDatabase";
-			this.textBoxDatabase.Size = new System.Drawing.Size(492, 20);
+			this.textBoxDatabase.Size = new System.Drawing.Size(490, 20);
 			this.textBoxDatabase.TabIndex = 2;
 			// 
 			// labelDatabaseCurrent
@@ -362,7 +364,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelDatabaseTitle.Location = new System.Drawing.Point(59, 20);
 			this.labelDatabaseTitle.Name = "labelDatabaseTitle";
-			this.labelDatabaseTitle.Size = new System.Drawing.Size(709, 32);
+			this.labelDatabaseTitle.Size = new System.Drawing.Size(707, 32);
 			this.labelDatabaseTitle.TabIndex = 0;
 			this.labelDatabaseTitle.Text = "Use this tab to select the SQL database you want to use for storing the Internet " +
     "data objects.";
@@ -387,7 +389,7 @@
 			this.tabPageTables.Location = new System.Drawing.Point(4, 22);
 			this.tabPageTables.Name = "tabPageTables";
 			this.tabPageTables.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTables.Size = new System.Drawing.Size(774, 301);
+			this.tabPageTables.Size = new System.Drawing.Size(774, 279);
 			this.tabPageTables.TabIndex = 1;
 			this.tabPageTables.Text = "Tables";
 			this.tabPageTables.UseVisualStyleBackColor = true;
@@ -422,7 +424,7 @@
 			this.listViewTables.Location = new System.Drawing.Point(155, 55);
 			this.listViewTables.MultiSelect = false;
 			this.listViewTables.Name = "listViewTables";
-			this.listViewTables.Size = new System.Drawing.Size(490, 238);
+			this.listViewTables.Size = new System.Drawing.Size(490, 216);
 			this.listViewTables.SmallImageList = this.imageListSmall;
 			this.listViewTables.TabIndex = 7;
 			this.listViewTables.UseCompatibleStateImageBehavior = false;
@@ -489,7 +491,7 @@
 			this.tabPageRelationships.Location = new System.Drawing.Point(4, 22);
 			this.tabPageRelationships.Name = "tabPageRelationships";
 			this.tabPageRelationships.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageRelationships.Size = new System.Drawing.Size(774, 301);
+			this.tabPageRelationships.Size = new System.Drawing.Size(774, 279);
 			this.tabPageRelationships.TabIndex = 2;
 			this.tabPageRelationships.Text = "Relationships";
 			this.tabPageRelationships.UseVisualStyleBackColor = true;
@@ -535,7 +537,7 @@
 			this.listViewRelationships.Location = new System.Drawing.Point(155, 55);
 			this.listViewRelationships.MultiSelect = false;
 			this.listViewRelationships.Name = "listViewRelationships";
-			this.listViewRelationships.Size = new System.Drawing.Size(490, 238);
+			this.listViewRelationships.Size = new System.Drawing.Size(490, 216);
 			this.listViewRelationships.SmallImageList = this.imageListSmall;
 			this.listViewRelationships.TabIndex = 8;
 			this.listViewRelationships.UseCompatibleStateImageBehavior = false;
@@ -626,20 +628,31 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
+			// panelServer
+			// 
+			this.panelServer.Controls.Add(this.panel);
+			this.panelServer.Controls.Add(this.toolStrip);
+			this.panelServer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelServer.Location = new System.Drawing.Point(0, 0);
+			this.panelServer.Name = "panelServer";
+			this.panelServer.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelServer.ShowBorder = true;
+			this.panelServer.ShowTitle = true;
+			this.panelServer.Size = new System.Drawing.Size(800, 425);
+			this.panelServer.TabIndex = 1;
+			this.panelServer.Title = "Server";
+			// 
 			// ControlServer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlServer";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
@@ -656,6 +669,8 @@
 			this.tabPageRelationships.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRelationships)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+			this.panelServer.ResumeLayout(false);
+			this.panelServer.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -711,5 +726,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderLeftField;
 		private System.Windows.Forms.ColumnHeader columnHeaderRightTable;
 		private System.Windows.Forms.ColumnHeader columnHeaderRightField;
+		private DotNetApi.Windows.Controls.ThemePanel panelServer;
 	}
 }

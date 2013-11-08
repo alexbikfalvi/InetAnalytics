@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new node.
 			if (null == file)
 			{
-				this.Title = "Configuration file unknown";
+				this.ObjectTitle = "Configuration file unknown";
 				this.Message = "The configuration file information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = "Configuration file {0}".FormatWith(file.Id);
+				this.ObjectTitle = "Configuration file {0}".FormatWith(file.Id);
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeObject_32;
 
@@ -136,7 +136,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for configuration file {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -183,7 +183,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Configuration file unknown";
+			this.ObjectTitle = "Configuration file unknown";
 			this.Message = "An error occurred while requesting the configuration file information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

@@ -67,7 +67,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new site.
 			if (null == site)
 			{
-				this.Title = "Address unknown";
+				this.ObjectTitle = "Address unknown";
 				this.Message = "The address information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -76,7 +76,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = site.Name;
+				this.ObjectTitle = site.Name;
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeSchema_32;
 
@@ -197,7 +197,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for site {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -244,7 +244,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Site unknown";
+			this.ObjectTitle = "Site unknown";
 			this.Message = "An error occurred while requesting the site information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

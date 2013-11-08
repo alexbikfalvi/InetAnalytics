@@ -68,7 +68,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 0);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(296, 275);
+			this.listView.Size = new System.Drawing.Size(296, 271);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 4;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -171,10 +171,11 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlPlaylist);
-			this.splitContainer.Size = new System.Drawing.Size(592, 275);
+			this.splitContainer.Size = new System.Drawing.Size(592, 271);
 			this.splitContainer.SplitterDistance = 296;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 6;
+			this.splitContainer.UseTheme = false;
 			// 
 			// controlPlaylist
 			// 
@@ -183,7 +184,7 @@
 			this.controlPlaylist.Location = new System.Drawing.Point(0, 0);
 			this.controlPlaylist.Name = "controlPlaylist";
 			this.controlPlaylist.Playlist = null;
-			this.controlPlaylist.Size = new System.Drawing.Size(291, 275);
+			this.controlPlaylist.Size = new System.Drawing.Size(291, 271);
 			this.controlPlaylist.TabIndex = 0;
 			// 
 			// panel
@@ -192,7 +193,7 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
-			this.panel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.panel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 4);
 			this.panel.Size = new System.Drawing.Size(600, 275);
 			this.panel.TabIndex = 7;
 			// 

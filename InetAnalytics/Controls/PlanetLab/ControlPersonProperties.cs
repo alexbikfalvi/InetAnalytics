@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new person.
 			if (null == person)
 			{
-				this.Title = "Person unknown";
+				this.ObjectTitle = "Person unknown";
 				this.Message = "The person information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = "{0} {1}".FormatWith(person.FirstName, person.LastName);
+				this.ObjectTitle = "{0} {1}".FormatWith(person.FirstName, person.LastName);
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeUser_32;
 
@@ -159,7 +159,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for person {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -206,7 +206,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Person unknown";
+			this.ObjectTitle = "Person unknown";
 			this.Message = "An error occurred while requesting the person information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

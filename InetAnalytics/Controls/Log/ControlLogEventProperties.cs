@@ -33,7 +33,7 @@ namespace InetAnalytics.Controls.Log
 	/// <summary>
 	/// Displays the information of a log event.
 	/// </summary>
-	public partial class ControlLogEventProperties : ThemeControl
+	public partial class ControlLogEventProperties : ThreadSafeControl
 	{
 		private static readonly Image[] eventImage = {
 														 Resources.EventInformation_32,

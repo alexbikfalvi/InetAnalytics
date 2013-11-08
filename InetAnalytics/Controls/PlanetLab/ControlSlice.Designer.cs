@@ -44,6 +44,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSlice));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelSlice = new DotNetApi.Windows.Controls.ThemePanel();
 			this.splitContainerSlice = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listViewNodes = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -97,10 +98,12 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.panelNodes = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.panelSlice.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSlice)).BeginInit();
 			this.splitContainerSlice.Panel1.SuspendLayout();
 			this.splitContainerSlice.Panel2.SuspendLayout();
@@ -109,37 +112,51 @@
 			this.toolStrip.SuspendLayout();
 			this.contextMenuAddToNodes.SuspendLayout();
 			this.contextMenu.SuspendLayout();
+			this.panelNodes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.splitContainerSlice);
-			this.splitContainer.Panel1.Controls.Add(this.panel);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.panelSlice);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(800, 578);
-			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.Size = new System.Drawing.Size(800, 600);
+			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
+			// 
+			// panelSlice
+			// 
+			this.panelSlice.Controls.Add(this.panelNodes);
+			this.panelSlice.Controls.Add(this.panel);
+			this.panelSlice.Controls.Add(this.toolStrip);
+			this.panelSlice.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelSlice.Location = new System.Drawing.Point(0, 0);
+			this.panelSlice.Name = "panelSlice";
+			this.panelSlice.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelSlice.ShowBorder = true;
+			this.panelSlice.ShowTitle = true;
+			this.panelSlice.Size = new System.Drawing.Size(800, 425);
+			this.panelSlice.TabIndex = 1;
+			this.panelSlice.Title = "PlanetLab Slice";
 			// 
 			// splitContainerSlice
 			// 
 			this.splitContainerSlice.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerSlice.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainerSlice.Location = new System.Drawing.Point(0, 129);
+			this.splitContainerSlice.Location = new System.Drawing.Point(4, 4);
 			this.splitContainerSlice.Name = "splitContainerSlice";
 			// 
 			// splitContainerSlice.Panel1
@@ -149,10 +166,11 @@
 			// splitContainerSlice.Panel2
 			// 
 			this.splitContainerSlice.Panel2.Controls.Add(this.mapControl);
-			this.splitContainerSlice.Size = new System.Drawing.Size(800, 274);
+			this.splitContainerSlice.Size = new System.Drawing.Size(790, 265);
 			this.splitContainerSlice.SplitterDistance = 266;
 			this.splitContainerSlice.SplitterWidth = 5;
 			this.splitContainerSlice.TabIndex = 2;
+			this.splitContainerSlice.UseTheme = false;
 			// 
 			// listViewNodes
 			// 
@@ -169,7 +187,7 @@
 			this.listViewNodes.Location = new System.Drawing.Point(0, 0);
 			this.listViewNodes.MultiSelect = false;
 			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(266, 274);
+			this.listViewNodes.Size = new System.Drawing.Size(266, 265);
 			this.listViewNodes.SmallImageList = this.imageList;
 			this.listViewNodes.TabIndex = 0;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
@@ -207,7 +225,7 @@
 			this.mapControl.Location = new System.Drawing.Point(0, 0);
 			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
 			this.mapControl.Name = "mapControl";
-			this.mapControl.Size = new System.Drawing.Size(529, 274);
+			this.mapControl.Size = new System.Drawing.Size(519, 265);
 			this.mapControl.TabIndex = 0;
 			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
 			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
@@ -230,10 +248,10 @@
 			this.panel.Controls.Add(this.labelName);
 			this.panel.Controls.Add(this.textBoxName);
 			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel.Location = new System.Drawing.Point(0, 25);
+			this.panel.Location = new System.Drawing.Point(1, 47);
 			this.panel.MaximumSize = new System.Drawing.Size(0, 104);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(800, 104);
+			this.panel.Size = new System.Drawing.Size(798, 104);
 			this.panel.TabIndex = 1;
 			// 
 			// linkLabelKey
@@ -373,9 +391,9 @@
             this.buttonConnect,
             this.buttonDisconnect,
             this.buttonProperties});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(800, 25);
+			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -613,6 +631,16 @@
 			this.menuItemSiteProperties.Text = "Site prop&erties";
 			this.menuItemSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
 			// 
+			// panelNodes
+			// 
+			this.panelNodes.Controls.Add(this.splitContainerSlice);
+			this.panelNodes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelNodes.Location = new System.Drawing.Point(1, 151);
+			this.panelNodes.Name = "panelNodes";
+			this.panelNodes.Padding = new System.Windows.Forms.Padding(4);
+			this.panelNodes.Size = new System.Drawing.Size(798, 273);
+			this.panelNodes.TabIndex = 3;
+			// 
 			// ControlSlice
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -620,15 +648,14 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSlice";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.panelSlice.ResumeLayout(false);
+			this.panelSlice.PerformLayout();
 			this.splitContainerSlice.Panel1.ResumeLayout(false);
 			this.splitContainerSlice.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSlice)).EndInit();
@@ -639,6 +666,7 @@
 			this.toolStrip.PerformLayout();
 			this.contextMenuAddToNodes.ResumeLayout(false);
 			this.contextMenu.ResumeLayout(false);
+			this.panelNodes.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -699,5 +727,7 @@
 		private System.Windows.Forms.ToolStripMenuItem buttonSiteProperties;
 		private System.Windows.Forms.ColumnHeader columnHeaderState;
 		private System.Windows.Forms.ToolStripButton buttonRenew;
+		private DotNetApi.Windows.Controls.ThemePanel panelSlice;
+		private System.Windows.Forms.Panel panelNodes;
 	}
 }

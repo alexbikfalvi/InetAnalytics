@@ -59,7 +59,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new tag.
 			if (null == tag)
 			{
-				this.Title = "Slice tag unknown";
+				this.ObjectTitle = "Slice tag unknown";
 				this.Message = "The slice tag information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -68,7 +68,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = tag.TagName;
+				this.ObjectTitle = tag.TagName;
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeTag_32;
 
@@ -108,7 +108,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for slice tag {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -155,7 +155,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Slice tag unknown";
+			this.ObjectTitle = "Slice tag unknown";
 			this.Message = "An error occurred while requesting the slice tag information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

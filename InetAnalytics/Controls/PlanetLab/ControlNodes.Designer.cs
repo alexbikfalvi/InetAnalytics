@@ -78,8 +78,10 @@
 			this.columnHeaderDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.panelNodes = new DotNetApi.Windows.Controls.ThemePanel();
 			this.contextMenu.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.panelNodes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// imageList
@@ -365,26 +367,35 @@
 			// 
 			this.columnHeaderType.Text = "Type";
 			// 
+			// panelNodes
+			// 
+			this.panelNodes.Controls.Add(this.listViewNodes);
+			this.panelNodes.Controls.Add(this.toolStrip);
+			this.panelNodes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelNodes.Location = new System.Drawing.Point(0, 0);
+			this.panelNodes.Name = "panelNodes";
+			this.panelNodes.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelNodes.ShowBorder = true;
+			this.panelNodes.ShowTitle = true;
+			this.panelNodes.Size = new System.Drawing.Size(600, 400);
+			this.panelNodes.TabIndex = 10;
+			this.panelNodes.Title = "PlanetLab Nodes";
+			// 
 			// ControlNodes
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.listViewNodes);
-			this.Controls.Add(this.toolStrip);
+			this.Controls.Add(this.panelNodes);
 			this.Enabled = false;
 			this.Name = "ControlNodes";
-			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.ShowBorder = true;
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
-			this.Title = "PlanetLab Nodes";
-			this.Controls.SetChildIndex(this.toolStrip, 0);
-			this.Controls.SetChildIndex(this.listViewNodes, 0);
+			this.Controls.SetChildIndex(this.panelNodes, 0);
 			this.contextMenu.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.panelNodes.ResumeLayout(false);
+			this.panelNodes.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -426,5 +437,6 @@
 		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList stateFilter;
 		private System.Windows.Forms.ToolStripSeparator separator5;
 		private System.Windows.Forms.ToolStripMenuItem menuItemFilterState;
+		private DotNetApi.Windows.Controls.ThemePanel panelNodes;
 	}
 }

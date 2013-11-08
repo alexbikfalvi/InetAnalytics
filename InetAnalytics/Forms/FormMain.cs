@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using DotNetApi;
+using DotNetApi.Drawing;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
 using DotNetApi.Windows.Themes;
@@ -146,6 +147,7 @@ namespace InetAnalytics.Forms
 
 		// Delegates.
 		private readonly EventHandler actionNetworkStatusChanged;
+		private readonly EventHandler actionNetworkStatusChecked;
 
 		/// <summary>
 		/// Constructor for main form window.
@@ -555,10 +557,12 @@ namespace InetAnalytics.Forms
 				this.sideMenu.SelectedItem.Control.SetSelected(this.crawler.Config.ConsoleSideMenuSelectedNode);
 			}
 
-			// Create the network status changed event handler.
+			// Create the network status event handler.
 			this.actionNetworkStatusChanged = new EventHandler(this.OnNetworkStatusChanged);
+			this.actionNetworkStatusChecked = new EventHandler(this.OnNetworkStatusChecked);
 			// Set the network availability event handler.
 			Crawler.Network.NetworkChanged += this.actionNetworkStatusChanged;
+			Crawler.Network.NetworkChecked += this.actionNetworkStatusChecked;
 			// Update the network status.
 			this.OnNetworkStatusChanged(this, EventArgs.Empty);
 
@@ -1149,17 +1153,53 @@ namespace InetAnalytics.Forms
 						this.statusLabelConnection.Text = "Not connected";
 						break;
 				}
-				// Set the label tooltip.
-				this.statusLabelConnection.ToolTipText = "ICMP connectivity: {0}{1}HTTP connectivity: {2}{3}HTTPS connectivity: {4}{5}{6}Connectivity last checked at {7}".FormatWith(
-					Crawler.Network.IsInternetIcmpAvailable ? "Yes" : "No",
-					Environment.NewLine,
-					Crawler.Network.IsInternetHttpAvailable ? "Yes" : "No",
-					Environment.NewLine,
-					Crawler.Network.IsInternetHttpsAvailable ? "Yes" : "No",
-					Environment.NewLine,
-					Environment.NewLine,
-					Crawler.Network.InternetAvailableLastUpdated.ToLongTimeString());
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the network status has been checked.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNetworkStatusChecked(object sender, EventArgs e)
+		{
+			// Call the method on the UI thread.
+			if (this.InvokeRequired) this.Invoke(this.actionNetworkStatusChecked, new object[] { sender, e });
+			else
+			{
+				// If the tooltip is visible.
+				if (this.toolTipNetworkStatus.Visible)
+				{
+					// Hide the tooltip.
+					this.OnNetworkStatusLeave(sender, e);
+					// Show the tooltip.
+					this.OnNetworkStatusEnter(sender, e);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Shows the network status tooltip.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNetworkStatusEnter(object sender, EventArgs e)
+		{
+			// Compute the tooltip location.
+			Point location = new Point(this.ClientRectangle.Right, this.ClientRectangle.Bottom);
+			// Show the tooltip.
+			this.toolTipNetworkStatus.Show(this, location, ContentAlignment.BottomRight);
+		}
+
+		/// <summary>
+		/// Hides the network status tooltip.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNetworkStatusLeave(object sender, EventArgs e)
+		{
+			// Hide the tooltip.
+			this.toolTipNetworkStatus.Hide(this);
 		}
 	}
 }

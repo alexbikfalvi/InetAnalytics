@@ -167,7 +167,6 @@
 			this.settings.Name = "settings";
 			this.settings.Size = new System.Drawing.Size(715, 408);
 			this.settings.TabIndex = 8;
-			this.settings.Title = "";
 			// 
 			// ControlPlanetLabInfo
 			// 

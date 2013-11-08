@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new address.
 			if (null == address)
 			{
-				this.Title = "Address unknown";
+				this.ObjectTitle = "Address unknown";
 				this.Message = "The address information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = string.Format("Address {0}", address.AddressId);
+				this.ObjectTitle = string.Format("Address {0}", address.AddressId);
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeEnvelope_32;
 
@@ -117,7 +117,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for address {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -164,7 +164,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Address unknown";
+			this.ObjectTitle = "Address unknown";
 			this.Message = "An error occurred while requesting the address information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

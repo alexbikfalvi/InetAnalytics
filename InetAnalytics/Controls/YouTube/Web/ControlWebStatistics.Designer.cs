@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlWebStatistics));
 			this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
@@ -58,6 +58,7 @@
 			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderExtra = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.panelChart = new DotNetApi.Windows.Controls.ThemePanel();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -69,38 +70,39 @@
 			this.splitContainerChart.Panel2.SuspendLayout();
 			this.splitContainerChart.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.panelChart.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// chart
 			// 
-			chartArea2.Name = "ChartArea";
-			this.chart.ChartAreas.Add(chartArea2);
+			chartArea1.Name = "ChartArea";
+			this.chart.ChartAreas.Add(chartArea1);
 			this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chart.Location = new System.Drawing.Point(0, 0);
 			this.chart.Name = "chart";
 			this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-			this.chart.Size = new System.Drawing.Size(600, 108);
+			this.chart.Size = new System.Drawing.Size(600, 121);
 			this.chart.TabIndex = 2;
 			// 
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.splitContainerChart);
+			this.splitContainer.Panel1.Controls.Add(this.panelChart);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(600, 378);
-			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.Size = new System.Drawing.Size(600, 400);
+			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 3;
 			// 
@@ -108,7 +110,7 @@
 			// 
 			this.splitContainerChart.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerChart.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainerChart.Location = new System.Drawing.Point(0, 0);
+			this.splitContainerChart.Location = new System.Drawing.Point(0, 22);
 			this.splitContainerChart.Name = "splitContainerChart";
 			this.splitContainerChart.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -121,7 +123,7 @@
 			// 
 			this.splitContainerChart.Panel2.Controls.Add(this.listViewDiscovery);
 			this.splitContainerChart.Size = new System.Drawing.Size(600, 203);
-			this.splitContainerChart.SplitterDistance = 108;
+			this.splitContainerChart.SplitterDistance = 121;
 			this.splitContainerChart.SplitterWidth = 5;
 			this.splitContainerChart.TabIndex = 3;
 			// 
@@ -296,7 +298,7 @@
 			this.listViewDiscovery.Location = new System.Drawing.Point(0, 0);
 			this.listViewDiscovery.MultiSelect = false;
 			this.listViewDiscovery.Name = "listViewDiscovery";
-			this.listViewDiscovery.Size = new System.Drawing.Size(600, 90);
+			this.listViewDiscovery.Size = new System.Drawing.Size(600, 77);
 			this.listViewDiscovery.SmallImageList = this.imageList;
 			this.listViewDiscovery.TabIndex = 0;
 			this.listViewDiscovery.UseCompatibleStateImageBehavior = false;
@@ -329,6 +331,18 @@
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.imageList.Images.SetKeyName(0, "HotSpot_16.png");
 			// 
+			// panelChart
+			// 
+			this.panelChart.Controls.Add(this.splitContainerChart);
+			this.panelChart.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelChart.Location = new System.Drawing.Point(0, 0);
+			this.panelChart.Name = "panelChart";
+			this.panelChart.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
+			this.panelChart.ShowTitle = true;
+			this.panelChart.Size = new System.Drawing.Size(600, 225);
+			this.panelChart.TabIndex = 4;
+			this.panelChart.Title = "YouTube Web Statistics";
+			// 
 			// log
 			// 
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -348,10 +362,7 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlWebStatistics";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
-			this.Title = "YouTube Web Statistics";
 			((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
@@ -364,6 +375,7 @@
 			this.splitContainerChart.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.panelChart.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -398,5 +410,6 @@
 		private System.Windows.Forms.ToolStripButton buttonDiscovery;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton buttonComment;
+		private DotNetApi.Windows.Controls.ThemePanel panelChart;
 	}
 }

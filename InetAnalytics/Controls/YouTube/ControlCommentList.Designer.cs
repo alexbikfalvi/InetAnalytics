@@ -43,8 +43,8 @@
 			this.labelVideosPerPage = new System.Windows.Forms.ToolStripLabel();
 			this.comboBoxCommentsPerPage = new System.Windows.Forms.ToolStripComboBox();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.controlComment = new InetAnalytics.Controls.YouTube.ControlCommentProperties();
 			this.panel = new System.Windows.Forms.Panel();
+			this.controlComment = new InetAnalytics.Controls.YouTube.ControlCommentProperties();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -68,7 +68,7 @@
 			this.listView.Location = new System.Drawing.Point(0, 0);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(296, 275);
+			this.listView.Size = new System.Drawing.Size(296, 271);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 4;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -169,10 +169,21 @@
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlComment);
-			this.splitContainer.Size = new System.Drawing.Size(592, 275);
+			this.splitContainer.Size = new System.Drawing.Size(592, 271);
 			this.splitContainer.SplitterDistance = 296;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 6;
+			this.splitContainer.UseTheme = false;
+			// 
+			// panel
+			// 
+			this.panel.Controls.Add(this.splitContainer);
+			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel.Location = new System.Drawing.Point(0, 0);
+			this.panel.Name = "panel";
+			this.panel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 4);
+			this.panel.Size = new System.Drawing.Size(600, 275);
+			this.panel.TabIndex = 7;
 			// 
 			// controlComment
 			// 
@@ -181,18 +192,8 @@
 			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlComment.Location = new System.Drawing.Point(0, 0);
 			this.controlComment.Name = "controlComment";
-			this.controlComment.Size = new System.Drawing.Size(291, 275);
+			this.controlComment.Size = new System.Drawing.Size(291, 271);
 			this.controlComment.TabIndex = 0;
-			// 
-			// panel
-			// 
-			this.panel.Controls.Add(this.splitContainer);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 0);
-			this.panel.Name = "panel";
-			this.panel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.panel.Size = new System.Drawing.Size(600, 275);
-			this.panel.TabIndex = 7;
 			// 
 			// ControlCommentList
 			// 

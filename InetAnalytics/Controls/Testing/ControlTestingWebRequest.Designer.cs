@@ -31,7 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingWebRequest));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.panel = new System.Windows.Forms.Panel();
+			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
 			this.buttonExport = new System.Windows.Forms.Button();
 			this.buttonImport = new System.Windows.Forms.Button();
 			this.buttonUndo = new System.Windows.Forms.Button();
@@ -75,9 +75,9 @@
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.labelUrl = new System.Windows.Forms.Label();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -95,20 +95,21 @@
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
 			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(600, 378);
-			this.splitContainer.SplitterDistance = 203;
+			this.splitContainer.Size = new System.Drawing.Size(600, 400);
+			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
@@ -126,13 +127,17 @@
 			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel.Location = new System.Drawing.Point(0, 0);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(600, 203);
+			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panel.ShowBorder = true;
+			this.panel.ShowTitle = true;
+			this.panel.Size = new System.Drawing.Size(600, 225);
 			this.panel.TabIndex = 0;
+			this.panel.Title = "Web Request Testing";
 			// 
 			// buttonExport
 			// 
 			this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonExport.Location = new System.Drawing.Point(522, 149);
+			this.buttonExport.Location = new System.Drawing.Point(521, 170);
 			this.buttonExport.Name = "buttonExport";
 			this.buttonExport.Size = new System.Drawing.Size(75, 23);
 			this.buttonExport.TabIndex = 7;
@@ -143,7 +148,7 @@
 			// buttonImport
 			// 
 			this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonImport.Location = new System.Drawing.Point(522, 177);
+			this.buttonImport.Location = new System.Drawing.Point(521, 198);
 			this.buttonImport.Name = "buttonImport";
 			this.buttonImport.Size = new System.Drawing.Size(75, 23);
 			this.buttonImport.TabIndex = 8;
@@ -155,7 +160,7 @@
 			// 
 			this.buttonUndo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonUndo.Enabled = false;
-			this.buttonUndo.Location = new System.Drawing.Point(522, 60);
+			this.buttonUndo.Location = new System.Drawing.Point(521, 82);
 			this.buttonUndo.Name = "buttonUndo";
 			this.buttonUndo.Size = new System.Drawing.Size(75, 23);
 			this.buttonUndo.TabIndex = 6;
@@ -174,10 +179,10 @@
 			this.tabControl.Controls.Add(this.tabPageRequestData);
 			this.tabControl.Controls.Add(this.tabPageResponseHeaders);
 			this.tabControl.Controls.Add(this.tabPageResponseData);
-			this.tabControl.Location = new System.Drawing.Point(6, 30);
+			this.tabControl.Location = new System.Drawing.Point(7, 52);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(510, 170);
+			this.tabControl.Size = new System.Drawing.Size(508, 169);
 			this.tabControl.TabIndex = 4;
 			// 
 			// tabPageGeneral
@@ -200,7 +205,7 @@
 			this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabPageGeneral.Name = "tabPageGeneral";
 			this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGeneral.Size = new System.Drawing.Size(502, 144);
+			this.tabPageGeneral.Size = new System.Drawing.Size(500, 143);
 			this.tabPageGeneral.TabIndex = 0;
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -230,7 +235,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUserAgent.Location = new System.Drawing.Point(110, 167);
 			this.textBoxUserAgent.Name = "textBoxUserAgent";
-			this.textBoxUserAgent.Size = new System.Drawing.Size(182, 20);
+			this.textBoxUserAgent.Size = new System.Drawing.Size(198, 20);
 			this.textBoxUserAgent.TabIndex = 13;
 			this.textBoxUserAgent.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -251,7 +256,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxReferer.Location = new System.Drawing.Point(110, 141);
 			this.textBoxReferer.Name = "textBoxReferer";
-			this.textBoxReferer.Size = new System.Drawing.Size(182, 20);
+			this.textBoxReferer.Size = new System.Drawing.Size(198, 20);
 			this.textBoxReferer.TabIndex = 11;
 			this.textBoxReferer.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -283,7 +288,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxExpect.Location = new System.Drawing.Point(110, 115);
 			this.textBoxExpect.Name = "textBoxExpect";
-			this.textBoxExpect.Size = new System.Drawing.Size(182, 20);
+			this.textBoxExpect.Size = new System.Drawing.Size(198, 20);
 			this.textBoxExpect.TabIndex = 9;
 			this.textBoxExpect.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -293,7 +298,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxContentType.Location = new System.Drawing.Point(110, 63);
 			this.textBoxContentType.Name = "textBoxContentType";
-			this.textBoxContentType.Size = new System.Drawing.Size(182, 20);
+			this.textBoxContentType.Size = new System.Drawing.Size(198, 20);
 			this.textBoxContentType.TabIndex = 5;
 			this.textBoxContentType.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -314,7 +319,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAccept.Location = new System.Drawing.Point(110, 37);
 			this.textBoxAccept.Name = "textBoxAccept";
-			this.textBoxAccept.Size = new System.Drawing.Size(182, 20);
+			this.textBoxAccept.Size = new System.Drawing.Size(198, 20);
 			this.textBoxAccept.TabIndex = 3;
 			this.textBoxAccept.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -579,7 +584,7 @@
 			// 
 			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonSave.Enabled = false;
-			this.buttonSave.Location = new System.Drawing.Point(522, 31);
+			this.buttonSave.Location = new System.Drawing.Point(521, 53);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(75, 23);
 			this.buttonSave.TabIndex = 5;
@@ -592,9 +597,9 @@
 			// 
 			this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxUrl.Location = new System.Drawing.Point(79, 4);
+			this.textBoxUrl.Location = new System.Drawing.Point(80, 26);
 			this.textBoxUrl.Name = "textBoxUrl";
-			this.textBoxUrl.Size = new System.Drawing.Size(356, 20);
+			this.textBoxUrl.Size = new System.Drawing.Size(354, 20);
 			this.textBoxUrl.TabIndex = 1;
 			this.textBoxUrl.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -603,7 +608,7 @@
 			this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStart.Enabled = false;
 			this.buttonStart.Image = global::InetAnalytics.Resources.PlayStart_16;
-			this.buttonStart.Location = new System.Drawing.Point(441, 2);
+			this.buttonStart.Location = new System.Drawing.Point(440, 24);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
 			this.buttonStart.TabIndex = 2;
@@ -617,7 +622,7 @@
 			this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Image = global::InetAnalytics.Resources.PlayStop_16;
-			this.buttonStop.Location = new System.Drawing.Point(522, 2);
+			this.buttonStop.Location = new System.Drawing.Point(521, 24);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(75, 23);
 			this.buttonStop.TabIndex = 3;
@@ -629,11 +634,21 @@
 			// labelUrl
 			// 
 			this.labelUrl.AutoSize = true;
-			this.labelUrl.Location = new System.Drawing.Point(3, 7);
+			this.labelUrl.Location = new System.Drawing.Point(4, 29);
 			this.labelUrl.Name = "labelUrl";
 			this.labelUrl.Size = new System.Drawing.Size(32, 13);
 			this.labelUrl.TabIndex = 0;
 			this.labelUrl.Text = "&URL:";
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
+			this.saveFileDialog.Title = "Export Settings";
+			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
+			this.openFileDialog.Title = "Import Settings";
 			// 
 			// log
 			// 
@@ -647,16 +662,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
-			// saveFileDialog
-			// 
-			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
-			this.saveFileDialog.Title = "Export Settings";
-			// 
-			// openFileDialog
-			// 
-			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
-			this.openFileDialog.Title = "Import Settings";
-			// 
 			// ControlTestingWebRequest
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -664,10 +669,7 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlTestingWebRequest";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
-			this.Title = "Web Request Testing";
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
@@ -691,7 +693,7 @@
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
-		private System.Windows.Forms.Panel panel;
+		private DotNetApi.Windows.Controls.ThemePanel panel;
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.TextBox textBoxUrl;

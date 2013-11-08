@@ -61,9 +61,9 @@
 			this.itemSelectNodesLocation = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemSelectNodesState = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemSelectNodesSlice = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttonRemoveFromNodes = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
-			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -72,6 +72,7 @@
 			this.menuItemRemoveFromNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.themePanel1 = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -79,27 +80,28 @@
 			this.toolStrip.SuspendLayout();
 			this.contextMenuAddToNodes.SuspendLayout();
 			this.contextMenu.SuspendLayout();
+			this.themePanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.listViewSlices);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.themePanel1);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(800, 578);
-			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.Size = new System.Drawing.Size(800, 600);
+			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
@@ -118,9 +120,9 @@
 			this.listViewSlices.GridLines = true;
 			this.listViewSlices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listViewSlices.HideSelection = false;
-			this.listViewSlices.Location = new System.Drawing.Point(0, 25);
+			this.listViewSlices.Location = new System.Drawing.Point(1, 47);
 			this.listViewSlices.Name = "listViewSlices";
-			this.listViewSlices.Size = new System.Drawing.Size(800, 378);
+			this.listViewSlices.Size = new System.Drawing.Size(798, 377);
 			this.listViewSlices.SmallImageList = this.imageList;
 			this.listViewSlices.TabIndex = 10;
 			this.listViewSlices.UseCompatibleStateImageBehavior = false;
@@ -177,9 +179,9 @@
             this.separator3,
             this.buttonAddToNodes,
             this.buttonRemoveFromNodes});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(800, 25);
+			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 9;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -264,7 +266,7 @@
             this.itemSelectNodesState,
             this.itemSelectNodesSlice});
 			this.contextMenuAddToNodes.Name = "contextMenuAddToNodes";
-			this.contextMenuAddToNodes.OwnerItem = this.menuItemAddToNodes;
+			this.contextMenuAddToNodes.OwnerItem = this.buttonAddToNodes;
 			this.contextMenuAddToNodes.Size = new System.Drawing.Size(203, 70);
 			// 
 			// itemSelectNodesLocation
@@ -288,6 +290,14 @@
 			this.itemSelectNodesSlice.Text = "Select nodes by slice";
 			this.itemSelectNodesSlice.Click += new System.EventHandler(this.OnAddToNodesSlice);
 			// 
+			// menuItemAddToNodes
+			// 
+			this.menuItemAddToNodes.DropDown = this.contextMenuAddToNodes;
+			this.menuItemAddToNodes.Image = global::InetAnalytics.Resources.NodeAdd_16;
+			this.menuItemAddToNodes.Name = "menuItemAddToNodes";
+			this.menuItemAddToNodes.Size = new System.Drawing.Size(181, 22);
+			this.menuItemAddToNodes.Text = "&Add to nodes";
+			// 
 			// buttonRemoveFromNodes
 			// 
 			this.buttonRemoveFromNodes.Enabled = false;
@@ -309,14 +319,6 @@
 			this.controlLog.Size = new System.Drawing.Size(800, 170);
 			this.controlLog.TabIndex = 0;
 			this.controlLog.Title = "Log";
-			// 
-			// menuItemAddToNodes
-			// 
-			this.menuItemAddToNodes.DropDown = this.contextMenuAddToNodes;
-			this.menuItemAddToNodes.Image = global::InetAnalytics.Resources.NodeAdd_16;
-			this.menuItemAddToNodes.Name = "menuItemAddToNodes";
-			this.menuItemAddToNodes.Size = new System.Drawing.Size(181, 22);
-			this.menuItemAddToNodes.Text = "&Add to nodes";
 			// 
 			// legendItemSuccess
 			// 
@@ -369,6 +371,20 @@
 			this.menuItemProperties.Text = "&Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
+			// themePanel1
+			// 
+			this.themePanel1.Controls.Add(this.listViewSlices);
+			this.themePanel1.Controls.Add(this.toolStrip);
+			this.themePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.themePanel1.Location = new System.Drawing.Point(0, 0);
+			this.themePanel1.Name = "themePanel1";
+			this.themePanel1.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.themePanel1.ShowBorder = true;
+			this.themePanel1.ShowTitle = true;
+			this.themePanel1.Size = new System.Drawing.Size(800, 425);
+			this.themePanel1.TabIndex = 11;
+			this.themePanel1.Title = "PlanetLab Slices";
+			// 
 			// ControlSlices
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,13 +392,9 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlSlices";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
-			this.Title = "PlanetLab Slices";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
@@ -390,6 +402,8 @@
 			this.toolStrip.PerformLayout();
 			this.contextMenuAddToNodes.ResumeLayout(false);
 			this.contextMenu.ResumeLayout(false);
+			this.themePanel1.ResumeLayout(false);
+			this.themePanel1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -430,5 +444,6 @@
 		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesLocation;
 		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesState;
 		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesSlice;
+		private DotNetApi.Windows.Controls.ThemePanel themePanel1;
 	}
 }

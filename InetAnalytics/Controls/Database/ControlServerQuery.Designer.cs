@@ -43,6 +43,8 @@
 			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.dataGrid = new System.Windows.Forms.DataGridView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.panelQuery = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelResult = new DotNetApi.Windows.Controls.ThemePanel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -50,6 +52,8 @@
 			this.splitContainer.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+			this.panelQuery.SuspendLayout();
+			this.panelResult.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -60,9 +64,9 @@
             this.toolStripSeparator1,
             this.buttonStart,
             this.buttonStop});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(800, 25);
+			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// buttonConnect
@@ -113,21 +117,21 @@
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.codeBox);
-			this.splitContainer.Panel1.Controls.Add(this.statusStrip);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.panelQuery);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
-			this.splitContainer.Panel2.Controls.Add(this.dataGrid);
-			this.splitContainer.Size = new System.Drawing.Size(800, 578);
-			this.splitContainer.SplitterDistance = 289;
+			this.splitContainer.Panel2.Controls.Add(this.panelResult);
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(800, 600);
+			this.splitContainer.SplitterDistance = 300;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
@@ -137,9 +141,9 @@
 			this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.codeBox.Font = new System.Drawing.Font("Consolas", 10F);
 			this.codeBox.ForeColor = System.Drawing.Color.Blue;
-			this.codeBox.Location = new System.Drawing.Point(0, 25);
+			this.codeBox.Location = new System.Drawing.Point(1, 47);
 			this.codeBox.Name = "codeBox";
-			this.codeBox.Size = new System.Drawing.Size(800, 242);
+			this.codeBox.Size = new System.Drawing.Size(798, 230);
 			this.codeBox.TabIndex = 2;
 			this.codeBox.Text = "";
 			this.codeBox.TextChanged += new System.EventHandler(this.OnQueryChanged);
@@ -148,9 +152,9 @@
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 267);
+			this.statusStrip.Location = new System.Drawing.Point(1, 277);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(800, 22);
+			this.statusStrip.Size = new System.Drawing.Size(798, 22);
 			this.statusStrip.SizingGrip = false;
 			this.statusStrip.TabIndex = 1;
 			// 
@@ -169,11 +173,11 @@
 			this.dataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGrid.Location = new System.Drawing.Point(0, 0);
+			this.dataGrid.Location = new System.Drawing.Point(1, 22);
 			this.dataGrid.Name = "dataGrid";
 			this.dataGrid.ReadOnly = true;
 			this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dataGrid.Size = new System.Drawing.Size(800, 284);
+			this.dataGrid.Size = new System.Drawing.Size(798, 272);
 			this.dataGrid.TabIndex = 0;
 			this.dataGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnCellFormatting);
 			// 
@@ -184,27 +188,54 @@
 			this.imageList.Images.SetKeyName(0, "Database");
 			this.imageList.Images.SetKeyName(1, "DatabaseStar");
 			// 
+			// panelQuery
+			// 
+			this.panelQuery.Controls.Add(this.codeBox);
+			this.panelQuery.Controls.Add(this.statusStrip);
+			this.panelQuery.Controls.Add(this.toolStrip);
+			this.panelQuery.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelQuery.Location = new System.Drawing.Point(0, 0);
+			this.panelQuery.Name = "panelQuery";
+			this.panelQuery.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelQuery.ShowBorder = true;
+			this.panelQuery.ShowTitle = true;
+			this.panelQuery.Size = new System.Drawing.Size(800, 300);
+			this.panelQuery.TabIndex = 3;
+			this.panelQuery.Title = "Database Query";
+			// 
+			// panelResult
+			// 
+			this.panelResult.Controls.Add(this.dataGrid);
+			this.panelResult.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelResult.Location = new System.Drawing.Point(0, 0);
+			this.panelResult.Name = "panelResult";
+			this.panelResult.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelResult.ShowBorder = true;
+			this.panelResult.ShowTitle = true;
+			this.panelResult.Size = new System.Drawing.Size(800, 295);
+			this.panelResult.TabIndex = 1;
+			this.panelResult.Title = "Query Result";
+			// 
 			// ControlServerQuery
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlServerQuery";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
-			this.Title = "Server Query";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+			this.panelQuery.ResumeLayout(false);
+			this.panelQuery.PerformLayout();
+			this.panelResult.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -223,5 +254,7 @@
 		private DotNetApi.Windows.Controls.CodeTextBox codeBox;
 		private System.Windows.Forms.ToolStripButton buttonStart;
 		private System.Windows.Forms.ToolStripButton buttonStop;
+		private DotNetApi.Windows.Controls.ThemePanel panelQuery;
+		private DotNetApi.Windows.Controls.ThemePanel panelResult;
 	}
 }

@@ -48,11 +48,13 @@
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.controlVideo = new InetAnalytics.Controls.YouTube.ControlVideoProperties();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -66,9 +68,9 @@
             this.buttonView,
             this.toolStripSeparator3,
             this.buttonComment});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(800, 25);
+			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
 			// 
 			// label
@@ -203,30 +205,30 @@
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.controlVideo);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.log);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(800, 578);
-			this.splitContainer.SplitterDistance = 403;
+			this.splitContainer.Size = new System.Drawing.Size(800, 600);
+			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
 			// controlVideo
 			// 
 			this.controlVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlVideo.Location = new System.Drawing.Point(0, 25);
+			this.controlVideo.Location = new System.Drawing.Point(1, 47);
 			this.controlVideo.Name = "controlVideo";
-			this.controlVideo.Size = new System.Drawing.Size(800, 378);
+			this.controlVideo.Size = new System.Drawing.Size(798, 377);
 			this.controlVideo.TabIndex = 0;
 			this.controlVideo.Video = null;
 			this.controlVideo.ViewProfile += new InetAnalytics.Events.StringEventHandler(this.OnViewProfile);
@@ -243,23 +245,35 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
+			// panel
+			// 
+			this.panel.Controls.Add(this.controlVideo);
+			this.panel.Controls.Add(this.toolStrip);
+			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel.Location = new System.Drawing.Point(0, 0);
+			this.panel.Name = "panel";
+			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panel.ShowBorder = true;
+			this.panel.ShowTitle = true;
+			this.panel.Size = new System.Drawing.Size(800, 425);
+			this.panel.TabIndex = 1;
+			this.panel.Title = "YouTube Video";
+			// 
 			// ControlYtApi2Video
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlYtApi2Video";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);
-			this.Title = "YouTube Video";
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.panel.ResumeLayout(false);
+			this.panel.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -286,5 +300,6 @@
 		private System.Windows.Forms.ToolStripButton buttonComment;
 		private System.Windows.Forms.ToolStripMenuItem menuItemAuthor;
 		private System.Windows.Forms.ToolStripMenuItem menuItemComments;
+		private DotNetApi.Windows.Controls.ThemePanel panel;
 	}
 }

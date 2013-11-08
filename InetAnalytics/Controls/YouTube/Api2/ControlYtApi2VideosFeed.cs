@@ -36,11 +36,10 @@ namespace InetAnalytics.Controls.YouTube.Api2
 {
 	public delegate Uri VideosFeedEventHandler(string video, int? startIndex, int? maxResults);
 
-
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlYtApi2VideosFeed : ThemeControl
+	public partial class ControlYtApi2VideosFeed : ThreadSafeControl
 	{
 		private string logSource;
 

@@ -89,7 +89,7 @@ namespace InetAnalytics.Controls.Database
 			this.treeNode = treeNode;
 
 			// Set the title.
-			this.Title = "Database Server ({0})".FormatWith(server.Name);
+			this.panelServer.Title = "Database Server ({0})".FormatWith(server.Name);
 
 			// Add the event handlers for the database server.
 			this.server.ServerChanged += this.OnServerChanged;

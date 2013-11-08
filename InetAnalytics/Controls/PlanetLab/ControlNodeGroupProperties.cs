@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new node group.
 			if (null == nodeGroup)
 			{
-				this.Title = "Node group unknown";
+				this.ObjectTitle = "Node group unknown";
 				this.Message = "The node group information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = nodeGroup.GroupName;
+				this.ObjectTitle = nodeGroup.GroupName;
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobeObject_32;
 
@@ -124,7 +124,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for node group {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -171,7 +171,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "Node group unknown";
+			this.ObjectTitle = "Node group unknown";
 			this.Message = "An error occurred while requesting the node group information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

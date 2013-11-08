@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the display information for the new PCU.
 			if (null == pcu)
 			{
-				this.Title = "PCU unknown";
+				this.ObjectTitle = "PCU unknown";
 				this.Message = "The PCU information is not available.";
 				this.Icon = Resources.GlobeWarning_32;
 				this.tabControl.Visible = false;
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// General.
 
-				this.Title = pcu.Hostname;
+				this.ObjectTitle = pcu.Hostname;
 				this.Message = string.Empty;
 				this.Icon = Resources.GlobePower_32;
 
@@ -130,7 +130,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Hide the current information.
 			this.Icon = Resources.GlobeClock_32;
-			this.Title = "Updating...";
+			this.ObjectTitle = "Updating...";
 			this.Message = "Updating the information for PCU {0}...".FormatWith(id);
 			this.tabControl.Visible = false;
 
@@ -177,7 +177,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Catch all exceptions.
 			this.Icon = Resources.GlobeError_32;
-			this.Title = "PCU unknown";
+			this.ObjectTitle = "PCU unknown";
 			this.Message = "An error occurred while requesting the PCU information. {0}{1}{2}".FormatWith(
 				Environment.NewLine,
 				Environment.NewLine,

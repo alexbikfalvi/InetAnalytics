@@ -150,6 +150,10 @@ namespace InetCrawler
 		/// An event raised when the network status has changed.
 		/// </summary>
 		public event EventHandler NetworkChanged;
+		/// <summary>
+		/// An event raised when the network status was checked.
+		/// </summary>
+		public event EventHandler NetworkChecked;
 
 		// Private methods.
 
@@ -253,6 +257,9 @@ namespace InetCrawler
 				// Raise the event.
 				if (null != this.NetworkChanged) this.NetworkChanged(this, EventArgs.Empty);
 			}
+
+			// Raise the network checked event.
+			if (null != this.NetworkChecked) this.NetworkChecked(this, EventArgs.Empty);
 		}
 
 		/// <summary>

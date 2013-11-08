@@ -45,31 +45,35 @@
 			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
 			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
 			this.controlLogEvent = new InetAnalytics.Controls.Log.ControlLogEventProperties();
+			this.panelList = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelEvent = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.panelList.SuspendLayout();
+			this.panelEvent.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.listView);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.panelList);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
-			this.splitContainer.Panel2.Controls.Add(this.controlLogEvent);
+			this.splitContainer.Panel2.Controls.Add(this.panelEvent);
 			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(600, 378);
-			this.splitContainer.SplitterDistance = 189;
+			this.splitContainer.Size = new System.Drawing.Size(600, 400);
+			this.splitContainer.SplitterDistance = 200;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
@@ -85,10 +89,10 @@
 			this.listView.GridLines = true;
 			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(0, 25);
+			this.listView.Location = new System.Drawing.Point(1, 47);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(600, 164);
+			this.listView.Size = new System.Drawing.Size(598, 152);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 0;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -131,9 +135,9 @@
             this.buttonLevel,
             this.toolStripSeparator,
             this.buttonCalendar});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(600, 25);
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 2;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -203,13 +207,38 @@
 			// 
 			this.controlLogEvent.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlLogEvent.Event = null;
-			this.controlLogEvent.Location = new System.Drawing.Point(0, 0);
+			this.controlLogEvent.Location = new System.Drawing.Point(1, 22);
 			this.controlLogEvent.Name = "controlLogEvent";
 			this.controlLogEvent.Padding = new System.Windows.Forms.Padding(1);
-			this.controlLogEvent.ShowBorder = true;
-			this.controlLogEvent.Size = new System.Drawing.Size(600, 184);
+			this.controlLogEvent.Size = new System.Drawing.Size(598, 172);
 			this.controlLogEvent.TabIndex = 0;
-			this.controlLogEvent.Title = "";
+			// 
+			// panelList
+			// 
+			this.panelList.Controls.Add(this.listView);
+			this.panelList.Controls.Add(this.toolStrip);
+			this.panelList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelList.Location = new System.Drawing.Point(0, 0);
+			this.panelList.Name = "panelList";
+			this.panelList.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelList.ShowBorder = true;
+			this.panelList.ShowTitle = true;
+			this.panelList.Size = new System.Drawing.Size(600, 200);
+			this.panelList.TabIndex = 3;
+			this.panelList.Title = "Event Log";
+			// 
+			// panelEvent
+			// 
+			this.panelEvent.Controls.Add(this.controlLogEvent);
+			this.panelEvent.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelEvent.Location = new System.Drawing.Point(0, 0);
+			this.panelEvent.Name = "panelEvent";
+			this.panelEvent.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelEvent.ShowBorder = true;
+			this.panelEvent.ShowTitle = true;
+			this.panelEvent.Size = new System.Drawing.Size(600, 195);
+			this.panelEvent.TabIndex = 1;
+			this.panelEvent.Title = "Event Information";
 			// 
 			// ControlLog
 			// 
@@ -217,18 +246,17 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlLog";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
-			this.Title = "Log";
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.panelList.ResumeLayout(false);
+			this.panelList.PerformLayout();
+			this.panelEvent.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -250,5 +278,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripDropDownButton buttonCalendar;
 		private DotNetApi.Windows.Controls.ToolStripDropDownCalendar calendar;
+		private DotNetApi.Windows.Controls.ThemePanel panelList;
+		private DotNetApi.Windows.Controls.ThemePanel panelEvent;
 	}
 }

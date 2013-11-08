@@ -92,7 +92,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Gets or sets the control title text.
 		/// </summary>
-		protected string Title
+		protected string ObjectTitle
 		{
 			get { return this.labelTitle.Text; }
 			set { this.labelTitle.Text = value; }

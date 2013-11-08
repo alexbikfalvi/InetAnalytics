@@ -46,7 +46,26 @@ namespace InetAnalytics.Forms
 			this.statusLabelMiddle = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
+			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
+			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideYouTube = new DotNetApi.Windows.Controls.SideTreeView();
+			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,37 +79,19 @@ namespace InetAnalytics.Forms
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
-			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideYouTube = new DotNetApi.Windows.Controls.SideTreeView();
-			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.labelNotAvailable = new System.Windows.Forms.Label();
-			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
-			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.toolTipNetworkStatus = new InetAnalytics.Controls.Net.NetworkStatusToolTip(this.components);
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer.SuspendLayout();
 			this.statusStrip.SuspendLayout();
-			this.menuStrip.SuspendLayout();
-			this.menuViewVideo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.sideMenu.SuspendLayout();
+			this.menuStrip.SuspendLayout();
+			this.menuViewVideo.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStripContainer
@@ -156,6 +157,93 @@ namespace InetAnalytics.Forms
 			this.statusLabelConnection.Name = "statusLabelConnection";
 			this.statusLabelConnection.Size = new System.Drawing.Size(81, 17);
 			this.statusLabelConnection.Text = "Connected";
+			this.statusLabelConnection.MouseEnter += new System.EventHandler(this.OnNetworkStatusEnter);
+			this.statusLabelConnection.MouseLeave += new System.EventHandler(this.OnNetworkStatusLeave);
+			// 
+			// splitContainer
+			// 
+			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.splitContainer.Location = new System.Drawing.Point(5, 5);
+			this.splitContainer.Name = "splitContainer";
+			// 
+			// splitContainer.Panel1
+			// 
+			this.splitContainer.Panel1.Controls.Add(this.sideMenu);
+			// 
+			// splitContainer.Panel2
+			// 
+			this.splitContainer.Panel2.Controls.Add(this.labelNotAvailable);
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(998, 526);
+			this.splitContainer.SplitterDistance = 246;
+			this.splitContainer.SplitterWidth = 5;
+			this.splitContainer.TabIndex = 0;
+			// 
+			// sideMenu
+			// 
+			this.sideMenu.Controls.Add(this.controlSideLog);
+			this.sideMenu.Controls.Add(this.controlSideComments);
+			this.sideMenu.Controls.Add(this.controlSideConfiguration);
+			this.sideMenu.Controls.Add(this.controlSideTesting);
+			this.sideMenu.Controls.Add(this.controlSidePlanetLab);
+			this.sideMenu.Controls.Add(this.controlSideSpiders);
+			this.sideMenu.Controls.Add(this.controlSideDatabase);
+			this.sideMenu.Controls.Add(this.controlSideYouTube);
+			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.sideMenu.ItemHeight = 48;
+			this.sideMenu.Items.AddRange(new DotNetApi.Windows.Controls.SideMenuItem[] {
+            this.sideMenuItemPlanetLab,
+            this.sideMenuItemDatabase,
+            this.sideMenuItemYouTube,
+            this.sideMenuItemTesting,
+            this.sideMenuItemSpiders,
+            this.sideMenuItemConfiguration,
+            this.sideMenuItemLog,
+            this.sideMenuItemComments});
+			this.sideMenu.Location = new System.Drawing.Point(0, 0);
+			this.sideMenu.MinimizedItemWidth = 25;
+			this.sideMenu.MinimumPanelHeight = 50;
+			this.sideMenu.Name = "sideMenu";
+			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 22, 0, 440);
+			this.sideMenu.SelectedIndex = 0;
+			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
+			this.sideMenu.Size = new System.Drawing.Size(246, 526);
+			this.sideMenu.TabIndex = 0;
+			this.sideMenu.Title = "";
+			this.sideMenu.VisibleItems = 8;
+			// 
+			// controlSideLog
+			// 
+			this.controlSideLog.AutoScroll = true;
+			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideLog.Location = new System.Drawing.Point(0, 22);
+			this.controlSideLog.Name = "controlSideLog";
+			this.controlSideLog.Size = new System.Drawing.Size(246, 64);
+			this.controlSideLog.TabIndex = 2;
+			this.controlSideLog.Visible = false;
+			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
+			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideComments
+			// 
+			this.controlSideComments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideComments.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideComments.FullRowSelect = true;
+			this.controlSideComments.HideSelection = false;
+			this.controlSideComments.ImageIndex = 0;
+			this.controlSideComments.ImageList = this.imageList;
+			this.controlSideComments.ItemHeight = 20;
+			this.controlSideComments.Location = new System.Drawing.Point(0, 22);
+			this.controlSideComments.Name = "controlSideComments";
+			this.controlSideComments.SelectedImageIndex = 0;
+			this.controlSideComments.ShowLines = false;
+			this.controlSideComments.ShowRootLines = false;
+			this.controlSideComments.Size = new System.Drawing.Size(246, 64);
+			this.controlSideComments.TabIndex = 3;
+			this.controlSideComments.Visible = false;
+			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// imageList
 			// 
@@ -210,179 +298,6 @@ namespace InetAnalytics.Forms
 			this.imageList.Images.SetKeyName(46, "GlobeTask");
 			this.imageList.Images.SetKeyName(47, "TestGlobeGoto");
 			this.imageList.Images.SetKeyName(48, "TestConnectGoto");
-			// 
-			// menuStrip
-			// 
-			this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
-			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemFile,
-            this.menuItemHelp});
-			this.menuStrip.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip.Name = "menuStrip";
-			this.menuStrip.Size = new System.Drawing.Size(1008, 24);
-			this.menuStrip.TabIndex = 0;
-			// 
-			// menuItemFile
-			// 
-			this.menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemExit});
-			this.menuItemFile.Name = "menuItemFile";
-			this.menuItemFile.Size = new System.Drawing.Size(37, 20);
-			this.menuItemFile.Text = "&File";
-			// 
-			// menuItemExit
-			// 
-			this.menuItemExit.Name = "menuItemExit";
-			this.menuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-			this.menuItemExit.Size = new System.Drawing.Size(134, 22);
-			this.menuItemExit.Text = "E&xit";
-			this.menuItemExit.Click += new System.EventHandler(this.OnExit);
-			// 
-			// menuItemHelp
-			// 
-			this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAbout});
-			this.menuItemHelp.Name = "menuItemHelp";
-			this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
-			this.menuItemHelp.Text = "&Help";
-			// 
-			// menuItemAbout
-			// 
-			this.menuItemAbout.Name = "menuItemAbout";
-			this.menuItemAbout.Size = new System.Drawing.Size(116, 22);
-			this.menuItemAbout.Text = "&About...";
-			this.menuItemAbout.Click += new System.EventHandler(this.OpenAboutForm);
-			// 
-			// menuViewVideo
-			// 
-			this.menuViewVideo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemApi2,
-            this.menuItemApiV2Related,
-            this.menuItemApiV2Responses,
-            this.menuItemApi3,
-            this.menuItemWeb,
-            this.toolStripSeparator1,
-            this.menuItemYouTube});
-			this.menuViewVideo.Name = "viewMenu";
-			this.menuViewVideo.Size = new System.Drawing.Size(192, 142);
-			// 
-			// menuItemApi2
-			// 
-			this.menuItemApi2.Image = global::InetAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApi2.Name = "menuItemApi2";
-			this.menuItemApi2.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApi2.Text = "APIv2 information";
-			// 
-			// menuItemApiV2Related
-			// 
-			this.menuItemApiV2Related.Image = global::InetAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApiV2Related.Name = "menuItemApiV2Related";
-			this.menuItemApiV2Related.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApiV2Related.Text = "APIv2 related videos";
-			// 
-			// menuItemApiV2Responses
-			// 
-			this.menuItemApiV2Responses.Image = global::InetAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApiV2Responses.Name = "menuItemApiV2Responses";
-			this.menuItemApiV2Responses.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApiV2Responses.Text = "APIv2 response videos";
-			// 
-			// menuItemApi3
-			// 
-			this.menuItemApi3.Image = global::InetAnalytics.Resources.ServerBrowse_16;
-			this.menuItemApi3.Name = "menuItemApi3";
-			this.menuItemApi3.Size = new System.Drawing.Size(191, 22);
-			this.menuItemApi3.Text = "APIv3 information";
-			// 
-			// menuItemWeb
-			// 
-			this.menuItemWeb.Image = global::InetAnalytics.Resources.GlobeBrowse_16;
-			this.menuItemWeb.Name = "menuItemWeb";
-			this.menuItemWeb.Size = new System.Drawing.Size(191, 22);
-			this.menuItemWeb.Text = "Web statistics";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
-			// 
-			// menuItemYouTube
-			// 
-			this.menuItemYouTube.Image = global::InetAnalytics.Resources.Globe_16;
-			this.menuItemYouTube.Name = "menuItemYouTube";
-			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
-			this.menuItemYouTube.Text = "Open in YouTube";
-			// 
-			// splitContainer
-			// 
-			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer.Location = new System.Drawing.Point(5, 5);
-			this.splitContainer.Name = "splitContainer";
-			// 
-			// splitContainer.Panel1
-			// 
-			this.splitContainer.Panel1.Controls.Add(this.sideMenu);
-			// 
-			// splitContainer.Panel2
-			// 
-			this.splitContainer.Panel2.Controls.Add(this.labelNotAvailable);
-			this.splitContainer.Panel2Border = false;
-			this.splitContainer.Size = new System.Drawing.Size(998, 526);
-			this.splitContainer.SplitterDistance = 246;
-			this.splitContainer.SplitterWidth = 5;
-			this.splitContainer.TabIndex = 0;
-			// 
-			// sideMenu
-			// 
-			this.sideMenu.Controls.Add(this.controlSideLog);
-			this.sideMenu.Controls.Add(this.controlSideComments);
-			this.sideMenu.Controls.Add(this.controlSideConfiguration);
-			this.sideMenu.Controls.Add(this.controlSideTesting);
-			this.sideMenu.Controls.Add(this.controlSidePlanetLab);
-			this.sideMenu.Controls.Add(this.controlSideSpiders);
-			this.sideMenu.Controls.Add(this.controlSideDatabase);
-			this.sideMenu.Controls.Add(this.controlSideYouTube);
-			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.sideMenu.ItemHeight = 48;
-			this.sideMenu.Items.AddRange(new DotNetApi.Windows.Controls.SideMenuItem[] {
-            this.sideMenuItemPlanetLab,
-            this.sideMenuItemDatabase,
-            this.sideMenuItemYouTube,
-            this.sideMenuItemTesting,
-            this.sideMenuItemSpiders,
-            this.sideMenuItemConfiguration,
-            this.sideMenuItemLog,
-            this.sideMenuItemComments});
-			this.sideMenu.Location = new System.Drawing.Point(0, 0);
-			this.sideMenu.MinimizedItemWidth = 25;
-			this.sideMenu.MinimumPanelHeight = 50;
-			this.sideMenu.Name = "sideMenu";
-			this.sideMenu.Padding = new System.Windows.Forms.Padding(0, 22, 0, 440);
-			this.sideMenu.SelectedIndex = 0;
-			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
-			this.sideMenu.Size = new System.Drawing.Size(246, 526);
-			this.sideMenu.TabIndex = 0;
-			this.sideMenu.VisibleItems = 8;
-			// 
-			// controlSideComments
-			// 
-			this.controlSideComments.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideComments.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideComments.FullRowSelect = true;
-			this.controlSideComments.HideSelection = false;
-			this.controlSideComments.ImageIndex = 0;
-			this.controlSideComments.ImageList = this.imageList;
-			this.controlSideComments.ItemHeight = 20;
-			this.controlSideComments.Location = new System.Drawing.Point(0, 22);
-			this.controlSideComments.Name = "controlSideComments";
-			this.controlSideComments.SelectedImageIndex = 0;
-			this.controlSideComments.ShowLines = false;
-			this.controlSideComments.ShowRootLines = false;
-			this.controlSideComments.Size = new System.Drawing.Size(246, 64);
-			this.controlSideComments.TabIndex = 3;
-			this.controlSideComments.Visible = false;
-			this.controlSideComments.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideConfiguration
 			// 
@@ -514,14 +429,6 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemDatabase.Index = -1;
 			this.sideMenuItemDatabase.Text = "Database";
 			// 
-			// sideMenuItemSpiders
-			// 
-			this.sideMenuItemSpiders.Control = this.controlSideSpiders;
-			this.sideMenuItemSpiders.ImageLarge = global::InetAnalytics.Resources.ServersCube_32;
-			this.sideMenuItemSpiders.ImageSmall = global::InetAnalytics.Resources.ServersCube_16;
-			this.sideMenuItemSpiders.Index = -1;
-			this.sideMenuItemSpiders.Text = "Spiders";
-			// 
 			// sideMenuItemYouTube
 			// 
 			this.sideMenuItemYouTube.Control = this.controlSideYouTube;
@@ -538,6 +445,14 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemTesting.Index = -1;
 			this.sideMenuItemTesting.Text = "Testing";
 			// 
+			// sideMenuItemSpiders
+			// 
+			this.sideMenuItemSpiders.Control = this.controlSideSpiders;
+			this.sideMenuItemSpiders.ImageLarge = global::InetAnalytics.Resources.ServersCube_32;
+			this.sideMenuItemSpiders.ImageSmall = global::InetAnalytics.Resources.ServersCube_16;
+			this.sideMenuItemSpiders.Index = -1;
+			this.sideMenuItemSpiders.Text = "Spiders";
+			// 
 			// sideMenuItemConfiguration
 			// 
 			this.sideMenuItemConfiguration.Control = this.controlSideConfiguration;
@@ -545,6 +460,14 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemConfiguration.ImageSmall = global::InetAnalytics.Resources.ConfigurationSettings_16;
 			this.sideMenuItemConfiguration.Index = -1;
 			this.sideMenuItemConfiguration.Text = "Configuration";
+			// 
+			// sideMenuItemLog
+			// 
+			this.sideMenuItemLog.Control = this.controlSideLog;
+			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
+			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
+			this.sideMenuItemLog.Index = -1;
+			this.sideMenuItemLog.Text = "Log";
 			// 
 			// sideMenuItemComments
 			// 
@@ -564,26 +487,111 @@ namespace InetAnalytics.Forms
 			this.labelNotAvailable.Text = "Feature not available";
 			this.labelNotAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// controlSideLog
+			// menuStrip
 			// 
-			this.controlSideLog.AutoScroll = true;
-			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideLog.Location = new System.Drawing.Point(0, 22);
-			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(246, 64);
-			this.controlSideLog.TabIndex = 2;
-			this.controlSideLog.Visible = false;
-			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemFile,
+            this.menuItemHelp});
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(1008, 24);
+			this.menuStrip.TabIndex = 0;
 			// 
-			// sideMenuItemLog
+			// menuItemFile
 			// 
-			this.sideMenuItemLog.Control = this.controlSideLog;
-			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
-			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
-			this.sideMenuItemLog.Index = -1;
-			this.sideMenuItemLog.Text = "Log";
+			this.menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemExit});
+			this.menuItemFile.Name = "menuItemFile";
+			this.menuItemFile.Size = new System.Drawing.Size(37, 20);
+			this.menuItemFile.Text = "&File";
+			// 
+			// menuItemExit
+			// 
+			this.menuItemExit.Name = "menuItemExit";
+			this.menuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+			this.menuItemExit.Size = new System.Drawing.Size(134, 22);
+			this.menuItemExit.Text = "E&xit";
+			this.menuItemExit.Click += new System.EventHandler(this.OnExit);
+			// 
+			// menuItemHelp
+			// 
+			this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAbout});
+			this.menuItemHelp.Name = "menuItemHelp";
+			this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
+			this.menuItemHelp.Text = "&Help";
+			// 
+			// menuItemAbout
+			// 
+			this.menuItemAbout.Name = "menuItemAbout";
+			this.menuItemAbout.Size = new System.Drawing.Size(116, 22);
+			this.menuItemAbout.Text = "&About...";
+			this.menuItemAbout.Click += new System.EventHandler(this.OpenAboutForm);
+			// 
+			// menuViewVideo
+			// 
+			this.menuViewVideo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemApi2,
+            this.menuItemApiV2Related,
+            this.menuItemApiV2Responses,
+            this.menuItemApi3,
+            this.menuItemWeb,
+            this.toolStripSeparator1,
+            this.menuItemYouTube});
+			this.menuViewVideo.Name = "viewMenu";
+			this.menuViewVideo.Size = new System.Drawing.Size(192, 142);
+			// 
+			// menuItemApi2
+			// 
+			this.menuItemApi2.Image = global::InetAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApi2.Name = "menuItemApi2";
+			this.menuItemApi2.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApi2.Text = "APIv2 information";
+			// 
+			// menuItemApiV2Related
+			// 
+			this.menuItemApiV2Related.Image = global::InetAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApiV2Related.Name = "menuItemApiV2Related";
+			this.menuItemApiV2Related.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApiV2Related.Text = "APIv2 related videos";
+			// 
+			// menuItemApiV2Responses
+			// 
+			this.menuItemApiV2Responses.Image = global::InetAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApiV2Responses.Name = "menuItemApiV2Responses";
+			this.menuItemApiV2Responses.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApiV2Responses.Text = "APIv2 response videos";
+			// 
+			// menuItemApi3
+			// 
+			this.menuItemApi3.Image = global::InetAnalytics.Resources.ServerBrowse_16;
+			this.menuItemApi3.Name = "menuItemApi3";
+			this.menuItemApi3.Size = new System.Drawing.Size(191, 22);
+			this.menuItemApi3.Text = "APIv3 information";
+			// 
+			// menuItemWeb
+			// 
+			this.menuItemWeb.Image = global::InetAnalytics.Resources.GlobeBrowse_16;
+			this.menuItemWeb.Name = "menuItemWeb";
+			this.menuItemWeb.Size = new System.Drawing.Size(191, 22);
+			this.menuItemWeb.Text = "Web statistics";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
+			// 
+			// menuItemYouTube
+			// 
+			this.menuItemYouTube.Image = global::InetAnalytics.Resources.Globe_16;
+			this.menuItemYouTube.Name = "menuItemYouTube";
+			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
+			this.menuItemYouTube.Text = "Open in YouTube";
+			// 
+			// toolTipNetworkStatus
+			// 
+			this.toolTipNetworkStatus.ToolTipTitle = "Network Status";
 			// 
 			// FormMain
 			// 
@@ -605,14 +613,14 @@ namespace InetAnalytics.Forms
 			this.toolStripContainer.PerformLayout();
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
-			this.menuStrip.ResumeLayout(false);
-			this.menuStrip.PerformLayout();
-			this.menuViewVideo.ResumeLayout(false);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.sideMenu.ResumeLayout(false);
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.menuViewVideo.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -658,6 +666,7 @@ namespace InetAnalytics.Forms
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelMiddle;
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelRight;
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelConnection;
+		private InetAnalytics.Controls.Net.NetworkStatusToolTip toolTipNetworkStatus;
 	}
 }
 
