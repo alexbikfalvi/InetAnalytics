@@ -47,34 +47,39 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonImport = new System.Windows.Forms.ToolStripButton();
 			this.buttonExport = new System.Windows.Forms.ToolStripButton();
+			this.panelComment = new DotNetApi.Windows.Controls.ThemeControl();
+			this.controlComment = new InetAnalytics.Controls.Comments.ControlCommentProperties();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.controlComment = new InetAnalytics.Controls.Comments.ControlCommentProperties();
+			this.panelComments = new DotNetApi.Windows.Controls.ThemeControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.contextMenu.SuspendLayout();
+			this.panelComment.SuspendLayout();
+			this.panelComments.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
 			// 
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer.Location = new System.Drawing.Point(0, 22);
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
 			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.listView);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip);
+			this.splitContainer.Panel1.Controls.Add(this.panelComments);
+			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
 			// 
-			this.splitContainer.Panel2.Controls.Add(this.controlComment);
-			this.splitContainer.Size = new System.Drawing.Size(600, 378);
-			this.splitContainer.SplitterDistance = 188;
+			this.splitContainer.Panel2.Controls.Add(this.panelComment);
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 400);
+			this.splitContainer.SplitterDistance = 198;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
@@ -91,10 +96,10 @@
 			this.listView.GridLines = true;
 			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(0, 25);
+			this.listView.Location = new System.Drawing.Point(1, 47);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(600, 163);
+			this.listView.Size = new System.Drawing.Size(598, 150);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 0;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -139,9 +144,9 @@
             this.toolStripSeparator2,
             this.buttonImport,
             this.buttonExport});
-			this.toolStrip.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(600, 25);
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 2;
 			this.toolStrip.Text = "toolStrip1";
 			// 
@@ -219,6 +224,28 @@
 			this.buttonExport.Text = "E&xport";
 			this.buttonExport.Click += new System.EventHandler(this.OnExport);
 			// 
+			// panelComment
+			// 
+			this.panelComment.Controls.Add(this.controlComment);
+			this.panelComment.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelComment.Location = new System.Drawing.Point(0, 0);
+			this.panelComment.Name = "panelComment";
+			this.panelComment.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelComment.ShowBorder = true;
+			this.panelComment.ShowTitle = true;
+			this.panelComment.Size = new System.Drawing.Size(600, 197);
+			this.panelComment.TabIndex = 1;
+			this.panelComment.Title = "Comment Information";
+			// 
+			// controlComment
+			// 
+			this.controlComment.Comment = null;
+			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlComment.Location = new System.Drawing.Point(1, 22);
+			this.controlComment.Name = "controlComment";
+			this.controlComment.Size = new System.Drawing.Size(598, 174);
+			this.controlComment.TabIndex = 0;
+			// 
 			// openFileDialog
 			// 
 			this.openFileDialog.Filter = "Comment XML file|*.xml";
@@ -230,14 +257,19 @@
 			this.saveFileDialog.Filter = "Comment XML file|*.xml";
 			this.saveFileDialog.Title = "Export Comment File";
 			// 
-			// controlComment
+			// panelComments
 			// 
-			this.controlComment.Comment = null;
-			this.controlComment.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlComment.Location = new System.Drawing.Point(0, 0);
-			this.controlComment.Name = "controlComment";
-			this.controlComment.Size = new System.Drawing.Size(600, 185);
-			this.controlComment.TabIndex = 0;
+			this.panelComments.Controls.Add(this.listView);
+			this.panelComments.Controls.Add(this.toolStrip);
+			this.panelComments.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelComments.Location = new System.Drawing.Point(0, 0);
+			this.panelComments.Name = "panelComments";
+			this.panelComments.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelComments.ShowBorder = true;
+			this.panelComments.ShowTitle = true;
+			this.panelComments.Size = new System.Drawing.Size(600, 198);
+			this.panelComments.TabIndex = 3;
+			this.panelComments.Title = "Comments";
 			// 
 			// ControlComments
 			// 
@@ -246,17 +278,17 @@
 			this.Controls.Add(this.splitContainer);
 			this.Enabled = false;
 			this.Name = "ControlComments";
-			this.Padding = new System.Windows.Forms.Padding(0, 22, 0, 0);
-			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.Panel1.ResumeLayout(false);
-			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenu.ResumeLayout(false);
+			this.panelComment.ResumeLayout(false);
+			this.panelComments.ResumeLayout(false);
+			this.panelComments.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -283,5 +315,7 @@
 		private System.Windows.Forms.ToolStripButton buttonExport;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
+		private DotNetApi.Windows.Controls.ThemeControl panelComment;
+		private DotNetApi.Windows.Controls.ThemeControl panelComments;
 	}
 }

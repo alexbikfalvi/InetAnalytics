@@ -138,7 +138,7 @@
 			// 
 			// pictureBoxIcon
 			// 
-			this.pictureBoxIcon.Image = global::InetAnalytics.Resources.ServerBrowse_48;
+			this.pictureBoxIcon.Image = global::InetAnalytics.Resources.ServerVideo_48;
 			this.pictureBoxIcon.Location = new System.Drawing.Point(20, 41);
 			this.pictureBoxIcon.Name = "pictureBoxIcon";
 			this.pictureBoxIcon.Size = new System.Drawing.Size(48, 48);

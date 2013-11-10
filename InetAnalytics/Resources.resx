@@ -2757,4 +2757,76 @@ Female, 45-54 years
   <data name="ServersVideo_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ServersVideo_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ServerVideo_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerVideo_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerVideo_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerVideo_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerVideo_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerVideo_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerVideo_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerVideo_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerGlobe_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerGlobe_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerGlobe_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerGlobe_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerGlobe_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerGlobe_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerGlobe_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerGlobe_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserError_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserError_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserError_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserError_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserQuestion_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserQuestion_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserQuestion_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserQuestion_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserQuestion_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserQuestion_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserQuestion_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserQuestion_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserSuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserSuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserSuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserSuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserWarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserWarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserWarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UserWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

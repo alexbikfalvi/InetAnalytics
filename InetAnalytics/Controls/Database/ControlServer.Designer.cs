@@ -41,7 +41,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.panel = new System.Windows.Forms.Panel();
+			this.panelServer = new DotNetApi.Windows.Controls.ThemeControl();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageDatabase = new System.Windows.Forms.TabPage();
 			this.buttonDatabaseSelect = new System.Windows.Forms.Button();
@@ -80,13 +80,12 @@
 			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.panelServer = new DotNetApi.Windows.Controls.ThemePanel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.panel.SuspendLayout();
+			this.panelServer.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageDatabase.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDatabase)).BeginInit();
@@ -95,7 +94,6 @@
 			this.tabPageRelationships.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRelationships)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-			this.panelServer.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -199,18 +197,22 @@
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
-			// panel
+			// panelServer
 			// 
-			this.panel.AutoScroll = true;
-			this.panel.Controls.Add(this.tabControl);
-			this.panel.Controls.Add(this.labelPrimary);
-			this.panel.Controls.Add(this.labelName);
-			this.panel.Controls.Add(this.pictureBox);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(1, 47);
-			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(798, 377);
-			this.panel.TabIndex = 0;
+			this.panelServer.Controls.Add(this.tabControl);
+			this.panelServer.Controls.Add(this.pictureBox);
+			this.panelServer.Controls.Add(this.labelName);
+			this.panelServer.Controls.Add(this.labelPrimary);
+			this.panelServer.Controls.Add(this.toolStrip);
+			this.panelServer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelServer.Location = new System.Drawing.Point(0, 0);
+			this.panelServer.Name = "panelServer";
+			this.panelServer.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelServer.ShowBorder = true;
+			this.panelServer.ShowTitle = true;
+			this.panelServer.Size = new System.Drawing.Size(800, 425);
+			this.panelServer.TabIndex = 1;
+			this.panelServer.Title = "Server";
 			// 
 			// tabControl
 			// 
@@ -220,7 +222,7 @@
 			this.tabControl.Controls.Add(this.tabPageDatabase);
 			this.tabControl.Controls.Add(this.tabPageTables);
 			this.tabControl.Controls.Add(this.tabPageRelationships);
-			this.tabControl.Location = new System.Drawing.Point(10, 64);
+			this.tabControl.Location = new System.Drawing.Point(10, 112);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(780, 304);
@@ -389,7 +391,7 @@
 			this.tabPageTables.Location = new System.Drawing.Point(4, 22);
 			this.tabPageTables.Name = "tabPageTables";
 			this.tabPageTables.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTables.Size = new System.Drawing.Size(774, 279);
+			this.tabPageTables.Size = new System.Drawing.Size(772, 278);
 			this.tabPageTables.TabIndex = 1;
 			this.tabPageTables.Text = "Tables";
 			this.tabPageTables.UseVisualStyleBackColor = true;
@@ -399,7 +401,7 @@
 			this.buttonTableProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonTableProperties.Enabled = false;
 			this.buttonTableProperties.Image = global::InetAnalytics.Resources.Properties_16;
-			this.buttonTableProperties.Location = new System.Drawing.Point(651, 55);
+			this.buttonTableProperties.Location = new System.Drawing.Point(649, 55);
 			this.buttonTableProperties.Name = "buttonTableProperties";
 			this.buttonTableProperties.Size = new System.Drawing.Size(95, 23);
 			this.buttonTableProperties.TabIndex = 8;
@@ -424,7 +426,7 @@
 			this.listViewTables.Location = new System.Drawing.Point(155, 55);
 			this.listViewTables.MultiSelect = false;
 			this.listViewTables.Name = "listViewTables";
-			this.listViewTables.Size = new System.Drawing.Size(490, 216);
+			this.listViewTables.Size = new System.Drawing.Size(488, 215);
 			this.listViewTables.SmallImageList = this.imageListSmall;
 			this.listViewTables.TabIndex = 7;
 			this.listViewTables.UseCompatibleStateImageBehavior = false;
@@ -466,7 +468,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelTablesTitle.Location = new System.Drawing.Point(58, 20);
 			this.labelTablesTitle.Name = "labelTablesTitle";
-			this.labelTablesTitle.Size = new System.Drawing.Size(707, 32);
+			this.labelTablesTitle.Size = new System.Drawing.Size(705, 32);
 			this.labelTablesTitle.TabIndex = 2;
 			this.labelTablesTitle.Text = "Use this tab to configure the SQL tables storing the Internet objects data. Selec" +
     "t one of the available tables, and map it to a database tables.";
@@ -491,7 +493,7 @@
 			this.tabPageRelationships.Location = new System.Drawing.Point(4, 22);
 			this.tabPageRelationships.Name = "tabPageRelationships";
 			this.tabPageRelationships.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageRelationships.Size = new System.Drawing.Size(774, 279);
+			this.tabPageRelationships.Size = new System.Drawing.Size(772, 278);
 			this.tabPageRelationships.TabIndex = 2;
 			this.tabPageRelationships.Text = "Relationships";
 			this.tabPageRelationships.UseVisualStyleBackColor = true;
@@ -501,7 +503,7 @@
 			this.buttonRelationshipProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonRelationshipProperties.Enabled = false;
 			this.buttonRelationshipProperties.Image = global::InetAnalytics.Resources.Properties_16;
-			this.buttonRelationshipProperties.Location = new System.Drawing.Point(651, 55);
+			this.buttonRelationshipProperties.Location = new System.Drawing.Point(649, 55);
 			this.buttonRelationshipProperties.Name = "buttonRelationshipProperties";
 			this.buttonRelationshipProperties.Size = new System.Drawing.Size(95, 23);
 			this.buttonRelationshipProperties.TabIndex = 10;
@@ -537,7 +539,7 @@
 			this.listViewRelationships.Location = new System.Drawing.Point(155, 55);
 			this.listViewRelationships.MultiSelect = false;
 			this.listViewRelationships.Name = "listViewRelationships";
-			this.listViewRelationships.Size = new System.Drawing.Size(490, 216);
+			this.listViewRelationships.Size = new System.Drawing.Size(488, 215);
 			this.listViewRelationships.SmallImageList = this.imageListSmall;
 			this.listViewRelationships.TabIndex = 8;
 			this.listViewRelationships.UseCompatibleStateImageBehavior = false;
@@ -571,7 +573,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelRelationships.Location = new System.Drawing.Point(58, 20);
 			this.labelRelationships.Name = "labelRelationships";
-			this.labelRelationships.Size = new System.Drawing.Size(707, 32);
+			this.labelRelationships.Size = new System.Drawing.Size(705, 32);
 			this.labelRelationships.TabIndex = 4;
 			this.labelRelationships.Text = "Use this tab to configure the relationships between the database tables.";
 			this.labelRelationships.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -589,7 +591,7 @@
 			// 
 			this.labelPrimary.AutoSize = true;
 			this.labelPrimary.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.labelPrimary.Location = new System.Drawing.Point(65, 37);
+			this.labelPrimary.Location = new System.Drawing.Point(64, 86);
 			this.labelPrimary.Name = "labelPrimary";
 			this.labelPrimary.Size = new System.Drawing.Size(73, 13);
 			this.labelPrimary.TabIndex = 1;
@@ -600,7 +602,7 @@
 			// 
 			this.labelName.AutoSize = true;
 			this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelName.Location = new System.Drawing.Point(64, 16);
+			this.labelName.Location = new System.Drawing.Point(64, 65);
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(99, 20);
 			this.labelName.TabIndex = 0;
@@ -610,7 +612,7 @@
 			// pictureBox
 			// 
 			this.pictureBox.Image = global::InetAnalytics.Resources.ServerDown_48;
-			this.pictureBox.Location = new System.Drawing.Point(10, 10);
+			this.pictureBox.Location = new System.Drawing.Point(10, 58);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(48, 48);
 			this.pictureBox.TabIndex = 0;
@@ -628,20 +630,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
-			// panelServer
-			// 
-			this.panelServer.Controls.Add(this.panel);
-			this.panelServer.Controls.Add(this.toolStrip);
-			this.panelServer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelServer.Location = new System.Drawing.Point(0, 0);
-			this.panelServer.Name = "panelServer";
-			this.panelServer.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panelServer.ShowBorder = true;
-			this.panelServer.ShowTitle = true;
-			this.panelServer.Size = new System.Drawing.Size(800, 425);
-			this.panelServer.TabIndex = 1;
-			this.panelServer.Title = "Server";
-			// 
 			// ControlServer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -656,8 +644,8 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
+			this.panelServer.ResumeLayout(false);
+			this.panelServer.PerformLayout();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageDatabase.ResumeLayout(false);
 			this.tabPageDatabase.PerformLayout();
@@ -669,8 +657,6 @@
 			this.tabPageRelationships.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRelationships)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-			this.panelServer.ResumeLayout(false);
-			this.panelServer.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -688,7 +674,6 @@
 		private System.Windows.Forms.ToolStripButton buttonChangePassword;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton buttonProperties;
-		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.Label labelPrimary;
 		private System.Windows.Forms.Label labelName;
@@ -726,6 +711,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderLeftField;
 		private System.Windows.Forms.ColumnHeader columnHeaderRightTable;
 		private System.Windows.Forms.ColumnHeader columnHeaderRightField;
-		private DotNetApi.Windows.Controls.ThemePanel panelServer;
+		private DotNetApi.Windows.Controls.ThemeControl panelServer;
 	}
 }

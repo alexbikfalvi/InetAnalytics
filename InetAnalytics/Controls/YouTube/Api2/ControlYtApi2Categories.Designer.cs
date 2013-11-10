@@ -34,7 +34,8 @@
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelCategories = new DotNetApi.Windows.Controls.ThemeControl();
+			this.panelSplitContainer = new System.Windows.Forms.Panel();
 			this.splitContainerUp = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderTerm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,18 +45,17 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.controlCategory = new InetAnalytics.Controls.YouTube.ControlCategoryProperties();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.panelPad = new System.Windows.Forms.Panel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.panel.SuspendLayout();
+			this.panelCategories.SuspendLayout();
+			this.panelSplitContainer.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerUp)).BeginInit();
 			this.splitContainerUp.Panel1.SuspendLayout();
 			this.splitContainerUp.Panel2.SuspendLayout();
 			this.splitContainerUp.SuspendLayout();
-			this.panelPad.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -96,7 +96,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1.Controls.Add(this.panelCategories);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
@@ -108,19 +108,29 @@
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			// 
-			// panel
+			// panelCategories
 			// 
-			this.panel.Controls.Add(this.panelPad);
-			this.panel.Controls.Add(this.toolStrip);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 0);
-			this.panel.Name = "panel";
-			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panel.ShowBorder = true;
-			this.panel.ShowTitle = true;
-			this.panel.Size = new System.Drawing.Size(800, 425);
-			this.panel.TabIndex = 5;
-			this.panel.Title = "YouTube Video Categories";
+			this.panelCategories.Controls.Add(this.panelSplitContainer);
+			this.panelCategories.Controls.Add(this.toolStrip);
+			this.panelCategories.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelCategories.Location = new System.Drawing.Point(0, 0);
+			this.panelCategories.Name = "panelCategories";
+			this.panelCategories.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelCategories.ShowBorder = true;
+			this.panelCategories.ShowTitle = true;
+			this.panelCategories.Size = new System.Drawing.Size(800, 425);
+			this.panelCategories.TabIndex = 5;
+			this.panelCategories.Title = "YouTube Video Categories";
+			// 
+			// panelSplitContainer
+			// 
+			this.panelSplitContainer.Controls.Add(this.splitContainerUp);
+			this.panelSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelSplitContainer.Location = new System.Drawing.Point(1, 47);
+			this.panelSplitContainer.Name = "panelSplitContainer";
+			this.panelSplitContainer.Padding = new System.Windows.Forms.Padding(4);
+			this.panelSplitContainer.Size = new System.Drawing.Size(798, 377);
+			this.panelSplitContainer.TabIndex = 8;
 			// 
 			// splitContainerUp
 			// 
@@ -211,16 +221,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
-			// panelPad
-			// 
-			this.panelPad.Controls.Add(this.splitContainerUp);
-			this.panelPad.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelPad.Location = new System.Drawing.Point(1, 47);
-			this.panelPad.Name = "panelPad";
-			this.panelPad.Padding = new System.Windows.Forms.Padding(4);
-			this.panelPad.Size = new System.Drawing.Size(798, 377);
-			this.panelPad.TabIndex = 8;
-			// 
 			// ControlYtApi2Categories
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,13 +235,13 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
+			this.panelCategories.ResumeLayout(false);
+			this.panelCategories.PerformLayout();
+			this.panelSplitContainer.ResumeLayout(false);
 			this.splitContainerUp.Panel1.ResumeLayout(false);
 			this.splitContainerUp.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerUp)).EndInit();
 			this.splitContainerUp.ResumeLayout(false);
-			this.panelPad.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -261,7 +261,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderDeprecated;
 		private System.Windows.Forms.ImageList imageList;
 		private ControlCategoryProperties controlCategory;
-		private DotNetApi.Windows.Controls.ThemePanel panel;
-		private System.Windows.Forms.Panel panelPad;
+		private DotNetApi.Windows.Controls.ThemeControl panelCategories;
+		private System.Windows.Forms.Panel panelSplitContainer;
 	}
 }

@@ -43,6 +43,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSession));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelConsole = new DotNetApi.Windows.Controls.ThemeControl();
 			this.console = new InetAnalytics.Controls.ControlConsole();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelHostname = new System.Windows.Forms.ToolStripLabel();
@@ -53,13 +54,12 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.panelConsole.SuspendLayout();
 			this.toolStrip.SuspendLayout();
-			this.panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -72,7 +72,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1.Controls.Add(this.panelConsole);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
@@ -83,6 +83,20 @@
 			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
+			// 
+			// panelConsole
+			// 
+			this.panelConsole.Controls.Add(this.console);
+			this.panelConsole.Controls.Add(this.toolStrip);
+			this.panelConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelConsole.Location = new System.Drawing.Point(0, 0);
+			this.panelConsole.Name = "panelConsole";
+			this.panelConsole.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelConsole.ShowBorder = true;
+			this.panelConsole.ShowTitle = true;
+			this.panelConsole.Size = new System.Drawing.Size(600, 225);
+			this.panelConsole.TabIndex = 2;
+			this.panelConsole.Title = "Secure Shell";
 			// 
 			// console
 			// 
@@ -165,20 +179,6 @@
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
 			// 
-			// panel
-			// 
-			this.panel.Controls.Add(this.console);
-			this.panel.Controls.Add(this.toolStrip);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 0);
-			this.panel.Name = "panel";
-			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panel.ShowBorder = true;
-			this.panel.ShowTitle = true;
-			this.panel.Size = new System.Drawing.Size(600, 225);
-			this.panel.TabIndex = 2;
-			this.panel.Title = "Secure Shell";
-			// 
 			// ControlSession
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,10 +192,10 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.panelConsole.ResumeLayout(false);
+			this.panelConsole.PerformLayout();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -213,7 +213,7 @@
 		private System.Windows.Forms.ToolStripButton buttonDisconnect;
 		private System.Windows.Forms.ToolStripLabel labelHostname;
 		private System.Windows.Forms.ToolStripSeparator separator1;
-		private DotNetApi.Windows.Controls.ThemePanel panel;
+		private DotNetApi.Windows.Controls.ThemeControl panelConsole;
 
 	}
 }

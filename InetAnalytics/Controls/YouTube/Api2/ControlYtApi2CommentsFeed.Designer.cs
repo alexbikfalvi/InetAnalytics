@@ -29,8 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelFeed = new DotNetApi.Windows.Controls.ThemeControl();
 			this.commentsList = new InetAnalytics.Controls.YouTube.ControlCommentList();
-			this.panel = new System.Windows.Forms.Panel();
+			this.panelQuery = new System.Windows.Forms.Panel();
 			this.textBoxVideo = new System.Windows.Forms.TextBox();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
@@ -38,13 +39,12 @@
 			this.labelUrl = new System.Windows.Forms.Label();
 			this.labelVideo = new System.Windows.Forms.Label();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.panelFeed = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.panel.SuspendLayout();
 			this.panelFeed.SuspendLayout();
+			this.panelQuery.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -69,6 +69,20 @@
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
+			// panelFeed
+			// 
+			this.panelFeed.Controls.Add(this.commentsList);
+			this.panelFeed.Controls.Add(this.panelQuery);
+			this.panelFeed.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelFeed.Location = new System.Drawing.Point(0, 0);
+			this.panelFeed.Name = "panelFeed";
+			this.panelFeed.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelFeed.ShowBorder = true;
+			this.panelFeed.ShowTitle = true;
+			this.panelFeed.Size = new System.Drawing.Size(600, 225);
+			this.panelFeed.TabIndex = 2;
+			this.panelFeed.Title = "YouTube Video Comments Feed";
+			// 
 			// commentsList
 			// 
 			this.commentsList.CountPerPage = null;
@@ -85,19 +99,19 @@
 			this.commentsList.NextClick += new System.EventHandler(this.OnNavigateNext);
 			this.commentsList.CommentsPerPageChanged += new System.EventHandler(this.OnSearchChanged);
 			// 
-			// panel
+			// panelQuery
 			// 
-			this.panel.Controls.Add(this.textBoxVideo);
-			this.panel.Controls.Add(this.buttonStart);
-			this.panel.Controls.Add(this.buttonStop);
-			this.panel.Controls.Add(this.linkLabel);
-			this.panel.Controls.Add(this.labelUrl);
-			this.panel.Controls.Add(this.labelVideo);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel.Location = new System.Drawing.Point(1, 22);
-			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(598, 82);
-			this.panel.TabIndex = 0;
+			this.panelQuery.Controls.Add(this.textBoxVideo);
+			this.panelQuery.Controls.Add(this.buttonStart);
+			this.panelQuery.Controls.Add(this.buttonStop);
+			this.panelQuery.Controls.Add(this.linkLabel);
+			this.panelQuery.Controls.Add(this.labelUrl);
+			this.panelQuery.Controls.Add(this.labelVideo);
+			this.panelQuery.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelQuery.Location = new System.Drawing.Point(1, 22);
+			this.panelQuery.Name = "panelQuery";
+			this.panelQuery.Size = new System.Drawing.Size(598, 82);
+			this.panelQuery.TabIndex = 0;
 			// 
 			// textBoxVideo
 			// 
@@ -176,20 +190,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
-			// panelFeed
-			// 
-			this.panelFeed.Controls.Add(this.commentsList);
-			this.panelFeed.Controls.Add(this.panel);
-			this.panelFeed.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelFeed.Location = new System.Drawing.Point(0, 0);
-			this.panelFeed.Name = "panelFeed";
-			this.panelFeed.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panelFeed.ShowBorder = true;
-			this.panelFeed.ShowTitle = true;
-			this.panelFeed.Size = new System.Drawing.Size(600, 225);
-			this.panelFeed.TabIndex = 2;
-			this.panelFeed.Title = "YouTube Video Comments Feed";
-			// 
 			// ControlYtApi2CommentsFeed
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,9 +202,9 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
 			this.panelFeed.ResumeLayout(false);
+			this.panelQuery.ResumeLayout(false);
+			this.panelQuery.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -213,7 +213,7 @@
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
-		private System.Windows.Forms.Panel panel;
+		private System.Windows.Forms.Panel panelQuery;
 		private System.Windows.Forms.Label labelVideo;
 		private System.Windows.Forms.LinkLabel linkLabel;
 		private System.Windows.Forms.Label labelUrl;
@@ -221,7 +221,7 @@
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.TextBox textBoxVideo;
 		private ControlCommentList commentsList;
-		private DotNetApi.Windows.Controls.ThemePanel panelFeed;
+		private DotNetApi.Windows.Controls.ThemeControl panelFeed;
 
 	}
 }

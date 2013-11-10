@@ -31,6 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlYtApi2StandardFeed));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelFeed = new DotNetApi.Windows.Controls.ThemeControl();
 			this.videoList = new InetAnalytics.Controls.YouTube.ControlVideoList();
 			this.viewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemApiV2Video = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +45,7 @@
 			this.menuItemComment = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.panel = new System.Windows.Forms.Panel();
+			this.panelQuery = new System.Windows.Forms.Panel();
 			this.buttonRefreshCategories = new System.Windows.Forms.Button();
 			this.checkBoxView = new System.Windows.Forms.CheckBox();
 			this.buttonStart = new System.Windows.Forms.Button();
@@ -61,14 +62,13 @@
 			this.comboBoxFeed = new System.Windows.Forms.ComboBox();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.panelFeeds = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.panelFeed.SuspendLayout();
 			this.viewMenu.SuspendLayout();
-			this.panel.SuspendLayout();
-			this.panelFeeds.SuspendLayout();
+			this.panelQuery.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -81,7 +81,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panelFeeds);
+			this.splitContainer.Panel1.Controls.Add(this.panelFeed);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
@@ -92,6 +92,20 @@
 			this.splitContainer.SplitterDistance = 225;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
+			// 
+			// panelFeed
+			// 
+			this.panelFeed.Controls.Add(this.videoList);
+			this.panelFeed.Controls.Add(this.panelQuery);
+			this.panelFeed.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelFeed.Location = new System.Drawing.Point(0, 0);
+			this.panelFeed.Name = "panelFeed";
+			this.panelFeed.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelFeed.ShowBorder = true;
+			this.panelFeed.ShowTitle = true;
+			this.panelFeed.Size = new System.Drawing.Size(600, 225);
+			this.panelFeed.TabIndex = 2;
+			this.panelFeed.Title = "YouTube Standard Video Feeds";
 			// 
 			// videoList
 			// 
@@ -209,27 +223,27 @@
 			this.menuItemProperties.Text = "Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnViewProperties);
 			// 
-			// panel
+			// panelQuery
 			// 
-			this.panel.Controls.Add(this.buttonRefreshCategories);
-			this.panel.Controls.Add(this.checkBoxView);
-			this.panel.Controls.Add(this.buttonStart);
-			this.panel.Controls.Add(this.buttonStop);
-			this.panel.Controls.Add(this.linkLabel);
-			this.panel.Controls.Add(this.labelUrl);
-			this.panel.Controls.Add(this.labelRegion);
-			this.panel.Controls.Add(this.labelTime);
-			this.panel.Controls.Add(this.labelCategory);
-			this.panel.Controls.Add(this.labelFeed);
-			this.panel.Controls.Add(this.comboBoxRegion);
-			this.panel.Controls.Add(this.comboBoxCategory);
-			this.panel.Controls.Add(this.comboBoxTime);
-			this.panel.Controls.Add(this.comboBoxFeed);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel.Location = new System.Drawing.Point(1, 22);
-			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(598, 82);
-			this.panel.TabIndex = 0;
+			this.panelQuery.Controls.Add(this.buttonRefreshCategories);
+			this.panelQuery.Controls.Add(this.checkBoxView);
+			this.panelQuery.Controls.Add(this.buttonStart);
+			this.panelQuery.Controls.Add(this.buttonStop);
+			this.panelQuery.Controls.Add(this.linkLabel);
+			this.panelQuery.Controls.Add(this.labelUrl);
+			this.panelQuery.Controls.Add(this.labelRegion);
+			this.panelQuery.Controls.Add(this.labelTime);
+			this.panelQuery.Controls.Add(this.labelCategory);
+			this.panelQuery.Controls.Add(this.labelFeed);
+			this.panelQuery.Controls.Add(this.comboBoxRegion);
+			this.panelQuery.Controls.Add(this.comboBoxCategory);
+			this.panelQuery.Controls.Add(this.comboBoxTime);
+			this.panelQuery.Controls.Add(this.comboBoxFeed);
+			this.panelQuery.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelQuery.Location = new System.Drawing.Point(1, 22);
+			this.panelQuery.Name = "panelQuery";
+			this.panelQuery.Size = new System.Drawing.Size(598, 82);
+			this.panelQuery.TabIndex = 0;
 			// 
 			// buttonRefreshCategories
 			// 
@@ -395,20 +409,6 @@
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.imageList.Images.SetKeyName(0, "Video");
 			// 
-			// panelFeeds
-			// 
-			this.panelFeeds.Controls.Add(this.videoList);
-			this.panelFeeds.Controls.Add(this.panel);
-			this.panelFeeds.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelFeeds.Location = new System.Drawing.Point(0, 0);
-			this.panelFeeds.Name = "panelFeeds";
-			this.panelFeeds.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panelFeeds.ShowBorder = true;
-			this.panelFeeds.ShowTitle = true;
-			this.panelFeeds.Size = new System.Drawing.Size(600, 225);
-			this.panelFeeds.TabIndex = 2;
-			this.panelFeeds.Title = "YouTube Standard Video Feeds";
-			// 
 			// ControlYtApi2StandardFeed
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -422,10 +422,10 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.panelFeed.ResumeLayout(false);
 			this.viewMenu.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
-			this.panelFeeds.ResumeLayout(false);
+			this.panelQuery.ResumeLayout(false);
+			this.panelQuery.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -435,7 +435,7 @@
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
 		private System.Windows.Forms.ImageList imageList;
-		private System.Windows.Forms.Panel panel;
+		private System.Windows.Forms.Panel panelQuery;
 		private System.Windows.Forms.ComboBox comboBoxCategory;
 		private System.Windows.Forms.ComboBox comboBoxTime;
 		private System.Windows.Forms.ComboBox comboBoxFeed;
@@ -463,7 +463,7 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemComment;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem menuItemApiV2Author;
-		private DotNetApi.Windows.Controls.ThemePanel panelFeeds;
+		private DotNetApi.Windows.Controls.ThemeControl panelFeed;
 
 	}
 }

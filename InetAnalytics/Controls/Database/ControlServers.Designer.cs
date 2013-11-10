@@ -58,7 +58,7 @@
 			this.menuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.panelServers = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelServers = new DotNetApi.Windows.Controls.ThemeControl();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -376,6 +376,6 @@
 		private System.Windows.Forms.ToolStripButton buttonChangePassword;
 		private System.Windows.Forms.ToolStripMenuItem menuItemChangePassword;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-		private DotNetApi.Windows.Controls.ThemePanel panelServers;
+		private DotNetApi.Windows.Controls.ThemeControl panelServers;
 	}
 }

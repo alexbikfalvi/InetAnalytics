@@ -43,8 +43,8 @@
 			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.dataGrid = new System.Windows.Forms.DataGridView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.panelQuery = new DotNetApi.Windows.Controls.ThemePanel();
-			this.panelResult = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelQuery = new DotNetApi.Windows.Controls.ThemeControl();
+			this.panelResult = new DotNetApi.Windows.Controls.ThemeControl();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -254,7 +254,7 @@
 		private DotNetApi.Windows.Controls.CodeTextBox codeBox;
 		private System.Windows.Forms.ToolStripButton buttonStart;
 		private System.Windows.Forms.ToolStripButton buttonStop;
-		private DotNetApi.Windows.Controls.ThemePanel panelQuery;
-		private DotNetApi.Windows.Controls.ThemePanel panelResult;
+		private DotNetApi.Windows.Controls.ThemeControl panelQuery;
+		private DotNetApi.Windows.Controls.ThemeControl panelResult;
 	}
 }

@@ -46,15 +46,15 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonComment = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelVideo = new DotNetApi.Windows.Controls.ThemeControl();
 			this.controlVideo = new InetAnalytics.Controls.YouTube.ControlVideoProperties();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.panel.SuspendLayout();
+			this.panelVideo.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -211,7 +211,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1.Controls.Add(this.panelVideo);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
@@ -222,6 +222,20 @@
 			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
+			// 
+			// panelVideo
+			// 
+			this.panelVideo.Controls.Add(this.controlVideo);
+			this.panelVideo.Controls.Add(this.toolStrip);
+			this.panelVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelVideo.Location = new System.Drawing.Point(0, 0);
+			this.panelVideo.Name = "panelVideo";
+			this.panelVideo.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelVideo.ShowBorder = true;
+			this.panelVideo.ShowTitle = true;
+			this.panelVideo.Size = new System.Drawing.Size(800, 425);
+			this.panelVideo.TabIndex = 1;
+			this.panelVideo.Title = "YouTube Video";
 			// 
 			// controlVideo
 			// 
@@ -245,20 +259,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
-			// panel
-			// 
-			this.panel.Controls.Add(this.controlVideo);
-			this.panel.Controls.Add(this.toolStrip);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 0);
-			this.panel.Name = "panel";
-			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panel.ShowBorder = true;
-			this.panel.ShowTitle = true;
-			this.panel.Size = new System.Drawing.Size(800, 425);
-			this.panel.TabIndex = 1;
-			this.panel.Title = "YouTube Video";
-			// 
 			// ControlYtApi2Video
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,8 +272,8 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
+			this.panelVideo.ResumeLayout(false);
+			this.panelVideo.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -300,6 +300,6 @@
 		private System.Windows.Forms.ToolStripButton buttonComment;
 		private System.Windows.Forms.ToolStripMenuItem menuItemAuthor;
 		private System.Windows.Forms.ToolStripMenuItem menuItemComments;
-		private DotNetApi.Windows.Controls.ThemePanel panel;
+		private DotNetApi.Windows.Controls.ThemeControl panelVideo;
 	}
 }

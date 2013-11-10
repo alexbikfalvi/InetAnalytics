@@ -31,6 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlLog));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelEvents = new DotNetApi.Windows.Controls.ThemeControl();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderTimestamp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,15 +45,14 @@
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
 			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
+			this.panelEvent = new DotNetApi.Windows.Controls.ThemeControl();
 			this.controlLogEvent = new InetAnalytics.Controls.Log.ControlLogEventProperties();
-			this.panelList = new DotNetApi.Windows.Controls.ThemePanel();
-			this.panelEvent = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
+			this.panelEvents.SuspendLayout();
 			this.toolStrip.SuspendLayout();
-			this.panelList.SuspendLayout();
 			this.panelEvent.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -65,7 +65,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panelList);
+			this.splitContainer.Panel1.Controls.Add(this.panelEvents);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
@@ -76,6 +76,20 @@
 			this.splitContainer.SplitterDistance = 200;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
+			// 
+			// panelEvents
+			// 
+			this.panelEvents.Controls.Add(this.listView);
+			this.panelEvents.Controls.Add(this.toolStrip);
+			this.panelEvents.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelEvents.Location = new System.Drawing.Point(0, 0);
+			this.panelEvents.Name = "panelEvents";
+			this.panelEvents.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelEvents.ShowBorder = true;
+			this.panelEvents.ShowTitle = true;
+			this.panelEvents.Size = new System.Drawing.Size(600, 200);
+			this.panelEvents.TabIndex = 3;
+			this.panelEvents.Title = "Events";
 			// 
 			// listView
 			// 
@@ -203,30 +217,6 @@
 			this.calendar.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
 			this.calendar.Size = new System.Drawing.Size(186, 160);
 			// 
-			// controlLogEvent
-			// 
-			this.controlLogEvent.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlLogEvent.Event = null;
-			this.controlLogEvent.Location = new System.Drawing.Point(1, 22);
-			this.controlLogEvent.Name = "controlLogEvent";
-			this.controlLogEvent.Padding = new System.Windows.Forms.Padding(1);
-			this.controlLogEvent.Size = new System.Drawing.Size(598, 172);
-			this.controlLogEvent.TabIndex = 0;
-			// 
-			// panelList
-			// 
-			this.panelList.Controls.Add(this.listView);
-			this.panelList.Controls.Add(this.toolStrip);
-			this.panelList.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelList.Location = new System.Drawing.Point(0, 0);
-			this.panelList.Name = "panelList";
-			this.panelList.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panelList.ShowBorder = true;
-			this.panelList.ShowTitle = true;
-			this.panelList.Size = new System.Drawing.Size(600, 200);
-			this.panelList.TabIndex = 3;
-			this.panelList.Title = "Event Log";
-			// 
 			// panelEvent
 			// 
 			this.panelEvent.Controls.Add(this.controlLogEvent);
@@ -240,6 +230,16 @@
 			this.panelEvent.TabIndex = 1;
 			this.panelEvent.Title = "Event Information";
 			// 
+			// controlLogEvent
+			// 
+			this.controlLogEvent.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLogEvent.Event = null;
+			this.controlLogEvent.Location = new System.Drawing.Point(1, 22);
+			this.controlLogEvent.Name = "controlLogEvent";
+			this.controlLogEvent.Padding = new System.Windows.Forms.Padding(1);
+			this.controlLogEvent.Size = new System.Drawing.Size(598, 172);
+			this.controlLogEvent.TabIndex = 0;
+			// 
 			// ControlLog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,10 +252,10 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
+			this.panelEvents.ResumeLayout(false);
+			this.panelEvents.PerformLayout();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
-			this.panelList.ResumeLayout(false);
-			this.panelList.PerformLayout();
 			this.panelEvent.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -278,7 +278,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripDropDownButton buttonCalendar;
 		private DotNetApi.Windows.Controls.ToolStripDropDownCalendar calendar;
-		private DotNetApi.Windows.Controls.ThemePanel panelList;
-		private DotNetApi.Windows.Controls.ThemePanel panelEvent;
+		private DotNetApi.Windows.Controls.ThemeControl panelEvents;
+		private DotNetApi.Windows.Controls.ThemeControl panelEvent;
 	}
 }

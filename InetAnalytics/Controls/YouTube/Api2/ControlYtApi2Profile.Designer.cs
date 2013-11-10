@@ -43,15 +43,15 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonComment = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelProfile = new DotNetApi.Windows.Controls.ThemeControl();
 			this.controlProfile = new InetAnalytics.Controls.YouTube.ControlProfileProperties();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.panel.SuspendLayout();
+			this.panelProfile.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -184,7 +184,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1.Controls.Add(this.panelProfile);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
@@ -195,6 +195,20 @@
 			this.splitContainer.SplitterDistance = 425;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
+			// 
+			// panelProfile
+			// 
+			this.panelProfile.Controls.Add(this.controlProfile);
+			this.panelProfile.Controls.Add(this.toolStrip);
+			this.panelProfile.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelProfile.Location = new System.Drawing.Point(0, 0);
+			this.panelProfile.Name = "panelProfile";
+			this.panelProfile.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelProfile.ShowBorder = true;
+			this.panelProfile.ShowTitle = true;
+			this.panelProfile.Size = new System.Drawing.Size(800, 425);
+			this.panelProfile.TabIndex = 2;
+			this.panelProfile.Title = "YouTube User Profile";
 			// 
 			// controlProfile
 			// 
@@ -217,20 +231,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
-			// panel
-			// 
-			this.panel.Controls.Add(this.controlProfile);
-			this.panel.Controls.Add(this.toolStrip);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 0);
-			this.panel.Name = "panel";
-			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panel.ShowBorder = true;
-			this.panel.ShowTitle = true;
-			this.panel.Size = new System.Drawing.Size(800, 425);
-			this.panel.TabIndex = 2;
-			this.panel.Title = "YouTube User Profile";
-			// 
 			// ControlYtApi2Profile
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -244,8 +244,8 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
+			this.panelProfile.ResumeLayout(false);
+			this.panelProfile.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -269,6 +269,6 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemUploads;
 		private System.Windows.Forms.ToolStripMenuItem menuItemFavorites;
 		private System.Windows.Forms.ToolStripMenuItem menuItemPlaylists;
-		private DotNetApi.Windows.Controls.ThemePanel panel;
+		private DotNetApi.Windows.Controls.ThemeControl panelProfile;
 	}
 }

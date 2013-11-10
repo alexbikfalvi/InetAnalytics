@@ -58,7 +58,7 @@
 			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderExtra = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.panelChart = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelChart = new DotNetApi.Windows.Controls.ThemeControl();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -410,6 +410,6 @@
 		private System.Windows.Forms.ToolStripButton buttonDiscovery;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton buttonComment;
-		private DotNetApi.Windows.Controls.ThemePanel panelChart;
+		private DotNetApi.Windows.Controls.ThemeControl panelChart;
 	}
 }

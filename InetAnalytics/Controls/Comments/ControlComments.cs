@@ -31,7 +31,7 @@ namespace InetAnalytics.Controls.Comments
 	/// <summary>
 	/// A control displaying a list of comments.
 	/// </summary>
-	public partial class ControlComments : ThemeControl
+	public partial class ControlComments : ThreadSafeControl
 	{
 		private CommentsList comments;
 
@@ -67,7 +67,7 @@ namespace InetAnalytics.Controls.Comments
 			if ((int)commentType < commentTypeHeader.Length)
 			{
 				this.columnHeaderItem.Text = ControlComments.commentTypeHeader[(int)commentType];
-				this.Title = ControlComments.commentTypeTitle[(int)commentType];
+				this.panelComments.Title = ControlComments.commentTypeTitle[(int)commentType];
 			}
 
 			// Populate the comments list.

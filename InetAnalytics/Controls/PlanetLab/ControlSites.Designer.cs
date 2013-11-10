@@ -43,6 +43,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSites));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.panelMap = new DotNetApi.Windows.Controls.ThemeControl();
 			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
@@ -61,7 +62,7 @@
 			this.menuItemExportListCsv = new System.Windows.Forms.ToolStripMenuItem();
 			this.separator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemExportMap = new System.Windows.Forms.ToolStripMenuItem();
-			this.panelList = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelSites = new DotNetApi.Windows.Controls.ThemeControl();
 			this.listViewSites = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -78,15 +79,14 @@
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.panelMap = new DotNetApi.Windows.Controls.ThemePanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.toolStrip.SuspendLayout();
-			this.panelList.SuspendLayout();
-			this.contextMenu.SuspendLayout();
 			this.panelMap.SuspendLayout();
+			this.toolStrip.SuspendLayout();
+			this.panelSites.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -103,12 +103,26 @@
 			// 
 			// splitContainer.Panel2
 			// 
-			this.splitContainer.Panel2.Controls.Add(this.panelList);
+			this.splitContainer.Panel2.Controls.Add(this.panelSites);
 			this.splitContainer.Panel2Border = false;
 			this.splitContainer.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.SplitterDistance = 274;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
+			// 
+			// panelMap
+			// 
+			this.panelMap.Controls.Add(this.mapControl);
+			this.panelMap.Controls.Add(this.toolStrip);
+			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMap.Location = new System.Drawing.Point(0, 0);
+			this.panelMap.Name = "panelMap";
+			this.panelMap.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelMap.ShowBorder = true;
+			this.panelMap.ShowTitle = true;
+			this.panelMap.Size = new System.Drawing.Size(600, 274);
+			this.panelMap.TabIndex = 11;
+			this.panelMap.Title = "Sites Map";
 			// 
 			// mapControl
 			// 
@@ -267,18 +281,18 @@
 			this.menuItemExportMap.Text = "Sites map";
 			this.menuItemExportMap.Click += new System.EventHandler(this.OnExportMap);
 			// 
-			// panelList
+			// panelSites
 			// 
-			this.panelList.Controls.Add(this.listViewSites);
-			this.panelList.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelList.Location = new System.Drawing.Point(0, 0);
-			this.panelList.Name = "panelList";
-			this.panelList.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panelList.ShowBorder = true;
-			this.panelList.ShowTitle = true;
-			this.panelList.Size = new System.Drawing.Size(600, 121);
-			this.panelList.TabIndex = 1;
-			this.panelList.Title = "Sites List";
+			this.panelSites.Controls.Add(this.listViewSites);
+			this.panelSites.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelSites.Location = new System.Drawing.Point(0, 0);
+			this.panelSites.Name = "panelSites";
+			this.panelSites.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelSites.ShowBorder = true;
+			this.panelSites.ShowTitle = true;
+			this.panelSites.Size = new System.Drawing.Size(600, 121);
+			this.panelSites.TabIndex = 1;
+			this.panelSites.Title = "Sites List";
 			// 
 			// listViewSites
 			// 
@@ -387,20 +401,6 @@
 			this.menuItemProperties.Text = "&Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
-			// panelMap
-			// 
-			this.panelMap.Controls.Add(this.mapControl);
-			this.panelMap.Controls.Add(this.toolStrip);
-			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMap.Location = new System.Drawing.Point(0, 0);
-			this.panelMap.Name = "panelMap";
-			this.panelMap.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panelMap.ShowBorder = true;
-			this.panelMap.ShowTitle = true;
-			this.panelMap.Size = new System.Drawing.Size(600, 274);
-			this.panelMap.TabIndex = 11;
-			this.panelMap.Title = "Sites Map";
-			// 
 			// ControlSites
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -414,12 +414,12 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.toolStrip.ResumeLayout(false);
-			this.toolStrip.PerformLayout();
-			this.panelList.ResumeLayout(false);
-			this.contextMenu.ResumeLayout(false);
 			this.panelMap.ResumeLayout(false);
 			this.panelMap.PerformLayout();
+			this.toolStrip.ResumeLayout(false);
+			this.toolStrip.PerformLayout();
+			this.panelSites.ResumeLayout(false);
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -461,7 +461,7 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemExportListCsv;
 		private System.Windows.Forms.ToolStripMenuItem menuItemExportMap;
 		private System.Windows.Forms.ToolStripSeparator separator4;
-		private DotNetApi.Windows.Controls.ThemePanel panelList;
-		private DotNetApi.Windows.Controls.ThemePanel panelMap;
+		private DotNetApi.Windows.Controls.ThemeControl panelSites;
+		private DotNetApi.Windows.Controls.ThemeControl panelMap;
 	}
 }

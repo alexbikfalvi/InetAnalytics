@@ -320,7 +320,7 @@ namespace InetCrawler.PlanetLab
 			// Save the persons.
 			persons.Lock();
 			try { this.LocalPersons.CopyFrom(persons); }
-			catch { persons.Unlock(); }
+			finally { persons.Unlock(); }
 			try { this.LocalPersons.SaveToFile(this.LocalPersonsFileName); }
 			catch { }
 			// Save the person.

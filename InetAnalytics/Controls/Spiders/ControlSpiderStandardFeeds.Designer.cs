@@ -46,7 +46,7 @@
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressInfo = new DotNetApi.Windows.Controls.ProgressInfo();
-			this.panelSpider = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelSpider = new DotNetApi.Windows.Controls.ThemeControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -282,6 +282,6 @@
 		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList checkedListFeeds;
 		private DotNetApi.Windows.Controls.ProgressBox progressBox;
 		private DotNetApi.Windows.Controls.ProgressInfo progressInfo;
-		private DotNetApi.Windows.Controls.ThemePanel panelSpider;
+		private DotNetApi.Windows.Controls.ThemeControl panelSpider;
 	}
 }

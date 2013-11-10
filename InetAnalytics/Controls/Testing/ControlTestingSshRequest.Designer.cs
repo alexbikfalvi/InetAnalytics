@@ -37,7 +37,7 @@
 			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingSshRequest));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.panel = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelTesting = new DotNetApi.Windows.Controls.ThemeControl();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageAuthentication = new System.Windows.Forms.TabPage();
 			this.buttonLoadKey = new System.Windows.Forms.Button();
@@ -67,7 +67,7 @@
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.panel.SuspendLayout();
+			this.panelTesting.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageAuthentication.SuspendLayout();
 			this.tabPageConsole.SuspendLayout();
@@ -83,7 +83,7 @@
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.panel);
+			this.splitContainer.Panel1.Controls.Add(this.panelTesting);
 			this.splitContainer.Panel1Border = false;
 			// 
 			// splitContainer.Panel2
@@ -95,26 +95,26 @@
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 2;
 			// 
-			// panel
+			// panelTesting
 			// 
-			this.panel.Controls.Add(this.tabControl);
-			this.panel.Controls.Add(this.buttonExport);
-			this.panel.Controls.Add(this.buttonImport);
-			this.panel.Controls.Add(this.buttonUndo);
-			this.panel.Controls.Add(this.buttonSave);
-			this.panel.Controls.Add(this.textBoxServer);
-			this.panel.Controls.Add(this.buttonConnect);
-			this.panel.Controls.Add(this.buttonDisconnect);
-			this.panel.Controls.Add(this.labelServer);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel.Location = new System.Drawing.Point(0, 0);
-			this.panel.Name = "panel";
-			this.panel.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.panel.ShowBorder = true;
-			this.panel.ShowTitle = true;
-			this.panel.Size = new System.Drawing.Size(600, 225);
-			this.panel.TabIndex = 0;
-			this.panel.Title = "Secure Shell Testing";
+			this.panelTesting.Controls.Add(this.tabControl);
+			this.panelTesting.Controls.Add(this.buttonExport);
+			this.panelTesting.Controls.Add(this.buttonImport);
+			this.panelTesting.Controls.Add(this.buttonUndo);
+			this.panelTesting.Controls.Add(this.buttonSave);
+			this.panelTesting.Controls.Add(this.textBoxServer);
+			this.panelTesting.Controls.Add(this.buttonConnect);
+			this.panelTesting.Controls.Add(this.buttonDisconnect);
+			this.panelTesting.Controls.Add(this.labelServer);
+			this.panelTesting.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelTesting.Location = new System.Drawing.Point(0, 0);
+			this.panelTesting.Name = "panelTesting";
+			this.panelTesting.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelTesting.ShowBorder = true;
+			this.panelTesting.ShowTitle = true;
+			this.panelTesting.Size = new System.Drawing.Size(600, 225);
+			this.panelTesting.TabIndex = 0;
+			this.panelTesting.Title = "Secure Shell Testing";
 			// 
 			// tabControl
 			// 
@@ -399,8 +399,8 @@
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
+			this.panelTesting.ResumeLayout(false);
+			this.panelTesting.PerformLayout();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageAuthentication.ResumeLayout(false);
 			this.tabPageAuthentication.PerformLayout();
@@ -413,7 +413,7 @@
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private Log.ControlLogList log;
-		private DotNetApi.Windows.Controls.ThemePanel panel;
+		private DotNetApi.Windows.Controls.ThemeControl panelTesting;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;

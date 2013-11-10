@@ -103,6 +103,12 @@
     <Compile Include="Controls\PlanetLab\ControlExportNodes.Designer.cs">
       <DependentUpon>ControlExportNodes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabPersons.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlPlanetLabPersons.Designer.cs">
+      <DependentUpon>ControlPlanetLabPersons.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlRequest.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -598,6 +604,12 @@
     <Compile Include="Forms\FormText.Designer.cs">
       <DependentUpon>FormText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormPlanetLabPersons.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormPlanetLabPersons.Designer.cs">
+      <DependentUpon>FormPlanetLabPersons.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormRenewSlice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -814,6 +826,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlExportNodes.resx">
       <DependentUpon>ControlExportNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlPlanetLabPersons.resx">
+      <DependentUpon>ControlPlanetLabPersons.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlRequest.resx">
       <DependentUpon>ControlRequest.cs</DependentUpon>
@@ -1063,6 +1078,9 @@
     <EmbeddedResource Include="Forms\FormText.resx">
       <DependentUpon>FormText.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormPlanetLabPersons.resx">
+      <DependentUpon>FormPlanetLabPersons.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormRenewSlice.resx">
       <DependentUpon>FormRenewSlice.cs</DependentUpon>
     </EmbeddedResource>
@@ -1195,6 +1213,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\UserWarning_48.png" />
+    <None Include="Resources\UserWarning_32.png" />
+    <None Include="Resources\UserWarning_24.png" />
+    <None Include="Resources\UserWarning_16.png" />
+    <None Include="Resources\UserSuccess_48.png" />
+    <None Include="Resources\UserSuccess_32.png" />
+    <None Include="Resources\UserSuccess_24.png" />
+    <None Include="Resources\UserSuccess_16.png" />
+    <None Include="Resources\UserQuestion_48.png" />
+    <None Include="Resources\UserQuestion_32.png" />
+    <None Include="Resources\UserQuestion_24.png" />
+    <None Include="Resources\UserQuestion_16.png" />
+    <None Include="Resources\UserError_48.png" />
+    <None Include="Resources\UserError_32.png" />
+    <None Include="Resources\UserError_24.png" />
+    <None Include="Resources\UserError_16.png" />
+    <None Include="Resources\ServerGlobe_48.png" />
+    <None Include="Resources\ServerGlobe_32.png" />
+    <None Include="Resources\ServerGlobe_24.png" />
+    <None Include="Resources\ServerGlobe_16.png" />
+    <None Include="Resources\ServerVideo_48.png" />
+    <None Include="Resources\ServerVideo_32.png" />
+    <None Include="Resources\ServerVideo_24.png" />
+    <None Include="Resources\ServerVideo_16.png" />
     <None Include="Resources\ServersVideo_48.png" />
     <None Include="Resources\ServersVideo_32.png" />
     <None Include="Resources\ServersVideo_24.png" />

@@ -44,7 +44,8 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSlice));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.panelSlice = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelSlice = new DotNetApi.Windows.Controls.ThemeControl();
+			this.panelNodes = new System.Windows.Forms.Panel();
 			this.splitContainerSlice = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listViewNodes = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -52,7 +53,7 @@
 			this.columnHeaderState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.mapControl = new DotNetApi.Windows.Controls.MapControl();
-			this.panel = new System.Windows.Forms.Panel();
+			this.panelInformation = new System.Windows.Forms.Panel();
 			this.linkLabelKey = new System.Windows.Forms.LinkLabel();
 			this.labelKey = new System.Windows.Forms.Label();
 			this.labelMaxNodes = new System.Windows.Forms.Label();
@@ -98,21 +99,20 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.panelNodes = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.panelSlice.SuspendLayout();
+			this.panelNodes.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSlice)).BeginInit();
 			this.splitContainerSlice.Panel1.SuspendLayout();
 			this.splitContainerSlice.Panel2.SuspendLayout();
 			this.splitContainerSlice.SuspendLayout();
-			this.panel.SuspendLayout();
+			this.panelInformation.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.contextMenuAddToNodes.SuspendLayout();
 			this.contextMenu.SuspendLayout();
-			this.panelNodes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -140,7 +140,7 @@
 			// panelSlice
 			// 
 			this.panelSlice.Controls.Add(this.panelNodes);
-			this.panelSlice.Controls.Add(this.panel);
+			this.panelSlice.Controls.Add(this.panelInformation);
 			this.panelSlice.Controls.Add(this.toolStrip);
 			this.panelSlice.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelSlice.Location = new System.Drawing.Point(0, 0);
@@ -151,6 +151,16 @@
 			this.panelSlice.Size = new System.Drawing.Size(800, 425);
 			this.panelSlice.TabIndex = 1;
 			this.panelSlice.Title = "PlanetLab Slice";
+			// 
+			// panelNodes
+			// 
+			this.panelNodes.Controls.Add(this.splitContainerSlice);
+			this.panelNodes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelNodes.Location = new System.Drawing.Point(1, 151);
+			this.panelNodes.Name = "panelNodes";
+			this.panelNodes.Padding = new System.Windows.Forms.Padding(4);
+			this.panelNodes.Size = new System.Drawing.Size(798, 273);
+			this.panelNodes.TabIndex = 3;
 			// 
 			// splitContainerSlice
 			// 
@@ -230,29 +240,29 @@
 			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
 			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
 			// 
-			// panel
+			// panelInformation
 			// 
-			this.panel.AutoScroll = true;
-			this.panel.Controls.Add(this.linkLabelKey);
-			this.panel.Controls.Add(this.labelKey);
-			this.panel.Controls.Add(this.labelMaxNodes);
-			this.panel.Controls.Add(this.labelExpires);
-			this.panel.Controls.Add(this.textBoxMaxNodes);
-			this.panel.Controls.Add(this.textBoxExpires);
-			this.panel.Controls.Add(this.labelCreated);
-			this.panel.Controls.Add(this.labelUrl);
-			this.panel.Controls.Add(this.textBoxCreated);
-			this.panel.Controls.Add(this.textBoxUrl);
-			this.panel.Controls.Add(this.labelDescription);
-			this.panel.Controls.Add(this.textBoxDescription);
-			this.panel.Controls.Add(this.labelName);
-			this.panel.Controls.Add(this.textBoxName);
-			this.panel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel.Location = new System.Drawing.Point(1, 47);
-			this.panel.MaximumSize = new System.Drawing.Size(0, 104);
-			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(798, 104);
-			this.panel.TabIndex = 1;
+			this.panelInformation.AutoScroll = true;
+			this.panelInformation.Controls.Add(this.linkLabelKey);
+			this.panelInformation.Controls.Add(this.labelKey);
+			this.panelInformation.Controls.Add(this.labelMaxNodes);
+			this.panelInformation.Controls.Add(this.labelExpires);
+			this.panelInformation.Controls.Add(this.textBoxMaxNodes);
+			this.panelInformation.Controls.Add(this.textBoxExpires);
+			this.panelInformation.Controls.Add(this.labelCreated);
+			this.panelInformation.Controls.Add(this.labelUrl);
+			this.panelInformation.Controls.Add(this.textBoxCreated);
+			this.panelInformation.Controls.Add(this.textBoxUrl);
+			this.panelInformation.Controls.Add(this.labelDescription);
+			this.panelInformation.Controls.Add(this.textBoxDescription);
+			this.panelInformation.Controls.Add(this.labelName);
+			this.panelInformation.Controls.Add(this.textBoxName);
+			this.panelInformation.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelInformation.Location = new System.Drawing.Point(1, 47);
+			this.panelInformation.MaximumSize = new System.Drawing.Size(0, 104);
+			this.panelInformation.Name = "panelInformation";
+			this.panelInformation.Size = new System.Drawing.Size(798, 104);
+			this.panelInformation.TabIndex = 1;
 			// 
 			// linkLabelKey
 			// 
@@ -631,16 +641,6 @@
 			this.menuItemSiteProperties.Text = "Site prop&erties";
 			this.menuItemSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
 			// 
-			// panelNodes
-			// 
-			this.panelNodes.Controls.Add(this.splitContainerSlice);
-			this.panelNodes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelNodes.Location = new System.Drawing.Point(1, 151);
-			this.panelNodes.Name = "panelNodes";
-			this.panelNodes.Padding = new System.Windows.Forms.Padding(4);
-			this.panelNodes.Size = new System.Drawing.Size(798, 273);
-			this.panelNodes.TabIndex = 3;
-			// 
 			// ControlSlice
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -656,17 +656,17 @@
 			this.splitContainer.ResumeLayout(false);
 			this.panelSlice.ResumeLayout(false);
 			this.panelSlice.PerformLayout();
+			this.panelNodes.ResumeLayout(false);
 			this.splitContainerSlice.Panel1.ResumeLayout(false);
 			this.splitContainerSlice.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSlice)).EndInit();
 			this.splitContainerSlice.ResumeLayout(false);
-			this.panel.ResumeLayout(false);
-			this.panel.PerformLayout();
+			this.panelInformation.ResumeLayout(false);
+			this.panelInformation.PerformLayout();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenuAddToNodes.ResumeLayout(false);
 			this.contextMenu.ResumeLayout(false);
-			this.panelNodes.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -692,7 +692,7 @@
 		private System.Windows.Forms.ToolStripMenuItem itemSelectNodesSlice;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerSlice;
 		private DotNetApi.Windows.Controls.MapControl mapControl;
-		private System.Windows.Forms.Panel panel;
+		private System.Windows.Forms.Panel panelInformation;
 		private System.Windows.Forms.Label labelMaxNodes;
 		private System.Windows.Forms.Label labelExpires;
 		private System.Windows.Forms.TextBox textBoxMaxNodes;
@@ -727,7 +727,7 @@
 		private System.Windows.Forms.ToolStripMenuItem buttonSiteProperties;
 		private System.Windows.Forms.ColumnHeader columnHeaderState;
 		private System.Windows.Forms.ToolStripButton buttonRenew;
-		private DotNetApi.Windows.Controls.ThemePanel panelSlice;
+		private DotNetApi.Windows.Controls.ThemeControl panelSlice;
 		private System.Windows.Forms.Panel panelNodes;
 	}
 }

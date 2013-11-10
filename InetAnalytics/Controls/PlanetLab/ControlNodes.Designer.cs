@@ -78,7 +78,7 @@
 			this.columnHeaderDateCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderLastUpdated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.panelNodes = new DotNetApi.Windows.Controls.ThemePanel();
+			this.panelNodes = new DotNetApi.Windows.Controls.ThemeControl();
 			this.contextMenu.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.panelNodes.SuspendLayout();
@@ -437,6 +437,6 @@
 		private DotNetApi.Windows.Controls.ToolStripDropDownCheckedList stateFilter;
 		private System.Windows.Forms.ToolStripSeparator separator5;
 		private System.Windows.Forms.ToolStripMenuItem menuItemFilterState;
-		private DotNetApi.Windows.Controls.ThemePanel panelNodes;
+		private DotNetApi.Windows.Controls.ThemeControl panelNodes;
 	}
 }

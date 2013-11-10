@@ -196,7 +196,7 @@
 			this.ShowBorder = true;
 			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 150);
-			this.Title = "Log";
+			this.Title = "Event Log";
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenu.ResumeLayout(false);

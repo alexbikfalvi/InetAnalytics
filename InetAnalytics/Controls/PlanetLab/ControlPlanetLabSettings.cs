@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
 using InetAnalytics.Forms.PlanetLab;
@@ -34,18 +35,39 @@ namespace InetAnalytics.Controls.PlanetLab
 	/// </summary>
 	public sealed partial class ControlPlanetLabSettings : ControlRequest
 	{
+		/// <summary>
+		/// An enumeration representing the user selection state.
+		/// </summary>
+		private enum UserState
+		{
+			Unknown = 0,
+			Success = 1,
+			Failed = 2,
+			NotSelected = 3
+		}
+		
 		private static readonly string logSource = "PlanetLab";
+		private static readonly Image[] personIcons = {
+														  Resources.UserQuestion_48,
+														  Resources.UserSuccess_48,
+														  Resources.UserError_48,
+														  Resources.UserWarning_48
+													  };
+		private static readonly string[] personMessage = {
+															 "There is no current PlanelLab account.",
+															 "The PlanetLab credentials correspond to the following account.",
+															 "There is no PlanetLab account for the specified credentials.",
+															 "There are multiple accounts corresponding to the specified credentials."
+														 };
 
 		private Crawler crawler;
 
 		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetPersons);
 
-		private string validatedUsername = null;
-		private SecureString validatedPassword = null;
-		private readonly PlList<PlPerson> validatedPersons = new PlList<PlPerson>();
-		private int validatedPerson = -1;
-
 		private readonly FormObjectProperties<ControlPersonProperties> formPersonProperties = new FormObjectProperties<ControlPersonProperties>();
+		private readonly FormPlanetLabPersons formSelectPerson = new FormPlanetLabPersons();
+
+		private PlPerson person = null;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -75,7 +97,23 @@ namespace InetAnalytics.Controls.PlanetLab
 		// Protected methods.
 
 		/// <summary>
-		/// A methods called when completing a PlanetLab request.
+		/// A method called when starting a PlanetLab request.
+		/// </summary>
+		/// <param name="state">The request state.</param>
+		protected override void OnRequestStarted(RequestState state)
+		{
+			// Disable the controls.
+			this.buttonSave.Enabled = false;
+			this.textBoxUsername.Enabled = false;
+			this.textBoxPassword.Enabled = false;
+			// Clear the person.
+			this.OnSetPerson(UserState.Unknown);
+			// Call the base class method.
+			base.OnRequestStarted(state);
+		}
+
+		/// <summary>
+		/// A method called when completing a PlanetLab request.
 		/// </summary>
 		/// <param name="response">The response.</param>
 		/// <param name="state">The request state.</param>
@@ -86,44 +124,65 @@ namespace InetAnalytics.Controls.PlanetLab
 			// If the request has not failed.
 			if ((null == response.Fault) && (null != response.Value))
 			{
-				// Set the validated account.
-				this.validatedUsername = this.textBoxUsername.Text;
-				this.validatedPassword = this.textBoxPassword.SecureText;
-
-				// Update the list of PlanetLab persons for the given response.
-				try	{ this.validatedPersons.Update(response.Value as XmlRpcArray); }
-				catch {	}
-				this.validatedPerson = -1;
-
-				// Lock the list.
-				this.validatedPersons.Lock();
 				try
 				{
-					// Populate the accounts list.
-					foreach (PlPerson person in this.validatedPersons)
+					// Create a new persons list.
+					PlList<PlPerson> persons = new PlList<PlPerson>();
+					// Get the list of PlanetLab persons for the given response.
+					persons.Update(response.Value as XmlRpcArray);
+					
+					// Check the number of persons returned in the response.
+					if (persons.Count == 1)
 					{
-						if (person.Id.HasValue)
+						// If the number of persons is one, set it as the current person.
+						this.OnSetPerson(persons[0]);
+						// Save the credentials.
+						this.OnSaveCredentials(persons, persons[0]);
+					}
+					else if (persons.Count > 1)
+					{
+						// Show the select person dialog.
+						if (this.formSelectPerson.ShowDialog(this, this.textBoxUsername.Text, persons) == DialogResult.OK)
 						{
-							ListViewItem item = new ListViewItem(new string[] {
-								person.Id.Value.ToString(),
-								person.FirstName,
-								person.LastName,
-								person.IsEnabled.HasValue ? person.IsEnabled.Value ? "Yes" : "No" : "Unknown",
-								person.Phone,
-								person.Email,
-								person.Url
-							});
-							item.ImageKey = "User";
-							item.Tag = person;
-							this.listView.Items.Add(item);
+							// Set the selected person as the current person.
+							this.OnSetPerson(this.formSelectPerson.Result);
+							// Save the credentials.
+							this.OnSaveCredentials(persons, this.formSelectPerson.Result);
+						}
+						else
+						{
+							// If a list was not selected, clear the selection.
+							this.OnSetPerson(UserState.NotSelected);
 						}
 					}
+					else
+					{
+						// If no results were returned, clear the selection.
+						this.OnSetPerson(UserState.Failed);
+					}
 				}
-				finally
+				catch
 				{
-					this.validatedPersons.Unlock();
+					// If an error ocurred, clear the selection.
+					this.OnSetPerson(UserState.Failed);
 				}
 			}
+			// Call the base class method.
+			base.OnRequestResult(response, state);
+		}
+
+		/// <summary>
+		/// A method called when the request has finished.
+		/// </summary>
+		/// <param name="state"></param>
+		protected override void OnRequestFinished(RequestState state)
+		{
+			// Enable the controls.
+			this.buttonSave.Enabled = true;
+			this.textBoxUsername.Enabled = true;
+			this.textBoxPassword.Enabled = true;
+			// Call the base class method.
+			base.OnRequestFinished(state);
 		}
 
 		// Private methods.
@@ -133,44 +192,27 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnLoad()
 		{
+			// If the crawler is not set, do nothing.
 			if (null == this.crawler) return;
 
-			// Load the configuration.
-			this.validatedUsername = CrawlerConfig.Static.PlanetLabUsername;
-			this.validatedPassword = CrawlerConfig.Static.PlanetLabPassword;
-			this.crawler.Config.PlanetLab.LocalPersons.CopyTo(this.validatedPersons);
-			this.validatedPerson = CrawlerConfig.Static.PlanetLabPersonId;
-
 			// Set the username.
-			this.textBoxUsername.Text = this.validatedUsername;
+			this.textBoxUsername.Text = CrawlerConfig.Static.PlanetLabUsername;
 			// Set the password.
-			this.textBoxPassword.SecureText = this.validatedPassword;
-			// Set the list of persons.
-			this.validatedPersons.Lock();
-			try
+			this.textBoxPassword.SecureText = CrawlerConfig.Static.PlanetLabPassword;
+			
+			// Get the account.
+			PlPerson person = this.crawler.Config.PlanetLab.DbPersons.Find(this.crawler.Config.PlanetLab.PersonId);
+
+			// If there exists a person.
+			if (null != person)
 			{
-				foreach (PlPerson person in this.validatedPersons)
-				{
-					if (person.Id.HasValue)
-					{
-						ListViewItem item = new ListViewItem(new string[] {
-								person.Id.Value.ToString(),
-								person.FirstName,
-								person.LastName,
-								person.IsEnabled.HasValue ? person.IsEnabled.Value ? "Yes" : "No" : "Unknown",
-								person.Phone,
-								person.Email,
-								person.Url
-							});
-						item.ImageKey = person.Id == this.validatedPerson ? "UserStar" : "User";
-						item.Tag = person;
-						this.listView.Items.Add(item);
-					}
-				}
+				// Set the person.
+				this.OnSetPerson(person);
 			}
-			finally
+			else
 			{
-				this.validatedPersons.Unlock();
+				// Clear the person.
+				this.OnSetPerson(UserState.Unknown);
 			}
 		}
 
@@ -179,19 +221,9 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnValidate(object sender, EventArgs e)
+		private void OnSave(object sender, EventArgs e)
 		{
 			if (null == this.crawler) return;
-
-			// Disable the validation and save buttons.
-			this.buttonValidate.Enabled = false;
-			this.buttonSave.Enabled = false;
-			this.buttonProperties.Enabled = false;
-			// Clear the accounts list view.
-			this.listView.Items.Clear();
-			// Clear the list of validated person and persons.
-			this.validatedPersons.Clear();
-			this.validatedPerson = -1;
 
 			// Try and validate the user account.
 			try
@@ -213,88 +245,9 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnChanged(object sender, EventArgs e)
 		{
-			this.buttonValidate.Enabled =
+			this.buttonSave.Enabled =
 				(!string.IsNullOrWhiteSpace(this.textBoxUsername.Text)) &&
 				(!this.textBoxPassword.SecureText.IsEmpty());
-		}
-
-		/// <summary>
-		/// An event handler called when the account selection has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnAccountSelectionChanged(object sender, EventArgs e)
-		{
-			// If there is a selected item.
-			if (this.listView.SelectedItems.Count > 0)
-			{
-				// Get the selected person.
-				PlPerson person = this.listView.SelectedItems[0].Tag as PlPerson;
-
-				this.buttonSave.Enabled = person.Id != this.validatedPerson;
-				this.buttonProperties.Enabled = true;
-			}
-			else
-			{
-				this.buttonSave.Enabled = false;
-				this.buttonProperties.Enabled = false;
-			}
-		}
-
-		/// <summary>
-		/// Saves the current configuration.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSave(object sender, EventArgs e)
-		{
-			// If there is no account selected, show a message and return.
-			if (this.listView.SelectedItems.Count == 0)
-			{
-				MessageBox.Show(this, "You must select a default PlanetLab account.", "Cannot Save Credentials", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
-
-			// If there exists a validated person.
-			if (this.validatedPerson != -1)
-			{
-				// Clear the default selection for the corresponding item.
-				foreach (ListViewItem oldItem in this.listView.Items)
-				{
-					if (oldItem.Tag.Equals(this.validatedPerson))
-					{
-						oldItem.ImageKey = "User";
-					}
-				}
-			}
-
-			// Get the selected item.
-			ListViewItem newItem = this.listView.SelectedItems[0];
-			newItem.ImageKey = "UserStar";
-			
-			// Get the selected person.
-			PlPerson person = newItem.Tag as PlPerson;
-
-			// Set the selected person ID.
-			this.validatedPerson = person.Id.HasValue ? person.Id.Value : -1;
-
-			// Save the PlanetLab credentials.
-			this.crawler.Config.PlanetLab.SaveCredentials(
-				this.validatedUsername,
-				this.validatedPassword,
-				this.validatedPersons,
-				this.validatedPerson);
-
-			// Log
-			this.crawler.Log.Add(
-				LogEventLevel.Verbose,
-				LogEventType.Information,
-				ControlPlanetLabSettings.logSource,
-				"Saved credentials for the PlanetLab account \'{0}\'.",
-				new object[] { this.validatedUsername });
-
-			// Disable the save button.
-			this.buttonSave.Enabled = false;
 		}
 
 		/// <summary>
@@ -304,33 +257,71 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnProperties(object sender, EventArgs e)
 		{
-			// If there is no account selected, do nothing.
-			if (this.listView.SelectedItems.Count == 0) return;
-
-			// Get the person.
-			PlPerson person = this.listView.SelectedItems[0].Tag as PlPerson;
-
-			// Open a new dialog with the PlanetLab properties.
-			this.formPersonProperties.ShowDialog(this, "Person", person);
+			// If there exists a current account.
+			if (null != this.person)
+			{
+				// Open a new dialog with the PlanetLab properties.
+				this.formPersonProperties.ShowDialog(this, "Person", this.person);
+			}
 		}
 
 		/// <summary>
-		/// An event handler called when user user clicks the list view.
+		/// Updates the control with the information of the specified person.
 		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnMouseClick(object sender, MouseEventArgs e)
+		/// <param name="person">The selected person.</param>
+		private void OnSetPerson(PlPerson person)
 		{
-			if (e.Button == MouseButtons.Right)
-			{
-				if (this.listView.FocusedItem != null)
-				{
-					if (this.listView.FocusedItem.Bounds.Contains(e.Location))
-					{
-						this.contextMenu.Show(this.listView, e.Location);
-					}
-				}
-			}
+			// Set the current person.
+			this.person = person;
+			// Show the panel.
+			this.panelPerson.Visible = true;
+			// Set the panel information.
+			this.textBoxFirstName.Text = person.FirstName;
+			this.textBoxLastName.Text = person.LastName;
+			this.textBoxTitle.Text = person.Title;
+			this.textBoxPhone.Text = person.Phone;
+			this.textBoxEmail.Text = person.Email;
+			this.textBoxUrl.Text = person.Url;
+			// Enable the properties button.
+			this.buttonProperties.Enabled = true;
+			// Set the user icon.
+			this.pictureUser.Image = ControlPlanetLabSettings.personIcons[(int)UserState.Success];
+			// Set the text.
+			this.labelPerson.Text = ControlPlanetLabSettings.personMessage[(int)UserState.Success];
+		}
+
+		/// <summary>
+		/// Updates the control with the information of the specified person.
+		/// </summary>
+		/// <param name="state">The user state.</param>
+		private void OnSetPerson(UserState state)
+		{
+			// Clear the current person.
+			this.person = null;
+			// Hide the panel.
+			this.panelPerson.Visible = false;
+			// Disable the properties button.
+			this.buttonProperties.Enabled = false;
+			// Set the user icon.
+			this.pictureUser.Image = ControlPlanetLabSettings.personIcons[(int)state];
+			// Set the text.
+			this.labelPerson.Text = ControlPlanetLabSettings.personMessage[(int)state];
+		}
+
+		/// <summary>
+		/// Saves the current credentials.
+		/// </summary>
+		/// <param name="persons">The list of persons corresponding to the current credentials.</param>
+		/// <param name="person">The selected person.</param>
+		private void OnSaveCredentials(PlList<PlPerson> persons, PlPerson person)
+		{
+			// Save the credentials.
+			this.crawler.Config.PlanetLab.SaveCredentials(
+				this.textBoxUsername.Text,
+				this.textBoxPassword.SecureText,
+				persons,
+				person.Id ?? -1
+				);
 		}
 	}
 }

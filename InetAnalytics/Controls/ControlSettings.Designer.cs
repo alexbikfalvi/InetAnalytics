@@ -164,7 +164,7 @@
 			this.tabPageYouTube.Location = new System.Drawing.Point(4, 22);
 			this.tabPageYouTube.Name = "tabPageYouTube";
 			this.tabPageYouTube.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageYouTube.Size = new System.Drawing.Size(584, 341);
+			this.tabPageYouTube.Size = new System.Drawing.Size(584, 320);
 			this.tabPageYouTube.TabIndex = 1;
 			this.tabPageYouTube.Text = "YouTube";
 			this.tabPageYouTube.UseVisualStyleBackColor = true;
@@ -265,7 +265,7 @@
 			this.tabPageLog.Location = new System.Drawing.Point(4, 22);
 			this.tabPageLog.Name = "tabPageLog";
 			this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageLog.Size = new System.Drawing.Size(584, 341);
+			this.tabPageLog.Size = new System.Drawing.Size(584, 320);
 			this.tabPageLog.TabIndex = 2;
 			this.tabPageLog.Text = "Log";
 			this.tabPageLog.UseVisualStyleBackColor = true;
@@ -301,7 +301,7 @@
 			this.tabPageComments.Location = new System.Drawing.Point(4, 22);
 			this.tabPageComments.Name = "tabPageComments";
 			this.tabPageComments.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageComments.Size = new System.Drawing.Size(584, 341);
+			this.tabPageComments.Size = new System.Drawing.Size(584, 320);
 			this.tabPageComments.TabIndex = 3;
 			this.tabPageComments.Text = "Comments";
 			this.tabPageComments.UseVisualStyleBackColor = true;
