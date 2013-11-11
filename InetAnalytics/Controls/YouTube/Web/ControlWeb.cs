@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using InetCrawler;
 
 namespace InetAnalytics.Controls.YouTube.Web
 {
@@ -34,6 +35,8 @@ namespace InetAnalytics.Controls.YouTube.Web
 	/// </summary>
 	public partial class ControlWeb : ThemeControl
 	{
+		private Crawler crawler; 
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -46,10 +49,21 @@ namespace InetAnalytics.Controls.YouTube.Web
 			this.Dock = DockStyle.Fill;
 		}
 
+		// Public methods.
+
 		/// <summary>
-		/// An event raised when the user selects the video statistics.
+		/// Initializes the control.
 		/// </summary>
-		public event EventHandler ClickVideoStatistics;
+		/// <param name="crawler">The crawler.</param>
+		public void Initialize(Crawler crawler)
+		{
+			// Set the crawler.
+			this.crawler = crawler;
+			// Enable the control.
+			this.Enabled = true;
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the user selects the video feeds link.
@@ -58,8 +72,7 @@ namespace InetAnalytics.Controls.YouTube.Web
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoStatisticsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickVideoStatistics) this.ClickVideoStatistics(this, e);
+			this.crawler.SelectYouTubeWebVideos();
 		}
-
 	}
 }

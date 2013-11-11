@@ -50,7 +50,7 @@
 			this.video.Size = new System.Drawing.Size(506, 369);
 			this.video.TabIndex = 2;
 			this.video.Video = null;
-			this.video.ViewProfile += new InetAnalytics.Events.StringEventHandler(this.OnViewProfile);
+			this.video.ViewProfile += new InetCrawler.Events.StringEventHandler(this.OnViewProfile);
 			// 
 			// FormVideo
 			// 

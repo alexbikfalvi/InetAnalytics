@@ -99,7 +99,7 @@
 			this.linkLabelVideosGlobal.TabIndex = 5;
 			this.linkLabelVideosGlobal.TabStop = true;
 			this.linkLabelVideosGlobal.Text = "Global video feeds and information";
-			this.linkLabelVideosGlobal.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnVideosGlobalClick);
+			this.linkLabelVideosGlobal.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnVideoFeedsClick);
 			// 
 			// linkLabelVideosUser
 			// 
@@ -111,7 +111,7 @@
 			this.linkLabelVideosUser.TabIndex = 6;
 			this.linkLabelVideosUser.TabStop = true;
 			this.linkLabelVideosUser.Text = "Per user video feeds and information";
-			this.linkLabelVideosUser.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnVideosUserClick);
+			this.linkLabelVideosUser.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnUserFeedsClick);
 			// 
 			// linkLabelCategories
 			// 
@@ -151,6 +151,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
+			this.Enabled = false;
 			this.Name = "ControlYtApi2Info";
 			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
 			this.ShowBorder = true;

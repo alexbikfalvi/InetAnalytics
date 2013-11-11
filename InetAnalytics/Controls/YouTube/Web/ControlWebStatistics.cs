@@ -61,10 +61,7 @@ namespace InetAnalytics.Controls.YouTube.Web
 			this.Visible = false;
 		}
 
-		/// <summary>
-		/// An event handler called when the user adds a new comment.
-		/// </summary>
-		public event StringEventHandler Comment;
+		// Public methods.
 
 		/// <summary>
 		/// Initializes the control.
@@ -87,6 +84,8 @@ namespace InetAnalytics.Controls.YouTube.Web
 			this.textBox.Text = video;
 			this.OnStart(null, null);
 		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the video ID has changed.
@@ -752,7 +751,7 @@ namespace InetAnalytics.Controls.YouTube.Web
 		private void OnComment(object sender, EventArgs e)
 		{
 			if (null == this.statisticsVideo) return;
-			if (this.Comment != null) this.Comment(this, new StringEventArgs(this.statisticsVideo));
+			this.crawler.CommentYouTubeVideo(this.statisticsVideo);
 		}
 	}
 }

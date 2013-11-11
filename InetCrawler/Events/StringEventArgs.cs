@@ -17,34 +17,33 @@
  */
 
 using System;
-using InetApi.YouTube.Api.V2.Data;
 
-namespace InetAnalytics.Events
+namespace InetCrawler.Events
 {
 	/// <summary>
-	/// A delegate representing a profile event handler.
+	/// A delegate representing a string event handler.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void ProfileEventHandler(object sender, ProfileEventArgs e);
+	public delegate void StringEventHandler(object sender, StringEventArgs e);
 
 	/// <summary>
-	/// A class representing a profile event argument.
+	/// A class representing a string event argument.
 	/// </summary>
-	public class ProfileEventArgs : EventArgs
+	public class StringEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Creates a new event instance.
 		/// </summary>
-		/// <param name="profile">The profile.</param>
-		public ProfileEventArgs(Profile profile)
+		/// <param name="value">The string value.</param>
+		public StringEventArgs(string value)
 		{
-			this.Profile = profile;
+			this.Value = value;
 		}
-
+		
 		/// <summary>
-		/// Gets the profile.
+		/// Gets the string value.
 		/// </summary>
-		public Profile Profile { get; private set; }
+		public string Value { get; private set; }
 	}
 }

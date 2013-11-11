@@ -63,9 +63,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowNext_16 {
+        internal static System.Drawing.Bitmap ArrowBlueDown_16 {
             get {
-                object obj = ResourceManager.GetObject("ArrowNext_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueDown_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowNext_24 {
+        internal static System.Drawing.Bitmap ArrowBlueDown_24 {
             get {
-                object obj = ResourceManager.GetObject("ArrowNext_24", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueDown_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowNext_32 {
+        internal static System.Drawing.Bitmap ArrowBlueDown_32 {
             get {
-                object obj = ResourceManager.GetObject("ArrowNext_32", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueDown_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowNext_48 {
+        internal static System.Drawing.Bitmap ArrowBlueDown_48 {
             get {
-                object obj = ResourceManager.GetObject("ArrowNext_48", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueDown_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowPrevious_16 {
+        internal static System.Drawing.Bitmap ArrowBlueNext_16 {
             get {
-                object obj = ResourceManager.GetObject("ArrowPrevious_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueNext_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowPrevious_24 {
+        internal static System.Drawing.Bitmap ArrowBlueNext_24 {
             get {
-                object obj = ResourceManager.GetObject("ArrowPrevious_24", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueNext_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowPrevious_32 {
+        internal static System.Drawing.Bitmap ArrowBlueNext_32 {
             get {
-                object obj = ResourceManager.GetObject("ArrowPrevious_32", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueNext_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,249 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ArrowPrevious_48 {
+        internal static System.Drawing.Bitmap ArrowBlueNext_48 {
             get {
-                object obj = ResourceManager.GetObject("ArrowPrevious_48", resourceCulture);
+                object obj = ResourceManager.GetObject("ArrowBlueNext_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBluePrevious_16 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBluePrevious_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBluePrevious_24 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBluePrevious_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBluePrevious_32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBluePrevious_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBluePrevious_48 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBluePrevious_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBlueUp_16 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBlueUp_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBlueUp_24 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBlueUp_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBlueUp_32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBlueUp_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowBlueUp_48 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBlueUp_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenDown_16 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenDown_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenDown_24 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenDown_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenDown_32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenDown_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenDown_48 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenDown_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenNext_16 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenNext_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenNext_24 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenNext_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenNext_32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenNext_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenNext_48 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenNext_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenPrevious_16 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenPrevious_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenPrevious_24 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenPrevious_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenPrevious_32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenPrevious_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenPrevious_48 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenPrevious_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenUp_16 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenUp_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenUp_24 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenUp_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenUp_32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenUp_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowGreenUp_48 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowGreenUp_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3135,6 +3375,86 @@ namespace InetAnalytics {
         internal static System.Drawing.Bitmap Find_48 {
             get {
                 object obj = ResourceManager.GetObject("Find_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindNext_16 {
+            get {
+                object obj = ResourceManager.GetObject("FindNext_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindNext_24 {
+            get {
+                object obj = ResourceManager.GetObject("FindNext_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindNext_32 {
+            get {
+                object obj = ResourceManager.GetObject("FindNext_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindNext_48 {
+            get {
+                object obj = ResourceManager.GetObject("FindNext_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindPrevious_16 {
+            get {
+                object obj = ResourceManager.GetObject("FindPrevious_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindPrevious_24 {
+            get {
+                object obj = ResourceManager.GetObject("FindPrevious_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindPrevious_32 {
+            get {
+                object obj = ResourceManager.GetObject("FindPrevious_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FindPrevious_48 {
+            get {
+                object obj = ResourceManager.GetObject("FindPrevious_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

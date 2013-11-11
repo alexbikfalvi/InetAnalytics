@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using InetCrawler;
 
 namespace InetAnalytics.Controls.YouTube.Api2
 {
@@ -27,6 +28,8 @@ namespace InetAnalytics.Controls.YouTube.Api2
 	/// </summary>
 	public partial class ControlYtApi2Info : ThemeControl
 	{
+		private Crawler crawler;
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -39,37 +42,40 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			this.Dock = DockStyle.Fill;
 		}
 
-		/// <summary>
-		/// An event raised when the user selects the global videos.
-		/// </summary>
-		public event EventHandler VideosGlobalClick;
-		/// <summary>
-		/// An event raised when the user selects the per user videos.
-		/// </summary>
-		public event EventHandler VideosUserClick;
-		/// <summary>
-		/// An event raised when the user selects the video categories.
-		/// </summary>
-		public event EventHandler CategoriesClick;
+		// Public methods.
 
 		/// <summary>
-		/// An event handler called when the user selects the global videos link.
+		/// Initializes the control.
+		/// </summary>
+		/// <param name="crawler">The crawler.</param>
+		public void Initialize(Crawler crawler)
+		{
+			// Set the crawler.
+			this.crawler = crawler;
+			// Enable the control.
+			this.Enabled = true;
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// An event handler called when the user selects the video feeds link.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnVideosGlobalClick(object sender, LinkLabelLinkClickedEventArgs e)
+		private void OnVideoFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.VideosGlobalClick) this.VideosGlobalClick(this, e);
+			this.crawler.SelectYouTubeVideoFeeds();
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the playlists feed link.
+		/// An event handler called when the user selects the user feeds link.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnVideosUserClick(object sender, LinkLabelLinkClickedEventArgs e)
+		private void OnUserFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.VideosUserClick) this.VideosUserClick(this, e);
+			this.crawler.SelectYouTubeUserFeeds();
 		}
 
 		/// <summary>
@@ -79,7 +85,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnCategoriesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.CategoriesClick) this.CategoriesClick(this, e);
+			this.crawler.SelectYouTubeCategories();
 		}
 	}
 }

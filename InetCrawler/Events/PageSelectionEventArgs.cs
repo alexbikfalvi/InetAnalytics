@@ -17,34 +17,34 @@
  */
 
 using System;
-using InetApi.YouTube.Api.V2.Data;
+using System.Windows.Forms;
 
-namespace InetAnalytics.Events
+namespace InetCrawler.Events
 {
 	/// <summary>
-	/// A delegate representing a video event handler.
+	/// A delegate representing a page selection event handler.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void VideoEventHandler(object sender, VideoEventArgs e);
+	public delegate void PageSelectionEventHandler(object sender, PageSelectionEventArgs e);
 
 	/// <summary>
-	/// A class representing a video event argument.
+	/// A class representing a page selection event argument.
 	/// </summary>
-	public class VideoEventArgs : EventArgs
+	public class PageSelectionEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Creates a new event instance.
+		/// Creates a new event argument instance.
 		/// </summary>
-		/// <param name="video">The video.</param>
-		public VideoEventArgs(Video video)
+		/// <param name="node">The selected tree node.</param>
+		public PageSelectionEventArgs(TreeNode node)
 		{
-			this.Video = video;
+			this.Node = node;
 		}
 
 		/// <summary>
-		/// Gets the video.
+		/// Gets the selected tree node.
 		/// </summary>
-		public Video Video { get; private set; }
+		public TreeNode Node { get; private set; }
 	}
 }

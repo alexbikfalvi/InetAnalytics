@@ -17,33 +17,34 @@
  */
 
 using System;
+using System.Windows.Forms;
 
-namespace InetAnalytics.Events
+namespace InetCrawler.Events
 {
 	/// <summary>
-	/// A delegate representing a string event handler.
+	/// A delegate representing a generic control event handler.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void StringEventHandler(object sender, StringEventArgs e);
+	public delegate void ControlEventHandler<T>(object sender, ControlEventArgs<T> e) where T : Control;
 
 	/// <summary>
-	/// A class representing a string event argument.
+	/// A class representing a generic control event argument.
 	/// </summary>
-	public class StringEventArgs : EventArgs
+	public class ControlEventArgs<T> : EventArgs where T : Control
 	{
 		/// <summary>
 		/// Creates a new event instance.
 		/// </summary>
-		/// <param name="value">The string value.</param>
-		public StringEventArgs(string value)
+		/// <param name="control">The control.</param>
+		public ControlEventArgs(T control)
 		{
-			this.Value = value;
+			this.Control = control;
 		}
-		
+
 		/// <summary>
-		/// Gets the string value.
+		/// Gets the control.
 		/// </summary>
-		public string Value { get; private set; }
+		public T Control { get; private set; }
 	}
 }

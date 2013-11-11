@@ -189,14 +189,14 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		// Public events.
 
-		/// <summary>
-		/// An event raised when a slice has been added.
-		/// </summary>
-		public event ControlEventHandler<ControlSlice> SliceAdded;
-		/// <summary>
-		/// An event raised when a slice has been removed.
-		/// </summary>
-		public event ControlEventHandler<ControlSlice> SliceRemoved;
+		///// <summary>
+		///// An event raised when a slice has been added.
+		///// </summary>
+		//public event ControlEventHandler<ControlSlice> SliceAdded;
+		///// <summary>
+		///// An event raised when a slice has been removed.
+		///// </summary>
+		//public event ControlEventHandler<ControlSlice> SliceRemoved;
 
 		// Public methods.
 
@@ -344,8 +344,6 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Get the slice info.
 				SliceInfo info = (SliceInfo)item.Tag;
-				// Raise the slice removed event.
-				if (null != this.SliceRemoved) this.SliceRemoved(this, new ControlEventArgs<ControlSlice>(info.Control));
 				// Remove the slice changed event handler.
 				info.Slice.Changed -= this.OnSliceChanged;
 				// Remove the tree node.
@@ -391,8 +389,6 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Get the slice info.
 				SliceInfo info = (SliceInfo)item.Tag;
-				// Raise the slice removed event.
-				if (null != this.SliceRemoved) this.SliceRemoved(this, new ControlEventArgs<ControlSlice>(info.Control));
 				// Remove the slice changed event handler.
 				info.Slice.Changed -= this.OnSliceChanged;
 				// Remove the list view item.
@@ -416,8 +412,6 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Get the slice info.
 				SliceInfo info = (SliceInfo)item.Tag;
-				// Raise the slice removed event.
-				if (null != this.SliceRemoved) this.SliceRemoved(this, new ControlEventArgs<ControlSlice>(info.Control));
 				// Remove the slice changed event handler.
 				info.Slice.Changed -= this.OnSliceChanged;
 				// Dispose the control.
@@ -462,9 +456,6 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Add the slice changed event handler.
 			slice.Changed += this.OnSliceChanged;
-
-			// Raise the slice added event.
-			if (null != this.SliceAdded) this.SliceAdded(this, new ControlEventArgs<ControlSlice>(control));
 		}
 
 		/// <summary>

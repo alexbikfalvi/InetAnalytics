@@ -30,6 +30,7 @@ using InetApi.YouTube.Api.V2;
 using InetApi.YouTube.Api.V2.Atom;
 using InetApi.YouTube.Api.V2.Data;
 using InetCrawler;
+using InetCrawler.Events;
 using InetCrawler.Log;
 
 namespace InetAnalytics.Controls.YouTube.Api2
@@ -50,6 +51,8 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private YouTubeRequestFeed<Video> request;
 		private IAsyncResult result;
 		private Feed<Video> feed = null;
+
+		private readonly object sync = new object();
 
 		private VideosFeedEventHandler delegateFeed = null;
 
@@ -94,33 +97,6 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			// Enable the control
 			this.Enabled = true;
 		}
-
-		// Public events.
-
-		/// <summary>
-		/// View the video information using the version 2 API.
-		/// </summary>
-		public event VideoEventHandler ViewVideoInApiV2;
-		/// <summary>
-		/// View the author profile using the version 2 API.
-		/// </summary>
-		public event StringEventHandler ViewAuthorInApiV2;
-		/// <summary>
-		/// View the related videos using the version 2 API.
-		/// </summary>
-		public event VideoEventHandler ViewRelatedVideosInApiV2;
-		/// <summary>
-		/// View the response videos using the version 2 API.
-		/// </summary>
-		public event VideoEventHandler ViewResponseVideosInApiV2;
-		/// <summary>
-		/// View the video statistics using the web.
-		/// </summary>
-		public event VideoEventHandler ViewVideoInWeb;
-		/// <summary>
-		/// An event handler called when the user adds a new comment.
-		/// </summary>
-		public event StringEventHandler Comment;
 
 		// Public methods.
 
@@ -235,69 +211,64 @@ namespace InetAnalytics.Controls.YouTube.Api2
 				{
 					try
 					{
-						// Complete the request
-						this.feed = this.request.End(result);
-
-						// Add the new items to the list view.
-						foreach (Video video in feed.Entries)
+						lock (this.sync)
 						{
-							this.videoList.Add(video);
-						}
+							// Complete the request
+							this.feed = this.request.End(result);
 
-						// Update the page information.
-						this.videoList.CountStart = feed.Entries.Count > 0 ? feed.SearchStartIndex : 0;
-						this.videoList.CountPerPage = feed.Entries.Count;
-						this.videoList.CountTotal = feed.SearchTotalResults;
+							// Add the new items to the list view.
+							this.videoList.Add(feed.Entries, feed.Entries.Count > 0 ? feed.SearchStartIndex : 0, feed.Entries.Count, feed.SearchTotalResults);
 
-						// Set the navigation buttons state.
-						this.videoList.Previous = feed.Links.Previous != null;
-						this.videoList.Next = feed.Links.Next != null;
+							// Set the navigation buttons state.
+							this.videoList.PreviousEnabled = feed.Links.Previous != null;
+							this.videoList.NextEnabled = feed.Links.Next != null;
 
-						// Compute the event type.
-						LogEventType eventType = (this.feed.FailuresAtom.Count == 0) && (this.feed.FailuresEntry.Count == 0) ?
-							LogEventType.Success : LogEventType.SuccessWarning;
-						string eventMessage = eventType == LogEventType.Success ?
-							"The request for the {0} of the {1} \'{{0}}\' completed successfully.".FormatWith(this.feedName, this.objectName) :
-							"The request for the {0} of the {1} \'{{0}}\' completed partially successfully. However, some errors have occurred.".FormatWith(this.feedName, this.objectName);
+							// Compute the event type.
+							LogEventType eventType = (this.feed.FailuresAtom.Count == 0) && (this.feed.FailuresEntry.Count == 0) ?
+								LogEventType.Success : LogEventType.SuccessWarning;
+							string eventMessage = eventType == LogEventType.Success ?
+								"The request for the {0} of the {1} \'{{0}}\' completed successfully.".FormatWith(this.feedName, this.objectName) :
+								"The request for the {0} of the {1} \'{{0}}\' completed partially successfully. However, some errors have occurred.".FormatWith(this.feedName, this.objectName);
 
-						// If there are failures, create a new subevent list.
-						List<LogEvent> subevents = null;
-						if ((this.feed.FailuresAtom.Count != 0) || (this.feed.FailuresEntry.Count != 0))
-						{
-							subevents = new List<LogEvent>();
-							foreach (AtomException exception in this.feed.FailuresAtom)
+							// If there are failures, create a new subevent list.
+							List<LogEvent> subevents = null;
+							if ((this.feed.FailuresAtom.Count != 0) || (this.feed.FailuresEntry.Count != 0))
 							{
-								subevents.Add(new LogEvent(
-									LogEventLevel.Important,
-									LogEventType.Error,
-									DateTime.MinValue,
-									this.logSource,
-									"Parsing of YouTube API version 2 atom XML failed.",
-									null,
-									exception));
+								subevents = new List<LogEvent>();
+								foreach (AtomException exception in this.feed.FailuresAtom)
+								{
+									subevents.Add(new LogEvent(
+										LogEventLevel.Important,
+										LogEventType.Error,
+										DateTime.MinValue,
+										this.logSource,
+										"Parsing of YouTube API version 2 atom XML failed.",
+										null,
+										exception));
+								}
+								foreach (YouTubeAtomException exception in this.feed.FailuresEntry)
+								{
+									subevents.Add(new LogEvent(
+										LogEventLevel.Important,
+										LogEventType.Error,
+										DateTime.MinValue,
+										this.logSource,
+										"Converting atom to YouTube API version 2 video entry failed.",
+										null,
+										exception));
+								}
 							}
-							foreach (YouTubeAtomException exception in this.feed.FailuresEntry)
-							{
-								subevents.Add(new LogEvent(
-									LogEventLevel.Important,
-									LogEventType.Error,
-									DateTime.MinValue,
-									this.logSource,
-									"Converting atom to YouTube API version 2 video entry failed.",
-									null,
-									exception));
-							}
-						}
 
-						// Log
-						this.log.Add(this.crawler.Log.Add(
-							LogEventLevel.Verbose,
-							eventType,
-							this.logSource,
-							eventMessage,
-							new object[] { this.textBoxId.Text, this.linkLabel.Text },
-							null,
-							subevents));
+							// Log
+							this.log.Add(this.crawler.Log.Add(
+								LogEventLevel.Verbose,
+								eventType,
+								this.logSource,
+								eventMessage,
+								new object[] { this.textBoxId.Text, this.linkLabel.Text },
+								null,
+								subevents));
+						}
 					}
 					catch (WebException exception)
 					{
@@ -382,7 +353,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Video(object sender, EventArgs e)
 		{
-			if (this.ViewVideoInApiV2 != null) this.ViewVideoInApiV2(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
+			this.crawler.OpenYouTubeVideo(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -394,7 +365,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Author(object sender, EventArgs e)
 		{
 			Video video = this.videoList.SelectedItem.Tag as Video;
-			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(this, new StringEventArgs(video.Author.UserId));
+			this.crawler.OpenYouTubeUser(video.Author.UserId);
 		}
 
 		/// <summary>
@@ -405,7 +376,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Related(object sender, EventArgs e)
 		{
-			if (this.ViewRelatedVideosInApiV2 != null) this.ViewRelatedVideosInApiV2(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
+			this.crawler.OpenYouTubeRelatedVideos(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -416,7 +387,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Responses(object sender, EventArgs e)
 		{
-			if (this.ViewResponseVideosInApiV2 != null) this.ViewResponseVideosInApiV2(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
+			this.crawler.OpenYouTubeResponseVideos(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -427,7 +398,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewWeb(object sender, EventArgs e)
 		{
-			if (this.ViewVideoInWeb != null) this.ViewVideoInWeb(this, new VideoEventArgs(this.videoList.SelectedItem.Tag as Video));
+			this.crawler.OpenYouTubeWebVideo(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -451,7 +422,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnComment(object sender, EventArgs e)
 		{
-			if (this.Comment != null) this.Comment(this, new StringEventArgs((this.videoList.SelectedItem.Tag as Video).Id));
+			this.crawler.CommentYouTubeVideo((this.videoList.SelectedItem.Tag as Video).Id);
 		}
 
 		/// <summary>
@@ -461,18 +432,21 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigatePrevious(object sender, EventArgs e)
 		{
-			// If the current feed is null, disable the button and return.
-			if ((null == this.feed) || (null == this.feed.Links.Previous))
+			lock (this.sync)
 			{
-				this.videoList.Previous = false;
-				return;
+				// If the current feed is null, disable the button and return.
+				if ((null == this.feed) || (null == this.feed.Links.Previous))
+				{
+					this.videoList.PreviousEnabled = false;
+					return;
+				}
+				// Copy the URL.
+				this.uri = this.feed.Links.Previous;
+				// Set the link label.
+				this.linkLabel.Text = this.uri.AbsoluteUri;
+				// Clear the feed.
+				this.feed = null;
 			}
-			// Copy the URL.
-			this.uri = this.feed.Links.Previous;
-			// Set the link label.
-			this.linkLabel.Text = this.uri.AbsoluteUri;
-			// Clear the feed.
-			this.feed = null;
 			// Clear the video list.
 			this.videoList.Clear();
 			// Start a new request.
@@ -486,18 +460,91 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnNavigateNext(object sender, EventArgs e)
 		{
-			// If the current feed is null, disable the button and return.
-			if ((null == this.feed) || (null == this.feed.Links.Next))
+			lock (this.sync)
 			{
-				this.videoList.Next = false;
-				return;
+				// If the current feed is null, disable the button and return.
+				if ((null == this.feed) || (null == this.feed.Links.Next))
+				{
+					this.videoList.NextEnabled = false;
+					return;
+				}
+				// Copy the URL.
+				this.uri = this.feed.Links.Next;
+				// Set the link label.
+				this.linkLabel.Text = this.uri.AbsoluteUri;
+				// Clear the feed.
+				this.feed = null;
 			}
-			// Copy the URL.
-			this.uri = this.feed.Links.Next;
-			// Set the link label.
-			this.linkLabel.Text = this.uri.AbsoluteUri;
-			// Clear the feed.
-			this.feed = null;
+			// Clear the video list.
+			this.videoList.Clear();
+			// Start a new request.
+			this.OnStart(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the find next button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFindNext(object sender, EventArgs e)
+		{
+			lock (this.sync)
+			{
+				// If the feed or the start index are null, disable the button and result.
+				if ((null == this.feed) && (!this.feed.SearchStartIndex.HasValue))
+				{
+					this.videoList.FindNextEnabled = false;
+					return;
+				}
+
+				// Compute the next start index.
+				int startIndex = this.feed.SearchStartIndex.Value + this.feed.Entries.Count;
+
+				// Compute the URI.
+				this.uri = this.delegateFeed(
+					this.textBoxId.Text,
+					startIndex,
+					this.videoList.VideosPerPage);
+				// Set the link label.
+				this.linkLabel.Text = this.uri.AbsoluteUri;
+				// Clear the feed.
+				this.feed = null;
+			}
+			// Clear the video list.
+			this.videoList.Clear();
+			// Start a new request.
+			this.OnStart(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the find previous button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFindPrevious(object sender, EventArgs e)
+		{
+			lock (this.sync)
+			{
+				// If the feed or the start index are null, disable the button and result.
+				if ((null == this.feed) && (!this.feed.SearchStartIndex.HasValue))
+				{
+					this.videoList.FindPreviousEnabled = false;
+					return;
+				}
+
+				// Compute the next start index.
+				int startIndex = this.feed.SearchStartIndex.Value > this.videoList.VideosPerPage + 1 ? this.feed.SearchStartIndex.Value - this.videoList.VideosPerPage : 1;
+
+				// Compute the URI.
+				this.uri = this.delegateFeed(
+					this.textBoxId.Text,
+					startIndex,
+					this.videoList.VideosPerPage);
+				// Set the link label.
+				this.linkLabel.Text = this.uri.AbsoluteUri;
+				// Clear the feed.
+				this.feed = null;
+			}
 			// Clear the video list.
 			this.videoList.Clear();
 			// Start a new request.
@@ -521,7 +568,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewProfile(object sender, StringEventArgs e)
 		{
-			if (this.ViewAuthorInApiV2 != null) this.ViewAuthorInApiV2(sender, e);
+			this.crawler.OpenYouTubeUser(e.Value);
 		}
 	}
 }

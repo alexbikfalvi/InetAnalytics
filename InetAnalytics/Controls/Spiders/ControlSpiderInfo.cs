@@ -17,15 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using InetCrawler;
 
 namespace InetAnalytics.Controls.Spiders
 {
@@ -34,6 +28,8 @@ namespace InetAnalytics.Controls.Spiders
 	/// </summary>
 	public partial class ControlSpiderInfo : ThemeControl
 	{
+		private Crawler crawler;
+
 		/// <summary>
 		/// Creates a new instance of the control.
 		/// </summary>
@@ -47,12 +43,19 @@ namespace InetAnalytics.Controls.Spiders
 			this.Dock = DockStyle.Fill;
 		}
 
-		// Public events.
+		// Public methods.
 
 		/// <summary>
-		/// An event raised when the user selects the standard feeds spider link.
+		/// Initializes the control.
 		/// </summary>
-		public event EventHandler StandardFeedsClick;
+		/// <param name="crawler">The crawler.</param>
+		public void Initialize(Crawler crawler)
+		{
+			// Set the crawler.
+			this.crawler = crawler;
+			// Enable the control.
+			this.Enabled = true;
+		}
 
 		// Private methods.
 
@@ -63,7 +66,7 @@ namespace InetAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnStandardFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.StandardFeedsClick) this.StandardFeedsClick(this, e);
+			this.crawler.SelectStandardFeedsSpider();
 		}
 	}
 }

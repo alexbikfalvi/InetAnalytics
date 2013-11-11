@@ -17,34 +17,34 @@
  */
 
 using System;
-using System.Windows.Forms;
+using InetApi.YouTube.Api.V2.Data;
 
-namespace InetAnalytics.Events
+namespace InetCrawler.Events
 {
 	/// <summary>
-	/// A delegate representing a control event handler.
+	/// A delegate representing a video event handler.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void ControlEventHandler<T>(object sender, ControlEventArgs<T> e) where T : Control;
+	public delegate void VideoEventHandler(object sender, VideoEventArgs e);
 
 	/// <summary>
-	/// A class representing a control event argument.
+	/// A class representing a video event argument.
 	/// </summary>
-	public class ControlEventArgs<T> : EventArgs where T : Control
+	public class VideoEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Creates a new event instance.
 		/// </summary>
-		/// <param name="control">The control.</param>
-		public ControlEventArgs(T control)
+		/// <param name="video">The video.</param>
+		public VideoEventArgs(Video video)
 		{
-			this.Control = control;
+			this.Video = video;
 		}
 
 		/// <summary>
-		/// Gets the control.
+		/// Gets the video.
 		/// </summary>
-		public T Control { get; private set; }
+		public Video Video { get; private set; }
 	}
 }

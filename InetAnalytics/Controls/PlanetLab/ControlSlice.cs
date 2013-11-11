@@ -204,7 +204,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event raised when a console is selected.
 		/// </summary>
-		public event PageSelectionEventHandler ConsoleSelected;
+		//public event PageSelectionEventHandler ConsoleSelected;
 
 		// Public methods.
 
@@ -1717,7 +1717,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			control.Disconnected += this.OnControlDisconnected;
 
 			// Switch to the specified node.
-			if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(node));
+			this.crawler.SelectPage(node);
 
 			// Connect the session.
 			control.Connect();
@@ -1888,7 +1888,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			NodeInfo info = item.Tag as NodeInfo;
 
 			// Switch to the specified node.
-			if (null != this.ConsoleSelected) this.ConsoleSelected(this, new PageSelectionEventArgs(this.treeNodeSlice));
+			this.crawler.SelectPage(this.treeNodeSlice);
 
 			// Remove the control event handlers.
 			info.ConsoleControl.Connecting -= this.OnConsoleConnecting;

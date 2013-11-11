@@ -39,10 +39,10 @@ using InetAnalytics.Controls.YouTube;
 using InetAnalytics.Controls.YouTube.Api2;
 using InetAnalytics.Controls.YouTube.Api3;
 using InetAnalytics.Controls.YouTube.Web;
-using InetAnalytics.Events;
 using InetApi.YouTube.Api.V2;
 using InetApi.YouTube.Api.V2.Data;
 using InetCrawler;
+using InetCrawler.Events;
 using InetCrawler.Status;
 
 namespace InetAnalytics.Forms
@@ -408,105 +408,56 @@ namespace InetAnalytics.Forms
 			this.controlSideConfiguration.Nodes.Add(this.treeNodeSettings);
 			this.controlSideComments.Nodes.Add(this.treeNodeComments);
 
-			// Set the control event handlers.
+			// Set the status event handler.
 			this.crawler.Status.Message += this.OnStatusMessage;
 
-			this.controlPlanetLab.ClickSites += this.PlanetLabSitesClick;
-			this.controlPlanetLab.ClickSlices += this.PlanetLabSlicesClick;
-			this.controlPlanetLabSlices.SliceAdded += this.PlanetLabSliceAdded;
-			this.controlPlanetLabSlices.SliceRemoved += this.PlanetLabSliceRemoved;
+			// Set the crawler event handlers.
 
-			this.controlYtApi2.VideosGlobalClick += this.YouTubeApi2VideosFeedsInfoClick;
-			this.controlYtApi2.VideosUserClick += this.YouTubeApi2UserFeedsInfoClick;
-			this.controlYtApi2.CategoriesClick += this.YouTubeApi2VideoCategoriesClick;
+			this.crawler.PlanetLabSitesSelected += this.OnPlanetLabSitesSelected;
+			this.crawler.PlanetLabNodesSelected += this.OnPlanetLabNodesSelected;
+			this.crawler.PlanetLabSlicesSelected += this.OnPlanetLabSlicesSelected;
 
-			this.controlYtApi2VideosFeedsInfo.VideoClick += this.YouTubeApi2VideoClick;
-			this.controlYtApi2VideosFeedsInfo.VideoCommentsClick += this.YouTubeApi2VideoCommentsClick;
-			this.controlYtApi2VideosFeedsInfo.SearchFeedClick += this.YouTubeApi2SearchFeedClick;
-			this.controlYtApi2VideosFeedsInfo.StandardFeedClick += this.YouTubeApi2StandardFeedClick;
-			this.controlYtApi2VideosFeedsInfo.RelatedVideosFeedClick += this.YouTubeApi2RelatedVideosFeedClick;
-			this.controlYtApi2VideosFeedsInfo.ResponseVideosFeedClick += this.YouTubeApi2ResponseVideosFeedClick;
+			this.crawler.YouTubeVideoFeedsSelected += this.OnYouTubeApiV2VideosFeedsInfoSelected;
+			this.crawler.YouTubeUserFeedsSelected += this.OnYouTubeApiV2UserFeedsInfoSelected;
+			this.crawler.YouTubeCategoriesSelected += this.OnYouTubeApi2VideoCategoriesSelected;
 
-			this.controlYtApi2Video.ViewVideoCommentsInApiV2 += this.ViewVideoCommentsInApiV2;
-			this.controlYtApi2Video.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2Video.ViewVideoRelatedInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2Video.ViewVideoResponsesInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2Video.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2Video.Comment += this.OnCommentVideo;
+			this.crawler.YouTubeVideoSelected += this.OnYouTubeApiV2VideoSelected;
+			this.crawler.YouTubeVideoCommentsSelected += this.OnYouTubeApiV2VideoCommentsSelected;
+			this.crawler.YouTubeSearchFeedSelected += this.OnYouTubeApiV2SearchFeedSelected;
+			this.crawler.YouTubeStandardFeedSelected += this.OnYouTubeApiV2StandardFeedSelected;
+			this.crawler.YouTubeRelatedVideosFeedSelected += this.OnYouTubeApiV2RelatedVideosFeedSelected;
+			this.crawler.YouTubeResponseVideosFeedSelected += this.OnYouTubeApiV2ResponseVideosFeedSelected;
 
-			this.controlYtApi2StandardFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2StandardFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2StandardFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2StandardFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2StandardFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2StandardFeed.Comment += this.OnCommentVideo;
+			this.crawler.YouTubeUserSelected += this.OnYouTubeApiV2UserSelected;
+			this.crawler.YouTubeUploadsFeedSelected += this.OnYouTubeApiV2UserUploadsSelected;
+			this.crawler.YouTubeFavoritesFeedSelected += this.OnYouTubeApiV2UserFavoritesSelected;
+			this.crawler.YouTubePlaylistsFeedSelected += this.OnYouTubeApiV2UserPlaylistsSelected;
+			this.crawler.YouTubePlaylistFeedSelected += this.OnYouTubeApiV2PlaylistVideosSelected;
 
-			this.controlYtApi2Search.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2Search.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2Search.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2Search.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2Search.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2Search.Comment += this.OnCommentVideo;
+			this.crawler.YouTubeApiV2VideoOpened += this.OnYouTubeApiV2VideoOpened;
+			this.crawler.YouTubeApiV2VideoCommentOpened += this.OnYouTubeApiV2VideoCommentOpened;
+			this.crawler.YouTubeApiV2RelatedVideosOpened += this.OnYouTubeApiV2RelatedVideosOpened;
+			this.crawler.YouTubeApiV2ResponseVideosOpened += this.OnYouTubeApiV2ResponseVideosOpened;
 
-			this.controlYtApi2RelatedFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2RelatedFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2RelatedFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2RelatedFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2RelatedFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2RelatedFeed.Comment += this.OnCommentVideo;
+			this.crawler.YouTubeApiV2UserOpened += this.OnYouTubeApiV2AuthorOpened;
+			this.crawler.YouTubeApiV2UserUploadsOpened += this.OnYouTubeApiV2UserUploadsOpened;
+			this.crawler.YouTubeApiV2UserFavoritesOpened += this.OnYouTubeApiV2UserFavoritesOpened;
+			this.crawler.YouTubeApiV2UserPlaylistsOpened += this.OnYouTubeApiV2UserPlaylistsOpened;
 
-			this.controlYtApi2ResponseFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2ResponseFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2ResponseFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2ResponseFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2ResponseFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2ResponseFeed.Comment += this.OnCommentVideo;
+			this.crawler.YouTubeApiV2PlaylistOpened += this.OnYouTubeApiV2PlaylistOpened;
 
-			this.controlYtApi2UserFeedInfo.UserClick += this.YouTubeApi2UserClick;
-			this.controlYtApi2UserFeedInfo.UploadsFeedClick += this.YouTubeApi2UserUploadsClick;
-			this.controlYtApi2UserFeedInfo.FavoritesFeedClick += this.YouTubeApi2UserFavoritesClick;
-			this.controlYtApi2UserFeedInfo.PlaylistsFeedClick += this.YouTubeApi2UserPlaylistsClick;
-			this.controlYtApi2UserFeedInfo.PlaylistFeedClick += this.YouTubeApi2PlaylistVideosClick;
+			this.crawler.YouTubeWebVideosSelected += this.OnYouTubeWebVideosSelected;
+			this.crawler.YouTubeWebVideoOpened += this.OnYouTubeWebVideoOpened;
 
-			this.controlYtApi2Profile.ViewUserUploadsInApiV2 += this.ViewApiV2UploadedVideos;
-			this.controlYtApi2Profile.ViewUserFavoritesInApiV2 += this.ViewApiV2FavoritedVideos;
-			this.controlYtApi2Profile.ViewUserPlaylistsInApiV2 += this.ViewApiV2Playlists;
-			this.controlYtApi2Profile.Comment += this.OnCommentUser;
+			this.crawler.CommentsYouTubeVideosSelected += this.OnYouTubeCommentsVideosSelected;
+			this.crawler.CommentsYouTubeUsersSelected += this.OnYouTubeCommentsUsersSelected;
+			this.crawler.CommentsYouTubePlaylistsSelected += this.OnYouTubeCommentsPlaylistsSelected;
 
-			this.controlYtApi2UploadsFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2UploadsFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2UploadsFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2UploadsFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2UploadsFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2UploadsFeed.Comment += this.OnCommentVideo;
+			this.crawler.YouTubeVideoCommented += this.OnYouTubeVideoCommented;
+			this.crawler.YouTubeUserCommented += this.OnYouTubeUserCommented;
+			this.crawler.YouTubePlaylistCommented += this.OnYouTubePlaylistCommented;
 
-			this.controlYtApi2FavoritesFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2FavoritesFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2FavoritesFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2FavoritesFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2FavoritesFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2FavoritesFeed.Comment += this.OnCommentVideo;
-
-			this.controlYtApi2PlaylistsFeed.ViewPlaylistAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2PlaylistsFeed.ViewPlaylistVideosInApiV2 += this.ViewApiV2Playlist;
-			this.controlYtApi2PlaylistsFeed.Comment += this.OnCommentPlaylist;
-
-			this.controlYtApi2PlaylistFeed.ViewVideoInApiV2 += this.ViewVideoInApiV2;
-			this.controlYtApi2PlaylistFeed.ViewRelatedVideosInApiV2 += this.ViewRelatedVideosInApiV2;
-			this.controlYtApi2PlaylistFeed.ViewResponseVideosInApiV2 += this.ViewResponseVideosInApiV2;
-			this.controlYtApi2PlaylistFeed.ViewAuthorInApiV2 += this.ViewApiV2User;
-			this.controlYtApi2PlaylistFeed.ViewVideoInWeb += this.ViewVideoInWeb;
-			this.controlYtApi2PlaylistFeed.Comment += this.OnCommentVideo;
-
-			this.controlYtWeb.ClickVideoStatistics += this.YouTubeWebVideosClick;
-
-			this.controlYtWebStatistics.Comment += this.OnCommentVideo;
-
-			this.controlSpiderInfo.StandardFeedsClick += this.YouTubeSpiderStandardFeedsClick;
-
-			this.controlCommentsInfo.ClickVideos += this.YouTubeCommentsVideosClick;
-			this.controlCommentsInfo.ClickUsers += this.YouTubeCommentsUsersClick;
-			this.controlCommentsInfo.ClickPlaylists += this.YouTubeCommentsPlaylistsClick;
+			this.crawler.SpiderStandardFeedsSelected += this.OnSpiderStandardFeedsSelected;
 
 			// Initialize the controls.
 			this.controlPlanetLab.Initialize(this.crawler);
@@ -515,22 +466,26 @@ namespace InetAnalytics.Forms
 			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
+			this.controlYtApi2.Initialize(this.crawler);
+			this.controlYtApi2VideosFeedsInfo.Initialize(this.crawler);
 			this.controlYtApi2Video.Initialize(this.crawler);
 			this.controlYtApi2CommentsFeed.Initialize(this.crawler);
 			this.controlYtApi2StandardFeed.Initialize(this.crawler);
 			this.controlYtApi2Search.Initialize(this.crawler);
 			this.controlYtApi2RelatedFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetRelatedVideosFeed), "&Video:", "related videos feed", "video", "APIv2 Related Videos Feed");
 			this.controlYtApi2ResponseFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetResponseVideosFeed), "&Video:", "response videos feed", "video", "APIv2 Response Videos Feed");
+			this.controlYtApi2UserFeedInfo.Initailize(this.crawler);
 			this.controlYtApi2Profile.Initialize(this.crawler);
 			this.controlYtApi2PlaylistsFeed.Initialize(this.crawler);
 			this.controlYtApi2UploadsFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetUploadsFeed), "&User:", "uploads video feed", "user", "APIv2 Uploads Videos Feed");
 			this.controlYtApi2FavoritesFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetFavoritesFeed), "&User:", "favorites video feed", "user", "APIv2 Favorites Videos Feed");
 			this.controlYtApi2PlaylistFeed.Initialize(this.crawler, new VideosFeedEventHandler(YouTubeUri.GetPlaylistFeed), "&Playlist:", "playlist video feed", "user", "APIv2 Playlist Videos Feed");
 			this.controlYtApi2Categories.Initialize(this.crawler);
+			this.controlYtWeb.Initialize(this.crawler);
+			this.controlYtWebStatistics.Initialize(this.crawler);
 			this.controlTestingWebRequest.Initialize(this.crawler);
 			this.controlTestingSshRequest.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
-			this.controlYtWebStatistics.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
 			this.controlCommentsVideos.Initialize(this.crawler.Comments.Videos, InetCrawler.Comments.Comment.CommentType.Video);
 			this.controlCommentsUsers.Initialize(this.crawler.Comments.Users, InetCrawler.Comments.Comment.CommentType.User);
@@ -666,10 +621,21 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void PlanetLabSitesClick(object sender, EventArgs e)
+		private void OnPlanetLabSitesSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
 			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSites;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the PlanetLab nodes page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPlanetLabNodesSelected(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
+			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabNodes;
 		}
 
 		/// <summary>
@@ -677,61 +643,73 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void PlanetLabSlicesClick(object sender, EventArgs e)
+		private void OnPlanetLabSlicesSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
 			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSlices;
 		}
 
-		/// <summary>
-		/// An event handler called when the a PlanetLab slice control was added.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void PlanetLabSliceAdded(object sender, ControlEventArgs<ControlSlice> e)
-		{
-			// Add the console selected event handler to the control.
-			e.Control.ConsoleSelected += this.PlanetLabConsoleSelected;
-		}
+		///// <summary>
+		///// An event handler called when the a PlanetLab slice control was added.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
+		//private void OnPlanetLabSliceAdded(object sender, ControlEventArgs e)
+		//{
+		//	// Get the slice control.
+		//	ControlSlice control = e.Control as ControlSlice;
+		//	// If the slice control is not null.
+		//	if (null != control)
+		//	{
+		//		// Add the console selected event handler to the control.
+		//		control.ConsoleSelected += this.PlanetLabConsoleSelected;
+		//	}
+		//}
 
-		/// <summary>
-		/// An event handler called when a PlanetLab slice control was removed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void PlanetLabSliceRemoved(object sender, ControlEventArgs<ControlSlice> e)
-		{
-			// Remove the console selected event handler from the control.
-			e.Control.ConsoleSelected -= this.PlanetLabConsoleSelected;
-		}
+		///// <summary>
+		///// An event handler called when a PlanetLab slice control was removed.
+		///// </summary>
+		///// <param name="sender">The sender object.</param>
+		///// <param name="e">The event arguments.</param>
+		//private void OnPlanetLabSliceRemoved(object sender, ControlEventArgs e)
+		//{
+		//	// Get the slice control.
+		//	ControlSlice control = e.Control as ControlSlice;
+		//	// If the slice control is not null.
+		//	if (null != control)
+		//	{
+		//		// Remove the console selected event handler from the control.
+		//		control.ConsoleSelected -= this.PlanetLabConsoleSelected;
+		//	}
+		//}
 
 		/// <summary>
 		/// An event handler called when a PlanetLab console is selected.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void PlanetLabConsoleSelected(object sender, PageSelectionEventArgs e)
+		private void OnPlanetLabConsoleSelected(object sender, PageSelectionEventArgs e)
 		{
 			this.controlSidePlanetLab.SelectedNode = e.Node;
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the videos feeds information page.
+		/// An event handler called when the user selects the YouTube APIv2 videos feeds information page.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2VideosFeedsInfoClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2VideosFeedsInfoSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideosFeedsInfo;
 		}
 
 		/// <summary>
-		/// An event handler called when the user selects the user feeds information page.
+		/// An event handler called when the user selects the YouTube APIv2 user feeds information page.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2UserFeedsInfoClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2UserFeedsInfoSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2UserFeedsInfo;
@@ -742,7 +720,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2VideoCategoriesClick(object sender, EventArgs e)
+		private void OnYouTubeApi2VideoCategoriesSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideoCategories;
@@ -753,7 +731,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2VideoClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2VideoSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Video;
@@ -764,7 +742,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2VideoCommentsClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2VideoCommentsSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideoComments;
@@ -775,7 +753,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2SearchFeedClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2SearchFeedSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2SearchFeed;
@@ -786,7 +764,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2StandardFeedClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2StandardFeedSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2StandardFeed;
@@ -797,7 +775,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2RelatedVideosFeedClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2RelatedVideosFeedSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2RelatedVideosFeed;
@@ -808,7 +786,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2ResponseVideosFeedClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2ResponseVideosFeedSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2ResponseVideosFeed;
@@ -819,7 +797,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2UserClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2UserSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2User;
@@ -830,7 +808,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2UserUploadsClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2UserUploadsSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2UploadsFeed;
@@ -841,7 +819,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2UserFavoritesClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2UserFavoritesSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2FavoritesFeed;
@@ -852,7 +830,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2UserPlaylistsClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2UserPlaylistsSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Playlists;
@@ -863,7 +841,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeApi2PlaylistVideosClick(object sender, EventArgs e)
+		private void OnYouTubeApiV2PlaylistVideosSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2PlaylistFeed;
@@ -874,21 +852,10 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeWebVideosClick(object sender, EventArgs e)
+		private void OnYouTubeWebVideosSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeWebVideos;
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the standard feeds spider page.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void YouTubeSpiderStandardFeedsClick(object sender, EventArgs e)
-		{
-			this.sideMenu.SelectedItem = this.sideMenuItemSpiders;
-			this.controlSideSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
 		}
 
 		/// <summary>
@@ -896,7 +863,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeCommentsVideosClick(object sender, EventArgs e)
+		private void OnYouTubeCommentsVideosSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
@@ -907,7 +874,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeCommentsUsersClick(object sender, EventArgs e)
+		private void OnYouTubeCommentsUsersSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
@@ -918,7 +885,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void YouTubeCommentsPlaylistsClick(object sender, EventArgs e)
+		private void OnYouTubeCommentsPlaylistsSelected(object sender, EventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
@@ -929,11 +896,11 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewVideoInApiV2(object sender, VideoEventArgs e)
+		private void OnYouTubeApiV2VideoOpened(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Video;
-			this.controlYtApi2Video.View(e.Video);
+			this.controlYtApi2Video.Open(e.Video);
 		}
 
 		/// <summary>
@@ -941,7 +908,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewVideoCommentsInApiV2(object sender, StringEventArgs e)
+		private void OnYouTubeApiV2VideoCommentOpened(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2VideoComments;
@@ -953,7 +920,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewRelatedVideosInApiV2(object sender, VideoEventArgs e)
+		private void OnYouTubeApiV2RelatedVideosOpened(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2RelatedVideosFeed;
@@ -965,7 +932,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewResponseVideosInApiV2(object sender, VideoEventArgs e)
+		private void OnYouTubeApiV2ResponseVideosOpened(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2ResponseVideosFeed;
@@ -977,7 +944,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2User(object sender, StringEventArgs e)
+		private void OnYouTubeApiV2AuthorOpened(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2User;
@@ -989,7 +956,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2UploadedVideos(object sender, ProfileEventArgs e)
+		private void OnYouTubeApiV2UserUploadsOpened(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2UploadsFeed;
@@ -1001,7 +968,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2FavoritedVideos(object sender, ProfileEventArgs e)
+		private void OnYouTubeApiV2UserFavoritesOpened(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2FavoritesFeed;
@@ -1013,7 +980,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Playlists(object sender, ProfileEventArgs e)
+		private void OnYouTubeApiV2UserPlaylistsOpened(object sender, ProfileEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2Playlists;
@@ -1025,7 +992,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewApiV2Playlist(object sender, StringEventArgs e)
+		private void OnYouTubeApiV2PlaylistOpened(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeApi2PlaylistFeed;
@@ -1037,7 +1004,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void ViewVideoInWeb(object sender, VideoEventArgs e)
+		private void OnYouTubeWebVideoOpened(object sender, VideoEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemYouTube;
 			this.controlSideYouTube.SelectedNode = this.treeNodeYouTubeWebVideos;
@@ -1049,7 +1016,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnCommentVideo(object sender, StringEventArgs e)
+		private void OnYouTubeVideoCommented(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsVideos;
@@ -1061,7 +1028,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnCommentUser(object sender, StringEventArgs e)
+		private void OnYouTubeUserCommented(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsUsers;
@@ -1073,11 +1040,22 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnCommentPlaylist(object sender, StringEventArgs e)
+		private void OnYouTubePlaylistCommented(object sender, StringEventArgs e)
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemComments;
 			this.controlSideComments.SelectedNode = this.treeNodeCommentsPlaylists;
 			this.controlCommentsPlaylists.AddComment(e.Value);
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the standard feeds spider page.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSpiderStandardFeedsSelected(object sender, EventArgs e)
+		{
+			this.sideMenu.SelectedItem = this.sideMenuItemSpiders;
+			this.controlSideSpiders.SelectedNode = this.treeNodeSpiderStandardFeeds;
 		}
 
 		/// <summary>

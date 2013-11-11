@@ -40,15 +40,6 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.Dock = DockStyle.Fill;
 		}
 
-		/// <summary>
-		/// An event raised when the user selects the sites link.
-		/// </summary>
-		public event EventHandler ClickSites;
-		/// <summary>
-		/// An event raised when the user selects the slices link.
-		/// </summary>
-		public event EventHandler ClickSlices;
-
 		// Public methods.
 
 		/// <summary>
@@ -70,7 +61,17 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSitesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickSites) this.ClickSites(this, e);
+			this.settings.Crawler.SelectPlanetLabSites();
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the nodes link.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodesClick(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			this.settings.Crawler.SelectPlanetLabNodes();
 		}
 
 		/// <summary>
@@ -80,7 +81,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSlicesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickSlices) this.ClickSlices(this, e);
+			this.settings.Crawler.SelectPlanetLabSlices();
 		}
 	}
 }

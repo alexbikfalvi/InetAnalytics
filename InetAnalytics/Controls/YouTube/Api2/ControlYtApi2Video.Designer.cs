@@ -245,7 +245,7 @@
 			this.controlVideo.Size = new System.Drawing.Size(798, 377);
 			this.controlVideo.TabIndex = 0;
 			this.controlVideo.Video = null;
-			this.controlVideo.ViewProfile += new InetAnalytics.Events.StringEventHandler(this.OnViewProfile);
+			this.controlVideo.ViewProfile += new InetCrawler.Events.StringEventHandler(this.OnViewProfile);
 			// 
 			// log
 			// 

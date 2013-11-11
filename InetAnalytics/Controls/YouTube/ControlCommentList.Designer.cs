@@ -115,7 +115,7 @@
 			// 
 			this.buttonPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.buttonPrevious.Enabled = false;
-			this.buttonPrevious.Image = global::InetAnalytics.Resources.ArrowPrevious_16;
+			this.buttonPrevious.Image = global::InetAnalytics.Resources.ArrowBluePrevious_16;
 			this.buttonPrevious.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonPrevious.Name = "buttonPrevious";
 			this.buttonPrevious.Size = new System.Drawing.Size(23, 22);
@@ -131,7 +131,7 @@
 			// 
 			this.buttonNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.buttonNext.Enabled = false;
-			this.buttonNext.Image = global::InetAnalytics.Resources.ArrowNext_16;
+			this.buttonNext.Image = global::InetAnalytics.Resources.ArrowBlueNext_16;
 			this.buttonNext.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonNext.Name = "buttonNext";
 			this.buttonNext.Size = new System.Drawing.Size(23, 22);

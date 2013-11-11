@@ -591,13 +591,8 @@
     </Compile>
     <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\CommentEventArgs.cs" />
-    <Compile Include="Events\ControlEventArgs.cs" />
-    <Compile Include="Events\PageSelectionEventArgs.cs" />
     <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
     <Compile Include="Events\PasswordChangedEventArgs.cs" />
-    <Compile Include="Events\ProfileEventArgs.cs" />
-    <Compile Include="Events\StringEventArgs.cs" />
-    <Compile Include="Events\VideoEventArgs.cs" />
     <Compile Include="Forms\FormText.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1213,6 +1208,38 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\FindPrevious_48.png" />
+    <None Include="Resources\FindPrevious_32.png" />
+    <None Include="Resources\FindPrevious_24.png" />
+    <None Include="Resources\FindPrevious_16.png" />
+    <None Include="Resources\FindNext_48.png" />
+    <None Include="Resources\FindNext_32.png" />
+    <None Include="Resources\FindNext_24.png" />
+    <None Include="Resources\FindNext_16.png" />
+    <None Include="Resources\ArrowGreenUp_48.png" />
+    <None Include="Resources\ArrowGreenUp_32.png" />
+    <None Include="Resources\ArrowGreenUp_24.png" />
+    <None Include="Resources\ArrowGreenUp_16.png" />
+    <None Include="Resources\ArrowGreenPrevious_48.png" />
+    <None Include="Resources\ArrowGreenPrevious_32.png" />
+    <None Include="Resources\ArrowGreenPrevious_24.png" />
+    <None Include="Resources\ArrowGreenPrevious_16.png" />
+    <None Include="Resources\ArrowGreenNext_48.png" />
+    <None Include="Resources\ArrowGreenNext_32.png" />
+    <None Include="Resources\ArrowGreenNext_24.png" />
+    <None Include="Resources\ArrowGreenNext_16.png" />
+    <None Include="Resources\ArrowGreenDown_48.png" />
+    <None Include="Resources\ArrowGreenDown_32.png" />
+    <None Include="Resources\ArrowGreenDown_24.png" />
+    <None Include="Resources\ArrowGreenDown_16.png" />
+    <None Include="Resources\ArrowBlueUp_48.png" />
+    <None Include="Resources\ArrowBlueUp_32.png" />
+    <None Include="Resources\ArrowBlueUp_24.png" />
+    <None Include="Resources\ArrowBlueUp_16.png" />
+    <None Include="Resources\ArrowBlueDown_48.png" />
+    <None Include="Resources\ArrowBlueDown_32.png" />
+    <None Include="Resources\ArrowBlueDown_24.png" />
+    <None Include="Resources\ArrowBlueDown_16.png" />
     <None Include="Resources\UserWarning_48.png" />
     <None Include="Resources\UserWarning_32.png" />
     <None Include="Resources\UserWarning_24.png" />

@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
@@ -24,6 +25,7 @@ using InetAnalytics.Controls.YouTube.Api2;
 using InetAnalytics.Events;
 using InetAnalytics.Forms;
 using InetApi.YouTube.Api.V2.Data;
+using InetCrawler.Events;
 
 namespace InetAnalytics.Controls.YouTube
 {
@@ -35,9 +37,6 @@ namespace InetAnalytics.Controls.YouTube
 		private int? countStart = null;
 		private int? countPerPage = null;
 		private int? countTotal = null;
-		private string pageBegin;
-		private string pageEnd;
-		private string pageTotal;
 		private static readonly int[] videosPerPageInt = new int[] { 10, 25, 50 };
 		private static readonly object[] videosPerPageObject = new object[] { 10, 25, 50 };
 
@@ -57,23 +56,27 @@ namespace InetAnalytics.Controls.YouTube
 			this.comboBoxVideosPerPage.Items.AddRange(ControlVideoList.videosPerPageObject);
 			this.comboBoxVideosPerPage.SelectedIndex = 1;
 
-			this.pageBegin = this.countStart != null ? this.countStart.ToString() : "?";
-			this.pageEnd = (this.countStart != null) && (this.countPerPage != null) ? this.PageEnd(this.countStart ?? -1, this.countPerPage ?? -1).ToString() : "?";
-			this.pageTotal = this.countTotal != null ? this.countTotal.ToString() : "?";
-
-			this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
+			this.labelVideos.Text = "? - ? of ?";
 
 			this.formVideo.ViewProfile += this.OnViewProfile;
 		}
 
 		/// <summary>
-		/// An event raised when the user clicks on the previous page button.
+		/// An event raised when the user clicks on the previous button.
 		/// </summary>
 		public event EventHandler PreviousClick;
 		/// <summary>
-		/// An event raised when the user clicks on the next page button.
+		/// An event raised when the user clicks on the next button.
 		/// </summary>
 		public event EventHandler NextClick;
+		/// <summary>
+		/// An event raised when the user clicks on the find previous button.
+		/// </summary>
+		public event EventHandler FindPreviousClick;
+		/// <summary>
+		/// An event raised when the user clicks on the find next button.
+		/// </summary>
+		public event EventHandler FindNextClick;
 		/// <summary>
 		/// An event raised when the video selection has changed.
 		/// </summary>
@@ -93,15 +96,6 @@ namespace InetAnalytics.Controls.YouTube
 		public int? CountStart
 		{
 			get { return this.countStart; }
-			set
-			{
-				this.countStart = value;
-
-				this.pageBegin = this.countStart != null ? this.countStart.ToString() : "?";
-				this.pageEnd = (this.countStart != null) && (this.countPerPage != null) ? this.PageEnd(this.countStart ?? -1, this.countPerPage ?? -1).ToString() : "?";
-
-				this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
-			}
 		}
 
 		/// <summary>
@@ -110,15 +104,6 @@ namespace InetAnalytics.Controls.YouTube
 		public int? CountPerPage
 		{
 			get { return this.countPerPage; }
-			set
-			{
-				this.countPerPage = value;
-				
-				this.pageBegin = this.countStart != null ? this.countStart.ToString() : "?";
-				this.pageEnd = (this.countStart != null) && (this.countPerPage != null) ? this.PageEnd(this.countStart ?? -1, this.countPerPage ?? -1).ToString() : "?";
-
-				this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
-			}
 		}
 
 		/// <summary>
@@ -127,14 +112,6 @@ namespace InetAnalytics.Controls.YouTube
 		public int? CountTotal
 		{
 			get { return this.countTotal; }
-			set
-			{
-				this.countTotal = value;
-
-				this.pageTotal = this.countTotal != null ? this.countTotal.ToString() : "?";
-
-				this.labelPage.Text = "{0} - {1} of {2}".FormatWith(this.pageBegin, this.pageEnd, this.pageTotal);
-			}
 		}
 
 		/// <summary>
@@ -153,19 +130,37 @@ namespace InetAnalytics.Controls.YouTube
 		/// <summary>
 		/// Gets or sets the enabled state of the previous button.
 		/// </summary>
-		public bool Previous
+		public bool PreviousEnabled
 		{
-			get { return this.buttonPrevious.Enabled; }
-			set { this.buttonPrevious.Enabled = value; }
+			get { return this.buttonPreviousVideos.Enabled; }
+			set { this.buttonPreviousVideos.Enabled = value; }
 		}
 
 		/// <summary>
 		/// Gets or sets the enabled state of the next button.
 		/// </summary>
-		public bool Next
+		public bool NextEnabled
 		{
-			get { return this.buttonNext.Enabled; }
-			set { this.buttonNext.Enabled = value; }
+			get { return this.buttonNextVideos.Enabled; }
+			set { this.buttonNextVideos.Enabled = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the enabled state of the find previous button.
+		/// </summary>
+		public bool FindPreviousEnabled
+		{
+			get { return this.buttonFindPrevious.Enabled; }
+			set { this.buttonFindPrevious.Enabled = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the enabled state of the find next button.
+		/// </summary>
+		public bool FindNextEnabled
+		{
+			get { return this.buttonFindNext.Enabled; }
+			set { this.buttonFindNext.Enabled = value; }
 		}
 
 		/// <summary>
@@ -178,17 +173,44 @@ namespace InetAnalytics.Controls.YouTube
 		}
 
 		/// <summary>
-		/// Adds a new video to the list.
+		/// Clears the list and adds the specified video collection.
 		/// </summary>
-		/// <param name="video">The video.</param>
-		public void Add(Video video)
+		/// <param name="videos">The collection videos.</param>
+		/// <param name="countStart">The start counter.</param>
+		/// <param name="countPerPage">The number of videos per page.</param>
+		/// <param name="countTotal">The total number of videos.</param>
+		public void Add(ICollection<Video> videos, int? countStart, int? countPerPage, int? countTotal)
 		{
-			ListViewItem item = new ListViewItem(
-				new string[] { video.Id, video.Title, video.Published != null ? video.Published.ToString() : string.Empty, video.Duration != null ? video.Duration.ToString() : string.Empty },
-				0);
-			item.Tag = video;
+			// Clear the list view.
+			this.listView.Items.Clear();
 
-			this.listView.Items.Add(item);
+			// For all videos.
+			foreach (Video video in videos)
+			{
+				ListViewItem item = new ListViewItem(
+					new string[] { video.Id, video.Title, video.Published != null ? video.Published.ToString() : string.Empty, video.Duration != null ? video.Duration.ToString() : string.Empty },
+					0);
+				item.Tag = video;
+
+				this.listView.Items.Add(item);
+			}
+
+			// Save the counters.
+			this.countStart = countStart;
+			this.countPerPage = countPerPage;
+			this.countTotal = countTotal;
+
+			// Format the page numbers.
+			string pageBegin = this.countStart.HasValue ? this.countStart.ToString() : "?";
+			string pageEnd = this.countStart.HasValue && this.countPerPage.HasValue ? this.PageEnd(this.countStart.Value, this.countPerPage.Value).ToString() : "?";
+			string pageTotal = this.countTotal.HasValue && this.countStart.HasValue ? this.countTotal.Value >= this.countStart.Value + videos.Count - 1 ?
+				this.countTotal.Value.ToString() : (this.countStart.Value + videos.Count - 1).ToString() : "?";
+
+			this.labelVideos.Text = "{0} - {1} of {2}".FormatWith(pageBegin, pageEnd,pageTotal);
+
+			// Set the find enabled state.
+			this.buttonFindPrevious.Enabled = countStart.HasValue ? countStart > 1 : false;
+			this.buttonFindNext.Enabled = countTotal.HasValue ? countTotal.Value > 0 : false;
 		}
 
 		/// <summary>
@@ -197,8 +219,10 @@ namespace InetAnalytics.Controls.YouTube
 		public void Clear()
 		{
 			this.listView.Items.Clear();
-			this.buttonNext.Enabled = false;
-			this.buttonPrevious.Enabled = false;
+			this.buttonNextVideos.Enabled = false;
+			this.buttonPreviousVideos.Enabled = false;
+			this.buttonFindPrevious.Enabled = false;
+			this.buttonFindNext.Enabled = false;
 			if (this.VideoSelectionChanged != null) this.VideoSelectionChanged(this, EventArgs.Empty);
 		}
 
@@ -297,9 +321,29 @@ namespace InetAnalytics.Controls.YouTube
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		void OnViewProfile(object sender, StringEventArgs e)
+		private void OnViewProfile(object sender, StringEventArgs e)
 		{
 			if (this.ViewProfile != null) this.ViewProfile(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the find previous button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFindPreviousClick(object sender, EventArgs e)
+		{
+			if (this.FindPreviousClick != null) this.FindPreviousClick(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the find next button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnFindNextClick(object sender, EventArgs e)
+		{
+			if (this.FindNextClick != null) this.FindNextClick(sender, e);
 		}
 	}
 }

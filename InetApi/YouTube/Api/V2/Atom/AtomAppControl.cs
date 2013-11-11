@@ -40,7 +40,7 @@ namespace InetApi.YouTube.Api.V2.Atom
 		{
 			// Set the optional elements.
 			this.AppDraft = AtomAppDraft.ParseChild(element, false);
-			this.YtState = AtomYtState.ParseChild(element, true);
+			this.YtState = AtomYtState.ParseChild(element, false);
 		}
 
 		// Public methods.

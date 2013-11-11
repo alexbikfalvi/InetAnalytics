@@ -118,28 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ArrowNext_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBlueNext_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowNext_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowNext_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBlueNext_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowNext_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowNext_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBlueNext_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowNext_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowNext_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBlueNext_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowNext_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowPrevious_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBluePrevious_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowPrevious_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowPrevious_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBluePrevious_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowPrevious_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowPrevious_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBluePrevious_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowPrevious_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ArrowPrevious_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ArrowBluePrevious_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ArrowPrevious_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Book_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -2828,5 +2828,101 @@ Female, 45-54 years
   </data>
   <data name="UserWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\UserWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueDown_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueDown_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueDown_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueDown_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueDown_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueDown_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueDown_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueDown_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueUp_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueUp_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueUp_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueUp_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueUp_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueUp_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowBlueUp_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowBlueUp_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenDown_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenDown_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenDown_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenDown_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenDown_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenDown_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenDown_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenDown_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenNext_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenNext_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenNext_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenNext_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenNext_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenNext_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenNext_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenNext_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenPrevious_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenPrevious_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenPrevious_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenPrevious_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenPrevious_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenPrevious_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenPrevious_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenPrevious_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenUp_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenUp_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenUp_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenUp_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenUp_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenUp_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowGreenUp_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ArrowGreenUp_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindNext_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindNext_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindNext_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindNext_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindNext_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindNext_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindNext_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindNext_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindPrevious_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindPrevious_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindPrevious_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindPrevious_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindPrevious_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindPrevious_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindPrevious_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FindPrevious_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

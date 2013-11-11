@@ -34,12 +34,15 @@
 			this.columnHeaderPublished = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderDuration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
-			this.buttonPrevious = new System.Windows.Forms.ToolStripButton();
-			this.labelPage = new System.Windows.Forms.ToolStripLabel();
-			this.buttonNext = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonPreviousVideos = new System.Windows.Forms.ToolStripButton();
+			this.labelVideos = new System.Windows.Forms.ToolStripLabel();
+			this.buttonNextVideos = new System.Windows.Forms.ToolStripButton();
+			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.labelVideosPerPage = new System.Windows.Forms.ToolStripLabel();
 			this.comboBoxVideosPerPage = new System.Windows.Forms.ToolStripComboBox();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonFindPrevious = new System.Windows.Forms.ToolStripButton();
+			this.buttonFindNext = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -90,48 +93,51 @@
 			// 
 			this.toolStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonPrevious,
-            this.labelPage,
-            this.buttonNext,
-            this.toolStripSeparator,
+            this.buttonPreviousVideos,
+            this.labelVideos,
+            this.buttonNextVideos,
+            this.separator1,
             this.labelVideosPerPage,
-            this.comboBoxVideosPerPage});
+            this.comboBoxVideosPerPage,
+            this.separator2,
+            this.buttonFindPrevious,
+            this.buttonFindNext});
 			this.toolStrip.Location = new System.Drawing.Point(0, 275);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(600, 25);
 			this.toolStrip.TabIndex = 5;
 			// 
-			// buttonPrevious
+			// buttonPreviousVideos
 			// 
-			this.buttonPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.buttonPrevious.Enabled = false;
-			this.buttonPrevious.Image = global::InetAnalytics.Resources.ArrowPrevious_16;
-			this.buttonPrevious.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonPrevious.Name = "buttonPrevious";
-			this.buttonPrevious.Size = new System.Drawing.Size(23, 22);
-			this.buttonPrevious.Text = "Back";
-			this.buttonPrevious.Click += new System.EventHandler(this.OnPreviousClick);
+			this.buttonPreviousVideos.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.buttonPreviousVideos.Enabled = false;
+			this.buttonPreviousVideos.Image = global::InetAnalytics.Resources.ArrowBluePrevious_16;
+			this.buttonPreviousVideos.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonPreviousVideos.Name = "buttonPreviousVideos";
+			this.buttonPreviousVideos.Size = new System.Drawing.Size(23, 22);
+			this.buttonPreviousVideos.Text = "Previous videos";
+			this.buttonPreviousVideos.Click += new System.EventHandler(this.OnPreviousClick);
 			// 
-			// labelPage
+			// labelVideos
 			// 
-			this.labelPage.Name = "labelPage";
-			this.labelPage.Size = new System.Drawing.Size(0, 22);
+			this.labelVideos.Name = "labelVideos";
+			this.labelVideos.Size = new System.Drawing.Size(0, 22);
 			// 
-			// buttonNext
+			// buttonNextVideos
 			// 
-			this.buttonNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.buttonNext.Enabled = false;
-			this.buttonNext.Image = global::InetAnalytics.Resources.ArrowNext_16;
-			this.buttonNext.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonNext.Name = "buttonNext";
-			this.buttonNext.Size = new System.Drawing.Size(23, 22);
-			this.buttonNext.Text = "Next";
-			this.buttonNext.Click += new System.EventHandler(this.OnNextClick);
+			this.buttonNextVideos.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.buttonNextVideos.Enabled = false;
+			this.buttonNextVideos.Image = global::InetAnalytics.Resources.ArrowBlueNext_16;
+			this.buttonNextVideos.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonNextVideos.Name = "buttonNextVideos";
+			this.buttonNextVideos.Size = new System.Drawing.Size(23, 22);
+			this.buttonNextVideos.Text = "Next videos";
+			this.buttonNextVideos.Click += new System.EventHandler(this.OnNextClick);
 			// 
-			// toolStripSeparator
+			// separator1
 			// 
-			this.toolStripSeparator.Name = "toolStripSeparator";
-			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+			this.separator1.Name = "separator1";
+			this.separator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// labelVideosPerPage
 			// 
@@ -145,6 +151,33 @@
 			this.comboBoxVideosPerPage.Name = "comboBoxVideosPerPage";
 			this.comboBoxVideosPerPage.Size = new System.Drawing.Size(75, 25);
 			this.comboBoxVideosPerPage.SelectedIndexChanged += new System.EventHandler(this.OnVideoPerPageChanged);
+			// 
+			// separator2
+			// 
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonFindPrevious
+			// 
+			this.buttonFindPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.buttonFindPrevious.Enabled = false;
+			this.buttonFindPrevious.Image = global::InetAnalytics.Resources.FindPrevious_16;
+			this.buttonFindPrevious.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonFindPrevious.Name = "buttonFindPrevious";
+			this.buttonFindPrevious.Size = new System.Drawing.Size(23, 22);
+			this.buttonFindPrevious.Text = "Find previous";
+			this.buttonFindPrevious.Click += new System.EventHandler(this.OnFindPreviousClick);
+			// 
+			// buttonFindNext
+			// 
+			this.buttonFindNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.buttonFindNext.Enabled = false;
+			this.buttonFindNext.Image = global::InetAnalytics.Resources.FindNext_16;
+			this.buttonFindNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonFindNext.Name = "buttonFindNext";
+			this.buttonFindNext.Size = new System.Drawing.Size(23, 22);
+			this.buttonFindNext.Text = "Find next";
+			this.buttonFindNext.Click += new System.EventHandler(this.OnFindNextClick);
 			// 
 			// ControlVideoList
 			// 
@@ -169,11 +202,14 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderPublished;
 		private System.Windows.Forms.ColumnHeader columnHeaderDuration;
 		private System.Windows.Forms.ToolStrip toolStrip;
-		private System.Windows.Forms.ToolStripButton buttonPrevious;
-		private System.Windows.Forms.ToolStripLabel labelPage;
-		private System.Windows.Forms.ToolStripButton buttonNext;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+		private System.Windows.Forms.ToolStripButton buttonPreviousVideos;
+		private System.Windows.Forms.ToolStripLabel labelVideos;
+		private System.Windows.Forms.ToolStripButton buttonNextVideos;
+		private System.Windows.Forms.ToolStripSeparator separator1;
 		private System.Windows.Forms.ToolStripLabel labelVideosPerPage;
 		private System.Windows.Forms.ToolStripComboBox comboBoxVideosPerPage;
+		private System.Windows.Forms.ToolStripSeparator separator2;
+		private System.Windows.Forms.ToolStripButton buttonFindPrevious;
+		private System.Windows.Forms.ToolStripButton buttonFindNext;
 	}
 }

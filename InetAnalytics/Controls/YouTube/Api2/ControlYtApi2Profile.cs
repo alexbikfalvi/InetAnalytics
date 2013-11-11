@@ -54,22 +54,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			this.Dock = DockStyle.Fill;
 		}
 
-		/// <summary>
-		/// View the user uploaded videos.
-		/// </summary>
-		public event ProfileEventHandler ViewUserUploadsInApiV2;
-		/// <summary>
-		/// View the user favorited videos.
-		/// </summary>
-		public event ProfileEventHandler ViewUserFavoritesInApiV2;
-		/// <summary>
-		/// View the user playlists.
-		/// </summary>
-		public event ProfileEventHandler ViewUserPlaylistsInApiV2;
-		/// <summary>
-		/// An event handler called when the user adds a new comment.
-		/// </summary>
-		public event StringEventHandler Comment;
+		// Public methods.
 
 		/// <summary>
 		/// Initializes the control with a crawler instance.
@@ -108,6 +93,8 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			// Begin the query.
 			this.Start(this, EventArgs.Empty);
 		}
+
+		// Private methods.
 
 		/// <summary>
 		/// Starts an asynchronous request for a video entry.
@@ -259,7 +246,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Uploads(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (this.ViewUserUploadsInApiV2 != null) this.ViewUserUploadsInApiV2(this, new ProfileEventArgs(this.controlProfile.Profile));
+			this.crawler.OpenYouTubeUserUploads(this.controlProfile.Profile);
 		}
 
 		/// <summary>
@@ -270,8 +257,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Favorites(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (this.ViewUserFavoritesInApiV2 != null) this.ViewUserFavoritesInApiV2(this, new ProfileEventArgs(this.controlProfile.Profile));
-
+			this.crawler.OpenYouTubeUserFavorites(this.controlProfile.Profile);
 		}
 
 		/// <summary>
@@ -282,7 +268,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Playlists(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (this.ViewUserPlaylistsInApiV2 != null) this.ViewUserPlaylistsInApiV2(this, new ProfileEventArgs(this.controlProfile.Profile));
+			this.crawler.OpenYouTubeUserPlaylists(this.controlProfile.Profile);
 		}
 
 		/// <summary>
@@ -306,7 +292,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnCommentClick(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			if (null != this.Comment) this.Comment(this, new StringEventArgs(this.controlProfile.Profile.Id));
+			this.crawler.CommentYouTubeUser(this.controlProfile.Profile.Id);
 		}
 	}
 }

@@ -102,22 +102,23 @@
 			// 
 			// videoList
 			// 
-			this.videoList.CountPerPage = null;
-			this.videoList.CountStart = null;
-			this.videoList.CountTotal = null;
 			this.videoList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.videoList.FindNextEnabled = false;
+			this.videoList.FindPreviousEnabled = false;
 			this.videoList.Location = new System.Drawing.Point(1, 104);
 			this.videoList.Name = "videoList";
-			this.videoList.Next = false;
-			this.videoList.Previous = false;
+			this.videoList.NextEnabled = false;
+			this.videoList.PreviousEnabled = false;
 			this.videoList.Size = new System.Drawing.Size(598, 120);
 			this.videoList.TabIndex = 1;
 			this.videoList.VideoContextMenu = this.viewMenu;
 			this.videoList.PreviousClick += new System.EventHandler(this.OnNavigatePrevious);
 			this.videoList.NextClick += new System.EventHandler(this.OnNavigateNext);
+			this.videoList.FindPreviousClick += new System.EventHandler(this.OnFindPrevious);
+			this.videoList.FindNextClick += new System.EventHandler(this.OnFindNext);
 			this.videoList.VideoSelectionChanged += new System.EventHandler(this.OnVideoSelectedChanged);
 			this.videoList.VideosPerPageChanged += new System.EventHandler(this.OnSearchChanged);
-			this.videoList.ViewProfile += new InetAnalytics.Events.StringEventHandler(this.OnViewProfile);
+			this.videoList.ViewProfile += new InetCrawler.Events.StringEventHandler(this.OnViewProfile);
 			// 
 			// viewMenu
 			// 
@@ -290,6 +291,7 @@
 			this.linkLabel.Name = "linkLabel";
 			this.linkLabel.Size = new System.Drawing.Size(0, 13);
 			this.linkLabel.TabIndex = 6;
+			this.linkLabel.UseMnemonic = false;
 			this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnOpenLink);
 			// 
 			// labelUrl

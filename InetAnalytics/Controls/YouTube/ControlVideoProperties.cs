@@ -17,8 +17,8 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -29,6 +29,7 @@ using InetAnalytics.Controls.YouTube.Api2;
 using InetAnalytics.Events;
 using InetAnalytics.Forms;
 using InetApi.YouTube.Api.V2.Data;
+using InetCrawler.Events;
 
 namespace InetAnalytics.Controls.YouTube
 {

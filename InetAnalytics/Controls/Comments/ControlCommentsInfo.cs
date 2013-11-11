@@ -17,15 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using InetCrawler;
 
 namespace InetAnalytics.Controls.Comments
 {
@@ -34,6 +28,8 @@ namespace InetAnalytics.Controls.Comments
 	/// </summary>
 	public partial class ControlCommentsInfo : ThemeControl
 	{
+		private Crawler crawler;
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -46,18 +42,21 @@ namespace InetAnalytics.Controls.Comments
 			this.Dock = DockStyle.Fill;
 		}
 
+		// Public methods.
+
 		/// <summary>
-		/// An event raised when the user selects the video statistics.
+		/// Initializes the control.
 		/// </summary>
-		public event EventHandler ClickVideos;
-		/// <summary>
-		/// An event raised when the user selects the users statistics.
-		/// </summary>
-		public event EventHandler ClickUsers;
-		/// <summary>
-		/// An event raised when the user selects the playlists statistics.
-		/// </summary>
-		public event EventHandler ClickPlaylists;
+		/// <param name="crawler">The crawler.</param>
+		public void Initialize(Crawler crawler)
+		{
+			// Set the crawler.
+			this.crawler = crawler;
+			// Enable the control.
+			this.Enabled = true;
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the user selects the videos link.
@@ -66,7 +65,7 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="e">The event arguments.</param>
 		private void OnVideosClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickVideos) this.ClickVideos(this, e);
+			this.crawler.SelectVideoComments();
 		}
 
 		/// <summary>
@@ -76,7 +75,7 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="e">The event arguments.</param>
 		private void OnUsersClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickUsers) this.ClickUsers(this, e);
+			this.crawler.SelectUserComments();
 		}
 
 		/// <summary>
@@ -86,7 +85,7 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="e">The event arguments.</param>
 		private void OnPlaylistsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ClickPlaylists) this.ClickPlaylists(this, e);
+			this.crawler.SelectPlaylistComments();
 		}
 	}
 }

@@ -17,34 +17,34 @@
  */
 
 using System;
-using System.Windows.Forms;
+using InetApi.YouTube.Api.V2.Data;
 
-namespace InetAnalytics.Events
+namespace InetCrawler.Events
 {
 	/// <summary>
-	/// A delegate representing a page selection event handler.
+	/// A delegate representing a profile event handler.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void PageSelectionEventHandler(object sender, PageSelectionEventArgs e);
+	public delegate void ProfileEventHandler(object sender, ProfileEventArgs e);
 
 	/// <summary>
-	/// A class representing a page selection event argument.
+	/// A class representing a profile event argument.
 	/// </summary>
-	public class PageSelectionEventArgs : EventArgs
+	public class ProfileEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Creates a new event argument instance.
+		/// Creates a new event instance.
 		/// </summary>
-		/// <param name="node">The selected tree node.</param>
-		public PageSelectionEventArgs(TreeNode node)
+		/// <param name="profile">The profile.</param>
+		public ProfileEventArgs(Profile profile)
 		{
-			this.Node = node;
+			this.Profile = profile;
 		}
 
 		/// <summary>
-		/// Gets the selected tree node.
+		/// Gets the profile.
 		/// </summary>
-		public TreeNode Node { get; private set; }
+		public Profile Profile { get; private set; }
 	}
 }

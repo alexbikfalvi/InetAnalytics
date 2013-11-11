@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using InetCrawler;
 
 namespace InetAnalytics.Controls.YouTube.Api2
 {
@@ -34,6 +35,8 @@ namespace InetAnalytics.Controls.YouTube.Api2
 	/// </summary>
 	public partial class ControlYtApi2VideosFeedsInfo : ThemeControl
 	{
+		private Crawler crawler;
+
 		/// <summary>
 		/// Creates a new instance of the control.
 		/// </summary>
@@ -47,30 +50,21 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			this.Dock = DockStyle.Fill;
 		}
 
+		// Public methods.
+
 		/// <summary>
-		/// An event raised when the user selects the video link.
+		/// Initializes the control.
 		/// </summary>
-		public event EventHandler VideoClick;
-		/// <summary>
-		/// An event raised when the user selects the video comments link.
-		/// </summary>
-		public event EventHandler VideoCommentsClick;
-		/// <summary>
-		/// An event raised when the user selects the videos feed link.
-		/// </summary>
-		public event EventHandler SearchFeedClick;
-		/// <summary>
-		/// An event raised when the user selects the standard feed link.
-		/// </summary>
-		public event EventHandler StandardFeedClick;
-		/// <summary>
-		/// An event raised when the user selects the related videos feed link.
-		/// </summary>
-		public event EventHandler RelatedVideosFeedClick;
-		/// <summary>
-		/// An event raised when the user selects the response videos feed link.
-		/// </summary>
-		public event EventHandler ResponseVideosFeedClick;
+		/// <param name="crawler">The crawler.</param>
+		public void Initialize(Crawler crawler)
+		{
+			// Set the crawler.
+			this.crawler = crawler;
+			// Enable the control.
+			this.Enabled = true;
+		}
+
+		// Private methods.
 
 		/// <summary>
 		/// The event handler for the user selection of the video link.
@@ -79,7 +73,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.VideoClick) this.VideoClick(this, e);
+			this.crawler.SelectYouTubeVideo();
 		}
 
 		/// <summary>
@@ -89,7 +83,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoCommentsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.VideoCommentsClick) this.VideoCommentsClick(this, e);
+			this.crawler.SelectYouTubeVideoComments();
 		}
 
 		/// <summary>
@@ -99,7 +93,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.SearchFeedClick) this.SearchFeedClick(this, e);
+			this.crawler.SelectYouTubeSearchFeed();
 		}
 
 		/// <summary>
@@ -109,7 +103,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnStandardFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.StandardFeedClick) this.StandardFeedClick(this, e);
+			this.crawler.SelectYouTubeStandardFeed();
 		}
 
 		/// <summary>
@@ -119,7 +113,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnRelatedVideosFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.RelatedVideosFeedClick) this.RelatedVideosFeedClick(this, e);
+			this.crawler.SelectYouTubeRelatedVideosFeed();
 		}
 
 		/// <summary>
@@ -129,7 +123,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnResponseVideosFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if (null != this.ResponseVideosFeedClick) this.ResponseVideosFeedClick(this, e);
+			this.crawler.SelectYouTubeResponseVideosFeed();
 		}
 	}
 }

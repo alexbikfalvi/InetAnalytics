@@ -66,21 +66,6 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			this.Dock = DockStyle.Fill;
 		}
 
-		// Public events.
-
-		/// <summary>
-		/// View the playlist author.
-		/// </summary>
-		public event StringEventHandler ViewPlaylistAuthorInApiV2;
-		/// <summary>
-		/// View the playlist videos.
-		/// </summary>
-		public event StringEventHandler ViewPlaylistVideosInApiV2;
-		/// <summary>
-		/// An event handler called when the user adds a new comment for the current playlist.
-		/// </summary>
-		public event StringEventHandler Comment;
-
 		// Public methods.
 
 		/// <summary>
@@ -379,7 +364,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewAuthor(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			if (this.ViewPlaylistAuthorInApiV2 != null) this.ViewPlaylistAuthorInApiV2(this, new StringEventArgs(playlist.Author.UserId));
+			this.crawler.OpenYouTubeUser(playlist.Author.UserId);
 		}
 
 		/// <summary>
@@ -390,7 +375,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewVideos(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			if (this.ViewPlaylistVideosInApiV2 != null) this.ViewPlaylistVideosInApiV2(this, new StringEventArgs(playlist.Id));
+			this.crawler.OpenYouTubePlaylist(playlist.Id);
 		}
 
 		/// <summary>
@@ -413,7 +398,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnAddComment(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			if (this.Comment != null) this.Comment(this, new StringEventArgs(playlist.Id));
+			this.crawler.CommentYouTubePlaylist(playlist.Id);
 		}
 
 		/// <summary>
