@@ -3502,6 +3502,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedClock_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedClock_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedClock_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedClock_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedClock_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedClock_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedClock_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedClock_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FolderClosedComment_16 {
             get {
                 object obj = ResourceManager.GetObject("FolderClosedComment_16", resourceCulture);
@@ -3582,9 +3622,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderClosedPlay_16 {
+        internal static System.Drawing.Bitmap FolderClosedPlayBlue_16 {
             get {
-                object obj = ResourceManager.GetObject("FolderClosedPlay_16", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderClosedPlayBlue_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3592,9 +3632,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderClosedPlay_24 {
+        internal static System.Drawing.Bitmap FolderClosedPlayBlue_24 {
             get {
-                object obj = ResourceManager.GetObject("FolderClosedPlay_24", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderClosedPlayBlue_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3602,9 +3642,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderClosedPlay_32 {
+        internal static System.Drawing.Bitmap FolderClosedPlayBlue_32 {
             get {
-                object obj = ResourceManager.GetObject("FolderClosedPlay_32", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderClosedPlayBlue_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3612,9 +3652,89 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderClosedPlay_48 {
+        internal static System.Drawing.Bitmap FolderClosedPlayBlue_48 {
             get {
-                object obj = ResourceManager.GetObject("FolderClosedPlay_48", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderClosedPlayBlue_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlayGreen_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlayGreen_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlayGreen_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlayGreen_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlayGreen_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlayGreen_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedPlayGreen_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedPlayGreen_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedTask_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedTask_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedTask_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedTask_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedTask_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedTask_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosedTask_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosedTask_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3782,6 +3902,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenClock_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenClock_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenClock_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenClock_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenClock_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenClock_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenClock_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenClock_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FolderOpenComment_16 {
             get {
                 object obj = ResourceManager.GetObject("FolderOpenComment_16", resourceCulture);
@@ -3862,9 +4022,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderOpenPlay_16 {
+        internal static System.Drawing.Bitmap FolderOpenPlayBlue_16 {
             get {
-                object obj = ResourceManager.GetObject("FolderOpenPlay_16", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderOpenPlayBlue_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3872,9 +4032,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderOpenPlay_24 {
+        internal static System.Drawing.Bitmap FolderOpenPlayBlue_24 {
             get {
-                object obj = ResourceManager.GetObject("FolderOpenPlay_24", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderOpenPlayBlue_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3882,9 +4042,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderOpenPlay_32 {
+        internal static System.Drawing.Bitmap FolderOpenPlayBlue_32 {
             get {
-                object obj = ResourceManager.GetObject("FolderOpenPlay_32", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderOpenPlayBlue_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3892,9 +4052,89 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderOpenPlay_48 {
+        internal static System.Drawing.Bitmap FolderOpenPlayBlue_48 {
             get {
-                object obj = ResourceManager.GetObject("FolderOpenPlay_48", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderOpenPlayBlue_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlayGreen_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlayGreen_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlayGreen_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlayGreen_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlayGreen_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlayGreen_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenPlayGreen_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenPlayGreen_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenTask_16 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenTask_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenTask_24 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenTask_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenTask_32 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenTask_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpenTask_48 {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpenTask_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7582,6 +7822,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ServerTask_16 {
+            get {
+                object obj = ResourceManager.GetObject("ServerTask_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerTask_24 {
+            get {
+                object obj = ResourceManager.GetObject("ServerTask_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerTask_32 {
+            get {
+                object obj = ResourceManager.GetObject("ServerTask_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServerTask_48 {
+            get {
+                object obj = ResourceManager.GetObject("ServerTask_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ServerUp_16 {
             get {
                 object obj = ResourceManager.GetObject("ServerUp_16", resourceCulture);
@@ -8062,9 +8342,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Task_16 {
+        internal static System.Drawing.Bitmap TaskClock_16 {
             get {
-                object obj = ResourceManager.GetObject("Task_16", resourceCulture);
+                object obj = ResourceManager.GetObject("TaskClock_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8072,9 +8352,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Task_24 {
+        internal static System.Drawing.Bitmap TaskClock_24 {
             get {
-                object obj = ResourceManager.GetObject("Task_24", resourceCulture);
+                object obj = ResourceManager.GetObject("TaskClock_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8082,9 +8362,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Task_32 {
+        internal static System.Drawing.Bitmap TaskClock_32 {
             get {
-                object obj = ResourceManager.GetObject("Task_32", resourceCulture);
+                object obj = ResourceManager.GetObject("TaskClock_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8092,9 +8372,129 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Task_48 {
+        internal static System.Drawing.Bitmap TaskClock_48 {
             get {
-                object obj = ResourceManager.GetObject("Task_48", resourceCulture);
+                object obj = ResourceManager.GetObject("TaskClock_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskLarge_16 {
+            get {
+                object obj = ResourceManager.GetObject("TaskLarge_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskLarge_24 {
+            get {
+                object obj = ResourceManager.GetObject("TaskLarge_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskLarge_32 {
+            get {
+                object obj = ResourceManager.GetObject("TaskLarge_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskLarge_48 {
+            get {
+                object obj = ResourceManager.GetObject("TaskLarge_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskPlay_16 {
+            get {
+                object obj = ResourceManager.GetObject("TaskPlay_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskPlay_24 {
+            get {
+                object obj = ResourceManager.GetObject("TaskPlay_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskPlay_32 {
+            get {
+                object obj = ResourceManager.GetObject("TaskPlay_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaskPlay_48 {
+            get {
+                object obj = ResourceManager.GetObject("TaskPlay_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tasks_16 {
+            get {
+                object obj = ResourceManager.GetObject("Tasks_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tasks_24 {
+            get {
+                object obj = ResourceManager.GetObject("Tasks_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tasks_32 {
+            get {
+                object obj = ResourceManager.GetObject("Tasks_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tasks_48 {
+            get {
+                object obj = ResourceManager.GetObject("Tasks_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

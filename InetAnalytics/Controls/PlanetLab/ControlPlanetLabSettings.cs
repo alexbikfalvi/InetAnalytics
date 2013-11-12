@@ -46,7 +46,6 @@ namespace InetAnalytics.Controls.PlanetLab
 			NotSelected = 3
 		}
 		
-		private static readonly string logSource = "PlanetLab";
 		private static readonly Image[] personIcons = {
 														  Resources.UserQuestion_48,
 														  Resources.UserSuccess_48,

@@ -57,8 +57,10 @@ namespace InetCrawler.Tasks
 		/// </summary>
 		public sealed class RunningTaskState
 		{
+			/// <summary>
+			/// Gets the cancellation source.
+			/// </summary>
 			public CancellationTokenSource CancellationSource { get; private set; }
-			//public WaitHandle 
 		}
 
 		private readonly object sync = new object();

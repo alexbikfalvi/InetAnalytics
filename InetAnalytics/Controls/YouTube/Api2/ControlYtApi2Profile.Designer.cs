@@ -140,7 +140,7 @@
 			// 
 			// menuItemPlaylists
 			// 
-			this.menuItemPlaylists.Image = global::InetAnalytics.Resources.FolderClosedPlay_16;
+			this.menuItemPlaylists.Image = global::InetAnalytics.Resources.FolderClosedPlayBlue_16;
 			this.menuItemPlaylists.Name = "menuItemPlaylists";
 			this.menuItemPlaylists.Size = new System.Drawing.Size(167, 22);
 			this.menuItemPlaylists.Text = "Playlists";

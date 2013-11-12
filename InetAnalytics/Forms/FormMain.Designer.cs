@@ -53,13 +53,15 @@ namespace InetAnalytics.Forms
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideYouTube = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideTasks = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
 			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemTasks = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
@@ -186,16 +188,18 @@ namespace InetAnalytics.Forms
 			this.sideMenu.Controls.Add(this.controlSideComments);
 			this.sideMenu.Controls.Add(this.controlSideConfiguration);
 			this.sideMenu.Controls.Add(this.controlSideTesting);
-			this.sideMenu.Controls.Add(this.controlSidePlanetLab);
 			this.sideMenu.Controls.Add(this.controlSideSpiders);
-			this.sideMenu.Controls.Add(this.controlSideDatabase);
 			this.sideMenu.Controls.Add(this.controlSideYouTube);
+			this.sideMenu.Controls.Add(this.controlSideTasks);
+			this.sideMenu.Controls.Add(this.controlSideDatabase);
+			this.sideMenu.Controls.Add(this.controlSidePlanetLab);
 			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.sideMenu.ItemHeight = 48;
 			this.sideMenu.Items.AddRange(new DotNetApi.Windows.Controls.SideMenuItem[] {
             this.sideMenuItemPlanetLab,
             this.sideMenuItemDatabase,
             this.sideMenuItemYouTube,
+            this.sideMenuItemTasks,
             this.sideMenuItemTesting,
             this.sideMenuItemSpiders,
             this.sideMenuItemConfiguration,
@@ -253,51 +257,58 @@ namespace InetAnalytics.Forms
 			this.imageList.Images.SetKeyName(1, "ServerDatabase");
 			this.imageList.Images.SetKeyName(2, "ServersDatabase");
 			this.imageList.Images.SetKeyName(3, "ServerCube");
-			this.imageList.Images.SetKeyName(4, "ServersCube");
-			this.imageList.Images.SetKeyName(5, "ServersGlobe");
-			this.imageList.Images.SetKeyName(6, "FolderClosed");
-			this.imageList.Images.SetKeyName(7, "FolderClosedXml");
-			this.imageList.Images.SetKeyName(8, "FolderClosedVideo");
-			this.imageList.Images.SetKeyName(9, "FolderClosedUser");
-			this.imageList.Images.SetKeyName(10, "FolderClosedComment");
-			this.imageList.Images.SetKeyName(11, "FolderClosedPlay");
-			this.imageList.Images.SetKeyName(12, "FolderClosedGlobe");
-			this.imageList.Images.SetKeyName(13, "FolderOpen");
-			this.imageList.Images.SetKeyName(14, "FolderOpenXml");
-			this.imageList.Images.SetKeyName(15, "FolderOpenVideo");
-			this.imageList.Images.SetKeyName(16, "FolderOpenUser");
-			this.imageList.Images.SetKeyName(17, "FolderOpenComment");
-			this.imageList.Images.SetKeyName(18, "FolderOpenPlay");
-			this.imageList.Images.SetKeyName(19, "FolderOpenGlobe");
-			this.imageList.Images.SetKeyName(20, "File");
-			this.imageList.Images.SetKeyName(21, "FileXml");
-			this.imageList.Images.SetKeyName(22, "FileVideo");
-			this.imageList.Images.SetKeyName(23, "FileUser");
-			this.imageList.Images.SetKeyName(24, "FileComment");
-			this.imageList.Images.SetKeyName(25, "FileGraphLine");
-			this.imageList.Images.SetKeyName(26, "GlobeBrowse");
-			this.imageList.Images.SetKeyName(27, "Categories");
-			this.imageList.Images.SetKeyName(28, "Comments");
-			this.imageList.Images.SetKeyName(29, "CommentVideo");
-			this.imageList.Images.SetKeyName(30, "CommentUser");
-			this.imageList.Images.SetKeyName(31, "CommentPlay");
-			this.imageList.Images.SetKeyName(32, "Settings");
-			this.imageList.Images.SetKeyName(33, "ServerDown");
-			this.imageList.Images.SetKeyName(34, "ServerUp");
-			this.imageList.Images.SetKeyName(35, "ServerWarning");
-			this.imageList.Images.SetKeyName(36, "ServerBusy");
-			this.imageList.Images.SetKeyName(37, "Log");
-			this.imageList.Images.SetKeyName(38, "QueryDatabase");
-			this.imageList.Images.SetKeyName(39, "Cube");
-			this.imageList.Images.SetKeyName(40, "Cubes");
-			this.imageList.Images.SetKeyName(41, "GlobeSettings");
-			this.imageList.Images.SetKeyName(42, "GlobeSchema");
-			this.imageList.Images.SetKeyName(43, "GlobeObject");
-			this.imageList.Images.SetKeyName(44, "GlobeConsole");
-			this.imageList.Images.SetKeyName(45, "GlobeNode");
-			this.imageList.Images.SetKeyName(46, "GlobeTask");
-			this.imageList.Images.SetKeyName(47, "TestGlobeGoto");
-			this.imageList.Images.SetKeyName(48, "TestConnectGoto");
+			this.imageList.Images.SetKeyName(4, "ServerTask");
+			this.imageList.Images.SetKeyName(5, "ServersCube");
+			this.imageList.Images.SetKeyName(6, "ServersGlobe");
+			this.imageList.Images.SetKeyName(7, "File");
+			this.imageList.Images.SetKeyName(8, "FileXml");
+			this.imageList.Images.SetKeyName(9, "FileVideo");
+			this.imageList.Images.SetKeyName(10, "FileUser");
+			this.imageList.Images.SetKeyName(11, "FileComment");
+			this.imageList.Images.SetKeyName(12, "FileGraphLine");
+			this.imageList.Images.SetKeyName(13, "GlobeBrowse");
+			this.imageList.Images.SetKeyName(14, "Categories");
+			this.imageList.Images.SetKeyName(15, "Comments");
+			this.imageList.Images.SetKeyName(16, "CommentVideo");
+			this.imageList.Images.SetKeyName(17, "CommentUser");
+			this.imageList.Images.SetKeyName(18, "CommentPlay");
+			this.imageList.Images.SetKeyName(19, "Settings");
+			this.imageList.Images.SetKeyName(20, "ServerDown");
+			this.imageList.Images.SetKeyName(21, "ServerUp");
+			this.imageList.Images.SetKeyName(22, "ServerWarning");
+			this.imageList.Images.SetKeyName(23, "ServerBusy");
+			this.imageList.Images.SetKeyName(24, "Log");
+			this.imageList.Images.SetKeyName(25, "QueryDatabase");
+			this.imageList.Images.SetKeyName(26, "Cube");
+			this.imageList.Images.SetKeyName(27, "Cubes");
+			this.imageList.Images.SetKeyName(28, "GlobeSettings");
+			this.imageList.Images.SetKeyName(29, "GlobeSchema");
+			this.imageList.Images.SetKeyName(30, "GlobeObject");
+			this.imageList.Images.SetKeyName(31, "GlobeConsole");
+			this.imageList.Images.SetKeyName(32, "GlobeNode");
+			this.imageList.Images.SetKeyName(33, "GlobeTask");
+			this.imageList.Images.SetKeyName(34, "TestGlobeGoto");
+			this.imageList.Images.SetKeyName(35, "TestConnectGoto");
+			this.imageList.Images.SetKeyName(36, "FolderClosed");
+			this.imageList.Images.SetKeyName(37, "FolderClosedClock");
+			this.imageList.Images.SetKeyName(38, "FolderClosedComment");
+			this.imageList.Images.SetKeyName(39, "FolderClosedGlobe");
+			this.imageList.Images.SetKeyName(40, "FolderClosedPlayBlue");
+			this.imageList.Images.SetKeyName(41, "FolderClosedPlayGreen");
+			this.imageList.Images.SetKeyName(42, "FolderClosedTask");
+			this.imageList.Images.SetKeyName(43, "FolderClosedUser");
+			this.imageList.Images.SetKeyName(44, "FolderClosedVideo");
+			this.imageList.Images.SetKeyName(45, "FolderClosedXml");
+			this.imageList.Images.SetKeyName(46, "FolderOpen");
+			this.imageList.Images.SetKeyName(47, "FolderOpenClock");
+			this.imageList.Images.SetKeyName(48, "FolderOpenComment");
+			this.imageList.Images.SetKeyName(49, "FolderOpenGlobe");
+			this.imageList.Images.SetKeyName(50, "FolderOpenPlayBlue");
+			this.imageList.Images.SetKeyName(51, "FolderOpenPlayGreen");
+			this.imageList.Images.SetKeyName(52, "FolderOpenTask");
+			this.imageList.Images.SetKeyName(53, "FolderOpenUser");
+			this.imageList.Images.SetKeyName(54, "FolderOpenVideo");
+			this.imageList.Images.SetKeyName(55, "FolderOpenXml");
 			// 
 			// controlSideConfiguration
 			// 
@@ -337,25 +348,6 @@ namespace InetAnalytics.Forms
 			this.controlSideTesting.Visible = false;
 			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
-			// controlSidePlanetLab
-			// 
-			this.controlSidePlanetLab.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSidePlanetLab.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSidePlanetLab.FullRowSelect = true;
-			this.controlSidePlanetLab.HideSelection = false;
-			this.controlSidePlanetLab.ImageIndex = 0;
-			this.controlSidePlanetLab.ImageList = this.imageList;
-			this.controlSidePlanetLab.ItemHeight = 20;
-			this.controlSidePlanetLab.Location = new System.Drawing.Point(0, 22);
-			this.controlSidePlanetLab.Name = "controlSidePlanetLab";
-			this.controlSidePlanetLab.SelectedImageIndex = 0;
-			this.controlSidePlanetLab.ShowLines = false;
-			this.controlSidePlanetLab.ShowRootLines = false;
-			this.controlSidePlanetLab.Size = new System.Drawing.Size(246, 64);
-			this.controlSidePlanetLab.TabIndex = 7;
-			this.controlSidePlanetLab.Visible = false;
-			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
 			// controlSideSpiders
 			// 
 			this.controlSideSpiders.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -374,6 +366,44 @@ namespace InetAnalytics.Forms
 			this.controlSideSpiders.TabIndex = 5;
 			this.controlSideSpiders.Visible = false;
 			this.controlSideSpiders.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideYouTube
+			// 
+			this.controlSideYouTube.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideYouTube.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideYouTube.FullRowSelect = true;
+			this.controlSideYouTube.HideSelection = false;
+			this.controlSideYouTube.ImageIndex = 0;
+			this.controlSideYouTube.ImageList = this.imageList;
+			this.controlSideYouTube.ItemHeight = 20;
+			this.controlSideYouTube.Location = new System.Drawing.Point(0, 22);
+			this.controlSideYouTube.Name = "controlSideYouTube";
+			this.controlSideYouTube.SelectedImageIndex = 0;
+			this.controlSideYouTube.ShowLines = false;
+			this.controlSideYouTube.ShowRootLines = false;
+			this.controlSideYouTube.Size = new System.Drawing.Size(246, 64);
+			this.controlSideYouTube.TabIndex = 0;
+			this.controlSideYouTube.Visible = false;
+			this.controlSideYouTube.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// controlSideTasks
+			// 
+			this.controlSideTasks.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideTasks.FullRowSelect = true;
+			this.controlSideTasks.HideSelection = false;
+			this.controlSideTasks.ImageIndex = 0;
+			this.controlSideTasks.ImageList = this.imageList;
+			this.controlSideTasks.ItemHeight = 20;
+			this.controlSideTasks.Location = new System.Drawing.Point(0, 22);
+			this.controlSideTasks.Name = "controlSideTasks";
+			this.controlSideTasks.SelectedImageIndex = 0;
+			this.controlSideTasks.ShowLines = false;
+			this.controlSideTasks.ShowRootLines = false;
+			this.controlSideTasks.Size = new System.Drawing.Size(246, 64);
+			this.controlSideTasks.TabIndex = 8;
+			this.controlSideTasks.Visible = false;
+			this.controlSideTasks.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideDatabase
 			// 
@@ -394,24 +424,24 @@ namespace InetAnalytics.Forms
 			this.controlSideDatabase.Visible = false;
 			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
-			// controlSideYouTube
+			// controlSidePlanetLab
 			// 
-			this.controlSideYouTube.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideYouTube.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideYouTube.FullRowSelect = true;
-			this.controlSideYouTube.HideSelection = false;
-			this.controlSideYouTube.ImageIndex = 0;
-			this.controlSideYouTube.ImageList = this.imageList;
-			this.controlSideYouTube.ItemHeight = 20;
-			this.controlSideYouTube.Location = new System.Drawing.Point(0, 22);
-			this.controlSideYouTube.Name = "controlSideYouTube";
-			this.controlSideYouTube.SelectedImageIndex = 0;
-			this.controlSideYouTube.ShowLines = false;
-			this.controlSideYouTube.ShowRootLines = false;
-			this.controlSideYouTube.Size = new System.Drawing.Size(246, 64);
-			this.controlSideYouTube.TabIndex = 0;
-			this.controlSideYouTube.Visible = false;
-			this.controlSideYouTube.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			this.controlSidePlanetLab.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSidePlanetLab.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSidePlanetLab.FullRowSelect = true;
+			this.controlSidePlanetLab.HideSelection = false;
+			this.controlSidePlanetLab.ImageIndex = 0;
+			this.controlSidePlanetLab.ImageList = this.imageList;
+			this.controlSidePlanetLab.ItemHeight = 20;
+			this.controlSidePlanetLab.Location = new System.Drawing.Point(0, 22);
+			this.controlSidePlanetLab.Name = "controlSidePlanetLab";
+			this.controlSidePlanetLab.SelectedImageIndex = 0;
+			this.controlSidePlanetLab.ShowLines = false;
+			this.controlSidePlanetLab.ShowRootLines = false;
+			this.controlSidePlanetLab.Size = new System.Drawing.Size(246, 64);
+			this.controlSidePlanetLab.TabIndex = 7;
+			this.controlSidePlanetLab.Visible = false;
+			this.controlSidePlanetLab.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// sideMenuItemPlanetLab
 			// 
@@ -436,6 +466,14 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemYouTube.ImageSmall = global::InetAnalytics.Resources.ServersVideo_16;
 			this.sideMenuItemYouTube.Index = -1;
 			this.sideMenuItemYouTube.Text = "YouTube";
+			// 
+			// sideMenuItemTasks
+			// 
+			this.sideMenuItemTasks.Control = this.controlSideTasks;
+			this.sideMenuItemTasks.ImageLarge = global::InetAnalytics.Resources.ServerTask_32;
+			this.sideMenuItemTasks.ImageSmall = global::InetAnalytics.Resources.ServerTask_16;
+			this.sideMenuItemTasks.Index = -1;
+			this.sideMenuItemTasks.Text = "Tasks";
 			// 
 			// sideMenuItemTesting
 			// 
@@ -591,6 +629,7 @@ namespace InetAnalytics.Forms
 			// 
 			// toolTipNetworkStatus
 			// 
+			this.toolTipNetworkStatus.OwnerDraw = true;
 			this.toolTipNetworkStatus.ToolTipTitle = "Network Status";
 			// 
 			// FormMain
@@ -667,6 +706,8 @@ namespace InetAnalytics.Forms
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelRight;
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelConnection;
 		private InetAnalytics.Controls.Net.NetworkStatusToolTip toolTipNetworkStatus;
+		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemTasks;
+		private DotNetApi.Windows.Controls.SideTreeView controlSideTasks;
 	}
 }
 

@@ -1174,30 +1174,6 @@
   <data name="FolderOpenVideo_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FolderOpenVideo_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FolderClosedPlay_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderClosedPlay_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FolderClosedPlay_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderClosedPlay_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FolderClosedPlay_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderClosedPlay_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FolderClosedPlay_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderClosedPlay_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FolderOpenPlay_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderOpenPlay_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FolderOpenPlay_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderOpenPlay_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FolderOpenPlay_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderOpenPlay_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FolderOpenPlay_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FolderOpenPlay_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="FilePlay_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FilePlay_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -2637,16 +2613,16 @@ Female, 45-54 years
   <data name="TaskSmall_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\TaskSmall_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Task_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="TaskLarge_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Task_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Task_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="TaskLarge_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Task_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Task_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="TaskLarge_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Task_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Task_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="TaskLarge_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Task_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ConnectionError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -2924,5 +2900,149 @@ Female, 45-54 years
   </data>
   <data name="FindPrevious_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FindPrevious_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerTask_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerTask_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerTask_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerTask_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerTask_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerTask_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerTask_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerTask_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedClock_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedClock_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedClock_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedClock_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedClock_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedClock_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedClock_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedClock_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayGreen_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayGreen_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayGreen_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayGreen_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayGreen_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayGreen_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayGreen_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayGreen_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedTask_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedTask_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedTask_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedTask_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedTask_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedTask_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedTask_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedTask_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenClock_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenClock_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenClock_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenClock_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenClock_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenClock_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenClock_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenClock_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayGreen_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayGreen_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayGreen_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayGreen_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayGreen_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayGreen_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayGreen_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayGreen_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenTask_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenTask_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenTask_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenTask_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenTask_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenTask_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenTask_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenTask_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskClock_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskClock_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskClock_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskClock_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskClock_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskClock_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskClock_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskClock_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskPlay_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskPlay_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskPlay_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskPlay_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskPlay_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskPlay_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaskPlay_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TaskPlay_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tasks_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tasks_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tasks_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tasks_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tasks_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tasks_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tasks_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tasks_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayBlue_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayBlue_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayBlue_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayBlue_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayBlue_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayBlue_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderClosedPlayBlue_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderClosedPlayBlue_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayBlue_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayBlue_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayBlue_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayBlue_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayBlue_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayBlue_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderOpenPlayBlue_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\FolderOpenPlayBlue_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

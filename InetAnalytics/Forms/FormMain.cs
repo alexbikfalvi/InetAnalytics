@@ -86,6 +86,11 @@ namespace InetAnalytics.Forms
 		private TreeNode treeNodeYouTubeWeb;
 		private TreeNode treeNodeYouTubeWebVideos;
 
+		private TreeNode treeNodeTasksInfo;
+		private TreeNode treeNodeTasksAll;
+		private TreeNode treeNodeTasksScheduled;
+		private TreeNode treeNodeTasksRunning;
+
 		private TreeNode treeNodeTestingWebRequest;
 		private TreeNode treeNodeTestingSshRequest;
 
@@ -234,8 +239,8 @@ namespace InetAnalytics.Forms
 				this.imageList.Images.IndexOfKey("FolderClosedVideo"),
 				this.imageList.Images.IndexOfKey("FolderOpenVideo"));
 			this.treeNodeYouTubeApi2Playlists = new TreeNode("Playlists",
-				this.imageList.Images.IndexOfKey("FolderClosedPlay"),
-				this.imageList.Images.IndexOfKey("FolderOpenPlay"),
+				this.imageList.Images.IndexOfKey("FolderClosedPlayBlue"),
+				this.imageList.Images.IndexOfKey("FolderOpenPlayBlue"),
 				new TreeNode[] {
 					this.treeNodeYouTubeApi2PlaylistFeed
 				});
@@ -284,6 +289,24 @@ namespace InetAnalytics.Forms
 				this.imageList.Images.IndexOfKey("GlobeBrowse"),
 				new TreeNode[] {
 					this.treeNodeYouTubeWebVideos
+				});
+
+			this.treeNodeTasksRunning = new TreeNode("Running tasks",
+				this.imageList.Images.IndexOfKey("FolderClosedPlayGreen"),
+				this.imageList.Images.IndexOfKey("FolderOpenPlayGreen"));
+			this.treeNodeTasksScheduled = new TreeNode("Scheduled tasks",
+				this.imageList.Images.IndexOfKey("FolderClosedClock"),
+				this.imageList.Images.IndexOfKey("FolderOpenClock"));
+			this.treeNodeTasksAll = new TreeNode("All tasks",
+				this.imageList.Images.IndexOfKey("FolderClosedTask"),
+				this.imageList.Images.IndexOfKey("FolderOpenTask"));
+			this.treeNodeTasksInfo = new TreeNode("Tasks",
+				this.imageList.Images.IndexOfKey("ServerTask"),
+				this.imageList.Images.IndexOfKey("ServerTask"),
+				new TreeNode[] {
+					this.treeNodeTasksRunning,
+					this.treeNodeTasksScheduled,
+					this.treeNodeTasksAll
 				});
 
 			this.treeNodeTestingWebRequest = new TreeNode("Web request",
@@ -400,6 +423,7 @@ namespace InetAnalytics.Forms
 					this.treeNodeYouTubeApi3,
 					this.treeNodeYouTubeWeb
 				});
+			this.controlSideTasks.Nodes.Add(this.treeNodeTasksInfo);
 			this.controlSideTesting.Nodes.AddRange(
 				new TreeNode[] {
 					this.treeNodeTestingWebRequest,
@@ -499,6 +523,7 @@ namespace InetAnalytics.Forms
 			this.controlSideDatabase.Initialize();
 			this.controlSideSpiders.Initialize();
 			this.controlSideYouTube.Initialize();
+			this.controlSideTasks.Initialize();
 			this.controlSideTesting.Initialize();
 			this.controlSideLog.Initialize();
 			this.controlSideConfiguration.Initialize();
@@ -648,40 +673,6 @@ namespace InetAnalytics.Forms
 			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
 			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSlices;
 		}
-
-		///// <summary>
-		///// An event handler called when the a PlanetLab slice control was added.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		//private void OnPlanetLabSliceAdded(object sender, ControlEventArgs e)
-		//{
-		//	// Get the slice control.
-		//	ControlSlice control = e.Control as ControlSlice;
-		//	// If the slice control is not null.
-		//	if (null != control)
-		//	{
-		//		// Add the console selected event handler to the control.
-		//		control.ConsoleSelected += this.PlanetLabConsoleSelected;
-		//	}
-		//}
-
-		///// <summary>
-		///// An event handler called when a PlanetLab slice control was removed.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		//private void OnPlanetLabSliceRemoved(object sender, ControlEventArgs e)
-		//{
-		//	// Get the slice control.
-		//	ControlSlice control = e.Control as ControlSlice;
-		//	// If the slice control is not null.
-		//	if (null != control)
-		//	{
-		//		// Remove the console selected event handler from the control.
-		//		control.ConsoleSelected -= this.PlanetLabConsoleSelected;
-		//	}
-		//}
 
 		/// <summary>
 		/// An event handler called when a PlanetLab console is selected.

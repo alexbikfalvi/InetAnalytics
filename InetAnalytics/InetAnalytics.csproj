@@ -301,6 +301,12 @@
     <Compile Include="Controls\Net\ControlHttpHeaderProperties.Designer.cs">
       <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Tasks\ControlTasksInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Tasks\ControlTasksInfo.Designer.cs">
+      <DependentUpon>ControlTasksInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Testing\ControlTestingWebRequest.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -925,6 +931,9 @@
     <EmbeddedResource Include="Controls\Net\ControlHttpHeaderProperties.resx">
       <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Tasks\ControlTasksInfo.resx">
+      <DependentUpon>ControlTasksInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Testing\ControlTestingWebRequest.resx">
       <DependentUpon>ControlTestingWebRequest.cs</DependentUpon>
     </EmbeddedResource>
@@ -1208,6 +1217,54 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\FolderOpenPlayBlue_48.png" />
+    <None Include="Resources\FolderOpenPlayBlue_32.png" />
+    <None Include="Resources\FolderOpenPlayBlue_24.png" />
+    <None Include="Resources\FolderOpenPlayBlue_16.png" />
+    <None Include="Resources\FolderClosedPlayBlue_48.png" />
+    <None Include="Resources\FolderClosedPlayBlue_32.png" />
+    <None Include="Resources\FolderClosedPlayBlue_24.png" />
+    <None Include="Resources\FolderClosedPlayBlue_16.png" />
+    <None Include="Resources\Tasks_48.png" />
+    <None Include="Resources\Tasks_32.png" />
+    <None Include="Resources\Tasks_24.png" />
+    <None Include="Resources\Tasks_16.png" />
+    <None Include="Resources\FolderOpenClock_48.png" />
+    <None Include="Resources\FolderOpenClock_32.png" />
+    <None Include="Resources\FolderOpenClock_24.png" />
+    <None Include="Resources\FolderOpenClock_16.png" />
+    <None Include="Resources\FolderClosedClock_48.png" />
+    <None Include="Resources\FolderClosedClock_32.png" />
+    <None Include="Resources\FolderClosedClock_24.png" />
+    <None Include="Resources\FolderClosedClock_16.png" />
+    <None Include="Resources\FolderOpenPlayGreen_48.png" />
+    <None Include="Resources\FolderOpenPlayGreen_32.png" />
+    <None Include="Resources\FolderOpenPlayGreen_24.png" />
+    <None Include="Resources\FolderOpenPlayGreen_16.png" />
+    <None Include="Resources\FolderClosedPlayGreen_48.png" />
+    <None Include="Resources\FolderClosedPlayGreen_32.png" />
+    <None Include="Resources\FolderClosedPlayGreen_24.png" />
+    <None Include="Resources\FolderClosedPlayGreen_16.png" />
+    <None Include="Resources\TaskPlay_48.png" />
+    <None Include="Resources\TaskPlay_32.png" />
+    <None Include="Resources\TaskPlay_24.png" />
+    <None Include="Resources\TaskPlay_16.png" />
+    <None Include="Resources\TaskClock_48.png" />
+    <None Include="Resources\TaskClock_32.png" />
+    <None Include="Resources\TaskClock_24.png" />
+    <None Include="Resources\TaskClock_16.png" />
+    <None Include="Resources\FolderOpenTask_48.png" />
+    <None Include="Resources\FolderOpenTask_32.png" />
+    <None Include="Resources\FolderOpenTask_24.png" />
+    <None Include="Resources\FolderOpenTask_16.png" />
+    <None Include="Resources\FolderClosedTask_48.png" />
+    <None Include="Resources\FolderClosedTask_32.png" />
+    <None Include="Resources\FolderClosedTask_24.png" />
+    <None Include="Resources\FolderClosedTask_16.png" />
+    <None Include="Resources\ServerTask_48.png" />
+    <None Include="Resources\ServerTask_32.png" />
+    <None Include="Resources\ServerTask_24.png" />
+    <None Include="Resources\ServerTask_16.png" />
     <None Include="Resources\FindPrevious_48.png" />
     <None Include="Resources\FindPrevious_32.png" />
     <None Include="Resources\FindPrevious_24.png" />
