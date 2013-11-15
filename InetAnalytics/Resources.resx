@@ -3045,4 +3045,64 @@ Female, 45-54 years
   <data name="FolderOpenPlayBlue_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FolderOpenPlayBlue_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ServersToolbox_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersToolbox_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServersToolbox_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersToolbox_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServersToolbox_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersToolbox_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServersToolbox_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServersToolbox_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxLarge_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxLarge_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxLarge_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxLarge_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxLarge_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxLarge_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxLarge_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxLarge_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxMedium_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxMedium_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxMedium_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxMedium_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxMedium_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxMedium_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxMedium_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxMedium_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxSmall_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxSmall_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxSmall_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxSmall_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxSmall_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxSmall_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxSmall_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxSmall_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerToolbox_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerToolbox_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerToolbox_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerToolbox_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerToolbox_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerToolbox_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServerToolbox_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServerToolbox_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

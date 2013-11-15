@@ -1217,6 +1217,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ServerToolbox_48.png" />
+    <None Include="Resources\ServerToolbox_32.png" />
+    <None Include="Resources\ServerToolbox_24.png" />
+    <None Include="Resources\ServerToolbox_16.png" />
+    <None Include="Resources\ToolboxSmall_48.png" />
+    <None Include="Resources\ToolboxSmall_32.png" />
+    <None Include="Resources\ToolboxSmall_24.png" />
+    <None Include="Resources\ToolboxSmall_16.png" />
+    <None Include="Resources\ToolboxMedium_48.png" />
+    <None Include="Resources\ToolboxMedium_32.png" />
+    <None Include="Resources\ToolboxMedium_24.png" />
+    <None Include="Resources\ToolboxMedium_16.png" />
+    <None Include="Resources\ToolboxLarge_48.png" />
+    <None Include="Resources\ToolboxLarge_32.png" />
+    <None Include="Resources\ToolboxLarge_24.png" />
+    <None Include="Resources\ToolboxLarge_16.png" />
+    <None Include="Resources\ServersToolbox_48.png" />
+    <None Include="Resources\ServersToolbox_32.png" />
+    <None Include="Resources\ServersToolbox_24.png" />
+    <None Include="Resources\ServersToolbox_16.png" />
     <None Include="Resources\FolderOpenPlayBlue_48.png" />
     <None Include="Resources\FolderOpenPlayBlue_32.png" />
     <None Include="Resources\FolderOpenPlayBlue_24.png" />

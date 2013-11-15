@@ -63,6 +63,8 @@ namespace InetAnalytics.Forms
 
 		private TreeNode treeNodeDatabaseServers;
 
+		private TreeNode treeNodeToolboxInfo;
+
 		private TreeNode treeNodeSpidersLocal;
 		private TreeNode treeNodeSpiderStandardFeeds;
 
@@ -186,6 +188,11 @@ namespace InetAnalytics.Forms
 					this.treeNodePlanetLabNodes,
 					this.treeNodePlanetLabSlices
 				});
+
+			this.treeNodeToolboxInfo = new TreeNode("Toolbox",
+				this.imageList.Images.IndexOfKey("ServerToolbox"),
+				this.imageList.Images.IndexOfKey("ServerToolbox")
+				);
 
 			this.treeNodeDatabaseServers = new TreeNode("Servers",
 				this.imageList.Images.IndexOfKey("ServersDatabase"),
@@ -415,6 +422,7 @@ namespace InetAnalytics.Forms
 
 			// Add the tree nodes to the side panel tree views.
 			this.controlSidePlanetLab.Nodes.Add(this.treeNodePlanetLab);
+			this.controlSideToolbox.Nodes.Add(this.treeNodeToolboxInfo);
 			this.controlSideDatabase.Nodes.Add(this.treeNodeDatabaseServers);
 			this.controlSideSpiders.Nodes.Add(this.treeNodeSpidersLocal);
 			this.controlSideYouTube.Nodes.AddRange(
@@ -520,6 +528,7 @@ namespace InetAnalytics.Forms
 
 			// Initialize the side controls.
 			this.controlSidePlanetLab.Initialize();
+			this.controlSideToolbox.Initialize();
 			this.controlSideDatabase.Initialize();
 			this.controlSideSpiders.Initialize();
 			this.controlSideYouTube.Initialize();
@@ -532,7 +541,7 @@ namespace InetAnalytics.Forms
 			// Configure the side menu with the last saved configuration.
 			this.sideMenu.VisibleItems = this.crawler.Config.ConsoleSideMenuVisibleItems;
 			this.sideMenu.SelectedIndex = this.crawler.Config.ConsoleSideMenuSelectedItem;
-			if (this.sideMenu.SelectedItem.Control.HasSelected())
+			if (this.sideMenu.SelectedItem.HasControl && this.sideMenu.SelectedItem.Control.HasSelected())
 			{
 				this.sideMenu.SelectedItem.Control.SetSelected(this.crawler.Config.ConsoleSideMenuSelectedNode);
 			}
@@ -561,7 +570,10 @@ namespace InetAnalytics.Forms
 			// Save the configuration.
 			this.crawler.Config.ConsoleSideMenuVisibleItems = this.sideMenu.VisibleItems;
 			this.crawler.Config.ConsoleSideMenuSelectedItem = this.sideMenu.SelectedIndex ?? 0;
-			this.crawler.Config.ConsoleSideMenuSelectedNode = this.sideMenu.SelectedItem.Control.GetSelected();
+			if (this.sideMenu.SelectedItem.HasControl)
+			{
+				this.crawler.Config.ConsoleSideMenuSelectedNode = this.sideMenu.SelectedItem.Control.GetSelected();
+			}
 			// Call the base class event handler.
 			base.OnClosing(e);
 		}

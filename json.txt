@@ -1,0 +1,29 @@
+{
+  "assetcdn": null,
+  "basecdn": null,
+  "everything": [
+    {
+      "count": 43,
+      "bytes": 2976364,
+      "headerguess": null,
+      "isbase": true,
+      "hostname": "www.upf.edu",
+      "cnames": [
+        "www.upf.edu"
+      ],
+      "cdn": null
+    },
+    {
+      "count": 2,
+      "bytes": 39972,
+      "headerguess": null,
+      "isbase": false,
+      "hostname": "www.google-analytics.com",
+      "cnames": [
+        "www.google-analytics.com",
+        "www-google-analytics.l.google.com"
+      ],
+      "cdn": "Google"
+    }
+  ]
+}

@@ -48,7 +48,6 @@ namespace InetAnalytics.Forms
 			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
-			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
 			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
@@ -57,15 +56,16 @@ namespace InetAnalytics.Forms
 			this.controlSideYouTube = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideTasks = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideDatabase = new DotNetApi.Windows.Controls.SideTreeView();
+			this.controlSideToolbox = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSidePlanetLab = new DotNetApi.Windows.Controls.SideTreeView();
 			this.sideMenuItemPlanetLab = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemToolbox = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemDatabase = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemTasks = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -81,6 +81,8 @@ namespace InetAnalytics.Forms
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
+			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
+			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.toolTipNetworkStatus = new InetAnalytics.Controls.Net.NetworkStatusToolTip(this.components);
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
@@ -192,14 +194,16 @@ namespace InetAnalytics.Forms
 			this.sideMenu.Controls.Add(this.controlSideYouTube);
 			this.sideMenu.Controls.Add(this.controlSideTasks);
 			this.sideMenu.Controls.Add(this.controlSideDatabase);
+			this.sideMenu.Controls.Add(this.controlSideToolbox);
 			this.sideMenu.Controls.Add(this.controlSidePlanetLab);
 			this.sideMenu.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.sideMenu.ItemHeight = 48;
 			this.sideMenu.Items.AddRange(new DotNetApi.Windows.Controls.SideMenuItem[] {
             this.sideMenuItemPlanetLab,
+            this.sideMenuItemToolbox,
             this.sideMenuItemDatabase,
-            this.sideMenuItemYouTube,
             this.sideMenuItemTasks,
+            this.sideMenuItemYouTube,
             this.sideMenuItemTesting,
             this.sideMenuItemSpiders,
             this.sideMenuItemConfiguration,
@@ -216,19 +220,6 @@ namespace InetAnalytics.Forms
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.Title = "";
 			this.sideMenu.VisibleItems = 8;
-			// 
-			// controlSideLog
-			// 
-			this.controlSideLog.AutoScroll = true;
-			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideLog.Location = new System.Drawing.Point(0, 22);
-			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(246, 64);
-			this.controlSideLog.TabIndex = 2;
-			this.controlSideLog.Visible = false;
-			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideComments
 			// 
@@ -260,55 +251,56 @@ namespace InetAnalytics.Forms
 			this.imageList.Images.SetKeyName(4, "ServerTask");
 			this.imageList.Images.SetKeyName(5, "ServersCube");
 			this.imageList.Images.SetKeyName(6, "ServersGlobe");
-			this.imageList.Images.SetKeyName(7, "File");
-			this.imageList.Images.SetKeyName(8, "FileXml");
-			this.imageList.Images.SetKeyName(9, "FileVideo");
-			this.imageList.Images.SetKeyName(10, "FileUser");
-			this.imageList.Images.SetKeyName(11, "FileComment");
-			this.imageList.Images.SetKeyName(12, "FileGraphLine");
-			this.imageList.Images.SetKeyName(13, "GlobeBrowse");
-			this.imageList.Images.SetKeyName(14, "Categories");
-			this.imageList.Images.SetKeyName(15, "Comments");
-			this.imageList.Images.SetKeyName(16, "CommentVideo");
-			this.imageList.Images.SetKeyName(17, "CommentUser");
-			this.imageList.Images.SetKeyName(18, "CommentPlay");
-			this.imageList.Images.SetKeyName(19, "Settings");
-			this.imageList.Images.SetKeyName(20, "ServerDown");
-			this.imageList.Images.SetKeyName(21, "ServerUp");
-			this.imageList.Images.SetKeyName(22, "ServerWarning");
-			this.imageList.Images.SetKeyName(23, "ServerBusy");
-			this.imageList.Images.SetKeyName(24, "Log");
-			this.imageList.Images.SetKeyName(25, "QueryDatabase");
-			this.imageList.Images.SetKeyName(26, "Cube");
-			this.imageList.Images.SetKeyName(27, "Cubes");
-			this.imageList.Images.SetKeyName(28, "GlobeSettings");
-			this.imageList.Images.SetKeyName(29, "GlobeSchema");
-			this.imageList.Images.SetKeyName(30, "GlobeObject");
-			this.imageList.Images.SetKeyName(31, "GlobeConsole");
-			this.imageList.Images.SetKeyName(32, "GlobeNode");
-			this.imageList.Images.SetKeyName(33, "GlobeTask");
-			this.imageList.Images.SetKeyName(34, "TestGlobeGoto");
-			this.imageList.Images.SetKeyName(35, "TestConnectGoto");
-			this.imageList.Images.SetKeyName(36, "FolderClosed");
-			this.imageList.Images.SetKeyName(37, "FolderClosedClock");
-			this.imageList.Images.SetKeyName(38, "FolderClosedComment");
-			this.imageList.Images.SetKeyName(39, "FolderClosedGlobe");
-			this.imageList.Images.SetKeyName(40, "FolderClosedPlayBlue");
-			this.imageList.Images.SetKeyName(41, "FolderClosedPlayGreen");
-			this.imageList.Images.SetKeyName(42, "FolderClosedTask");
-			this.imageList.Images.SetKeyName(43, "FolderClosedUser");
-			this.imageList.Images.SetKeyName(44, "FolderClosedVideo");
-			this.imageList.Images.SetKeyName(45, "FolderClosedXml");
-			this.imageList.Images.SetKeyName(46, "FolderOpen");
-			this.imageList.Images.SetKeyName(47, "FolderOpenClock");
-			this.imageList.Images.SetKeyName(48, "FolderOpenComment");
-			this.imageList.Images.SetKeyName(49, "FolderOpenGlobe");
-			this.imageList.Images.SetKeyName(50, "FolderOpenPlayBlue");
-			this.imageList.Images.SetKeyName(51, "FolderOpenPlayGreen");
-			this.imageList.Images.SetKeyName(52, "FolderOpenTask");
-			this.imageList.Images.SetKeyName(53, "FolderOpenUser");
-			this.imageList.Images.SetKeyName(54, "FolderOpenVideo");
-			this.imageList.Images.SetKeyName(55, "FolderOpenXml");
+			this.imageList.Images.SetKeyName(7, "ServerToolbox");
+			this.imageList.Images.SetKeyName(8, "File");
+			this.imageList.Images.SetKeyName(9, "FileXml");
+			this.imageList.Images.SetKeyName(10, "FileVideo");
+			this.imageList.Images.SetKeyName(11, "FileUser");
+			this.imageList.Images.SetKeyName(12, "FileComment");
+			this.imageList.Images.SetKeyName(13, "FileGraphLine");
+			this.imageList.Images.SetKeyName(14, "GlobeBrowse");
+			this.imageList.Images.SetKeyName(15, "Categories");
+			this.imageList.Images.SetKeyName(16, "Comments");
+			this.imageList.Images.SetKeyName(17, "CommentVideo");
+			this.imageList.Images.SetKeyName(18, "CommentUser");
+			this.imageList.Images.SetKeyName(19, "CommentPlay");
+			this.imageList.Images.SetKeyName(20, "Settings");
+			this.imageList.Images.SetKeyName(21, "ServerDown");
+			this.imageList.Images.SetKeyName(22, "ServerUp");
+			this.imageList.Images.SetKeyName(23, "ServerWarning");
+			this.imageList.Images.SetKeyName(24, "ServerBusy");
+			this.imageList.Images.SetKeyName(25, "Log");
+			this.imageList.Images.SetKeyName(26, "QueryDatabase");
+			this.imageList.Images.SetKeyName(27, "Cube");
+			this.imageList.Images.SetKeyName(28, "Cubes");
+			this.imageList.Images.SetKeyName(29, "GlobeSettings");
+			this.imageList.Images.SetKeyName(30, "GlobeSchema");
+			this.imageList.Images.SetKeyName(31, "GlobeObject");
+			this.imageList.Images.SetKeyName(32, "GlobeConsole");
+			this.imageList.Images.SetKeyName(33, "GlobeNode");
+			this.imageList.Images.SetKeyName(34, "GlobeTask");
+			this.imageList.Images.SetKeyName(35, "TestGlobeGoto");
+			this.imageList.Images.SetKeyName(36, "TestConnectGoto");
+			this.imageList.Images.SetKeyName(37, "FolderClosed");
+			this.imageList.Images.SetKeyName(38, "FolderClosedClock");
+			this.imageList.Images.SetKeyName(39, "FolderClosedComment");
+			this.imageList.Images.SetKeyName(40, "FolderClosedGlobe");
+			this.imageList.Images.SetKeyName(41, "FolderClosedPlayBlue");
+			this.imageList.Images.SetKeyName(42, "FolderClosedPlayGreen");
+			this.imageList.Images.SetKeyName(43, "FolderClosedTask");
+			this.imageList.Images.SetKeyName(44, "FolderClosedUser");
+			this.imageList.Images.SetKeyName(45, "FolderClosedVideo");
+			this.imageList.Images.SetKeyName(46, "FolderClosedXml");
+			this.imageList.Images.SetKeyName(47, "FolderOpen");
+			this.imageList.Images.SetKeyName(48, "FolderOpenClock");
+			this.imageList.Images.SetKeyName(49, "FolderOpenComment");
+			this.imageList.Images.SetKeyName(50, "FolderOpenGlobe");
+			this.imageList.Images.SetKeyName(51, "FolderOpenPlayBlue");
+			this.imageList.Images.SetKeyName(52, "FolderOpenPlayGreen");
+			this.imageList.Images.SetKeyName(53, "FolderOpenTask");
+			this.imageList.Images.SetKeyName(54, "FolderOpenUser");
+			this.imageList.Images.SetKeyName(55, "FolderOpenVideo");
+			this.imageList.Images.SetKeyName(56, "FolderOpenXml");
 			// 
 			// controlSideConfiguration
 			// 
@@ -424,6 +416,25 @@ namespace InetAnalytics.Forms
 			this.controlSideDatabase.Visible = false;
 			this.controlSideDatabase.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
+			// controlSideToolbox
+			// 
+			this.controlSideToolbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.controlSideToolbox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideToolbox.FullRowSelect = true;
+			this.controlSideToolbox.HideSelection = false;
+			this.controlSideToolbox.ImageIndex = 0;
+			this.controlSideToolbox.ImageList = this.imageList;
+			this.controlSideToolbox.ItemHeight = 20;
+			this.controlSideToolbox.Location = new System.Drawing.Point(0, 22);
+			this.controlSideToolbox.Name = "controlSideToolbox";
+			this.controlSideToolbox.SelectedImageIndex = 0;
+			this.controlSideToolbox.ShowLines = false;
+			this.controlSideToolbox.ShowRootLines = false;
+			this.controlSideToolbox.Size = new System.Drawing.Size(246, 64);
+			this.controlSideToolbox.TabIndex = 9;
+			this.controlSideToolbox.Visible = false;
+			this.controlSideToolbox.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
 			// controlSidePlanetLab
 			// 
 			this.controlSidePlanetLab.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -451,6 +462,14 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemPlanetLab.Index = -1;
 			this.sideMenuItemPlanetLab.Text = "PlanetLab";
 			// 
+			// sideMenuItemToolbox
+			// 
+			this.sideMenuItemToolbox.Control = this.controlSideToolbox;
+			this.sideMenuItemToolbox.ImageLarge = global::InetAnalytics.Resources.ServersToolbox_32;
+			this.sideMenuItemToolbox.ImageSmall = global::InetAnalytics.Resources.ServersToolbox_16;
+			this.sideMenuItemToolbox.Index = -1;
+			this.sideMenuItemToolbox.Text = "Toolbox";
+			// 
 			// sideMenuItemDatabase
 			// 
 			this.sideMenuItemDatabase.Control = this.controlSideDatabase;
@@ -459,14 +478,6 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemDatabase.Index = -1;
 			this.sideMenuItemDatabase.Text = "Database";
 			// 
-			// sideMenuItemYouTube
-			// 
-			this.sideMenuItemYouTube.Control = this.controlSideYouTube;
-			this.sideMenuItemYouTube.ImageLarge = global::InetAnalytics.Resources.ServersVideo_32;
-			this.sideMenuItemYouTube.ImageSmall = global::InetAnalytics.Resources.ServersVideo_16;
-			this.sideMenuItemYouTube.Index = -1;
-			this.sideMenuItemYouTube.Text = "YouTube";
-			// 
 			// sideMenuItemTasks
 			// 
 			this.sideMenuItemTasks.Control = this.controlSideTasks;
@@ -474,6 +485,14 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemTasks.ImageSmall = global::InetAnalytics.Resources.ServerTask_16;
 			this.sideMenuItemTasks.Index = -1;
 			this.sideMenuItemTasks.Text = "Tasks";
+			// 
+			// sideMenuItemYouTube
+			// 
+			this.sideMenuItemYouTube.Control = this.controlSideYouTube;
+			this.sideMenuItemYouTube.ImageLarge = global::InetAnalytics.Resources.ServersVideo_32;
+			this.sideMenuItemYouTube.ImageSmall = global::InetAnalytics.Resources.ServersVideo_16;
+			this.sideMenuItemYouTube.Index = -1;
+			this.sideMenuItemYouTube.Text = "YouTube";
 			// 
 			// sideMenuItemTesting
 			// 
@@ -498,14 +517,6 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemConfiguration.ImageSmall = global::InetAnalytics.Resources.ConfigurationSettings_16;
 			this.sideMenuItemConfiguration.Index = -1;
 			this.sideMenuItemConfiguration.Text = "Configuration";
-			// 
-			// sideMenuItemLog
-			// 
-			this.sideMenuItemLog.Control = this.controlSideLog;
-			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
-			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
-			this.sideMenuItemLog.Index = -1;
-			this.sideMenuItemLog.Text = "Log";
 			// 
 			// sideMenuItemComments
 			// 
@@ -627,6 +638,27 @@ namespace InetAnalytics.Forms
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
+			// controlSideLog
+			// 
+			this.controlSideLog.AutoScroll = true;
+			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideLog.Location = new System.Drawing.Point(0, 22);
+			this.controlSideLog.Name = "controlSideLog";
+			this.controlSideLog.Size = new System.Drawing.Size(246, 64);
+			this.controlSideLog.TabIndex = 2;
+			this.controlSideLog.Visible = false;
+			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
+			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
+			// 
+			// sideMenuItemLog
+			// 
+			this.sideMenuItemLog.Control = this.controlSideLog;
+			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
+			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
+			this.sideMenuItemLog.Index = -1;
+			this.sideMenuItemLog.Text = "Log";
+			// 
 			// toolTipNetworkStatus
 			// 
 			this.toolTipNetworkStatus.OwnerDraw = true;
@@ -708,6 +740,8 @@ namespace InetAnalytics.Forms
 		private InetAnalytics.Controls.Net.NetworkStatusToolTip toolTipNetworkStatus;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemTasks;
 		private DotNetApi.Windows.Controls.SideTreeView controlSideTasks;
+		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemToolbox;
+		private DotNetApi.Windows.Controls.SideTreeView controlSideToolbox;
 	}
 }
 
