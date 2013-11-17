@@ -39,12 +39,11 @@ namespace InetCrawler.Database
 			MsSql = 0
 		};
 
-		private CrawlerConfig config;
+		private readonly RegistryKey key;
 
 		private readonly Dictionary<string, DbServer> servers = new Dictionary<string, DbServer>();
 		private IOrderedEnumerable<KeyValuePair<string, DbServer>> orderedServers = null;
 		private DbServer primary = null;
-		//private readonly Mutex mutex = new Mutex();
 		private readonly object sync = new object();
 
 		private static readonly string[] dbServerTypeNames = {
@@ -54,35 +53,35 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Creates a new database servers list, using the specified configuration.
 		/// </summary>
-		/// <param name="config">The crawler configuration.</param>
-		public DbServers(CrawlerConfig config)
+		/// <param name="key">The registry key.</param>
+		public DbServers(RegistryKey key)
 		{
-			// Save the configuration.
-			this.config = config;
+			// Save the registry key.
+			this.key = key;
 
 			// Get the ID of the primary database server.
-			string primaryId = DotNetApi.Windows.Registry.GetString(this.config.Database.Key.Name, "Primary", null);
+			string primaryId = DotNetApi.Windows.Registry.GetString(this.key.Name, "Primary", null);
 
 			// Create the servers list.
-			foreach (string id in this.config.Database.Servers)
+			foreach (string id in this.key.GetSubKeyNames())
 			{
 				// Compute the database server log file.
-				string logFile = this.config.DatabaseLogFileName.FormatWith(id, "{0}", "{1}", "{2}");
+				string logFile = CrawlerConfig.Static.DatabaseLogFileName.FormatWith(id, "{0}", "{1}", "{2}");
 				// Try to create the database server.
 				try
 				{
 					// Open the server configuration registry key.
-					RegistryKey key = this.config.Database.Key.OpenSubKey(id, true);
+					RegistryKey serverKey = this.key.OpenSubKey(id, true);
 					// If the registry key could not be opened, continue to the next server.
-					if (null == key) continue;
+					if (null == serverKey) continue;
 					// Get the database server type.
-					DbServerType type = (DbServerType)DotNetApi.Windows.Registry.GetInteger(key.Name, "Type", 0);
+					DbServerType type = (DbServerType)DotNetApi.Windows.Registry.GetInteger(serverKey.Name, "Type", 0);
 					// Create a server instance for the specified configuration.
 					DbServer server;
 					switch (type)
 					{
 						case DbServerType.MsSql:
-							server = new DbServerSql(key, id, logFile);
+							server = new DbServerSql(serverKey, id, logFile);
 							break;
 						default: throw new CrawlerException("Cannot add a new database server. Unknown database server type \'{0}\'.".FormatWith(type));
 					}
@@ -99,7 +98,7 @@ namespace InetCrawler.Database
 				catch (Exception)
 				{
 					// If any exception occurs, remove the server configuration.
-					config.Database.Remove(id);
+					this.key.DeleteSubKey(id);
 				}
 			}
 		}
@@ -190,7 +189,7 @@ namespace InetCrawler.Database
 			// Change the primary server.
 			this.primary = server;
 			// Update the registry key.
-			Registry.SetValue(this.config.Database.Key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
+			Registry.SetValue(this.key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
 			// Raise the primary server changed event.
 			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(this, new DbPrimaryServerChangedEventArgs(oldPrimary, this.primary));
 		}
@@ -238,7 +237,7 @@ namespace InetCrawler.Database
 			// Check the server ID does not exist. Otherwise, throw an exception.
 			if (this.servers.ContainsKey(id)) throw new CrawlerException("Cannot add a new database server. The server ID \'{0}\' already exists.".FormatWith(id));
 			// Create the registry key for this server.
-			RegistryKey key = this.config.Database.Key.CreateSubKey(id);
+			RegistryKey key = this.key.CreateSubKey(id);
 			// Compute the database server log file.
 			string logFile = string.Format(this.config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
 			DbServer server;

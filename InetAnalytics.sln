@@ -44,6 +44,8 @@ Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "InetSetup", "InetSetup\Inet
 		{6740E3FF-81AD-4CDF-8A61-F471D13EE38F} = {6740E3FF-81AD-4CDF-8A61-F471D13EE38F}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InetTools", "InetTools\InetTools.csproj", "{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -204,6 +206,16 @@ Global
 		{2F7538F8-09A2-4219-BAAC-201CDCF9A741}.Release|Mixed Platforms.Build.0 = SingleImage
 		{2F7538F8-09A2-4219-BAAC-201CDCF9A741}.Release|x86.ActiveCfg = SingleImage
 		{2F7538F8-09A2-4219-BAAC-201CDCF9A741}.Release|x86.Build.0 = SingleImage
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

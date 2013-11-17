@@ -18,9 +18,8 @@
 
 using System;
 using System.Windows.Forms;
-using InetApi.YouTube.Api.V2;
-using InetApi.YouTube.Api.V2.Data;
 using InetCrawler.Database;
+using InetCrawler.PlanetLab;
 using InetCrawler.Events;
 using InetCrawler.Log;
 using InetCrawler.Spider;
@@ -36,12 +35,12 @@ namespace InetCrawler
 	public sealed class Crawler : IDisposable
 	{
 		private CrawlerConfig config;
-		private YouTubeSettings settings;
-		private YouTubeCategories categories;
+
+		private DbConfig dbConfig;
+		private PlConfig plConfig;
 		private Logger log;
 		private Status.Status status;
 		private Comments.Comments comments;
-		private DbServers servers;
 		private Spiders spiders;
 		private Testing.Testing testing;
 		private readonly static CrawlerNetwork network = new CrawlerNetwork();
@@ -56,11 +55,8 @@ namespace InetCrawler
 			// Read the crawler configuration
 			this.config = new CrawlerConfig(rootKey, rootPath);
 
-			// Create the YouTube settings
-			this.settings = new YouTubeSettings(this.config.YouTubeV2ApiKey);
-
-			// Create the YouTube categories
-			this.categories = new YouTubeCategories(this.config.YouTubeCategoriesFileName);
+			// Create the database servers.
+			this.servers = new DbServers(this.config);
 
 			// Create the logger.
 			this.log = new Logger(this.Config.LogFileName);
@@ -70,9 +66,6 @@ namespace InetCrawler
 
 			// Create the comments.
 			this.comments = new Comments.Comments(this.config);
-
-			// Create the database servers.
-			this.servers = new DbServers(this.config);
 
 			// Create the crawler spiders.
 			this.spiders = new Spiders(this);
@@ -100,9 +93,6 @@ namespace InetCrawler
 		/// An event raised when selecting the PlanetLab slices.
 		/// </summary>
 		public event EventHandler PlanetLabSlicesSelected;
-		
-		//public event ControlEventHandler PlanetLabSliceAdded;
-		//public event ControlEventHandler PlanelLabSliceRemoved;
 
 		/// <summary>
 		/// An event raised when selecting the YouTube video feeds page.
@@ -250,6 +240,10 @@ namespace InetCrawler
 		/// </summary>
 		public CrawlerConfig Config { get { return this.config; } }
 		/// <summary>
+		/// Returns the crawler spiders.
+		/// </summary>
+		public Spiders Spiders { get { return this.spiders; } }
+		/// <summary>
 		/// Returns the YouTube settings.
 		/// </summary>
 		public YouTubeSettings Settings { get { return this.settings; } }
@@ -273,10 +267,6 @@ namespace InetCrawler
 		/// Returns the database servers.
 		/// </summary>
 		public DbServers Servers { get { return this.servers; } }
-		/// <summary>
-		/// Returns the crawler spiders.
-		/// </summary>
-		public Spiders Spiders { get { return this.spiders; } }
 		/// <summary>
 		/// Returns the crawler testing configuration.
 		/// </summary>

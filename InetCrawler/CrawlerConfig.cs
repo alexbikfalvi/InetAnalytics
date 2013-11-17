@@ -23,6 +23,7 @@ using DotNetApi;
 using DotNetApi.Security;
 using InetCrawler.Database;
 using InetCrawler.PlanetLab;
+using InetCrawler.YouTube;
 
 namespace InetCrawler
 {
@@ -81,14 +82,12 @@ namespace InetCrawler
 			public string PlanetLabLocalSlicesFileName { get; internal set; }
 		}
 
-		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
-		internal static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
+		private static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
+		private static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
 
 		private RegistryKey rootKey;
 		private string rootPath;
 		private string root;
-		private DbConfig dbConfig;
-		private PlConfig plConfig;
 
 		/// <summary>
 		/// Static constructor.
@@ -117,7 +116,6 @@ namespace InetCrawler
 			this.plConfig = new PlConfig(this.rootKey, this.rootPath + @"\PlanetLab");
 
 			// Initialize the static configuration.
-
 			CrawlerConfig.Static.YouTubeUsername = this.YouTubeUsername;
 			CrawlerConfig.Static.YouTubePassword = this.YouTubePassword;
 			CrawlerConfig.Static.YouTubeCategoriesFileName = this.YouTubeCategoriesFileName;
@@ -140,6 +138,38 @@ namespace InetCrawler
 		/// Gets the static configuration.
 		/// </summary>
 		public static StaticConfig Static { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the log file name.
+		/// </summary>
+		public string LogFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "FileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-{0}-{1}-{2}.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "FileName", value);
+				CrawlerConfig.Static.LogFileName = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the database server log file name.
+		/// </summary>
+		public string DatabaseLogFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "DatabaseFileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-Db-{0}-{1}-{2}-{3}.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "DatabaseFileName", value);
+				CrawlerConfig.Static.DatabaseLogFileName = value;
+			}
+		}
 
 		/// <summary>
 		/// Gets or sets the YouTube account name.
@@ -202,38 +232,6 @@ namespace InetCrawler
 			{
 				DotNetApi.Windows.Registry.SetSecureString(this.root + @"\YouTube\V2", "ApiKey", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 				CrawlerConfig.Static.YouTubeV2ApiKey = value;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the log file name.
-		/// </summary>
-		public string LogFileName
-		{
-			get
-			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "FileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-{0}-{1}-{2}.xml");
-			}
-			set
-			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "FileName", value);
-				CrawlerConfig.Static.LogFileName = value;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the database server log file name.
-		/// </summary>
-		public string DatabaseLogFileName
-		{
-			get
-			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "DatabaseFileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-Db-{0}-{1}-{2}-{3}.xml");
-			}
-			set
-			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "DatabaseFileName", value);
-				CrawlerConfig.Static.DatabaseLogFileName = value;
 			}
 		}
 

@@ -27,7 +27,9 @@ namespace InetCrawler.Database
 	/// </summary>
 	public sealed class DbConfig : IDisposable
 	{
-		private RegistryKey key;
+		private readonly RegistryKey key;
+
+		private readonly DbServers servers;
 
 		/// <summary>
 		/// Creates a database configuration instance at the specified registry key.
@@ -41,6 +43,9 @@ namespace InetCrawler.Database
 			{
 				this.key = rootKey.CreateSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree);
 			}
+
+			// Create the database servers.
+			this.servers = new DbServers(this.key);
 		}
 
 		// Public properties.
@@ -48,12 +53,12 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Returns an array with the current server IDs (not server names).
 		/// </summary>
-		public string[] Servers { get { return this.key.GetSubKeyNames(); } }
+		//public string[] Servers { get { return this.key.GetSubKeyNames(); } }
 
 		/// <summary>
 		/// Returns the database registry key.
 		/// </summary>
-		public RegistryKey Key { get { return this.key; } }
+		//public RegistryKey Key { get { return this.key; } }
 
 		// Public methods.
 
@@ -72,9 +77,9 @@ namespace InetCrawler.Database
 		/// Removes the configuration for server with the specified identifier.
 		/// </summary>
 		/// <param name="id">The server ID.</param>
-		public void Remove(string id)
-		{
-			this.key.DeleteSubKey(id);
-		}
+		//public void Remove(string id)
+		//{
+		//	this.key.DeleteSubKey(id);
+		//}
 	}
 }

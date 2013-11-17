@@ -130,6 +130,10 @@
     <Compile Include="Testing\Testing.cs" />
     <Compile Include="Testing\TestingSshRequest.cs" />
     <Compile Include="Testing\TestingWebRequest.cs" />
+    <Compile Include="Tools\ITool.cs" />
+    <Compile Include="Tools\IToolbox.cs" />
+    <Compile Include="Tools\Toolbox.cs" />
+    <Compile Include="YouTube\YtConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
@@ -145,6 +149,7 @@
       <Name>InetApi</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

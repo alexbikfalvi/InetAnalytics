@@ -319,6 +319,18 @@
     <Compile Include="Controls\Testing\ControlTestingSshRequest.Designer.cs">
       <DependentUpon>ControlTestingSshRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Tools\ControlToolboxInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlToolboxInfo.Designer.cs">
+      <DependentUpon>ControlToolboxInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlToolboxSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlToolboxSettings.Designer.cs">
+      <DependentUpon>ControlToolboxSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\YouTube\ControlCommentProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -939,6 +951,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Testing\ControlTestingSshRequest.resx">
       <DependentUpon>ControlTestingSshRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Tools\ControlToolboxInfo.resx">
+      <DependentUpon>ControlToolboxInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Tools\ControlToolboxSettings.resx">
+      <DependentUpon>ControlToolboxSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlCommentProperties.resx">
       <DependentUpon>ControlCommentProperties.cs</DependentUpon>
@@ -2190,6 +2208,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
