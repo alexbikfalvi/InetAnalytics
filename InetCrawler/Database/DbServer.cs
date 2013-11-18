@@ -156,7 +156,7 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the type of the current database server.
 		/// </summary>
-		public abstract DbServers.DbServerType Type { get; }
+		public abstract DbConfig.DbServerType Type { get; }
 		/// <summary>
 		/// Gets or sets the server name.
 		/// </summary>

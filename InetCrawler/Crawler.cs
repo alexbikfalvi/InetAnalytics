@@ -56,7 +56,7 @@ namespace InetCrawler
 			this.config = new CrawlerConfig(rootKey, rootPath);
 
 			// Create the database servers.
-			this.servers = new DbServers(this.config);
+			this.database = new DbConfig(this.config, rootKey, rootPath + @"\Database");
 
 			// Create the logger.
 			this.log = new Logger(this.Config.LogFileName);
@@ -266,7 +266,7 @@ namespace InetCrawler
 		/// <summary>
 		/// Returns the database servers.
 		/// </summary>
-		public DbServers Servers { get { return this.servers; } }
+		public DbConfig Servers { get { return this.servers; } }
 		/// <summary>
 		/// Returns the crawler testing configuration.
 		/// </summary>

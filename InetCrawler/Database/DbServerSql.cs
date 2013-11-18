@@ -126,7 +126,7 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the type of the database server.
 		/// </summary>
-		public override DbServers.DbServerType Type { get { return DbServers.DbServerType.MsSql; } }
+		public override DbConfig.DbServerType Type { get { return DbConfig.DbServerType.MsSql; } }
 		/// <summary>
 		/// Gets the server version.
 		/// </summary>

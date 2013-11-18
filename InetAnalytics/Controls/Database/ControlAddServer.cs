@@ -38,7 +38,7 @@ namespace InetAnalytics.Controls.Database
 			InitializeComponent();
 
 			// Populate the server types.
-			this.comboBoxType.Items.AddRange(DbServers.ServerTypeNames);
+			this.comboBoxType.Items.AddRange(DbConfig.ServerTypeNames);
 			this.comboBoxType.SelectedIndex = 0;
 		}
 
@@ -50,7 +50,7 @@ namespace InetAnalytics.Controls.Database
 		/// <summary>
 		/// Returns the database server type.
 		/// </summary>
-		public DbServers.DbServerType Type { get { return (DbServers.DbServerType)this.comboBoxType.SelectedIndex; } }
+		public DbConfig.DbServerType Type { get { return (DbConfig.DbServerType)this.comboBoxType.SelectedIndex; } }
 
 		/// <summary>
 		/// Gets the server name.

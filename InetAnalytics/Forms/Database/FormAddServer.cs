@@ -54,7 +54,7 @@ namespace InetAnalytics.Forms.Database
 		/// <summary>
 		/// Gets the database server type.
 		/// </summary>
-		public DbServers.DbServerType Type { get { return this.control.Type; } }
+		public DbConfig.DbServerType Type { get { return this.control.Type; } }
 
 		/// <summary>
 		/// Gets the database server name.
