@@ -63,7 +63,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		public void Initialize(Crawler crawler)
 		{
 			this.crawler = crawler;
-			this.request = new YouTubeRequestProfile(this.crawler.Settings);
+			this.request = new YouTubeRequestProfile(this.crawler.YouTube.Settings);
 		}
 
 		/// <summary>
@@ -246,7 +246,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Uploads(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			this.crawler.OpenYouTubeUserUploads(this.controlProfile.Profile);
+			this.crawler.Events.OpenYouTubeUserUploads(this.controlProfile.Profile);
 		}
 
 		/// <summary>
@@ -257,7 +257,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Favorites(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			this.crawler.OpenYouTubeUserFavorites(this.controlProfile.Profile);
+			this.crawler.Events.OpenYouTubeUserFavorites(this.controlProfile.Profile);
 		}
 
 		/// <summary>
@@ -268,7 +268,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Playlists(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			this.crawler.OpenYouTubeUserPlaylists(this.controlProfile.Profile);
+			this.crawler.Events.OpenYouTubeUserPlaylists(this.controlProfile.Profile);
 		}
 
 		/// <summary>
@@ -292,7 +292,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnCommentClick(object sender, EventArgs e)
 		{
 			if (null == this.controlProfile.Profile) return;
-			this.crawler.CommentYouTubeUser(this.controlProfile.Profile.Id);
+			this.crawler.Events.CommentYouTubeUser(this.controlProfile.Profile.Id);
 		}
 	}
 }

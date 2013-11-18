@@ -8742,6 +8742,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ToolboxAdd_16 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxAdd_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxAdd_24 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxAdd_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxAdd_32 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxAdd_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxAdd_48 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxAdd_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ToolboxLarge_16 {
             get {
                 object obj = ResourceManager.GetObject("ToolboxLarge_16", resourceCulture);
@@ -8822,6 +8862,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ToolboxRemove_16 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxRemove_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxRemove_24 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxRemove_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxRemove_32 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxRemove_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxRemove_48 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxRemove_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ToolboxSmall_16 {
             get {
                 object obj = ResourceManager.GetObject("ToolboxSmall_16", resourceCulture);
@@ -8855,6 +8935,46 @@ namespace InetAnalytics {
         internal static System.Drawing.Bitmap ToolboxSmall_48 {
             get {
                 object obj = ResourceManager.GetObject("ToolboxSmall_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxStar_16 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxStar_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxStar_24 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxStar_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxStar_32 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxStar_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxStar_48 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxStar_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

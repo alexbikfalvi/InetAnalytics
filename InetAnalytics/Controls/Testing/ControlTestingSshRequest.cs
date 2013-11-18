@@ -45,7 +45,7 @@ namespace InetAnalytics.Controls.Testing
 		// Private variables.
 
 		private Crawler crawler = null;
-		private StatusHandler status = null;
+		private CrawlerStatusHandler status = null;
 
 		private byte[] sshKey = null;
 		
@@ -79,7 +79,7 @@ namespace InetAnalytics.Controls.Testing
 
 			// Get the crawler status.
 			this.status = this.crawler.Status.GetHandler(this);
-			this.status.Send("Disconnected.", Resources.Server_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
 
 			// Enable the control.
 			this.Enabled = true;
@@ -101,7 +101,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send("Connecting to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -120,7 +120,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send("Connected to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerSuccess_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connected to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerSuccess_16);
 			// Enable the console.
 			this.OnEnableConsole();
 			// Log
@@ -144,7 +144,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send("Connecting to the SSH server \'{0}\' failed".FormatWith(info.Host), Resources.ServerError_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\' failed".FormatWith(info.Host), Resources.ServerError_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -163,7 +163,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send("Disconnecting from the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Disconnecting from the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -180,7 +180,7 @@ namespace InetAnalytics.Controls.Testing
 		protected override void OnDisconnected(ConnectionInfo info)
 		{
 			// Update the status bar.
-			this.status.Send("Disconnected.", Resources.Server_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -300,8 +300,8 @@ namespace InetAnalytics.Controls.Testing
 			this.secureTextBoxPassword.SecureText = this.crawler.Testing.SshRequest.Password;
 			this.textBoxKey.Text = this.sshKey != null ? Encoding.UTF8.GetString(this.sshKey).Replace("\n", Environment.NewLine) : string.Empty;
 			
-			this.radioPasswordAuthentication.Checked = this.crawler.Testing.SshRequest.Authentication == TestingSshRequest.AuthenticationType.Password;
-			this.radioKeyAuthentication.Checked = this.crawler.Testing.SshRequest.Authentication == TestingSshRequest.AuthenticationType.Key;
+			this.radioPasswordAuthentication.Checked = this.crawler.Testing.SshRequest.Authentication == CrawlerTestingSshRequest.AuthenticationType.Password;
+			this.radioKeyAuthentication.Checked = this.crawler.Testing.SshRequest.Authentication == CrawlerTestingSshRequest.AuthenticationType.Key;
 
 			// Initialize the authentication controls.
 			this.OnAuthenticationChanged(this, EventArgs.Empty);
@@ -323,7 +323,7 @@ namespace InetAnalytics.Controls.Testing
 			this.crawler.Testing.SshRequest.Password = this.secureTextBoxPassword.SecureText;
 			this.crawler.Testing.SshRequest.Key = this.sshKey;
 
-			this.crawler.Testing.SshRequest.Authentication = this.radioPasswordAuthentication.Checked ? TestingSshRequest.AuthenticationType.Password : TestingSshRequest.AuthenticationType.Key;
+			this.crawler.Testing.SshRequest.Authentication = this.radioPasswordAuthentication.Checked ? CrawlerTestingSshRequest.AuthenticationType.Password : CrawlerTestingSshRequest.AuthenticationType.Key;
 
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;

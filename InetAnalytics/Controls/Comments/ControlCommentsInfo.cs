@@ -65,7 +65,7 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="e">The event arguments.</param>
 		private void OnVideosClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectVideoComments();
+			this.crawler.Events.SelectVideoComments();
 		}
 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="e">The event arguments.</param>
 		private void OnUsersClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectUserComments();
+			this.crawler.Events.SelectUserComments();
 		}
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="e">The event arguments.</param>
 		private void OnPlaylistsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectPlaylistComments();
+			this.crawler.Events.SelectPlaylistComments();
 		}
 	}
 }

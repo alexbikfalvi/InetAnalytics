@@ -340,7 +340,6 @@ namespace InetCrawler.PlanetLab
 			// If the slice does not have a valid identifier, throw an exception.
 			if (!slice.Id.HasValue) throw new CrawlerException("The slice does not have a valid identifier.");
 
-
 			// Return the configuration.
 			PlConfigSlice configSlice;
 			// Try and get the configuration.

@@ -42,9 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comments\Comment.cs" />
-    <Compile Include="Comments\Comments.cs" />
-    <Compile Include="Comments\CommentsList.cs" />
+    <Compile Include="Comments\CrawlerComment.cs" />
+    <Compile Include="Comments\CrawlerComments.cs" />
+    <Compile Include="Comments\CrawlerCommentsList.cs" />
+    <Compile Include="Events\CrawlerEvents.cs" />
     <Compile Include="CrawlerException.cs" />
     <Compile Include="CrawlerNetwork.cs" />
     <Compile Include="Database\DbIdEventArgs.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="PlanetLab\PlConfigSlice.cs" />
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />
     <Compile Include="Spider\SpiderEventArgs.cs" />
-    <Compile Include="Status\Status.cs" />
+    <Compile Include="Status\CrawlerStatus.cs" />
     <Compile Include="Database\Data\DbObject.cs" />
     <Compile Include="Database\Data\DbObjectColumn.cs" />
     <Compile Include="Database\Data\DbObjectDatabase.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Database\DbField.cs" />
     <Compile Include="Database\DbCommand.cs" />
     <Compile Include="Database\DbCommandSql.cs" />
-    <Compile Include="Database\DbConfig.cs" />
     <Compile Include="Database\DbException.cs" />
     <Compile Include="Database\DbFieldException.cs" />
     <Compile Include="Database\DbDataObject.cs" />
@@ -92,7 +92,7 @@
     <Compile Include="Database\DbServer.cs" />
     <Compile Include="Database\DbServerAsyncState.cs" />
     <Compile Include="Database\DbServerSql.cs" />
-    <Compile Include="Database\DbServers.cs" />
+    <Compile Include="Database\DbConfig.cs" />
     <Compile Include="Database\DbServerStateEventArgs.cs" />
     <Compile Include="Database\DbDataRaw.cs" />
     <Compile Include="Database\DbTable.cs" />
@@ -112,9 +112,9 @@
     <Compile Include="Spider\SpiderException.cs" />
     <Compile Include="Spider\Spiders.cs" />
     <Compile Include="Spider\SpiderStandardFeeds.cs" />
-    <Compile Include="Status\StatusMessageEventArgs.cs" />
-    <Compile Include="Status\StatusHandler.cs" />
-    <Compile Include="Status\StatusMessage.cs" />
+    <Compile Include="Status\CrawlerStatusMessageEventArgs.cs" />
+    <Compile Include="Status\CrawlerStatusHandler.cs" />
+    <Compile Include="Status\CrawlerStatusMessage.cs" />
     <Compile Include="Tasks\CrawlerScheduleEventArgs.cs" />
     <Compile Include="Tasks\CrawlerTask.cs" />
     <Compile Include="Tasks\CrawlerTaskEventArgs.cs" />
@@ -127,12 +127,16 @@
     <Compile Include="Tasks\Triggers\CrawlerTriggerTask.cs" />
     <Compile Include="Tasks\Triggers\CrawlerTriggerTaskRestart.cs" />
     <Compile Include="Tasks\Triggers\CrawlerTriggerTaskStop.cs" />
-    <Compile Include="Testing\Testing.cs" />
-    <Compile Include="Testing\TestingSshRequest.cs" />
-    <Compile Include="Testing\TestingWebRequest.cs" />
-    <Compile Include="Tools\ITool.cs" />
-    <Compile Include="Tools\IToolbox.cs" />
+    <Compile Include="Testing\CrawlerTesting.cs" />
+    <Compile Include="Testing\CrawlerTestingSshRequest.cs" />
+    <Compile Include="Testing\CrawlerTestingWebRequest.cs" />
+    <Compile Include="Tools\Tool.cs" />
+    <Compile Include="Tools\Toolset.cs" />
     <Compile Include="Tools\Toolbox.cs" />
+    <Compile Include="Tools\ToolsetInfoAttribute.cs" />
+    <Compile Include="Tools\ToolDependencyAttribute.cs" />
+    <Compile Include="Tools\ToolInfo.cs" />
+    <Compile Include="Tools\ToolInfoAttribute.cs" />
     <Compile Include="YouTube\YtConfig.cs" />
   </ItemGroup>
   <ItemGroup>

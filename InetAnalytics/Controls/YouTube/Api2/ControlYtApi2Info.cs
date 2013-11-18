@@ -65,7 +65,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeVideoFeeds();
+			this.crawler.Events.SelectYouTubeVideoFeeds();
 		}
 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnUserFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeUserFeeds();
+			this.crawler.Events.SelectYouTubeUserFeeds();
 		}
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnCategoriesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeCategories();
+			this.crawler.Events.SelectYouTubeCategories();
 		}
 	}
 }

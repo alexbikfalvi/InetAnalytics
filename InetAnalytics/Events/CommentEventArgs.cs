@@ -37,7 +37,7 @@ namespace InetAnalytics.Events
 		/// Creates a new event instance.
 		/// </summary>
 		/// <param name="comment">The comment.</param>
-		public CommentEventArgs(Comment comment)
+		public CommentEventArgs(CrawlerComment comment)
 		{
 			this.Comment = comment;
 		}
@@ -45,6 +45,6 @@ namespace InetAnalytics.Events
 		/// <summary>
 		/// Gets the comment.
 		/// </summary>
-		public Comment Comment { get; private set; }
+		public CrawlerComment Comment { get; private set; }
 	}
 }

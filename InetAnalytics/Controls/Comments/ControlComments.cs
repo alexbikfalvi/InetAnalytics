@@ -33,7 +33,7 @@ namespace InetAnalytics.Controls.Comments
 	/// </summary>
 	public partial class ControlComments : ThreadSafeControl
 	{
-		private CommentsList comments;
+		private CrawlerCommentsList comments;
 
 		private readonly FormAddComment formAdd = new FormAddComment();
 		private readonly FormCommentProperties formComment = new FormCommentProperties();
@@ -58,7 +58,7 @@ namespace InetAnalytics.Controls.Comments
 		/// Initializes the control.
 		/// </summary>
 		/// <param name="comments">A crawler object.</param>
-		public void Initialize(CommentsList comments, Comment.CommentType commentType)
+		public void Initialize(CrawlerCommentsList comments, CrawlerComment.CommentType commentType)
 		{
 			this.comments = comments;
 			this.formAdd.CommentType = commentType;
@@ -71,7 +71,7 @@ namespace InetAnalytics.Controls.Comments
 			}
 
 			// Populate the comments list.
-			foreach (Comment comment in this.comments)
+			foreach (CrawlerComment comment in this.comments)
 			{
 				// Add a new list view item.
 				ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Item, comment.User, comment.Text }, 0);
@@ -114,7 +114,7 @@ namespace InetAnalytics.Controls.Comments
 			// Get the selected item.
 			ListViewItem item = this.listView.SelectedItems[0];
 			// Get the item comment.
-			Comment comment = item.Tag as Comment;
+			CrawlerComment comment = item.Tag as CrawlerComment;
 
 			try
 			{
@@ -174,7 +174,7 @@ namespace InetAnalytics.Controls.Comments
 			{
 				this.buttonRemove.Enabled = true;
 				this.buttonView.Enabled = true;
-				this.controlComment.Comment = this.listView.SelectedItems[0].Tag as Comment;
+				this.controlComment.Comment = this.listView.SelectedItems[0].Tag as CrawlerComment;
 			}
 			else
 			{
@@ -214,7 +214,7 @@ namespace InetAnalytics.Controls.Comments
 			if (this.listView.SelectedItems.Count == 0) return;
 
 			// Open a dialog with the selected comment.
-			this.formComment.ShowDialog(this, this.listView.SelectedItems[0].Tag as Comment);
+			this.formComment.ShowDialog(this, this.listView.SelectedItems[0].Tag as CrawlerComment);
 		}
 
 		/// <summary>
@@ -232,12 +232,12 @@ namespace InetAnalytics.Controls.Comments
 					int countAdded;
 					int countIgnored;
 					// Try import the comments.
-					ICollection<Comment> comments = this.comments.Import(this.openFileDialog.FileName, out countAdded, out countIgnored);
+					ICollection<CrawlerComment> comments = this.comments.Import(this.openFileDialog.FileName, out countAdded, out countIgnored);
 					// Add the comments to the list.
 					if (null != comments)
 					{
 						// Populate the comments list.
-						foreach (Comment comment in comments)
+						foreach (CrawlerComment comment in comments)
 						{
 							// Add a new list view item.
 							ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Item, comment.User, comment.Text }, 0);

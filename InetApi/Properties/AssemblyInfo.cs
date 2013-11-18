@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("InetApi.YouTube")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Internet Analytics Web API")]
+[assembly: AssemblyDescription("The web API for the Internet Analytics software.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("InetApi.YouTube")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("Alex Bikfalvi")]
+[assembly: AssemblyProduct("Internet Analytics")]
+[assembly: AssemblyCopyright("Copyright © Alex Bikfalvi 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

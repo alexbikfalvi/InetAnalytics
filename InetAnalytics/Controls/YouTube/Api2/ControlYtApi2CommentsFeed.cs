@@ -76,7 +76,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		{
 			// Save the parameters.
 			this.crawler = crawler;
-			this.request = new YouTubeRequestFeed<Comment>(this.crawler.Settings);
+			this.request = new YouTubeRequestFeed<Comment>(this.crawler.YouTube.Settings);
 		
 			// Enable the control
 			this.Enabled = true;

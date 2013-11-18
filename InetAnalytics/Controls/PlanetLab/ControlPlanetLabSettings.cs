@@ -195,12 +195,12 @@ namespace InetAnalytics.Controls.PlanetLab
 			if (null == this.crawler) return;
 
 			// Set the username.
-			this.textBoxUsername.Text = CrawlerConfig.Static.PlanetLabUsername;
+			this.textBoxUsername.Text = this.crawler.PlanetLab.Username;
 			// Set the password.
-			this.textBoxPassword.SecureText = CrawlerConfig.Static.PlanetLabPassword;
+			this.textBoxPassword.SecureText = this.crawler.PlanetLab.Password;
 			
 			// Get the account.
-			PlPerson person = this.crawler.Config.PlanetLab.DbPersons.Find(this.crawler.Config.PlanetLab.PersonId);
+			PlPerson person = this.crawler.PlanetLab.DbPersons.Find(this.crawler.PlanetLab.PersonId);
 
 			// If there exists a person.
 			if (null != person)
@@ -315,7 +315,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnSaveCredentials(PlList<PlPerson> persons, PlPerson person)
 		{
 			// Save the credentials.
-			this.crawler.Config.PlanetLab.SaveCredentials(
+			this.crawler.PlanetLab.SaveCredentials(
 				this.textBoxUsername.Text,
 				this.textBoxPassword.SecureText,
 				persons,

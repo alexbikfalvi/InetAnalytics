@@ -97,7 +97,7 @@ namespace InetAnalytics.Controls.Database
 			this.server.DatabaseChanged += this.OnDatabaseChanged;
 			this.server.TableChanged += this.OnTableChanged;
 			this.server.EventLogged += this.OnEventLogged;
-			this.crawler.Servers.ServerPrimaryChanged += this.OnPrimaryServerChanged;
+			this.crawler.Database.PrimaryServerChanged += this.OnPrimaryServerChanged;
 
 			// Initialize the contols.
 			this.OnServerChanged(this, new DbServerEventArgs(this.server));
@@ -186,7 +186,7 @@ namespace InetAnalytics.Controls.Database
 		{
 			// Update the server properties.
 			this.labelName.Text = e.Server.Name;
-			this.labelPrimary.Text = this.crawler.Servers.IsPrimary(e.Server) ? "Primary database server" : "Backup database server";
+			this.labelPrimary.Text = this.crawler.Database.IsPrimary(e.Server) ? "Primary database server" : "Backup database server";
 		}
 
 		/// <summary>
@@ -331,7 +331,7 @@ namespace InetAnalytics.Controls.Database
 			// Execute the code on the UI thread.
 			this.Invoke(() =>
 				{
-					this.buttonPrimary.Enabled = !this.crawler.Servers.IsPrimary(this.server);
+					this.buttonPrimary.Enabled = !this.crawler.Database.IsPrimary(this.server);
 
 					// Log the change.
 					this.log.Add(this.crawler.Log.Add(
@@ -363,7 +363,7 @@ namespace InetAnalytics.Controls.Database
 				MessageBoxDefaultButton.Button2))
 			{
 				// Change the primary server.
-				this.crawler.Servers.SetPrimary(this.server);
+				this.crawler.Database.SetPrimary(this.server);
 			}
 		}
 
@@ -395,7 +395,7 @@ namespace InetAnalytics.Controls.Database
 		private void OnProperties(object sender, EventArgs e)
 		{
 			// Show the properties dialog.
-			this.formProperties.ShowDialog(this, this.server, this.crawler.Servers.IsPrimary(this.server));
+			this.formProperties.ShowDialog(this, this.server, this.crawler.Database.IsPrimary(this.server));
 		}
 
 		/// <summary>

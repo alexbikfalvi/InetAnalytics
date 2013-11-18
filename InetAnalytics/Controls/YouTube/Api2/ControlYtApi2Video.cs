@@ -64,7 +64,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		public void Initialize(Crawler crawler)
 		{
 			this.crawler = crawler;
-			this.request = new YouTubeRequestVideo(this.crawler.Settings);
+			this.request = new YouTubeRequestVideo(this.crawler.YouTube.Settings);
 		}
 
 		/// <summary>
@@ -236,7 +236,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		{
 			if (null == this.controlVideo.Video) return;
 			if (null == this.controlVideo.Video.Author) return;
-			this.crawler.OpenYouTubeUser(this.controlVideo.Video.Author.UserId);
+			this.crawler.Events.OpenYouTubeUser(this.controlVideo.Video.Author.UserId);
 		}
 
 		/// <summary>
@@ -247,7 +247,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewCommentsClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
-			this.crawler.OpenYouTubeVideoComment(this.controlVideo.Video.Id);
+			this.crawler.Events.OpenYouTubeVideoComment(this.controlVideo.Video.Id);
 		}
 
 		/// <summary>
@@ -258,7 +258,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewRelatedVideosClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
-			this.crawler.OpenYouTubeRelatedVideos(this.controlVideo.Video);
+			this.crawler.Events.OpenYouTubeRelatedVideos(this.controlVideo.Video);
 		}
 
 		/// <summary>
@@ -269,7 +269,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewResponseVideosClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
-			this.crawler.OpenYouTubeResponseVideos(this.controlVideo.Video);
+			this.crawler.Events.OpenYouTubeResponseVideos(this.controlVideo.Video);
 		}
 
 		/// <summary>
@@ -280,7 +280,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnWebStatisticsClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
-			this.crawler.OpenYouTubeWebVideo(this.controlVideo.Video);
+			this.crawler.Events.OpenYouTubeWebVideo(this.controlVideo.Video);
 		}
 
 		/// <summary>
@@ -303,7 +303,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnCommentClick(object sender, EventArgs e)
 		{
 			if (null == this.controlVideo.Video) return;
-			this.crawler.CommentYouTubeVideo(this.controlVideo.Video.Id);
+			this.crawler.Events.CommentYouTubeVideo(this.controlVideo.Video.Id);
 		}
 
 		/// <summary>
@@ -313,7 +313,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewProfile(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeUser(this.controlVideo.Video.Author.UserId);
+			this.crawler.Events.OpenYouTubeUser(this.controlVideo.Video.Author.UserId);
 		}
 	}
 }

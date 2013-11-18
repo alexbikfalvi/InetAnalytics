@@ -28,8 +28,6 @@ namespace InetAnalytics.Controls.Tools
 	/// </summary>
 	public partial class ControlToolboxInfo : ThemeControl
 	{
-		private Crawler crawler;
-
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -50,40 +48,8 @@ namespace InetAnalytics.Controls.Tools
 		/// <param name="crawler">The crawler.</param>
 		public void Initialize(Crawler crawler)
 		{
-			// Set the crawler.
-			this.crawler = crawler;
-		}
-
-		// Private methods.
-
-		/// <summary>
-		/// An event handler called when the user selects the sites link.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSitesClick(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			//this.settings.Crawler.SelectPlanetLabSites();
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the nodes link.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnNodesClick(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			//this.settings.Crawler.SelectPlanetLabNodes();
-		}
-
-		/// <summary>
-		/// An event handler called when the user selects the slices link.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnSlicesClick(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			//this.settings.Crawler.SelectPlanetLabSlices();
+			// Initialize the settings.
+			this.settings.Initialize(crawler);
 		}
 	}
 }

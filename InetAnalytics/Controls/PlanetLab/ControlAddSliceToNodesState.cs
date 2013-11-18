@@ -86,11 +86,11 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Refreshes the list of PlanetLab nodes.
 		/// </summary>
-		/// <param name="config">The crawler config.</param>
-		public void Refresh(CrawlerConfig config)
+		/// <param name="crawler">The crawler configuration.</param>
+		public void Refresh(Crawler crawler)
 		{
 			// Set the nodes.
-			this.nodes = config.PlanetLab.Nodes;
+			this.nodes = crawler.PlanetLab.Nodes;
 			// Clear the filter.
 			this.textBoxFilter.Clear();
 			this.stateFilter.CheckAll();

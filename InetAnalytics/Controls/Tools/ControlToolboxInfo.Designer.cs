@@ -31,8 +31,9 @@
 			this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-			this.labelConfiguration = new System.Windows.Forms.Label();
 			this.labelDescription = new System.Windows.Forms.Label();
+			this.labelConfiguration = new System.Windows.Forms.Label();
+			this.settings = new InetAnalytics.Controls.Tools.ControlToolboxSettings();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.SuspendLayout();
@@ -68,6 +69,7 @@
 			this.tableLayoutPanel.Controls.Add(this.labelTitle, 0, 0);
 			this.tableLayoutPanel.Controls.Add(this.labelDescription, 0, 1);
 			this.tableLayoutPanel.Controls.Add(this.labelConfiguration, 0, 2);
+			this.tableLayoutPanel.Controls.Add(this.settings, 0, 3);
 			this.tableLayoutPanel.Location = new System.Drawing.Point(75, 42);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
 			this.tableLayoutPanel.RowCount = 4;
@@ -81,6 +83,17 @@
 			this.tableLayoutPanel.Size = new System.Drawing.Size(721, 554);
 			this.tableLayoutPanel.TabIndex = 5;
 			// 
+			// labelDescription
+			// 
+			this.labelDescription.AutoSize = true;
+			this.tableLayoutPanel.SetColumnSpan(this.labelDescription, 2);
+			this.labelDescription.Location = new System.Drawing.Point(3, 30);
+			this.labelDescription.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+			this.labelDescription.Name = "labelDescription";
+			this.labelDescription.Size = new System.Drawing.Size(390, 13);
+			this.labelDescription.TabIndex = 4;
+			this.labelDescription.Text = "You can use the toolbox to manage the analytics tools for Internet measurements.";
+			// 
 			// labelConfiguration
 			// 
 			this.labelConfiguration.AutoSize = true;
@@ -93,16 +106,18 @@
 			this.labelConfiguration.Text = "The following list shows the current analytics tool. You can load new tools from " +
     "an existing library.";
 			// 
-			// labelDescription
+			// settings
 			// 
-			this.labelDescription.AutoSize = true;
-			this.tableLayoutPanel.SetColumnSpan(this.labelDescription, 2);
-			this.labelDescription.Location = new System.Drawing.Point(3, 30);
-			this.labelDescription.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-			this.labelDescription.Name = "labelDescription";
-			this.labelDescription.Size = new System.Drawing.Size(390, 13);
-			this.labelDescription.TabIndex = 4;
-			this.labelDescription.Text = "You can use the toolbox to manage the analytics tools for Internet measurements.";
+			this.tableLayoutPanel.SetColumnSpan(this.settings, 2);
+			this.settings.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.settings.Enabled = false;
+			this.settings.Location = new System.Drawing.Point(3, 105);
+			this.settings.Name = "settings";
+			this.settings.Padding = new System.Windows.Forms.Padding(1);
+			this.settings.ShowBorder = true;
+			this.settings.Size = new System.Drawing.Size(715, 446);
+			this.settings.TabIndex = 12;
+			this.settings.Title = "";
 			// 
 			// ControlToolboxInfo
 			// 
@@ -130,5 +145,6 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
 		private System.Windows.Forms.Label labelConfiguration;
 		private System.Windows.Forms.Label labelDescription;
+		private ControlToolboxSettings settings;
 	}
 }

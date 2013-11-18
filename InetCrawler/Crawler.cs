@@ -17,15 +17,17 @@
  */
 
 using System;
-using System.Windows.Forms;
+using Microsoft.Win32;
+using InetCrawler.Comments;
 using InetCrawler.Database;
 using InetCrawler.PlanetLab;
+using InetCrawler.YouTube;
 using InetCrawler.Events;
 using InetCrawler.Log;
 using InetCrawler.Spider;
 using InetCrawler.Status;
 using InetCrawler.Testing;
-using Microsoft.Win32;
+
 
 namespace InetCrawler
 {
@@ -34,15 +36,17 @@ namespace InetCrawler
 	/// </summary>
 	public sealed class Crawler : IDisposable
 	{
-		private CrawlerConfig config;
-
-		private DbConfig dbConfig;
-		private PlConfig plConfig;
-		private Logger log;
-		private Status.Status status;
-		private Comments.Comments comments;
-		private Spiders spiders;
-		private Testing.Testing testing;
+		private readonly CrawlerConfig config;
+		private readonly CrawlerEvents events;
+		private readonly Logger log;
+		private readonly DbConfig dbConfig;
+		private readonly PlConfig plConfig;
+		private readonly YtConfig ytConfig;
+		private readonly CrawlerStatus status;
+		private readonly CrawlerComments comments;
+		private readonly Spiders spiders;
+		private readonly CrawlerTesting testing;
+		
 		private readonly static CrawlerNetwork network = new CrawlerNetwork();
 
 		/// <summary>
@@ -52,205 +56,63 @@ namespace InetCrawler
 		/// <param name="rootPath">The root registry path.</param>
 		public Crawler(RegistryKey rootKey, string rootPath)
 		{
-			// Read the crawler configuration
+			// Create the crawler configuration.
 			this.config = new CrawlerConfig(rootKey, rootPath);
 
-			// Create the database servers.
-			this.database = new DbConfig(this.config, rootKey, rootPath + @"\Database");
+			// Create the crawler events.
+			this.events = new CrawlerEvents();
 
 			// Create the logger.
-			this.log = new Logger(this.Config.LogFileName);
+			this.log = new Logger(this.config.LogFileName);
+
+			// Create the database servers.
+			this.dbConfig = new DbConfig(this.config, rootKey, rootPath + @"\Database");
+
+			// Create the PlanetLab configuration.
+			this.plConfig = new PlConfig(rootKey, rootPath + @"\PlanetLab");
+
+			// Create the YouTube configuration.
+			this.ytConfig = new YtConfig(this.config);
 
 			// Create the status.
-			this.status = new Status.Status();
+			this.status = new CrawlerStatus();
 
 			// Create the comments.
-			this.comments = new Comments.Comments(this.config);
+			this.comments = new CrawlerComments(this.config);
 
 			// Create the crawler spiders.
 			this.spiders = new Spiders(this);
 
 			// Create the crawler testing.
-			this.testing = new Testing.Testing(rootKey, rootPath);
+			this.testing = new CrawlerTesting(rootKey, rootPath + @"\Testing");
 		}
-
-		// Public events.
-
-		/// <summary>
-		/// An event raised when selecting a page.
-		/// </summary>
-		public event PageSelectionEventHandler PageSelected;
-
-		/// <summary>
-		/// An event raised when selecting the PlanetLab sites.
-		/// </summary>
-		public event EventHandler PlanetLabSitesSelected;
-		/// <summary>
-		/// An event raised when selecting the PlanetLab nodes.
-		/// </summary>
-		public event EventHandler PlanetLabNodesSelected;
-		/// <summary>
-		/// An event raised when selecting the PlanetLab slices.
-		/// </summary>
-		public event EventHandler PlanetLabSlicesSelected;
-
-		/// <summary>
-		/// An event raised when selecting the YouTube video feeds page.
-		/// </summary>
-		public event EventHandler YouTubeVideoFeedsSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube user feeds page.
-		/// </summary>
-		public event EventHandler YouTubeUserFeedsSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube categories page.
-		/// </summary>
-		public event EventHandler YouTubeCategoriesSelected;
-
-		/// <summary>
-		/// An event raised when selecting the YouTube video page.
-		/// </summary>
-		public event EventHandler YouTubeVideoSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube video comments page.
-		/// </summary>
-		public event EventHandler YouTubeVideoCommentsSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube search feed page.
-		/// </summary>
-		public event EventHandler YouTubeSearchFeedSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube standard feed page.
-		/// </summary>
-		public event EventHandler YouTubeStandardFeedSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube related videos feed page.
-		/// </summary>
-		public event EventHandler YouTubeRelatedVideosFeedSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube response videos feed page.
-		/// </summary>
-		public event EventHandler YouTubeResponseVideosFeedSelected;
-
-		/// <summary>
-		/// An event raised when selecting the YouTube user profile page.
-		/// </summary>
-		public event EventHandler YouTubeUserSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube user uploads page.
-		/// </summary>
-		public event EventHandler YouTubeUploadsFeedSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube user favorites page.
-		/// </summary>
-		public event EventHandler YouTubeFavoritesFeedSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube user playlists page.
-		/// </summary>
-		public event EventHandler YouTubePlaylistsFeedSelected;
-		/// <summary>
-		/// An event raised when selecting the YouTube user playlist page.
-		/// </summary>
-		public event EventHandler YouTubePlaylistFeedSelected;
-
-		/// <summary>
-		/// An event raised when selecting the YouTube videos web page.
-		/// </summary>
-		public event EventHandler YouTubeWebVideosSelected;
-
-		/// <summary>
-		/// An event raised when opening a YouTube APIv2 video.
-		/// </summary>
-		public event VideoEventHandler YouTubeApiV2VideoOpened;
-		/// <summary>
-		/// An event raised when opening a YouTube APIv2 video comment.
-		/// </summary>
-		public event StringEventHandler YouTubeApiV2VideoCommentOpened;
-		/// <summary>
-		/// An event raised when opening a YouTube APIv2 user.
-		/// </summary>
-		public event StringEventHandler YouTubeApiV2UserOpened;
-		/// <summary>
-		/// An event raised when opening a YouTube APIv2 related videos.
-		/// </summary>
-		public event VideoEventHandler YouTubeApiV2RelatedVideosOpened;
-		/// <summary>
-		/// An event raised when opening a YouTube APIv2 response videos. 
-		/// </summary>
-		public event VideoEventHandler YouTubeApiV2ResponseVideosOpened;
-
-		/// <summary>
-		/// An event raised when opening the YouTube APIv2 user uploads.
-		/// </summary>
-		public event ProfileEventHandler YouTubeApiV2UserUploadsOpened;
-		/// <summary>
-		/// An event raisd when opening the YouTube APIv2 user favorites.
-		/// </summary>
-		public event ProfileEventHandler YouTubeApiV2UserFavoritesOpened;
-		/// <summary>
-		/// An event raised when opening the YouTube APIv2 user playlists.
-		/// </summary>
-		public event ProfileEventHandler YouTubeApiV2UserPlaylistsOpened;
-
-		/// <summary>
-		/// An event raised when opening a YouTube APIv2 playlist.
-		/// </summary>
-		public event StringEventHandler YouTubeApiV2PlaylistOpened;
-
-		/// <summary>
-		/// An event raised when opening a YouTube web video.
-		/// </summary>
-		public event VideoEventHandler YouTubeWebVideoOpened;
-
-		/// <summary>
-		/// An event raised when the user selects the video comments.
-		/// </summary>
-		public event EventHandler CommentsYouTubeVideosSelected;
-		/// <summary>
-		/// An event raised when the user selects the user comments.
-		/// </summary>
-		public event EventHandler CommentsYouTubeUsersSelected;
-		/// <summary>
-		/// An event raised when the user selects the playlist comments.
-		/// </summary>
-		public event EventHandler CommentsYouTubePlaylistsSelected;
-
-		/// <summary>
-		/// An event raised when commenting a YouTube video.
-		/// </summary>
-		public event StringEventHandler YouTubeVideoCommented;
-		/// <summary>
-		/// An event raised when commenting a YouTube user.
-		/// </summary>
-		public event StringEventHandler YouTubeUserCommented;
-		/// <summary>
-		/// An event raised when commenting a YouTube playlist.
-		/// </summary>
-		public event StringEventHandler YouTubePlaylistCommented;
-
-		/// <summary>
-		/// An event raised when selecting the standard feeds spider.
-		/// </summary>
-		public event EventHandler SpiderStandardFeedsSelected;
 
 		// Public properties.
 
 		/// <summary>
-		/// Returns the crawler configuration.
+		/// Gets the crawler configuration.
 		/// </summary>
 		public CrawlerConfig Config { get { return this.config; } }
+		/// <summary>
+		/// Gets the crawler events.
+		/// </summary>
+		public CrawlerEvents Events { get { return this.events; } }
+		/// <summary>
+		/// Gets the database configuration.
+		/// </summary>
+		public DbConfig Database { get { return this.dbConfig; } }
+		/// <summary>
+		/// Gets the PlanetLab configuration.
+		/// </summary>
+		public PlConfig PlanetLab { get { return this.plConfig; } }
+		/// <summary>
+		/// Gets the YouTube configuration.
+		/// </summary>
+		public YtConfig YouTube { get { return this.ytConfig; } }
 		/// <summary>
 		/// Returns the crawler spiders.
 		/// </summary>
 		public Spiders Spiders { get { return this.spiders; } }
-		/// <summary>
-		/// Returns the YouTube settings.
-		/// </summary>
-		public YouTubeSettings Settings { get { return this.settings; } }
-		/// <summary>
-		/// Returns the YouTube categories.
-		/// </summary>
-		public YouTubeCategories Categories { get { return this.categories; } }
 		/// <summary>
 		/// Returns the crawler log.
 		/// </summary>
@@ -258,19 +120,15 @@ namespace InetCrawler
 		/// <summary>
 		/// Returns the crawler status.
 		/// </summary>
-		public Status.Status Status { get { return this.status; } }
+		public CrawlerStatus Status { get { return this.status; } }
 		/// <summary>
 		/// Returns the crawler comments.
 		/// </summary>
-		public Comments.Comments Comments { get { return this.comments; } }
-		/// <summary>
-		/// Returns the database servers.
-		/// </summary>
-		public DbConfig Servers { get { return this.servers; } }
+		public CrawlerComments Comments { get { return this.comments; } }
 		/// <summary>
 		/// Returns the crawler testing configuration.
 		/// </summary>
-		public Testing.Testing Testing { get { return this.testing; } }
+		public CrawlerTesting Testing { get { return this.testing; } }
 		/// <summary>
 		/// Gets the network information.
 		/// </summary>
@@ -289,308 +147,6 @@ namespace InetCrawler
 			GC.SuppressFinalize(this);
 		}
 
-		/// <summary>
-		/// Raises a page selection event.
-		/// </summary>
-		/// <param name="node">The tree node corresponding to the page.</param>
-		public void SelectPage(TreeNode node)
-		{
-			if (null != this.PageSelected) this.PageSelected(this, new PageSelectionEventArgs(node));
-		}
-		
-		/// <summary>
-		/// Raises a PlanetLab sites selected event.
-		/// </summary>
-		public void SelectPlanetLabSites()
-		{
-			if (null != this.PlanetLabSitesSelected) this.PlanetLabSitesSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a PlanetLab nodes selected event.
-		/// </summary>
-		public void SelectPlanetLabNodes()
-		{
-			if (null != this.PlanetLabNodesSelected) this.PlanetLabNodesSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a PlanetLab slices selected event.
-		/// </summary>
-		public void SelectPlanetLabSlices()
-		{
-			if (null != this.PlanetLabSlicesSelected) this.PlanetLabSlicesSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube video feeds selected event.
-		/// </summary>
-		public void SelectYouTubeVideoFeeds()
-		{
-			if (null != this.YouTubeVideoFeedsSelected) this.YouTubeVideoFeedsSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube user feeds selected event.
-		/// </summary>
-		public void SelectYouTubeUserFeeds()
-		{
-			if (null != this.YouTubeUserFeedsSelected) this.YouTubeUserFeedsSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube categories selected event.
-		/// </summary>
-		public void SelectYouTubeCategories()
-		{
-			if (null != this.YouTubeCategoriesSelected) this.YouTubeCategoriesSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube video selected event.
-		/// </summary>
-		public void SelectYouTubeVideo()
-		{
-			if (null != this.YouTubeVideoSelected) this.YouTubeVideoSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube video comments selected event.
-		/// </summary>
-		public void SelectYouTubeVideoComments()
-		{
-			if (null != this.YouTubeVideoCommentsSelected) this.YouTubeVideoCommentsSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube search feed selected event.
-		/// </summary>
-		public void SelectYouTubeSearchFeed()
-		{
-			if (null != this.YouTubeSearchFeedSelected) this.YouTubeSearchFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube standard feed selected event.
-		/// </summary>
-		public void SelectYouTubeStandardFeed()
-		{
-			if (null != this.YouTubeStandardFeedSelected) this.YouTubeStandardFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube related videos feed selected event.
-		/// </summary>
-		public void SelectYouTubeRelatedVideosFeed()
-		{
-			if (null != this.YouTubeRelatedVideosFeedSelected) this.YouTubeRelatedVideosFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube response videos feed selected event.
-		/// </summary>
-		public void SelectYouTubeResponseVideosFeed()
-		{
-			if (null != this.YouTubeResponseVideosFeedSelected) this.YouTubeResponseVideosFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the YouTube user profile selected event.
-		/// </summary>
-		public void SelectYouTubeUser()
-		{
-			if (null != this.YouTubeUserSelected) this.YouTubeUserSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the YouTube user uploads selected event.
-		/// </summary>
-		public void SelectYouTubeUploadsFeed()
-		{
-			if (null != this.YouTubeUploadsFeedSelected) this.YouTubeUploadsFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the YouTube user favorites selected event.
-		/// </summary>
-		public void SelectYouTubeFavoriesFeed()
-		{
-			if (null != this.YouTubeFavoritesFeedSelected) this.YouTubeFavoritesFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the YouTube playlists feed selected event.
-		/// </summary>
-		public void SelectYouTubePlaylistsFeed()
-		{
-			if (null != this.YouTubePlaylistsFeedSelected) this.YouTubePlaylistsFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the YouTube playlist feed selected event.
-		/// </summary>
-		public void SelectYouTubePlaylistFeed()
-		{
-			if (null != this.YouTubePlaylistFeedSelected) this.YouTubePlaylistFeedSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the YouTube web video selected event.
-		/// </summary>
-		public void SelectYouTubeWebVideos()
-		{
-			if (null != this.YouTubeWebVideosSelected) this.YouTubeWebVideosSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a YouTube open video event.
-		/// </summary>
-		/// <param name="video">The video.</param>
-		public void OpenYouTubeVideo(Video video)
-		{
-			if (null != this.YouTubeApiV2VideoOpened) this.YouTubeApiV2VideoOpened(this, new VideoEventArgs(video));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open video comment event.
-		/// </summary>
-		/// <param name="video">The video.</param>
-		public void OpenYouTubeVideoComment(string video)
-		{
-			if (null != this.YouTubeApiV2VideoCommentOpened) this.YouTubeApiV2VideoCommentOpened(this, new StringEventArgs(video));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open user event.
-		/// </summary>
-		/// <param name="user">The user.</param>
-		public void OpenYouTubeUser(string user)
-		{
-			if (null != this.YouTubeApiV2UserOpened) this.YouTubeApiV2UserOpened(this, new StringEventArgs(user));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open related videos event.
-		/// </summary>
-		/// <param name="video">The video.</param>
-		public void OpenYouTubeRelatedVideos(Video video)
-		{
-			if (null != this.YouTubeApiV2RelatedVideosOpened) this.YouTubeApiV2RelatedVideosOpened(this, new VideoEventArgs(video));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open response videos event.
-		/// </summary>
-		/// <param name="video">The video.</param>
-		public void OpenYouTubeResponseVideos(Video video)
-		{
-			if (null != this.YouTubeApiV2ResponseVideosOpened) this.YouTubeApiV2ResponseVideosOpened(this, new VideoEventArgs(video));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open user uploads event.
-		/// </summary>
-		/// <param name="profile">The user profile.</param>
-		public void OpenYouTubeUserUploads(Profile profile)
-		{
-			if (null != this.YouTubeApiV2UserUploadsOpened) this.YouTubeApiV2UserUploadsOpened(this, new ProfileEventArgs(profile));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open user favorites event.
-		/// </summary>
-		/// <param name="profile">The user profile.</param>
-		public void OpenYouTubeUserFavorites(Profile profile)
-		{
-			if (null != this.YouTubeApiV2UserFavoritesOpened) this.YouTubeApiV2UserFavoritesOpened(this, new ProfileEventArgs(profile));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open user playlists event.
-		/// </summary>
-		/// <param name="profile">The user profile.</param>
-		public void OpenYouTubeUserPlaylists(Profile profile)
-		{
-			if (null != this.YouTubeApiV2UserPlaylistsOpened) this.YouTubeApiV2UserPlaylistsOpened(this, new ProfileEventArgs(profile));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open playlist event.
-		/// </summary>
-		/// <param name="playlist">The playlist.</param>
-		public void OpenYouTubePlaylist(string playlist)
-		{
-			if (null != this.YouTubeApiV2PlaylistOpened) this.YouTubeApiV2PlaylistOpened(this, new StringEventArgs(playlist));
-		}
-
-		/// <summary>
-		/// Raises a YouTube open web video.
-		/// </summary>
-		/// <param name="video">The video.</param>
-		public void OpenYouTubeWebVideo(Video video)
-		{
-			if (null != this.YouTubeWebVideoOpened) this.YouTubeWebVideoOpened(this, new VideoEventArgs(video));
-		}
-
-		/// <summary>
-		/// Raises the video comments selected event.
-		/// </summary>
-		public void SelectVideoComments()
-		{
-			if (null != this.CommentsYouTubeVideosSelected) this.CommentsYouTubeVideosSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the user comments selected event.
-		/// </summary>
-		public void SelectUserComments()
-		{
-			if (null != this.CommentsYouTubeUsersSelected) this.CommentsYouTubeUsersSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises the playlist comments selected event.
-		/// </summary>
-		public void SelectPlaylistComments()
-		{
-			if (null != this.CommentsYouTubePlaylistsSelected) this.CommentsYouTubePlaylistsSelected(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Raises a comment YouTube video event.
-		/// </summary>
-		/// <param name="video">The video.</param>
-		public void CommentYouTubeVideo(string video)
-		{
-			if (null != this.YouTubeVideoCommented) this.YouTubeVideoCommented(this, new StringEventArgs(video));
-		}
-
-		/// <summary>
-		/// Raises a comment YouTube user event.
-		/// </summary>
-		/// <param name="user">The user.</param>
-		public void CommentYouTubeUser(string user)
-		{
-			if (null != this.YouTubeUserCommented) this.YouTubeUserCommented(this, new StringEventArgs(user));
-		}
-
-		/// <summary>
-		/// Raises a comment YouTube playlist event.
-		/// </summary>
-		/// <param name="playlist">The playlist.</param>
-		public void CommentYouTubePlaylist(string playlist)
-		{
-			if (null != this.YouTubePlaylistCommented) this.YouTubePlaylistCommented(this, new StringEventArgs(playlist));
-		}
-
-		/// <summary>
-		/// Raises the standard feeds spider selected event.
-		/// </summary>
-		public void SelectStandardFeedsSpider()
-		{
-			if (null != this.SpiderStandardFeedsSelected) this.SpiderStandardFeedsSelected(this, EventArgs.Empty);
-		}
-
 		// Private methods.
 
 		/// <summary>
@@ -602,18 +158,20 @@ namespace InetCrawler
 			// Dispose the current objects.
 			if (disposing)
 			{
-				// Close the database servers.
-				this.servers.Dispose();
-				// Close the log.
-				this.log.Dispose();
+				// Close the database configuration.
+				this.dbConfig.Dispose();
+				// Close the PlanetLab configuration.
+				this.plConfig.Dispose();
+				// Close the YouTube configuration.
+				this.ytConfig.Dispose();
 				// Close the status.
 				this.status.Dispose();
 				// Close the comments.
 				this.comments.Dispose();
-				// Close the YouTube categories.
-				this.categories.Dispose();
 				// Close the spiders.
 				this.spiders.Dispose();
+				// Close the log.
+				this.log.Dispose();
 				// Close the configuration.
 				this.config.Dispose();
 			}

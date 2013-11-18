@@ -35,7 +35,7 @@ namespace InetAnalytics.Controls.Comments
 	/// </summary>
 	public partial class ControlAddComment : ThreadSafeControl
 	{
-		private Comment.CommentType type;
+		private CrawlerComment.CommentType type;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -50,7 +50,7 @@ namespace InetAnalytics.Controls.Comments
 		/// </summary>
 		public event EventHandler InputChanged;
 
-		public Comment.CommentType Type
+		public CrawlerComment.CommentType Type
 		{
 			get { return this.type; }
 			set
@@ -58,15 +58,15 @@ namespace InetAnalytics.Controls.Comments
 				this.type = value;
 				switch (value)
 				{
-					case Comment.CommentType.Video:
+					case CrawlerComment.CommentType.Video:
 						this.labelTitle.Text = "Add video comment";
 						this.labelItem.Text = "&Video:";
 						break;
-					case Comment.CommentType.User:
+					case CrawlerComment.CommentType.User:
 						this.labelTitle.Text = "Add user comment";
 						this.labelItem.Text = "&User:";
 						break;
-					case Comment.CommentType.Playlist:
+					case CrawlerComment.CommentType.Playlist:
 						this.labelTitle.Text = "Add playlist comment";
 						this.labelItem.Text = "&Playlist:";
 						break;

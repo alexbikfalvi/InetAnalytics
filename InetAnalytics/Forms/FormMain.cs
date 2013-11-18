@@ -31,6 +31,7 @@ using Microsoft.Win32;
 using InetAnalytics.Controls;
 using InetAnalytics.Controls.Comments;
 using InetAnalytics.Controls.Database;
+using InetAnalytics.Controls.Tools;
 using InetAnalytics.Controls.Log;
 using InetAnalytics.Controls.Spiders;
 using InetAnalytics.Controls.PlanetLab;
@@ -115,6 +116,8 @@ namespace InetAnalytics.Forms
 
 		private readonly ControlServers controlDatabaseServers = new ControlServers();
 
+		private readonly ControlToolboxInfo controlToolboxInfo = new ControlToolboxInfo();
+
 		private readonly ControlSpiderInfo controlSpiderInfo = new ControlSpiderInfo();
 		private readonly ControlSpiderStandardFeeds controlSpiderStandardFeeds = new ControlSpiderStandardFeeds();
 
@@ -155,6 +158,10 @@ namespace InetAnalytics.Forms
 		// Delegates.
 		private readonly EventHandler actionNetworkStatusChanged;
 		private readonly EventHandler actionNetworkStatusChecked;
+
+		// Status.
+
+		private CrawlerStatus.StatusType status = CrawlerStatus.StatusType.Unknown;
 
 		/// <summary>
 		/// Constructor for main form window.
@@ -351,6 +358,7 @@ namespace InetAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabNodes);
 			this.splitContainer.Panel2.Controls.Add(this.controlPlanetLabSlices);
 			this.splitContainer.Panel2.Controls.Add(this.controlDatabaseServers);
+			this.splitContainer.Panel2.Controls.Add(this.controlToolboxInfo);
 			this.splitContainer.Panel2.Controls.Add(this.controlSpiderInfo);
 			this.splitContainer.Panel2.Controls.Add(this.controlSpiderStandardFeeds);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi2);
@@ -387,6 +395,8 @@ namespace InetAnalytics.Forms
 			this.treeNodePlanetLabSlices.Tag = this.controlPlanetLabSlices;
 
 			this.treeNodeDatabaseServers.Tag = this.controlDatabaseServers;
+
+			this.treeNodeToolboxInfo.Tag = this.controlToolboxInfo;
 
 			this.treeNodeSpidersLocal.Tag = this.controlSpiderInfo;
 			this.treeNodeSpiderStandardFeeds.Tag = this.controlSpiderStandardFeeds;
@@ -445,51 +455,51 @@ namespace InetAnalytics.Forms
 
 			// Set the crawler event handlers.
 
-			this.crawler.PlanetLabSitesSelected += this.OnPlanetLabSitesSelected;
-			this.crawler.PlanetLabNodesSelected += this.OnPlanetLabNodesSelected;
-			this.crawler.PlanetLabSlicesSelected += this.OnPlanetLabSlicesSelected;
+			this.crawler.Events.PlanetLabSitesSelected += this.OnPlanetLabSitesSelected;
+			this.crawler.Events.PlanetLabNodesSelected += this.OnPlanetLabNodesSelected;
+			this.crawler.Events.PlanetLabSlicesSelected += this.OnPlanetLabSlicesSelected;
 
-			this.crawler.YouTubeVideoFeedsSelected += this.OnYouTubeApiV2VideosFeedsInfoSelected;
-			this.crawler.YouTubeUserFeedsSelected += this.OnYouTubeApiV2UserFeedsInfoSelected;
-			this.crawler.YouTubeCategoriesSelected += this.OnYouTubeApi2VideoCategoriesSelected;
+			this.crawler.Events.YouTubeVideoFeedsSelected += this.OnYouTubeApiV2VideosFeedsInfoSelected;
+			this.crawler.Events.YouTubeUserFeedsSelected += this.OnYouTubeApiV2UserFeedsInfoSelected;
+			this.crawler.Events.YouTubeCategoriesSelected += this.OnYouTubeApi2VideoCategoriesSelected;
 
-			this.crawler.YouTubeVideoSelected += this.OnYouTubeApiV2VideoSelected;
-			this.crawler.YouTubeVideoCommentsSelected += this.OnYouTubeApiV2VideoCommentsSelected;
-			this.crawler.YouTubeSearchFeedSelected += this.OnYouTubeApiV2SearchFeedSelected;
-			this.crawler.YouTubeStandardFeedSelected += this.OnYouTubeApiV2StandardFeedSelected;
-			this.crawler.YouTubeRelatedVideosFeedSelected += this.OnYouTubeApiV2RelatedVideosFeedSelected;
-			this.crawler.YouTubeResponseVideosFeedSelected += this.OnYouTubeApiV2ResponseVideosFeedSelected;
+			this.crawler.Events.YouTubeVideoSelected += this.OnYouTubeApiV2VideoSelected;
+			this.crawler.Events.YouTubeVideoCommentsSelected += this.OnYouTubeApiV2VideoCommentsSelected;
+			this.crawler.Events.YouTubeSearchFeedSelected += this.OnYouTubeApiV2SearchFeedSelected;
+			this.crawler.Events.YouTubeStandardFeedSelected += this.OnYouTubeApiV2StandardFeedSelected;
+			this.crawler.Events.YouTubeRelatedVideosFeedSelected += this.OnYouTubeApiV2RelatedVideosFeedSelected;
+			this.crawler.Events.YouTubeResponseVideosFeedSelected += this.OnYouTubeApiV2ResponseVideosFeedSelected;
 
-			this.crawler.YouTubeUserSelected += this.OnYouTubeApiV2UserSelected;
-			this.crawler.YouTubeUploadsFeedSelected += this.OnYouTubeApiV2UserUploadsSelected;
-			this.crawler.YouTubeFavoritesFeedSelected += this.OnYouTubeApiV2UserFavoritesSelected;
-			this.crawler.YouTubePlaylistsFeedSelected += this.OnYouTubeApiV2UserPlaylistsSelected;
-			this.crawler.YouTubePlaylistFeedSelected += this.OnYouTubeApiV2PlaylistVideosSelected;
+			this.crawler.Events.YouTubeUserSelected += this.OnYouTubeApiV2UserSelected;
+			this.crawler.Events.YouTubeUploadsFeedSelected += this.OnYouTubeApiV2UserUploadsSelected;
+			this.crawler.Events.YouTubeFavoritesFeedSelected += this.OnYouTubeApiV2UserFavoritesSelected;
+			this.crawler.Events.YouTubePlaylistsFeedSelected += this.OnYouTubeApiV2UserPlaylistsSelected;
+			this.crawler.Events.YouTubePlaylistFeedSelected += this.OnYouTubeApiV2PlaylistVideosSelected;
 
-			this.crawler.YouTubeApiV2VideoOpened += this.OnYouTubeApiV2VideoOpened;
-			this.crawler.YouTubeApiV2VideoCommentOpened += this.OnYouTubeApiV2VideoCommentOpened;
-			this.crawler.YouTubeApiV2RelatedVideosOpened += this.OnYouTubeApiV2RelatedVideosOpened;
-			this.crawler.YouTubeApiV2ResponseVideosOpened += this.OnYouTubeApiV2ResponseVideosOpened;
+			this.crawler.Events.YouTubeApiV2VideoOpened += this.OnYouTubeApiV2VideoOpened;
+			this.crawler.Events.YouTubeApiV2VideoCommentOpened += this.OnYouTubeApiV2VideoCommentOpened;
+			this.crawler.Events.YouTubeApiV2RelatedVideosOpened += this.OnYouTubeApiV2RelatedVideosOpened;
+			this.crawler.Events.YouTubeApiV2ResponseVideosOpened += this.OnYouTubeApiV2ResponseVideosOpened;
 
-			this.crawler.YouTubeApiV2UserOpened += this.OnYouTubeApiV2AuthorOpened;
-			this.crawler.YouTubeApiV2UserUploadsOpened += this.OnYouTubeApiV2UserUploadsOpened;
-			this.crawler.YouTubeApiV2UserFavoritesOpened += this.OnYouTubeApiV2UserFavoritesOpened;
-			this.crawler.YouTubeApiV2UserPlaylistsOpened += this.OnYouTubeApiV2UserPlaylistsOpened;
+			this.crawler.Events.YouTubeApiV2UserOpened += this.OnYouTubeApiV2AuthorOpened;
+			this.crawler.Events.YouTubeApiV2UserUploadsOpened += this.OnYouTubeApiV2UserUploadsOpened;
+			this.crawler.Events.YouTubeApiV2UserFavoritesOpened += this.OnYouTubeApiV2UserFavoritesOpened;
+			this.crawler.Events.YouTubeApiV2UserPlaylistsOpened += this.OnYouTubeApiV2UserPlaylistsOpened;
 
-			this.crawler.YouTubeApiV2PlaylistOpened += this.OnYouTubeApiV2PlaylistOpened;
+			this.crawler.Events.YouTubeApiV2PlaylistOpened += this.OnYouTubeApiV2PlaylistOpened;
 
-			this.crawler.YouTubeWebVideosSelected += this.OnYouTubeWebVideosSelected;
-			this.crawler.YouTubeWebVideoOpened += this.OnYouTubeWebVideoOpened;
+			this.crawler.Events.YouTubeWebVideosSelected += this.OnYouTubeWebVideosSelected;
+			this.crawler.Events.YouTubeWebVideoOpened += this.OnYouTubeWebVideoOpened;
 
-			this.crawler.CommentsYouTubeVideosSelected += this.OnYouTubeCommentsVideosSelected;
-			this.crawler.CommentsYouTubeUsersSelected += this.OnYouTubeCommentsUsersSelected;
-			this.crawler.CommentsYouTubePlaylistsSelected += this.OnYouTubeCommentsPlaylistsSelected;
+			this.crawler.Events.CommentsYouTubeVideosSelected += this.OnYouTubeCommentsVideosSelected;
+			this.crawler.Events.CommentsYouTubeUsersSelected += this.OnYouTubeCommentsUsersSelected;
+			this.crawler.Events.CommentsYouTubePlaylistsSelected += this.OnYouTubeCommentsPlaylistsSelected;
 
-			this.crawler.YouTubeVideoCommented += this.OnYouTubeVideoCommented;
-			this.crawler.YouTubeUserCommented += this.OnYouTubeUserCommented;
-			this.crawler.YouTubePlaylistCommented += this.OnYouTubePlaylistCommented;
+			this.crawler.Events.YouTubeVideoCommented += this.OnYouTubeVideoCommented;
+			this.crawler.Events.YouTubeUserCommented += this.OnYouTubeUserCommented;
+			this.crawler.Events.YouTubePlaylistCommented += this.OnYouTubePlaylistCommented;
 
-			this.crawler.SpiderStandardFeedsSelected += this.OnSpiderStandardFeedsSelected;
+			this.crawler.Events.SpiderStandardFeedsSelected += this.OnSpiderStandardFeedsSelected;
 
 			// Initialize the controls.
 			this.controlPlanetLab.Initialize(this.crawler);
@@ -497,6 +507,7 @@ namespace InetAnalytics.Forms
 			this.controlPlanetLabNodes.Initialize(this.crawler);
 			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls, this.imageList);
 			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
+			this.controlToolboxInfo.Initialize(this.crawler);
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
 			this.controlYtApi2.Initialize(this.crawler);
 			this.controlYtApi2VideosFeedsInfo.Initialize(this.crawler);
@@ -519,9 +530,9 @@ namespace InetAnalytics.Forms
 			this.controlTestingSshRequest.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
-			this.controlCommentsVideos.Initialize(this.crawler.Comments.Videos, InetCrawler.Comments.Comment.CommentType.Video);
-			this.controlCommentsUsers.Initialize(this.crawler.Comments.Users, InetCrawler.Comments.Comment.CommentType.User);
-			this.controlCommentsPlaylists.Initialize(this.crawler.Comments.Playlists, InetCrawler.Comments.Comment.CommentType.Playlist);
+			this.controlCommentsVideos.Initialize(this.crawler.Comments.Videos, InetCrawler.Comments.CrawlerComment.CommentType.Video);
+			this.controlCommentsUsers.Initialize(this.crawler.Comments.Users, InetCrawler.Comments.CrawlerComment.CommentType.User);
+			this.controlCommentsPlaylists.Initialize(this.crawler.Comments.Playlists, InetCrawler.Comments.CrawlerComment.CommentType.Playlist);
 
 			// Set the selected control.
 			this.controlPanel = this.labelNotAvailable;
@@ -631,14 +642,38 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnStatusMessage(object sender, StatusMessageEventArgs e)
+		private void OnStatusMessage(object sender, CrawlerStatusMessageEventArgs e)
 		{
-			this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
-			this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
-			this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
-			this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 			if (e.Message.HasValue)
 			{
+				// If the status type has changed.
+				if (e.Message.Value.Type != this.status)
+				{
+					// Update the status.
+					switch (e.Message.Value.Type)
+					{
+						case CrawlerStatus.StatusType.Ready:
+							this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
+							this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+							this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+							this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+							break;
+						case CrawlerStatus.StatusType.Normal:
+							this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
+							this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+							this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+							this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+							break;
+						case CrawlerStatus.StatusType.Busy:
+							this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripBusyBackground;
+							this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
+							this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
+							this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
+							break;
+					}
+					// Set the new status.
+					this.status = e.Message.Value.Type;
+				}
 				this.statusLabelLeft.Image = e.Message.Value.LeftImage;
 				this.statusLabelLeft.Text = e.Message.Value.LeftText;
 				this.statusLabelRight.Image = e.Message.Value.RightImage;
@@ -646,8 +681,12 @@ namespace InetAnalytics.Forms
 			}
 			else
 			{
+				this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
+				this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+				this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+				this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 				this.statusLabelLeft.Image = null;
-				this.statusLabelLeft.Text = null;
+				this.statusLabelLeft.Text = "Ready";
 				this.statusLabelRight.Image = null;
 				this.statusLabelRight.Text = null;
 			}

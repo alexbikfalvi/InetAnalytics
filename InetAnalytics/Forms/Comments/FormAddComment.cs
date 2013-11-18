@@ -30,7 +30,7 @@ namespace InetAnalytics.Forms.Comments
 	/// </summary>
 	public partial class FormAddComment : Form
 	{
-		private Comment.CommentType type;
+		private CrawlerComment.CommentType type;
 
 		/// <summary>
 		/// Creates a new form instance.
@@ -46,16 +46,16 @@ namespace InetAnalytics.Forms.Comments
 		/// <summary>
 		/// Gets or sets the comment type.
 		/// </summary>
-		public Comment.CommentType CommentType
+		public CrawlerComment.CommentType CommentType
 		{
 			get { return this.type; }
 			set
 			{
 				switch (value)
 				{
-					case Comment.CommentType.Video: this.Text = "Add Video Comment"; break;
-					case Comment.CommentType.User: this.Text = "Add User Comment"; break;
-					case Comment.CommentType.Playlist: this.Text = "Add Playlist Comment"; break;
+					case CrawlerComment.CommentType.Video: this.Text = "Add Video Comment"; break;
+					case CrawlerComment.CommentType.User: this.Text = "Add User Comment"; break;
+					case CrawlerComment.CommentType.Playlist: this.Text = "Add Playlist Comment"; break;
 				}
 				this.control.Type = value;
 				this.type = value;
@@ -92,7 +92,7 @@ namespace InetAnalytics.Forms.Comments
 		{
 			// Raise the add event.
 			if (this.CommentAdded != null) this.CommentAdded(this, new CommentEventArgs(
-				new Comment(this.CommentType, DateTime.Now, this.control.Item, this.control.User, this.control.Text)));
+				new CrawlerComment(this.CommentType, DateTime.Now, this.control.Item, this.control.User, this.control.Text)));
 			// Close the dialog.
 			this.Close();
 		}

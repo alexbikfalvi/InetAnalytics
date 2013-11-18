@@ -25,17 +25,17 @@ namespace InetCrawler.Testing
 	/// <summary>
 	/// A class that represents the crawler testing parameters.
 	/// </summary>
-	public sealed class Testing
+	public sealed class CrawlerTesting
 	{
 		/// <summary>
 		/// Creates a new testing instance.
 		/// </summary>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="rootPath">The root registry path.</param>
-		public Testing(RegistryKey rootKey, string rootPath)
+		public CrawlerTesting(RegistryKey rootKey, string rootPath)
 		{
-			this.WebRequest = new TestingWebRequest(@"{0}\{1}\Testing\WebRequest".FormatWith(rootKey.Name, rootPath));
-			this.SshRequest = new TestingSshRequest(@"{0}\{1}\Testing\SshRequest".FormatWith(rootKey.Name, rootPath));
+			this.WebRequest = new CrawlerTestingWebRequest(@"{0}\{1}\WebRequest".FormatWith(rootKey.Name, rootPath));
+			this.SshRequest = new CrawlerTestingSshRequest(@"{0}\{1}\SshRequest".FormatWith(rootKey.Name, rootPath));
 		}
 
 		// Public properties.
@@ -43,10 +43,10 @@ namespace InetCrawler.Testing
 		/// <summary>
 		/// Gets the testing web request configuration.
 		/// </summary>
-		public TestingWebRequest WebRequest { get; private set; }
+		public CrawlerTestingWebRequest WebRequest { get; private set; }
 		/// <summary>
 		/// Gets the testing SSH request configuration.
 		/// </summary>
-		public TestingSshRequest SshRequest { get; private set; }
+		public CrawlerTestingSshRequest SshRequest { get; private set; }
 	}
 }

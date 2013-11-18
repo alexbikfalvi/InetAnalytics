@@ -82,8 +82,8 @@ namespace InetCrawler
 			public string PlanetLabLocalSlicesFileName { get; internal set; }
 		}
 
-		private static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
-		private static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
+		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
+		internal static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
 
 		private RegistryKey rootKey;
 		private string rootPath;
@@ -109,11 +109,6 @@ namespace InetCrawler
 			this.rootPath = rootPath;
 			this.root = @"{0}\{1}".FormatWith(this.rootKey.Name, this.rootPath);
 
-			// Create the database configuration.
-			this.dbConfig = new DbConfig(this.rootKey, this.rootPath + @"\Database");
-
-			// Create the PlanetLab configuration.
-			this.plConfig = new PlConfig(this.rootKey, this.rootPath + @"\PlanetLab");
 
 			// Initialize the static configuration.
 			CrawlerConfig.Static.YouTubeUsername = this.YouTubeUsername;
@@ -129,9 +124,6 @@ namespace InetCrawler
 			CrawlerConfig.Static.ConsoleSideMenuVisibleItems = this.ConsoleSideMenuVisibleItems;
 			CrawlerConfig.Static.ConsoleSideMenuSelectedItem = this.ConsoleSideMenuSelectedItem;
 			CrawlerConfig.Static.ConsoleSideMenuSelectedNode = this.ConsoleSideMenuSelectedNode;
-			CrawlerConfig.Static.PlanetLabUsername = this.PlanetLab.Username;
-			CrawlerConfig.Static.PlanetLabPassword = this.PlanetLab.Password;
-			CrawlerConfig.Static.PlanetLabSitesFileName = this.PlanetLab.SitesFileName;
 		}
 
 		/// <summary>
@@ -349,16 +341,6 @@ namespace InetCrawler
 		}
 
 		/// <summary>
-		/// Gets the database configuration.
-		/// </summary>
-		public DbConfig Database { get { return this.dbConfig; } }
-		
-		/// <summary>
-		/// Gets the PlanetLab configuration.
-		/// </summary>
-		public PlConfig PlanetLab { get { return this.plConfig; } }
-
-		/// <summary>
 		/// Gets the spiders configuration path.
 		/// </summary>
 		public string SpidersConfigPath { get { return this.root + @"\Spiders"; } }
@@ -370,10 +352,6 @@ namespace InetCrawler
 		/// </summary>
 		public void Dispose()
 		{
-			// Dispose the database configuration.
-			this.dbConfig.Dispose();
-			// Dispose the PlanetLab configuration.
-			this.plConfig.Dispose();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}

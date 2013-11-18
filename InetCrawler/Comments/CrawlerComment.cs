@@ -29,7 +29,7 @@ namespace InetCrawler.Comments
 	/// <summary>
 	/// Represents a user comment.
 	/// </summary>
-	public sealed class Comment
+	public sealed class CrawlerComment
 	{
 		public enum CommentType
 		{
@@ -50,7 +50,7 @@ namespace InetCrawler.Comments
 		/// <summary>
 		/// Private contructor.
 		/// </summary>
-		private Comment() { }
+		private CrawlerComment() { }
 
 		/// <summary>
 		/// Creates a comment instance.
@@ -60,7 +60,7 @@ namespace InetCrawler.Comments
 		/// <param name="user">The user.</param>
 		/// <param name="item">The item.</param>
 		/// <param name="text">The text.</param>
-		public Comment(CommentType type, DateTime time, string user, string item, string text)
+		public CrawlerComment(CommentType type, DateTime time, string user, string item, string text)
 		{
 			this.type = type;
 			this.guid = Guid.NewGuid();
@@ -82,7 +82,7 @@ namespace InetCrawler.Comments
 		/// Creates a new comment instance from an XML element.
 		/// </summary>
 		/// <param name="xml">The XML element.</param>
-		public Comment(XElement xml)
+		public CrawlerComment(XElement xml)
 		{
 			this.type = (CommentType)int.Parse(xml.Attribute("type").Value, CultureInfo.InvariantCulture);
 			this.guid = Guid.Parse(xml.Attribute("guid").Value);

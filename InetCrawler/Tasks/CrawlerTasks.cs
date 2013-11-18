@@ -28,7 +28,7 @@ namespace InetCrawler.Tasks
 	/// <summary>
 	/// A class representing the crawler tasks, scheduled or background.
 	/// </summary>
-	public sealed class CrawlerTasks : ICrawlerTasks
+	public sealed class CrawlerTasks : ICrawlerTasks, IDisposable
 	{
 		private object sync = new object();
 
@@ -63,6 +63,17 @@ namespace InetCrawler.Tasks
 		public event CrawlerTaskEventHandler TaskRemoved;
 
 		// Public methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			// Dispose the fields.
+			this.timer.Dispose();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
+		}
 
 		/// <summary>
 		/// Adds a task to the tasks list.

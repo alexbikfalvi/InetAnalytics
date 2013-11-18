@@ -46,7 +46,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		// Private variables.
 
 		private Crawler crawler = null;
-		private StatusHandler status = null;
+		private CrawlerStatusHandler status = null;
 
 		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetSites);
 		
@@ -85,10 +85,10 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.crawler = crawler;
 
 			// Set the site list event handler.
-			this.crawler.Config.PlanetLab.Sites.Cleared += this.OnSitesCleared;
-			this.crawler.Config.PlanetLab.Sites.Updated += this.OnSitesUpdated;
-			this.crawler.Config.PlanetLab.Sites.Added += this.OnSitesAdded;
-			this.crawler.Config.PlanetLab.Sites.Removed += this.OnSitesRemoved;
+			this.crawler.PlanetLab.Sites.Cleared += this.OnSitesCleared;
+			this.crawler.PlanetLab.Sites.Updated += this.OnSitesUpdated;
+			this.crawler.PlanetLab.Sites.Added += this.OnSitesAdded;
+			this.crawler.PlanetLab.Sites.Removed += this.OnSitesRemoved;
 
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
@@ -129,7 +129,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				try
 				{
 					// Update the list of PlanetLab sites.
-					this.crawler.Config.PlanetLab.Sites.CopyFrom(response.Value as XmlRpcArray);
+					this.crawler.PlanetLab.Sites.CopyFrom(response.Value as XmlRpcArray);
 
 					// Log
 					this.crawler.Log.Add(
@@ -151,7 +151,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			else
 			{
 				// Update the status.
-				this.status.Send("Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
+				this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
 				if (null == response.Fault)
 				{
 					// Log
@@ -183,7 +183,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonCancel.Enabled = false;
 			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab sites was canceled.", Resources.GlobeCanceled_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab sites was canceled.", Resources.GlobeCanceled_16);
 			// Log
 			this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -200,7 +200,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		protected override void OnRequestException(Exception exception, RequestState state)
 		{
 			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab sites failed.", Resources.GlobeError_16);
 			// Log
 			this.crawler.Log.Add(
 				LogEventLevel.Important,
@@ -278,10 +278,11 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.mapControl.Markers.Clear();
 
 			// Update the label.
-			this.status.Send("Showing {0} of {1} PlanetLab site{2}.".FormatWith(
+			this.status.Send(CrawlerStatus.StatusType.Normal,
+				"Showing {0} of {1} PlanetLab site{2}.".FormatWith(
 				this.listViewSites.Items.Count,
-				this.crawler.Config.PlanetLab.Sites.Count,
-				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
+				this.crawler.PlanetLab.Sites.Count,
+				this.crawler.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
@@ -294,11 +295,11 @@ namespace InetAnalytics.Controls.PlanetLab
 			int numNodes = 0;
 
 			// Lock the sites.
-			this.crawler.Config.PlanetLab.Sites.Lock();
+			this.crawler.PlanetLab.Sites.Lock();
 			try
 			{
 				// Add the list view items.
-				foreach (PlSite site in this.crawler.Config.PlanetLab.Sites)
+				foreach (PlSite site in this.crawler.PlanetLab.Sites)
 				{
 					// If the filter is not null or empty.
 					if (!string.IsNullOrEmpty(this.filter))
@@ -321,15 +322,16 @@ namespace InetAnalytics.Controls.PlanetLab
 			}
 			finally
 			{
-				this.crawler.Config.PlanetLab.Sites.Unlock();
+				this.crawler.PlanetLab.Sites.Unlock();
 			}
 
 			// Update the label.
 			this.status.Send(
+				CrawlerStatus.StatusType.Normal,
 				"Showing {0} of {1} PlanetLab site{2}.".FormatWith(
 				this.listViewSites.Items.Count,
-				this.crawler.Config.PlanetLab.Sites.Count,
-				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()),
+				this.crawler.PlanetLab.Sites.Count,
+				this.crawler.PlanetLab.Sites.Count.PluralSuffix()),
 				"Sites have {0} nodes.".FormatWith(numNodes),
 				Resources.GlobeLab_16);
 		}
@@ -362,10 +364,11 @@ namespace InetAnalytics.Controls.PlanetLab
 			}
 
 			// Update the label.
-			this.status.Send("Showing {0} of {1} PlanetLab site{2}.".FormatWith(
+			this.status.Send(CrawlerStatus.StatusType.Normal,
+				"Showing {0} of {1} PlanetLab site{2}.".FormatWith(
 				this.listViewSites.Items.Count,
-				this.crawler.Config.PlanetLab.Sites.Count,
-				this.crawler.Config.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
+				this.crawler.PlanetLab.Sites.Count,
+				this.crawler.PlanetLab.Sites.Count.PluralSuffix()), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
@@ -464,10 +467,10 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnRefresh(object sender, EventArgs e)
 		{
 			// Clear the current list of sites.
-			this.crawler.Config.PlanetLab.Sites.Clear();
+			this.crawler.PlanetLab.Sites.Clear();
 
 			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Refreshing the list of PlanetLab sites...", Resources.GlobeClock_16);
 			// Log
 			this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -478,8 +481,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
 				this.request,
-				CrawlerConfig.Static.PlanetLabUsername,
-				CrawlerConfig.Static.PlanetLabPassword);
+				this.crawler.PlanetLab.Username,
+				this.crawler.PlanetLab.Password);
 		}
 
 		/// <summary>
@@ -664,16 +667,16 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnExportListCsv(object sender, EventArgs e)
 		{
 			// Lock the sites.
-			this.crawler.Config.PlanetLab.Sites.Lock();
+			this.crawler.PlanetLab.Sites.Lock();
 			try
 			{
 				// Show the export dialog.
-				this.formExport.ShowDialog<PlSite>(this, typeof(PlSite.Fields), this.crawler.Config.PlanetLab.Sites);
+				this.formExport.ShowDialog<PlSite>(this, typeof(PlSite.Fields), this.crawler.PlanetLab.Sites);
 			}
 			finally
 			{
 				// Unlock the sites.
-				this.crawler.Config.PlanetLab.Sites.Unlock();
+				this.crawler.PlanetLab.Sites.Unlock();
 			}
 		}
 

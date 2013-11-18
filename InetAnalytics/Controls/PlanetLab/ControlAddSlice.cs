@@ -75,11 +75,11 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Refreshes the list of PlanetLab slices.
 		/// </summary>
-		/// <param name="config">The crawler configuration.</param>
-		public void Refresh(CrawlerConfig config)
+		/// <param name="crawler">The crawler configuration.</param>
+		public void Refresh(Crawler crawler)
 		{
 			// Set the slices.
-			this.slices = config.PlanetLab.Slices;
+			this.slices = crawler.PlanetLab.Slices;
 			// Clear the filter.
 			this.textBoxFilter.Clear();
 			// Clear the buttons state.

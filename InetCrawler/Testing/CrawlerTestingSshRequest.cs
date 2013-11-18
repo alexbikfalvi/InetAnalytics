@@ -27,7 +27,7 @@ namespace InetCrawler.Testing
 	/// <summary>
 	/// A class that stores the testing SSH request parameters.
 	/// </summary>
-	public sealed class TestingSshRequest
+	public sealed class CrawlerTestingSshRequest
 	{
 		private static readonly byte[] defaultKey = new byte[0];
 
@@ -46,7 +46,7 @@ namespace InetCrawler.Testing
 		/// Creates a new testing SSH request instance.
 		/// </summary>
 		/// <param name="key">The registry key.</param>
-		public TestingSshRequest(string key)
+		public CrawlerTestingSshRequest(string key)
 		{
 			// Set the registry key.
 			this.key = key;
@@ -95,7 +95,7 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public byte[] Key
 		{
-			get { return Registry.GetSecureByteArray(this.key, "Key", TestingSshRequest.defaultKey, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			get { return Registry.GetSecureByteArray(this.key, "Key", CrawlerTestingSshRequest.defaultKey, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
 			set { Registry.SetSecureByteArray(this.key, "Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
 		}
 	}

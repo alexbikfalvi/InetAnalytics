@@ -30,7 +30,7 @@ namespace InetCrawler.Comments
 	/// Represents a generic comments list.
 	/// </summary>
 	/// <typeparam name="T">The comment class.</typeparam>
-	public class CommentsList : List<Comment>
+	public class CrawlerCommentsList : List<CrawlerComment>
 	{
 		private XDocument document;
 		private HashSet<Guid> set = new HashSet<Guid>();
@@ -39,7 +39,7 @@ namespace InetCrawler.Comments
 		/// Creates a new comments list from the specified file.
 		/// </summary>
 		/// <param name="fileName">The file name.</param>
-		public CommentsList(string fileName)
+		public CrawlerCommentsList(string fileName)
 		{
 			try
 			{
@@ -52,7 +52,7 @@ namespace InetCrawler.Comments
 					foreach (XElement element in this.document.Root.Elements("comment"))
 					{
 						// Create a new comment from the XML element.
-						Comment comment = new Comment(element);
+						CrawlerComment comment = new CrawlerComment(element);
 						// If the GUID does not exist in the set.
 						if (!this.set.Contains(comment.Guid))
 						{
@@ -91,7 +91,7 @@ namespace InetCrawler.Comments
 		/// </summary>
 		/// <param name="comment">The comment.</param>
 		/// <returns>Returns <b>true</b> if the comment was added successfully, or <b>false</b> otherwise.</returns>
-		public bool AddComment(Comment comment)
+		public bool AddComment(CrawlerComment comment)
 		{
 			// If the set already contains the GUID, do nothing.
 			if (this.set.Contains(comment.Guid)) return false;
@@ -108,7 +108,7 @@ namespace InetCrawler.Comments
 		/// Removes a comment from the list.
 		/// </summary>
 		/// <param name="comment">The comment.</param>
-		public void RemoveComment(Comment comment)
+		public void RemoveComment(CrawlerComment comment)
 		{
 			// Remove the XML element from the XML document.
 			comment.Xml.Remove();
@@ -125,10 +125,10 @@ namespace InetCrawler.Comments
 		/// <param name="countAdded">The number of added comments.</param>
 		/// <param name="countIgnored">The number of ignored comments.</param>
 		/// <returns>The collection of added items.</returns>
-		public ICollection<Comment> Import(string fileName, out int countAdded, out int countIgnored)
+		public ICollection<CrawlerComment> Import(string fileName, out int countAdded, out int countIgnored)
 		{
 			// The list of added items.
-			List<Comment> comments = null;
+			List<CrawlerComment> comments = null;
 
 			countAdded = 0;
 			countIgnored = 0;
@@ -136,7 +136,7 @@ namespace InetCrawler.Comments
 			// If the specified file exists.
 			if (File.Exists(fileName))
 			{
-				comments = new List<Comment>();
+				comments = new List<CrawlerComment>();
 				// Read the XML document from file.
 				this.document = XDocument.Load(fileName);
 				// Read the comments from the file.
@@ -145,7 +145,7 @@ namespace InetCrawler.Comments
 					try
 					{
 						// Create a new comment.
-						Comment comment = new Comment(element);
+						CrawlerComment comment = new CrawlerComment(element);
 						// If the GUID does not exist in the set.
 						if (!this.set.Contains(comment.Guid))
 						{

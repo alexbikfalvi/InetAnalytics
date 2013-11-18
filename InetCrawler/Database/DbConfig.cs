@@ -133,7 +133,7 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// An event raised when the primary server has changed.
 		/// </summary>
-		public event DbPrimaryServerChangedEventHandler ServerPrimaryChanged;
+		public event DbPrimaryServerChangedEventHandler PrimaryServerChanged;
 		/// <summary>
 		/// An event raised when a database server logs an event.
 		/// </summary>
@@ -200,7 +200,7 @@ namespace InetCrawler.Database
 			// Update the registry key.
 			Registry.SetValue(this.key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
 			// Raise the primary server changed event.
-			if (this.ServerPrimaryChanged != null) this.ServerPrimaryChanged(this, new DbPrimaryServerChangedEventArgs(oldPrimary, this.primary));
+			if (this.PrimaryServerChanged != null) this.PrimaryServerChanged(this, new DbPrimaryServerChangedEventArgs(oldPrimary, this.primary));
 		}
 
 		/// <summary>
@@ -270,7 +270,7 @@ namespace InetCrawler.Database
 				// Close the key.
 				key.Close();
 				// Delete the registry key.
-				this.config.Database.Key.DeleteSubKeyTree(id);
+				this.key.DeleteSubKeyTree(id);
 				// Re-throw the exception.
 				throw;
 			}
@@ -409,7 +409,7 @@ namespace InetCrawler.Database
 			lock (this.sync)
 			{
 				// Remove the server configuration.
-				this.config.Database.Key.DeleteSubKeyTree(id);
+				this.key.DeleteSubKeyTree(id);
 				// Remove the server.
 				this.servers.Remove(id);
 			}

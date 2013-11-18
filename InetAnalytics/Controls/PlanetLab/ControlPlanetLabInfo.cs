@@ -61,7 +61,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSitesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.settings.Crawler.SelectPlanetLabSites();
+			this.settings.Crawler.Events.SelectPlanetLabSites();
 		}
 
 		/// <summary>
@@ -71,7 +71,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.settings.Crawler.SelectPlanetLabNodes();
+			this.settings.Crawler.Events.SelectPlanetLabNodes();
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSlicesClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.settings.Crawler.SelectPlanetLabSlices();
+			this.settings.Crawler.Events.SelectPlanetLabSlices();
 		}
 	}
 }

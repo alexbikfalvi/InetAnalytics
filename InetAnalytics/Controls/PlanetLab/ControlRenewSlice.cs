@@ -92,12 +92,12 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Refreshes the current slice information.
 		/// </summary>
-		/// <param name="config">The crawler configuration.</param>
+		/// <param name="crawler">The crawler configuration.</param>
 		/// <param name="slice">The current slice.</param>
-		public void Refresh(CrawlerConfig config, PlSlice slice)
+		public void Refresh(Crawler crawler, PlSlice slice)
 		{
 			// Set the slices database.
-			this.slices = config.PlanetLab.DbSlices;
+			this.slices = crawler.PlanetLab.DbSlices;
 			// Set the slice.
 			this.slice = slice;
 

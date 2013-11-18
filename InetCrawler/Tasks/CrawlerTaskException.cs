@@ -23,6 +23,7 @@ namespace InetCrawler.Tasks
 	/// <summary>
 	/// A class representing a crawler task exception.
 	/// </summary>
+	[Serializable]
 	public class CrawlerTaskException : CrawlerException
 	{
 		/// <summary>

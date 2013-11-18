@@ -143,7 +143,7 @@ namespace InetCrawler.Spider
 				Dictionary<string, DbObjectStandardFeed> feeds = new Dictionary<string, DbObjectStandardFeed>();
 
 				// For all standard feeds.
-				foreach (YouTubeStandardFeed feed in YouTube.StandardFeeds)
+				foreach (YouTubeStandardFeed feed in InetApi.YouTube.Api.V2.YouTube.StandardFeeds)
 				{
 					// If the feed is not selected, continue.
 					if (!this.GetFeedSelected(feed)) continue;
@@ -164,7 +164,7 @@ namespace InetCrawler.Spider
 						feeds.Add(obj.Id, obj);
 
 						// For all assignable and non-deprecated categories.
-						foreach (YouTubeCategory category in this.crawler.Categories)
+						foreach (YouTubeCategory category in this.crawler.YouTube.Categories)
 						{
 							// If the category supports browsable regions.
 							if (category.Browsable != null)
@@ -376,7 +376,7 @@ namespace InetCrawler.Spider
 			Uri uri = YouTubeUri.GetStandardFeed(feedId, regionId, category, timeId, 1, 1);
 
 			// Create a new video request.
-			YouTubeRequestFeed<Video> request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
+			YouTubeRequestFeed<Video> request = new YouTubeRequestFeed<Video>(this.crawler.YouTube.Settings);
 
 			// Set the feed URL.
 			obj.Url = uri.AbsoluteUri;

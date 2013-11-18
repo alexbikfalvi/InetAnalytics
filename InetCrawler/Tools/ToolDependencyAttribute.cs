@@ -17,38 +17,32 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace InetCrawler.Tools
 {
 	/// <summary>
-	/// An interface for a toolbox.
+	/// A class representing a tool dependency attribute.
 	/// </summary>
-	public interface IToolbox
+	public sealed class ToolDependencyAttribute : Attribute
 	{
 		/// <summary>
-		/// Gets the toolbox identifier.
+		/// Creates a new tool information structure.
 		/// </summary>
-		public Guid Id;
+		/// <param name="id">The identifier.</param>
+		/// <param name="major">The toolbox major version.</param>
+		/// <param name="minor">The toolbox minor version.</param>
+		/// <param name="build">The toolbox build version.</param>
+		/// <param name="revision">The toolbox revision version.</param>
+		/// <param name="name">The tool name.</param>
+		/// <param name="description">The tool description.</param>
+		public ToolDependencyAttribute(string id, int major, int minor, int build, int revision)
+		{
+			this.Info = new ToolInfo(new Guid(id), new Version(major, minor, build, revision));
+		}
+
 		/// <summary>
-		/// The tool name.
+		/// Gets the dependency tool information.
 		/// </summary>
-		public string ToolboxName;
-		/// <summary>
-		/// The vendor name.
-		/// </summary>
-		public string VendorName;
-		/// <summary>
-		/// The product name.
-		/// </summary>
-		public string Product;
-		/// <summary>
-		/// The tool version.
-		/// </summary>
-		public Version Version;
-		/// <summary>
-		/// Gets the list of tools.
-		/// </summary>
-		public ICollection<ITool> Tools;
+		public ToolInfo Info { get; private set; }
 	}
 }

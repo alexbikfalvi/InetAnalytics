@@ -21,29 +21,43 @@ using System;
 namespace InetCrawler.Tools
 {
 	/// <summary>
-	/// An interface for an analytics tool.
+	/// A structure representing the tool information.
 	/// </summary>
-	public interface ITool
+	public struct ToolInfo
 	{
 		/// <summary>
-		/// The tool identifiers.
+		/// Creates a new tool information structure.
 		/// </summary>
-		public Guid Id;
+		/// <param name="id">The identifier.</param>
+		/// <param name="version">The tool version.</param>
+		/// <p
+		public ToolInfo(Guid id, Version version)
+			: this()
+		{
+			this.Id = id;
+			this.Version = version;
+		}
+
 		/// <summary>
-		/// The tool name.
+		/// Gets the tool identifier.
 		/// </summary>
-		public string ToolName;
+		public Guid Id { get; private set; }
 		/// <summary>
-		/// The vendor name.
+		/// Gets the tool version.
 		/// </summary>
-		public string VendorName;
+		public Version Version { get; private set; }
+
 		/// <summary>
-		/// The product name.
+		/// Compares two tool information structures for equality.
 		/// </summary>
-		public string Product;
-		/// <summary>
-		/// The tool version.
-		/// </summary>
-		public Version Version;
+		/// <param name="obj">The tool information structure to compare.</param>
+		/// <returns><b>True</b> if the two structures are equal, <b>false</b> otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (null == obj) return false;
+			if (!(obj is ToolInfo)) return false;
+			ToolInfo info = (ToolInfo)obj;
+			return (this.Id == info.Id) && (this.Version == info.Version);
+		}
 	}
 }

@@ -31,7 +31,7 @@ namespace InetCrawler.Testing
 	/// <summary>
 	/// A class that stores the testing web request parameters.
 	/// </summary>
-	public sealed class TestingWebRequest
+	public sealed class CrawlerTestingWebRequest
 	{
 		private string key;
 		private readonly Dictionary<string, string> headers = new Dictionary<string, string>();
@@ -41,7 +41,7 @@ namespace InetCrawler.Testing
 		/// Creates a new testing web request instance.
 		/// </summary>
 		/// <param name="key">The registry key.</param>
-		public TestingWebRequest(string key)
+		public CrawlerTestingWebRequest(string key)
 		{
 			// Set the registry key.
 			this.key = key;
@@ -232,7 +232,7 @@ namespace InetCrawler.Testing
 					foreach (string header in list)
 					{
 						// Split the header string into tokens using the column separator.
-						string[] tokens = header.Split(TestingWebRequest.headerSeparator, 2);
+						string[] tokens = header.Split(CrawlerTestingWebRequest.headerSeparator, 2);
 						// If the number of tokens is not two, continue to the next header.
 						if (tokens.Length != 2) continue;
 						// Check whether the header is restricted.

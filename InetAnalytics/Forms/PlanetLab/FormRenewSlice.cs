@@ -56,15 +56,15 @@ namespace InetAnalytics.Forms.PlanetLab
 		/// <summary>
 		/// Opens the modal dialog to select a PlanetLab object.
 		/// </summary>
-		/// <param name="config">The crawler configuration.</param>
+		/// <param name="crawler">The crawler configuration.</param>
 		/// <param name="slice">The PlanetLab slice.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(CrawlerConfig config, PlSlice slice)
+		public DialogResult ShowDialog(Crawler crawler, PlSlice slice)
 		{
 			// Reset the result.
 			this.Result = null;
 			// Refresh the results list.
-			this.control.Refresh(config, slice);
+			this.control.Refresh(crawler, slice);
 			// Show the dialog.
 			return base.ShowDialog();
 		}
@@ -73,15 +73,15 @@ namespace InetAnalytics.Forms.PlanetLab
 		/// Opens the modal dialog to select a PlanetLab object.
 		/// </summary>
 		/// <param name="owner">The window owner.</param>
-		/// <param name="config">The crawler configuration.</param>
+		/// <param name="crawler">The crawler configuration.</param>
 		/// <param name="slice">The PlanetLab slice.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, CrawlerConfig config, PlSlice slice)
+		public DialogResult ShowDialog(IWin32Window owner, Crawler crawler, PlSlice slice)
 		{
 			// Reset the result.
 			this.Result = null;
 			// Refresh the results list.
-			this.control.Refresh(config, slice);
+			this.control.Refresh(crawler, slice);
 			// Show the dialog.
 			return base.ShowDialog(owner);
 		}

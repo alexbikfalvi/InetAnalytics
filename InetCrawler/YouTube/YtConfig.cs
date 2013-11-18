@@ -26,13 +26,45 @@ namespace InetCrawler.YouTube
 	/// <summary>
 	/// A class representing the YouTube configuration.
 	/// </summary>
-	public sealed class YouTube
+	public sealed class YtConfig : IDisposable
 	{
-		private YouTubeSettings settings;
-		private YouTubeCategories categories;
+		private readonly YouTubeSettings settings;
+		private readonly YouTubeCategories categories;
+
+
+		/// <summary>
+		/// Creates a new YouTube configuration instance.
+		/// </summary>
+		public YtConfig(CrawlerConfig config)
+		{
+			// Create the YouTube settings.
+			this.settings = new YouTubeSettings(config.YouTubeV2ApiKey);
+			// Create the YouTube categories.
+			this.categories = new YouTubeCategories(config.YouTubeCategoriesFileName);
+		}
 
 		// Public properties.
 
+		/// <summary>
+		/// Returns the YouTube settings.
+		/// </summary>
+		public YouTubeSettings Settings { get { return this.settings; } }
+		/// <summary>
+		/// Returns the YouTube categories.
+		/// </summary>
+		public YouTubeCategories Categories { get { return this.categories; } }
 
+		// Public methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			// Dispose the categories.
+			this.categories.Dispose();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
+		}
 	}
 }

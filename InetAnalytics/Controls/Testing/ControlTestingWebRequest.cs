@@ -41,7 +41,7 @@ namespace InetAnalytics.Controls.Testing
 		// Private variables.
 
 		private Crawler crawler = null;
-		private StatusHandler status = null;
+		private CrawlerStatusHandler status = null;
 
 		private Uri uri = null;
 		private AsyncWebRequest request = new AsyncWebRequest();
@@ -91,7 +91,7 @@ namespace InetAnalytics.Controls.Testing
 
 			// Get the crawler status.
 			this.status = this.crawler.Status.GetHandler(this);
-			this.status.Send("Ready.", Resources.Information_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 
 			// Enable the control.
 			this.Enabled = true;
@@ -120,7 +120,7 @@ namespace InetAnalytics.Controls.Testing
 			// Clear the response data.
 			this.textBoxResponseData.Text = string.Empty;
 			// Clear the status bar.
-			this.status.Send("Executing the HTTP request...", Resources.Busy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Executing the HTTP request...", Resources.Busy_16);
 
 			// Log
 			this.log.Add(this.crawler.Log.Add(
@@ -178,7 +178,7 @@ namespace InetAnalytics.Controls.Testing
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send("The HTTP request for web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Log the result.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
@@ -238,6 +238,7 @@ namespace InetAnalytics.Controls.Testing
 
 						// Update the status label.
 						this.status.Send(
+							CrawlerStatus.StatusType.Normal,
 							"The HTTP request for the web URL completed successfully.",
 							"{0} bytes of data received".FormatWith(asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
 							Resources.Success_16);
@@ -254,7 +255,7 @@ namespace InetAnalytics.Controls.Testing
 						if (exception.Status == WebExceptionStatus.RequestCanceled)
 						{
 							// Update the status label.
-							this.status.Send("The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
+							this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
 							// Log the result.
 							this.log.Add(this.crawler.Log.Add(
 								LogEventLevel.Verbose,
@@ -266,7 +267,7 @@ namespace InetAnalytics.Controls.Testing
 						else
 						{
 							// Update the status label.
-							this.status.Send("The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+							this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 							// Log the result.
 							this.log.Add(this.crawler.Log.Add(
 								LogEventLevel.Important,
@@ -280,7 +281,7 @@ namespace InetAnalytics.Controls.Testing
 					catch (Exception exception)
 					{
 						// Update the status label.
-						this.status.Send("The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
+						this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Important,

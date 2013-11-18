@@ -25,15 +25,15 @@ namespace InetCrawler.Status
 	/// A delegate used when performing an action on the status handler.
 	/// </summary>
 	/// <param name="handle">The status handler.</param>
-	internal delegate void CrawlerStatusHandlerAction(StatusHandler handler);
+	internal delegate void CrawlerStatusHandlerAction(CrawlerStatusHandler handler);
 
 	/// <summary>
 	/// A class allowing a single control to send status messages.
 	/// </summary>
-	public sealed class StatusHandler
+	public sealed class CrawlerStatusHandler
 	{
 		private object owner;
-		private StatusMessage message;
+		private CrawlerStatusMessage message;
 		private CrawlerStatusHandlerAction status;
 
 		/// <summary>
@@ -41,7 +41,7 @@ namespace InetCrawler.Status
 		/// </summary>
 		/// <param name="owner">The owner object.</param>
 		/// <param name="status">The status event handler.</param>
-		internal StatusHandler(object owner, CrawlerStatusHandlerAction status)
+		internal CrawlerStatusHandler(object owner, CrawlerStatusHandlerAction status)
 		{
 			this.owner = owner;
 			this.status = status;
@@ -54,18 +54,19 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Gets the current status message for this handler.
 		/// </summary>
-		public StatusMessage Message { get { return this.message; } }
+		public CrawlerStatusMessage Message { get { return this.message; } }
 
 		// Public methods.
 
 		/// <summary>
 		/// Sends a notification status message.
 		/// </summary>
+		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
-		public void Send(string text)
+		public void Send(CrawlerStatus.StatusType type, string text)
 		{
 			// Set the message.
-			this.message = new StatusMessage(text);
+			this.message = new CrawlerStatusMessage(type, text);
 			// Call the delegate.
 			this.status(this);
 		}
@@ -73,12 +74,13 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Sends a notification status message.
 		/// </summary>
+		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
 		/// <param name="image">The left image.</param>
-		public void Send(string text, Image image)
+		public void Send(CrawlerStatus.StatusType type, string text, Image image)
 		{
 			// Set the message.
-			this.message = new StatusMessage(text, image);
+			this.message = new CrawlerStatusMessage(type, text, image);
 			// Call the delegate.
 			this.status(this);
 		}
@@ -86,14 +88,15 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Sends a notification status message.
 		/// </summary>
+		/// <param name="type">The status type.</param>
 		/// <param name="leftText">The left text.</param>
 		/// <param name="rightText">The right text.</param>
 		/// <param name="leftImage">The left image.</param>
 		/// <param name="rightImage">The right image.</param>
-		public void Send(string leftText, string rightText, Image leftImage = null, Image rightImage = null)
+		public void Send(CrawlerStatus.StatusType type, string leftText, string rightText, Image leftImage = null, Image rightImage = null)
 		{
 			// Set the message.
-			this.message = new StatusMessage(leftText, rightText, leftImage, rightImage);
+			this.message = new CrawlerStatusMessage(type, leftText, rightText, leftImage, rightImage);
 			// Call the delegate.
 			this.status(this);
 		}

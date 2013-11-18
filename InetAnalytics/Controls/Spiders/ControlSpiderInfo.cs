@@ -66,7 +66,7 @@ namespace InetAnalytics.Controls.Spiders
 		/// <param name="e">The event arguments.</param>
 		private void OnStandardFeedsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectStandardFeedsSpider();
+			this.crawler.Events.SelectStandardFeedsSpider();
 		}
 	}
 }

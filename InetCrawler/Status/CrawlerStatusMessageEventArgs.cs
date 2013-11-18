@@ -25,18 +25,18 @@ namespace InetCrawler.Status
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void StatusMessageEventHandler(object sender, StatusMessageEventArgs e);
+	public delegate void StatusMessageEventHandler(object sender, CrawlerStatusMessageEventArgs e);
 
 	/// <summary>
 	/// A class representing a status message event arguments.
 	/// </summary>
-	public class StatusMessageEventArgs : EventArgs
+	public class CrawlerStatusMessageEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Creates a new event arguments instance.
 		/// </summary>
 		/// <param name="message">The status message.</param>
-		public StatusMessageEventArgs(StatusMessage? message)
+		public CrawlerStatusMessageEventArgs(CrawlerStatusMessage? message)
 		{
 			this.Message = message;
 		}
@@ -46,6 +46,6 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Gets the status message.
 		/// </summary>
-		public StatusMessage? Message { get; private set; }
+		public CrawlerStatusMessage? Message { get; private set; }
 	}
 }

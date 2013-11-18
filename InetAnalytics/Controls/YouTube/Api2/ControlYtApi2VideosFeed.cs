@@ -92,7 +92,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			this.feedName = feedName;
 			this.objectName = objectName;
 			this.logSource = logSource;
-			this.request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
+			this.request = new YouTubeRequestFeed<Video>(this.crawler.YouTube.Settings);
 		
 			// Enable the control
 			this.Enabled = true;
@@ -353,7 +353,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Video(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeVideo(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeVideo(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -365,7 +365,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Author(object sender, EventArgs e)
 		{
 			Video video = this.videoList.SelectedItem.Tag as Video;
-			this.crawler.OpenYouTubeUser(video.Author.UserId);
+			this.crawler.Events.OpenYouTubeUser(video.Author.UserId);
 		}
 
 		/// <summary>
@@ -376,7 +376,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Related(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeRelatedVideos(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeRelatedVideos(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -387,7 +387,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Responses(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeResponseVideos(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeResponseVideos(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -398,7 +398,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewWeb(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeWebVideo(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeWebVideo(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -422,7 +422,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnComment(object sender, EventArgs e)
 		{
-			this.crawler.CommentYouTubeVideo((this.videoList.SelectedItem.Tag as Video).Id);
+			this.crawler.Events.CommentYouTubeVideo((this.videoList.SelectedItem.Tag as Video).Id);
 		}
 
 		/// <summary>
@@ -568,7 +568,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewProfile(object sender, StringEventArgs e)
 		{
-			this.crawler.OpenYouTubeUser(e.Value);
+			this.crawler.Events.OpenYouTubeUser(e.Value);
 		}
 	}
 }

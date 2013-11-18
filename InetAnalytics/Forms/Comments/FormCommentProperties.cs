@@ -46,7 +46,7 @@ namespace InetAnalytics.Forms.Comments
 		/// <param name="owner">The owner window.</param>
 		/// <param name="comment">The comment.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, Comment comment)
+		public DialogResult ShowDialog(IWin32Window owner, CrawlerComment comment)
 		{
 			// If the comment is null, do nothing.
 			if (null == comment) return DialogResult.Abort;
@@ -56,13 +56,13 @@ namespace InetAnalytics.Forms.Comments
 			// Set the title.
 			switch (comment.Type)
 			{
-				case Comment.CommentType.Video:
+				case CrawlerComment.CommentType.Video:
 					this.Text = "Comment for Video {0} Properties".FormatWith(comment.Item);
 					break;
-				case Comment.CommentType.User:
+				case CrawlerComment.CommentType.User:
 					this.Text = "Comment for User {0} Properties".FormatWith(comment.Item);
 					break;
-				case Comment.CommentType.Playlist:
+				case CrawlerComment.CommentType.Playlist:
 					this.Text = "Comment for Playlist {0} Properties".FormatWith(comment.Item);
 					break;
 				default:

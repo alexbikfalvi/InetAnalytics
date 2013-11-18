@@ -28,31 +28,31 @@ namespace InetCrawler.Comments
 	/// <summary>
 	/// A class that stores all user comments.
 	/// </summary>
-	public sealed class Comments : IDisposable
+	public sealed class CrawlerComments : IDisposable
 	{
 		private CrawlerConfig config;
 
-		private CommentsList commentsVideos;
-		private CommentsList commentsUsers;
-		private CommentsList commentsPlaylists;
+		private CrawlerCommentsList commentsVideos;
+		private CrawlerCommentsList commentsUsers;
+		private CrawlerCommentsList commentsPlaylists;
 
 		/// <summary>
 		/// Creates a new comments instance.
 		/// </summary>
 		/// <param name="config">A crawler configuration object.</param>
-		public Comments(CrawlerConfig config)
+		public CrawlerComments(CrawlerConfig config)
 		{
 			// Set the configuration.
 			this.config = config;
 
 			// Create the videos comments.
-			this.commentsVideos = new CommentsList(this.config.CommentsVideosFileName);
+			this.commentsVideos = new CrawlerCommentsList(this.config.CommentsVideosFileName);
 
 			// Create the users comments.
-			this.commentsUsers = new CommentsList(this.config.CommentsUsersFileName);
+			this.commentsUsers = new CrawlerCommentsList(this.config.CommentsUsersFileName);
 
 			// Create the playlists comments.
-			this.commentsPlaylists = new CommentsList(this.config.CommentsPlaylistsFileName);
+			this.commentsPlaylists = new CrawlerCommentsList(this.config.CommentsPlaylistsFileName);
 		}
 
 		/// <summary>
@@ -69,17 +69,17 @@ namespace InetCrawler.Comments
 		/// <summary>
 		/// Returns the videos comments.
 		/// </summary>
-		public CommentsList Videos { get { return this.commentsVideos; } }
+		public CrawlerCommentsList Videos { get { return this.commentsVideos; } }
 
 		/// <summary>
 		/// Returns the users comments.
 		/// </summary>
-		public CommentsList Users { get { return this.commentsUsers; } }
+		public CrawlerCommentsList Users { get { return this.commentsUsers; } }
 
 		/// <summary>
 		/// Returns the playlist comments.
 		/// </summary>
-		public CommentsList Playlists { get { return this.commentsPlaylists; } }
+		public CrawlerCommentsList Playlists { get { return this.commentsPlaylists; } }
 
 		// Private methods.
 

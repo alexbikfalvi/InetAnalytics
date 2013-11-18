@@ -90,12 +90,12 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			try
 			{
 				// Begin an asynchronous refresh of the YouTube categories.
-				this.asyncResult = this.crawler.Categories.BeginRefresh((AsyncWebResult asyncResult) =>
+				this.asyncResult = this.crawler.YouTube.Categories.BeginRefresh((AsyncWebResult asyncResult) =>
 					{
 						try
 						{
 							// Complete the asynchronous request.
-							this.crawler.Categories.EndRefresh(asyncResult);
+							this.crawler.YouTube.Categories.EndRefresh(asyncResult);
 							// Update the message that the operation completed successfully.
 							this.ShowMessage(
 								Resources.GlobeSuccess_48,
@@ -179,7 +179,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			// If the asynchronous result is null, do nothing.
 			if (null != this.asyncResult) return;
 			// Else, cancel the refresh.
-			this.crawler.Categories.Cancel(this.asyncResult);
+			this.crawler.YouTube.Categories.Cancel(this.asyncResult);
 			// Disable the cancel button.
 			this.buttonCancel.Enabled = false;
 		}
@@ -195,7 +195,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			// Set the selected category to null.
 			this.controlCategory.Catergory = null;
 			// Add the categories to the list view.
-			foreach (YouTubeCategory category in this.crawler.Categories)
+			foreach (YouTubeCategory category in this.crawler.YouTube.Categories)
 			{
 				// Create a new list item.
 				ListViewItem item = new ListViewItem(new string[] {

@@ -27,7 +27,7 @@ namespace InetCrawler
 	/// <summary>
 	/// A class used to collect network information.
 	/// </summary>
-	public sealed class CrawlerNetwork
+	public sealed class CrawlerNetwork : IDisposable
 	{
 		/// <summary>
 		/// An enumeration representing the availability status.
@@ -154,6 +154,21 @@ namespace InetCrawler
 		/// An event raised when the network status was checked.
 		/// </summary>
 		public event EventHandler NetworkChecked;
+
+		// Public methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			// Dispose the fields.
+			this.ping.Dispose();
+			this.web.Dispose();
+			this.timer.Dispose();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
+		}
 
 		// Private methods.
 

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("InetUpgrade")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Internet Analytics Upgrade Tool")]
+[assembly: AssemblyDescription("An upgrade tool for the Internet Analytics software.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("InetUpgrade")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCompany("Alex Bikfalvi")]
+[assembly: AssemblyProduct("Internet Analytics")]
+[assembly: AssemblyCopyright("Copyright © Alex Bikfalvi 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

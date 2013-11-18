@@ -19,8 +19,8 @@
 				// Dispose the nodes list.
 				this.OnDisposeNodes();
 				// Remove the nodes list event handler.
-				this.crawler.Config.PlanetLab.Nodes.Cleared -= this.OnNodesCleared;
-				this.crawler.Config.PlanetLab.Nodes.Updated -= this.OnNodesUpdated;
+				this.crawler.PlanetLab.Nodes.Cleared -= this.OnNodesCleared;
+				this.crawler.PlanetLab.Nodes.Updated -= this.OnNodesUpdated;
 				// If the components are not null.
 				if (components != null)
 				{

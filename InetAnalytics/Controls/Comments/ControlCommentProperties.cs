@@ -30,7 +30,7 @@ namespace InetAnalytics.Controls.Comments
 	/// </summary>
 	public partial class ControlCommentProperties : ThreadSafeControl
 	{
-		private Comment comment = null;
+		private CrawlerComment comment = null;
 
 		/// <summary>
 		/// Creates a new comment control instance.
@@ -43,13 +43,13 @@ namespace InetAnalytics.Controls.Comments
 		/// <summary>
 		/// Gets or sets the current comment.
 		/// </summary>
-		public Comment Comment
+		public CrawlerComment Comment
 		{
 			get { return this.comment; }
 			set
 			{
 				// Save the old value.
-				Comment old = this.comment;
+				CrawlerComment old = this.comment;
 				// Set the new value.
 				this.comment = value;
 				// Call the event handler.
@@ -64,7 +64,7 @@ namespace InetAnalytics.Controls.Comments
 		/// </summary>
 		/// <param name="oldComment">The old comment.</param>
 		/// <param name="newComment">The new comment.</param>
-		protected virtual void OnCommentSet(Comment oldComment, Comment newComment)
+		protected virtual void OnCommentSet(CrawlerComment oldComment, CrawlerComment newComment)
 		{
 			// If the comment has not changed, do nothing.
 			if (oldComment == newComment) return;
@@ -86,17 +86,17 @@ namespace InetAnalytics.Controls.Comments
 
 				switch (newComment.Type)
 				{
-					case Comment.CommentType.Video:
+					case CrawlerComment.CommentType.Video:
 						this.labelTitle.Text = "Comment for video {0}".FormatWith(newComment.Item);
 						this.labelObject.Text = "&Video:";
 						this.pictureBox.Image = Resources.CommentVideo_32;
 						break;
-					case Comment.CommentType.User:
+					case CrawlerComment.CommentType.User:
 						this.labelTitle.Text = "Comment for user {0}".FormatWith(newComment.Item);
 						this.labelObject.Text = "&User:";
 						this.pictureBox.Image = Resources.CommentUser_32;
 						break;
-					case Comment.CommentType.Playlist:
+					case CrawlerComment.CommentType.Playlist:
 						this.labelTitle.Text = "Comment for playlist {0}".FormatWith(newComment.Item);
 						this.labelObject.Text = "&Playlist:";
 						this.pictureBox.Image = Resources.CommentPlay_32;

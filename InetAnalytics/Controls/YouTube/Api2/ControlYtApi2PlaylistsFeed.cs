@@ -76,7 +76,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		{
 			// Save the parameters.
 			this.crawler = crawler;
-			this.request = new YouTubeRequestFeed<Playlist>(this.crawler.Settings);
+			this.request = new YouTubeRequestFeed<Playlist>(this.crawler.YouTube.Settings);
 		
 			// Enable the control
 			this.Enabled = true;
@@ -364,7 +364,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewAuthor(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			this.crawler.OpenYouTubeUser(playlist.Author.UserId);
+			this.crawler.Events.OpenYouTubeUser(playlist.Author.UserId);
 		}
 
 		/// <summary>
@@ -375,7 +375,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewVideos(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			this.crawler.OpenYouTubePlaylist(playlist.Id);
+			this.crawler.Events.OpenYouTubePlaylist(playlist.Id);
 		}
 
 		/// <summary>
@@ -398,7 +398,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnAddComment(object sender, EventArgs e)
 		{
 			Playlist playlist = this.playlistsList.SelectedItem.Tag as Playlist;
-			this.crawler.CommentYouTubePlaylist(playlist.Id);
+			this.crawler.Events.CommentYouTubePlaylist(playlist.Id);
 		}
 
 		/// <summary>

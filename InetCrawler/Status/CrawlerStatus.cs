@@ -26,17 +26,28 @@ namespace InetCrawler.Status
 	/// <summary>
 	/// A class allowing controls to send status messages.
 	/// </summary>
-	public sealed class Status : IDisposable
+	public sealed class CrawlerStatus : IDisposable
 	{
-		private readonly Dictionary<object, StatusHandler> handlers = new Dictionary<object, StatusHandler>();
+		/// <summary>
+		/// An enumeration representing the status type.
+		/// </summary>
+		public enum StatusType
+		{
+			Ready = 0,
+			Normal = 1,
+			Busy = 2,
+			Unknown = 3
+		}
+
+		private readonly Dictionary<object, CrawlerStatusHandler> handlers = new Dictionary<object, CrawlerStatusHandler>();
 		private CrawlerStatusHandlerAction status;
-		private StatusHandler handler = null;
+		private CrawlerStatusHandler handler = null;
 		private bool disposed = false;
 
 		/// <summary>
 		/// Creates a new crawler notification instance.
 		/// </summary>
-		public Status()
+		public CrawlerStatus()
 		{
 			this.status = new CrawlerStatusHandlerAction(this.OnSend);
 		}
@@ -60,14 +71,14 @@ namespace InetCrawler.Status
 		/// </summary>
 		/// <param name="owner">The object.</param>
 		/// <returns>The notification handler.</returns>
-		public StatusHandler GetHandler(object owner)
+		public CrawlerStatusHandler GetHandler(object owner)
 		{
-			StatusHandler handler;
+			CrawlerStatusHandler handler;
 			// Try get the handler from the current collection.
 			if (!this.handlers.TryGetValue(owner, out handler))
 			{
 				// If the handler is not found, create a new handler for the given owner.
-				handler = new StatusHandler(owner, this.status);
+				handler = new CrawlerStatusHandler(owner, this.status);
 				// Add the handler to the collection.
 				this.handlers.Add(owner, handler);
 			}
@@ -81,7 +92,7 @@ namespace InetCrawler.Status
 		/// <param name="owner">The owner object.</param>
 		public void Activate(object owner)
 		{
-			StatusHandler handler;
+			CrawlerStatusHandler handler;
 			// Try and get the handler for the specified owner.
 			if (this.handlers.TryGetValue(owner, out handler))
 			{
@@ -121,7 +132,7 @@ namespace InetCrawler.Status
 		/// An event handler called when receiving a status message from a handler.
 		/// </summary>
 		/// <param name="handler">The handler that sent the notification.</param>
-		private void OnSend(StatusHandler handler)
+		private void OnSend(CrawlerStatusHandler handler)
 		{
 			// If the object is disposed, do nothing.
 			if (this.disposed) return;
@@ -141,8 +152,8 @@ namespace InetCrawler.Status
 			if (null != this.Message)
 			{
 				// If the handler is not null.
-				if (null != this.handler) this.Message(this, new StatusMessageEventArgs(this.handler.Message));
-				else this.Message(this, new StatusMessageEventArgs(null));
+				if (null != this.handler) this.Message(this, new CrawlerStatusMessageEventArgs(this.handler.Message));
+				else this.Message(this, new CrawlerStatusMessageEventArgs(null));
 			}
 		}
 	}

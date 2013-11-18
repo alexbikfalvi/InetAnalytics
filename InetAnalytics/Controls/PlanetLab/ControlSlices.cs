@@ -145,7 +145,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		// Private variables.
 
 		private Crawler crawler = null;
-		private StatusHandler status = null;
+		private CrawlerStatusHandler status = null;
 
 		private TreeNode treeNode = null;
 		private Control.ControlCollection controls = null;
@@ -213,10 +213,10 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.crawler = crawler;
 
 			// Set the slices list event handler.
-			this.crawler.Config.PlanetLab.LocalSlices.Updated += this.OnSlicesUpdated;
-			this.crawler.Config.PlanetLab.LocalSlices.Cleared += this.OnSlicesCleared;
-			this.crawler.Config.PlanetLab.LocalSlices.Added += this.OnSlicesAdded;
-			this.crawler.Config.PlanetLab.LocalSlices.Removed += this.OnSlicesRemoved;
+			this.crawler.PlanetLab.LocalSlices.Updated += this.OnSlicesUpdated;
+			this.crawler.PlanetLab.LocalSlices.Cleared += this.OnSlicesCleared;
+			this.crawler.PlanetLab.LocalSlices.Added += this.OnSlicesAdded;
+			this.crawler.PlanetLab.LocalSlices.Removed += this.OnSlicesRemoved;
 
 			// Get the status handler.
 			this.status = this.crawler.Status.GetHandler(this);
@@ -314,22 +314,22 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnSlicesUpdated(object sender, EventArgs e)
 		{
 			// Lock the slices list.
-			this.crawler.Config.PlanetLab.LocalSlices.Lock();
+			this.crawler.PlanetLab.LocalSlices.Lock();
 			try
 			{
 				// Add the list view items.
-				foreach (PlSlice slice in this.crawler.Config.PlanetLab.LocalSlices)
+				foreach (PlSlice slice in this.crawler.PlanetLab.LocalSlices)
 				{
 					this.OnAddSlice(slice);
 				}
 			}
 			finally
 			{
-				this.crawler.Config.PlanetLab.LocalSlices.Unlock();
+				this.crawler.PlanetLab.LocalSlices.Unlock();
 			}
 
 			// Update the label.
-			this.status.Send("Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
@@ -485,7 +485,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			}
 
 			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab slices...", Resources.GlobeClock_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Refreshing the list of PlanetLab slices...", Resources.GlobeClock_16);
 			// Log
 			this.controlLog.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -494,13 +494,13 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Refreshing the list of PlanetLab slices."));
 
 			// Clear the current list of slices.
-			this.crawler.Config.PlanetLab.LocalSlices.Clear();
+			this.crawler.PlanetLab.LocalSlices.Clear();
 
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
 				this.requestGetSlices,
-				this.crawler.Config.PlanetLab.Username,
-				this.crawler.Config.PlanetLab.Password,
+				this.crawler.PlanetLab.Username,
+				this.crawler.PlanetLab.Password,
 				null,
 				this.requestStateGetSlices);
 		}
@@ -534,7 +534,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				try
 				{
 					// Update the list of PlanetLab local slices, filtering by the current person account.
-					this.crawler.Config.PlanetLab.LocalSlices.CopyFrom(slices.Where((XmlRpcValue value) =>
+					this.crawler.PlanetLab.LocalSlices.CopyFrom(slices.Where((XmlRpcValue value) =>
 						{
 							XmlRpcStruct str = value.Value as XmlRpcStruct;
 							if (null == str) return false;
@@ -561,7 +561,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			}
 			
 			// Update the status when the operation failed.
-			this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
 			if (null == response.Fault)
 			{
 				// Log
@@ -590,7 +590,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnRefreshSlicesRequestCanceled(RequestState state)
 		{
 			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab slices was canceled.", Resources.GlobeCanceled_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab slices was canceled.", Resources.GlobeCanceled_16);
 			// Log
 			this.controlLog.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -607,7 +607,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnRefreshSlicesRequestException(Exception exception, RequestState state)
 		{
 			// Update the status.
-			this.status.Send("Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab slices failed.", Resources.GlobeError_16);
 			// Log
 			this.controlLog.Add(this.crawler.Log.Add(
 				LogEventLevel.Important,
@@ -672,10 +672,10 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnAddSlice(object sender, EventArgs e)
 		{
 			// Show the add slice dialog.
-			if (this.formAddSlice.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			if (this.formAddSlice.ShowDialog(this, this.crawler) == DialogResult.OK)
 			{
 				// Add the slice to the slices list.
-				this.crawler.Config.PlanetLab.LocalSlices.Add(this.formAddSlice.Result);
+				this.crawler.PlanetLab.LocalSlices.Add(this.formAddSlice.Result);
 			}
 		}
 
@@ -700,7 +700,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 			{
 				// Remove the slice.
-				this.crawler.Config.PlanetLab.LocalSlices.Remove(info.Slice);
+				this.crawler.PlanetLab.LocalSlices.Remove(info.Slice);
 			}
 		}
 
@@ -725,7 +725,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			SliceInfo info = (SliceInfo)this.listViewSlices.SelectedItems[0].Tag;
 
 			// Show the add slice to nodes by location dialog.
-			if (this.formAddSliceToNodesLocation.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			if (this.formAddSliceToNodesLocation.ShowDialog(this, this.crawler) == DialogResult.OK)
 			{
 				// Add the slice to nodes.
 				this.OnAddSliceToNodes(info.Slice, this.formAddSliceToNodesLocation.Result);
@@ -753,7 +753,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			SliceInfo info = (SliceInfo)this.listViewSlices.SelectedItems[0].Tag;
 
 			// Show the add slice to nodes by state dialog.
-			if (this.formAddSliceToNodesState.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			if (this.formAddSliceToNodesState.ShowDialog(this, this.crawler) == DialogResult.OK)
 			{
 				// Add the slice to nodes.
 				this.OnAddSliceToNodes(info.Slice, this.formAddSliceToNodesState.Result);
@@ -781,7 +781,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			SliceInfo info = (SliceInfo)this.listViewSlices.SelectedItems[0].Tag;
 
 			// Show the add slice to nodes by state dialog.
-			if (this.formAddSliceToNodesSlice.ShowDialog(this, this.crawler.Config) == DialogResult.OK)
+			if (this.formAddSliceToNodesSlice.ShowDialog(this, this.crawler) == DialogResult.OK)
 			{
 				// Add the slice to nodes.
 				this.OnAddSliceToNodes(info.Slice, this.formAddSliceToNodesSlice.Result);
@@ -804,7 +804,8 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				CrawlerStatus.StatusType.Busy,
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 				"Adding slice {0} to {1} PlanetLab node{2}...".FormatWith(slice.Id, ids.Length, ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeClock_16);
@@ -830,8 +831,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
 				this.requestAddSliceToNodes,
-				this.crawler.Config.PlanetLab.Username,
-				this.crawler.Config.PlanetLab.Password,
+				this.crawler.PlanetLab.Username,
+				this.crawler.PlanetLab.Password,
 				new object[] { slice.Id.Value, ids },
 				requestState);
 		}
@@ -864,7 +865,8 @@ namespace InetAnalytics.Controls.PlanetLab
 				{
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						CrawlerStatus.StatusType.Normal,
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 						"Adding slice {0} to {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
@@ -889,7 +891,8 @@ namespace InetAnalytics.Controls.PlanetLab
 						MessageBoxIcon.Warning);
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						CrawlerStatus.StatusType.Normal,
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 						"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
@@ -906,7 +909,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Update the status.
 				this.status.Send(
-					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+					CrawlerStatus.StatusType.Normal,
+					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 					"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
@@ -943,7 +947,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				CrawlerStatus.StatusType.Normal,
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 				"Adding the slice {0} to {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
@@ -967,7 +972,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				CrawlerStatus.StatusType.Normal,
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 				"Adding the slice {0} to {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
@@ -1021,8 +1027,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
 				this.requestGetSlices,
-				this.crawler.Config.PlanetLab.Username,
-				this.crawler.Config.PlanetLab.Password,
+				this.crawler.PlanetLab.Username,
+				this.crawler.PlanetLab.Password,
 				PlSlice.GetFilter(PlSlice.Fields.SliceId, slice.Id),
 				requestState);
 		}
@@ -1111,7 +1117,8 @@ namespace InetAnalytics.Controls.PlanetLab
 
 				// Update the status.
 				this.status.Send(
-					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+					CrawlerStatus.StatusType.Busy,
+					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 					"Removing slice {0} from {1} PlanetLab node{2}...".FormatWith(info.Slice.Id, ids.Length, ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
@@ -1136,8 +1143,8 @@ namespace InetAnalytics.Controls.PlanetLab
 				// Begin an asynchronous PlanetLab request.
 				this.BeginRequest(
 					this.requestRemoveSliceFromNodes,
-					this.crawler.Config.PlanetLab.Username,
-					this.crawler.Config.PlanetLab.Password,
+					this.crawler.PlanetLab.Username,
+					this.crawler.PlanetLab.Password,
 					new object[] { info.Slice.Id.Value, ids },
 					requestState);
 			}
@@ -1171,7 +1178,8 @@ namespace InetAnalytics.Controls.PlanetLab
 				{
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						CrawlerStatus.StatusType.Normal,
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 						"Removing slice {0} from {1} PlanetLab node{2} succeeded.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
@@ -1197,7 +1205,8 @@ namespace InetAnalytics.Controls.PlanetLab
 						MessageBoxIcon.Warning);
 					// Update the status.
 					this.status.Send(
-						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+						CrawlerStatus.StatusType.Normal,
+						"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 						"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
@@ -1207,7 +1216,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Update the status.
 				this.status.Send(
-					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+					CrawlerStatus.StatusType.Normal,
+					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 					"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
@@ -1244,7 +1254,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				CrawlerStatus.StatusType.Normal,
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 				"Removing the slice {0} from {1} PlanetLab node{2} was canceled.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
@@ -1268,7 +1279,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			SliceIdsRequestState requestState = state as SliceIdsRequestState;
 			// Update the status.
 			this.status.Send(
-				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.Config.PlanetLab.LocalSlices.Count),
+				CrawlerStatus.StatusType.Normal,
+				"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
 				"Removing the slice {0} from {1} PlanetLab node{2} failed.".FormatWith(requestState.Slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);

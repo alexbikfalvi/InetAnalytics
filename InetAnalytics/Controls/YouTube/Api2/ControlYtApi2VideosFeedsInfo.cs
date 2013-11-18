@@ -73,7 +73,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeVideo();
+			this.crawler.Events.SelectYouTubeVideo();
 		}
 
 		/// <summary>
@@ -83,7 +83,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoCommentsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeVideoComments();
+			this.crawler.Events.SelectYouTubeVideoComments();
 		}
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnSearchFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeSearchFeed();
+			this.crawler.Events.SelectYouTubeSearchFeed();
 		}
 
 		/// <summary>
@@ -103,7 +103,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnStandardFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeStandardFeed();
+			this.crawler.Events.SelectYouTubeStandardFeed();
 		}
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnRelatedVideosFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeRelatedVideosFeed();
+			this.crawler.Events.SelectYouTubeRelatedVideosFeed();
 		}
 
 		/// <summary>
@@ -123,7 +123,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnResponseVideosFeedClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeResponseVideosFeed();
+			this.crawler.Events.SelectYouTubeResponseVideosFeed();
 		}
 	}
 }

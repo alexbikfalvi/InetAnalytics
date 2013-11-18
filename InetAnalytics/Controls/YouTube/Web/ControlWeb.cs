@@ -72,7 +72,7 @@ namespace InetAnalytics.Controls.YouTube.Web
 		/// <param name="e">The event arguments.</param>
 		private void OnVideoStatisticsClick(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			this.crawler.SelectYouTubeWebVideos();
+			this.crawler.Events.SelectYouTubeWebVideos();
 		}
 	}
 }

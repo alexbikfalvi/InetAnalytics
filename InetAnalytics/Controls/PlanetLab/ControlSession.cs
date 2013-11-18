@@ -51,7 +51,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		private PlConfigSlice config = null;
 		private PlNode node = null;
 
-		private StatusHandler status = null;
+		private CrawlerStatusHandler status = null;
 
 		// Public declarations
 
@@ -125,7 +125,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Get the crawler status.
 			this.status = this.crawler.Status.GetHandler(this);
-			this.status.Send("Disconnected.", Resources.Server_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
 
 			// Enable the control.
 			this.Enabled = true;
@@ -216,7 +216,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send("Connecting to the PlanetLab node \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the PlanetLab node \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -237,7 +237,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send("Connected to the PlanetLab node \'{0}\'".FormatWith(info.Host), Resources.ServerSuccess_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connected to the PlanetLab node \'{0}\'".FormatWith(info.Host), Resources.ServerSuccess_16);
 			// Enable the console.
 			this.OnEnableConsole();
 			// Log
@@ -261,7 +261,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send("Connecting to the PlanetLab node \'{0}\' failed".FormatWith(info.Host), Resources.ServerError_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Connecting to the PlanetLab node \'{0}\' failed".FormatWith(info.Host), Resources.ServerError_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -283,7 +283,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send("Disconnecting from the PlanetLab node \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Disconnecting from the PlanetLab node \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -302,7 +302,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		protected override void OnDisconnected(ConnectionInfo info)
 		{
 			// Update the status bar.
-			this.status.Send("Disconnected.", Resources.Server_16);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,

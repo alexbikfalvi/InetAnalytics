@@ -751,7 +751,7 @@ namespace InetAnalytics.Controls.YouTube.Web
 		private void OnComment(object sender, EventArgs e)
 		{
 			if (null == this.statisticsVideo) return;
-			this.crawler.CommentYouTubeVideo(this.statisticsVideo);
+			this.crawler.Events.CommentYouTubeVideo(this.statisticsVideo);
 		}
 	}
 }

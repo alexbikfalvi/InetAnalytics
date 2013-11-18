@@ -102,11 +102,11 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// Refreshes the control using the PlanetLab sites from the current configuration.
 		/// </summary>
-		/// <param name="config">The crawler configuration.</param>
-		public void Refresh(CrawlerConfig config)
+		/// <param name="crawler">The crawler configuration.</param>
+		public void Refresh(Crawler crawler)
 		{
 			// Update the sites list.
-			this.sites = config.PlanetLab.Sites;
+			this.sites = crawler.PlanetLab.Sites;
 			// Clear the list view.
 			this.listViewSites.Items.Clear();
 			this.listViewNodes.Items.Clear();

@@ -24,26 +24,30 @@ namespace InetCrawler.Status
 	/// <summary>
 	/// A structure representing a status message.
 	/// </summary>
-	public struct StatusMessage
+	public struct CrawlerStatusMessage
 	{
 		/// <summary>
 		/// Creates a new message structure.
 		/// </summary>
+		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
-		public StatusMessage(string text)
+		public CrawlerStatusMessage(CrawlerStatus.StatusType type, string text)
 			: this()
 		{
+			this.Type = type;
 			this.LeftText = text;
 		}
 
 		/// <summary>
 		/// Creates a new message structure.
 		/// </summary>
+		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
 		/// <param name="image">The left image.</param>
-		public StatusMessage(string text, Image image)
+		public CrawlerStatusMessage(CrawlerStatus.StatusType type, string text, Image image)
 			: this()
 		{
+			this.Type = type;
 			this.LeftText = text;
 			this.LeftImage = image;
 		}
@@ -51,13 +55,15 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Creates a new messge structure.
 		/// </summary>
+		/// <param name="type">The status type.</param>
 		/// <param name="leftText">The left text.</param>
 		/// <param name="rightText">The right text.</param>
 		/// <param name="leftImage">The left image.</param>
 		/// <param name="rightImage">The right image.</param>
-		public StatusMessage(string leftText, string rightText, Image leftImage, Image rightImage)
+		public CrawlerStatusMessage(CrawlerStatus.StatusType type, string leftText, string rightText, Image leftImage, Image rightImage)
 			: this()
 		{
+			this.Type = type;
 			this.LeftText = leftText;
 			this.RightText = rightText;
 			this.LeftImage = leftImage;
@@ -66,6 +72,10 @@ namespace InetCrawler.Status
 
 		// Public properties.
 
+		/// <summary>
+		/// Gets the status type.
+		/// </summary>
+		public CrawlerStatus.StatusType Type { get; private set; }
 		/// <summary>
 		/// Gets the left image.
 		/// </summary>

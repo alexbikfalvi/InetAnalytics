@@ -91,7 +91,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		{
 			// Save the parameters.
 			this.crawler = crawler;
-			this.request = new YouTubeRequestFeed<Video>(this.crawler.Settings);
+			this.request = new YouTubeRequestFeed<Video>(this.crawler.YouTube.Settings);
 
 			// Enable the control.
 			this.Enabled = true;
@@ -118,7 +118,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			this.uri = YouTubeUri.GetStandardFeed(
 				InetApi.YouTube.Api.V2.YouTube.StandardFeeds[this.comboBoxFeed.SelectedIndex],
 				this.comboBoxRegion.SelectedIndex == 0 ? null : YouTubeUri.GetRegionId(this.comboBoxRegion.SelectedItem as string),
-				this.comboBoxCategory.SelectedIndex == 0 ? null : this.crawler.Categories[this.comboBoxCategory.SelectedItem as string].Term,
+				this.comboBoxCategory.SelectedIndex == 0 ? null : this.crawler.YouTube.Categories[this.comboBoxCategory.SelectedItem as string].Term,
 				this.comboBoxTime.SelectedIndex == 0 ? null : InetApi.YouTube.Api.V2.YouTube.Times[Array.IndexOf(YouTubeUri.TimeNames, this.comboBoxTime.SelectedItem as string)] as YouTubeTimeId?,
 				1,
 				this.videoList.VideosPerPage);
@@ -133,7 +133,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnOpenCategories(object sender, EventArgs e)
 		{
 			// If there are no categories in the combobox, refresh the categories list.
-			if (this.crawler.Categories.IsEmpty)
+			if (this.crawler.YouTube.Categories.IsEmpty)
 			{
 				this.OnBeginRefreshCategories(sender, e);
 			}
@@ -152,9 +152,9 @@ namespace InetAnalytics.Controls.YouTube.Api2
 					// Update the categories list.
 					this.comboBoxCategory.Items.Clear();
 					this.comboBoxCategory.Items.Add("(any)");
-					if (this.crawler.Categories.CategoryLabels != null)
+					if (this.crawler.YouTube.Categories.CategoryLabels != null)
 					{
-						this.comboBoxCategory.Items.AddRange(this.crawler.Categories.CategoryLabels);
+						this.comboBoxCategory.Items.AddRange(this.crawler.YouTube.Categories.CategoryLabels);
 					}
 					this.comboBoxCategory.SelectedIndex = 0;
 				});
@@ -171,7 +171,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			this.ShowMessage(Resources.GlobeClock_48, "Video Categories", "Refreshing the list of YouTube categories...");
 
 			// Refresh the list of categories.
-			this.crawler.Categories.BeginRefresh(new AsyncWebRequestCallback(this.OnEndRefreshCategories), null);
+			this.crawler.YouTube.Categories.BeginRefresh(new AsyncWebRequestCallback(this.OnEndRefreshCategories), null);
 		}
 
 		/// <summary>
@@ -183,7 +183,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			try
 			{
 				// Complete the asynchronous request.
-				this.crawler.Categories.EndRefresh(result);
+				this.crawler.YouTube.Categories.EndRefresh(result);
 				// Update the message that the operation completed successfully.
 				this.ShowMessage(
 					Resources.GlobeSuccess_48,
@@ -249,10 +249,10 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			else
 			{
 				// Compute the category index.
-				int categoryIndex = Array.IndexOf(this.crawler.Categories.CategoryLabels, this.comboBoxCategory.SelectedItem);
+				int categoryIndex = Array.IndexOf(this.crawler.YouTube.Categories.CategoryLabels, this.comboBoxCategory.SelectedItem);
 
 				// Get the category region IDs.
-				string[] ids = this.crawler.Categories[categoryIndex].Browsable;
+				string[] ids = this.crawler.YouTube.Categories[categoryIndex].Browsable;
 
 				// Add the region names.
 				if (ids != null)
@@ -500,7 +500,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Video(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeVideo(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeVideo(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -511,7 +511,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Related(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeRelatedVideos(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeRelatedVideos(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -522,7 +522,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewApiV2Responses(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeResponseVideos(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeResponseVideos(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -534,7 +534,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		private void OnViewApiV2Author(object sender, EventArgs e)
 		{
 			Video video = this.videoList.SelectedItem.Tag as Video;
-			this.crawler.OpenYouTubeUser(video.Author.UserId);
+			this.crawler.Events.OpenYouTubeUser(video.Author.UserId);
 		}
 
 		/// <summary>
@@ -545,7 +545,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewWeb(object sender, EventArgs e)
 		{
-			this.crawler.OpenYouTubeWebVideo(this.videoList.SelectedItem.Tag as Video);
+			this.crawler.Events.OpenYouTubeWebVideo(this.videoList.SelectedItem.Tag as Video);
 		}
 
 		/// <summary>
@@ -569,7 +569,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnComment(object sender, EventArgs e)
 		{
-			this.crawler.CommentYouTubeVideo((this.videoList.SelectedItem.Tag as Video).Id);
+			this.crawler.Events.CommentYouTubeVideo((this.videoList.SelectedItem.Tag as Video).Id);
 		}
 
 		/// <summary>
@@ -651,7 +651,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 				this.uri = YouTubeUri.GetStandardFeed(
 					InetApi.YouTube.Api.V2.YouTube.StandardFeeds[this.comboBoxFeed.SelectedIndex],
 					this.comboBoxRegion.SelectedIndex == 0 ? null : YouTubeUri.GetRegionId(this.comboBoxRegion.SelectedItem as string),
-					this.comboBoxCategory.SelectedIndex == 0 ? null : this.crawler.Categories[this.comboBoxCategory.SelectedItem as string].Term,
+					this.comboBoxCategory.SelectedIndex == 0 ? null : this.crawler.YouTube.Categories[this.comboBoxCategory.SelectedItem as string].Term,
 					this.comboBoxTime.SelectedIndex == 0 ? null : InetApi.YouTube.Api.V2.YouTube.Times[Array.IndexOf(YouTubeUri.TimeNames, this.comboBoxTime.SelectedItem as string)] as YouTubeTimeId?,
 					startIndex,
 					this.videoList.VideosPerPage);
@@ -689,7 +689,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 				this.uri = YouTubeUri.GetStandardFeed(
 					InetApi.YouTube.Api.V2.YouTube.StandardFeeds[this.comboBoxFeed.SelectedIndex],
 					this.comboBoxRegion.SelectedIndex == 0 ? null : YouTubeUri.GetRegionId(this.comboBoxRegion.SelectedItem as string),
-					this.comboBoxCategory.SelectedIndex == 0 ? null : this.crawler.Categories[this.comboBoxCategory.SelectedItem as string].Term,
+					this.comboBoxCategory.SelectedIndex == 0 ? null : this.crawler.YouTube.Categories[this.comboBoxCategory.SelectedItem as string].Term,
 					this.comboBoxTime.SelectedIndex == 0 ? null : InetApi.YouTube.Api.V2.YouTube.Times[Array.IndexOf(YouTubeUri.TimeNames, this.comboBoxTime.SelectedItem as string)] as YouTubeTimeId?,
 					startIndex,
 					this.videoList.VideosPerPage);
@@ -721,7 +721,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 		/// <param name="e">The event arguments.</param>
 		private void OnViewProfile(object sender, StringEventArgs e)
 		{
-			this.crawler.OpenYouTubeUser(e.Value);
+			this.crawler.Events.OpenYouTubeUser(e.Value);
 		}
 	}
 }
