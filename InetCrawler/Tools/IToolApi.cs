@@ -21,26 +21,10 @@ using System;
 namespace InetCrawler.Tools
 {
 	/// <summary>
-	/// A class representing a tool dependency attribute.
+	/// An interface allowing the communication of a tool with the host application.
 	/// </summary>
-	public sealed class ToolDependencyAttribute : Attribute
+	public interface IToolApi
 	{
-		/// <summary>
-		/// Creates a new tool information structure.
-		/// </summary>
-		/// <param name="id">The tool identifier.</param>
-		/// <param name="major">The toolbox major version.</param>
-		/// <param name="minor">The toolbox minor version.</param>
-		/// <param name="build">The toolbox build version.</param>
-		/// <param name="revision">The toolbox revision version.</param>
-		public ToolDependencyAttribute(string id, int major, int minor, int build, int revision)
-		{
-			this.Info = new ToolId(new Guid(id), new Version(major, minor, build, revision));
-		}
 
-		/// <summary>
-		/// Gets the dependency tool information.
-		/// </summary>
-		public ToolId Info { get; private set; }
 	}
 }

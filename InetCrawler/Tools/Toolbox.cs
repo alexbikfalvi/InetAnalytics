@@ -20,24 +20,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Win32;
 using DotNetApi;
+using InetCrawler.Tools;
 
 namespace InetCrawler.Tools
 {
 	/// <summary>
 	/// A class representing the Internet Analytics toolbox.
 	/// </summary>
-	public sealed class Toolbox : IDisposable, IEnumerable<Tool>
+	public sealed class Toolbox
 	{
-		private readonly Dictionary<ToolInfo, Tool> tools = new Dictionary<ToolInfo, Tool>();
+		private readonly IToolApi api;
+
 		private readonly object sync = new object();
+
+		private readonly RegistryKey key;
+		private readonly Dictionary<Guid, ToolsetConfig> toolsets = new Dictionary<Guid, ToolsetConfig>();
 
 		/// <summary>
 		/// Creates a new toolbox instance.
 		/// </summary>
-		public Toolbox()
+		/// <param name="api">The tools API.</param>
+		/// <param name="rootKey">The root registry key.</param>
+		/// <param name="path">The registry path.</param>
+		public Toolbox(IToolApi api, RegistryKey rootKey, string path)
 		{
-
+			// Set the tool API.
+			this.api = api;
+			// Open a registry key for the toolbox.
+			if (null == (this.key = rootKey.OpenSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree)))
+			{
+				this.key = rootKey.CreateSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree);
+			}
 		}
 
 		// Public methods.
@@ -47,34 +62,26 @@ namespace InetCrawler.Tools
 		/// </summary>
 		public void Dispose()
 		{
+			// Dispose the toolsets.
+			lock (this.sync)
+			{
+				foreach (ToolsetConfig toolset in this.toolsets.Values)
+				{
+					toolset.Dispose();
+				}
+			}
+			// Close the registry key.
+			this.key.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
-		/// Gets the generic enumerator for the toolbox collection.
-		/// </summary>
-		/// <returns>The enumerator.</returns>
-		public IEnumerator<Tool> GetEnumerator()
-		{
-			return this.tools.Values.GetEnumerator();
-		}
-
-		/// <summary>
-		/// Gets the non-generic enumerator for the toolbox collection.
-		/// </summary>
-		/// <returns>The enumerator.</returns>
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
-
-		/// <summary>
-		/// Loads a toolbox from the specified file.
+		/// Opens a toolset from the specified file.
 		/// </summary>
 		/// <param name="fileName">The file name.</param>
-		/// <returns>The toolbox.</returns>
-		public static Toolset Load(string fileName)
+		/// <returns>The toolset.</returns>
+		public Toolset Open(string fileName)
 		{
 			// Load the file as an assembly.
 			Assembly assembly = Assembly.LoadFrom(fileName);
@@ -82,22 +89,52 @@ namespace InetCrawler.Tools
 			// Search the assembly for a toolset type.
 			foreach (Type type in assembly.GetExportedTypes())
 			{
-				// Check the type extends the toolset interface.
-				if (type.IsSubclassOf(typeof(Toolset)))
+				// If the type is a toolset.
+				if (Toolset.IsToolset(type))
 				{
-					// Check the toolbox class has a toolbox attribute.
-					object[] attributes = type.GetCustomAttributes(typeof(ToolsetInfoAttribute), false);
-
-					// If the attributes list is not empty.
-					if (attributes.Length != 0)
-					{
-						// Create a new instance.
-						return Activator.CreateInstance(type) as Toolset;
-					}
+					// Create a new instance.
+					return Activator.CreateInstance(type, new object[] { this.api, type.FullName }) as Toolset;
 				}
 			}
 			// Else, throw an exception.
-			throw new NotSupportedException("Cannot find an Internet Analytics toolbox in the specified library.");
+			throw new NotSupportedException("Cannot find an Internet Analytics toolset in the specified library.");
+		}
+
+		/// <summary>
+		/// Adds the specified toolset and tools to the toolbox.
+		/// </summary>
+		/// <param name="fileName">The library file name.</param>
+		/// <param name="toolset">The toolset.</param>
+		/// <param name="tools">The tools.</param>
+		public void Add(string fileName, Toolset toolset, Type[] tools)
+		{
+			// Get the toolset information.
+			ToolsetInfoAttribute info = toolset.GetToolsetInfo();
+
+			// Create the toolset configuration.
+			ToolsetConfig config = new ToolsetConfig(this.key, fileName, toolset, tools);
+			
+			lock (this.sync)
+			{
+				// Add the configuration to the toolset list.
+				this.toolsets.Add(info.Id, config);
+			}
+		}
+
+		/// <summary>
+		/// Loads the toolbox configuration.
+		/// </summary>
+		public void LoadConfiguration()
+		{
+
+		}
+
+		/// <summary>
+		/// Saves the toolbox configuration.
+		/// </summary>
+		public void SaveConfiguration()
+		{
+
 		}
 	}
 }

@@ -73,13 +73,16 @@ namespace InetAnalytics.Controls.Tools
 			{
 				try
 				{
-					// If the user selects a file, load the toolset.
-					Toolset toolset = Toolbox.Load(this.openFileDialog.FileName);
+					// If the user selects a file, open the toolset.
+					Toolset toolset = this.crawler.Toolbox.OpenToolset(this.openFileDialog.FileName);
 
 					// Show the add tool dialog with the loaded toolset.
 					if (this.formAddTool.ShowDialog(this, toolset) == DialogResult.OK)
 					{
-
+						// Get the list of added tools.
+						Type[] tools = this.formAddTool.Result;
+						// Add the tools to the toolbox.
+						this.crawler.Toolbox.Add(this.openFileDialog.FileName, toolset, tools);
 					}
 				}
 				catch

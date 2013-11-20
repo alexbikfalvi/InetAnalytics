@@ -42,6 +42,8 @@ namespace InetAnalytics.Forms.Tools
 			this.control.Name = "control";
 			this.control.Size = new System.Drawing.Size(584, 362);
 			this.control.TabIndex = 0;
+			this.control.Added += new System.EventHandler(this.OnAdded);
+			this.control.Canceled += new System.EventHandler(this.OnCanceled);
 			// 
 			// FormAddTool
 			// 

@@ -17,47 +17,45 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using InetCrawler.Tools;
-using InetTools.Tools;
+using System.Windows.Forms;
+using DotNetApi;
+using DotNetApi.Windows;
 
-namespace InetTools
+namespace InetAnalytics.Forms.Tools
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// A form dialog displaying a tool information.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
-		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
-		)]
-	public sealed class StandardToolset : Toolset
+	public partial class FormToolProperties : Form
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolWebCrawler)
-		};
-
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Creates a new form instance.
 		/// </summary>
-		/// <param name="api">The tool API.</param>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(IToolApi api, string name)
-			: base(api, name)
+		public FormToolProperties()
 		{
+			InitializeComponent();
 
+			// Set the font.
+			Window.SetFont(this);
 		}
 
-		// Properties.
-
 		/// <summary>
-		/// Gets the list of tools.
+		/// Shows the form as a dialog and the specified tool.
 		/// </summary>
-		public override Type[] Tools { get { return StandardToolset.tools; } }
+		/// <param name="owner">The owner window.</param>
+		/// <param name="tool">The tool.</param>
+		/// <returns>The dialog result.</returns>
+		public DialogResult ShowDialog(IWin32Window owner, Type tool)
+		{
+			// If the tool is null, do nothing.
+			if (null == tool) return DialogResult.Abort;
+
+			// Set the tool.
+			this.tool.Tool = tool;
+			// Set the title.
+			this.Text = "{0} Properties".FormatWith(this.tool.Title);
+			// Open the dialog.
+			return base.ShowDialog(owner);
+		}
 	}
 }

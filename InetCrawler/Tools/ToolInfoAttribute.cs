@@ -37,15 +37,15 @@ namespace InetCrawler.Tools
 		/// <param name="description">The tool description.</param>
 		public ToolInfoAttribute(string id, int major, int minor, int build, int revision, string name, string description)
 		{
-			this.Info = new ToolInfo(new Guid(id), new Version(major, minor, build, revision));
+			this.Id = new ToolId(new Guid(id), new Version(major, minor, build, revision));
 			this.Name = name;
 			this.Description = description;
 		}
 
 		/// <summary>
-		/// Gets the tool information.
+		/// Gets the tool identifier.
 		/// </summary>
-		public ToolInfo Info { get; private set; }
+		public ToolId Id { get; private set; }
 		/// <summary>
 		/// Gets the tool name.
 		/// </summary>

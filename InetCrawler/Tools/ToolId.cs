@@ -21,9 +21,9 @@ using System;
 namespace InetCrawler.Tools
 {
 	/// <summary>
-	/// A structure representing the tool information.
+	/// A structure representing a tool identifier.
 	/// </summary>
-	public struct ToolInfo
+	public struct ToolId
 	{
 		/// <summary>
 		/// Creates a new tool information structure.
@@ -31,21 +31,25 @@ namespace InetCrawler.Tools
 		/// <param name="id">The identifier.</param>
 		/// <param name="version">The tool version.</param>
 		/// <p
-		public ToolInfo(Guid id, Version version)
+		public ToolId(Guid guid, Version version)
 			: this()
 		{
-			this.Id = id;
+			this.Guid = guid;
 			this.Version = version;
 		}
+
+		// Public properties.
 
 		/// <summary>
 		/// Gets the tool identifier.
 		/// </summary>
-		public Guid Id { get; private set; }
+		public Guid Guid { get; private set; }
 		/// <summary>
 		/// Gets the tool version.
 		/// </summary>
 		public Version Version { get; private set; }
+
+		// Public methods.
 
 		/// <summary>
 		/// Compares two tool information structures for equality.
@@ -55,9 +59,40 @@ namespace InetCrawler.Tools
 		public override bool Equals(object obj)
 		{
 			if (null == obj) return false;
-			if (!(obj is ToolInfo)) return false;
-			ToolInfo info = (ToolInfo)obj;
-			return (this.Id == info.Id) && (this.Version == info.Version);
+			if (!(obj is ToolId)) return false;
+			ToolId info = (ToolId)obj;
+			return (this.Guid == info.Guid) && (this.Version == info.Version);
+		}
+
+		/// <summary>
+		/// Returns the hash code of the current object.
+		/// </summary>
+		/// <returns>The hash code.</returns>
+		public override int GetHashCode()
+		{
+			return this.Guid.GetHashCode() ^ this.Version.GetHashCode();
+		}
+
+		/// <summary>
+		/// Compares two tool information structures.
+		/// </summary>
+		/// <param name="left">The left header.</param>
+		/// <param name="right">The right header.</param>
+		/// <returns><b>True</b> if the two headers are equal, or <b>false</b> otherwise.</returns>
+		public static bool operator ==(ToolId left, ToolId right)
+		{
+			return left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares two tool information structures.
+		/// </summary>
+		/// <param name="left">The left header.</param>
+		/// <param name="right">The right header.</param>
+		/// <returns><b>True</b> if the two headers are equal, or <b>false</b> otherwise.</returns>
+		public static bool operator !=(ToolId left, ToolId right)
+		{
+			return !left.Equals(right);
 		}
 	}
 }

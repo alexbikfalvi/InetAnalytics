@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using InetAnalytics.Forms.Tools;
 using InetCrawler.Tools;
 
 namespace InetAnalytics.Controls.Tools
@@ -28,6 +29,8 @@ namespace InetAnalytics.Controls.Tools
 	/// </summary>
 	public partial class ControlAddTool : ThreadSafeControl
 	{
+		private readonly FormToolProperties formToolProperties = new FormToolProperties();
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -39,13 +42,20 @@ namespace InetAnalytics.Controls.Tools
 		// Public events.
 
 		/// <summary>
-		/// An event raised when the user selects one or more tools.
+		/// An event raised when the user adds one or more tools.
 		/// </summary>
-		public event EventHandler Selected;
+		public event EventHandler Added;
 		/// <summary>
 		/// An event raised when the user cancels the tools selection.
 		/// </summary>
 		public event EventHandler Canceled;
+
+		// Public result.
+
+		/// <summary>
+		/// The list of selected tools.
+		/// </summary>
+		public Type[] Result { get; private set; }
 
 		// Public methods.
 
@@ -53,14 +63,18 @@ namespace InetAnalytics.Controls.Tools
 		/// Refreshes the control with the information from the specified toolset.
 		/// </summary>
 		/// <param name="toolset">The toolset.</param>
-		public void Refresh(Toolset toolset)
+		public bool Refresh(Toolset toolset)
 		{
 			// Reset the buttons.
 			this.buttonAdd.Enabled = false;
-			this.buttonProperties.Enabled = false;
+			this.buttonSelectAll.Enabled = toolset.Tools.Length > 0;
+			this.buttonClearAll.Enabled = false;
 
 			// Clear the list.
 			this.listView.Items.Clear();
+
+			// Clear the result.
+			this.Result = null;
 			
 			// Load the toolset information.
 			ToolsetInfoAttribute toolsetInfo = toolset.GetToolsetInfo();
@@ -70,35 +84,131 @@ namespace InetAnalytics.Controls.Tools
 			{
 				// Show an error message.
 				MessageBox.Show(this, "The selected toolset is invalid.", "Invalid Toolset", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				// Cancel the selection.
-				if (null != this.Canceled) this.Canceled(this, EventArgs.Empty);
 				// Return.
-				return;
+				return false;
 			}
 
 			// Set the toolset information.
 			this.textBoxName.Text = toolsetInfo.Name;
 			this.textBoxVersion.Text = toolsetInfo.Version.ToString();
 			this.textBoxProduct.Text = toolsetInfo.Product;
-			this.textBoxVendor.Text = toolsetInfo.Vendor;
+			this.textBoxVendor.Text = toolsetInfo.Author;
 
 			// List all tools.
 			foreach (Type type in toolset.Tools)
 			{
-				// Get the tool attributes.
-				object[] attributes = type.GetCustomAttributes(typeof(ToolInfoAttribute), false);
-				// Check the tool type has a tool attribute.
-				if (attributes.Length > 0)
+				// Get the tool information.
+				ToolInfoAttribute info = Tool.GetToolInfo(type);
+
+				// If the info is not null.
+				if (null != info)
 				{
-					// Get the tool information.
-					ToolInfoAttribute toolInfo = attributes[0] as ToolInfoAttribute;
 					// Create a new item.
-					ListViewItem item = new ListViewItem(new string[] { toolInfo.Name, toolInfo.Info.Version.ToString(), toolInfo.Description });
+					ListViewItem item = new ListViewItem(new string[] { info.Name, info.Id.Version.ToString(), info.Description });
+					// Set the item tag.
+					item.Tag = type;
 					// Set the item as not checked.
 					item.Checked = false;
 					// Add the item.
 					this.listView.Items.Add(item);
 				}
+			}
+
+			// Return true.
+			return true;
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// An event handler called when an item was checked.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			// Update the button enabled state.
+			this.buttonAdd.Enabled = this.listView.CheckedItems.Count > 0;
+			this.buttonSelectAll.Enabled = this.listView.CheckedItems.Count < this.listView.Items.Count;
+			this.buttonClearAll.Enabled = this.listView.CheckedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the user adds a new tool.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAdded(object sender, EventArgs e)
+		{
+			// Set the result.
+			this.Result = new Type[this.listView.CheckedItems.Count];
+			// Set the tools.
+			for (int index = 0; index < this.listView.CheckedItems.Count; index++)
+			{
+				this.Result[index] = this.listView.CheckedItems[index].Tag as Type;
+			}
+			// Raise the added event.
+			if (null != this.Added) this.Added(this, EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// An event handler called when the user cancels the addition of a new tool.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCanceled(object sender, EventArgs e)
+		{
+			// Raise the canceled event.
+			if (null != this.Canceled) this.Canceled(this, EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// An event handler called when the selected tool has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectedChanged(object sender, EventArgs e)
+		{
+			// Update the button enabled state.
+			this.buttonProperties.Enabled = this.listView.SelectedItems.Count > 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects a tool properties.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The sender arguments.</param>
+		private void OnProperties(object sender, EventArgs e)
+		{
+			// If there are no selected tools, do nothing.
+			if (0 == this.listView.SelectedItems.Count) return;
+			// Show the properties dialog.
+			this.formToolProperties.ShowDialog(this, this.listView.SelectedItems[0].Tag as Type);
+		}
+
+		/// <summary>
+		/// An event handler called when selecting all tools.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectAll(object sender, EventArgs e)
+		{
+			foreach (ListViewItem item in this.listView.Items)
+			{
+				item.Checked = true;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when clearing all tools.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnClearAll(object sender, EventArgs e)
+		{
+			foreach (ListViewItem item in this.listView.Items)
+			{
+				item.Checked = false;
 			}
 		}
 	}

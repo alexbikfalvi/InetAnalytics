@@ -6462,6 +6462,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PickAxeLarge_16 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeLarge_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PickAxeLarge_24 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeLarge_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PickAxeLarge_32 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeLarge_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PickAxeLarge_48 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeLarge_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PlayPause_16 {
             get {
                 object obj = ResourceManager.GetObject("PlayPause_16", resourceCulture);

@@ -20,14 +20,14 @@ using System;
 using Microsoft.Win32;
 using InetCrawler.Comments;
 using InetCrawler.Database;
-using InetCrawler.PlanetLab;
-using InetCrawler.YouTube;
 using InetCrawler.Events;
 using InetCrawler.Log;
+using InetCrawler.PlanetLab;
 using InetCrawler.Spider;
 using InetCrawler.Status;
 using InetCrawler.Testing;
-
+using InetCrawler.Tools;
+using InetCrawler.YouTube;
 
 namespace InetCrawler
 {
@@ -38,13 +38,15 @@ namespace InetCrawler
 	{
 		private readonly CrawlerConfig config;
 		private readonly CrawlerEvents events;
+		private readonly ToolApi toolApi;
+		private readonly Toolbox toolbox;
 		private readonly Logger log;
 		private readonly DbConfig dbConfig;
 		private readonly PlConfig plConfig;
 		private readonly YtConfig ytConfig;
+		private readonly Spiders spiders;
 		private readonly CrawlerStatus status;
 		private readonly CrawlerComments comments;
-		private readonly Spiders spiders;
 		private readonly CrawlerTesting testing;
 		
 		private readonly static CrawlerNetwork network = new CrawlerNetwork();
@@ -85,6 +87,12 @@ namespace InetCrawler
 
 			// Create the crawler testing.
 			this.testing = new CrawlerTesting(rootKey, rootPath + @"\Testing");
+
+			// Create the toolbox API.
+			this.toolApi = new ToolApi();
+
+			// Create the toolbox.
+			this.toolbox = new Toolbox(this.toolApi, rootKey, rootPath + @"\Toolbox");
 		}
 
 		// Public properties.
@@ -117,6 +125,10 @@ namespace InetCrawler
 		/// Returns the crawler log.
 		/// </summary>
 		public Logger Log { get { return this.log; } }
+		/// <summary>
+		/// Returns the toolbox.
+		/// </summary>
+		public Toolbox Toolbox { get { return this.toolbox; } }
 		/// <summary>
 		/// Returns the crawler status.
 		/// </summary>
@@ -158,6 +170,8 @@ namespace InetCrawler
 			// Dispose the current objects.
 			if (disposing)
 			{
+				// Close the toolbox.
+				this.toolbox.Dispose();
 				// Close the database configuration.
 				this.dbConfig.Dispose();
 				// Close the PlanetLab configuration.

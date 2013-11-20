@@ -37,11 +37,9 @@ namespace InetTools.Tools
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
-		/// <param name="productId">The product identifier.</param>
-		/// <param name="productName">The product name.</param>
-		/// <param name="vendorName">The vendor name.</param>
-		public ToolWebCrawler(Guid productId, string productName, string vendorName)
-			: base(productId, productName, vendorName)
+		/// <param name="api">The tool API.</param>
+		public ToolWebCrawler(IToolApi api)
+			: base(api)
 		{
 
 		}

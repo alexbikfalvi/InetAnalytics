@@ -71,7 +71,7 @@
 			this.textBoxStack.ReadOnly = true;
 			this.textBoxStack.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.textBoxStack.Size = new System.Drawing.Size(245, 171);
-			this.textBoxStack.TabIndex = 8;
+			this.textBoxStack.TabIndex = 11;
 			this.textBoxStack.WordWrap = false;
 			// 
 			// textBoxMessage
@@ -82,7 +82,7 @@
 			this.textBoxMessage.Name = "textBoxMessage";
 			this.textBoxMessage.ReadOnly = true;
 			this.textBoxMessage.Size = new System.Drawing.Size(245, 20);
-			this.textBoxMessage.TabIndex = 4;
+			this.textBoxMessage.TabIndex = 3;
 			// 
 			// textBoxType
 			// 
@@ -92,33 +92,33 @@
 			this.textBoxType.Name = "textBoxType";
 			this.textBoxType.ReadOnly = true;
 			this.textBoxType.Size = new System.Drawing.Size(245, 20);
-			this.textBoxType.TabIndex = 2;
+			this.textBoxType.TabIndex = 1;
 			// 
 			// labelMessage
 			// 
 			this.labelMessage.AutoSize = true;
-			this.labelMessage.Location = new System.Drawing.Point(8, 35);
+			this.labelMessage.Location = new System.Drawing.Point(6, 35);
 			this.labelMessage.Name = "labelMessage";
 			this.labelMessage.Size = new System.Drawing.Size(53, 13);
-			this.labelMessage.TabIndex = 3;
+			this.labelMessage.TabIndex = 2;
 			this.labelMessage.Text = "&Message:";
 			// 
 			// labelType
 			// 
 			this.labelType.AutoSize = true;
-			this.labelType.Location = new System.Drawing.Point(8, 9);
+			this.labelType.Location = new System.Drawing.Point(6, 9);
 			this.labelType.Name = "labelType";
 			this.labelType.Size = new System.Drawing.Size(34, 13);
-			this.labelType.TabIndex = 1;
+			this.labelType.TabIndex = 0;
 			this.labelType.Text = "&Type:";
 			// 
 			// labelStack
 			// 
 			this.labelStack.AutoSize = true;
-			this.labelStack.Location = new System.Drawing.Point(8, 138);
+			this.labelStack.Location = new System.Drawing.Point(6, 138);
 			this.labelStack.Name = "labelStack";
 			this.labelStack.Size = new System.Drawing.Size(38, 13);
-			this.labelStack.TabIndex = 7;
+			this.labelStack.TabIndex = 10;
 			this.labelStack.Text = "Stack:";
 			// 
 			// textBoxSource
@@ -129,15 +129,15 @@
 			this.textBoxSource.Name = "textBoxSource";
 			this.textBoxSource.ReadOnly = true;
 			this.textBoxSource.Size = new System.Drawing.Size(245, 20);
-			this.textBoxSource.TabIndex = 9;
+			this.textBoxSource.TabIndex = 5;
 			// 
 			// labelSource
 			// 
 			this.labelSource.AutoSize = true;
-			this.labelSource.Location = new System.Drawing.Point(8, 61);
+			this.labelSource.Location = new System.Drawing.Point(7, 61);
 			this.labelSource.Name = "labelSource";
 			this.labelSource.Size = new System.Drawing.Size(44, 13);
-			this.labelSource.TabIndex = 10;
+			this.labelSource.TabIndex = 4;
 			this.labelSource.Text = "&Source:";
 			// 
 			// textBoxTarget
@@ -148,15 +148,15 @@
 			this.textBoxTarget.Name = "textBoxTarget";
 			this.textBoxTarget.ReadOnly = true;
 			this.textBoxTarget.Size = new System.Drawing.Size(245, 20);
-			this.textBoxTarget.TabIndex = 11;
+			this.textBoxTarget.TabIndex = 7;
 			// 
 			// labelTarget
 			// 
 			this.labelTarget.AutoSize = true;
-			this.labelTarget.Location = new System.Drawing.Point(8, 87);
+			this.labelTarget.Location = new System.Drawing.Point(6, 87);
 			this.labelTarget.Name = "labelTarget";
 			this.labelTarget.Size = new System.Drawing.Size(41, 13);
-			this.labelTarget.TabIndex = 12;
+			this.labelTarget.TabIndex = 6;
 			this.labelTarget.Text = "T&arget:";
 			// 
 			// pictureBox
@@ -178,7 +178,7 @@
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(341, 339);
-			this.tabControl.TabIndex = 13;
+			this.tabControl.TabIndex = 0;
 			this.tabControl.Visible = false;
 			// 
 			// tabPageGeneral
@@ -206,10 +206,10 @@
 			// labelInner
 			// 
 			this.labelInner.AutoSize = true;
-			this.labelInner.Location = new System.Drawing.Point(8, 113);
+			this.labelInner.Location = new System.Drawing.Point(6, 114);
 			this.labelInner.Name = "labelInner";
 			this.labelInner.Size = new System.Drawing.Size(34, 13);
-			this.labelInner.TabIndex = 5;
+			this.labelInner.TabIndex = 8;
 			this.labelInner.Text = "I&nner:";
 			// 
 			// linkLabelInner
@@ -220,7 +220,7 @@
 			this.linkLabelInner.Location = new System.Drawing.Point(79, 111);
 			this.linkLabelInner.Name = "linkLabelInner";
 			this.linkLabelInner.Size = new System.Drawing.Size(35, 16);
-			this.linkLabelInner.TabIndex = 6;
+			this.linkLabelInner.TabIndex = 9;
 			this.linkLabelInner.TabStop = true;
 			this.linkLabelInner.Text = "None";
 			this.linkLabelInner.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

@@ -36,15 +36,15 @@ namespace InetCrawler.Tools
 		/// <param name="name">The toolset name.</param>
 		/// <param name="description">The toolset description.</param>
 		/// <param name="product">The product.</param>
-		/// <param name="vendor">The vendor.</param>
-		public ToolsetInfoAttribute(string id, int major, int minor, int build, int revision, string name, string description, string product, string vendor)
+		/// <param name="author">The author.</param>
+		public ToolsetInfoAttribute(string id, int major, int minor, int build, int revision, string name, string description, string product, string author)
 		{
 			this.Id = new Guid(id);
 			this.Version = new Version(major, minor, build, revision);
 			this.Name = name;
 			this.Description = description;
 			this.Product = product;
-			this.Vendor = vendor;
+			this.Author = author;
 		}
 
 		/// <summary>
@@ -68,8 +68,8 @@ namespace InetCrawler.Tools
 		/// </summary>
 		public string Product { get; private set; }
 		/// <summary>
-		/// Gets the tool vendor.
+		/// Gets the tool author.
 		/// </summary>
-		public string Vendor { get; private set; }
+		public string Author { get; private set; }
 	}
 }

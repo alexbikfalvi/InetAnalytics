@@ -44,9 +44,9 @@ namespace InetAnalytics.Forms.Tools
 		// Public properties.
 
 		/// <summary>
-		/// The selected PlanetLab slice.
+		/// The selected list of tools.
 		/// </summary>
-		//public PlSlice Result { get; private set; }
+		public Type[] Result { get { return this.control.Result; } }
 
 		// Public methods.
 
@@ -58,15 +58,41 @@ namespace InetAnalytics.Forms.Tools
 		/// <returns>The dialog result.</returns>
 		public DialogResult ShowDialog(IWin32Window owner, Toolset toolbox)
 		{
-			// Reset the result.
-			//this.Result = null;
 			// Refresh the results list.
-			this.control.Refresh(toolbox);
-			// Show the dialog.
-			return base.ShowDialog(owner);
+			if (this.control.Refresh(toolbox))
+			{
+				// Show the dialog.
+				return base.ShowDialog(owner);
+			}
+			else return DialogResult.Abort;
 		}
 
 		// Private methods.
 
+		/// <summary>
+		/// An event handler called when the user adds a new list of tools.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAdded(object sender, EventArgs e)
+		{
+			// Set the dialog result.
+			this.DialogResult = DialogResult.OK;
+			// Close the dialog.
+			this.Close();
+		}
+
+		/// <summary>
+		/// An event handler called when the user cancels the addition of tools.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCanceled(object sender, EventArgs e)
+		{
+			// Set the dialog result.
+			this.DialogResult = DialogResult.Cancel;
+			// Close the dialog.
+			this.Close();
+		}
 	}
 }

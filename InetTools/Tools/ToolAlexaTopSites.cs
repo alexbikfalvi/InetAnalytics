@@ -17,47 +17,34 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
+using DotNetApi.Windows.Controls;
 using InetCrawler.Tools;
-using InetTools.Tools;
 
-namespace InetTools
+namespace InetTools.Tools
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// A tool that collects the top web sites from the Alexa ranking.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
+	[ToolInfo(
+		"24654A51-339D-4C75-A60C-559388B5AFCB",
 		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
+		"Amazon Alexa Top Sites",
+		"A tool that collects the top web sites from the Alexa ranking."
 		)]
-	public sealed class StandardToolset : Toolset
+	public sealed class ToolAlexaTopSites : Tool
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolWebCrawler)
-		};
-
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Creates a new tool instance.
 		/// </summary>
 		/// <param name="api">The tool API.</param>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(IToolApi api, string name)
-			: base(api, name)
+		public ToolAlexaTopSites(IToolApi api)
+			: base(api)
 		{
 
 		}
 
-		// Properties.
-
 		/// <summary>
-		/// Gets the list of tools.
+		/// Gets the user interface control for this tool.
 		/// </summary>
-		public override Type[] Tools { get { return StandardToolset.tools; } }
-	}
+		public override ThemeControl Control { get { return null; } }	}
 }

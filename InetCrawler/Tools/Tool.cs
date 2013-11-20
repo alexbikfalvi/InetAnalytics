@@ -27,36 +27,67 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public abstract class Tool : IDisposable
 	{
+		private readonly IToolApi api;
+
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
-		/// <param name="productId">The product identifier.</param>
-		/// <param name="productName">The product name.</param>
-		/// <param name="vendorName">The vendor name.</param>
-		public Tool(Guid productId, string productName, string vendorName)
+		/// <param name="api">The tool API.</param>
+		public Tool(IToolApi api)
 		{
-			this.ProductId = productId;
-			this.ProductName = productName;
-			this.VendorName = vendorName;
+			// Set the tool API.
+			this.api = api;
 		}
 
-		/// <summary>
-		/// The product identifier.
-		/// </summary>
-		public Guid ProductId { get; private set; }
-		/// <summary>
-		/// The product name.
-		/// </summary>
-		public string ProductName { get; private set; }
-		/// <summary>
-		/// The vendor name.
-		/// </summary>
-		public string VendorName { get; private set; }
+		// Public properties.
 
 		/// <summary>
 		/// Gets the user interface control for this tool.
 		/// </summary>
 		public abstract ThemeControl Control { get; }
+
+		// Protected properties.
+
+		/// <summary>
+		/// Gets the tool API.
+		/// </summary>
+		protected IToolApi Api { get { return this.api; } }
+
+		// Public static methods.
+
+		/// <summary>
+		/// Checks if the specified type is a tool type.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><b>True</b> if the specified type is a tool attribute, <b>false</b> otherwise.</returns>
+		public static bool IsTool(Type type)
+		{
+			// Check the type inherits the tool class.
+			if (type.IsSubclassOf(typeof(Tool)))
+			{
+				// Check the type has a tool attribute.
+				return type.GetCustomAttributes(typeof(ToolInfoAttribute), false).Length > 0;
+			}
+			else return false;
+		}
+
+		/// <summary>
+		/// Returns the tool info for the specified type.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>The tool attribute, or <b>null</b> if the attribute does not exist.</returns>
+		public static ToolInfoAttribute GetToolInfo(Type type)
+		{
+			// Check the type inherits the tool class.
+			if (type.IsSubclassOf(typeof(Tool)))
+			{
+				// Get the tool attributes.
+				object[] attributes = type.GetCustomAttributes(typeof(ToolInfoAttribute), false);
+				// If there exists a tool attribute.
+				return attributes.Length > 0 ? attributes[0] as ToolInfoAttribute : null;
+			}
+			else return null;
+		}
 
 		// Public methods.
 
