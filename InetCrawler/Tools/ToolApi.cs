@@ -17,6 +17,8 @@
  */
 
 using System;
+using DotNetApi;
+using InetCrawler.Log;
 
 namespace InetCrawler.Tools
 {
@@ -25,5 +27,61 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public sealed class ToolApi : IToolApi
 	{
+		private readonly Logger log;
+
+		/// <summary>
+		/// Creates a new tool API instance.
+		/// </summary>
+		/// <param name="log">The log.</param>
+		public ToolApi(Logger log)
+		{
+			// Check the arguments.
+			if (null == log) throw new ArgumentNullException("log");
+
+			// Set the parameters.
+			this.log = log;
+		}
+
+		/// <summary>
+		/// Logs an event for the specified toolset.
+		/// </summary>
+		/// <param name="toolset">The toolset.</param>
+		/// <param name="level">The log event level.</param>
+		/// <param name="type">The log event type.</param>
+		/// <param name="message">The event message.</param>
+		/// <param name="parameters">The event parameters.</param>
+		/// <param name="exception">The event exception.</param>
+		public void Log(Toolset toolset, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null)
+		{
+			this.log.Add(
+				level,
+				type,
+				@"Toolbox\{0}".FormatWith(toolset.Info.Id),
+				message,
+				parameters,
+				exception
+				);
+		}
+
+
+		/// Logs an event for the specified tool.
+		/// </summary>
+		/// <param name="tool">The tool.</param>
+		/// <param name="level">The log event level.</param>
+		/// <param name="type">The log event type.</param>
+		/// <param name="message">The event message.</param>
+		/// <param name="parameters">The event parameters.</param>
+		/// <param name="exception">The event exception.</param>
+		public void Log(Tool tool, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null)
+		{
+			this.log.Add(
+				level,
+				type,
+				@"Toolbox\{0}\{1}".FormatWith(tool.Toolset.Id, tool.Info.Id),
+				message,
+				parameters,
+				exception
+				);
+		}
 	}
 }

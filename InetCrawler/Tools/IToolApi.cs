@@ -17,6 +17,7 @@
  */
 
 using System;
+using InetCrawler.Log;
 
 namespace InetCrawler.Tools
 {
@@ -25,6 +26,24 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public interface IToolApi
 	{
-
+		/// <summary>
+		/// Logs an event for the specified toolset.
+		/// </summary>
+		/// <param name="toolset">The toolset.</param>
+		/// <param name="level">The log event level.</param>
+		/// <param name="type">The log event type.</param>
+		/// <param name="message">The event message.</param>
+		/// <param name="parameters">The event parameters.</param>
+		/// <param name="exception">The event exception.</param>
+		void Log(Toolset toolset, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
+		/// Logs an event for the specified tool.
+		/// </summary>
+		/// <param name="tool">The tool.</param>
+		/// <param name="level">The log event level.</param>
+		/// <param name="type">The log event type.</param>
+		/// <param name="message">The event message.</param>
+		/// <param name="parameters">The event parameters.</param>
+		/// <param name="exception">The event exception.</param>
+		void Log(Tool tool, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
 	}
 }

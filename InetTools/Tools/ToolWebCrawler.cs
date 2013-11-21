@@ -38,8 +38,9 @@ namespace InetTools.Tools
 		/// Creates a new tool instance.
 		/// </summary>
 		/// <param name="api">The tool API.</param>
-		public ToolWebCrawler(IToolApi api)
-			: base(api)
+		/// <param name="toolset">The toolset information.</param>
+		public ToolWebCrawler(IToolApi api, ToolsetInfoAttribute toolset)
+			: base(api, toolset)
 		{
 
 		}

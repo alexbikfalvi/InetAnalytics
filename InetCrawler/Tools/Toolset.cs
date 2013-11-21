@@ -26,6 +26,7 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public abstract class Toolset
 	{
+		private readonly ToolsetInfoAttribute info;
 		private readonly Dictionary<ToolId, Type> tools = new Dictionary<ToolId, Type>();
 		private readonly IToolApi api;
 		private readonly string name;
@@ -37,9 +38,19 @@ namespace InetCrawler.Tools
 		/// <param name="name">The toolset name.</param>
 		public Toolset(IToolApi api, string name)
 		{
+			// Check the arguments.
+			if (null == api) throw new ArgumentNullException("api");
+			if (null == name) throw new ArgumentNullException("name");
+
 			// Set the toolset parameters.
 			this.api = api;
 			this.name = name;
+
+			// Get the toolset information.
+			this.info = Toolset.GetToolsetInfo(this.GetType());
+
+			// Check the toolset information is not null.
+			if (null == this.info) throw new InvalidOperationException("Cannot create a toolset object from a class without the toolset information attribute.");
 
 			// Create the toolset mapping.
 			foreach (Type type in this.Tools)
@@ -58,9 +69,20 @@ namespace InetCrawler.Tools
 		// Public properties.
 
 		/// <summary>
+		/// Returns the tool type for the specified identifier and version.
+		/// </summary>
+		/// <param name="id">The tool identifier.</param>
+		/// <param name="version">The tool version.</param>
+		/// <returns>The tool type or null, if the tool does not exist.</returns>
+		public Type this[string id, string version] { get { return this.GetTool(id, version); } }
+		/// <summary>
 		/// Gets the toolset name.
 		/// </summary>
 		public string Name { get { return this.name; } }
+		/// <summary>
+		/// Gets the toolset information.
+		/// </summary>
+		public ToolsetInfoAttribute Info { get { return this.info; } }
 		/// <summary>
 		/// Gets the list of tools.
 		/// </summary>
@@ -108,16 +130,27 @@ namespace InetCrawler.Tools
 			}
 			else return null;
 		}
-		
+
 		// Public methods.
 
 		/// <summary>
-		/// Gets the toolset information attribute.
+		/// Returns the tool type for the specified identifier and version. The method does not throw an exception.
 		/// </summary>
-		/// <returns>The toolset information attribute, or <b>null</b> if the attribute is missing.</returns>
-		public ToolsetInfoAttribute GetToolsetInfo()
+		/// <param name="strId">The tool identifier.</param>
+		/// <param name="strVersion">The tool version.</param>
+		/// <returns>The type or <b>null</b>, if the tool does not exist.</returns>
+		public Type GetTool(string strId, string strVersion)
 		{
-			return Toolset.GetToolsetInfo(this.GetType());
+			Guid guid;
+			Version version;
+
+			if (!Guid.TryParse(strId, out guid)) return null;
+			if (!Version.TryParse(strVersion, out version)) return null;
+
+			Type type;
+
+			if (this.tools.TryGetValue(new ToolId(guid, version), out type)) return type;
+			else return null;
 		}
 	}
 }

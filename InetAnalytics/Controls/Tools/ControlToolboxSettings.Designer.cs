@@ -13,9 +13,16 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			if (disposing)
 			{
-				components.Dispose();
+				// Remove the toolbox event handlers.
+				this.crawler.Toolbox.ToolAdded -= this.OnToolAdded;
+				this.crawler.Toolbox.ToolRemoved -= this.OnToolRemoved;
+				// Dispose the components.
+				if (components != null)
+				{
+					components.Dispose();
+				}
 			}
 			base.Dispose(disposing);
 		}
@@ -29,17 +36,20 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlToolboxSettings));
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonAdd = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemove = new System.Windows.Forms.ToolStripButton();
 			this.separator = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonProperties = new System.Windows.Forms.ToolStripButton();
 			this.listView = new System.Windows.Forms.ListView();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderVendor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderToolset = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderProduct = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderToolsetVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderToolVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -96,9 +106,11 @@
 			this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
-            this.columnHeaderVendor,
+            this.columnHeaderToolset,
+            this.columnHeaderAuthor,
             this.columnHeaderProduct,
-            this.columnHeaderVersion});
+            this.columnHeaderToolsetVersion,
+            this.columnHeaderToolVersion});
 			this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView.FullRowSelect = true;
 			this.listView.GridLines = true;
@@ -108,35 +120,46 @@
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
 			this.listView.Size = new System.Drawing.Size(598, 373);
+			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
-			// 
-			// imageList
-			// 
-			this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-			this.imageList.ImageSize = new System.Drawing.Size(16, 16);
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// columnHeaderName
 			// 
 			this.columnHeaderName.Text = "Name";
 			this.columnHeaderName.Width = 150;
 			// 
-			// columnHeaderVendor
+			// columnHeaderToolset
 			// 
-			this.columnHeaderVendor.Text = "Vendor";
-			this.columnHeaderVendor.Width = 120;
+			this.columnHeaderToolset.Text = "Toolset";
+			this.columnHeaderToolset.Width = 150;
+			// 
+			// columnHeaderAuthor
+			// 
+			this.columnHeaderAuthor.Text = "Author";
+			this.columnHeaderAuthor.Width = 120;
 			// 
 			// columnHeaderProduct
 			// 
 			this.columnHeaderProduct.Text = "Product";
 			this.columnHeaderProduct.Width = 120;
 			// 
-			// columnHeaderVersion
+			// columnHeaderToolsetVersion
 			// 
-			this.columnHeaderVersion.Text = "Version";
-			this.columnHeaderVersion.Width = 120;
+			this.columnHeaderToolsetVersion.Text = "Toolset version";
+			this.columnHeaderToolsetVersion.Width = 120;
+			// 
+			// columnHeaderToolVersion
+			// 
+			this.columnHeaderToolVersion.Text = "Tool version";
+			this.columnHeaderToolVersion.Width = 120;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "PickAxeLarge");
 			// 
 			// openFileDialog
 			// 
@@ -171,9 +194,11 @@
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ColumnHeader columnHeaderName;
-		private System.Windows.Forms.ColumnHeader columnHeaderVendor;
+		private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
 		private System.Windows.Forms.ColumnHeader columnHeaderProduct;
-		private System.Windows.Forms.ColumnHeader columnHeaderVersion;
+		private System.Windows.Forms.ColumnHeader columnHeaderToolsetVersion;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
+		private System.Windows.Forms.ColumnHeader columnHeaderToolset;
+		private System.Windows.Forms.ColumnHeader columnHeaderToolVersion;
 	}
 }

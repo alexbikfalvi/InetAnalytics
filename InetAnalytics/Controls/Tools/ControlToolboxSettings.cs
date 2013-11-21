@@ -55,8 +55,15 @@ namespace InetAnalytics.Controls.Tools
 			// Enable the control.
 			this.Enabled = true;
 
-			// Load the tools.
+			// Set the toolbox event handlers.
+			this.crawler.Toolbox.ToolAdded += this.OnToolAdded;
+			this.crawler.Toolbox.ToolRemoved += this.OnToolRemoved;
 
+			// Load the current tools from the toolset.
+			foreach (Tool tool in this.crawler.Toolbox)
+			{
+				this.OnAddTool(tool);
+			}
 		}
 
 		// Private methods.
@@ -74,7 +81,7 @@ namespace InetAnalytics.Controls.Tools
 				try
 				{
 					// If the user selects a file, open the toolset.
-					Toolset toolset = this.crawler.Toolbox.OpenToolset(this.openFileDialog.FileName);
+					Toolset toolset = this.crawler.Toolbox.Open(this.openFileDialog.FileName);
 
 					// Show the add tool dialog with the loaded toolset.
 					if (this.formAddTool.ShowDialog(this, toolset) == DialogResult.OK)
@@ -111,6 +118,42 @@ namespace InetAnalytics.Controls.Tools
 		private void OnProperties(object sender, EventArgs e)
 		{
 
+		}
+
+		/// <summary>
+		/// An event handler called when a tool was added to the toolbox.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnToolAdded(object sender, ToolEventArgs e)
+		{
+			this.OnAddTool(e.Tool);
+		}
+
+		/// <summary>
+		/// An event handler called when a tool was removed from the toolbox.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnToolRemoved(object sender, ToolEventArgs e)
+		{
+		}
+
+		private void OnAddTool(Tool tool)
+		{
+			// Add the tool to the toolbox list.
+			ListViewItem item = new ListViewItem(new string[] {
+				tool.Info.Name,
+				tool.Toolset.Name,
+				tool.Toolset.Author,
+				tool.Toolset.Product,
+				tool.Toolset.Version.ToString(),
+				tool.Info.Id.Version.ToString()
+			});
+			item.ImageIndex = 0;
+			item.Tag = tool;
+			// Add the item to the list.
+			this.listView.Items.Add(item);
 		}
 	}
 }

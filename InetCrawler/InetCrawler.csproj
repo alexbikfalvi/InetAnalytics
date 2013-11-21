@@ -134,7 +134,9 @@
     <Compile Include="Tools\Tool.cs" />
     <Compile Include="Tools\ToolApi.cs" />
     <Compile Include="Tools\Toolbox.cs" />
+    <Compile Include="Tools\ToolboxEnumerator.cs" />
     <Compile Include="Tools\ToolDependencyAttribute.cs" />
+    <Compile Include="Tools\ToolEventArgs.cs" />
     <Compile Include="Tools\ToolId.cs" />
     <Compile Include="Tools\ToolInfoAttribute.cs" />
     <Compile Include="Tools\Toolset.cs" />

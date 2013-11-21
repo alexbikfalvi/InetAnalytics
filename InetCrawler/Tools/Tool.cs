@@ -27,16 +27,30 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public abstract class Tool : IDisposable
 	{
+		private readonly ToolInfoAttribute info;
+		private readonly ToolsetInfoAttribute toolset;
 		private readonly IToolApi api;
 
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
 		/// <param name="api">The tool API.</param>
-		public Tool(IToolApi api)
+		/// <param name="toolset">The toolset information.</param>
+		public Tool(IToolApi api, ToolsetInfoAttribute toolset)
 		{
-			// Set the tool API.
+			// Check the arguments.
+			if (null == api) throw new ArgumentNullException("api");
+			if (null == toolset) throw new ArgumentNullException("toolset");
+
+			// Set the parameters.
 			this.api = api;
+			this.toolset = toolset;
+
+			// Get the tool information.
+			this.info = Tool.GetToolInfo(this.GetType());
+
+			// Check the tool information is not null.
+			if (null == this.info) throw new InvalidOperationException("Cannot create a tool object from a class without the tool information attribute.");
 		}
 
 		// Public properties.
@@ -45,6 +59,14 @@ namespace InetCrawler.Tools
 		/// Gets the user interface control for this tool.
 		/// </summary>
 		public abstract ThemeControl Control { get; }
+		/// <summary>
+		/// Gets the tool information.
+		/// </summary>
+		public ToolInfoAttribute Info { get { return this.info; } }
+		/// <summary>
+		/// Gets the toolset information.
+		/// </summary>
+		public ToolsetInfoAttribute Toolset { get { return this.toolset; } }
 
 		// Protected properties.
 

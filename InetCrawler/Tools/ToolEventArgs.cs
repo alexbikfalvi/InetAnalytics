@@ -17,35 +17,33 @@
  */
 
 using System;
-using DotNetApi.Windows.Controls;
-using InetCrawler.Tools;
 
-namespace InetTools.Tools
+namespace InetCrawler.Tools
 {
 	/// <summary>
-	/// A tool that collects the top web sites from the Alexa ranking.
+	/// A delegate representing a tool event handler.
 	/// </summary>
-	[ToolInfo(
-		"24654A51-339D-4C75-A60C-559388B5AFCB",
-		1, 0, 0, 0,
-		"Amazon Alexa Top Sites",
-		"A tool that collects the top web sites from the Alexa ranking."
-		)]
-	public sealed class ToolAlexaTopSites : Tool
+	/// <param name="sender">The sender object.</param>
+	/// <param name="e">The event arguments.</param>
+	public delegate void ToolEventHandler(object sender, ToolEventArgs e);
+
+	/// <summary>
+	/// A class representing tool event arguments.
+	/// </summary>
+	public class ToolEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Creates a new tool instance.
+		/// Creates a new event arguments instance.
 		/// </summary>
-		/// <param name="api">The tool API.</param>
-		/// <param name="toolset">The toolset information.</param>
-		public ToolAlexaTopSites(IToolApi api, ToolsetInfoAttribute toolset)
-			: base(api, toolset)
+		/// <param name="tool">The tool.</param>
+		public ToolEventArgs(Tool tool)
 		{
-
+			this.Tool = tool;
 		}
 
 		/// <summary>
-		/// Gets the user interface control for this tool.
+		/// Gets the event tool.
 		/// </summary>
-		public override ThemeControl Control { get { return null; } }	}
+		public Tool Tool { get; private set; }
+	}
 }

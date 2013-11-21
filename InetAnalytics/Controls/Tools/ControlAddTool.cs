@@ -76,23 +76,11 @@ namespace InetAnalytics.Controls.Tools
 			// Clear the result.
 			this.Result = null;
 			
-			// Load the toolset information.
-			ToolsetInfoAttribute toolsetInfo = toolset.GetToolsetInfo();
-
-			// If the toolset information is missing.
-			if (null == toolsetInfo)
-			{
-				// Show an error message.
-				MessageBox.Show(this, "The selected toolset is invalid.", "Invalid Toolset", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				// Return.
-				return false;
-			}
-
 			// Set the toolset information.
-			this.textBoxName.Text = toolsetInfo.Name;
-			this.textBoxVersion.Text = toolsetInfo.Version.ToString();
-			this.textBoxProduct.Text = toolsetInfo.Product;
-			this.textBoxVendor.Text = toolsetInfo.Author;
+			this.textBoxName.Text = toolset.Info.Name;
+			this.textBoxVersion.Text = toolset.Info.Version.ToString();
+			this.textBoxProduct.Text = toolset.Info.Product;
+			this.textBoxVendor.Text = toolset.Info.Author;
 
 			// List all tools.
 			foreach (Type type in toolset.Tools)

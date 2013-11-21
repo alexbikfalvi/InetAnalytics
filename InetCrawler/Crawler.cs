@@ -89,10 +89,10 @@ namespace InetCrawler
 			this.testing = new CrawlerTesting(rootKey, rootPath + @"\Testing");
 
 			// Create the toolbox API.
-			this.toolApi = new ToolApi();
+			this.toolApi = new ToolApi(this.log);
 
 			// Create the toolbox.
-			this.toolbox = new Toolbox(this.toolApi, rootKey, rootPath + @"\Toolbox");
+			this.toolbox = new Toolbox(this.log, this.toolApi, rootKey, rootPath + @"\Toolbox");
 		}
 
 		// Public properties.
