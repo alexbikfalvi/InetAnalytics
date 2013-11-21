@@ -149,7 +149,6 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		private TreeNode treeNode = null;
 		private Control.ControlCollection controls = null;
-		private ImageList treeImageList = null;
 
 		private readonly PlRequest requestGetSlices = new PlRequest(PlRequest.RequestMethod.GetSlices);
 		private readonly PlRequest requestAddSliceToNodes = new PlRequest(PlRequest.RequestMethod.AddSliceToNodes);
@@ -187,17 +186,6 @@ namespace InetAnalytics.Controls.PlanetLab
 				null);
 		}
 
-		// Public events.
-
-		///// <summary>
-		///// An event raised when a slice has been added.
-		///// </summary>
-		//public event ControlEventHandler<ControlSlice> SliceAdded;
-		///// <summary>
-		///// An event raised when a slice has been removed.
-		///// </summary>
-		//public event ControlEventHandler<ControlSlice> SliceRemoved;
-
 		// Public methods.
 
 		/// <summary>
@@ -206,8 +194,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="crawler">The crawler object.</param>
 		/// <param name="treeNode">The root tree node for the database servers.</param>
 		/// <param name="controls">The panel where to add the server control.</param>
-		/// <param name="imageList">The image list.</param>
-		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection controls, ImageList imageList)
+		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection controls)
 		{
 			// Save the parameters.
 			this.crawler = crawler;
@@ -226,9 +213,6 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Set the control collection.
 			this.controls = controls;
-
-			// Set the tree image list.
-			this.treeImageList = imageList;
 		
 			// Enable the control.
 			this.Enabled = true;

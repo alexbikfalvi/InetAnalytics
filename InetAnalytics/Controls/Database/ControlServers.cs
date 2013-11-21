@@ -108,7 +108,6 @@ namespace InetAnalytics.Controls.Database
 
 		private readonly Dictionary<string, ServerControls> items = new Dictionary<string, ServerControls>();
 
-		private ImageList imageList = null;
 		private TreeNode treeNode = null;
 		private static readonly string[] imageKeys = { "ServerDown", "ServerUp", "ServerWarning", "ServerBusy", "ServerBusy", "ServerBusy" };
 		private Control.ControlCollection controls = null;
@@ -141,7 +140,6 @@ namespace InetAnalytics.Controls.Database
 			// Set the root tree node.
 			this.treeNode = treeNode;
 			// Set the image list.
-			this.imageList = imageList;
 			this.listView.SmallImageList = imageList;
 			// Set the controls collection.
 			this.controls = controls;

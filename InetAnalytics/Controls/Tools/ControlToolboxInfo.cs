@@ -46,10 +46,12 @@ namespace InetAnalytics.Controls.Tools
 		/// Initializes the control with the specified crawler object.
 		/// </summary>
 		/// <param name="crawler">The crawler.</param>
-		public void Initialize(Crawler crawler)
+		/// <param name="treeNode">The root tree node.</param>
+		/// <param name="controls">The controls collection.</param>
+		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection controls)
 		{
 			// Initialize the settings.
-			this.settings.Initialize(crawler);
+			this.settings.Initialize(crawler, treeNode, controls);
 		}
 	}
 }

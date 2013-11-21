@@ -505,9 +505,9 @@ namespace InetAnalytics.Forms
 			this.controlPlanetLab.Initialize(this.crawler);
 			this.controlPlanetLabSites.Initialize(this.crawler);
 			this.controlPlanetLabNodes.Initialize(this.crawler);
-			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls, this.imageList);
+			this.controlPlanetLabSlices.Initialize(this.crawler, this.treeNodePlanetLabSlices, this.splitContainer.Panel2.Controls);
 			this.controlDatabaseServers.Initialize(this.crawler, this.treeNodeDatabaseServers, this.splitContainer.Panel2.Controls, this.imageList);
-			this.controlToolboxInfo.Initialize(this.crawler);
+			this.controlToolboxInfo.Initialize(this.crawler, this.treeNodeToolboxInfo, this.splitContainer.Panel2.Controls);
 			this.controlSpiderStandardFeeds.Initialize(this.crawler);
 			this.controlYtApi2.Initialize(this.crawler);
 			this.controlYtApi2VideosFeedsInfo.Initialize(this.crawler);
