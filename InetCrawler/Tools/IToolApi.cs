@@ -26,6 +26,8 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public interface IToolApi
 	{
+		// Log.
+
 		/// <summary>
 		/// Logs an event for the specified toolset.
 		/// </summary>
@@ -35,7 +37,7 @@ namespace InetCrawler.Tools
 		/// <param name="message">The event message.</param>
 		/// <param name="parameters">The event parameters.</param>
 		/// <param name="exception">The event exception.</param>
-		void Log(Toolset toolset, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
+		LogEvent Log(Toolset toolset, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
 		/// Logs an event for the specified tool.
 		/// </summary>
 		/// <param name="tool">The tool.</param>
@@ -44,6 +46,14 @@ namespace InetCrawler.Tools
 		/// <param name="message">The event message.</param>
 		/// <param name="parameters">The event parameters.</param>
 		/// <param name="exception">The event exception.</param>
-		void Log(Tool tool, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
+		LogEvent Log(Tool tool, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
+		
+		// User interface.
+
+		/// <summary>
+		/// The delay to close a notification message.
+		/// </summary>
+		/// <returns>The delay.</returns>
+		TimeSpan MessageCloseDelay();
 	}
 }

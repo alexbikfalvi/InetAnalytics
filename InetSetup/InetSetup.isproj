@@ -49,6 +49,10 @@
 			<Name>InetCrawler</Name>
 			<Project>{A9792D30-2043-4CF9-9578-991288B0FB9E}</Project>
 		</ProjectReference>
+		<ProjectReference Include="..\InetTools\InetTools.csproj">
+			<Name>InetTools</Name>
+			<Project>{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}</Project>
+		</ProjectReference>
 		<ProjectReference Include="..\InetUpgrade\InetUpgrade.csproj">
 			<Name>InetUpgrade</Name>
 			<Project>{375EE9F6-ECE2-4116-BC46-2D746A1C40D0}</Project>

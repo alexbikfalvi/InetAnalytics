@@ -455,6 +455,8 @@ namespace InetAnalytics.Forms
 
 			// Set the crawler event handlers.
 
+			this.crawler.Events.PageSelected += this.OnPageSelected;
+
 			this.crawler.Events.PlanetLabSitesSelected += this.OnPlanetLabSitesSelected;
 			this.crawler.Events.PlanetLabNodesSelected += this.OnPlanetLabNodesSelected;
 			this.crawler.Events.PlanetLabSlicesSelected += this.OnPlanetLabSlicesSelected;
@@ -693,6 +695,16 @@ namespace InetAnalytics.Forms
 		}
 
 		/// <summary>
+		/// An event handler called when a page is selected.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPageSelected(object sender, PageSelectionEventArgs e)
+		{
+			e.Node.TreeView.SelectedNode = e.Node;
+		}
+
+		/// <summary>
 		/// An event handler called when the user selects the PlanetLab sites page.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -723,16 +735,6 @@ namespace InetAnalytics.Forms
 		{
 			this.sideMenu.SelectedItem = this.sideMenuItemPlanetLab;
 			this.controlSidePlanetLab.SelectedNode = this.treeNodePlanetLabSlices;
-		}
-
-		/// <summary>
-		/// An event handler called when a PlanetLab console is selected.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnPlanetLabConsoleSelected(object sender, PageSelectionEventArgs e)
-		{
-			this.controlSidePlanetLab.SelectedNode = e.Node;
 		}
 
 		/// <summary>

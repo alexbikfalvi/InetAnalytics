@@ -355,6 +355,7 @@
 		<row><td>InetAnalytics.Primary_output</td><td>{C072E757-1198-4DA5-8B70-316BC85A9C3E}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetanalytics.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetApi.Primary_output</td><td>{41045FA4-8427-43F7-BD69-644B991F40D1}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetCrawler.Primary_output</td><td>{625C5D43-9CEF-486E-A87B-36160B141B00}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetcrawler.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>InetTools.Primary_output</td><td>{BA0467E3-6B54-4FCB-B061-37FC5F80C5F3}</td><td>INSTALLDIR</td><td>2</td><td/><td>inettools.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetUpgrade.Primary_output</td><td>{D5707671-0EFE-4889-B509-6A974596D631}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetupgrade.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>MapApi.Primary_output</td><td>{54A0B410-B4DB-488C-AF8E-AB574C3494E7}</td><td>INSTALLDIR</td><td>2</td><td/><td>mapapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlanetLab.Primary_output</td><td>{0BD910B3-6C6E-497F-9666-1D4D7919A90A}</td><td>INSTALLDIR</td><td>2</td><td/><td>planetlab.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1902,6 +1903,7 @@
 		<row><td>AlwaysInstall</td><td>InetAnalytics.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetApi.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetCrawler.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>InetTools.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetUpgrade.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>MapApi.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>PlanetLab.Primary_output</td></row>
@@ -1925,6 +1927,7 @@
 		<row><td>inetanalytics.primary_output</td><td>InetAnalytics.Primary_output</td><td>InetAnalytics.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetAnalytics&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inetapi.primary_output</td><td>InetApi.Primary_output</td><td>InetApi.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetApi&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inetcrawler.primary_output</td><td>InetCrawler.Primary_output</td><td>InetCrawler.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetCrawler&gt;|Built</td><td>3</td><td/></row>
+		<row><td>inettools.primary_output</td><td>InetTools.Primary_output</td><td>InetTools.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetTools&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inetupgrade.primary_output</td><td>InetUpgrade.Primary_output</td><td>InetUpgrade.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetUpgrade&gt;|Built</td><td>3</td><td/></row>
 		<row><td>mapapi.primary_output</td><td>MapApi.Primary_output</td><td>MapApi.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;MapApi&gt;|Built</td><td>3</td><td/></row>
 		<row><td>planetlab.primary_output</td><td>PlanetLab.Primary_output</td><td>PlanetLab.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlanetLab&gt;|Built</td><td>3</td><td/></row>
@@ -2081,6 +2084,7 @@
 		<row><td>InetAnalytics.Primary_output</td><td/><td/><td>_F3D3D295_7FEB_42C2_8710_8F3216FB8FCD_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetApi.Primary_output</td><td/><td/><td>_3512EB23_8EB2_42C3_8457_E274F133716A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetCrawler.Primary_output</td><td/><td/><td>_B8A492BB_15C4_42EC_AB2C_A8D7EEE71035_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>InetTools.Primary_output</td><td/><td/><td>_D6876214_A931_4A9D_8EDA_2C400643F270_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetUpgrade.Primary_output</td><td/><td/><td>_A1E69100_FBFE_4B00_9DC3_56AD1B27AD54_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>MapApi.Primary_output</td><td/><td/><td>_B8B52A96_0948_4C6F_B84A_5B451100E2E5_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlanetLab.Primary_output</td><td/><td/><td>_C67A17D5_2937_413A_B698_9C7B349DAA79_FILTER</td><td/><td/><td/><td/></row>
@@ -2395,6 +2399,7 @@
 		<row><td>InetAnalytics</td><td>InetAnalytics\InetAnalytics.csproj</td><td/><td>2</td></row>
 		<row><td>InetApi</td><td>InetApi\InetApi.csproj</td><td/><td>2</td></row>
 		<row><td>InetCrawler</td><td>InetCrawler\InetCrawler.csproj</td><td/><td>2</td></row>
+		<row><td>InetTools</td><td>InetTools\InetTools.csproj</td><td/><td>2</td></row>
 		<row><td>InetUpgrade</td><td>InetUpgrade\InetUpgrade.csproj</td><td/><td>2</td></row>
 		<row><td>MapApi</td><td>..\DotNetApi\MapApi\MapApi.csproj</td><td/><td>2</td></row>
 		<row><td>PlanetLab</td><td>..\PlanetLab\PlanetLab\PlanetLab.csproj</td><td/><td>2</td></row>
@@ -4520,7 +4525,14 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>Registry1</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry10</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Database</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry11</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Database</td><td>Primary</td><td>0e7a98f0-8366-4aa0-96fc-4d8025f75a4a</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry15</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry16</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry17</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>FileName</td><td>[INSTALLDIR]InetTools.dll</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry18</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>TypeName</td><td>InetTools.StandardToolset</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry19</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>Id</td><td>1fa6dd5f-f500-4920-85a4-72a2d46ac08d</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry2</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Comments</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry20</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>Version</td><td>1.0.0.0</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry21</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>Tools</td><td>24654a51-339d-4c75-a60c-559388b5afcb,1.0.0.0[~]bd140334-43d9-4853-a124-aca4fd799034,1.0.0.0</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry3</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Comments</td><td>VideosFileName</td><td>C:\Users\Alex\AppData\Roaming\Alex Bikfalvi\Internet Analytics\Comments\Videos.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry30</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Log</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry31</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Log</td><td>FileName</td><td>C:\Users\Alex\AppData\Roaming\Alex Bikfalvi\Internet Analytics\Log\YtLog-{0}-{1}-{2}.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>

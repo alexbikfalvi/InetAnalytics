@@ -51,7 +51,12 @@
 			this.columnHeaderToolVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuItemProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -124,6 +129,9 @@
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
+			this.listView.ItemActivate += new System.EventHandler(this.OnProperties);
+			this.listView.SelectedIndexChanged += new System.EventHandler(this.OnSelectedChanged);
+			this.listView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick);
 			// 
 			// columnHeaderName
 			// 
@@ -159,12 +167,42 @@
 			// 
 			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "PickAxeLarge");
+			this.imageList.Images.SetKeyName(0, "ToolboxPickAxe");
 			// 
 			// openFileDialog
 			// 
 			this.openFileDialog.Filter = "Toolbox library files (*.dll)|*.dll";
 			this.openFileDialog.Title = "Load Toolbox Library";
+			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemRemove,
+            this.toolStripSeparator1,
+            this.menuItemProperties});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(142, 54);
+			// 
+			// menuItemRemove
+			// 
+			this.menuItemRemove.Image = global::InetAnalytics.Resources.ToolboxRemove_16;
+			this.menuItemRemove.Name = "menuItemRemove";
+			this.menuItemRemove.Size = new System.Drawing.Size(152, 22);
+			this.menuItemRemove.Text = "Remove tool";
+			this.menuItemRemove.Click += new System.EventHandler(this.OnRemove);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			// 
+			// menuItemProperties
+			// 
+			this.menuItemProperties.Image = global::InetAnalytics.Resources.Properties_16;
+			this.menuItemProperties.Name = "menuItemProperties";
+			this.menuItemProperties.Size = new System.Drawing.Size(152, 22);
+			this.menuItemProperties.Text = "Properties";
+			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
 			// ControlToolboxSettings
 			// 
@@ -179,6 +217,7 @@
 			this.Size = new System.Drawing.Size(600, 400);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -200,5 +239,9 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
 		private System.Windows.Forms.ColumnHeader columnHeaderToolset;
 		private System.Windows.Forms.ColumnHeader columnHeaderToolVersion;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem menuItemRemove;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem menuItemProperties;
 	}
 }

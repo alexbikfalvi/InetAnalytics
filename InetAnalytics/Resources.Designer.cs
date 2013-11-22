@@ -6502,6 +6502,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PickAxeSmall_16 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeSmall_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PickAxeSmall_24 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeSmall_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PickAxeSmall_32 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeSmall_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PickAxeSmall_48 {
+            get {
+                object obj = ResourceManager.GetObject("PickAxeSmall_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PlayPause_16 {
             get {
                 object obj = ResourceManager.GetObject("PlayPause_16", resourceCulture);
@@ -8895,6 +8935,46 @@ namespace InetAnalytics {
         internal static System.Drawing.Bitmap ToolboxMedium_48 {
             get {
                 object obj = ResourceManager.GetObject("ToolboxMedium_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxPickAxe_16 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxPickAxe_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxPickAxe_24 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxPickAxe_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxPickAxe_32 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxPickAxe_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolboxPickAxe_48 {
+            get {
+                object obj = ResourceManager.GetObject("ToolboxPickAxe_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

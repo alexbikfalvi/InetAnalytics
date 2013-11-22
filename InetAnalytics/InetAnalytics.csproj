@@ -85,6 +85,18 @@
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Log\ControlLogEventProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogEventProperties.Designer.cs">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogList.Designer.cs">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Net\NetworkStatusToolTip.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -337,6 +349,12 @@
     <Compile Include="Controls\Tools\ControlToolboxSettings.Designer.cs">
       <DependentUpon>ControlToolboxSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Tools\ControlToolProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlToolProperties.Designer.cs">
+      <DependentUpon>ControlToolProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\YouTube\ControlCommentProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -378,18 +396,6 @@
     </Compile>
     <Compile Include="Controls\ControlSideCalendar.Designer.cs">
       <DependentUpon>ControlSideCalendar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Log\ControlLogEventProperties.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Log\ControlLogEventProperties.Designer.cs">
-      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Log\ControlLogList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Log\ControlLogList.Designer.cs">
-      <DependentUpon>ControlLogList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\YouTube\ControlVideoProperties.cs">
       <SubType>UserControl</SubType>
@@ -761,11 +767,11 @@
     <Compile Include="Forms\Database\FormAddServer.Designer.cs">
       <DependentUpon>FormAddServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Tools\ControlToolProperties.cs">
+    <Compile Include="Controls\Tools\ControlToolInfoProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Tools\ControlToolProperties.Designer.cs">
-      <DependentUpon>ControlToolProperties.cs</DependentUpon>
+    <Compile Include="Controls\Tools\ControlToolInfoProperties.Designer.cs">
+      <DependentUpon>ControlToolInfoProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Tools\FormAddTool.cs">
       <SubType>Form</SubType>
@@ -778,6 +784,12 @@
     </Compile>
     <Compile Include="Forms\Tools\FormToolProperties.Designer.cs">
       <DependentUpon>FormToolProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Tools\FormToolInfoProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\FormToolInfoProperties.Designer.cs">
+      <DependentUpon>FormToolInfoProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\YouTube\FormPlaylistProperties.cs">
       <SubType>Form</SubType>
@@ -857,6 +869,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Log\ControlLogEventProperties.resx">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlAddSlice.resx">
       <DependentUpon>ControlAddSlice.cs</DependentUpon>
@@ -985,6 +1003,9 @@
     <EmbeddedResource Include="Controls\Tools\ControlToolboxSettings.resx">
       <DependentUpon>ControlToolboxSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Tools\ControlToolProperties.resx">
+      <DependentUpon>ControlToolProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlCommentProperties.resx">
       <DependentUpon>ControlCommentProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -1005,12 +1026,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlSideCalendar.resx">
       <DependentUpon>ControlSideCalendar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Log\ControlLogEventProperties.resx">
-      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
-      <DependentUpon>ControlLogList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\YouTube\ControlVideoProperties.resx">
       <DependentUpon>ControlVideoProperties.cs</DependentUpon>
@@ -1196,14 +1211,17 @@
     <EmbeddedResource Include="Forms\Database\FormAddServer.resx">
       <DependentUpon>FormAddServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Tools\ControlToolProperties.resx">
-      <DependentUpon>ControlToolProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Tools\ControlToolInfoProperties.resx">
+      <DependentUpon>ControlToolInfoProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Tools\FormAddTool.resx">
       <DependentUpon>FormAddTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Tools\FormToolProperties.resx">
       <DependentUpon>FormToolProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\FormToolInfoProperties.resx">
+      <DependentUpon>FormToolInfoProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\YouTube\FormPlaylistProperties.resx">
       <DependentUpon>FormPlaylistProperties.cs</DependentUpon>
@@ -1271,6 +1289,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ToolboxPickAxe_48.png" />
+    <None Include="Resources\ToolboxPickAxe_32.png" />
+    <None Include="Resources\ToolboxPickAxe_24.png" />
+    <None Include="Resources\ToolboxPickAxe_16.png" />
+    <None Include="Resources\PickAxeSmall_48.png" />
+    <None Include="Resources\PickAxeSmall_32.png" />
+    <None Include="Resources\PickAxeSmall_24.png" />
+    <None Include="Resources\PickAxeSmall_16.png" />
     <None Include="Resources\PickAxeLarge_48.png" />
     <None Include="Resources\PickAxeLarge_32.png" />
     <None Include="Resources\PickAxeLarge_24.png" />

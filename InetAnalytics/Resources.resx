@@ -3153,4 +3153,28 @@ Female, 45-54 years
   <data name="PickAxeLarge_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\PickAxeLarge_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PickAxeSmall_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PickAxeSmall_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PickAxeSmall_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PickAxeSmall_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PickAxeSmall_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PickAxeSmall_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PickAxeSmall_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PickAxeSmall_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxPickAxe_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxPickAxe_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxPickAxe_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxPickAxe_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxPickAxe_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxPickAxe_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolboxPickAxe_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ToolboxPickAxe_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

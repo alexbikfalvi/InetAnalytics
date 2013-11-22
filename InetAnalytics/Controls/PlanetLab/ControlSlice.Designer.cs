@@ -233,7 +233,6 @@
 			// 
 			this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.mapControl.Location = new System.Drawing.Point(0, 0);
-			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
 			this.mapControl.Name = "mapControl";
 			this.mapControl.Size = new System.Drawing.Size(519, 265);
 			this.mapControl.TabIndex = 0;

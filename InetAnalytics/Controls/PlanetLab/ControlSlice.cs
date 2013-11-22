@@ -1941,11 +1941,12 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnCreateTasks()
 		{
 			// Create the tasks tree node.
+			/*
 			this.treeNodeTasks = new TreeNode("Tasks");
 			this.treeNodeTasks.ImageKey = "GlobeTasks";
 			this.treeNodeTasks.SelectedImageKey = "GlobeTasks";
 			this.treeNodeSlice.Nodes.Add(this.treeNodeTasks);
-			this.treeNodeSlice.ExpandAll();
+			this.treeNodeSlice.ExpandAll();*/
 		}
 
 		/// <summary>

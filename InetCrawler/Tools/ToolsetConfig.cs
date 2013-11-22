@@ -63,16 +63,16 @@ namespace InetCrawler.Tools
 			this.toolset = toolset;
 
 			// Open a registry key for the toolbox.
-			if (null == (this.key = rootKey.OpenSubKey("{0}".FormatWith(this.toolset.Info.Id), RegistryKeyPermissionCheck.ReadWriteSubTree)))
+			if (null == (this.key = rootKey.OpenSubKey("{0},{1}".FormatWith(this.toolset.Info.Id.Guid.ToString(), this.toolset.Info.Id.Version.ToString()), RegistryKeyPermissionCheck.ReadWriteSubTree)))
 			{
-				this.key = rootKey.CreateSubKey("{0}".FormatWith(this.toolset.Info.Id), RegistryKeyPermissionCheck.ReadWriteSubTree);
+				this.key = rootKey.CreateSubKey("{0},{1}".FormatWith(this.toolset.Info.Id.Guid.ToString(), this.toolset.Info.Id.Version.ToString()), RegistryKeyPermissionCheck.ReadWriteSubTree);
 			}
 
 			// Save the toolset configuration.
 			this.key.SetString("FileName", this.fileName);
 			this.key.SetString("TypeName", this.toolset.Name);
-			this.key.SetString("Id", this.toolset.Info.Id.ToString());
-			this.key.SetString("Version", this.toolset.Info.Version.ToString());
+			this.key.SetString("Id", this.toolset.Info.Id.Guid.ToString());
+			this.key.SetString("Version", this.toolset.Info.Id.Version.ToString());
 		}
 
 
@@ -81,19 +81,20 @@ namespace InetCrawler.Tools
 		/// </summary>
 		/// <param name="api">The tool API.</param>
 		/// <param name="rootKey">The root registry key.</param>
-		/// <param name="id">The toolset identifier.</param>
-		public ToolsetConfig(IToolApi api, RegistryKey rootKey, string id)
+		/// <param name="keyName">The registry key name.</param>
+		/// <
+		public ToolsetConfig(IToolApi api, RegistryKey rootKey, string keyName)
 		{
 			// Check the arguments.
 			if (null == api) throw new ArgumentNullException("api");
 			if (null == rootKey) throw new ArgumentNullException("rootKey");
-			if (null == id) throw new ArgumentNullException("id");
+			if (null == keyName) throw new ArgumentNullException("keyName");
 
 			// Set the toolset parameters.
 			this.api = api;
 
 			// Open the registry key for the toolbox.
-			if (null == (this.key = rootKey.OpenSubKey(id, RegistryKeyPermissionCheck.ReadWriteSubTree)))
+			if (null == (this.key = rootKey.OpenSubKey(keyName, RegistryKeyPermissionCheck.ReadWriteSubTree)))
 			{
 				throw new InvalidOperationException("Cannot create the toolset configuration because the registry key is not accessible.");
 			}
@@ -215,6 +216,46 @@ namespace InetCrawler.Tools
 				// Save the toolset configuration.
 				this.OnSaveConfiguration();
 			}
+		}
+
+		/// <summary>
+		/// Removes the specified tool from the toolset configuration.
+		/// </summary>
+		/// <param name="tool">The tool.</param>
+		/// <returns><b>True</b> if the toolset is empty and can be unloaded, <b>false</b> otherwise.</returns>
+		public bool Remove(Tool tool)
+		{
+			try
+			{
+				// Remove the tool from the toolset.
+				this.tools.Remove(tool.Info.Id);
+				// Raise a tool removed event.
+				if (null != this.ToolRemoved) this.ToolRemoved(this, new ToolEventArgs(tool));
+				// Update the tools configuration.
+				this.OnSaveConfiguration();
+			}
+			finally
+			{
+				// Dispose the tool.
+				tool.Dispose();
+			}
+			// Return whether the toolset is empty.
+			return this.tools.Count == 0;
+		}
+
+		/// <summary>
+		/// Deletes the specified toolset configuration.
+		/// </summary>
+		/// <param name="toolset">The toolset.</param>
+		/// <param name="rootKey">The root registry key.</param>
+		public static void Delete(ToolsetConfig toolset, RegistryKey rootKey)
+		{
+			// Get the registry key name.
+			string keyName = "{0},{1}".FormatWith(toolset.toolset.Info.Id.Guid.ToString(), toolset.toolset.Info.Id.Version.ToString());
+			// Close the toolset.
+			toolset.Dispose();
+			// Delete the registry configuration.
+			rootKey.DeleteSubKeyTree(keyName);
 		}
 
 		// Private methods.

@@ -31,8 +31,45 @@ namespace InetAnalytics.Controls.Tools
 	/// </summary>
 	public partial class ControlToolboxSettings : ThemeControl
 	{
+		/// <summary>
+		/// A structure representing the control information for a toolbox tool.
+		/// </summary>
+		private struct ToolboxInfo
+		{
+			/// <summary>
+			/// Creates a new toolbox information instance.
+			/// </summary>
+			/// <param name="tool">The tool.</param>
+			/// <param name="node">The tree node.</param>
+			public ToolboxInfo(Tool tool, TreeNode node)
+				: this()
+			{
+				this.Tool = tool;
+				this.Node = node;
+				this.Control = tool.Control;
+			}
+
+			/// <summary>
+			/// Gets the tool.
+			/// </summary>
+			public Tool Tool { get; private set; }
+			/// <summary>
+			/// Gets the tree node for this tool.
+			/// </summary>
+			public TreeNode Node { get; private set; }
+			/// <summary>
+			/// Gets the control for this tool.
+			/// </summary>
+			public Control Control { get; private set; }
+		}
+
 		private Crawler crawler;
+
+		private TreeNode treeNode;
+		private Control.ControlCollection controls;
+
 		private readonly FormAddTool formAddTool = new FormAddTool();
+		private readonly FormToolProperties formToolProperties = new FormToolProperties();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -52,8 +89,11 @@ namespace InetAnalytics.Controls.Tools
 		/// <param name="controls">The controls collection.</param>
 		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection controls)
 		{
-			// Set the crawler.
+			// Set the parameters.
 			this.crawler = crawler;
+			this.treeNode = treeNode;
+			this.controls = controls;
+
 			// Enable the control.
 			this.Enabled = true;
 
@@ -109,7 +149,24 @@ namespace InetAnalytics.Controls.Tools
 		/// <param name="e">The event arguments.</param>
 		private void OnRemove(object sender, EventArgs e)
 		{
+			// If there is no tool selected, do nothing.
+			if (0 == this.listView.SelectedItems.Count) return;
 
+			// Get the toolbox information.
+			ToolboxInfo info = (ToolboxInfo)this.listView.SelectedItems[0].Tag;
+
+			// Show a confirmation dialog.
+			if (MessageBox.Show(
+				this,
+				@"You are removing the tool '{0}' from toolbox. Upon removal all tasks executed by this tool will be closed and unsaved data will be lost.".FormatWith(info.Tool.Info.Name),
+				"Remove Toolbox Tool",
+				MessageBoxButtons.OKCancel,
+				MessageBoxIcon.Question,
+				MessageBoxDefaultButton.Button2) == DialogResult.OK)
+			{
+				// Remove the tool from the toolbox.
+				this.crawler.Toolbox.Remove(info.Tool);
+			}
 		}
 
 		/// <summary>
@@ -119,7 +176,33 @@ namespace InetAnalytics.Controls.Tools
 		/// <param name="e">The event arguments.</param>
 		private void OnProperties(object sender, EventArgs e)
 		{
+			// If there is no tool selected, do nothing.
+			if (0 == this.listView.SelectedItems.Count) return;
+			
+			// Get the toolbox information.
+			ToolboxInfo info = (ToolboxInfo)this.listView.SelectedItems[0].Tag;
+			
+			// Open the tool properties dialog for the selected dialog.
+			this.formToolProperties.ShowDialog(this, info.Tool);
+		}
 
+		/// <summary>
+		/// An event handler called when the selected tool has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectedChanged(object sender, EventArgs e)
+		{
+			if (this.listView.SelectedItems.Count > 0)
+			{
+				this.buttonRemove.Enabled = true;
+				this.buttonProperties.Enabled = true;
+			}
+			else
+			{
+				this.buttonRemove.Enabled = false;
+				this.buttonProperties.Enabled = false;
+			}
 		}
 
 		/// <summary>
@@ -139,23 +222,100 @@ namespace InetAnalytics.Controls.Tools
 		/// <param name="e">The event arguments.</param>
 		private void OnToolRemoved(object sender, ToolEventArgs e)
 		{
+			this.OnRemoveTool(e.Tool);
 		}
 
+		/// <summary>
+		/// Adds a new tool to the toolbox.
+		/// </summary>
+		/// <param name="tool">The tool.</param>
 		private void OnAddTool(Tool tool)
 		{
+			// Create a new tree node.
+			TreeNode node = new TreeNode(tool.Info.Name);
+			node.ImageKey = "ToolboxPickAxe";
+			node.SelectedImageKey = "ToolboxPickAxe";
+			// Add the node to the nodes list.
+			this.treeNode.Nodes.Add(node);
+			// Expand the tree nodes.
+			this.treeNode.ExpandAll();
+
+			// Create the toolbox information.
+			ToolboxInfo info = new ToolboxInfo(tool, node);
+
 			// Add the tool to the toolbox list.
 			ListViewItem item = new ListViewItem(new string[] {
 				tool.Info.Name,
 				tool.Toolset.Name,
 				tool.Toolset.Author,
 				tool.Toolset.Product,
-				tool.Toolset.Version.ToString(),
+				tool.Toolset.Id.Version.ToString(),
 				tool.Info.Id.Version.ToString()
 			});
 			item.ImageIndex = 0;
-			item.Tag = tool;
+			item.Tag = info;
 			// Add the item to the list.
 			this.listView.Items.Add(item);
+
+			// If the tool control is not null.
+			if (null != info.Control)
+			{
+				// Set the control properties.
+				info.Control.Dock = DockStyle.Fill;
+				info.Control.Visible = false;
+
+				// Add the control.
+				this.controls.Add(info.Control);
+				node.Tag = info.Control;
+			}
+		}
+
+		/// <summary>
+		/// Removes a new tool to the toolbox.
+		/// </summary>
+		/// <param name="tool">The tool.</param>
+		private void OnRemoveTool(Tool tool)
+		{
+			// Find the list view item corresponding to the tool.
+			ListViewItem item = this.listView.Items.FirstOrDefault((ListViewItem it) =>
+				{
+					// Return true if the tool matches.
+					return object.ReferenceEquals(tool, ((ToolboxInfo)it.Tag).Tool);
+				});
+
+			// Get the toolbox information.
+			ToolboxInfo info = (ToolboxInfo)item.Tag;
+
+			// Remove the tree node.
+			this.treeNode.Nodes.Remove(info.Node);
+
+			// Remove the control.
+			this.controls.Remove(info.Control);
+
+			// Remove the list view item.
+			this.listView.Items.Remove(item);
+
+			// Call the selection changed event handler.
+			this.OnSelectedChanged(this, EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// An event handler called when the use clicks with the mouse on the tools list.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				if (this.listView.FocusedItem != null)
+				{
+					if (this.listView.FocusedItem.Bounds.Contains(e.Location))
+					{
+						this.contextMenu.Show(this.listView, e.Location);
+					}
+				}
+			}
 		}
 	}
 }

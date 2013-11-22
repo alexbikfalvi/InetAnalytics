@@ -17,8 +17,9 @@
  */
 
 using System;
-using DotNetApi.Windows.Controls;
+using System.Windows.Forms;
 using InetCrawler.Tools;
+using InetTools.Controls;
 
 namespace InetTools.Tools
 {
@@ -28,11 +29,13 @@ namespace InetTools.Tools
 	[ToolInfo(
 		"24654A51-339D-4C75-A60C-559388B5AFCB",
 		1, 0, 0, 0,
-		"Amazon Alexa Top Sites",
+		"Alexa Top Sites",
 		"A tool that collects the top web sites from the Alexa ranking."
 		)]
 	public sealed class ToolAlexaTopSites : Tool
 	{
+		private readonly ControlAlexaTopSites control;
+
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
@@ -41,11 +44,32 @@ namespace InetTools.Tools
 		public ToolAlexaTopSites(IToolApi api, ToolsetInfoAttribute toolset)
 			: base(api, toolset)
 		{
-
+			// Create the control.
+			this.control = new ControlAlexaTopSites(api);
 		}
+
+		// Public properties.
 
 		/// <summary>
 		/// Gets the user interface control for this tool.
 		/// </summary>
-		public override ThemeControl Control { get { return null; } }	}
+		public override Control Control { get { return this.control; } }
+
+		// Protected methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Dispose the control.
+				this.control.Dispose();
+			}
+			// Call the base clas method.
+			base.Dispose(disposing);
+		}
+	}
 }

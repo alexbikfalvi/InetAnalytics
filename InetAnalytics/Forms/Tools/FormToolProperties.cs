@@ -20,6 +20,7 @@ using System;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows;
+using InetCrawler.Tools;
 
 namespace InetAnalytics.Forms.Tools
 {
@@ -45,7 +46,7 @@ namespace InetAnalytics.Forms.Tools
 		/// <param name="owner">The owner window.</param>
 		/// <param name="tool">The tool.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, Type tool)
+		public DialogResult ShowDialog(IWin32Window owner, Tool tool)
 		{
 			// If the tool is null, do nothing.
 			if (null == tool) return DialogResult.Abort;

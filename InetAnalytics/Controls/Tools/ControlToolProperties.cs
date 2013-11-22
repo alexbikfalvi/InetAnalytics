@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ namespace InetAnalytics.Controls.Tools
 	/// </summary>
 	public partial class ControlToolProperties : ThreadSafeControl
 	{
-		private Type tool = null;
+		private Tool tool = null;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -43,13 +43,13 @@ namespace InetAnalytics.Controls.Tools
 		/// <summary>
 		/// Gets or sets the current tool.
 		/// </summary>
-		public Type Tool
+		public Tool Tool
 		{
 			get { return this.tool; }
 			set
 			{
 				// Save the old value.
-				Type old = this.tool;
+				Tool old = this.tool;
 				// Set the new tool.
 				this.tool = value;
 				// Call the event handler.
@@ -69,7 +69,7 @@ namespace InetAnalytics.Controls.Tools
 		/// </summary>
 		/// <param name="oldTool">The old tool.</param>
 		/// <param name="newTool">The new tool.</param>
-		protected virtual void OnToolSet(Type oldTool, Type newTool)
+		protected virtual void OnToolSet(Tool oldTool, Tool newTool)
 		{
 			// Set the title to empty.
 			this.Title = string.Empty;
@@ -77,22 +77,28 @@ namespace InetAnalytics.Controls.Tools
 			// If the tool has not changed, do nothing.
 			if (oldTool == newTool) return;
 
-			// The tool information.
-			ToolInfoAttribute info = (null != newTool) ? InetCrawler.Tools.Tool.GetToolInfo(newTool) : null;
-
-			if (null == info)
+			if (null == newTool)
 			{
 				this.labelTitle.Text = "No tool selected";
 				this.tabControl.Visible = false;
 			}
 			else
 			{
-				this.labelTitle.Text = info.Name;
-				this.textBoxName.Text = info.Name;
-				this.textBoxId.Text = info.Id.Guid.ToString();
-				this.textBoxVersion.Text = info.Id.Version.ToString();
-				this.textBoxDescription.Text = info.Description;
-				this.Title = info.Name;
+				this.labelTitle.Text = newTool.Info.Name;
+				this.textBoxName.Text = newTool.Info.Name;
+				this.textBoxId.Text = newTool.Info.Id.Guid.ToString();
+				this.textBoxVersion.Text = newTool.Info.Id.Version.ToString();
+				this.textBoxDescription.Text = newTool.Info.Description;
+
+				this.textBoxToolsetName.Text = newTool.Toolset.Name;
+				this.textBoxToolsetId.Text = newTool.Toolset.Id.Guid.ToString();
+				this.textBoxToolsetVersion.Text = newTool.Toolset.Id.Version.ToString();
+				this.textBoxToolsetProduct.Text = newTool.Toolset.Product;
+				this.textBoxToolsetAuthor.Text = newTool.Toolset.Author;
+				this.textBoxToolsetDescription.Text = newTool.Toolset.Description;
+
+				this.Title = newTool.Info.Name;
+
 				this.tabControl.Visible = true;
 			}
 

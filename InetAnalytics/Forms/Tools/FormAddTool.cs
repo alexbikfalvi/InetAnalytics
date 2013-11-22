@@ -28,8 +28,6 @@ namespace InetAnalytics.Forms.Tools
 	/// </summary>
 	public sealed partial class FormAddTool : Form
 	{
-		private bool canClose = true;
-
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>

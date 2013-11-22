@@ -18,7 +18,7 @@
 
 using System;
 using System.Collections.Generic;
-using DotNetApi.Windows.Controls;
+using System.Windows.Forms;
 
 namespace InetCrawler.Tools
 {
@@ -58,7 +58,7 @@ namespace InetCrawler.Tools
 		/// <summary>
 		/// Gets the user interface control for this tool.
 		/// </summary>
-		public abstract ThemeControl Control { get; }
+		public abstract Control Control { get; }
 		/// <summary>
 		/// Gets the tool information.
 		/// </summary>

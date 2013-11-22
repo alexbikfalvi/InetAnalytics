@@ -18,7 +18,7 @@
 
 using System;
 using System.Collections.Generic;
-using DotNetApi.Windows.Controls;
+using System.Windows.Forms;
 using InetCrawler.Tools;
 
 namespace InetTools.Tools
@@ -29,7 +29,7 @@ namespace InetTools.Tools
 	[ToolInfo(
 		"BD140334-43D9-4853-A124-ACA4FD799034",
 		1, 0, 0, 0,
-		"Web-Site Content Crawler",
+		"Web Content Crawler",
 		"A tool that organizes the content of a web site according to the content source."
 		)]
 	public sealed class ToolWebCrawler : Tool
@@ -48,6 +48,6 @@ namespace InetTools.Tools
 		/// <summary>
 		/// Gets the user interface control for this tool.
 		/// </summary>
-		public override ThemeControl Control { get { return null; } }
+		public override Control Control { get { return null; } }
 	}
 }

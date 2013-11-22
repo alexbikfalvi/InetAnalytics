@@ -38,7 +38,7 @@ namespace InetCrawler.Tools
 		private readonly object sync = new object();
 
 		private readonly RegistryKey key;
-		private readonly Dictionary<Guid, ToolsetConfig> toolsets = new Dictionary<Guid, ToolsetConfig>();
+		private readonly Dictionary<ToolId, ToolsetConfig> toolsets = new Dictionary<ToolId, ToolsetConfig>();
 
 		/// <summary>
 		/// Creates a new toolbox instance.
@@ -169,6 +169,31 @@ namespace InetCrawler.Tools
 		}
 
 		/// <summary>
+		/// Removes the specified tool from the toolbox.
+		/// </summary>
+		/// <param name="tool">The tool.</param>
+		public void Remove(Tool tool)
+		{
+			lock (this.sync)
+			{
+				// The toolset configuration.
+				ToolsetConfig toolset;
+				// Get the toolset configuration for this tool.
+				if (this.toolsets.TryGetValue(tool.Toolset.Id, out toolset))
+				{
+					// Remove the tool from the toolset configuration.
+					if (toolset.Remove(tool))
+					{
+						// If the toolset is empty, remove the toolset.
+						this.toolsets.Remove(toolset.Toolset.Info.Id);
+						// Close the toolset and delete its configuration.
+						ToolsetConfig.Delete(toolset, this.key);
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		/// Loads the toolbox configuration.
 		/// </summary>
 		public void OnLoadConfiguration()
@@ -185,6 +210,10 @@ namespace InetCrawler.Tools
 
 						// Add the toolset configuration.
 						this.toolsets.Add(config.Toolset.Info.Id, config);
+
+						// Add the configuration event handlers.
+						config.ToolAdded += this.OnToolAdded;
+						config.ToolRemoved += this.OnToolRemoved;
 					}
 					catch (Exception exception)
 					{

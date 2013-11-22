@@ -29,7 +29,7 @@ namespace InetAnalytics.Controls.Tools
 	/// </summary>
 	public partial class ControlAddTool : ThreadSafeControl
 	{
-		private readonly FormToolProperties formToolProperties = new FormToolProperties();
+		private readonly FormToolInfoProperties formToolProperties = new FormToolInfoProperties();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -78,7 +78,7 @@ namespace InetAnalytics.Controls.Tools
 			
 			// Set the toolset information.
 			this.textBoxName.Text = toolset.Info.Name;
-			this.textBoxVersion.Text = toolset.Info.Version.ToString();
+			this.textBoxVersion.Text = toolset.Info.Id.Version.ToString();
 			this.textBoxProduct.Text = toolset.Info.Product;
 			this.textBoxVendor.Text = toolset.Info.Author;
 

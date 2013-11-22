@@ -51,12 +51,12 @@ namespace InetCrawler.Tools
 		/// <param name="message">The event message.</param>
 		/// <param name="parameters">The event parameters.</param>
 		/// <param name="exception">The event exception.</param>
-		public void Log(Toolset toolset, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null)
+		public LogEvent Log(Toolset toolset, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null)
 		{
-			this.log.Add(
+			return this.log.Add(
 				level,
 				type,
-				@"Toolbox\{0}".FormatWith(toolset.Info.Id),
+				@"Toolbox\{0}".FormatWith(toolset.Info.Name),
 				message,
 				parameters,
 				exception
@@ -72,16 +72,25 @@ namespace InetCrawler.Tools
 		/// <param name="message">The event message.</param>
 		/// <param name="parameters">The event parameters.</param>
 		/// <param name="exception">The event exception.</param>
-		public void Log(Tool tool, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null)
+		public LogEvent Log(Tool tool, LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null)
 		{
-			this.log.Add(
+			return this.log.Add(
 				level,
 				type,
-				@"Toolbox\{0}\{1}".FormatWith(tool.Toolset.Id, tool.Info.Id),
+				@"Toolbox\{0}\{1}".FormatWith(tool.Toolset.Name, tool.Info.Name),
 				message,
 				parameters,
 				exception
 				);
+		}
+
+		/// <summary>
+		/// The delay to close a notification message.
+		/// </summary>
+		/// <returns>The delay.</returns>
+		public TimeSpan MessageCloseDelay()
+		{
+			return CrawlerConfig.Static.ConsoleMessageCloseDelay;
 		}
 	}
 }
