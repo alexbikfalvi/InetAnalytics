@@ -31,25 +31,27 @@ namespace InetCrawler.Tools
 	/// <summary>
 	/// A class representing the toolset configuration.
 	/// </summary>
-	public sealed class ToolsetConfig : IDisposable, IEnumerable<Tool>
+	public sealed class ToolsetConfig : IDisposable, IEnumerable<ToolConfig>
 	{
-		private readonly IToolApi api;
+		private static readonly string logSource = @"Toolbox\{0}";
+
+		private readonly CrawlerApi api;
 		private readonly RegistryKey key;
 
 		private readonly string fileName;
 		private readonly Toolset toolset;
 
 		private readonly object sync = new object();
-		private readonly Dictionary<ToolId, Tool> tools = new Dictionary<ToolId, Tool>();
+		private readonly Dictionary<ToolId, ToolConfig> tools = new Dictionary<ToolId, ToolConfig>();
 
 		/// <summary>
-		/// Creates a new toolset configuration instance.
+		/// Creates a new toolset configuration instance without tools.
 		/// </summary>
-		/// <param name="api">The tool API.</param>
+		/// <param name="api">The crawler API.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="fileName">The library file name.</param>
 		/// <param name="toolset">The toolset.</param>
-		public ToolsetConfig(IToolApi api, RegistryKey rootKey, string fileName, Toolset toolset)
+		public ToolsetConfig(CrawlerApi api, RegistryKey rootKey, string fileName, Toolset toolset)
 		{
 			// Check the arguments.
 			if (null == api) throw new ArgumentNullException("api");
@@ -83,7 +85,7 @@ namespace InetCrawler.Tools
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="keyName">The registry key name.</param>
 		/// <
-		public ToolsetConfig(IToolApi api, RegistryKey rootKey, string keyName)
+		public ToolsetConfig(CrawlerApi api, RegistryKey rootKey, string keyName)
 		{
 			// Check the arguments.
 			if (null == api) throw new ArgumentNullException("api");
@@ -104,7 +106,6 @@ namespace InetCrawler.Tools
 			string toolsetType = this.key.GetString("TypeName", null);
 			string toolsetId = this.key.GetString("Id", null);
 			string toolsetVersion = this.key.GetString("Version", null);
-			string[] toolsetTools = this.key.GetMultiString("Tools", null);
 
 			// Open the toolset from the specified library.
 			Assembly assembly = Assembly.LoadFrom(this.fileName);
@@ -123,24 +124,55 @@ namespace InetCrawler.Tools
 				throw new InvalidOperationException("Cannot create the toolset configuration because the specified type is not a toolset.");
 			}
 
-			// Load the tools.
-			if (null != toolsetTools)
+			// For all subkeys of the toolset key.
+			foreach (string subKey in this.key.GetSubKeyNames())
 			{
-				// For each tool information.
-				foreach (string tool in toolsetTools)
+				// Get the tool identifier for this key.
+				ToolId id;
+				// Try and parse the tool identifier.
+				if (!ToolId.TryParse(subKey, out id)) continue;
+
+				try
 				{
-					// Split the tool information between identifier and version.
-					string[] toolParams = tool.Split(',');
-					// If the information does not have exactly two parameters, skip.
-					if (2 != toolParams.Length) continue;
-					// Get the tool type from the toolset.
-					Type toolType = this.toolset[toolParams[0], toolParams[1]];
-					// If the tool type is null, skip.
-					if (null == toolType) continue;
-					// Add the tool to the tools list.
-					this.OnAddInternal(toolType);
+					// Create the tool configuration.
+					ToolConfig tool = new ToolConfig(this.api, this.toolset, this.key, id);
+
+					lock (this.sync)
+					{
+						// Add the tool configuration.
+						this.tools.Add(tool.Tool.Info.Id, tool);
+					}
+				}
+				catch (Exception exception)
+				{
+					// Log the exception.
+					this.api.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ToolsetConfig.logSource.FormatWith(this.toolset.Info.Id),
+						"Loading the tool of type {0} from the toolset {1} failed.",
+						new object[] { type.FullName, this.toolset.Info.Id },
+						exception);
 				}
 			}
+
+			//if (null != toolsetTools)
+			//{
+			//	// For each tool information.
+			//	foreach (string tool in toolsetTools)
+			//	{
+			//		// Split the tool information between identifier and version.
+			//		string[] toolParams = tool.Split(',');
+			//		// If the information does not have exactly two parameters, skip.
+			//		if (2 != toolParams.Length) continue;
+			//		// Get the tool type from the toolset.
+			//		Type toolType = this.toolset[toolParams[0], toolParams[1]];
+			//		// If the tool type is null, skip.
+			//		if (null == toolType) continue;
+			//		// Add the tool to the tools list.
+			//		this.OnAddInternal(toolType);
+			//	}
+			//}
 		}
 
 		// Public events.
@@ -178,7 +210,7 @@ namespace InetCrawler.Tools
 		/// Gets the enumerator for the current toolset.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
-		public IEnumerator<Tool> GetEnumerator()
+		public IEnumerator<ToolConfig> GetEnumerator()
 		{
 			return this.tools.Values.GetEnumerator();
 		}
@@ -198,24 +230,24 @@ namespace InetCrawler.Tools
 		/// <param name="tools">The tools.</param>
 		public void Add(Type[] tools)
 		{
-			lock (this.sync)
-			{
-				// Create the tools.
-				for (int index = 0; index < tools.Length; index++)
-				{
-					// The tool.
-					Tool tool = null;
-					// If adding the tool was successful.
-					if (null != (tool = this.OnAddInternal(tools[index])))
-					{
-						// Raise a tool added event.
-						if (null != this.ToolAdded) this.ToolAdded(this, new ToolEventArgs(tool));
-					}
-				}
+			//lock (this.sync)
+			//{
+			//	// Create the tools.
+			//	for (int index = 0; index < tools.Length; index++)
+			//	{
+			//		// The tool.
+			//		Tool tool = null;
+			//		// If adding the tool was successful.
+			//		if (null != (tool = this.OnAddInternal(tools[index])))
+			//		{
+			//			// Raise a tool added event.
+			//			if (null != this.ToolAdded) this.ToolAdded(this, new ToolEventArgs(tool));
+			//		}
+			//	}
 
-				// Save the toolset configuration.
-				this.OnSaveConfiguration();
-			}
+			//	// Save the toolset configuration.
+			//	this.OnSaveConfiguration();
+			//}
 		}
 
 		/// <summary>
@@ -232,7 +264,7 @@ namespace InetCrawler.Tools
 				// Raise a tool removed event.
 				if (null != this.ToolRemoved) this.ToolRemoved(this, new ToolEventArgs(tool));
 				// Update the tools configuration.
-				this.OnSaveConfiguration();
+				//this.OnSaveConfiguration();
 			}
 			finally
 			{
@@ -263,21 +295,21 @@ namespace InetCrawler.Tools
 		/// <summary>
 		/// Saves the toolset configuration.
 		/// </summary>
-		private void OnSaveConfiguration()
-		{
-			// Create the list of tools identifiers.
-			string[] toolsConfig = new string[this.tools.Values.Count];
+		//private void OnSaveConfiguration()
+		//{
+		//	// Create the list of tools identifiers.
+		//	string[] toolsConfig = new string[this.tools.Values.Count];
 
-			int index = 0;
-			// For all tools.
-			foreach (Tool tool in this.tools.Values)
-			{
-				// Set the tool identifier.
-				toolsConfig[index++] = "{0},{1}".FormatWith(tool.Info.Id.Guid.ToString(), tool.Info.Id.Version.ToString());
-			}
-			// Save the configuration to the registry.
-			this.key.SetMultiString("Tools", toolsConfig);
-		}
+		//	int index = 0;
+		//	// For all tools.
+		//	foreach (Tool tool in this.tools.Values)
+		//	{
+		//		// Set the tool identifier.
+		//		toolsConfig[index++] = "{0},{1}".FormatWith(tool.Info.Id.Guid.ToString(), tool.Info.Id.Version.ToString());
+		//	}
+		//	// Save the configuration to the registry.
+		//	this.key.SetMultiString("Tools", toolsConfig);
+		//}
 
 		/// <summary>
 		/// Adds the tool of the specified type from the current toolbox to the tools list. The method does not change the configuration, nor
@@ -285,38 +317,38 @@ namespace InetCrawler.Tools
 		/// </summary>
 		/// <param name="type">The tool type.</param>
 		/// <returns>The tool instance if the operation was successful, <b>false</b> otherwise.</returns>
-		private Tool OnAddInternal(Type type)
-		{
-			// Get the tool info.
-			ToolInfoAttribute info = Tool.GetToolInfo(type);
+		//private Tool OnAddInternal(Type type)
+		//{
+		//	// Get the tool info.
+		//	ToolInfoAttribute info = Tool.GetToolInfo(type);
 
-			// If the type does not have a tool information, skip the type.
-			if (null == info) return null;
+		//	// If the type does not have a tool information, skip the type.
+		//	if (null == info) return null;
 
-			// If the tool has already been loaded to the toolset, do nothing.
-			if (this.tools.ContainsKey(info.Id)) return null;
+		//	// If the tool has already been loaded to the toolset, do nothing.
+		//	if (this.tools.ContainsKey(info.Id)) return null;
 
-			try
-			{
-				// Create the tool instance.
-				Tool tool = Activator.CreateInstance(type, new object[] { this.api, this.toolset.Info }) as Tool;
+		//	try
+		//	{
+		//		// Create the tool instance.
+		//		Tool tool = Activator.CreateInstance(type, new object[] { this.api, this.toolset.Info }) as Tool;
 
-				// Add the tool to the tools dictionary.
-				this.tools.Add(tool.Info.Id, tool);
+		//		// Add the tool to the tools dictionary.
+		//		this.tools.Add(tool.Info.Id, tool);
 
-				// Return the tool.
-				return tool;
-			}
-			catch (Exception exception)
-			{
-				// Log the exception.
-				this.api.Log(this.toolset, LogEventLevel.Important, LogEventType.Error,
-					"Loading the tool of type {0} from the toolset {1} failed.",
-					new object[] { type.FullName, this.toolset.Info.Id },
-					exception);
-			}
-			// Return null.
-			return null;
-		}
+		//		// Return the tool.
+		//		return tool;
+		//	}
+		//	catch (Exception exception)
+		//	{
+		//		// Log the exception.
+		//		this.api.Log(this.toolset, LogEventLevel.Important, LogEventType.Error,
+		//			"Loading the tool of type {0} from the toolset {1} failed.",
+		//			new object[] { type.FullName, this.toolset.Info.Id },
+		//			exception);
+		//	}
+		//	// Return null.
+		//	return null;
+		//}
 	}
 }

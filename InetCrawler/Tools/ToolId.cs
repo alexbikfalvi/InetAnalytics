@@ -17,6 +17,7 @@
  */
 
 using System;
+using DotNetApi;
 
 namespace InetCrawler.Tools
 {
@@ -74,6 +75,15 @@ namespace InetCrawler.Tools
 		}
 
 		/// <summary>
+		/// Converts the tool identifier to a string.
+		/// </summary>
+		/// <returns>The string.</returns>
+		public override string ToString()
+		{
+			return "{0},{1}".FormatWith(this.Guid.ToString(), this.Version.ToString());
+		}
+
+		/// <summary>
 		/// Compares two tool information structures.
 		/// </summary>
 		/// <param name="left">The left header.</param>
@@ -93,6 +103,53 @@ namespace InetCrawler.Tools
 		public static bool operator !=(ToolId left, ToolId right)
 		{
 			return !left.Equals(right);
+		}
+
+		/// <summary>
+		/// Parses the specified string into a tool identifier.
+		/// </summary>
+		/// <param name="value">The string value.</param>
+		/// <returns>The tool identifier.</returns>
+		public static ToolId Parse(string value)
+		{
+			// Split the tool information between identifier and version.
+			string[] str = value.Split(',');
+
+			// If the information does not have exactly two parameters, throw an exception.
+			if (2 != str.Length) throw new FormatException("The specified string does not correspond to a tool identifier.");
+
+			// Return the tool identifier.
+			return new ToolId(Guid.Parse(str[0]), Version.Parse(str[1]));
+		}
+
+		/// <summary>
+		/// Try and parse the specified string into a tool identifier.
+		/// </summary>
+		/// <param name="value">The string value.</param>
+		/// <param name="id">The tool identifier.</param>
+		/// <returns><b>True</b> if the parsing was successful, <b>false</b> otherwise.</returns>
+		public static bool TryParse(string value, out ToolId id)
+		{
+			// Split the tool information between identifier and version.
+			string[] str = value.Split(',');
+
+			id = default(ToolId);
+
+			// If the information does not have exactly two parameters, throw an exception.
+			if (2 != str.Length) return false;
+
+			Guid guid;
+			Version version;
+
+			// Try parse the GUID.
+			if (!Guid.TryParse(str[0], out guid)) return false;
+			// Try parse the version.
+			if (!Version.TryParse(str[1], out version)) return false;
+
+			// Create the new tool identifier.
+			id = new ToolId(guid, version);
+
+			return true;
 		}
 	}
 }

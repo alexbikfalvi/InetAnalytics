@@ -45,6 +45,7 @@
     <Compile Include="Comments\CrawlerComment.cs" />
     <Compile Include="Comments\CrawlerComments.cs" />
     <Compile Include="Comments\CrawlerCommentsList.cs" />
+    <Compile Include="CrawlerApi.cs" />
     <Compile Include="Events\CrawlerEvents.cs" />
     <Compile Include="CrawlerException.cs" />
     <Compile Include="CrawlerNetwork.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Tools\ToolApi.cs" />
     <Compile Include="Tools\Toolbox.cs" />
     <Compile Include="Tools\ToolboxEnumerator.cs" />
+    <Compile Include="Tools\ToolConfig.cs" />
     <Compile Include="Tools\ToolDependencyAttribute.cs" />
     <Compile Include="Tools\ToolEventArgs.cs" />
     <Compile Include="Tools\ToolId.cs" />

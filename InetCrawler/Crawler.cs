@@ -38,7 +38,7 @@ namespace InetCrawler
 	{
 		private readonly CrawlerConfig config;
 		private readonly CrawlerEvents events;
-		private readonly ToolApi toolApi;
+		private readonly CrawlerApi api;
 		private readonly Toolbox toolbox;
 		private readonly Logger log;
 		private readonly DbConfig dbConfig;
@@ -88,11 +88,11 @@ namespace InetCrawler
 			// Create the crawler testing.
 			this.testing = new CrawlerTesting(rootKey, rootPath + @"\Testing");
 
-			// Create the toolbox API.
-			this.toolApi = new ToolApi(this.log);
+			// Create the crawler API.
+			this.api = new CrawlerApi(this.config, this.log);
 
 			// Create the toolbox.
-			this.toolbox = new Toolbox(this.log, this.toolApi, rootKey, rootPath + @"\Toolbox");
+			this.toolbox = new Toolbox(this.api, rootKey, rootPath + @"\Toolbox");
 		}
 
 		// Public properties.

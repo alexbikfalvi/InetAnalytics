@@ -72,9 +72,8 @@ namespace InetCrawler.Tools
 		/// Returns the tool type for the specified identifier and version.
 		/// </summary>
 		/// <param name="id">The tool identifier.</param>
-		/// <param name="version">The tool version.</param>
 		/// <returns>The tool type or null, if the tool does not exist.</returns>
-		public Type this[string id, string version] { get { return this.GetTool(id, version); } }
+		public Type this[ToolId id] { get { return this.GetTool(id); } }
 		/// <summary>
 		/// Gets the toolset name.
 		/// </summary>
@@ -137,19 +136,11 @@ namespace InetCrawler.Tools
 		/// Returns the tool type for the specified identifier and version. The method does not throw an exception.
 		/// </summary>
 		/// <param name="strId">The tool identifier.</param>
-		/// <param name="strVersion">The tool version.</param>
 		/// <returns>The type or <b>null</b>, if the tool does not exist.</returns>
-		public Type GetTool(string strId, string strVersion)
+		public Type GetTool(ToolId id)
 		{
-			Guid guid;
-			Version version;
-
-			if (!Guid.TryParse(strId, out guid)) return null;
-			if (!Version.TryParse(strVersion, out version)) return null;
-
 			Type type;
-
-			if (this.tools.TryGetValue(new ToolId(guid, version), out type)) return type;
+			if (this.tools.TryGetValue(id, out type)) return type;
 			else return null;
 		}
 	}

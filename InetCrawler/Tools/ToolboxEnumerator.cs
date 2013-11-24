@@ -28,7 +28,7 @@ namespace InetCrawler.Tools
 	public sealed class ToolboxEnumerator : IEnumerator<Tool>
 	{
 		private readonly IEnumerator<ToolsetConfig> enumeratorToolset;
-		private IEnumerator<Tool> enumeratorTool = null;
+		private IEnumerator<ToolConfig> enumeratorTool = null;
 
 		/// <summary>
 		/// Creates a toolbox enumerator instance.
@@ -94,7 +94,7 @@ namespace InetCrawler.Tools
 				if (this.enumeratorTool.MoveNext())
 				{
 					// Set the element.
-					this.Current = this.enumeratorTool.Current;
+					this.Current = this.enumeratorTool.Current.Tool;
 					// Set the element.
 					return true;
 				}

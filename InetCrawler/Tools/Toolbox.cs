@@ -32,8 +32,7 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public sealed class Toolbox : IEnumerable<Tool>
 	{
-		private readonly Logger log;
-		private readonly IToolApi api;
+		private readonly CrawlerApi api;
 
 		private readonly object sync = new object();
 
@@ -43,21 +42,17 @@ namespace InetCrawler.Tools
 		/// <summary>
 		/// Creates a new toolbox instance.
 		/// </summary>
-		/// <param name="log">The log.</param>
-		/// <param name="api">The tools API.</param>
+		/// <param name="api">The crawler API.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="path">The registry path.</param>
-		public Toolbox(Logger log, IToolApi api, RegistryKey rootKey, string path)
+		public Toolbox(CrawlerApi api, RegistryKey rootKey, string path)
 		{
 			// Check the arguments.
-			if (null == log) throw new ArgumentNullException("log");
 			if (null == api) throw new ArgumentNullException("api");
 			if (null == rootKey) throw new ArgumentNullException("rootKey");
 			if (null == path) throw new ArgumentNullException("path");
 
-			// Set the log.
-			this.log = log;
-			// Set the tool API.
+			// Set the API.
 			this.api = api;
 			// Open a registry key for the toolbox.
 			if (null == (this.key = rootKey.OpenSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree)))
@@ -66,7 +61,36 @@ namespace InetCrawler.Tools
 			}
 
 			// Load the configuration.
-			this.OnLoadConfiguration();
+			lock (this.sync)
+			{
+				// Load the registry configuration.
+				foreach (string id in this.key.GetSubKeyNames())
+				{
+					try
+					{
+						// Create a toolset for the repective key.
+						ToolsetConfig config = new ToolsetConfig(this.api, this.key, id);
+
+						// Add the toolset configuration.
+						this.toolsets.Add(config.Toolset.Info.Id, config);
+
+						// Add the configuration event handlers.
+						config.ToolAdded += this.OnToolAdded;
+						config.ToolRemoved += this.OnToolRemoved;
+					}
+					catch (Exception exception)
+					{
+						// If an exception occurred, log an event.
+						this.api.Log.Add(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							"Toolbox",
+							"An error occurred while loading the configuration for the toolset {0}.",
+							new object[] { id },
+							exception);
+					}
+				}
+			}
 		}
 
 		// Public events.
@@ -106,11 +130,19 @@ namespace InetCrawler.Tools
 			GC.SuppressFinalize(this);
 		}
 
+		/// <summary>
+		/// Returns the generic enumerator for the toolbox.
+		/// </summary>
+		/// <returns>The enumerator.</returns>
 		public IEnumerator<Tool> GetEnumerator()
 		{
 			return new ToolboxEnumerator(this.toolsets.Values);
 		}
 
+		/// <summary>
+		/// Returns the non-generic enumerator for the toolbox.
+		/// </summary>
+		/// <returns>The enumerator.</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -191,51 +223,6 @@ namespace InetCrawler.Tools
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		/// Loads the toolbox configuration.
-		/// </summary>
-		public void OnLoadConfiguration()
-		{
-			lock (this.sync)
-			{
-				// For all subkeys of the toolbox key.
-				foreach (string id in this.key.GetSubKeyNames())
-				{
-					try
-					{
-						// Create a toolset for the repective key.
-						ToolsetConfig config = new ToolsetConfig(this.api, this.key, id);
-
-						// Add the toolset configuration.
-						this.toolsets.Add(config.Toolset.Info.Id, config);
-
-						// Add the configuration event handlers.
-						config.ToolAdded += this.OnToolAdded;
-						config.ToolRemoved += this.OnToolRemoved;
-					}
-					catch (Exception exception)
-					{
-						// If an exception occurred, log an event.
-						this.log.Add(
-							LogEventLevel.Important,
-							LogEventType.Error,
-							"Toolbox",
-							"An error occurred while loading the configuration for the toolset {0}.",
-							new object[] { id },
-							exception);
-					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Saves the toolbox configuration.
-		/// </summary>
-		public void OnSaveConfiguration()
-		{
-
 		}
 
 		// Private methods.
