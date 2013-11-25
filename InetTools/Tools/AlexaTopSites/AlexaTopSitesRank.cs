@@ -17,43 +17,39 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using InetCrawler.Tools;
-using InetTools.Tools;
 
-namespace InetTools
+namespace InetTools.Tools.AlexaTopSites
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// A structure representing the Alexa ranking information.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
-		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
-		)]
-	public sealed class StandardToolset : Toolset
+	public struct AlexaTopSitesRank
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolCdnFinder),
-			typeof(ToolWebCrawler)
-		};
+		/// <summary>
+		/// Creates a new ranking information structure.
+		/// </summary>
+		/// <param name="position">The rank position.</param>
+		/// <param name="site">The site name.</param>
+		/// <param name="url">The URL path.</param>
+		public AlexaTopSitesRank(int position, string site, string url)
+			: this()
+		{
+			this.Position = position;
+			this.Site = site;
+			this.Url = url;
+		}
 
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Gets the ranking position.
 		/// </summary>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(string name)
-			: base(name)
-		{
-			foreach (Type tool in StandardToolset.tools)
-			{
-				this.Add(tool);
-			}
-		}
+		public int Position { get; private set; }
+		/// <summary>
+		/// Gets the site name.
+		/// </summary>
+		public string Site { get; private set; }
+		/// <summary>
+		/// Gets the URL path.
+		/// </summary>
+		public string Url { get; private set; }
 	}
 }

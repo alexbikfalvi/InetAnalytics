@@ -47,6 +47,7 @@
     <Compile Include="Actions\UpgradeActionEventArgs.cs" />
     <Compile Include="Actions\UpgradeActionFiles.cs" />
     <Compile Include="Actions\UpgradeActionRegistry.cs" />
+    <Compile Include="Actions\UpgradeActionTools.cs" />
     <Compile Include="FormSetup.cs">
       <SubType>Form</SubType>
     </Compile>

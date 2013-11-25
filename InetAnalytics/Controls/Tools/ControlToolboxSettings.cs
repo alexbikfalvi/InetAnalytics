@@ -129,7 +129,7 @@ namespace InetAnalytics.Controls.Tools
 					if (this.formAddTool.ShowDialog(this, toolset) == DialogResult.OK)
 					{
 						// Get the list of added tools.
-						Type[] tools = this.formAddTool.Result;
+						ToolId[] tools = this.formAddTool.Result;
 						// Add the tools to the toolbox.
 						this.crawler.Toolbox.Add(this.openFileDialog.FileName, toolset, tools);
 					}

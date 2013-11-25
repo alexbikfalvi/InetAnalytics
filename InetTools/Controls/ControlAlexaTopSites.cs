@@ -17,7 +17,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -26,6 +25,7 @@ using DotNetApi;
 using DotNetApi.Windows.Controls;
 using DotNetApi.Web;
 using InetCrawler.Tools;
+using InetTools.Tools.AlexaTopSites;
 
 namespace InetTools.Controls
 {
@@ -34,66 +34,6 @@ namespace InetTools.Controls
 	/// </summary>
 	public partial class ControlAlexaTopSites : NotificationControl
 	{
-		/// <summary>
-		/// A structure representing the Alexa country information.
-		/// </summary>
-		public struct AlexaCountryInfo
-		{
-			/// <summary>
-			/// Creates a new country information structure.
-			/// </summary>
-			/// <param name="name">The country name.</param>
-			/// <param name="url">The URL path.</param>
-			public AlexaCountryInfo(string name, string url)
-				: this()
-			{
-				this.Name = name;
-				this.Url = url;
-			}
-
-			/// <summary>
-			/// Gets the country name.
-			/// </summary>
-			public string Name { get; private set; }
-			/// <summary>
-			/// Gets the URL path.
-			/// </summary>
-			public string Url { get; private set; }
-		}
-
-		/// <summary>
-		/// A structure representing the Alexa ranking information.
-		/// </summary>
-		public struct AlexaRankingInfo
-		{
-			/// <summary>
-			/// Creates a new ranking information structure.
-			/// </summary>
-			/// <param name="rank">The rank position.</param>
-			/// <param name="site">The site name.</param>
-			/// <param name="url">The URL path.</param>
-			public AlexaRankingInfo(int rank, string site, string url)
-				: this()
-			{
-				this.Rank = rank;
-				this.Site = site;
-				this.Url = url;
-			}
-
-			/// <summary>
-			/// Gets the ranking position.
-			/// </summary>
-			public int Rank { get; private set; }
-			/// <summary>
-			/// Gets the site name.
-			/// </summary>
-			public string Site { get; private set; }
-			/// <summary>
-			/// Gets the URL path.
-			/// </summary>
-			public string Url { get; private set; }
-		}
-
 		/// <summary>
 		/// A structure representing the Alexa request state.
 		/// </summary>
@@ -104,7 +44,7 @@ namespace InetTools.Controls
 			/// </summary>
 			/// <param name="url">The country information.</param>
 			/// <param name="pages">The total number of pages to download.</param>
-			public AlexaRequestState(AlexaCountryInfo country, int pages)
+			public AlexaRequestState(AlexaTopSitesCountry country, int pages)
 			{
 				this.Country = country;
 				this.Page = 0;
@@ -114,7 +54,7 @@ namespace InetTools.Controls
 			/// <summary>
 			/// Gets the country information.
 			/// </summary>
-			public AlexaCountryInfo Country { get; private set; }
+			public AlexaTopSitesCountry Country { get; private set; }
 			/// <summary>
 			/// Gets the page index.
 			/// </summary>
@@ -126,17 +66,14 @@ namespace InetTools.Controls
 		}
 
 		private readonly IToolApi api;
+		
 		private readonly object sync = new object();
 		private readonly AsyncWebRequest request = new AsyncWebRequest();
 
 		private IAsyncResult result = null;
 
-		private readonly List<AlexaCountryInfo> alexaCountries = new List<AlexaCountryInfo>() {
-			new AlexaCountryInfo("(Global)", ControlAlexaTopSites.urlAlexaGlobal)
-		};
-		private readonly List<AlexaRankingInfo> alexaRanking = new List<AlexaRankingInfo>();
-		private AlexaCountryInfo alexaRankingCountry;
-		private DateTime alexaRankingTimestamp = DateTime.MinValue;
+		private AlexaTopSitesCountries countries = new AlexaTopSitesCountries();
+		private AlexaTopSitesRanking ranking = new AlexaTopSitesRanking();
 
 		private static readonly string urlAlexa = "http://www.alexa.com";
 		private static readonly string urlAlexaCountries = "/topsites/countries";
@@ -206,12 +143,12 @@ namespace InetTools.Controls
 				{
 					// Clear the ranking lists.
 					this.listView.Items.Clear();
-					this.alexaRanking.Clear();
+					this.ranking.Clear();
 					// Disable the export button.
 					this.buttonExport.Enabled = false;
 					
 					// Get the selected country.
-					AlexaCountryInfo info = this.alexaCountries[this.comboBoxCountries.SelectedIndex];
+					AlexaTopSitesCountry country = this.countries[this.comboBoxCountries.SelectedIndex];
 					// Get the number of pages to download.
 					int pages = int.Parse(this.comboBoxPages.SelectedItem as string);
 					
@@ -222,7 +159,7 @@ namespace InetTools.Controls
 						"Updating the Alexa ranking...");
 					
 					// Create a new request state.
-					AlexaRequestState state = new AlexaRequestState(info, pages);
+					AlexaRequestState state = new AlexaRequestState(country, pages);
 					// Begin a new ranking request.
 					this.OnStartRankingRequest(state);
 				}
@@ -236,7 +173,7 @@ namespace InetTools.Controls
 						"Alexa Request",
 						"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 						false,
-						(int)this.api.MessageCloseDelay().TotalMilliseconds);
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
 				}
 			}
 		}
@@ -274,7 +211,7 @@ namespace InetTools.Controls
 				this.request.End(result, out data);
 
 				// Parse the list of Alexa countries.
-				this.OnParseAlexaRanking(data);
+				this.ranking.Parse(data);
 
 				// Get the request state.
 				AlexaRequestState state = result.AsyncState as AlexaRequestState;
@@ -293,7 +230,7 @@ namespace InetTools.Controls
 						"Alexa Request",
 						"Updating the Alexa ranking completed successfully.",
 						false,
-						(int)this.api.MessageCloseDelay().TotalMilliseconds,
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 						{
 							// Call the request finished event handler.
@@ -311,7 +248,7 @@ namespace InetTools.Controls
 					"Alexa Request",
 					"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 					false,
-					(int)this.api.MessageCloseDelay().TotalMilliseconds,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the request finished event handler.
@@ -377,7 +314,7 @@ namespace InetTools.Controls
 						"Alexa Request",
 						"Updating the list of Alexa ranking countries failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 						false,
-						(int)this.api.MessageCloseDelay().TotalMilliseconds);
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
 				}
 			}
 		}
@@ -403,7 +340,7 @@ namespace InetTools.Controls
 				this.request.End(result, out data);
 				
 				// Parse the list of Alexa countries.
-				this.OnParseAlexaCountries(data);
+				this.countries.Parse(data);
 
 				// Show a message.
 				this.ShowMessage(
@@ -411,7 +348,7 @@ namespace InetTools.Controls
 					"Alexa Request",
 					"Updating the list of Alexa ranking countries completed successfully.",
 					false,
-					(int)this.api.MessageCloseDelay().TotalMilliseconds,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the request finished event handler.
@@ -428,7 +365,7 @@ namespace InetTools.Controls
 					"Alexa Request",
 					"Updating the list of Alexa ranking countries failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 					false,
-					(int)this.api.MessageCloseDelay().TotalMilliseconds,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the request finished event handler.
@@ -442,13 +379,12 @@ namespace InetTools.Controls
 		/// </summary>
 		private void OnUpdateCountries()
 		{
-			lock (this.sync)
+			// Add the global ranking.
+			this.comboBoxCountries.Items.Add("(Global)");
+			// Update the list of countries.
+			foreach (AlexaTopSitesCountry country in this.countries)
 			{
-				// Update the list of countries.
-				foreach (AlexaCountryInfo info in this.alexaCountries)
-				{
-					this.comboBoxCountries.Items.Add(info.Name);
-				}
+				this.comboBoxCountries.Items.Add(country.Name);
 			}
 			// Select the first index.
 			this.comboBoxCountries.SelectedIndex = 0;
@@ -458,121 +394,118 @@ namespace InetTools.Controls
 		/// Updates the Alexa ranking.
 		/// </summary>
 		/// <param name="country">The country.</param>
-		private void OnUpdateRanking(AlexaCountryInfo country)
+		private void OnUpdateRanking(AlexaTopSitesCountry country)
 		{
-			lock (this.sync)
+			// Set the ranking timestamp and country.
+			//this.alexaRankingTimestamp = DateTime.Now;
+			//this.alexaRankingCountry = country;
+			// Update the list of sites.
+			foreach (AlexaTopSitesRank rank in this.ranking)
 			{
-				// Set the ranking timestamp and country.
-				this.alexaRankingTimestamp = DateTime.Now;
-				this.alexaRankingCountry = country;
-				// Update the list of sites.
-				foreach (AlexaRankingInfo info in this.alexaRanking)
-				{
-					// Create a new item.
-					ListViewItem item = new ListViewItem(new string[] { info.Rank.ToString(), info.Site });
-					item.Tag = info;
-					item.ImageIndex = 0;
-					// Add the item to the list.
-					this.listView.Items.Add(item);
-				}
-				// Enable the export button.
-				this.buttonExport.Enabled = this.alexaRanking.Count > 0;
+				// Create a new item.
+				ListViewItem item = new ListViewItem(new string[] { rank.Position.ToString(), rank.Site });
+				item.Tag = rank;
+				item.ImageIndex = 0;
+				// Add the item to the list.
+				this.listView.Items.Add(item);
 			}
+			// Enable the export button.
+			this.buttonExport.Enabled = this.ranking.Count > 0;
 		}
 
-		/// <summary>
-		/// Parses the list of Alexa countries.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		private void OnParseAlexaCountries(string data)
-		{
-			// Create an HTML document for the list of Alexa countries.
-			HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
-			// Load the HTML data.
-			html.LoadHtml(data);
-			// Parse the countries node.
-			HtmlAgilityPack.HtmlNode node = html.GetElementbyId("topsites-countries").Element("div").Element("div");
+		///// <summary>
+		///// Parses the list of Alexa countries.
+		///// </summary>
+		///// <param name="data">The data.</param>
+		//private void OnParseAlexaCountries(string data)
+		//{
+		//	// Create an HTML document for the list of Alexa countries.
+		//	HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
+		//	// Load the HTML data.
+		//	html.LoadHtml(data);
+		//	// Parse the countries node.
+		//	HtmlAgilityPack.HtmlNode node = html.GetElementbyId("topsites-countries").Element("div").Element("div");
 
-			// Synchronize access.
-			lock (this.sync)
-			{
-				// Clear the countries list.
-				this.alexaCountries.Clear();
-				// Add the global ranking.
-				this.alexaCountries.Add(new AlexaCountryInfo("(Global)", ControlAlexaTopSites.urlAlexaGlobal));
-				// For all unnumbered list chilren.
-				foreach (HtmlAgilityPack.HtmlNode nodeUl in node.Elements("ul"))
-				{
-					// For all list elements.
-					foreach (HtmlAgilityPack.HtmlNode nodeLi in nodeUl.Elements("li"))
-					{
-						// Get the link element.
-						HtmlAgilityPack.HtmlNode nodeA = nodeLi.Element("a");
-						// Create a new Alexa country information.
-						AlexaCountryInfo info = new AlexaCountryInfo(nodeA.InnerText, nodeA.GetAttributeValue("href", null));
-						// Add the information to the list.
-						this.alexaCountries.Add(info);
-					}
-				}
-			}
-		}
+		//	// Synchronize access.
+		//	lock (this.sync)
+		//	{
+		//		// Clear the countries list.
+		//		this.countries.Clear();
+		//		// Add the global ranking.
+		//		this.countries.Add(new AlexaCountryInfo("(Global)", ControlAlexaTopSites.urlAlexaGlobal));
+		//		// For all unnumbered list chilren.
+		//		foreach (HtmlAgilityPack.HtmlNode nodeUl in node.Elements("ul"))
+		//		{
+		//			// For all list elements.
+		//			foreach (HtmlAgilityPack.HtmlNode nodeLi in nodeUl.Elements("li"))
+		//			{
+		//				// Get the link element.
+		//				HtmlAgilityPack.HtmlNode nodeA = nodeLi.Element("a");
+		//				// Create a new Alexa country information.
+		//				AlexaCountryInfo info = new AlexaCountryInfo(nodeA.InnerText, nodeA.GetAttributeValue("href", null));
+		//				// Add the information to the list.
+		//				this.alexaCountries.Add(info);
+		//			}
+		//		}
+		//	}
+		//}
 
-		/// <summary>
-		/// Parses the list of Alexa ranking.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		private void OnParseAlexaRanking(string data)
-		{
-			// Create an HTML document for the list of Alexa countries.
-			HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
-			// Load the HTML data.
-			html.LoadHtml(data);
+		///// <summary>
+		///// Parses the list of Alexa ranking.
+		///// </summary>
+		///// <param name="data">The data.</param>
+		//private void OnParseAlexaRanking(string data)
+		//{
+		//	// Create an HTML document for the list of Alexa countries.
+		//	HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
+		//	// Load the HTML data.
+		//	html.LoadHtml(data);
 
-			// The root node.
-			HtmlAgilityPack.HtmlNode node;
+		//	// The root node.
+		//	HtmlAgilityPack.HtmlNode node;
 
-			// Parse the countries node.
-			if (null != (node = html.GetElementbyId("topsites-global")))
-			{
-				this.OnParseAlexaRanking(node);
-			}
-			else if (null != (node = html.GetElementbyId("topsites-countries")))
-			{
-				this.OnParseAlexaRanking(node);
-			}
-		}
+		//	// Parse the countries node.
+		//	if (null != (node = html.GetElementbyId("topsites-global")))
+		//	{
+		//		this.OnParseAlexaRanking(node);
+		//	}
+		//	else if (null != (node = html.GetElementbyId("topsites-countries")))
+		//	{
+		//		this.OnParseAlexaRanking(node);
+		//	}
+		//}
 
-		/// <summary>
-		/// Parses the Alexa ranking.
-		/// </summary>
-		/// <param name="node">The inner HTML node.</param>
-		private void OnParseAlexaRanking(HtmlAgilityPack.HtmlNode node)
-		{
-			lock (this.sync)
-			{
-				// For all ranking elements.
-				foreach (HtmlAgilityPack.HtmlNode nodeLi in node.Element("div").Element("ul").Elements("li"))
-				{
-					HtmlAgilityPack.HtmlNode nodeRank = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
-					{
-						return child.GetAttributeValue("class", null) == "count";
-					}).FirstOrDefault();
-					HtmlAgilityPack.HtmlNode nodeSite = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
-					{
-						return child.GetAttributeValue("class", null) == "desc-container";
-					}).FirstOrDefault().Element("h2").Element("a");
+		///// <summary>
+		///// Parses the Alexa ranking.
+		///// </summary>
+		///// <param name="node">The inner HTML node.</param>
+		//private void OnParseAlexaRanking(HtmlAgilityPack.HtmlNode node)
+		//{
+		//	lock (this.sync)
+		//	{
+		//		// For all ranking elements.
+		//		foreach (HtmlAgilityPack.HtmlNode nodeLi in node.Element("div").Element("ul").Elements("li"))
+		//		{
+		//			HtmlAgilityPack.HtmlNode nodeRank = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
+		//			{
+		//				return child.GetAttributeValue("class", null) == "count";
+		//			}).FirstOrDefault();
+		//			HtmlAgilityPack.HtmlNode nodeSite = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
+		//			{
+		//				return child.GetAttributeValue("class", null) == "desc-container";
+		//			}).FirstOrDefault().Element("h2").Element("a");
 
-					// Create a new ranking information.
-					AlexaRankingInfo info = new AlexaRankingInfo(
-						int.Parse(nodeRank.InnerText),
-						nodeSite.InnerText,
-						nodeSite.GetAttributeValue("href", null)
-						);
-					// Add the information to the ranking list.
-					this.alexaRanking.Add(info);
-				}
-			}
-		}
+		//			// Create a new ranking information.
+		//			AlexaRankingInfo info = new AlexaRankingInfo(
+		//				int.Parse(nodeRank.InnerText),
+		//				nodeSite.InnerText,
+		//				nodeSite.GetAttributeValue("href", null)
+		//				);
+		//			// Add the information to the ranking list.
+		//			this.alexaRanking.Add(info);
+		//		}
+		//	}
+		//}
 
 		/// <summary>
 		/// An event handler called when the user exports the data.
@@ -584,24 +517,7 @@ namespace InetTools.Controls
 			// Show the save file dialog.
 			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				lock (this.sync)
-				{
-					// Create an XML element for the ranking.
-					XElement xml = new XElement("AlexaTopSites",
-						new XAttribute("Country", this.alexaRankingCountry.Name),
-						new XAttribute("Timestamp", this.alexaRankingTimestamp));
-					// Add all elements.
-					foreach (AlexaRankingInfo info in this.alexaRanking)
-					{
-						xml.Add(new XElement("Site",
-							new XAttribute("Rank", info.Rank),
-							new XAttribute("Site", info.Site)));
-					}
-					// Create an XML document.
-					XDocument doc = new XDocument(xml);
-					// Export the data to the file.
-					doc.Save(this.saveFileDialog.FileName);
-				}
+				//this.ranking.Save(fileName, )
 			}
 		}
 	}

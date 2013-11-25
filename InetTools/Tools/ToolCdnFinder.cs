@@ -18,42 +18,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Windows.Forms;
 using InetCrawler.Tools;
-using InetTools.Tools;
 
-namespace InetTools
+namespace InetTools.Tools
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// Creates a CDN finder tool, which collects information about the content of a web site from a CDN Finder server.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
+	[ToolInfo(
+		"9D988BAC-87A5-470A-81B3-BAE3FA30E92D",
 		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
+		"Content Delivery Networks Finder",
+		"A tool that collects information on the web sites content origin from a CDN Finder server."
 		)]
-	public sealed class StandardToolset : Toolset
+	public sealed class ToolCdnFinder : Tool
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolCdnFinder),
-			typeof(ToolWebCrawler)
-		};
+		/// <summary>
+		/// Creates a new tool instance.
+		/// </summary>
+		/// <param name="api">The tool API.</param>
+		/// <param name="toolset">The toolset information.</param>
+		public ToolCdnFinder(IToolApi api, ToolsetInfoAttribute toolset)
+			: base(api, toolset)
+		{
+
+		}
 
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Gets the user interface control for this tool.
 		/// </summary>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(string name)
-			: base(name)
-		{
-			foreach (Type tool in StandardToolset.tools)
-			{
-				this.Add(tool);
-			}
-		}
+		public override Control Control { get { return null; } }
 	}
 }

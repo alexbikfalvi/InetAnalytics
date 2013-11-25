@@ -44,7 +44,7 @@ namespace InetAnalytics.Forms.Tools
 		/// <summary>
 		/// The selected list of tools.
 		/// </summary>
-		public Type[] Result { get { return this.control.Result; } }
+		public ToolId[] Result { get { return this.control.Result; } }
 
 		// Public methods.
 

@@ -55,7 +55,7 @@ namespace InetAnalytics.Controls.Tools
 		/// <summary>
 		/// The list of selected tools.
 		/// </summary>
-		public Type[] Result { get; private set; }
+		public ToolId[] Result { get; private set; }
 
 		// Public methods.
 
@@ -67,7 +67,7 @@ namespace InetAnalytics.Controls.Tools
 		{
 			// Reset the buttons.
 			this.buttonAdd.Enabled = false;
-			this.buttonSelectAll.Enabled = toolset.Tools.Length > 0;
+			this.buttonSelectAll.Enabled = toolset.Tools.Count > 0;
 			this.buttonClearAll.Enabled = false;
 
 			// Clear the list.
@@ -94,7 +94,7 @@ namespace InetAnalytics.Controls.Tools
 					// Create a new item.
 					ListViewItem item = new ListViewItem(new string[] { info.Name, info.Id.Version.ToString(), info.Description });
 					// Set the item tag.
-					item.Tag = type;
+					item.Tag = info;
 					// Set the item as not checked.
 					item.Checked = false;
 					// Add the item.
@@ -129,11 +129,11 @@ namespace InetAnalytics.Controls.Tools
 		private void OnAdded(object sender, EventArgs e)
 		{
 			// Set the result.
-			this.Result = new Type[this.listView.CheckedItems.Count];
+			this.Result = new ToolId[this.listView.CheckedItems.Count];
 			// Set the tools.
 			for (int index = 0; index < this.listView.CheckedItems.Count; index++)
 			{
-				this.Result[index] = this.listView.CheckedItems[index].Tag as Type;
+				this.Result[index] = (this.listView.CheckedItems[index].Tag as ToolInfoAttribute).Id;
 			}
 			// Raise the added event.
 			if (null != this.Added) this.Added(this, EventArgs.Empty);

@@ -32,6 +32,8 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public sealed class Toolbox : IEnumerable<Tool>
 	{
+		private static readonly string logSource = "Toolbox";
+
 		private readonly CrawlerApi api;
 
 		private readonly object sync = new object();
@@ -60,34 +62,45 @@ namespace InetCrawler.Tools
 				this.key = rootKey.CreateSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree);
 			}
 
-			// Load the configuration.
+			// Load the configuration toolsets.
 			lock (this.sync)
 			{
 				// Load the registry configuration.
-				foreach (string id in this.key.GetSubKeyNames())
+				foreach (string subKey in this.key.GetSubKeyNames())
 				{
-					try
-					{
-						// Create a toolset for the repective key.
-						ToolsetConfig config = new ToolsetConfig(this.api, this.key, id);
+					// Get the tool identifier for this key.
+					ToolId toolsetId;
+					// Try and parse the tool identifier.
+					if (!ToolId.TryParse(subKey, out toolsetId)) continue;
 
-						// Add the toolset configuration.
-						this.toolsets.Add(config.Toolset.Info.Id, config);
-
-						// Add the configuration event handlers.
-						config.ToolAdded += this.OnToolAdded;
-						config.ToolRemoved += this.OnToolRemoved;
-					}
-					catch (Exception exception)
+					lock (this.sync)
 					{
-						// If an exception occurred, log an event.
-						this.api.Log.Add(
-							LogEventLevel.Important,
-							LogEventType.Error,
-							"Toolbox",
-							"An error occurred while loading the configuration for the toolset {0}.",
-							new object[] { id },
-							exception);
+						// If the toolset has already been loaded to the toolbox, skip to the next toolset.
+						if (this.toolsets.ContainsKey(toolsetId)) continue;
+
+						try
+						{
+							// Create a toolset for the repective key.
+							ToolsetConfig config = new ToolsetConfig(this.api, this.key, toolsetId);
+
+							// Add the toolset configuration.
+							this.toolsets.Add(toolsetId, config);
+
+							// Add the configuration event handlers.
+							config.ToolAdded += this.OnToolAdded;
+							config.ToolRemoved += this.OnToolRemoved;
+						}
+						catch (Exception exception)
+						{
+							// If an exception occurred, log an event.
+							this.api.Log.Add(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								Toolbox.logSource,
+								"An error occurred while loading the configuration for the toolset {0}.",
+								new object[] { toolsetId },
+								exception);
+						}
 					}
 				}
 			}
@@ -165,11 +178,11 @@ namespace InetCrawler.Tools
 				if (Toolset.IsToolset(type))
 				{
 					// Create a new instance.
-					return Activator.CreateInstance(type, new object[] { this.api, type.FullName }) as Toolset;
+					return Activator.CreateInstance(type, new object[] { type.FullName }) as Toolset;
 				}
 			}
 			// Else, throw an exception.
-			throw new NotSupportedException("Cannot find an Internet Analytics toolset in the specified library.");
+			throw new ToolException("Cannot find an Internet Analytics toolset in the specified library.");
 		}
 
 		/// <summary>
@@ -178,7 +191,7 @@ namespace InetCrawler.Tools
 		/// <param name="fileName">The library file name.</param>
 		/// <param name="toolset">The toolset.</param>
 		/// <param name="tools">The tools.</param>
-		public void Add(string fileName, Toolset toolset, Type[] tools)
+		public void Add(string fileName, Toolset toolset, ToolId[] tools)
 		{
 			lock (this.sync)
 			{
@@ -209,17 +222,20 @@ namespace InetCrawler.Tools
 			lock (this.sync)
 			{
 				// The toolset configuration.
-				ToolsetConfig toolset;
+				ToolsetConfig config;
 				// Get the toolset configuration for this tool.
-				if (this.toolsets.TryGetValue(tool.Toolset.Id, out toolset))
+				if (this.toolsets.TryGetValue(tool.Toolset.Id, out config))
 				{
 					// Remove the tool from the toolset configuration.
-					if (toolset.Remove(tool))
+					if (config.Remove(tool))
 					{
+						// Remove the configuration event handlers.
+						config.ToolAdded -= this.OnToolAdded;
+						config.ToolRemoved -= this.OnToolRemoved;
 						// If the toolset is empty, remove the toolset.
-						this.toolsets.Remove(toolset.Toolset.Info.Id);
+						this.toolsets.Remove(config.Toolset.Info.Id);
 						// Close the toolset and delete its configuration.
-						ToolsetConfig.Delete(toolset, this.key);
+						ToolsetConfig.Delete(config, this.key);
 					}
 				}
 			}

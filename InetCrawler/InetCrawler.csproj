@@ -132,6 +132,7 @@
     <Compile Include="Testing\CrawlerTestingSshRequest.cs" />
     <Compile Include="Testing\CrawlerTestingWebRequest.cs" />
     <Compile Include="Tools\IToolApi.cs" />
+    <Compile Include="Tools\IToolConfig.cs" />
     <Compile Include="Tools\Tool.cs" />
     <Compile Include="Tools\ToolApi.cs" />
     <Compile Include="Tools\Toolbox.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Tools\ToolConfig.cs" />
     <Compile Include="Tools\ToolDependencyAttribute.cs" />
     <Compile Include="Tools\ToolEventArgs.cs" />
+    <Compile Include="Tools\ToolException.cs" />
     <Compile Include="Tools\ToolId.cs" />
     <Compile Include="Tools\ToolInfoAttribute.cs" />
     <Compile Include="Tools\Toolset.cs" />

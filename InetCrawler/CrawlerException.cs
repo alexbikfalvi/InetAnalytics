@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Runtime.Serialization;
 
 namespace InetCrawler
 {
@@ -43,6 +44,17 @@ namespace InetCrawler
 		public CrawlerException(string message, Exception innerException)
 			: base(message, innerException)
 		{
+		}
+
+		/// <summary>
+		/// Creates a new tool excpetion instance from the serialization information.
+		/// </summary>
+		/// <param name="info">The serialization information.</param>
+		/// <param name="context">The streaming context.</param>
+		protected CrawlerException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+
 		}
 	}
 }

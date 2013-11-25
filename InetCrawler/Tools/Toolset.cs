@@ -28,42 +28,25 @@ namespace InetCrawler.Tools
 	{
 		private readonly ToolsetInfoAttribute info;
 		private readonly Dictionary<ToolId, Type> tools = new Dictionary<ToolId, Type>();
-		private readonly IToolApi api;
 		private readonly string name;
 
 		/// <summary>
 		/// Creates a new toolset instance.
 		/// </summary>
-		/// <param name="api">The tool API.</param>
 		/// <param name="name">The toolset name.</param>
-		public Toolset(IToolApi api, string name)
+		public Toolset(string name)
 		{
 			// Check the arguments.
-			if (null == api) throw new ArgumentNullException("api");
 			if (null == name) throw new ArgumentNullException("name");
 
 			// Set the toolset parameters.
-			this.api = api;
 			this.name = name;
 
 			// Get the toolset information.
 			this.info = Toolset.GetToolsetInfo(this.GetType());
 
 			// Check the toolset information is not null.
-			if (null == this.info) throw new InvalidOperationException("Cannot create a toolset object from a class without the toolset information attribute.");
-
-			// Create the toolset mapping.
-			foreach (Type type in this.Tools)
-			{
-				// Get the tool information.
-				ToolInfoAttribute info = Tool.GetToolInfo(type);
-				// If the information is not null.
-				if (null != info)
-				{
-					// Add the type to the tools list.
-					this.tools.Add(info.Id, type);
-				}
-			}
+			if (null == this.info) throw new ToolException("Cannot create a toolset object from a class without the toolset information attribute.");
 		}
 
 		// Public properties.
@@ -85,14 +68,7 @@ namespace InetCrawler.Tools
 		/// <summary>
 		/// Gets the list of tools.
 		/// </summary>
-		public abstract Type[] Tools { get; }
-
-		// Protected properties.
-
-		/// <summary>
-		/// Gets the tool API.
-		/// </summary>
-		protected IToolApi Api { get { return this.api; } }
+		public ICollection<Type> Tools { get { return this.tools.Values; } }
 
 		// Static methods.
 
@@ -142,6 +118,24 @@ namespace InetCrawler.Tools
 			Type type;
 			if (this.tools.TryGetValue(id, out type)) return type;
 			else return null;
+		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// Adds the specified tool type to the tools list.
+		/// </summary>
+		/// <param name="type">The tool type.</param>
+		protected void Add(Type type)
+		{
+			// Get the tool information.
+			ToolInfoAttribute info = Tool.GetToolInfo(type);
+			// If the information is not null.
+			if (null != info)
+			{
+				// Add the type to the tools list.
+				this.tools.Add(info.Id, type);
+			}
 		}
 	}
 }

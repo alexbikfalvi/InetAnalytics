@@ -17,43 +17,21 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using InetCrawler.Tools;
-using InetTools.Tools;
 
-namespace InetTools
+namespace InetTools.Tools.AlexaTopSites
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// A class representing the configuration for the Alexa Top Sites tool.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
-		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
-		)]
-	public sealed class StandardToolset : Toolset
+	internal sealed class AlexaTopSitesConfig
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolCdnFinder),
-			typeof(ToolWebCrawler)
-		};
+		private readonly AlexaTopSitesCountries countries = new AlexaTopSitesCountries();
 
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Creates a new configuration instance.
 		/// </summary>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(string name)
-			: base(name)
+		public AlexaTopSitesConfig()
 		{
-			foreach (Type tool in StandardToolset.tools)
-			{
-				this.Add(tool);
-			}
 		}
 	}
 }

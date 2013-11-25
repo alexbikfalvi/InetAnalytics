@@ -17,43 +17,57 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using InetCrawler.Tools;
-using InetTools.Tools;
+using DotNetApi.Web;
 
-namespace InetTools
+namespace InetTools.Tools.AlexaTopSites
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// A class representing a web request to the Alexa web request.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
-		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
-		)]
-	public sealed class StandardToolset : Toolset
+	public sealed class AlexaTopSitesRequest
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolCdnFinder),
-			typeof(ToolWebCrawler)
-		};
+		private readonly AsyncWebRequest request = new AsyncWebRequest();
+		private readonly object sync = new object();
+		private IAsyncResult result = null;
 
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Creates a new Alexa web request instance.
 		/// </summary>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(string name)
-			: base(name)
+		public AlexaTopSitesRequest()
 		{
-			foreach (Type tool in StandardToolset.tools)
+		}
+
+		// Public methods.
+
+		/// <summary>
+		/// Cancels the current request.
+		/// </summary>
+		public void Cancel()
+		{
+			lock (this.sync)
 			{
-				this.Add(tool);
+				if (null != this.result) this.request.Cancel(this.result);
 			}
+		}
+
+		public void BeginGetCountries()
+		{
+
+		}
+
+		public AlexaTopSitesCountries EndGetCountries(IAsyncResult result)
+		{
+
+		}
+
+		public void BeginGetRanking()
+		{
+
+		}
+
+		public AlexaTopSitesRanking EndGetRanking(IAsyncResult result)
+		{
+
 		}
 	}
 }

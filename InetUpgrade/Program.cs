@@ -69,6 +69,13 @@ namespace InetUpgrade
 							actions.Add(new UpgradeActionFiles(arguments[++index], arguments[++index]));
 						}
 						break;
+					case "/tools":
+						// Tools upgrade action.
+						if (index + 1 < arguments.Length)
+						{
+							actions.Add(new UpgradeActionTools(arguments[++index]));
+						}
+						break;
 				}
 			}
 

@@ -41,6 +41,18 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlCdnFinder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlCdnFinder.Designer.cs">
+      <DependentUpon>ControlCdnFinder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlWebCrawler.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlWebCrawler.Designer.cs">
+      <DependentUpon>ControlWebCrawler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlAlexaTopSites.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -54,7 +66,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StandardToolset.cs" />
+    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesRequest.cs" />
+    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesConfig.cs" />
+    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesCountries.cs" />
+    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesCountry.cs" />
+    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesRank.cs" />
+    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesRanking.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
+    <Compile Include="Tools\ToolCdnFinder.cs" />
     <Compile Include="Tools\ToolWebCrawler.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +95,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ControlCdnFinder.resx">
+      <DependentUpon>ControlCdnFinder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlWebCrawler.resx">
+      <DependentUpon>ControlWebCrawler.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlAlexaTopSites.resx">
       <DependentUpon>ControlAlexaTopSites.cs</DependentUpon>
     </EmbeddedResource>
@@ -192,6 +217,7 @@
   <ItemGroup>
     <None Include="Resources\Export_48.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
