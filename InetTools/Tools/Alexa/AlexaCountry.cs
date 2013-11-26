@@ -17,57 +17,37 @@
  */
 
 using System;
-using DotNetApi.Web;
 
-namespace InetTools.Tools.AlexaTopSites
+namespace InetTools.Tools.Alexa
 {
 	/// <summary>
-	/// A class representing a web request to the Alexa web request.
+	/// A structure representing the Alexa country information.
 	/// </summary>
-	public sealed class AlexaTopSitesRequest
+	public struct AlexaCountry
 	{
-		private readonly AsyncWebRequest request = new AsyncWebRequest();
-		private readonly object sync = new object();
-		private IAsyncResult result = null;
+		/// <summary>
+		/// Creates a new country information structure.
+		/// </summary>
+		/// <param name="name">The country name.</param>
+		/// <param name="url">The URL path.</param>
+		public AlexaCountry(string name, string url)
+			: this()
+		{
+			this.Name = name;
+			this.Url = url;
+		}
 
 		/// <summary>
-		/// Creates a new Alexa web request instance.
+		/// Gets the country name.
 		/// </summary>
-		public AlexaTopSitesRequest()
-		{
-		}
-
-		// Public methods.
-
+		public string Name { get; private set; }
 		/// <summary>
-		/// Cancels the current request.
+		/// Gets the country code.
 		/// </summary>
-		public void Cancel()
-		{
-			lock (this.sync)
-			{
-				if (null != this.result) this.request.Cancel(this.result);
-			}
-		}
-
-		public void BeginGetCountries()
-		{
-
-		}
-
-		public AlexaTopSitesCountries EndGetCountries(IAsyncResult result)
-		{
-
-		}
-
-		public void BeginGetRanking()
-		{
-
-		}
-
-		public AlexaTopSitesRanking EndGetRanking(IAsyncResult result)
-		{
-
-		}
+		public string Code { get; private set; }
+		/// <summary>
+		/// Gets the URL path.
+		/// </summary>
+		public string Url { get; private set; }
 	}
 }

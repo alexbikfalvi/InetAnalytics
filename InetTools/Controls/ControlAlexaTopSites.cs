@@ -72,7 +72,7 @@ namespace InetTools.Controls
 
 		private IAsyncResult result = null;
 
-		private AlexaTopSitesCountries countries = new AlexaTopSitesCountries();
+		private AlexaCountries countries = new AlexaCountries();
 		private AlexaTopSitesRanking ranking = new AlexaTopSitesRanking();
 
 		private static readonly string urlAlexa = "http://www.alexa.com";

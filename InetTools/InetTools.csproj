@@ -66,12 +66,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StandardToolset.cs" />
-    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesRequest.cs" />
-    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesConfig.cs" />
-    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesCountries.cs" />
-    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesCountry.cs" />
-    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesRank.cs" />
-    <Compile Include="Tools\AlexaTopSites\AlexaTopSitesRanking.cs" />
+    <Compile Include="Tools\Alexa\AlexaRequest.cs" />
+    <Compile Include="Tools\Alexa\AlexaConfig.cs" />
+    <Compile Include="Tools\Alexa\AlexaCountries.cs" />
+    <Compile Include="Tools\Alexa\AlexaCountry.cs" />
+    <Compile Include="Tools\Alexa\AlexaRank.cs" />
+    <Compile Include="Tools\Alexa\AlexaRanking.cs" />
+    <Compile Include="Tools\Alexa\AlexaCountriesRequestState.cs" />
+    <Compile Include="Tools\Alexa\AlexaRequestState.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
     <Compile Include="Tools\ToolCdnFinder.cs" />
     <Compile Include="Tools\ToolWebCrawler.cs" />

@@ -19,17 +19,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace InetTools.Tools.AlexaTopSites
+namespace InetTools.Tools.Alexa
 {
 	/// <summary>
 	/// A class representing the list of Alexa countries.
 	/// </summary>
-	public sealed class AlexaTopSitesCountries : List<AlexaTopSitesCountry>
+	public sealed class AlexaCountries : List<AlexaCountry>
 	{
 		/// <summary>
 		/// Creates a new countries instance.
 		/// </summary>
-		public AlexaTopSitesCountries()
+		public AlexaCountries()
 		{
 		}
 
@@ -68,7 +68,7 @@ namespace InetTools.Tools.AlexaTopSites
 					// Get the link element.
 					HtmlAgilityPack.HtmlNode nodeA = nodeLi.Element("a");
 					// Create a new Alexa country information.
-					AlexaTopSitesCountry country = new AlexaTopSitesCountry(nodeA.InnerText, nodeA.GetAttributeValue("href", null));
+					AlexaCountry country = new AlexaCountry(nodeA.InnerText, nodeA.GetAttributeValue("href", null));
 					// Add the information to the list.
 					this.Add(country);
 				}

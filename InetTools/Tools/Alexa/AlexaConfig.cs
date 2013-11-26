@@ -18,19 +18,19 @@
 
 using System;
 
-namespace InetTools.Tools.AlexaTopSites
+namespace InetTools.Tools.Alexa
 {
 	/// <summary>
 	/// A class representing the configuration for the Alexa Top Sites tool.
 	/// </summary>
-	internal sealed class AlexaTopSitesConfig
+	internal sealed class AlexaConfig
 	{
-		private readonly AlexaTopSitesCountries countries = new AlexaTopSitesCountries();
+		private readonly AlexaCountries countries = new AlexaCountries();
 
 		/// <summary>
 		/// Creates a new configuration instance.
 		/// </summary>
-		public AlexaTopSitesConfig()
+		public AlexaConfig()
 		{
 		}
 	}
