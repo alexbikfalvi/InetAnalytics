@@ -18,20 +18,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace InetTools.Tools.AlexaTopSites
+namespace InetTools.Tools.Alexa
 {
 	/// <summary>
 	/// A class representing the Alexa ranking.
 	/// </summary>
-	public sealed class AlexaTopSitesRanking : List<AlexaTopSitesRank>
+	public sealed class AlexaRanking : List<AlexaRank>
 	{
 		/// <summary>
 		/// Creates a new Alexa ranking.
 		/// </summary>
-		public AlexaTopSitesRanking()
+		public AlexaRanking()
 		{
 		}
 
@@ -41,6 +42,10 @@ namespace InetTools.Tools.AlexaTopSites
 		/// Gets the ranking timestamp.
 		/// </summary>
 		public DateTime Timestamp { get; private set; }
+		/// <summary>
+		/// Gets the ranking country.
+		/// </summary>
+		public AlexaCountry Country { get; private set; }
 
 		// Public methods.
 
@@ -48,7 +53,8 @@ namespace InetTools.Tools.AlexaTopSites
 		/// Parses the specified HTML data and add the result to the ranking list.
 		/// </summary>
 		/// <param name="data">The Alexa data.</param>
-		public void Parse(string data)
+		/// <param name="country">The country.</param>
+		public void Parse(string data, AlexaCountry country)
 		{
 			// Create an HTML document for the list of Alexa countries.
 			HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
@@ -70,30 +76,89 @@ namespace InetTools.Tools.AlexaTopSites
 
 			// Set the timestamp.
 			this.Timestamp = DateTime.Now;
+			// Set the country.
+			this.Country = country;
 		}
 
 		/// <summary>
-		/// Saves teh ranking to the specified file.
+		/// Loads an Alexa ranking from the specified XML file.
 		/// </summary>
 		/// <param name="fileName">The file name.</param>
-		/// <param name="country">The rank country.</param>
-		public void Save(string fileName, AlexaTopSitesCountry country)
+		/// <returns>The Alexa ranking.</returns>
+		public static AlexaRanking Load(string fileName)
+		{
+			// Create a new ranking.
+			AlexaRanking ranking = new AlexaRanking();
+
+			// Open the XML document.
+			XDocument xml = XDocument.Load(fileName);
+
+			// Check the file.
+			if (xml.Root.Name != "AlexaTopSites") throw new IOException("The XML file does not match the Alexa ranking format.");
+
+			// Parse the country.
+			ranking.Country = bool.Parse(xml.Root.Attribute("Global").Value) ? 
+				AlexaCountry.Global :
+				new AlexaCountry(xml.Root.Attribute("CountryName").Value, xml.Root.Attribute("CountryUrl").Value);
+			// Parse the timestamp.
+			ranking.Timestamp = DateTime.Parse(xml.Root.Attribute("Timestamp").Value);
+			
+			// Parse the ranking.
+			foreach (XElement element in xml.Root.Elements("Rank"))
+			{
+				ranking.Add(new AlexaRank(
+					int.Parse(element.Attribute("Position").Value),
+					element.Attribute("Site").Value,
+					element.Attribute("Url").Value
+					));
+			}
+
+			// Return the ranking.
+			return ranking;
+		}
+
+		/// <summary>
+		/// Saves the ranking to the specified XML file.
+		/// </summary>
+		/// <param name="fileName">The file name.</param>
+		public void SaveXml(string fileName)
 		{
 			// Create an XML element for the ranking.
 			XElement xml = new XElement("AlexaTopSites",
-				new XAttribute("Country", country.Name),
+				new XAttribute("Global", this.Country.IsGlobal),
+				new XAttribute("CountryName", this.Country.Name),
+				new XAttribute("CountryUrl", this.Country.Url),
+				new XAttribute("CountryCode", this.Country.Code),
 				new XAttribute("Timestamp", this.Timestamp));
 			// Add all elements.
-			foreach (AlexaTopSitesRank rank in this)
+			foreach (AlexaRank rank in this)
 			{
 				xml.Add(new XElement("Rank",
 					new XAttribute("Position", rank.Position),
-					new XAttribute("Site", rank.Site)));
+					new XAttribute("Site", rank.Site),
+					new XAttribute("Url", rank.Url)));
 			}
 			// Create an XML document.
 			XDocument doc = new XDocument(xml);
 			// Export the data to the file.
 			doc.Save(fileName);
+		}
+
+		/// <summary>
+		/// Saves the ranking to the specified text file.
+		/// </summary>
+		/// <param name="fileName">The file name.</param>
+		public void SaveText(string fileName)
+		{
+			// Create a new file.
+			using (StreamWriter file = new StreamWriter(fileName, false))
+			{
+				// Add all elements.
+				foreach (AlexaRank rank in this)
+				{
+					file.WriteLine(rank.Site);
+				}
+			}
 		}
 
 		// Private methods.
@@ -117,7 +182,7 @@ namespace InetTools.Tools.AlexaTopSites
 				}).FirstOrDefault().Element("h2").Element("a");
 
 				// Create a new ranking information.
-				AlexaTopSitesRank rank = new AlexaTopSitesRank(
+				AlexaRank rank = new AlexaRank(
 					int.Parse(nodeRank.InnerText),
 					nodeSite.InnerText,
 					nodeSite.GetAttributeValue("href", null)

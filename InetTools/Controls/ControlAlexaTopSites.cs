@@ -17,15 +17,14 @@
  */
 
 using System;
-using System.Linq;
-using System.Text;
+using System.Net;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
-using DotNetApi.Web;
+using InetCrawler.Log;
 using InetCrawler.Tools;
-using InetTools.Tools.AlexaTopSites;
+using InetCrawler.Status;
+using InetTools.Tools.Alexa;
 
 namespace InetTools.Controls
 {
@@ -34,51 +33,16 @@ namespace InetTools.Controls
 	/// </summary>
 	public partial class ControlAlexaTopSites : NotificationControl
 	{
-		/// <summary>
-		/// A structure representing the Alexa request state.
-		/// </summary>
-		public class AlexaRequestState
-		{
-			/// <summary>
-			/// Creates a new Alexa request state instance.
-			/// </summary>
-			/// <param name="url">The country information.</param>
-			/// <param name="pages">The total number of pages to download.</param>
-			public AlexaRequestState(AlexaTopSitesCountry country, int pages)
-			{
-				this.Country = country;
-				this.Page = 0;
-				this.Pages = pages;
-			}
-
-			/// <summary>
-			/// Gets the country information.
-			/// </summary>
-			public AlexaTopSitesCountry Country { get; private set; }
-			/// <summary>
-			/// Gets the page index.
-			/// </summary>
-			public int Page { get; set; }
-			/// <summary>
-			/// Gets the total number of pages.
-			/// </summary>
-			public int Pages { get; private set; }
-		}
-
 		private readonly IToolApi api;
+		private readonly CrawlerStatusHandler status = null;
 		
 		private readonly object sync = new object();
-		private readonly AsyncWebRequest request = new AsyncWebRequest();
 
+		private readonly AlexaRequest request = new AlexaRequest();
 		private IAsyncResult result = null;
 
 		private AlexaCountries countries = new AlexaCountries();
-		private AlexaTopSitesRanking ranking = new AlexaTopSitesRanking();
-
-		private static readonly string urlAlexa = "http://www.alexa.com";
-		private static readonly string urlAlexaCountries = "/topsites/countries";
-		private static readonly string urlAlexaGlobal = "/topsites/global";
-		private const int maxAlexaPages = 3;
+		private AlexaRanking ranking = new AlexaRanking();
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -91,6 +55,10 @@ namespace InetTools.Controls
 			
 			// Set the API.
 			this.api = api;
+
+			// Set the status.
+			this.status = this.api.Status.GetHandler(this);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Properties.Resources.Information_16);
 
 			// Initialize the number of pages.
 			this.comboBoxPages.SelectedIndex = 0;
@@ -137,64 +105,79 @@ namespace InetTools.Controls
 			// Call the request started event handler.
 			this.OnRequestStarted();
 
-			lock (this.sync)
+			try
 			{
-				try
-				{
-					// Clear the ranking lists.
-					this.listView.Items.Clear();
-					this.ranking.Clear();
-					// Disable the export button.
-					this.buttonExport.Enabled = false;
-					
-					// Get the selected country.
-					AlexaTopSitesCountry country = this.countries[this.comboBoxCountries.SelectedIndex];
-					// Get the number of pages to download.
-					int pages = int.Parse(this.comboBoxPages.SelectedItem as string);
-					
-					// Show a message.
-					this.ShowMessage(
-						Properties.Resources.GlobeClock_48,
-						"Alexa Request",
-						"Updating the Alexa ranking...");
-					
-					// Create a new request state.
-					AlexaRequestState state = new AlexaRequestState(country, pages);
-					// Begin a new ranking request.
-					this.OnStartRankingRequest(state);
-				}
-				catch (Exception exception)
-				{
-					// Call the request finished event handler.
-					this.OnRequestFinished();
-					// Show a message.
-					this.ShowMessage(
-						Properties.Resources.GlobeError_48,
-						"Alexa Request",
-						"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
-						false,
-						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
-				}
-			}
-		}
+				// Clear the ranking lists.
+				this.listView.Items.Clear();
+				// Disable the export button.
+				this.buttonExport.Enabled = false;
 
-		/// <summary>
-		/// Begins a new ranking request with the specified state.
-		/// </summary>
-		/// <param name="state">The request state.</param>
-		private void OnStartRankingRequest(AlexaRequestState state)
-		{
-			// Create the URL.
-			Uri uri = new Uri("{0}{1};{2}".FormatWith(ControlAlexaTopSites.urlAlexa, state.Country.Url, state.Page));
-			// Begin a new web request.
-			this.result = this.request.Begin(uri, this.OnCallbackRanking, state);
+				// Compute the number of pages to download.
+				int pages = int.Parse(this.comboBoxPages.SelectedItem as string);
+
+				// If the selected index is zero.
+				if (this.comboBoxCountries.SelectedIndex == 0)
+				{
+					lock (this.sync)
+					{
+						// Get the global Alexa ranking.
+						this.result = this.request.BeginGetGlobalRanking(this.OnCallbackRanking, pages, this.ranking);
+					}
+				}
+				else
+				{
+					// Get the selected country.
+					AlexaCountry country = this.countries[this.comboBoxCountries.SelectedIndex - 1];
+					lock (this.sync)
+					{
+						// Get the country specific Alexa ranking.
+						this.result = this.request.BeginGetCountryRanking(this.OnCallbackRanking, country, pages, this.ranking);
+					}
+				}
+
+				// Set the status.
+				this.status.Send(CrawlerStatus.StatusType.Busy, "Updating the Alexa ranking...", Properties.Resources.Busy_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeClock_48,
+					"Alexa Request",
+					"Updating the Alexa ranking...");
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					"Started a request for updating the Alexa ranking."
+					));
+			}
+			catch (Exception exception)
+			{
+				// Call the request finished event handler.
+				this.OnRequestFinished();
+				// Update the status label.
+				this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeError_48,
+					"Alexa Request",
+					"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+					false,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Updating the Alexa ranking failed. {0}",
+					new object[] { exception.Message },
+					exception
+					));
+			}
 		}
 
 		/// <summary>
 		/// A method called when receiving the web response.
 		/// </summary>
 		/// <param name="result">The result of the asynchronous operation.</param>
-		private void OnCallbackRanking(AsyncWebResult result)
+		private void OnCallbackRanking(IAsyncResult result)
 		{
 			// Set the result to null.
 			lock (this.sync)
@@ -204,44 +187,90 @@ namespace InetTools.Controls
 
 			try
 			{
-				// The received data.
-				string data = null;
-
-				// Complete the web request.
-				this.request.End(result, out data);
-
-				// Parse the list of Alexa countries.
-				this.ranking.Parse(data);
-
-				// Get the request state.
-				AlexaRequestState state = result.AsyncState as AlexaRequestState;
-
-				// If the request state is not null, and there are more pages.
-				if ((null != state) && (++state.Page < state.Pages))
+				// Complete the request.
+				this.request.EndGetRanking(result);
+				// Update the status label.
+				this.status.Send(
+					CrawlerStatus.StatusType.Normal,
+					"Updating the Alexa ranking completed successfully.",
+					"{0} web sites received.".FormatWith(this.ranking.Count),
+					Properties.Resources.Success_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeSuccess_48,
+					"Alexa Request",
+					"Updating the Alexa ranking completed successfully.",
+					false,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+					(object[] parameters) =>
+					{
+						// Call the request finished event handler.
+						this.OnRequestFinished();
+						// Update the ranking list.
+						this.OnUpdateRanking();
+					});
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					"Updating the Alexa ranking completed successfully."
+					));
+			}
+			catch (WebException exception)
+			{
+				if (exception.Status == WebExceptionStatus.RequestCanceled)
 				{
-					// Begin a new ranking request.
-					this.OnStartRankingRequest(state);
-				}
-				else
-				{
+					// Update the status label.
+					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking was canceled.".FormatWith(exception.Message), Properties.Resources.Canceled_16);
 					// Show a message.
 					this.ShowMessage(
-						Properties.Resources.GlobeSuccess_48,
+						Properties.Resources.GlobeCanceled_48,
 						"Alexa Request",
-						"Updating the Alexa ranking completed successfully.",
+						"Updating the Alexa ranking was canceled.",
 						false,
 						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 						{
 							// Call the request finished event handler.
 							this.OnRequestFinished();
-							// Update the ranking list.
-							this.OnUpdateRanking(state.Country);
 						});
+					// Log the events.
+					this.controlLog.Add(this.api.Log(
+						LogEventLevel.Normal,
+						LogEventType.Canceled,
+						"Updating the Alexa ranking was canceled."
+						));
+				}
+				else
+				{
+					// Update the status label.
+					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
+					// Show a message.
+					this.ShowMessage(
+						Properties.Resources.GlobeError_48,
+						"Alexa Request",
+						"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+						false,
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+						(object[] parameters) =>
+						{
+							// Call the request finished event handler.
+							this.OnRequestFinished();
+						});
+					// Log the events.
+					this.controlLog.Add(this.api.Log(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						"Updating the Alexa ranking failed. {0}",
+						new object[] { exception.Message },
+						exception
+						));
 				}
 			}
 			catch (Exception exception)
 			{
+				// Update the status label.
+				this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Properties.Resources.GlobeError_48,
@@ -254,6 +283,14 @@ namespace InetTools.Controls
 						// Call the request finished event handler.
 						this.OnRequestFinished();
 					});
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Updating the Alexa ranking failed. {0}",
+					new object[] { exception.Message },
+					exception
+					));
 			}
 		}
 
@@ -290,32 +327,52 @@ namespace InetTools.Controls
 			// Call the request started event handler.
 			this.OnRequestStarted();
 
-			lock (this.sync)
+			try
 			{
-				try
+				// Clear the countries list.
+				this.comboBoxCountries.Items.Clear();
+
+				// Set the status.
+				this.status.Send(CrawlerStatus.StatusType.Busy, "Updating the list of Alexa ranking countries...", Properties.Resources.Busy_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeClock_48,
+					"Alexa Request",
+					"Updating the list of Alexa ranking countries...");
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					"Started a request for updating the list of Alexa ranking countries."
+					));
+
+				lock (this.sync)
 				{
-					// Clear the countries list.
-					this.comboBoxCountries.Items.Clear();
-					// Show a message.
-					this.ShowMessage(
-						Properties.Resources.GlobeClock_48,
-						"Alexa Request",
-						"Updating the list of Alexa ranking countries...");
 					// Begin a new web request.
-					this.result = this.request.Begin(new Uri(ControlAlexaTopSites.urlAlexa + ControlAlexaTopSites.urlAlexaCountries), this.OnCallbackRefreshCountries, null);
+					this.result = this.request.BeginGetCountries(this.OnCallbackCountries, this.countries);
 				}
-				catch (Exception exception)
-				{
-					// Call the request finished event handler.
-					this.OnRequestFinished();
-					// Show a message.
-					this.ShowMessage(
-						Properties.Resources.GlobeError_48,
-						"Alexa Request",
-						"Updating the list of Alexa ranking countries failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
-						false,
-						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
-				}
+			}
+			catch (Exception exception)
+			{
+				// Call the request finished event handler.
+				this.OnRequestFinished();
+				// Update the status label.
+				this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the list of Alexa ranking countries failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeError_48,
+					"Alexa Request",
+					"Updating the list of Alexa ranking countries failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+					false,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Updating the list of Alexa ranking countries failed. {0}",
+					new object[] { exception.Message },
+					exception
+					));
 			}
 		}
 
@@ -323,7 +380,7 @@ namespace InetTools.Controls
 		/// A method called when receiving the web response.
 		/// </summary>
 		/// <param name="result">The result of the asynchronous operation.</param>
-		private void OnCallbackRefreshCountries(AsyncWebResult result)
+		private void OnCallbackCountries(IAsyncResult result)
 		{
 			// Set the result to null.
 			lock (this.sync)
@@ -333,15 +390,15 @@ namespace InetTools.Controls
 
 			try
 			{
-				// The received data.
-				string data = null;
-				
 				// Complete the web request.
-				this.request.End(result, out data);
-				
-				// Parse the list of Alexa countries.
-				this.countries.Parse(data);
+				this.request.EndGetCountries(result);
 
+				// Update the status label.
+				this.status.Send(
+					CrawlerStatus.StatusType.Normal,
+					"Updating the list of Alexa ranking countries completed successfully.",
+					"{0} countries received.".FormatWith(this.countries.Count),
+					Properties.Resources.Success_16);
 				// Show a message.
 				this.ShowMessage(
 					Properties.Resources.GlobeSuccess_48,
@@ -356,6 +413,63 @@ namespace InetTools.Controls
 						// Update the list of countries.
 						this.OnUpdateCountries();
 					});
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					"Updating the list of Alexa ranking countries completed successfully."
+					));
+			}
+			catch (WebException exception)
+			{
+				if (exception.Status == WebExceptionStatus.RequestCanceled)
+				{
+					// Update the status label.
+					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the list of Alexa ranking countries was canceled.".FormatWith(exception.Message), Properties.Resources.Canceled_16);
+					// Show a message.
+					this.ShowMessage(
+						Properties.Resources.GlobeCanceled_48,
+						"Alexa Request",
+						"Updating the list of Alexa ranking countries was canceled.",
+						false,
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+						(object[] parameters) =>
+						{
+							// Call the request finished event handler.
+							this.OnRequestFinished();
+						});
+					// Log the events.
+					this.controlLog.Add(this.api.Log(
+						LogEventLevel.Normal,
+						LogEventType.Canceled,
+						"Updating the list of Alexa ranking was canceled."
+						));
+				}
+				else
+				{
+					// Update the status label.
+					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the list of Alexa ranking countries failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
+					// Show a message.
+					this.ShowMessage(
+						Properties.Resources.GlobeError_48,
+						"Alexa Request",
+						"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+						false,
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+						(object[] parameters) =>
+						{
+							// Call the request finished event handler.
+							this.OnRequestFinished();
+						});
+					// Log the events.
+					this.controlLog.Add(this.api.Log(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						"Updating the list of Alexa ranking countries failed. {0}",
+						new object[] { exception.Message },
+						exception
+						));
+				}
 			}
 			catch (Exception exception)
 			{
@@ -371,6 +485,14 @@ namespace InetTools.Controls
 						// Call the request finished event handler.
 						this.OnRequestFinished();
 					});
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Updating the list of Alexa ranking countries failed. {0}",
+					new object[] { exception.Message },
+					exception
+					));
 			}
 		}
 
@@ -382,7 +504,7 @@ namespace InetTools.Controls
 			// Add the global ranking.
 			this.comboBoxCountries.Items.Add("(Global)");
 			// Update the list of countries.
-			foreach (AlexaTopSitesCountry country in this.countries)
+			foreach (AlexaCountry country in this.countries)
 			{
 				this.comboBoxCountries.Items.Add(country.Name);
 			}
@@ -393,14 +515,10 @@ namespace InetTools.Controls
 		/// <summary>
 		/// Updates the Alexa ranking.
 		/// </summary>
-		/// <param name="country">The country.</param>
-		private void OnUpdateRanking(AlexaTopSitesCountry country)
+		private void OnUpdateRanking()
 		{
-			// Set the ranking timestamp and country.
-			//this.alexaRankingTimestamp = DateTime.Now;
-			//this.alexaRankingCountry = country;
 			// Update the list of sites.
-			foreach (AlexaTopSitesRank rank in this.ranking)
+			foreach (AlexaRank rank in this.ranking)
 			{
 				// Create a new item.
 				ListViewItem item = new ListViewItem(new string[] { rank.Position.ToString(), rank.Site });
@@ -413,111 +531,35 @@ namespace InetTools.Controls
 			this.buttonExport.Enabled = this.ranking.Count > 0;
 		}
 
-		///// <summary>
-		///// Parses the list of Alexa countries.
-		///// </summary>
-		///// <param name="data">The data.</param>
-		//private void OnParseAlexaCountries(string data)
-		//{
-		//	// Create an HTML document for the list of Alexa countries.
-		//	HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
-		//	// Load the HTML data.
-		//	html.LoadHtml(data);
-		//	// Parse the countries node.
-		//	HtmlAgilityPack.HtmlNode node = html.GetElementbyId("topsites-countries").Element("div").Element("div");
-
-		//	// Synchronize access.
-		//	lock (this.sync)
-		//	{
-		//		// Clear the countries list.
-		//		this.countries.Clear();
-		//		// Add the global ranking.
-		//		this.countries.Add(new AlexaCountryInfo("(Global)", ControlAlexaTopSites.urlAlexaGlobal));
-		//		// For all unnumbered list chilren.
-		//		foreach (HtmlAgilityPack.HtmlNode nodeUl in node.Elements("ul"))
-		//		{
-		//			// For all list elements.
-		//			foreach (HtmlAgilityPack.HtmlNode nodeLi in nodeUl.Elements("li"))
-		//			{
-		//				// Get the link element.
-		//				HtmlAgilityPack.HtmlNode nodeA = nodeLi.Element("a");
-		//				// Create a new Alexa country information.
-		//				AlexaCountryInfo info = new AlexaCountryInfo(nodeA.InnerText, nodeA.GetAttributeValue("href", null));
-		//				// Add the information to the list.
-		//				this.alexaCountries.Add(info);
-		//			}
-		//		}
-		//	}
-		//}
-
-		///// <summary>
-		///// Parses the list of Alexa ranking.
-		///// </summary>
-		///// <param name="data">The data.</param>
-		//private void OnParseAlexaRanking(string data)
-		//{
-		//	// Create an HTML document for the list of Alexa countries.
-		//	HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
-		//	// Load the HTML data.
-		//	html.LoadHtml(data);
-
-		//	// The root node.
-		//	HtmlAgilityPack.HtmlNode node;
-
-		//	// Parse the countries node.
-		//	if (null != (node = html.GetElementbyId("topsites-global")))
-		//	{
-		//		this.OnParseAlexaRanking(node);
-		//	}
-		//	else if (null != (node = html.GetElementbyId("topsites-countries")))
-		//	{
-		//		this.OnParseAlexaRanking(node);
-		//	}
-		//}
-
-		///// <summary>
-		///// Parses the Alexa ranking.
-		///// </summary>
-		///// <param name="node">The inner HTML node.</param>
-		//private void OnParseAlexaRanking(HtmlAgilityPack.HtmlNode node)
-		//{
-		//	lock (this.sync)
-		//	{
-		//		// For all ranking elements.
-		//		foreach (HtmlAgilityPack.HtmlNode nodeLi in node.Element("div").Element("ul").Elements("li"))
-		//		{
-		//			HtmlAgilityPack.HtmlNode nodeRank = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
-		//			{
-		//				return child.GetAttributeValue("class", null) == "count";
-		//			}).FirstOrDefault();
-		//			HtmlAgilityPack.HtmlNode nodeSite = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
-		//			{
-		//				return child.GetAttributeValue("class", null) == "desc-container";
-		//			}).FirstOrDefault().Element("h2").Element("a");
-
-		//			// Create a new ranking information.
-		//			AlexaRankingInfo info = new AlexaRankingInfo(
-		//				int.Parse(nodeRank.InnerText),
-		//				nodeSite.InnerText,
-		//				nodeSite.GetAttributeValue("href", null)
-		//				);
-		//			// Add the information to the ranking list.
-		//			this.alexaRanking.Add(info);
-		//		}
-		//	}
-		//}
-
 		/// <summary>
-		/// An event handler called when the user exports the data.
+		/// An event handler called when the user exports the data to an XML file.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnExport(object sender, EventArgs e)
+		private void OnExportXml(object sender, EventArgs e)
 		{
+			// Set the dialog filter.
+			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
 			// Show the save file dialog.
 			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				//this.ranking.Save(fileName, )
+				this.ranking.SaveXml(this.saveFileDialog.FileName);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the user exports the data to a text file.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnExportText(object sender, EventArgs e)
+		{
+			// Set the dialog filter.
+			this.saveFileDialog.Filter = "Text files (*.txt)|*.txt";
+			// Show the save file dialog.
+			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
+			{
+				this.ranking.SaveText(this.saveFileDialog.FileName);
 			}
 		}
 	}

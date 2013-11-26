@@ -101,7 +101,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\'...".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -120,7 +120,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Connected to the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerSuccess_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connected to the SSH server \'{0}\'.".FormatWith(info.Host), Resources.ServerSuccess_16);
 			// Enable the console.
 			this.OnEnableConsole();
 			// Log
@@ -144,7 +144,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\' failed".FormatWith(info.Host), Resources.ServerError_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\' failed.".FormatWith(info.Host), Resources.ServerError_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -163,7 +163,7 @@ namespace InetAnalytics.Controls.Testing
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Disconnecting from the SSH server \'{0}\'".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Disconnecting from the SSH server \'{0}\'...".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,

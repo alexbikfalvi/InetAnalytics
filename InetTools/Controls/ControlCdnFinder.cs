@@ -17,15 +17,16 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using DotNetApi;
-using DotNetApi.Windows.Controls;
 using DotNetApi.Web;
+using DotNetApi.Windows.Controls;
+using InetCrawler.Log;
 using InetCrawler.Tools;
+using InetCrawler.Status;
+using InetTools.Tools.Alexa;
+using InetTools.Tools.CdnFinder;
 
 namespace InetTools.Controls
 {
@@ -34,10 +35,13 @@ namespace InetTools.Controls
 	/// </summary>
 	public partial class ControlCdnFinder : NotificationControl
 	{
-
 		private readonly IToolApi api;
+		private readonly CrawlerStatusHandler status = null;
+		
 		private readonly object sync = new object();
-		private readonly AsyncWebRequest request = new AsyncWebRequest();
+
+		private readonly CdnFinderRequest request = new CdnFinderRequest();
+		private IAsyncResult result = null;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -50,6 +54,10 @@ namespace InetTools.Controls
 			
 			// Set the API.
 			this.api = api;
+
+			// Set the status.
+			this.status = this.api.Status.GetHandler(this);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Properties.Resources.Information_16);
 		}
 
 		// Private methods.
@@ -62,6 +70,7 @@ namespace InetTools.Controls
 			// Set the controls enabled state.
 			this.buttonStart.Enabled = false;
 			this.buttonStop.Enabled = true;
+			this.buttonImport.Enabled = false;
 			this.textBoxUrl.Enabled = false;
 		}
 
@@ -73,6 +82,7 @@ namespace InetTools.Controls
 			// Set the controls enabled state.
 			this.buttonStart.Enabled = true;
 			this.buttonStop.Enabled = false;
+			this.buttonImport.Enabled = true;
 			this.textBoxUrl.Enabled = true;
 		}
 
@@ -86,125 +96,180 @@ namespace InetTools.Controls
 			// Call the request started event handler.
 			this.OnRequestStarted();
 
-			lock (this.sync)
+			try
 			{
-				try
+				lock (this.sync)
 				{
-					//// Clear the ranking lists.
-					//this.listView.Items.Clear();
-					//this.alexaRanking.Clear();
-					//// Disable the export button.
-					//this.buttonExport.Enabled = false;
-					
-					//// Get the selected country.
-					//AlexaCountryInfo info = this.alexaCountries[this.comboBoxCountries.SelectedIndex];
-					//// Get the number of pages to download.
-					//int pages = int.Parse(this.comboBoxPages.SelectedItem as string);
-					
-					//// Show a message.
-					//this.ShowMessage(
-					//	Properties.Resources.GlobeClock_48,
-					//	"Alexa Request",
-					//	"Updating the Alexa ranking...");
-					
-					//// Create a new request state.
-					//AlexaRequestState state = new AlexaRequestState(info, pages);
-					//// Begin a new ranking request.
-					//this.OnStartRankingRequest(state);
+					// Compute the server URI.
+					Uri uri = new Uri(this.textBoxUrl.Text);
+					// Compute the list of domains.
+					string[] domains = new string[this.listView.Items.Count];
+					for (int index = 0; index < this.listView.Items.Count; index++)
+					{
+						domains[index] = this.listView.Items[index].Tag as string;
+					}
+					// Begin the request.
+					this.result = this.request.Begin(uri, domains, this.OnCallback);
 				}
-				catch (Exception exception)
-				{
-					// Call the request finished event handler.
-					this.OnRequestFinished();
-					// Show a message.
-					this.ShowMessage(
-						Properties.Resources.GlobeError_48,
-						"Alexa Request",
-						"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
-						false,
-						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
-				}
+
+				// Set the status.
+				this.status.Send(CrawlerStatus.StatusType.Busy, "Requesting the CDN Finder data...", Properties.Resources.Busy_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeClock_48,
+					"CDN Finder Request",
+					"Requesting the CDN Finder data...");
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					"Started a request for the CDN Finder data."
+					));
+			}
+			catch (Exception exception)
+			{
+				// Call the request finished event handler.
+				this.OnRequestFinished();
+				// Update the status label.
+				this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeError_48,
+					"CDN Finder Request",
+					"Requesting the CDN Finder data failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+					false,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Requesting the CDN Finder data failed. {0}",
+					new object[] { exception.Message },
+					exception
+					));
 			}
 		}
 
-		///// <summary>
-		///// Begins a new ranking request with the specified state.
-		///// </summary>
-		///// <param name="state">The request state.</param>
-		//private void OnStartRankingRequest(AlexaRequestState state)
-		//{
-		//	// Create the URL.
-		//	Uri uri = new Uri("{0}{1};{2}".FormatWith(ControlCdnFinder.urlAlexa, state.Country.Url, state.Page));
-		//	// Begin a new web request.
-		//	this.result = this.request.Begin(uri, this.OnCallbackRanking, state);
-		//}
+		/// <summary>
+		/// A method called when receiving the web response.
+		/// </summary>
+		/// <param name="result">The result of the asynchronous operation.</param>
+		private void OnCallback(AsyncWebResult result)
+		{
+			// Set the result to null.
+			lock (this.sync)
+			{
+				this.result = null;
+			}
 
-		///// <summary>
-		///// A method called when receiving the web response.
-		///// </summary>
-		///// <param name="result">The result of the asynchronous operation.</param>
-		//private void OnCallbackRanking(AsyncWebResult result)
-		//{
-		//	// Set the result to null.
-		//	lock (this.sync)
-		//	{
-		//		this.result = null;
-		//	}
-
-		//	try
-		//	{
-		//		// The received data.
-		//		string data = null;
-
-		//		// Complete the web request.
-		//		this.request.End(result, out data);
-
-		//		// Parse the list of Alexa countries.
-		//		this.OnParseAlexaRanking(data);
-
-		//		// Get the request state.
-		//		AlexaRequestState state = result.AsyncState as AlexaRequestState;
-
-		//		// If the request state is not null, and there are more pages.
-		//		if ((null != state) && (++state.Page < state.Pages))
-		//		{
-		//			// Begin a new ranking request.
-		//			this.OnStartRankingRequest(state);
-		//		}
-		//		else
-		//		{
-		//			// Show a message.
-		//			this.ShowMessage(
-		//				Properties.Resources.GlobeSuccess_48,
-		//				"Alexa Request",
-		//				"Updating the Alexa ranking completed successfully.",
-		//				false,
-		//				(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
-		//				(object[] parameters) =>
-		//				{
-		//					// Call the request finished event handler.
-		//					this.OnRequestFinished();
-		//					// Update the ranking list.
-		//					this.OnUpdateRanking(state.Country);
-		//				});
-		//		}
-		//	}
-		//	catch (Exception exception)
-		//	{
-		//		// Show a message.
-		//		this.ShowMessage(
-		//			Properties.Resources.GlobeError_48,
-		//			"Alexa Request",
-		//			"Updating the Alexa ranking failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
-		//			false,
-		//			(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
-		//			(object[] parameters) =>
-		//			{
-		//				// Call the request finished event handler.
-		//				this.OnRequestFinished();
-		//			});
-		//	}
-		//}
+			try
+			{
+				// Complete the request.
+				CdnFinderDomains domains = this.request.End(result);
+				// Update the status label.
+				this.status.Send(
+					CrawlerStatus.StatusType.Normal,
+					"Requesting the CDN Finder data completed successfully.",
+					"{0} web domains received.".FormatWith(domains.Count),
+					Properties.Resources.Success_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeSuccess_48,
+					"CDN Finder Request",
+					"Requesting the CDN Finder data completed successfully.",
+					false,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+					(object[] parameters) =>
+					{
+						// Call the request finished event handler.
+						this.OnRequestFinished();
+						// Update the ranking list.
+						//this.OnUpdateRanking();
+					});
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					"Requesting the CDN Finder data completed successfully."
+					));
+			}
+			catch (WebException exception)
+			{
+				if (exception.Status == WebExceptionStatus.RequestCanceled)
+				{
+					// Update the status label.
+					this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data was canceled.".FormatWith(exception.Message), Properties.Resources.Canceled_16);
+					// Show a message.
+					this.ShowMessage(
+						Properties.Resources.GlobeCanceled_48,
+						"CDN Finder Request",
+						"Requesting the CDN Finder data was canceled.",
+						false,
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+						(object[] parameters) =>
+						{
+							// Call the request finished event handler.
+							this.OnRequestFinished();
+						});
+					// Log the events.
+					this.controlLog.Add(this.api.Log(
+						LogEventLevel.Normal,
+						LogEventType.Canceled,
+						"Requesting the CDN Finder data was canceled."
+						));
+				}
+				else
+				{
+					// Update the status label.
+					this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
+					// Show a message.
+					this.ShowMessage(
+						Properties.Resources.GlobeError_48,
+						"CDN Finder Request",
+						"Requesting the CDN Finder data failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+						false,
+						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+						(object[] parameters) =>
+						{
+							// Call the request finished event handler.
+							this.OnRequestFinished();
+						});
+					// Log the events.
+					this.controlLog.Add(this.api.Log(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						"Requesting the CDN Finder data failed. {0}",
+						new object[] { exception.Message },
+						exception
+						));
+				}
+			}
+			catch (Exception exception)
+			{
+				// Update the status label.
+				this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Properties.Resources.Error_16);
+				// Show a message.
+				this.ShowMessage(
+					Properties.Resources.GlobeError_48,
+					"CDN Finder Request",
+					"Requesting the CDN Finder data failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+					false,
+					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+					(object[] parameters) =>
+					{
+						// Call the request finished event handler.
+						this.OnRequestFinished();
+					});
+				// Log the events.
+				this.controlLog.Add(this.api.Log(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Requesting the CDN Finder data failed. {0}",
+					new object[] { exception.Message },
+					exception
+					));
+			}
+		}
 
 		/// <summary>
 		/// An event handler called when the user clicks on the stop button.
@@ -213,282 +278,78 @@ namespace InetTools.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnStop(object sender, EventArgs e)
 		{
-			//// Set the controls enabled state.
-			//this.buttonStop.Enabled = false;
+			// Set the controls enabled state.
+			this.buttonStop.Enabled = false;
 
-			//lock (this.sync)
-			//{
-			//	// If the request result is not null.
-			//	if (null != this.result)
-			//	{
-			//		// Cancel the asynchronous operation.
-			//		this.request.Cancel(this.result);
-			//		// Set the result to null.
-			//		this.result = null;
-			//	}
-			//}
+			lock (this.sync)
+			{
+				// If the request result is not null.
+				if (null != this.result)
+				{
+					// Cancel the asynchronous operation.
+					this.request.Cancel(this.result);
+					// Set the result to null.
+					this.result = null;
+				}
+			}
 		}
 
-		///// <summary>
-		///// An event handler called when refreshing the list of Alexa countries.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		//private void OnRefreshCountries(object sender, EventArgs e)
-		//{
-		//	// Call the request started event handler.
-		//	this.OnRequestStarted();
+		/// <summary>
+		/// An event handler called when reading data from an Alexa ranking.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnImportAlexaRanking(object sender, EventArgs e)
+		{
+			// Set the dialog filter.
+			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
+			// Imports a list of domains from the specified Alexa ranking file.
+			if (this.openFileDialog.ShowDialog(this) == DialogResult.OK)
+			{
+				try
+				{
+					// Open the Alexa ranking file.
+					AlexaRanking ranking = AlexaRanking.Load(this.openFileDialog.FileName);
 
-		//	lock (this.sync)
-		//	{
-		//		try
-		//		{
-		//			// Clear the countries list.
-		//			this.comboBoxCountries.Items.Clear();
-		//			// Show a message.
-		//			this.ShowMessage(
-		//				Properties.Resources.GlobeClock_48,
-		//				"Alexa Request",
-		//				"Updating the list of Alexa ranking countries...");
-		//			// Begin a new web request.
-		//			this.result = this.request.Begin(new Uri(ControlCdnFinder.urlAlexa + ControlCdnFinder.urlAlexaCountries), this.OnCallbackRefreshCountries, null);
-		//		}
-		//		catch (Exception exception)
-		//		{
-		//			// Call the request finished event handler.
-		//			this.OnRequestFinished();
-		//			// Show a message.
-		//			this.ShowMessage(
-		//				Properties.Resources.GlobeError_48,
-		//				"Alexa Request",
-		//				"Updating the list of Alexa ranking countries failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
-		//				false,
-		//				(int)this.api.Config.MessageCloseDelay.TotalMilliseconds);
-		//		}
-		//	}
-		//}
+					// Update the domains list.
+					lock (this.sync)
+					{
+						// Clear the sites list.
+						this.listView.Items.Clear();
+						// Updates the sites list.
+						foreach (AlexaRank rank in ranking)
+						{
+							// Create the site item.
+							ListViewItem item = new ListViewItem(rank.Site, 0);
+							item.Tag = @"http://{0}/".FormatWith(rank.Site);
+							this.listView.Items.Add(item);
+						}
+					}
 
-		///// <summary>
-		///// A method called when receiving the web response.
-		///// </summary>
-		///// <param name="result">The result of the asynchronous operation.</param>
-		//private void OnCallbackRefreshCountries(AsyncWebResult result)
-		//{
-		//	// Set the result to null.
-		//	lock (this.sync)
-		//	{
-		//		this.result = null;
-		//	}
+					// Call the input changed event handler.
+					this.OnInputChanged(sender, e);
+				}
+				catch (Exception exception)
+				{
+					// Show an error message.
+					MessageBox.Show(this,
+						"An error occurred while opening the Alexa ranking file. The file is inaccessible or has the wrong format.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
+						"Open Alexa Ranking",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
+				}
+			}
+		}
 
-		//	try
-		//	{
-		//		// The received data.
-		//		string data = null;
-				
-		//		// Complete the web request.
-		//		this.request.End(result, out data);
-				
-		//		// Parse the list of Alexa countries.
-		//		this.OnParseAlexaCountries(data);
-
-		//		// Show a message.
-		//		this.ShowMessage(
-		//			Properties.Resources.GlobeSuccess_48,
-		//			"Alexa Request",
-		//			"Updating the list of Alexa ranking countries completed successfully.",
-		//			false,
-		//			(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
-		//			(object[] parameters) =>
-		//			{
-		//				// Call the request finished event handler.
-		//				this.OnRequestFinished();
-		//				// Update the list of countries.
-		//				this.OnUpdateCountries();
-		//			});
-		//	}
-		//	catch (Exception exception)
-		//	{
-		//		// Show a message.
-		//		this.ShowMessage(
-		//			Properties.Resources.GlobeError_48,
-		//			"Alexa Request",
-		//			"Updating the list of Alexa ranking countries failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
-		//			false,
-		//			(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
-		//			(object[] parameters) =>
-		//			{
-		//				// Call the request finished event handler.
-		//				this.OnRequestFinished();
-		//			});
-		//	}
-		//}
-
-		///// <summary>
-		///// Updates the current list of countries.
-		///// </summary>
-		//private void OnUpdateCountries()
-		//{
-		//	lock (this.sync)
-		//	{
-		//		// Update the list of countries.
-		//		foreach (AlexaCountryInfo info in this.alexaCountries)
-		//		{
-		//			this.comboBoxCountries.Items.Add(info.Name);
-		//		}
-		//	}
-		//	// Select the first index.
-		//	this.comboBoxCountries.SelectedIndex = 0;
-		//}
-
-		///// <summary>
-		///// Updates the Alexa ranking.
-		///// </summary>
-		///// <param name="country">The country.</param>
-		//private void OnUpdateRanking(AlexaCountryInfo country)
-		//{
-		//	lock (this.sync)
-		//	{
-		//		// Set the ranking timestamp and country.
-		//		this.alexaRankingTimestamp = DateTime.Now;
-		//		this.alexaRankingCountry = country;
-		//		// Update the list of sites.
-		//		foreach (AlexaRankingInfo info in this.alexaRanking)
-		//		{
-		//			// Create a new item.
-		//			ListViewItem item = new ListViewItem(new string[] { info.Rank.ToString(), info.Site });
-		//			item.Tag = info;
-		//			item.ImageIndex = 0;
-		//			// Add the item to the list.
-		//			this.listView.Items.Add(item);
-		//		}
-		//		// Enable the export button.
-		//		this.buttonExport.Enabled = this.alexaRanking.Count > 0;
-		//	}
-		//}
-
-		///// <summary>
-		///// Parses the list of Alexa countries.
-		///// </summary>
-		///// <param name="data">The data.</param>
-		//private void OnParseAlexaCountries(string data)
-		//{
-		//	// Create an HTML document for the list of Alexa countries.
-		//	HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
-		//	// Load the HTML data.
-		//	html.LoadHtml(data);
-		//	// Parse the countries node.
-		//	HtmlAgilityPack.HtmlNode node = html.GetElementbyId("topsites-countries").Element("div").Element("div");
-
-		//	// Synchronize access.
-		//	lock (this.sync)
-		//	{
-		//		// Clear the countries list.
-		//		this.alexaCountries.Clear();
-		//		// Add the global ranking.
-		//		this.alexaCountries.Add(new AlexaCountryInfo("(Global)", ControlCdnFinder.urlAlexaGlobal));
-		//		// For all unnumbered list chilren.
-		//		foreach (HtmlAgilityPack.HtmlNode nodeUl in node.Elements("ul"))
-		//		{
-		//			// For all list elements.
-		//			foreach (HtmlAgilityPack.HtmlNode nodeLi in nodeUl.Elements("li"))
-		//			{
-		//				// Get the link element.
-		//				HtmlAgilityPack.HtmlNode nodeA = nodeLi.Element("a");
-		//				// Create a new Alexa country information.
-		//				AlexaCountryInfo info = new AlexaCountryInfo(nodeA.InnerText, nodeA.GetAttributeValue("href", null));
-		//				// Add the information to the list.
-		//				this.alexaCountries.Add(info);
-		//			}
-		//		}
-		//	}
-		//}
-
-		///// <summary>
-		///// Parses the list of Alexa ranking.
-		///// </summary>
-		///// <param name="data">The data.</param>
-		//private void OnParseAlexaRanking(string data)
-		//{
-		//	// Create an HTML document for the list of Alexa countries.
-		//	HtmlAgilityPack.HtmlDocument html = new HtmlAgilityPack.HtmlDocument();
-		//	// Load the HTML data.
-		//	html.LoadHtml(data);
-
-		//	// The root node.
-		//	HtmlAgilityPack.HtmlNode node;
-
-		//	// Parse the countries node.
-		//	if (null != (node = html.GetElementbyId("topsites-global")))
-		//	{
-		//		this.OnParseAlexaRanking(node);
-		//	}
-		//	else if (null != (node = html.GetElementbyId("topsites-countries")))
-		//	{
-		//		this.OnParseAlexaRanking(node);
-		//	}
-		//}
-
-		///// <summary>
-		///// Parses the Alexa ranking.
-		///// </summary>
-		///// <param name="node">The inner HTML node.</param>
-		//private void OnParseAlexaRanking(HtmlAgilityPack.HtmlNode node)
-		//{
-		//	lock (this.sync)
-		//	{
-		//		// For all ranking elements.
-		//		foreach (HtmlAgilityPack.HtmlNode nodeLi in node.Element("div").Element("ul").Elements("li"))
-		//		{
-		//			HtmlAgilityPack.HtmlNode nodeRank = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
-		//			{
-		//				return child.GetAttributeValue("class", null) == "count";
-		//			}).FirstOrDefault();
-		//			HtmlAgilityPack.HtmlNode nodeSite = nodeLi.Elements("div").Where((HtmlAgilityPack.HtmlNode child) =>
-		//			{
-		//				return child.GetAttributeValue("class", null) == "desc-container";
-		//			}).FirstOrDefault().Element("h2").Element("a");
-
-		//			// Create a new ranking information.
-		//			AlexaRankingInfo info = new AlexaRankingInfo(
-		//				int.Parse(nodeRank.InnerText),
-		//				nodeSite.InnerText,
-		//				nodeSite.GetAttributeValue("href", null)
-		//				);
-		//			// Add the information to the ranking list.
-		//			this.alexaRanking.Add(info);
-		//		}
-		//	}
-		//}
-
-		///// <summary>
-		///// An event handler called when the user exports the data.
-		///// </summary>
-		///// <param name="sender">The sender object.</param>
-		///// <param name="e">The event arguments.</param>
-		//private void OnExport(object sender, EventArgs e)
-		//{
-		//	// Show the save file dialog.
-		//	if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
-		//	{
-		//		lock (this.sync)
-		//		{
-		//			// Create an XML element for the ranking.
-		//			XElement xml = new XElement("AlexaTopSites",
-		//				new XAttribute("Country", this.alexaRankingCountry.Name),
-		//				new XAttribute("Timestamp", this.alexaRankingTimestamp));
-		//			// Add all elements.
-		//			foreach (AlexaRankingInfo info in this.alexaRanking)
-		//			{
-		//				xml.Add(new XElement("Site",
-		//					new XAttribute("Rank", info.Rank),
-		//					new XAttribute("Site", info.Site)));
-		//			}
-		//			// Create an XML document.
-		//			XDocument doc = new XDocument(xml);
-		//			// Export the data to the file.
-		//			doc.Save(this.saveFileDialog.FileName);
-		//		}
-		//	}
-		//}
+		/// <summary>
+		/// An event handler called when the input has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnInputChanged(object sender, EventArgs e)
+		{
+			// Changed the enabled state of the start button.
+			this.buttonStart.Enabled = (!string.IsNullOrWhiteSpace(this.textBoxUrl.Text)) && (this.listView.Items.Count > 0);
+		}
 	}
 }

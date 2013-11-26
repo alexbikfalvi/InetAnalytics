@@ -1,5 +1,22 @@
-﻿using System;
-using DotNetApi.Web
+﻿/* 
+ * Copyright (C) 2013 Alex Bikfalvi
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
+using System;
 
 namespace InetTools.Tools.Alexa
 {
@@ -16,11 +33,13 @@ namespace InetTools.Tools.Alexa
 		/// <param name="callback">The callback method.</param>
 		/// <param name="countries">The list of Alexa counties.</param>
 		/// <param name="state">The user state.</param>
-		public AlexaCountriesRequestState(AsyncWebRequestCallback callback, AlexaCountries countries, object state)
+		public AlexaCountriesRequestState(AsyncCallback callback, AlexaCountries countries, object state)
 			: base(callback, state)
 		{
 			// Set the countries list.
 			this.countries = countries != null ? countries : new AlexaCountries();
+			// Clear the list of countries.
+			this.countries.Clear();
 		}
 
 		// Public properties.

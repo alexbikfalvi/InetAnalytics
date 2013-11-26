@@ -18,12 +18,12 @@
 
 using System;
 
-namespace InetTools.Tools.AlexaTopSites
+namespace InetTools.Tools.Alexa
 {
 	/// <summary>
 	/// A structure representing the Alexa ranking information.
 	/// </summary>
-	public struct AlexaTopSitesRank
+	public struct AlexaRank
 	{
 		/// <summary>
 		/// Creates a new ranking information structure.
@@ -31,7 +31,7 @@ namespace InetTools.Tools.AlexaTopSites
 		/// <param name="position">The rank position.</param>
 		/// <param name="site">The site name.</param>
 		/// <param name="url">The URL path.</param>
-		public AlexaTopSitesRank(int position, string site, string url)
+		public AlexaRank(int position, string site, string url)
 			: this()
 		{
 			this.Position = position;

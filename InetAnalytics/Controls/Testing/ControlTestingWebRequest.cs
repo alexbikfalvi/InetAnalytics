@@ -34,7 +34,7 @@ namespace InetAnalytics.Controls.Testing
 	/// <summary>
 	/// A control class for testing web request.
 	/// </summary>
-	public partial class ControlTestingWebRequest : ThreadSafeControl
+	public partial class ControlTestingWebRequest : NotificationControl
 	{
 		private static readonly string logSource = "Testing Web Request";
 
@@ -119,9 +119,15 @@ namespace InetAnalytics.Controls.Testing
 			this.listViewResponseHeaders.Items.Clear();
 			// Clear the response data.
 			this.textBoxResponseData.Text = string.Empty;
-			// Clear the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Executing the HTTP request...", Resources.Busy_16);
 
+			// Set the status.
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Executing the HTTP request...", Resources.Busy_16);
+			// Show a message.
+			this.ShowMessage(
+				Resources.GlobeClock_48,
+				"Web Request",
+				"Started an HTTP request for the URL \'{0}\'.".FormatWith(this.textBoxUrl.Text)
+				);
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -179,6 +185,13 @@ namespace InetAnalytics.Controls.Testing
 			{
 				// Update the status label.
 				this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				// Show a message.
+				this.ShowMessage(
+					Resources.GlobeError_48,
+					"Web Request",
+					"The HTTP request for web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message),
+					false,
+					(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 				// Log the result.
 				this.log.Add(this.crawler.Log.Add(
 					LogEventLevel.Important,
@@ -240,8 +253,15 @@ namespace InetAnalytics.Controls.Testing
 						this.status.Send(
 							CrawlerStatus.StatusType.Normal,
 							"The HTTP request for the web URL completed successfully.",
-							"{0} bytes of data received".FormatWith(asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
+							"{0} bytes of data received.".FormatWith(asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
 							Resources.Success_16);
+						// Show a message.
+						this.ShowMessage(
+							Resources.GlobeSuccess_48,
+							"Web Request",
+							"The HTTP request for the web URL \'{0}\' completed successfully.".FormatWith(this.textBoxUrl.Text),
+							false,
+							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 						// Log the result.
 						this.log.Add(this.crawler.Log.Add(
 							LogEventLevel.Verbose,
@@ -254,6 +274,13 @@ namespace InetAnalytics.Controls.Testing
 					{
 						if (exception.Status == WebExceptionStatus.RequestCanceled)
 						{
+							// Show a message.
+							this.ShowMessage(
+								Resources.GlobeCanceled_48,
+								"Web Request",
+								"The HTTP request for the web URL \'{0}\' has been canceled.".FormatWith(this.textBoxUrl.Text),
+								false,
+								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 							// Update the status label.
 							this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
 							// Log the result.
@@ -266,6 +293,13 @@ namespace InetAnalytics.Controls.Testing
 						}
 						else
 						{
+							// Show a message.
+							this.ShowMessage(
+								Resources.GlobeError_48,
+								"Web Request",
+								"The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message),
+								false,
+								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 							// Update the status label.
 							this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 							// Log the result.
@@ -280,6 +314,13 @@ namespace InetAnalytics.Controls.Testing
 					}
 					catch (Exception exception)
 					{
+						// Show a message.
+						this.ShowMessage(
+							Resources.GlobeError_48,
+							"Web Request",
+							"The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message),
+							false,
+							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 						// Update the status label.
 						this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
 						// Log the result.

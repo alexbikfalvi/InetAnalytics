@@ -118,6 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Busy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Busy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Busy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Busy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Busy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Busy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Busy_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Busy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Canceled_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Canceled_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Canceled_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Canceled_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Canceled_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Canceled_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Canceled_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Canceled_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Error_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Error_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Error_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Error_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Error_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Error_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Error_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Error_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Export_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Export_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -190,6 +226,30 @@
   <data name="GlobeWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GlobeWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Import_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Import_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Import_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Import_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Import_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Import_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Import_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Import_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Information_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Information_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Information_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Information_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Information_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Information_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Information_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Information_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="PlayStart_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayStart_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -225,5 +285,17 @@
   </data>
   <data name="Refresh_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Refresh_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Success_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Success_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Success_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Success_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Success_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Success_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Success_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Success_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -25,6 +25,8 @@ namespace InetTools.Tools.Alexa
 	/// </summary>
 	public struct AlexaCountry
 	{
+		public static readonly AlexaCountry Global = new AlexaCountry { IsGlobal = true, Name = "Global", Url = string.Empty, Code = string.Empty };
+
 		/// <summary>
 		/// Creates a new country information structure.
 		/// </summary>
@@ -33,10 +35,16 @@ namespace InetTools.Tools.Alexa
 		public AlexaCountry(string name, string url)
 			: this()
 		{
+			this.IsGlobal = false;
 			this.Name = name;
 			this.Url = url;
+			this.Code = url.Split('/')[3];
 		}
 
+		/// <summary>
+		/// Gets whether this is global.
+		/// </summary>
+		public bool IsGlobal { get; private set; }
 		/// <summary>
 		/// Gets the country name.
 		/// </summary>

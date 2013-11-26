@@ -33,20 +33,24 @@
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panelTool = new DotNetApi.Windows.Controls.ThemeControl();
 			this.listView = new System.Windows.Forms.ListView();
-			this.columnHeaderRank = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderSite = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelServer = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxUrl = new System.Windows.Forms.ToolStripTextBox();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonImport = new System.Windows.Forms.ToolStripDropDownButton();
+			this.menuItemImportAlexa = new System.Windows.Forms.ToolStripMenuItem();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
 			this.buttonStop = new System.Windows.Forms.ToolStripButton();
+			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonImport = new System.Windows.Forms.ToolStripButton();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
+			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.panelTool.SuspendLayout();
 			this.toolStrip.SuspendLayout();
@@ -64,6 +68,10 @@
 			// 
 			this.splitContainer.Panel1.Controls.Add(this.panelTool);
 			this.splitContainer.Panel1Border = false;
+			// 
+			// splitContainer.Panel2
+			// 
+			this.splitContainer.Panel2.Controls.Add(this.controlLog);
 			this.splitContainer.Panel2Border = false;
 			this.splitContainer.Size = new System.Drawing.Size(600, 400);
 			this.splitContainer.SplitterDistance = 225;
@@ -88,7 +96,6 @@
 			// 
 			this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderRank,
             this.columnHeaderSite});
 			this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView.FullRowSelect = true;
@@ -102,10 +109,6 @@
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeaderRank
-			// 
-			this.columnHeaderRank.Text = "Rank";
 			// 
 			// columnHeaderSite
 			// 
@@ -125,9 +128,10 @@
             this.textBoxUrl,
             this.separator1,
             this.buttonImport,
-            this.toolStripSeparator1,
+            this.separator2,
             this.buttonStart,
-            this.buttonStop});
+            this.buttonStop,
+            this.separator3});
 			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
@@ -144,14 +148,38 @@
 			// 
 			this.textBoxUrl.Name = "textBoxUrl";
 			this.textBoxUrl.Size = new System.Drawing.Size(200, 25);
+			this.textBoxUrl.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// separator1
 			// 
 			this.separator1.Name = "separator1";
 			this.separator1.Size = new System.Drawing.Size(6, 25);
 			// 
+			// buttonImport
+			// 
+			this.buttonImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemImportAlexa});
+			this.buttonImport.Image = global::InetTools.Properties.Resources.Import_16;
+			this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonImport.Name = "buttonImport";
+			this.buttonImport.Size = new System.Drawing.Size(72, 22);
+			this.buttonImport.Text = "&Import";
+			// 
+			// menuItemImportAlexa
+			// 
+			this.menuItemImportAlexa.Name = "menuItemImportAlexa";
+			this.menuItemImportAlexa.Size = new System.Drawing.Size(185, 22);
+			this.menuItemImportAlexa.Text = "From Alexa ranking...";
+			this.menuItemImportAlexa.Click += new System.EventHandler(this.OnImportAlexaRanking);
+			// 
+			// separator2
+			// 
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
+			// 
 			// buttonStart
 			// 
+			this.buttonStart.Enabled = false;
 			this.buttonStart.Image = global::InetTools.Properties.Resources.PlayStart_16;
 			this.buttonStart.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonStart.Name = "buttonStart";
@@ -169,24 +197,31 @@
 			this.buttonStop.Text = "St&op";
 			this.buttonStop.Click += new System.EventHandler(this.OnStop);
 			// 
+			// separator3
+			// 
+			this.separator3.Name = "separator3";
+			this.separator3.Size = new System.Drawing.Size(6, 25);
+			// 
 			// saveFileDialog
 			// 
 			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.saveFileDialog.Title = "Export Alexa Ranking";
 			// 
-			// toolStripSeparator1
+			// openFileDialog
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			this.openFileDialog.Title = "Open Sites List";
 			// 
-			// buttonImport
+			// controlLog
 			// 
-			this.buttonImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.buttonImport.Image = ((System.Drawing.Image)(resources.GetObject("buttonImport.Image")));
-			this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonImport.Name = "buttonImport";
-			this.buttonImport.Size = new System.Drawing.Size(23, 22);
-			this.buttonImport.Text = "toolStripButton1";
+			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLog.Location = new System.Drawing.Point(0, 0);
+			this.controlLog.Name = "controlLog";
+			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.controlLog.ShowBorder = true;
+			this.controlLog.ShowTitle = true;
+			this.controlLog.Size = new System.Drawing.Size(600, 170);
+			this.controlLog.TabIndex = 0;
+			this.controlLog.Title = "Event Log";
 			// 
 			// ControlCdnFinder
 			// 
@@ -197,6 +232,7 @@
 			this.Size = new System.Drawing.Size(600, 400);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.splitContainer.Panel1.ResumeLayout(false);
+			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.panelTool.ResumeLayout(false);
@@ -217,12 +253,15 @@
 		private System.Windows.Forms.ToolStripSeparator separator1;
 		private System.Windows.Forms.ToolStripLabel labelServer;
 		private System.Windows.Forms.ListView listView;
-		private System.Windows.Forms.ColumnHeader columnHeaderRank;
 		private System.Windows.Forms.ColumnHeader columnHeaderSite;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.ToolStripTextBox textBoxUrl;
-		private System.Windows.Forms.ToolStripButton buttonImport;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripSeparator separator2;
+		private System.Windows.Forms.ToolStripDropDownButton buttonImport;
+		private System.Windows.Forms.ToolStripMenuItem menuItemImportAlexa;
+		private System.Windows.Forms.ToolStripSeparator separator3;
+		private System.Windows.Forms.OpenFileDialog openFileDialog;
+		private InetAnalytics.Controls.Log.ControlLogList controlLog;
 	}
 }

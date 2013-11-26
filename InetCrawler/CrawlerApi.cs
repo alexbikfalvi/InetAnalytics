@@ -18,6 +18,7 @@
 
 using System;
 using InetCrawler.Log;
+using InetCrawler.Status;
 
 namespace InetCrawler
 {
@@ -28,16 +29,19 @@ namespace InetCrawler
 	{
 		private readonly CrawlerConfig config;
 		private readonly Logger log;
+		private readonly CrawlerStatus status;
 
 		/// <summary>
 		/// Creates a new crawler API instance.
 		/// </summary>
 		/// <param name="config">The crawler configuration.</param>
 		/// <param name="log">The crawler log.</param>
-		public CrawlerApi(CrawlerConfig config, Logger log)
+		/// <param name="status">The crawler status.</param>
+		public CrawlerApi(CrawlerConfig config, Logger log, CrawlerStatus status)
 		{
 			this.config = config;
 			this.log = log;
+			this.status = status;
 		}
 
 		// Public properties.
@@ -50,5 +54,9 @@ namespace InetCrawler
 		/// Gets the crawler log.
 		/// </summary>
 		public Logger Log { get { return this.log; } }
+		/// <summary>
+		/// Gets the crawler status.
+		/// </summary>
+		public CrawlerStatus Status { get { return this.status; } }
 	}
 }

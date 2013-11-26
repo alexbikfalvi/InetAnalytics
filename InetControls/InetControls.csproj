@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FE702303-5ACC-498F-BAB4-7479957193CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InetControls</RootNamespace>
+    <AssemblyName>InetControls</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\ControlExceptionProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlExceptionProperties.Designer.cs">
+      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogEventProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogEventProperties.Designer.cs">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Log\ControlLogList.Designer.cs">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormExceptionProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormExceptionProperties.Designer.cs">
+      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Log\FormEventProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Log\FormEventProperties.Designer.cs">
+      <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ControlExceptionProperties.resx">
+      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Log\ControlLogEventProperties.resx">
+      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
+      <DependentUpon>ControlLogList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormExceptionProperties.resx">
+      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Log\FormEventProperties.resx">
+      <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>InetAnalytics</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
+      <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
+      <Name>DotNetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetApi\InetApi.csproj">
+      <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
+      <Name>InetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetCrawler\InetCrawler.csproj">
+      <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>
+      <Name>InetCrawler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventInformation_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccess_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventCanceled_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventError_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventErrorWarning_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccessWarning_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventWarning_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventStop_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventCanceled_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventCanceled_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventCanceled_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventError_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventError_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventError_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventErrorWarning_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventErrorWarning_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventErrorWarning_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventInformation_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventInformation_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventInformation_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMagenta_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMagenta_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMagenta_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMagenta_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMessage_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMessage_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMessage_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventMessage_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventStop_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventStop_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventStop_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccess_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccess_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccess_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccessWarning_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccessWarning_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccessWarning_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventWarning_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventWarning_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventWarning_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exception_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exception_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exception_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exception_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Log_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Log_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Log_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Log_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Properties_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Properties_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Properties_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Properties_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XmlNamespace_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XmlNamespace_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XmlNamespace_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XmlNamespace_48.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -36,7 +36,7 @@ namespace InetTools.Tools.Alexa
 		/// </summary>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="state">The user state.</param>
-		public AlexaRequestState(AsyncWebRequestCallback callback, object state)
+		public AlexaRequestState(AsyncCallback callback, object state)
 			: base(state)
 		{
 			this.Callback = callback;
@@ -48,7 +48,7 @@ namespace InetTools.Tools.Alexa
 		/// <summary>
 		/// Gets the request callback method.
 		/// </summary>
-		public AsyncWebRequestCallback Callback { get; private set; }
+		public AsyncCallback Callback { get; private set; }
 		/// <summary>
 		/// Gets or sets the request state exception.
 		/// </summary>

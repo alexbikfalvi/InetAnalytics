@@ -66,6 +66,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StandardToolset.cs" />
+    <Compile Include="Tools\Alexa\AlexaRankingRequestState.cs" />
     <Compile Include="Tools\Alexa\AlexaRequest.cs" />
     <Compile Include="Tools\Alexa\AlexaConfig.cs" />
     <Compile Include="Tools\Alexa\AlexaCountries.cs" />
@@ -74,6 +75,10 @@
     <Compile Include="Tools\Alexa\AlexaRanking.cs" />
     <Compile Include="Tools\Alexa\AlexaCountriesRequestState.cs" />
     <Compile Include="Tools\Alexa\AlexaRequestState.cs" />
+    <Compile Include="Tools\CdnFinder\CdnFinderDomain.cs" />
+    <Compile Include="Tools\CdnFinder\CdnFinderDomains.cs" />
+    <Compile Include="Tools\CdnFinder\CdnFinderRequest.cs" />
+    <Compile Include="Tools\CdnFinder\CdnFinderResource.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
     <Compile Include="Tools\ToolCdnFinder.cs" />
     <Compile Include="Tools\ToolWebCrawler.cs" />
@@ -90,6 +95,10 @@
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>InetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetControls\InetControls.csproj">
+      <Project>{fe702303-5acc-498f-bab4-7479957193cd}</Project>
+      <Name>InetControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\InetCrawler\InetCrawler.csproj">
       <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>
@@ -219,7 +228,78 @@
   <ItemGroup>
     <None Include="Resources\Export_48.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Import_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Import_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Import_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Import_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Busy_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Busy_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Busy_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Busy_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Success_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Success_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Success_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Success_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Canceled_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Canceled_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Canceled_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Canceled_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Information_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Information_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Information_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Information_48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

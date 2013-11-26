@@ -354,6 +354,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{CE0819E2-579C-4178-92CF-4810849BC9E8}</td><td>INTERNET_ANALYTICS1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetAnalytics.Primary_output</td><td>{C072E757-1198-4DA5-8B70-316BC85A9C3E}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetanalytics.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetApi.Primary_output</td><td>{41045FA4-8427-43F7-BD69-644B991F40D1}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetapi.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>InetControls.Primary_output</td><td>{9919A669-208C-4982-B31F-31648A48E6E5}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetcontrols.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetCrawler.Primary_output</td><td>{625C5D43-9CEF-486E-A87B-36160B141B00}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetcrawler.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetTools.Primary_output</td><td>{BA0467E3-6B54-4FCB-B061-37FC5F80C5F3}</td><td>INSTALLDIR</td><td>2</td><td/><td>inettools.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>InetUpgrade.Primary_output</td><td>{D5707671-0EFE-4889-B509-6A974596D631}</td><td>INSTALLDIR</td><td>2</td><td/><td>inetupgrade.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1902,6 +1903,7 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>AlwaysInstall</td><td>InetAnalytics.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetApi.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>InetControls.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetCrawler.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetTools.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>InetUpgrade.Primary_output</td></row>
@@ -1926,6 +1928,7 @@
 		<row><td>htmlagilitypack.primary_outp</td><td>HtmlAgilityPack.Primary_output</td><td>HtmlAgilityPack.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;HtmlAgilityPack&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inetanalytics.primary_output</td><td>InetAnalytics.Primary_output</td><td>InetAnalytics.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetAnalytics&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inetapi.primary_output</td><td>InetApi.Primary_output</td><td>InetApi.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetApi&gt;|Built</td><td>3</td><td/></row>
+		<row><td>inetcontrols.primary_output</td><td>InetControls.Primary_output</td><td>InetControls.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetControls&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inetcrawler.primary_output</td><td>InetCrawler.Primary_output</td><td>InetCrawler.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetCrawler&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inettools.primary_output</td><td>InetTools.Primary_output</td><td>InetTools.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetTools&gt;|Built</td><td>3</td><td/></row>
 		<row><td>inetupgrade.primary_output</td><td>InetUpgrade.Primary_output</td><td>InetUpgrade.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;InetUpgrade&gt;|Built</td><td>3</td><td/></row>
@@ -2083,6 +2086,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_12E748BC_03E2_4915_890D_35F38173D1CB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetAnalytics.Primary_output</td><td/><td/><td>_F3D3D295_7FEB_42C2_8710_8F3216FB8FCD_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetApi.Primary_output</td><td/><td/><td>_3512EB23_8EB2_42C3_8457_E274F133716A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>InetControls.Primary_output</td><td/><td/><td>_6892AC29_721D_4685_A21B_F85DDA7B73CD_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetCrawler.Primary_output</td><td/><td/><td>_B8A492BB_15C4_42EC_AB2C_A8D7EEE71035_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetTools.Primary_output</td><td/><td/><td>_D6876214_A931_4A9D_8EDA_2C400643F270_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>InetUpgrade.Primary_output</td><td/><td/><td>_A1E69100_FBFE_4B00_9DC3_56AD1B27AD54_FILTER</td><td/><td/><td/><td/></row>
@@ -2398,6 +2402,7 @@
 		<row><td>ISProjectFolder</td><td/><td/><td>1</td></row>
 		<row><td>InetAnalytics</td><td>InetAnalytics\InetAnalytics.csproj</td><td/><td>2</td></row>
 		<row><td>InetApi</td><td>InetApi\InetApi.csproj</td><td/><td>2</td></row>
+		<row><td>InetControls</td><td>InetControls\InetControls.csproj</td><td/><td>2</td></row>
 		<row><td>InetCrawler</td><td>InetCrawler\InetCrawler.csproj</td><td/><td>2</td></row>
 		<row><td>InetTools</td><td>InetTools\InetTools.csproj</td><td/><td>2</td></row>
 		<row><td>InetUpgrade</td><td>InetUpgrade\InetUpgrade.csproj</td><td/><td>2</td></row>

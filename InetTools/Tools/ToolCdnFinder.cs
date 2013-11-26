@@ -17,9 +17,9 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using InetCrawler.Tools;
+using InetTools.Controls;
 
 namespace InetTools.Tools
 {
@@ -29,11 +29,13 @@ namespace InetTools.Tools
 	[ToolInfo(
 		"9D988BAC-87A5-470A-81B3-BAE3FA30E92D",
 		1, 0, 0, 0,
-		"Content Delivery Networks Finder",
+		"CDN Finder Client",
 		"A tool that collects information on the web sites content origin from a CDN Finder server."
 		)]
 	public sealed class ToolCdnFinder : Tool
 	{
+		private readonly ControlCdnFinder control;
+
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
@@ -42,12 +44,32 @@ namespace InetTools.Tools
 		public ToolCdnFinder(IToolApi api, ToolsetInfoAttribute toolset)
 			: base(api, toolset)
 		{
-
+			// Create the control.
+			this.control = new ControlCdnFinder(api);
 		}
+
+		// Protected methods.
 
 		/// <summary>
 		/// Gets the user interface control for this tool.
 		/// </summary>
-		public override Control Control { get { return null; } }
+		public override Control Control { get { return this.control; } }
+
+		// Protected methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Dispose the control.
+				this.control.Dispose();
+			}
+			// Call the base clas method.
+			base.Dispose(disposing);
+		}
 	}
 }

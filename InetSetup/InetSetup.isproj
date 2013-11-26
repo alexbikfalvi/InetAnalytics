@@ -45,6 +45,10 @@
 			<Name>InetApi</Name>
 			<Project>{6E2D7303-FFAB-4732-86F5-8BB0F7CD8276}</Project>
 		</ProjectReference>
+		<ProjectReference Include="..\InetControls\InetControls.csproj">
+			<Name>InetControls</Name>
+			<Project>{FE702303-5ACC-498F-BAB4-7479957193CD}</Project>
+		</ProjectReference>
 		<ProjectReference Include="..\InetCrawler\InetCrawler.csproj">
 			<Name>InetCrawler</Name>
 			<Project>{A9792D30-2043-4CF9-9578-991288B0FB9E}</Project>

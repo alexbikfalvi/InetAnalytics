@@ -18,6 +18,7 @@
 
 using System;
 using InetCrawler.Log;
+using InetCrawler.Status;
 
 namespace InetCrawler.Tools
 {
@@ -33,6 +34,7 @@ namespace InetCrawler.Tools
 		/// </summary>
 		IToolConfig Config { get; }
 
+
 		// Log.
 
 		/// Logs an event for the specified tool.
@@ -43,5 +45,12 @@ namespace InetCrawler.Tools
 		/// <param name="parameters">The event parameters.</param>
 		/// <param name="exception">The event exception.</param>
 		LogEvent Log(LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
+
+		// Status.
+
+		/// <summary>
+		/// Gets the crawler status.
+		/// </summary>
+		CrawlerStatus Status { get; }
 	}
 }

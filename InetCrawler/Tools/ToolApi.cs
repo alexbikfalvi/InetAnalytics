@@ -20,6 +20,7 @@ using System;
 using Microsoft.Win32;
 using DotNetApi;
 using InetCrawler.Log;
+using InetCrawler.Status;
 
 namespace InetCrawler.Tools
 {
@@ -61,6 +62,10 @@ namespace InetCrawler.Tools
 		/// Gets the tool configuration.
 		/// </summary>
 		public IToolConfig Config { get { return this; } }
+		/// <summary>
+		/// Gets the crawler status.
+		/// </summary>
+		public CrawlerStatus Status { get { return this.api.Status; } }
 		/// <summary>
 		/// Gets the notification message close delay.
 		/// </summary>

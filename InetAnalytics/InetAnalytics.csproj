@@ -85,18 +85,6 @@
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Log\ControlLogEventProperties.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Log\ControlLogEventProperties.Designer.cs">
-      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Log\ControlLogList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Log\ControlLogList.Designer.cs">
-      <DependentUpon>ControlLogList.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Net\NetworkStatusToolTip.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -372,12 +360,6 @@
     </Compile>
     <Compile Include="Controls\Comments\ControlAddComment.Designer.cs">
       <DependentUpon>ControlAddComment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ControlExceptionProperties.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ControlExceptionProperties.Designer.cs">
-      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Log\ControlLog.cs">
       <SubType>UserControl</SubType>
@@ -833,12 +815,6 @@
     <Compile Include="Forms\YouTube\FormDiscoveryProperties.Designer.cs">
       <DependentUpon>FormDiscoveryProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormExceptionProperties.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormExceptionProperties.Designer.cs">
-      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\FormImage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -850,12 +826,6 @@
     </Compile>
     <Compile Include="Forms\YouTube\FormVideoProperties.Designer.cs">
       <DependentUpon>FormVideoProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Log\FormEventProperties.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Log\FormEventProperties.Designer.cs">
-      <DependentUpon>FormEventProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -869,12 +839,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Log\ControlLogEventProperties.resx">
-      <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
-      <DependentUpon>ControlLogList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlAddSlice.resx">
       <DependentUpon>ControlAddSlice.cs</DependentUpon>
@@ -1014,9 +978,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Comments\ControlAddComment.resx">
       <DependentUpon>ControlAddComment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlExceptionProperties.resx">
-      <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Log\ControlLog.resx">
       <DependentUpon>ControlLog.cs</DependentUpon>
@@ -1244,17 +1205,11 @@
     <EmbeddedResource Include="Forms\YouTube\FormDiscoveryProperties.resx">
       <DependentUpon>FormDiscoveryProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormExceptionProperties.resx">
-      <DependentUpon>FormExceptionProperties.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormImage.resx">
       <DependentUpon>FormImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\YouTube\FormVideoProperties.resx">
       <DependentUpon>FormVideoProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Log\FormEventProperties.resx">
-      <DependentUpon>FormEventProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -2258,6 +2213,10 @@
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>InetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetControls\InetControls.csproj">
+      <Project>{fe702303-5acc-498f-bab4-7479957193cd}</Project>
+      <Name>InetControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\InetCrawler\InetCrawler.csproj">
       <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>

@@ -26,6 +26,7 @@ using DotNetApi;
 using DotNetApi.Drawing;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
+using DotNetApi.Windows.Forms;
 using DotNetApi.Windows.Themes;
 using Microsoft.Win32;
 using InetAnalytics.Controls;
@@ -48,7 +49,7 @@ using InetCrawler.Status;
 
 namespace InetAnalytics.Forms
 {
-	public partial class FormMain : Form
+	public partial class FormMain : ThreadSafeForm
 	{
 		// Crawler.
 		private Crawler crawler;
@@ -646,52 +647,57 @@ namespace InetAnalytics.Forms
 		/// <param name="e">The event arguments.</param>
 		private void OnStatusMessage(object sender, CrawlerStatusMessageEventArgs e)
 		{
-			if (e.Message.HasValue)
-			{
-				// If the status type has changed.
-				if (e.Message.Value.Type != this.status)
+			// Call the code on the UI thread.
+			this.Invoke(() =>
 				{
-					// Update the status.
-					switch (e.Message.Value.Type)
+					if (e.Message.HasValue)
 					{
-						case CrawlerStatus.StatusType.Ready:
-							this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
-							this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-							this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-							this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-							break;
-						case CrawlerStatus.StatusType.Normal:
-							this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
-							this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
-							this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
-							this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
-							break;
-						case CrawlerStatus.StatusType.Busy:
-							this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripBusyBackground;
-							this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
-							this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
-							this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
-							break;
+						// If the status type has changed.
+						if (e.Message.Value.Type != this.status)
+						{
+							// Update the status.
+							switch (e.Message.Value.Type)
+							{
+								case CrawlerStatus.StatusType.Ready:
+									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
+									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+									break;
+								case CrawlerStatus.StatusType.Normal:
+									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
+									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+									break;
+								case CrawlerStatus.StatusType.Busy:
+									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripBusyBackground;
+									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
+									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
+									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
+									break;
+							}
+							// Set the new status.
+							this.status = e.Message.Value.Type;
+						}
+						this.statusLabelLeft.Image = e.Message.Value.LeftImage;
+						this.statusLabelLeft.Text = e.Message.Value.LeftText;
+						this.statusLabelRight.Image = e.Message.Value.RightImage;
+						this.statusLabelRight.Text = e.Message.Value.RightText;
 					}
-					// Set the new status.
-					this.status = e.Message.Value.Type;
-				}
-				this.statusLabelLeft.Image = e.Message.Value.LeftImage;
-				this.statusLabelLeft.Text = e.Message.Value.LeftText;
-				this.statusLabelRight.Image = e.Message.Value.RightImage;
-				this.statusLabelRight.Text = e.Message.Value.RightText;
-			}
-			else
-			{
-				this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
-				this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-				this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-				this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-				this.statusLabelLeft.Image = null;
-				this.statusLabelLeft.Text = "Ready";
-				this.statusLabelRight.Image = null;
-				this.statusLabelRight.Text = null;
-			}
+					else
+					{
+						this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
+						this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+						this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+						this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+						this.statusLabelLeft.Image = Resources.Information_16;
+						this.statusLabelLeft.Text = "Ready.";
+						this.statusLabelRight.Image = null;
+						this.statusLabelRight.Text = null;
+						this.status = CrawlerStatus.StatusType.Ready;
+					}
+				});
 		}
 
 		/// <summary>

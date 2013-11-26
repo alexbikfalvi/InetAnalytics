@@ -89,7 +89,7 @@ namespace InetCrawler
 			this.testing = new CrawlerTesting(rootKey, rootPath + @"\Testing");
 
 			// Create the crawler API.
-			this.api = new CrawlerApi(this.config, this.log);
+			this.api = new CrawlerApi(this.config, this.log, this.status);
 
 			// Create the toolbox.
 			this.toolbox = new Toolbox(this.api, rootKey, rootPath + @"\Toolbox");
