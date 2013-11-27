@@ -80,6 +80,7 @@
 			this.buttonApply.TabIndex = 4;
 			this.buttonApply.Text = "&Apply";
 			this.buttonApply.UseVisualStyleBackColor = true;
+			this.buttonApply.Click += new System.EventHandler(this.OnApplyClick);
 			// 
 			// buttonCancel
 			// 

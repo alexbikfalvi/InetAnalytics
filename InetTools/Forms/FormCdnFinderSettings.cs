@@ -79,8 +79,28 @@ namespace InetTools.Forms
 			// If there is no configuration, do nothing.
 			if (null == this.config) return;
 
+			// Apply the changes.
+			this.OnApplyClick(sender, e);
+
+			// Close the dialog.
+			this.Close();
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the apply button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnApplyClick(object sender, EventArgs e)
+		{
 			// Save the changes.
 			this.config.Timeout = (int)this.numericUpDownTimeout.Value;
+
+			// Set the dialog result.
+			this.DialogResult = DialogResult.OK;
+
+			// Disable the apply button.
+			this.buttonApply.Enabled = false;
 		}
 	}
 }
