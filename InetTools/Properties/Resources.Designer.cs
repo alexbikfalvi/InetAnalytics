@@ -343,6 +343,46 @@ namespace InetTools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GlobeQuestion_16 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeQuestion_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeQuestion_24 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeQuestion_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeQuestion_32 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeQuestion_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GlobeQuestion_48 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeQuestion_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GlobeSuccess_16 {
             get {
                 object obj = ResourceManager.GetObject("GlobeSuccess_16", resourceCulture);

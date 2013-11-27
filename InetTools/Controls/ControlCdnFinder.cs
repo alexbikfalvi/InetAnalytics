@@ -358,7 +358,7 @@ namespace InetTools.Controls
 					{
 						// Create the site item.
 						ListViewItem item = new ListViewItem(new string[] { rank.Site, "N/A" });
-						item.ImageKey = "Globe";
+						item.ImageKey = "GlobeQuestion";
 						item.Tag = @"http://{0}/".FormatWith(rank.Site);
 						this.listView.Items.Add(item);
 					}
