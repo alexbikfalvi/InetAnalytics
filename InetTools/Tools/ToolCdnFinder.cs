@@ -20,6 +20,7 @@ using System;
 using System.Windows.Forms;
 using InetCrawler.Tools;
 using InetTools.Controls;
+using InetTools.Tools.CdnFinder;
 
 namespace InetTools.Tools
 {
@@ -34,6 +35,7 @@ namespace InetTools.Tools
 		)]
 	public sealed class ToolCdnFinder : Tool
 	{
+		private readonly CdnFinderConfig config;
 		private readonly ControlCdnFinder control;
 
 		/// <summary>
@@ -44,8 +46,10 @@ namespace InetTools.Tools
 		public ToolCdnFinder(IToolApi api, ToolsetInfoAttribute toolset)
 			: base(api, toolset)
 		{
+			// Create the configuration.
+			this.config = new CdnFinderConfig(api);
 			// Create the control.
-			this.control = new ControlCdnFinder(api);
+			this.control = new ControlCdnFinder(api, config);
 		}
 
 		// Protected methods.

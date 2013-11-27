@@ -59,6 +59,10 @@ namespace InetCrawler.Tools
 		// Configuration.
 
 		/// <summary>
+		/// Gets the Registry key.
+		/// </summary>
+		public RegistryKey Key { get { return this.key; } }
+		/// <summary>
 		/// Gets the tool configuration.
 		/// </summary>
 		public IToolConfig Config { get { return this; } }
@@ -86,7 +90,7 @@ namespace InetCrawler.Tools
 			return this.api.Log.Add(
 				level,
 				type,
-				@"Toolbox\{0}".FormatWith(toolset.Name),
+				@"Toolbox\{0}\{1}".FormatWith(this.toolset.Name, this.tool.Name),
 				message,
 				parameters,
 				exception

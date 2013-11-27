@@ -1078,18 +1078,6 @@
   <data name="Import_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Import_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SaveAll_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\SaveAll_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveAll_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\SaveAll_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveAll_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\SaveAll_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveAll_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\SaveAll_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="FileComment_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FileComment_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -3176,5 +3164,41 @@ Female, 45-54 years
   </data>
   <data name="ToolboxPickAxe_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ToolboxPickAxe_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Open_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Open_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Open_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Open_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveAll_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SaveAll_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveAll_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SaveAll_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveAll_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SaveAll_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveAll_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SaveAll_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Save_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Save_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Save_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Save_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

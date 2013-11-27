@@ -17,6 +17,7 @@
  */
 
 using System;
+using Microsoft.Win32;
 using InetCrawler.Log;
 using InetCrawler.Status;
 
@@ -27,13 +28,19 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public interface IToolApi
 	{
+		// Registry.
+
+		/// <summary>
+		/// Gets the registry key for this tool.
+		/// </summary>
+		RegistryKey Key { get; }
+
 		// Configuration.
 
 		/// <summary>
 		/// Gets the tool configuration.
 		/// </summary>
 		IToolConfig Config { get; }
-
 
 		// Log.
 

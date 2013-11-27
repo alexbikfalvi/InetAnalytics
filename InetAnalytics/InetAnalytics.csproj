@@ -1244,6 +1244,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Open_48.png" />
+    <None Include="Resources\Open_32.png" />
+    <None Include="Resources\Open_24.png" />
+    <None Include="Resources\Open_16.png" />
+    <None Include="Resources\SaveAll_48.png" />
+    <None Include="Resources\SaveAll_32.png" />
+    <None Include="Resources\SaveAll_24.png" />
+    <None Include="Resources\SaveAll_16.png" />
+    <None Include="Resources\Save_48.png" />
+    <None Include="Resources\Save_32.png" />
+    <None Include="Resources\Save_24.png" />
+    <None Include="Resources\Save_16.png" />
     <None Include="Resources\ToolboxPickAxe_48.png" />
     <None Include="Resources\ToolboxPickAxe_32.png" />
     <None Include="Resources\ToolboxPickAxe_24.png" />
@@ -1864,10 +1876,6 @@
     <None Include="Resources\FolderClosedUser_32.png" />
     <None Include="Resources\FolderClosedUser_24.png" />
     <None Include="Resources\FolderClosedUser_16.png" />
-    <None Include="Resources\SaveAll_48.png" />
-    <None Include="Resources\SaveAll_32.png" />
-    <None Include="Resources\SaveAll_24.png" />
-    <None Include="Resources\SaveAll_16.png" />
     <None Include="Resources\Import_48.png" />
     <None Include="Resources\Import_32.png" />
     <None Include="Resources\Import_24.png" />

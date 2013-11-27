@@ -109,8 +109,8 @@ namespace InetTools.Controls
 			{
 				// Clear the ranking lists.
 				this.listView.Items.Clear();
-				// Disable the export button.
-				this.buttonExport.Enabled = false;
+				// Disable the save button.
+				this.buttonSave.Enabled = false;
 
 				// Compute the number of pages to download.
 				int pages = int.Parse(this.comboBoxPages.SelectedItem as string);
@@ -527,39 +527,30 @@ namespace InetTools.Controls
 				// Add the item to the list.
 				this.listView.Items.Add(item);
 			}
-			// Enable the export button.
-			this.buttonExport.Enabled = this.ranking.Count > 0;
+			// Enable the save button.
+			this.buttonSave.Enabled = this.ranking.Count > 0;
 		}
 
 		/// <summary>
-		/// An event handler called when the user exports the data to an XML file.
+		/// An event handler called when the user exports the data to a file.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnExportXml(object sender, EventArgs e)
+		private void OnSave(object sender, EventArgs e)
 		{
-			// Set the dialog filter.
-			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
 			// Show the save file dialog.
 			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				this.ranking.SaveXml(this.saveFileDialog.FileName);
-			}
-		}
-
-		/// <summary>
-		/// An event handler called when the user exports the data to a text file.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnExportText(object sender, EventArgs e)
-		{
-			// Set the dialog filter.
-			this.saveFileDialog.Filter = "Text files (*.txt)|*.txt";
-			// Show the save file dialog.
-			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
-			{
-				this.ranking.SaveText(this.saveFileDialog.FileName);
+				// Save according to the file filter.
+				switch (this.saveFileDialog.FilterIndex)
+				{
+					case 1:
+						this.ranking.SaveXml(this.saveFileDialog.FileName);
+						break;
+					case 2:
+						this.ranking.SaveText(this.saveFileDialog.FileName);
+						break;
+				}
 			}
 		}
 	}

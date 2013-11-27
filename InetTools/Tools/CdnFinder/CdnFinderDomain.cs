@@ -41,6 +41,10 @@ namespace InetTools.Tools.CdnFinder
 		// Public properties.
 
 		/// <summary>
+		/// Gets whether the domain was processed successfully.
+		/// </summary>
+		public bool Success { get; private set; }
+		/// <summary>
 		/// Gets the domain name.
 		/// </summary>
 		public string Domain { get; private set; }
@@ -55,7 +59,7 @@ namespace InetTools.Tools.CdnFinder
 		/// <summary>
 		/// Gets the collection of resources for this domain.
 		/// </summary>
-		public IEnumerable<CdnFinderResource> Resources { get { return this.resources; } }
+		public ICollection<CdnFinderResource> Resources { get { return this.resources; } }
 
 		// Public methods.
 
@@ -63,13 +67,25 @@ namespace InetTools.Tools.CdnFinder
 		{
 			// Create a new domain object.
 			CdnFinderDomain domain = new CdnFinderDomain(element.Element("domain").Value);
-			// Parse the properties.
-			domain.AssetCdn = element.Element("assetcdn").Value;
-			domain.BaseCdn = element.Element("basecdn").Value;
-			// Parse the domain resources.
-			foreach (XElement child in element.Elements("resource"))
+
+			XElement status = element.Element("status");
+			if ((null != status) && (status.Value.ToLower().Equals("failure")))
 			{
-				domain.resources.Add(CdnFinderResource.Parse(child));
+				// Set success to false.
+				domain.Success = false;
+			}
+			else
+			{
+				// Set success to true.
+				domain.Success = true;
+				// Parse the properties.
+				domain.AssetCdn = element.Element("assetcdn").Value;
+				domain.BaseCdn = element.Element("basecdn").Value;
+				// Parse the domain resources.
+				foreach (XElement child in element.Elements("resource"))
+				{
+					domain.resources.Add(CdnFinderResource.Parse(child));
+				}
 			}
 			// Return the domain object.
 			return domain;

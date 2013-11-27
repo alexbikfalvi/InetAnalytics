@@ -47,11 +47,9 @@
 			this.labelPages = new System.Windows.Forms.ToolStripLabel();
 			this.comboBoxPages = new System.Windows.Forms.ToolStripComboBox();
 			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonExport = new System.Windows.Forms.ToolStripDropDownButton();
-			this.menuItemExportXml = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuItemExportText = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -143,7 +141,7 @@
             this.labelPages,
             this.comboBoxPages,
             this.separator3,
-            this.buttonExport});
+            this.buttonSave});
 			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
@@ -224,34 +222,15 @@
 			this.separator3.Name = "separator3";
 			this.separator3.Size = new System.Drawing.Size(6, 25);
 			// 
-			// buttonExport
+			// buttonSave
 			// 
-			this.buttonExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemExportXml,
-            this.menuItemExportText});
-			this.buttonExport.Image = global::InetTools.Properties.Resources.Export_16;
-			this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonExport.Name = "buttonExport";
-			this.buttonExport.Size = new System.Drawing.Size(69, 22);
-			this.buttonExport.Text = "&Export";
-			// 
-			// menuItemExportXml
-			// 
-			this.menuItemExportXml.Name = "menuItemExportXml";
-			this.menuItemExportXml.Size = new System.Drawing.Size(143, 22);
-			this.menuItemExportXml.Text = "To XML file...";
-			this.menuItemExportXml.Click += new System.EventHandler(this.OnExportXml);
-			// 
-			// menuItemExportText
-			// 
-			this.menuItemExportText.Name = "menuItemExportText";
-			this.menuItemExportText.Size = new System.Drawing.Size(143, 22);
-			this.menuItemExportText.Text = "To text file...";
-			this.menuItemExportText.Click += new System.EventHandler(this.OnExportText);
-			// 
-			// saveFileDialog
-			// 
-			this.saveFileDialog.Title = "Export Alexa Ranking";
+			this.buttonSave.Enabled = false;
+			this.buttonSave.Image = global::InetTools.Properties.Resources.Save_16;
+			this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonSave.Name = "buttonSave";
+			this.buttonSave.Size = new System.Drawing.Size(74, 22);
+			this.buttonSave.Text = "&Save as...";
+			this.buttonSave.Click += new System.EventHandler(this.OnSave);
 			// 
 			// controlLog
 			// 
@@ -264,6 +243,11 @@
 			this.controlLog.Size = new System.Drawing.Size(600, 170);
 			this.controlLog.TabIndex = 0;
 			this.controlLog.Title = "Event Log";
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml|Text files (*.txt)|*.txt";
+			this.saveFileDialog.Title = "Export Alexa Ranking";
 			// 
 			// ControlAlexaTopSites
 			// 
@@ -305,9 +289,7 @@
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripSeparator separator3;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
-		private System.Windows.Forms.ToolStripDropDownButton buttonExport;
-		private System.Windows.Forms.ToolStripMenuItem menuItemExportXml;
-		private System.Windows.Forms.ToolStripMenuItem menuItemExportText;
 		private InetAnalytics.Controls.Log.ControlLogList controlLog;
+		private System.Windows.Forms.ToolStripButton buttonSave;
 	}
 }

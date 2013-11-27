@@ -30,6 +30,17 @@ namespace InetTools.Tools.CdnFinder
 	/// </summary>
 	public sealed class CdnFinderRequest : AsyncWebRequest
 	{
+		private readonly CdnFinderConfig config;
+
+		/// <summary>
+		/// Creates a new CDN Finder request instance.
+		/// </summary>
+		/// <param name="config">The configuration.</param>
+		public CdnFinderRequest(CdnFinderConfig config)
+		{
+			this.config = config;
+		}
+
 		/// <summary>
 		/// Begins a new request to the specified CDN Finder server.
 		/// </summary>
@@ -44,42 +55,29 @@ namespace InetTools.Tools.CdnFinder
 			AsyncWebResult asyncState = new AsyncWebResult(uri, callback, userState);
 
 			// Generate the request boundary.
-			string boundary = "----WebKitFormBoundaryAljP98LxwqAucB68";// "----InetAnalytics";//.FormatWith(AsyncWeb.GenerateNonce());
+			string boundary = "----InetAnalytics{0}".FormatWith(AsyncWeb.GenerateNonce());
 
 			// Set the request headers.
 			asyncState.Request.Method = "POST";
 			asyncState.Request.Accept = "text/html,application/xhtml+xml,application/xml";
 			asyncState.Request.ContentType = "multipart/form-data; boundary={0}".FormatWith(boundary);
+			asyncState.Request.Timeout = this.config.Timeout;
 
 			// Compute the send data.
 			StringBuilder builder = new StringBuilder();
-			//builder.AppendLine(boundary);
-			//builder.AppendLine("Content-Disposition: form-data; name=\"file\"; filename=\"sites\"");
-			//builder.AppendLine("Content-Type: text/plain");
-			//builder.AppendLine();
-			//foreach (string domain in domains)
-			//{
-			//	builder.AppendLine(domain);
-			//}
-			//builder.AppendLine();
-			//builder.AppendLine(boundary);
-			//builder.AppendLine("Content-Disposition: form-data; name=\"format\"");
-			//builder.AppendLine();
-			//builder.AppendLine("xml");
-			//builder.AppendLine(boundary);
-
-			builder.AppendLine("------WebKitFormBoundaryAljP98LxwqAucB68");
-			builder.AppendLine("Content-Disposition: form-data; name=\"file\"; filename=\"rank.txt\"");
+			builder.AppendFormat("--{0}{1}", boundary, Environment.NewLine);
+			builder.AppendLine("Content-Disposition: form-data; name=\"file\"; filename=\"sites\"");
 			builder.AppendLine("Content-Type: text/plain");
 			builder.AppendLine();
-			builder.AppendLine("http://google.com/");
-			builder.AppendLine("http://facebook.com/");
-			builder.AppendLine();
-			builder.AppendLine("------WebKitFormBoundaryAljP98LxwqAucB68");
+			foreach (string domain in domains)
+			{
+				builder.AppendLine(domain);
+			}
+			builder.AppendFormat("--{0}{1}", boundary, Environment.NewLine);
 			builder.AppendLine("Content-Disposition: form-data; name=\"format\"");
 			builder.AppendLine();
 			builder.AppendLine("xml");
-			builder.AppendLine("------WebKitFormBoundaryAljP98LxwqAucB68--");
+			builder.AppendFormat("--{0}--{1}", boundary, Environment.NewLine);
 
 			// Append the send data.
 			asyncState.SendData.Append(builder.ToString(), Encoding.UTF8);
