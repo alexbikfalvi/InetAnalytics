@@ -34,38 +34,32 @@
 			this.panelTool = new DotNetApi.Windows.Controls.ThemeControl();
 			this.panelDomains = new System.Windows.Forms.Panel();
 			this.splitContainerDomains = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.listView = new System.Windows.Forms.ListView();
+			this.themeTabControl1 = new DotNetApi.Windows.Controls.ThemeTabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.listViewSites = new System.Windows.Forms.ListView();
+			this.columnHeaderIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderSite = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderResources = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.listViewResources = new System.Windows.Forms.ListView();
-			this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderCdn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderIsBase = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.panelDomain = new System.Windows.Forms.Panel();
+			this.controlSite = new InetTools.Controls.ControlCdnFinderSite();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelServer = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxUrl = new System.Windows.Forms.ToolStripTextBox();
+			this.buttonSettings = new System.Windows.Forms.ToolStripButton();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonOpen = new System.Windows.Forms.ToolStripButton();
 			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonStart = new System.Windows.Forms.ToolStripButton();
+			this.buttonStop = new System.Windows.Forms.ToolStripButton();
 			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonSave = new System.Windows.Forms.ToolStripDropDownButton();
+			this.menuItemSaveSites = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemSaveResources = new System.Windows.Forms.ToolStripMenuItem();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.labelTitle = new System.Windows.Forms.Label();
-			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.buttonSettings = new System.Windows.Forms.ToolStripButton();
-			this.buttonOpen = new System.Windows.Forms.ToolStripButton();
-			this.buttonStart = new System.Windows.Forms.ToolStripButton();
-			this.buttonStop = new System.Windows.Forms.ToolStripButton();
-			this.textBoxSite = new System.Windows.Forms.TextBox();
-			this.labelSite = new System.Windows.Forms.Label();
-			this.textBoxAssetCdn = new System.Windows.Forms.TextBox();
-			this.labelAssetCdn = new System.Windows.Forms.Label();
-			this.textBoxBaseCdn = new System.Windows.Forms.TextBox();
-			this.labelBaseCdn = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -76,9 +70,8 @@
 			this.splitContainerDomains.Panel1.SuspendLayout();
 			this.splitContainerDomains.Panel2.SuspendLayout();
 			this.splitContainerDomains.SuspendLayout();
-			this.panelDomain.SuspendLayout();
+			this.themeTabControl1.SuspendLayout();
 			this.toolStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -135,13 +128,13 @@
 			// 
 			// splitContainerDomains.Panel1
 			// 
-			this.splitContainerDomains.Panel1.Controls.Add(this.listView);
+			this.splitContainerDomains.Panel1.Controls.Add(this.themeTabControl1);
+			this.splitContainerDomains.Panel1.Controls.Add(this.listViewSites);
 			this.splitContainerDomains.Panel1.Padding = new System.Windows.Forms.Padding(1);
 			// 
 			// splitContainerDomains.Panel2
 			// 
-			this.splitContainerDomains.Panel2.Controls.Add(this.listViewResources);
-			this.splitContainerDomains.Panel2.Controls.Add(this.panelDomain);
+			this.splitContainerDomains.Panel2.Controls.Add(this.controlSite);
 			this.splitContainerDomains.Panel2.Padding = new System.Windows.Forms.Padding(1);
 			this.splitContainerDomains.Size = new System.Drawing.Size(790, 369);
 			this.splitContainerDomains.SplitterDistance = 390;
@@ -149,34 +142,76 @@
 			this.splitContainerDomains.TabIndex = 2;
 			this.splitContainerDomains.UseTheme = false;
 			// 
-			// listView
+			// themeTabControl1
 			// 
-			this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.themeTabControl1.Controls.Add(this.tabPage1);
+			this.themeTabControl1.Controls.Add(this.tabPage2);
+			this.themeTabControl1.Location = new System.Drawing.Point(72, 85);
+			this.themeTabControl1.Name = "themeTabControl1";
+			this.themeTabControl1.SelectedIndex = 0;
+			this.themeTabControl1.Size = new System.Drawing.Size(200, 100);
+			this.themeTabControl1.TabIndex = 1;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(192, 74);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "tabPage1";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(192, 74);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "tabPage2";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// listViewSites
+			// 
+			this.listViewSites.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listViewSites.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderIndex,
             this.columnHeaderSite,
+            this.columnHeaderUrl,
             this.columnHeaderResources});
-			this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView.FullRowSelect = true;
-			this.listView.GridLines = true;
-			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(1, 1);
-			this.listView.MultiSelect = false;
-			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(388, 367);
-			this.listView.SmallImageList = this.imageList;
-			this.listView.TabIndex = 0;
-			this.listView.UseCompatibleStateImageBehavior = false;
-			this.listView.View = System.Windows.Forms.View.Details;
+			this.listViewSites.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listViewSites.FullRowSelect = true;
+			this.listViewSites.GridLines = true;
+			this.listViewSites.HideSelection = false;
+			this.listViewSites.Location = new System.Drawing.Point(1, 1);
+			this.listViewSites.MultiSelect = false;
+			this.listViewSites.Name = "listViewSites";
+			this.listViewSites.Size = new System.Drawing.Size(388, 367);
+			this.listViewSites.SmallImageList = this.imageList;
+			this.listViewSites.TabIndex = 0;
+			this.listViewSites.UseCompatibleStateImageBehavior = false;
+			this.listViewSites.View = System.Windows.Forms.View.Details;
+			this.listViewSites.SelectedIndexChanged += new System.EventHandler(this.OnSiteSelectionChanged);
+			// 
+			// columnHeaderIndex
+			// 
+			this.columnHeaderIndex.Text = "Index";
 			// 
 			// columnHeaderSite
 			// 
 			this.columnHeaderSite.Text = "Site";
 			this.columnHeaderSite.Width = 150;
 			// 
+			// columnHeaderUrl
+			// 
+			this.columnHeaderUrl.Text = "URL";
+			this.columnHeaderUrl.Width = 150;
+			// 
 			// columnHeaderResources
 			// 
 			this.columnHeaderResources.Text = "Resources";
-			this.columnHeaderResources.Width = 100;
+			this.columnHeaderResources.Width = 80;
 			// 
 			// imageList
 			// 
@@ -187,66 +222,14 @@
 			this.imageList.Images.SetKeyName(2, "GlobeWarning");
 			this.imageList.Images.SetKeyName(3, "GlobeError");
 			// 
-			// listViewResources
+			// controlSite
 			// 
-			this.listViewResources.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.listViewResources.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderHostname,
-            this.columnHeaderCount,
-            this.columnHeaderSize,
-            this.columnHeaderCdn,
-            this.columnHeaderIsBase});
-			this.listViewResources.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listViewResources.FullRowSelect = true;
-			this.listViewResources.GridLines = true;
-			this.listViewResources.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.listViewResources.HideSelection = false;
-			this.listViewResources.Location = new System.Drawing.Point(1, 146);
-			this.listViewResources.MultiSelect = false;
-			this.listViewResources.Name = "listViewResources";
-			this.listViewResources.Size = new System.Drawing.Size(393, 222);
-			this.listViewResources.TabIndex = 1;
-			this.listViewResources.UseCompatibleStateImageBehavior = false;
-			this.listViewResources.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeaderHostname
-			// 
-			this.columnHeaderHostname.Text = "Hostname";
-			this.columnHeaderHostname.Width = 120;
-			// 
-			// columnHeaderCount
-			// 
-			this.columnHeaderCount.Text = "Count";
-			// 
-			// columnHeaderSize
-			// 
-			this.columnHeaderSize.Text = "Size";
-			// 
-			// columnHeaderCdn
-			// 
-			this.columnHeaderCdn.Text = "CDN";
-			this.columnHeaderCdn.Width = 120;
-			// 
-			// columnHeaderIsBase
-			// 
-			this.columnHeaderIsBase.Text = "Is base";
-			// 
-			// panelDomain
-			// 
-			this.panelDomain.AutoScroll = true;
-			this.panelDomain.Controls.Add(this.labelBaseCdn);
-			this.panelDomain.Controls.Add(this.textBoxBaseCdn);
-			this.panelDomain.Controls.Add(this.labelAssetCdn);
-			this.panelDomain.Controls.Add(this.textBoxAssetCdn);
-			this.panelDomain.Controls.Add(this.labelSite);
-			this.panelDomain.Controls.Add(this.textBoxSite);
-			this.panelDomain.Controls.Add(this.labelTitle);
-			this.panelDomain.Controls.Add(this.pictureBox);
-			this.panelDomain.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelDomain.Location = new System.Drawing.Point(1, 1);
-			this.panelDomain.Name = "panelDomain";
-			this.panelDomain.Size = new System.Drawing.Size(393, 145);
-			this.panelDomain.TabIndex = 0;
+			this.controlSite.AutoScroll = true;
+			this.controlSite.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSite.Location = new System.Drawing.Point(1, 1);
+			this.controlSite.Name = "controlSite";
+			this.controlSite.Size = new System.Drawing.Size(393, 367);
+			this.controlSite.TabIndex = 0;
 			// 
 			// toolStrip
 			// 
@@ -259,7 +242,8 @@
             this.separator2,
             this.buttonStart,
             this.buttonStop,
-            this.separator3});
+            this.separator3,
+            this.buttonSave});
 			this.toolStrip.Location = new System.Drawing.Point(1, 22);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
@@ -278,61 +262,6 @@
 			this.textBoxUrl.Size = new System.Drawing.Size(200, 25);
 			this.textBoxUrl.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
-			// separator1
-			// 
-			this.separator1.Name = "separator1";
-			this.separator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// separator2
-			// 
-			this.separator2.Name = "separator2";
-			this.separator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// separator3
-			// 
-			this.separator3.Name = "separator3";
-			this.separator3.Size = new System.Drawing.Size(6, 25);
-			// 
-			// controlLog
-			// 
-			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlLog.Location = new System.Drawing.Point(0, 0);
-			this.controlLog.Name = "controlLog";
-			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.controlLog.ShowBorder = true;
-			this.controlLog.ShowTitle = true;
-			this.controlLog.Size = new System.Drawing.Size(800, 170);
-			this.controlLog.TabIndex = 0;
-			this.controlLog.Title = "Event Log";
-			// 
-			// saveFileDialog
-			// 
-			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
-			this.saveFileDialog.Title = "Export Alexa Ranking";
-			// 
-			// openFileDialog
-			// 
-			this.openFileDialog.Filter = "Alexa ranking XML files (*.xml)|*.xml";
-			this.openFileDialog.Title = "Open Sites List";
-			// 
-			// labelTitle
-			// 
-			this.labelTitle.AutoSize = true;
-			this.labelTitle.Location = new System.Drawing.Point(64, 28);
-			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(83, 13);
-			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "No site selected";
-			// 
-			// pictureBox
-			// 
-			this.pictureBox.Image = global::InetTools.Properties.Resources.GlobeQuestion_48;
-			this.pictureBox.Location = new System.Drawing.Point(10, 10);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(48, 48);
-			this.pictureBox.TabIndex = 0;
-			this.pictureBox.TabStop = false;
-			// 
 			// buttonSettings
 			// 
 			this.buttonSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -343,6 +272,11 @@
 			this.buttonSettings.Text = "&Settings";
 			this.buttonSettings.Click += new System.EventHandler(this.OnSettingsClick);
 			// 
+			// separator1
+			// 
+			this.separator1.Name = "separator1";
+			this.separator1.Size = new System.Drawing.Size(6, 25);
+			// 
 			// buttonOpen
 			// 
 			this.buttonOpen.Image = global::InetTools.Properties.Resources.Open_16;
@@ -351,6 +285,11 @@
 			this.buttonOpen.Size = new System.Drawing.Size(65, 22);
 			this.buttonOpen.Text = "&Open...";
 			this.buttonOpen.Click += new System.EventHandler(this.OnOpen);
+			// 
+			// separator2
+			// 
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// buttonStart
 			// 
@@ -372,56 +311,57 @@
 			this.buttonStop.Text = "St&op";
 			this.buttonStop.Click += new System.EventHandler(this.OnStop);
 			// 
-			// textBoxSite
+			// separator3
 			// 
-			this.textBoxSite.Location = new System.Drawing.Point(112, 64);
-			this.textBoxSite.Name = "textBoxSite";
-			this.textBoxSite.ReadOnly = true;
-			this.textBoxSite.Size = new System.Drawing.Size(240, 20);
-			this.textBoxSite.TabIndex = 2;
+			this.separator3.Name = "separator3";
+			this.separator3.Size = new System.Drawing.Size(6, 25);
 			// 
-			// labelSite
+			// buttonSave
 			// 
-			this.labelSite.AutoSize = true;
-			this.labelSite.Location = new System.Drawing.Point(7, 67);
-			this.labelSite.Name = "labelSite";
-			this.labelSite.Size = new System.Drawing.Size(28, 13);
-			this.labelSite.TabIndex = 1;
-			this.labelSite.Text = "&Site:";
+			this.buttonSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemSaveSites,
+            this.menuItemSaveResources});
+			this.buttonSave.Image = global::InetTools.Properties.Resources.Save_16;
+			this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonSave.Name = "buttonSave";
+			this.buttonSave.Size = new System.Drawing.Size(69, 22);
+			this.buttonSave.Text = "Sa&ve...";
 			// 
-			// textBoxAssetCdn
+			// menuItemSaveSites
 			// 
-			this.textBoxAssetCdn.Location = new System.Drawing.Point(112, 90);
-			this.textBoxAssetCdn.Name = "textBoxAssetCdn";
-			this.textBoxAssetCdn.ReadOnly = true;
-			this.textBoxAssetCdn.Size = new System.Drawing.Size(240, 20);
-			this.textBoxAssetCdn.TabIndex = 4;
+			this.menuItemSaveSites.Name = "menuItemSaveSites";
+			this.menuItemSaveSites.Size = new System.Drawing.Size(136, 22);
+			this.menuItemSaveSites.Text = "Sites...";
+			this.menuItemSaveSites.Click += new System.EventHandler(this.OnSaveSites);
 			// 
-			// labelAssetCdn
+			// menuItemSaveResources
 			// 
-			this.labelAssetCdn.AutoSize = true;
-			this.labelAssetCdn.Location = new System.Drawing.Point(7, 93);
-			this.labelAssetCdn.Name = "labelAssetCdn";
-			this.labelAssetCdn.Size = new System.Drawing.Size(62, 13);
-			this.labelAssetCdn.TabIndex = 3;
-			this.labelAssetCdn.Text = "&Asset CDN:";
+			this.menuItemSaveResources.Name = "menuItemSaveResources";
+			this.menuItemSaveResources.Size = new System.Drawing.Size(136, 22);
+			this.menuItemSaveResources.Text = "Resources...";
+			this.menuItemSaveResources.Click += new System.EventHandler(this.OnSaveResources);
 			// 
-			// textBoxBaseCdn
+			// controlLog
 			// 
-			this.textBoxBaseCdn.Location = new System.Drawing.Point(112, 116);
-			this.textBoxBaseCdn.Name = "textBoxBaseCdn";
-			this.textBoxBaseCdn.ReadOnly = true;
-			this.textBoxBaseCdn.Size = new System.Drawing.Size(240, 20);
-			this.textBoxBaseCdn.TabIndex = 6;
+			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLog.Location = new System.Drawing.Point(0, 0);
+			this.controlLog.Name = "controlLog";
+			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.controlLog.ShowBorder = true;
+			this.controlLog.ShowTitle = true;
+			this.controlLog.Size = new System.Drawing.Size(800, 170);
+			this.controlLog.TabIndex = 0;
+			this.controlLog.Title = "Event Log";
 			// 
-			// labelBaseCdn
+			// saveFileDialog
 			// 
-			this.labelBaseCdn.AutoSize = true;
-			this.labelBaseCdn.Location = new System.Drawing.Point(7, 119);
-			this.labelBaseCdn.Name = "labelBaseCdn";
-			this.labelBaseCdn.Size = new System.Drawing.Size(60, 13);
-			this.labelBaseCdn.TabIndex = 5;
-			this.labelBaseCdn.Text = "&Base CDN:";
+			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
+			this.saveFileDialog.Title = "Save Sites";
+			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.Filter = "Alexa ranking XML files (*.xml)|*.xml";
+			this.openFileDialog.Title = "Open Sites List";
 			// 
 			// ControlCdnFinder
 			// 
@@ -442,11 +382,9 @@
 			this.splitContainerDomains.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerDomains)).EndInit();
 			this.splitContainerDomains.ResumeLayout(false);
-			this.panelDomain.ResumeLayout(false);
-			this.panelDomain.PerformLayout();
+			this.themeTabControl1.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -460,7 +398,7 @@
 		private System.Windows.Forms.ToolStripButton buttonStop;
 		private System.Windows.Forms.ToolStripSeparator separator1;
 		private System.Windows.Forms.ToolStripLabel labelServer;
-		private System.Windows.Forms.ListView listView;
+		private System.Windows.Forms.ListView listViewSites;
 		private System.Windows.Forms.ColumnHeader columnHeaderSite;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
@@ -474,20 +412,14 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderResources;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerDomains;
 		private System.Windows.Forms.Panel panelDomains;
-		private System.Windows.Forms.Panel panelDomain;
-		private System.Windows.Forms.ListView listViewResources;
-		private System.Windows.Forms.ColumnHeader columnHeaderHostname;
-		private System.Windows.Forms.ColumnHeader columnHeaderCount;
-		private System.Windows.Forms.ColumnHeader columnHeaderSize;
-		private System.Windows.Forms.ColumnHeader columnHeaderCdn;
-		private System.Windows.Forms.ColumnHeader columnHeaderIsBase;
-		private System.Windows.Forms.PictureBox pictureBox;
-		private System.Windows.Forms.Label labelTitle;
-		private System.Windows.Forms.TextBox textBoxSite;
-		private System.Windows.Forms.Label labelSite;
-		private System.Windows.Forms.Label labelAssetCdn;
-		private System.Windows.Forms.TextBox textBoxAssetCdn;
-		private System.Windows.Forms.Label labelBaseCdn;
-		private System.Windows.Forms.TextBox textBoxBaseCdn;
+		private System.Windows.Forms.ColumnHeader columnHeaderIndex;
+		private ControlCdnFinderSite controlSite;
+		private System.Windows.Forms.ToolStripDropDownButton buttonSave;
+		private System.Windows.Forms.ToolStripMenuItem menuItemSaveSites;
+		private System.Windows.Forms.ToolStripMenuItem menuItemSaveResources;
+		private System.Windows.Forms.ColumnHeader columnHeaderUrl;
+		private DotNetApi.Windows.Controls.ThemeTabControl themeTabControl1;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TabPage tabPage2;
 	}
 }

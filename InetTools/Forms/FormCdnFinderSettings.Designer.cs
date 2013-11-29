@@ -33,6 +33,11 @@
 			this.buttonApply = new System.Windows.Forms.Button();
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonOk = new System.Windows.Forms.Button();
+			this.textBoxPrefix = new System.Windows.Forms.TextBox();
+			this.labelPrefix = new System.Windows.Forms.Label();
+			this.checkBoxAutoRedirect = new System.Windows.Forms.CheckBox();
+			this.labelProtocol = new System.Windows.Forms.Label();
+			this.comboBoxProtocol = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -40,7 +45,7 @@
 			// 
 			this.numericUpDownTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDownTimeout.Location = new System.Drawing.Point(172, 12);
+			this.numericUpDownTimeout.Location = new System.Drawing.Point(15, 30);
 			this.numericUpDownTimeout.Maximum = new decimal(new int[] {
             3600000,
             0,
@@ -52,7 +57,7 @@
             0,
             0});
 			this.numericUpDownTimeout.Name = "numericUpDownTimeout";
-			this.numericUpDownTimeout.Size = new System.Drawing.Size(150, 20);
+			this.numericUpDownTimeout.Size = new System.Drawing.Size(407, 20);
 			this.numericUpDownTimeout.TabIndex = 1;
 			this.numericUpDownTimeout.Value = new decimal(new int[] {
             10000,
@@ -74,10 +79,10 @@
 			// 
 			this.buttonApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonApply.Enabled = false;
-			this.buttonApply.Location = new System.Drawing.Point(247, 127);
+			this.buttonApply.Location = new System.Drawing.Point(347, 277);
 			this.buttonApply.Name = "buttonApply";
 			this.buttonApply.Size = new System.Drawing.Size(75, 23);
-			this.buttonApply.TabIndex = 4;
+			this.buttonApply.TabIndex = 9;
 			this.buttonApply.Text = "&Apply";
 			this.buttonApply.UseVisualStyleBackColor = true;
 			this.buttonApply.Click += new System.EventHandler(this.OnApplyClick);
@@ -86,23 +91,76 @@
 			// 
 			this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonCancel.Location = new System.Drawing.Point(166, 127);
+			this.buttonCancel.Location = new System.Drawing.Point(266, 277);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-			this.buttonCancel.TabIndex = 3;
+			this.buttonCancel.TabIndex = 8;
 			this.buttonCancel.Text = "&Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			// 
 			// buttonOk
 			// 
 			this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonOk.Location = new System.Drawing.Point(85, 127);
+			this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.buttonOk.Location = new System.Drawing.Point(185, 277);
 			this.buttonOk.Name = "buttonOk";
 			this.buttonOk.Size = new System.Drawing.Size(75, 23);
-			this.buttonOk.TabIndex = 2;
+			this.buttonOk.TabIndex = 7;
 			this.buttonOk.Text = "&OK";
 			this.buttonOk.UseVisualStyleBackColor = true;
 			this.buttonOk.Click += new System.EventHandler(this.OnOkClick);
+			// 
+			// textBoxPrefix
+			// 
+			this.textBoxPrefix.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPrefix.Location = new System.Drawing.Point(15, 109);
+			this.textBoxPrefix.Name = "textBoxPrefix";
+			this.textBoxPrefix.Size = new System.Drawing.Size(407, 20);
+			this.textBoxPrefix.TabIndex = 5;
+			this.textBoxPrefix.TextChanged += new System.EventHandler(this.OnSettingsChanged);
+			// 
+			// labelPrefix
+			// 
+			this.labelPrefix.AutoSize = true;
+			this.labelPrefix.Location = new System.Drawing.Point(12, 93);
+			this.labelPrefix.Name = "labelPrefix";
+			this.labelPrefix.Size = new System.Drawing.Size(355, 13);
+			this.labelPrefix.TabIndex = 4;
+			this.labelPrefix.Text = "&Subdomains for non-existing domains (separate multiple subdomains by \';\'):";
+			// 
+			// checkBoxAutoRedirect
+			// 
+			this.checkBoxAutoRedirect.AutoSize = true;
+			this.checkBoxAutoRedirect.Location = new System.Drawing.Point(15, 135);
+			this.checkBoxAutoRedirect.Name = "checkBoxAutoRedirect";
+			this.checkBoxAutoRedirect.Size = new System.Drawing.Size(227, 17);
+			this.checkBoxAutoRedirect.TabIndex = 6;
+			this.checkBoxAutoRedirect.Text = "Use &automatic redirection for web requests";
+			this.checkBoxAutoRedirect.UseVisualStyleBackColor = true;
+			this.checkBoxAutoRedirect.CheckedChanged += new System.EventHandler(this.OnSettingsChanged);
+			// 
+			// labelProtocol
+			// 
+			this.labelProtocol.AutoSize = true;
+			this.labelProtocol.Location = new System.Drawing.Point(12, 53);
+			this.labelProtocol.Name = "labelProtocol";
+			this.labelProtocol.Size = new System.Drawing.Size(49, 13);
+			this.labelProtocol.TabIndex = 2;
+			this.labelProtocol.Text = "Pr&otocol:";
+			// 
+			// comboBoxProtocol
+			// 
+			this.comboBoxProtocol.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxProtocol.FormattingEnabled = true;
+			this.comboBoxProtocol.Items.AddRange(new object[] {
+            "http",
+            "https"});
+			this.comboBoxProtocol.Location = new System.Drawing.Point(15, 69);
+			this.comboBoxProtocol.Name = "comboBoxProtocol";
+			this.comboBoxProtocol.Size = new System.Drawing.Size(407, 21);
+			this.comboBoxProtocol.TabIndex = 3;
 			// 
 			// FormCdnFinderSettings
 			// 
@@ -110,7 +168,12 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.CancelButton = this.buttonCancel;
-			this.ClientSize = new System.Drawing.Size(334, 162);
+			this.ClientSize = new System.Drawing.Size(434, 312);
+			this.Controls.Add(this.comboBoxProtocol);
+			this.Controls.Add(this.labelProtocol);
+			this.Controls.Add(this.checkBoxAutoRedirect);
+			this.Controls.Add(this.labelPrefix);
+			this.Controls.Add(this.textBoxPrefix);
 			this.Controls.Add(this.buttonOk);
 			this.Controls.Add(this.buttonCancel);
 			this.Controls.Add(this.buttonApply);
@@ -134,6 +197,11 @@
 		private System.Windows.Forms.Button buttonApply;
 		private System.Windows.Forms.Button buttonCancel;
 		private System.Windows.Forms.Button buttonOk;
+		private System.Windows.Forms.TextBox textBoxPrefix;
+		private System.Windows.Forms.Label labelPrefix;
+		private System.Windows.Forms.CheckBox checkBoxAutoRedirect;
+		private System.Windows.Forms.Label labelProtocol;
+		private System.Windows.Forms.ComboBox comboBoxProtocol;
 
 	}
 }

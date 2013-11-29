@@ -45,11 +45,11 @@ namespace InetTools.Tools.CdnFinder
 		/// Begins a new request to the specified CDN Finder server.
 		/// </summary>
 		/// <param name="uri">The CDN Finder URI.</param>
-		/// <param name="domains">The list of web domains.</param>
+		/// <param name="sites">The list of web sites.</param>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous web operation.</returns>
-		public IAsyncResult Begin(Uri uri, IEnumerable<string> domains, AsyncWebRequestCallback callback, object userState = null)
+		public IAsyncResult Begin(Uri uri, IEnumerable<object> sites, AsyncWebRequestCallback callback, object userState = null)
 		{
 			// Create the request state.
 			AsyncWebResult asyncState = new AsyncWebResult(uri, callback, userState);
@@ -62,6 +62,7 @@ namespace InetTools.Tools.CdnFinder
 			asyncState.Request.Accept = "text/html,application/xhtml+xml,application/xml";
 			asyncState.Request.ContentType = "multipart/form-data; boundary={0}".FormatWith(boundary);
 			asyncState.Request.Timeout = this.config.Timeout;
+			asyncState.Request.AllowAutoRedirect = this.config.AutoRedirect;
 
 			// Compute the send data.
 			StringBuilder builder = new StringBuilder();
@@ -69,9 +70,12 @@ namespace InetTools.Tools.CdnFinder
 			builder.AppendLine("Content-Disposition: form-data; name=\"file\"; filename=\"sites\"");
 			builder.AppendLine("Content-Type: text/plain");
 			builder.AppendLine();
-			foreach (string domain in domains)
+			foreach (object site in sites)
 			{
-				builder.AppendLine(domain);
+				if (!string.IsNullOrWhiteSpace(site.ToString()))
+				{
+					builder.AppendLine(site.ToString());
+				}
 			}
 			builder.AppendFormat("--{0}{1}", boundary, Environment.NewLine);
 			builder.AppendLine("Content-Disposition: form-data; name=\"format\"");
@@ -90,8 +94,8 @@ namespace InetTools.Tools.CdnFinder
 		/// Completes the web request and returns the result.
 		/// </summary>
 		/// <param name="result">The result of the asynchronous web operation.</param>
-		/// <returns>The list of CDN Finder domains.</returns>
-		public new CdnFinderDomains End(IAsyncResult result)
+		/// <returns>The list of CDN Finder sites.</returns>
+		public new CdnFinderSites End(IAsyncResult result)
 		{
 			// The data.
 			string data;
@@ -99,8 +103,8 @@ namespace InetTools.Tools.CdnFinder
 			// Call the base class end method.
 			base.End(result, out data);
 
-			// Parse the data into the list of CDN Finder domains.
-			return CdnFinderDomains.Parse(data);
+			// Parse the data into the list of CDN Finder sites.
+			return CdnFinderSites.Parse(data);
 		}
 	}
 }

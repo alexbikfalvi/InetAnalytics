@@ -56,5 +56,29 @@ namespace InetTools.Tools.CdnFinder
 			get { return this.api.Key.GetInteger("Timeout", 600000); }
 			set { this.api.Key.SetInteger("Timeout", value); }
 		}
+		/// <summary>
+		/// Gets or sets whether the connection uses automatic redirection.
+		/// </summary>
+		public bool AutoRedirect
+		{
+			get { return this.api.Key.GetBoolean("AutoRedirect", true); }
+			set { this.api.Key.SetBoolean("AutoRedirect", value); }
+		}
+		/// <summary>
+		/// Gets or sets the protocol.
+		/// </summary>
+		public string Protocol
+		{
+			get { return this.api.Key.GetString("Protocol", "http"); }
+			set { this.api.Key.SetString("Protocol", value); }
+		}
+		/// <summary>
+		/// Gets or sets the site URL subdomains.
+		/// </summary>
+		public string[] Subdomains
+		{
+			get { return this.api.Key.GetMultiString("Subdomains", new string[] { "www" }); }
+			set { this.api.Key.SetMultiString("Subdomains", value); }
+		}
 	}
 }

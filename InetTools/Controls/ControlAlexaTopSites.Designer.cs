@@ -247,7 +247,7 @@
 			// saveFileDialog
 			// 
 			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml|Text files (*.txt)|*.txt";
-			this.saveFileDialog.Title = "Export Alexa Ranking";
+			this.saveFileDialog.Title = "Save Alexa Ranking";
 			// 
 			// ControlAlexaTopSites
 			// 

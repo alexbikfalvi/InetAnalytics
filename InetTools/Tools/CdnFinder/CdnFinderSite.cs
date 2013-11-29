@@ -23,31 +23,31 @@ using System.Xml.Linq;
 namespace InetTools.Tools.CdnFinder
 {
 	/// <summary>
-	/// A class representing the CDN Finder domain information.
+	/// A class representing the CDN Finder site information.
 	/// </summary>
-	public sealed class CdnFinderDomain
+	public sealed class CdnFinderSite
 	{
 		private readonly List<CdnFinderResource> resources = new List<CdnFinderResource>();
 
 		/// <summary>
-		/// Creates a new domain instance.
+		/// Creates a new site instance.
 		/// </summary>
-		/// <param name="domain">The domain name.</param>
-		public CdnFinderDomain(string domain)
+		/// <param name="site">The site name.</param>
+		public CdnFinderSite(string site)
 		{
-			this.Domain = domain;
+			this.Site = site;
 		}
 
 		// Public properties.
 
 		/// <summary>
-		/// Gets whether the domain was processed successfully.
+		/// Gets whether the site was processed successfully.
 		/// </summary>
 		public bool Success { get; private set; }
 		/// <summary>
-		/// Gets the domain name.
+		/// Gets the site name.
 		/// </summary>
-		public string Domain { get; private set; }
+		public string Site { get; private set; }
 		/// <summary>
 		/// Gets the asset CDN name.
 		/// </summary>
@@ -57,38 +57,38 @@ namespace InetTools.Tools.CdnFinder
 		/// </summary>
 		public string BaseCdn { get; private set; }
 		/// <summary>
-		/// Gets the collection of resources for this domain.
+		/// Gets the collection of resources for this site.
 		/// </summary>
 		public ICollection<CdnFinderResource> Resources { get { return this.resources; } }
 
 		// Public methods.
 
-		public static CdnFinderDomain Parse(XElement element)
+		public static CdnFinderSite Parse(XElement element)
 		{
-			// Create a new domain object.
-			CdnFinderDomain domain = new CdnFinderDomain(element.Element("domain").Value);
+			// Create a new site object.
+			CdnFinderSite site = new CdnFinderSite(element.Element("domain").Value);
 
 			XElement status = element.Element("status");
 			if ((null != status) && (status.Value.ToLower().Equals("failure")))
 			{
 				// Set success to false.
-				domain.Success = false;
+				site.Success = false;
 			}
 			else
 			{
 				// Set success to true.
-				domain.Success = true;
+				site.Success = true;
 				// Parse the properties.
-				domain.AssetCdn = element.Element("assetcdn").Value;
-				domain.BaseCdn = element.Element("basecdn").Value;
-				// Parse the domain resources.
+				site.AssetCdn = element.Element("assetcdn").Value;
+				site.BaseCdn = element.Element("basecdn").Value;
+				// Parse the site resources.
 				foreach (XElement child in element.Elements("resource"))
 				{
-					domain.resources.Add(CdnFinderResource.Parse(child));
+					site.resources.Add(CdnFinderResource.Parse(child));
 				}
 			}
-			// Return the domain object.
-			return domain;
+			// Return the site object.
+			return site;
 		}
 	}
 }

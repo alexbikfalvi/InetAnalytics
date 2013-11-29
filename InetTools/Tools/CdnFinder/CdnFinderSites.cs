@@ -24,39 +24,39 @@ using System.Xml.Linq;
 namespace InetTools.Tools.CdnFinder
 {
 	/// <summary>
-	/// A class representing the list of CDN Finder domains.
+	/// A class representing the list of CDN Finder sites.
 	/// </summary>
-	public sealed class CdnFinderDomains : IEnumerable<CdnFinderDomain>
+	public sealed class CdnFinderSites : IEnumerable<CdnFinderSite>
 	{
-		private readonly List<CdnFinderDomain> domains = new List<CdnFinderDomain>();
+		private readonly List<CdnFinderSite> sites = new List<CdnFinderSite>();
 
 		/// <summary>
-		/// Creates a new empty domains list.
+		/// Creates a new empty sites list.
 		/// </summary>
-		public CdnFinderDomains()
+		public CdnFinderSites()
 		{
 		}
 
 		// Public properties.
 
 		/// <summary>
-		/// Gets the number of domains in the collection.
+		/// Gets the number of sites in the collection.
 		/// </summary>
-		public int Count { get { return this.domains.Count; } }
+		public int Count { get { return this.sites.Count; } }
 
 		// Public methods.
 
 		/// <summary>
-		/// Returns the generic enumerator for the current domains collection.
+		/// Returns the generic enumerator for the current sites collection.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
-		public IEnumerator<CdnFinderDomain> GetEnumerator()
+		public IEnumerator<CdnFinderSite> GetEnumerator()
 		{
-			return this.domains.GetEnumerator();
+			return this.sites.GetEnumerator();
 		}
 
 		/// <summary>
-		/// Returns the non-generic enumerator for the current domains collection.
+		/// Returns the non-generic enumerator for the current sites collection.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
 		IEnumerator IEnumerable.GetEnumerator()
@@ -65,34 +65,34 @@ namespace InetTools.Tools.CdnFinder
 		}
 
 		/// <summary>
-		/// Parses a new domains list from the specified XML element.
+		/// Parses a new sites list from the specified XML element.
 		/// </summary>
 		/// <param name="element">The XML element.</param>
-		/// <returns>The domains list.</returns>
-		public static CdnFinderDomains Parse(XElement element)
+		/// <returns>The sites list.</returns>
+		public static CdnFinderSites Parse(XElement element)
 		{
-			// Create a new domains object.
-			CdnFinderDomains domains = new CdnFinderDomains();
-			// Parse all domains.
+			// Create a new sites object.
+			CdnFinderSites sites = new CdnFinderSites();
+			// Parse all sites.
 			foreach (XElement child in element.Elements("domains"))
 			{
-				domains.domains.Add(CdnFinderDomain.Parse(child));
+				sites.sites.Add(CdnFinderSite.Parse(child));
 			}
-			// Return the domains list.
-			return domains;
+			// Return the sites list.
+			return sites;
 		}
 
 		/// <summary>
-		/// Parses the specified string into a new domains list.
+		/// Parses the specified string into a new sites list.
 		/// </summary>
 		/// <param name="data">The strinf corresponding to the CDN finder XML format.</param>
-		/// <returns>The domains list.</returns>
-		public static CdnFinderDomains Parse(string data)
+		/// <returns>The sites list.</returns>
+		public static CdnFinderSites Parse(string data)
 		{
 			// Create the XML document.
 			XDocument xml = XDocument.Parse(data);
 			// Parse the document.
-			return CdnFinderDomains.Parse(xml.Root);
+			return CdnFinderSites.Parse(xml.Root);
 		}
 	}
 }

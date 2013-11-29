@@ -47,8 +47,14 @@ namespace InetTools.Forms
 		/// <returns>The dialog result.</returns>
 		public DialogResult ShowDialog(IWin32Window owner, CdnFinderConfig config)
 		{
+			// Set the configuration.
+			this.config = config;
+
 			// Set the properties.
-			this.numericUpDownTimeout.Value = config.Timeout;
+			this.numericUpDownTimeout.Value = this.config.Timeout;
+			this.comboBoxProtocol.Text = this.config.Protocol;
+			this.textBoxPrefix.Text = string.Join(";", this.config.Subdomains);
+			this.checkBoxAutoRedirect.Checked = this.config.AutoRedirect;
 
 			// Reset the buttons.
 			this.buttonApply.Enabled = false;
@@ -83,7 +89,7 @@ namespace InetTools.Forms
 			this.OnApplyClick(sender, e);
 
 			// Close the dialog.
-			this.Close();
+			this.DialogResult = DialogResult.Cancel;
 		}
 
 		/// <summary>
@@ -95,9 +101,9 @@ namespace InetTools.Forms
 		{
 			// Save the changes.
 			this.config.Timeout = (int)this.numericUpDownTimeout.Value;
-
-			// Set the dialog result.
-			this.DialogResult = DialogResult.OK;
+			this.config.Protocol = this.comboBoxProtocol.Text;
+			this.config.Subdomains = this.textBoxPrefix.Text.Split(';');
+			this.config.AutoRedirect = this.checkBoxAutoRedirect.Checked;
 
 			// Disable the apply button.
 			this.buttonApply.Enabled = false;

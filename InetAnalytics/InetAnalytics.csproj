@@ -1244,6 +1244,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Link_48.png" />
+    <None Include="Resources\Link_32.png" />
+    <None Include="Resources\Link_24.png" />
+    <None Include="Resources\Link_16.png" />
     <None Include="Resources\Open_48.png" />
     <None Include="Resources\Open_32.png" />
     <None Include="Resources\Open_24.png" />

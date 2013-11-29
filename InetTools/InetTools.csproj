@@ -47,6 +47,12 @@
     <Compile Include="Controls\ControlCdnFinder.Designer.cs">
       <DependentUpon>ControlCdnFinder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlCdnFinderSite.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlCdnFinderSite.Designer.cs">
+      <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlWebCrawler.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -82,8 +88,8 @@
     <Compile Include="Tools\Alexa\AlexaCountriesRequestState.cs" />
     <Compile Include="Tools\Alexa\AlexaRequestState.cs" />
     <Compile Include="Tools\CdnFinder\CdnFinderConfig.cs" />
-    <Compile Include="Tools\CdnFinder\CdnFinderDomain.cs" />
-    <Compile Include="Tools\CdnFinder\CdnFinderDomains.cs" />
+    <Compile Include="Tools\CdnFinder\CdnFinderSite.cs" />
+    <Compile Include="Tools\CdnFinder\CdnFinderSites.cs" />
     <Compile Include="Tools\CdnFinder\CdnFinderRequest.cs" />
     <Compile Include="Tools\CdnFinder\CdnFinderResource.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
@@ -115,6 +121,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\ControlCdnFinder.resx">
       <DependentUpon>ControlCdnFinder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlCdnFinderSite.resx">
+      <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlWebCrawler.resx">
       <DependentUpon>ControlWebCrawler.cs</DependentUpon>
