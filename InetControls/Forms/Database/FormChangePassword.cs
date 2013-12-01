@@ -24,13 +24,14 @@ using InetAnalytics.Events;
 using InetCrawler.Database;
 using DotNetApi.Security;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Database
 {
 	/// <summary>
 	/// A form dialog displaying a dialog allowing the user to change the database password.
 	/// </summary>
-	public partial class FormChangePassword : Form
+	public partial class FormChangePassword : ThreadSafeForm
 	{
 		private SecureString oldPassword;
 		private object state;

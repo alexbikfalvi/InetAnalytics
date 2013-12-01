@@ -17,22 +17,16 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms
 {
 	/// <summary>
 	/// A form that displays an about help window.
 	/// </summary>
-	public partial class FormAbout : Form
+	public partial class FormAbout : ThreadSafeForm
 	{
 		public FormAbout()
 		{

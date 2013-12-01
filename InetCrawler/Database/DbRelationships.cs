@@ -38,6 +38,8 @@ namespace InetCrawler.Database
 		private DbTables tables;
 		private readonly List<DbRelationship> relationships = new List<DbRelationship>();
 
+		private readonly object sync = new object();
+
 		/// <summary>
 		/// Creates a list of database table relationships, from the specified registry key.
 		/// </summary>
@@ -49,6 +51,17 @@ namespace InetCrawler.Database
 			this.key = key.Name;
 			this.tables = tables;
 		}
+
+		// Public events.
+
+		/// <summary>
+		/// An event raised when a relationship was added.
+		/// </summary>
+		public event DbRelationshipEventHandler RelationshipAdded;
+		/// <summary>
+		/// An event raised when a relationship was removed.
+		/// </summary>
+		public event DbRelationshipEventHandler RelationshipRemoved;
 		
 		// Public methods.
 
@@ -80,7 +93,27 @@ namespace InetCrawler.Database
 		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
 		public void Add(ITable tableLeft, ITable tableRight, string fieldLeft, string fieldRight, bool readOnly = true)
 		{
-			this.relationships.Add(new DbRelationship(tableLeft, tableRight, fieldLeft, fieldRight, readOnly));
+			lock (this.sync)
+			{
+				// Create the relationship.
+				DbRelationship relationship = new DbRelationship(tableLeft, tableRight, fieldLeft, fieldRight, readOnly);
+				// Add the relationship.
+				this.relationships.Add(relationship);
+				// Raise an event.
+				if (null != this.RelationshipAdded) this.RelationshipAdded(this, new DbRelationshipEventArgs(relationship));
+			}
+		}
+
+		/// <summary>
+		/// Removes any relationship containing the specified table.
+		/// </summary>
+		/// <param name="table">The table.</param>
+		public void Remove(ITable table)
+		{
+			lock (this.sync)
+			{
+
+			}
 		}
 
 		/// <summary>
@@ -95,22 +128,25 @@ namespace InetCrawler.Database
 
 			try
 			{
-				// Read the table XML configuration from the value as UTF-8.
-				XDocument document = XDocument.Parse(Encoding.UTF8.GetString(value));
-
-				// Check the document root.
-				if (document.Root.Name != DbRelationships.xmlRoot) return;
-
-				// Read the database relationships and add them to the relationships list.
-				foreach (XElement element in document.Root.Elements())
+				lock (this.sync)
 				{
-					// Create the relationship.
-					DbRelationship relationship = DbRelationship.Create(element, this.tables);
-					// Add the relationship to the collection.
-					this.relationships.Add(relationship);
+					// Read the table XML configuration from the value as UTF-8.
+					XDocument document = XDocument.Parse(Encoding.UTF8.GetString(value));
+
+					// Check the document root.
+					if (document.Root.Name != DbRelationships.xmlRoot) return;
+
+					// Read the database relationships and add them to the relationships list.
+					foreach (XElement element in document.Root.Elements())
+					{
+						// Create the relationship.
+						DbRelationship relationship = DbRelationship.Create(element, this.tables);
+						// Add the relationship to the collection.
+						this.relationships.Add(relationship);
+					}
 				}
 			}
-			catch (Exception)
+			catch
 			{
 				// If any exception occurs, do nothing.
 			}
@@ -121,20 +157,23 @@ namespace InetCrawler.Database
 		/// </summary>
 		public void SaveConfiguration()
 		{
-			// Create a new XML document for the collection of relationships.
-			XDocument document = new XDocument(new XElement(DbRelationships.xmlRoot));
-
-			// Add to the XML document the elements corresponding to the relationships that are not read-only.
-			foreach (DbRelationship relationship in this.relationships)
+			lock (this.sync)
 			{
-				// If the relationship is read-only, ignore and continue.
-				if (relationship.ReadOnly) continue;
-				// Else, add to the document root the relationship XML element.
-				document.Root.Add(relationship.Xml);
-			}
+				// Create a new XML document for the collection of relationships.
+				XDocument document = new XDocument(new XElement(DbRelationships.xmlRoot));
 
-			// Write the document to registry.
-			Registry.SetValue(key, DbRelationships.xmlRoot, Encoding.UTF8.GetBytes(document.ToString()), RegistryValueKind.Binary);
+				// Add to the XML document the elements corresponding to the relationships that are not read-only.
+				foreach (DbRelationship relationship in this.relationships)
+				{
+					// If the relationship is read-only, ignore and continue.
+					if (relationship.ReadOnly) continue;
+					// Else, add to the document root the relationship XML element.
+					document.Root.Add(relationship.Xml);
+				}
+
+				// Write the document to registry.
+				Registry.SetValue(key, DbRelationships.xmlRoot, Encoding.UTF8.GetBytes(document.ToString()), RegistryValueKind.Binary);
+			}
 		}
 	}
 }

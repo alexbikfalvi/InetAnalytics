@@ -22,13 +22,14 @@ using InetAnalytics.Events;
 using InetCrawler;
 using PlanetLab.Api;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
 	/// A form dialog allowing the selection of a PlanetLab node based on node state.
 	/// </summary>
-	public sealed partial class FormAddSliceToNodesState : Form
+	public sealed partial class FormAddSliceToNodesState : ThreadSafeForm
 	{
 		private bool canClose = true;
 

@@ -203,7 +203,6 @@
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
 			this.Name = "ControlPlanetLabInfo";
-			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
 			this.ShowBorder = true;
 			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);

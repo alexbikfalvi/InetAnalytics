@@ -523,12 +523,6 @@
     <Compile Include="Controls\Database\ControlAddServer.Designer.cs">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlChangePassword.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Database\ControlChangePassword.Designer.cs">
-      <DependentUpon>ControlChangePassword.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Database\ControlServer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -604,7 +598,6 @@
     <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\CommentEventArgs.cs" />
     <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
-    <Compile Include="Events\PasswordChangedEventArgs.cs" />
     <Compile Include="Forms\FormText.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -730,12 +723,6 @@
     </Compile>
     <Compile Include="Forms\Database\FormDatabaseProperties.Designer.cs">
       <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Database\FormChangePassword.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Database\FormChangePassword.Designer.cs">
-      <DependentUpon>FormChangePassword.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Database\FormServerProperties.cs">
       <SubType>Form</SubType>
@@ -1060,9 +1047,6 @@
     <EmbeddedResource Include="Controls\Database\ControlAddServer.resx">
       <DependentUpon>ControlAddServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Database\ControlChangePassword.resx">
-      <DependentUpon>ControlChangePassword.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlServer.resx">
       <DependentUpon>ControlServer.cs</DependentUpon>
     </EmbeddedResource>
@@ -1163,9 +1147,6 @@
     <EmbeddedResource Include="Forms\Database\FormDatabaseProperties.resx">
       <DependentUpon>FormDatabaseProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Database\FormChangePassword.resx">
-      <DependentUpon>FormChangePassword.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Database\FormServerProperties.resx">
       <DependentUpon>FormServerProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -1244,6 +1225,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\UndoLarge_48.png" />
+    <None Include="Resources\UndoLarge_32.png" />
+    <None Include="Resources\UndoLarge_24.png" />
+    <None Include="Resources\UndoLarge_16.png" />
     <None Include="Resources\Link_48.png" />
     <None Include="Resources\Link_32.png" />
     <None Include="Resources\Link_24.png" />

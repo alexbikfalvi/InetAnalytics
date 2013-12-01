@@ -118,6 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Connect_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Connect_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Connect_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Connect_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Connect_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Connect_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Connect_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Connect_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Copy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Copy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -129,6 +141,54 @@
   </data>
   <data name="Copy_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Copy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseBusy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseBusy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseBusy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseBusy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseBusy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseBusy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseBusy_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseBusy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseError_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseError_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseError_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseError_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseSuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseSuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseSuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\DatabaseSuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Disconnect_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Disconnect_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Disconnect_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Disconnect_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Disconnect_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Disconnect_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Disconnect_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Disconnect_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Error_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Error_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -285,6 +345,18 @@
   </data>
   <data name="Log_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Log_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PasswordChange_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PasswordChange_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PasswordChange_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PasswordChange_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PasswordChange_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PasswordChange_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PasswordChange_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PasswordChange_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Properties_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Properties_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

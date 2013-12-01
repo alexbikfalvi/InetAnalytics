@@ -21,23 +21,23 @@ using System;
 namespace InetCrawler.Database
 {
 	/// <summary>
-	/// A delegate representing the event handler for the database table changed.
+	/// A delegate representing the event handler for a database table.
 	/// </summary>
 	/// <param name="server">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void DbServerTableChangedEventHandler(object sender, DbServerTableChangedEventArgs e);
+	public delegate void DbServerTableEventHandler(object sender, DbServerTableEventArgs e);
 
 	/// <summary>
-	/// A class representing the event arguments for the database table changed.
+	/// A class representing the event arguments for a database table.
 	/// </summary>
-	public class DbServerTableChangedEventArgs : DbServerEventArgs
+	public class DbServerTableEventArgs : DbServerEventArgs
 	{
 		/// <summary>
 		/// Creates a new event arguments instance.
 		/// </summary>
 		/// <param name="table">The database table.</param>
 		/// <param name="newState">The new state.</param>
-		public DbServerTableChangedEventArgs(DbServer server, ITable table)
+		public DbServerTableEventArgs(DbServer server, ITable table)
 			: base(server)
 		{
 			this.Table = table;

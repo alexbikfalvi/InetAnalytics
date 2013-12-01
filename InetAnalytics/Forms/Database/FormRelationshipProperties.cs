@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using InetCrawler.Database;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Database
 {
 	/// <summary>
 	/// A form dialog displaying a log event.
 	/// </summary>
-	public partial class FormRelationshipProperties : Form
+	public partial class FormRelationshipProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

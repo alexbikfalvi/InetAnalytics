@@ -196,7 +196,6 @@
 			this.Controls.Add(this.pictureBoxIcon);
 			this.Enabled = false;
 			this.Name = "ControlYtApi2UserFeedsInfo";
-			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
 			this.ShowBorder = true;
 			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);

@@ -43,11 +43,11 @@ namespace InetCrawler.Database
 		private DbObjectDatabase database = null;
 
 		// SQL Server tables.
-		private DbTable<DbObjectSqlDatabase> tableDatabases = new DbTable<DbObjectSqlDatabase>("Databases", "databases", "sys", "master", false);
-		private DbTable<DbObjectSqlType> tableTypes = new DbTable<DbObjectSqlType>("Types", "types", "sys", "master", false);
-		private DbTable<DbObjectSqlSchema> tableSchema = new DbTable<DbObjectSqlSchema>("Schemas", "schemas", "sys", "master", false);
-		private DbTable<DbObjectSqlTable> tableTables = new DbTable<DbObjectSqlTable>("Tables", "tables", "sys", "master", true);
-		private DbTable<DbObjectSqlColumn> tableColumns = new DbTable<DbObjectSqlColumn>("Columns", "columns", "sys", "master", true);
+		private DbTable<DbObjectSqlDatabase> tableDatabases = new DbTable<DbObjectSqlDatabase>(new Guid("C9283AEE-E380-4345-91CF-90C0F93E49FC"), "Databases", "databases", "sys", "master", false);
+		private DbTable<DbObjectSqlType> tableTypes = new DbTable<DbObjectSqlType>(new Guid("566803E8-AAA0-4B63-B8D8-C380729997D6"), "Types", "types", "sys", "master", false);
+		private DbTable<DbObjectSqlSchema> tableSchema = new DbTable<DbObjectSqlSchema>(new Guid("8523364A-022E-45ED-9F3E-3AF12EA132AD"), "Schemas", "schemas", "sys", "master", false);
+		private DbTable<DbObjectSqlTable> tableTables = new DbTable<DbObjectSqlTable>(new Guid("10F8B1EC-9106-4039-A884-0DF76BB65200"), "Tables", "tables", "sys", "master", true);
+		private DbTable<DbObjectSqlColumn> tableColumns = new DbTable<DbObjectSqlColumn>(new Guid("096C8091-1158-47ED-BB05-4F338674148D"), "Columns", "columns", "sys", "master", true);
 
 		/// <summary>
 		/// Creates a new server instance.
@@ -55,7 +55,7 @@ namespace InetCrawler.Database
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServerSql(RegistryKey key, string id, string logFile)
+		public DbServerSql(RegistryKey key, Guid id, string logFile)
 			: base(key, id, logFile)
 		{
 			// Initialize the server with the current configuration.
@@ -92,7 +92,7 @@ namespace InetCrawler.Database
 		/// <param name="dateModified">The date when the server was last modified.</param>
 		public DbServerSql(
 			RegistryKey key,
-			string id,
+			Guid id,
 			string name,
 			string dataSource,
 			string username,

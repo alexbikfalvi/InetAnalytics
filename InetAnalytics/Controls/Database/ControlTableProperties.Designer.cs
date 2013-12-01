@@ -33,6 +33,8 @@
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageGeneral = new System.Windows.Forms.TabPage();
+			this.labelId = new System.Windows.Forms.Label();
+			this.textBoxId = new System.Windows.Forms.TextBox();
 			this.buttonSelectDatabase = new System.Windows.Forms.Button();
 			this.labelDatabase = new System.Windows.Forms.Label();
 			this.textBoxDatabase = new System.Windows.Forms.TextBox();
@@ -96,6 +98,8 @@
 			// 
 			// tabPageGeneral
 			// 
+			this.tabPageGeneral.Controls.Add(this.labelId);
+			this.tabPageGeneral.Controls.Add(this.textBoxId);
 			this.tabPageGeneral.Controls.Add(this.buttonSelectDatabase);
 			this.tabPageGeneral.Controls.Add(this.labelDatabase);
 			this.tabPageGeneral.Controls.Add(this.textBoxDatabase);
@@ -116,13 +120,32 @@
 			this.tabPageGeneral.Text = "General";
 			this.tabPageGeneral.UseVisualStyleBackColor = true;
 			// 
+			// labelId
+			// 
+			this.labelId.AutoSize = true;
+			this.labelId.Location = new System.Drawing.Point(10, 15);
+			this.labelId.Name = "labelId";
+			this.labelId.Size = new System.Drawing.Size(50, 13);
+			this.labelId.TabIndex = 0;
+			this.labelId.Text = "&Identifier:";
+			// 
+			// textBoxId
+			// 
+			this.textBoxId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxId.Location = new System.Drawing.Point(102, 12);
+			this.textBoxId.Name = "textBoxId";
+			this.textBoxId.ReadOnly = true;
+			this.textBoxId.Size = new System.Drawing.Size(256, 20);
+			this.textBoxId.TabIndex = 1;
+			// 
 			// buttonSelectDatabase
 			// 
 			this.buttonSelectDatabase.Enabled = false;
-			this.buttonSelectDatabase.Location = new System.Drawing.Point(102, 191);
+			this.buttonSelectDatabase.Location = new System.Drawing.Point(102, 217);
 			this.buttonSelectDatabase.Name = "buttonSelectDatabase";
 			this.buttonSelectDatabase.Size = new System.Drawing.Size(105, 23);
-			this.buttonSelectDatabase.TabIndex = 11;
+			this.buttonSelectDatabase.TabIndex = 13;
 			this.buttonSelectDatabase.Text = "Select database...";
 			this.buttonSelectDatabase.UseVisualStyleBackColor = true;
 			this.buttonSelectDatabase.Click += new System.EventHandler(this.OnSelectDatabase);
@@ -130,40 +153,40 @@
 			// labelDatabase
 			// 
 			this.labelDatabase.AutoSize = true;
-			this.labelDatabase.Location = new System.Drawing.Point(10, 93);
+			this.labelDatabase.Location = new System.Drawing.Point(10, 119);
 			this.labelDatabase.Name = "labelDatabase";
 			this.labelDatabase.Size = new System.Drawing.Size(56, 13);
-			this.labelDatabase.TabIndex = 6;
+			this.labelDatabase.TabIndex = 8;
 			this.labelDatabase.Text = "D&atabase:";
 			// 
 			// textBoxDatabase
 			// 
 			this.textBoxDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxDatabase.Location = new System.Drawing.Point(102, 90);
+			this.textBoxDatabase.Location = new System.Drawing.Point(102, 116);
 			this.textBoxDatabase.Name = "textBoxDatabase";
 			this.textBoxDatabase.ReadOnly = true;
 			this.textBoxDatabase.Size = new System.Drawing.Size(256, 20);
-			this.textBoxDatabase.TabIndex = 7;
+			this.textBoxDatabase.TabIndex = 9;
 			// 
 			// checkBoxReadOnly
 			// 
 			this.checkBoxReadOnly.AutoSize = true;
 			this.checkBoxReadOnly.Enabled = false;
-			this.checkBoxReadOnly.Location = new System.Drawing.Point(102, 139);
+			this.checkBoxReadOnly.Location = new System.Drawing.Point(102, 165);
 			this.checkBoxReadOnly.Name = "checkBoxReadOnly";
 			this.checkBoxReadOnly.Size = new System.Drawing.Size(74, 17);
-			this.checkBoxReadOnly.TabIndex = 9;
+			this.checkBoxReadOnly.TabIndex = 11;
 			this.checkBoxReadOnly.Text = "Read &only";
 			this.checkBoxReadOnly.UseVisualStyleBackColor = true;
 			// 
 			// buttonSelectTable
 			// 
 			this.buttonSelectTable.Enabled = false;
-			this.buttonSelectTable.Location = new System.Drawing.Point(102, 162);
+			this.buttonSelectTable.Location = new System.Drawing.Point(102, 188);
 			this.buttonSelectTable.Name = "buttonSelectTable";
 			this.buttonSelectTable.Size = new System.Drawing.Size(105, 23);
-			this.buttonSelectTable.TabIndex = 10;
+			this.buttonSelectTable.TabIndex = 12;
 			this.buttonSelectTable.Text = "Select table...";
 			this.buttonSelectTable.UseVisualStyleBackColor = true;
 			this.buttonSelectTable.Click += new System.EventHandler(this.OnSelectTable);
@@ -172,10 +195,10 @@
 			// 
 			this.checkBoxDefaultDatabase.AutoSize = true;
 			this.checkBoxDefaultDatabase.Enabled = false;
-			this.checkBoxDefaultDatabase.Location = new System.Drawing.Point(102, 116);
+			this.checkBoxDefaultDatabase.Location = new System.Drawing.Point(102, 142);
 			this.checkBoxDefaultDatabase.Name = "checkBoxDefaultDatabase";
 			this.checkBoxDefaultDatabase.Size = new System.Drawing.Size(132, 17);
-			this.checkBoxDefaultDatabase.TabIndex = 8;
+			this.checkBoxDefaultDatabase.TabIndex = 10;
 			this.checkBoxDefaultDatabase.Text = "&Uses default database";
 			this.checkBoxDefaultDatabase.UseVisualStyleBackColor = true;
 			this.checkBoxDefaultDatabase.CheckedChanged += new System.EventHandler(this.OnDefaultDatabaseChanged);
@@ -184,57 +207,57 @@
 			// 
 			this.textBoxSchema.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxSchema.Location = new System.Drawing.Point(102, 64);
+			this.textBoxSchema.Location = new System.Drawing.Point(102, 90);
 			this.textBoxSchema.Name = "textBoxSchema";
 			this.textBoxSchema.ReadOnly = true;
 			this.textBoxSchema.Size = new System.Drawing.Size(256, 20);
-			this.textBoxSchema.TabIndex = 5;
+			this.textBoxSchema.TabIndex = 7;
 			// 
 			// textBoxNameDatabase
 			// 
 			this.textBoxNameDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxNameDatabase.Location = new System.Drawing.Point(102, 38);
+			this.textBoxNameDatabase.Location = new System.Drawing.Point(102, 64);
 			this.textBoxNameDatabase.Name = "textBoxNameDatabase";
 			this.textBoxNameDatabase.ReadOnly = true;
 			this.textBoxNameDatabase.Size = new System.Drawing.Size(256, 20);
-			this.textBoxNameDatabase.TabIndex = 3;
+			this.textBoxNameDatabase.TabIndex = 5;
 			// 
 			// textBoxNameLocal
 			// 
 			this.textBoxNameLocal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxNameLocal.Location = new System.Drawing.Point(102, 12);
+			this.textBoxNameLocal.Location = new System.Drawing.Point(102, 38);
 			this.textBoxNameLocal.Name = "textBoxNameLocal";
 			this.textBoxNameLocal.ReadOnly = true;
 			this.textBoxNameLocal.Size = new System.Drawing.Size(256, 20);
-			this.textBoxNameLocal.TabIndex = 1;
+			this.textBoxNameLocal.TabIndex = 3;
 			// 
 			// labelSchema
 			// 
 			this.labelSchema.AutoSize = true;
-			this.labelSchema.Location = new System.Drawing.Point(10, 67);
+			this.labelSchema.Location = new System.Drawing.Point(10, 93);
 			this.labelSchema.Name = "labelSchema";
 			this.labelSchema.Size = new System.Drawing.Size(49, 13);
-			this.labelSchema.TabIndex = 4;
+			this.labelSchema.TabIndex = 6;
 			this.labelSchema.Text = "&Schema:";
 			// 
 			// labelNameDatabase
 			// 
 			this.labelNameDatabase.AutoSize = true;
-			this.labelNameDatabase.Location = new System.Drawing.Point(10, 41);
+			this.labelNameDatabase.Location = new System.Drawing.Point(10, 67);
 			this.labelNameDatabase.Name = "labelNameDatabase";
 			this.labelNameDatabase.Size = new System.Drawing.Size(85, 13);
-			this.labelNameDatabase.TabIndex = 2;
+			this.labelNameDatabase.TabIndex = 4;
 			this.labelNameDatabase.Text = "&Database name:";
 			// 
 			// labelNameLocal
 			// 
 			this.labelNameLocal.AutoSize = true;
-			this.labelNameLocal.Location = new System.Drawing.Point(10, 15);
+			this.labelNameLocal.Location = new System.Drawing.Point(10, 41);
 			this.labelNameLocal.Name = "labelNameLocal";
 			this.labelNameLocal.Size = new System.Drawing.Size(65, 13);
-			this.labelNameLocal.TabIndex = 0;
+			this.labelNameLocal.TabIndex = 2;
 			this.labelNameLocal.Text = "&Local name:";
 			// 
 			// tabPageFields
@@ -413,14 +436,14 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
-			// ControlTable
+			// ControlTableProperties
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl);
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox);
-			this.Name = "ControlTable";
+			this.Name = "ControlTableProperties";
 			this.Size = new System.Drawing.Size(400, 350);
 			this.Controls.SetChildIndex(this.pictureBox, 0);
 			this.Controls.SetChildIndex(this.labelTitle, 0);
@@ -473,5 +496,7 @@
 		private System.Windows.Forms.Label labelDatabase;
 		private System.Windows.Forms.TextBox textBoxDatabase;
 		private System.Windows.Forms.Button buttonSelectDatabase;
+		private System.Windows.Forms.Label labelId;
+		private System.Windows.Forms.TextBox textBoxId;
 	}
 }

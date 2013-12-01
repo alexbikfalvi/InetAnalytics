@@ -218,7 +218,7 @@ namespace InetCrawler.Database
 			List<IRelationship> relationships = new List<IRelationship>();
 			foreach (IRelationship relationship in table.Relationships)
 			{
-				if (relationship.TableRight == tableOn)
+				if (relationship.RightTable == tableOn)
 				{
 					relationships.Add(relationship);
 				}
@@ -274,7 +274,7 @@ namespace InetCrawler.Database
 			List<IRelationship> relationships = new List<IRelationship>();
 			foreach (IRelationship relationship in table.Relationships)
 			{
-				if (relationship.TableRight == tableOn)
+				if (relationship.RightTable == tableOn)
 				{
 					relationships.Add(relationship);
 				}
@@ -484,10 +484,10 @@ namespace InetCrawler.Database
 			// Add a condition for each relationship.
 			foreach (IRelationship relationship in relationships)
 			{
-				ITable tableLeft = relationship.TableLeft;
-				ITable tableRight = relationship.TableRight;
-				DbField fieldLeft = tableLeft[relationship.FieldLeft];
-				DbField fieldRight = tableRight[relationship.FieldRight];
+				ITable tableLeft = relationship.LeftTable;
+				ITable tableRight = relationship.RightTable;
+				DbField fieldLeft = tableLeft[relationship.LeftField];
+				DbField fieldRight = tableRight[relationship.RightField];
 
 				builderConditions.AppendFormat(" AND ({0}.[{1}] = {2}.[{3}])",
 					DbQuery.GetTableName(tableLeft, database),

@@ -23,13 +23,14 @@ using InetCrawler;
 using PlanetLab;
 using PlanetLab.Api;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
 	/// A form dialog allowing the selection of a PlanetLab slice.
 	/// </summary>
-	public sealed partial class FormAddSlice : Form
+	public sealed partial class FormAddSlice : ThreadSafeForm
 	{
 		private bool canClose = true;
 

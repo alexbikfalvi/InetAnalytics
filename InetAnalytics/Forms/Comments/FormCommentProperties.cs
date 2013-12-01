@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using InetCrawler.Comments;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Comments
 {
 	/// <summary>
 	/// A form dialog displaying the properties of a user comment.
 	/// </summary>
-	public partial class FormCommentProperties : Form
+	public partial class FormCommentProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

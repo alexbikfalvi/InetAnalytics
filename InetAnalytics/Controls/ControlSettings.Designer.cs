@@ -372,7 +372,6 @@
 			this.Controls.Add(this.toolStrip);
 			this.Enabled = false;
 			this.Name = "ControlSettings";
-			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
 			this.ShowBorder = true;
 			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 400);

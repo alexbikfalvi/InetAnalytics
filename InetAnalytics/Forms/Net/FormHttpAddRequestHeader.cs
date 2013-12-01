@@ -20,13 +20,14 @@ using System;
 using System.Net;
 using System.Windows.Forms;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Net
 {
 	/// <summary>
 	/// A form dialog to add an HTTP header.
 	/// </summary>
-	public partial class FormHttpAddRequestHeader : Form
+	public partial class FormHttpAddRequestHeader : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

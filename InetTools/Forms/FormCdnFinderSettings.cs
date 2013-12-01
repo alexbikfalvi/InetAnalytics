@@ -18,6 +18,7 @@
 
 using System;
 using System.Windows.Forms;
+using DotNetApi.Windows.Forms;
 using InetTools.Tools.CdnFinder;
 
 namespace InetTools.Forms
@@ -25,7 +26,7 @@ namespace InetTools.Forms
 	/// <summary>
 	/// A form displaying a settings for the CDN Finder tool.
 	/// </summary>
-	public partial class FormCdnFinderSettings : Form
+	public partial class FormCdnFinderSettings : ThreadSafeForm
 	{
 		private CdnFinderConfig config = null;
 

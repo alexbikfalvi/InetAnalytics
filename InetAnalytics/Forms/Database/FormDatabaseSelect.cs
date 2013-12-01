@@ -22,13 +22,14 @@ using InetAnalytics.Events;
 using InetCrawler.Database;
 using InetCrawler.Database.Data;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Database
 {
 	/// <summary>
 	/// A form dialog allowing the selection of an object from the database.
 	/// </summary>
-	public partial class FormDatabaseSelect : Form
+	public partial class FormDatabaseSelect : ThreadSafeForm
 	{
 		private bool canClose = true;
 

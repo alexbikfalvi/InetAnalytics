@@ -19,6 +19,7 @@
 using System;
 using Microsoft.Win32;
 using DotNetApi;
+using InetCrawler.Database;
 using InetCrawler.Log;
 using InetCrawler.Status;
 
@@ -95,6 +96,26 @@ namespace InetCrawler.Tools
 				parameters,
 				exception
 				);
+		}
+
+		// Database.
+
+		/// <summary>
+		/// Adds the table template to the database.
+		/// </summary>
+		/// <param name="table">The database table template.</param>
+		public void DatabaseAddTable(DbTableTemplate table)
+		{
+			this.api.Database.Tables.Add(table);
+		}
+
+		/// <summary>
+		/// Removes the table template to the database.
+		/// </summary>
+		/// <param name="table">The database table template.</param>
+		public void DatabaseRemoveTable(DbTableTemplate table)
+		{
+			this.api.Database.Tables.Remove(table);
 		}
 	}
 }

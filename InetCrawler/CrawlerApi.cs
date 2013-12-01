@@ -17,6 +17,7 @@
  */
 
 using System;
+using InetCrawler.Database;
 using InetCrawler.Log;
 using InetCrawler.Status;
 
@@ -28,6 +29,7 @@ namespace InetCrawler
 	public sealed class CrawlerApi
 	{
 		private readonly CrawlerConfig config;
+		private readonly DbConfig database;
 		private readonly Logger log;
 		private readonly CrawlerStatus status;
 
@@ -35,11 +37,13 @@ namespace InetCrawler
 		/// Creates a new crawler API instance.
 		/// </summary>
 		/// <param name="config">The crawler configuration.</param>
+		/// <param name="database">The database configuration.</param>
 		/// <param name="log">The crawler log.</param>
 		/// <param name="status">The crawler status.</param>
-		public CrawlerApi(CrawlerConfig config, Logger log, CrawlerStatus status)
+		public CrawlerApi(CrawlerConfig config, DbConfig database, Logger log, CrawlerStatus status)
 		{
 			this.config = config;
+			this.database = database;
 			this.log = log;
 			this.status = status;
 		}
@@ -50,6 +54,10 @@ namespace InetCrawler
 		/// Gets the crawler configuration.
 		/// </summary>
 		public CrawlerConfig Config { get { return this.config; } }
+		/// <summary>
+		/// Gets the database configuration.
+		/// </summary>
+		public DbConfig Database { get { return this.database; } }
 		/// <summary>
 		/// Gets the crawler log.
 		/// </summary>

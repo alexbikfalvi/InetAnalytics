@@ -192,7 +192,6 @@
 			this.Controls.Add(this.listView);
 			this.Controls.Add(this.toolStrip);
 			this.Name = "ControlLogList";
-			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
 			this.ShowBorder = true;
 			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(600, 150);

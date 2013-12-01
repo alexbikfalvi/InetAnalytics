@@ -18,13 +18,14 @@
 
 using System;
 using System.Windows.Forms;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms
 {
 	/// <summary>
 	/// A form displaying a text dialog.
 	/// </summary>
-	public partial class FormText : Form
+	public partial class FormText : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

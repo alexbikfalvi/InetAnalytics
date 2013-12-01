@@ -22,13 +22,14 @@ using InetAnalytics.Controls.Comments;
 using InetAnalytics.Events;
 using InetCrawler.Comments;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Comments
 {
 	/// <summary>
 	/// A form dialog displaying a comment.
 	/// </summary>
-	public partial class FormAddComment : Form
+	public partial class FormAddComment : ThreadSafeForm
 	{
 		private CrawlerComment.CommentType type;
 

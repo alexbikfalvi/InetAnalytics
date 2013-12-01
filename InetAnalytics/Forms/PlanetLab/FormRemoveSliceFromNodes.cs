@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using InetAnalytics.Events;
 using PlanetLab.Api;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
 	/// A form dialog allowing the removal of a slice from a PlanetLab node.
 	/// </summary>
-	public sealed partial class FormRemoveSliceFromNodes : Form
+	public sealed partial class FormRemoveSliceFromNodes : ThreadSafeForm
 	{
 		private bool canClose = true;
 

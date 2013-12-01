@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using InetCrawler.Comments;
 using DotNetApi.Web.Http;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Net
 {
 	/// <summary>
 	/// A form dialog displaying an HTTP header.
 	/// </summary>
-	public partial class FormHttpHeaderProperties : Form
+	public partial class FormHttpHeaderProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

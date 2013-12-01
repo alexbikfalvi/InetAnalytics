@@ -17,20 +17,16 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms
 {
 	/// <summary>
 	/// A form that displays an image.
 	/// </summary>
-	public partial class FormImage : Form
+	public partial class FormImage : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

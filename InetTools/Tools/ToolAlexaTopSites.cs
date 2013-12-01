@@ -18,8 +18,10 @@
 
 using System;
 using System.Windows.Forms;
+using InetCrawler.Database;
 using InetCrawler.Tools;
 using InetTools.Controls;
+using InetTools.Tools.Alexa;
 
 namespace InetTools.Tools
 {
@@ -36,6 +38,9 @@ namespace InetTools.Tools
 	{
 		private readonly ControlAlexaTopSites control;
 
+		private readonly DbTableTemplate<AlexaRankDbObject> dbTableRanking;
+		private readonly DbTableTemplate<AlexaHistoryDbObject> dbTableHistory;
+
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
@@ -46,6 +51,14 @@ namespace InetTools.Tools
 		{
 			// Create the control.
 			this.control = new ControlAlexaTopSites(api);
+
+			// Create the Alexa ranking database table.
+			this.dbTableRanking = new DbTableTemplate<AlexaRankDbObject>(new Guid("7D65B301-C4C9-4823-9D64-0EB4E2CA43F4"), "Alexa ranking");
+			this.dbTableHistory = new DbTableTemplate<AlexaHistoryDbObject>(new Guid("BD058EA2-0D75-4671-80A0-5A94A979B7E9"), "Alexa history");
+
+			// Add the tables to the database.
+			this.Api.DatabaseAddTable(this.dbTableRanking);
+			this.Api.DatabaseAddTable(this.dbTableHistory);
 		}
 
 		// Public properties.
@@ -65,6 +78,10 @@ namespace InetTools.Tools
 		{
 			if (disposing)
 			{
+				// Remove the tables to the database.
+				this.Api.DatabaseRemoveTable(this.dbTableRanking);
+				this.Api.DatabaseRemoveTable(this.dbTableHistory);
+
 				// Dispose the control.
 				this.control.Dispose();
 			}

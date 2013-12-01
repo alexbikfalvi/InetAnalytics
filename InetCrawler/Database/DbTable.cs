@@ -39,6 +39,10 @@ namespace InetCrawler.Database
 		/// </summary>
 		Type Type { get; }
 		/// <summary>
+		/// Gets the table identifier.
+		/// </summary>
+		Guid Id { get; }
+		/// <summary>
 		/// Gets the table local name.
 		/// </summary>
 		string LocalName { get; }
@@ -129,11 +133,38 @@ namespace InetCrawler.Database
 	}
 
 	/// <summary>
+	/// A static class used to generate a non-generic table.
+	/// </summary>
+	public static class DbTable
+	{
+		/// <summary>
+		/// Creates a new table instance for the specified table template.
+		/// </summary>
+		/// <param name="template">The table template.</param>
+		/// <returns></returns>
+		public static ITable Create(DbTableTemplate template)
+		{
+			// Check the arguments.
+			if (null == template) throw new ArgumentNullException("template");
+			
+			// Check the type.
+			if (!template.Type.IsSubclassOf(typeof(DbObject))) throw new DbException("Cannot create a database table because the table type if not a database object.");
+			
+			// Create the table type.
+			Type tableType = typeof(DbTable<>).MakeGenericType(template.Type);
+
+			// Create and return a table instance.
+			return Activator.CreateInstance(tableType, template.Id, template.LocalName) as ITable;
+		}
+	}
+
+	/// <summary>
 	/// A class that represents a database table for a generic type.
 	/// </summary>
 	public class DbTable<T> : ITable where T : DbObject, new()
 	{
 		private static readonly string xmlRoot = "DbTable";
+		private static readonly string xmlRootId = "id";
 		private static readonly string xmlRootLocalName = "localName";
 		private static readonly string xmlRootDatabaseName = "databaseName";
 		private static readonly string xmlRootSchema = "schema";
@@ -144,6 +175,8 @@ namespace InetCrawler.Database
 		private static readonly string xmlFieldDatabaseName = "databaseName";
 		
 		private bool readOnly = true;
+
+		private Guid id;
 
 		private string localName;
 		private string databaseName = string.Empty;
@@ -162,9 +195,13 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Creates a new user-customizable table instance.
 		/// </summary>
+		/// <param name="id">The table identfier.</param>
 		/// <param name="localName">The local name.</param>
-		public DbTable(string localName)
+		public DbTable(Guid id, string localName)
 		{
+			// Set the table identifier.
+			this.id = id;
+
 			// Set the table name.
 			this.localName = localName;
 
@@ -181,14 +218,16 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Creates a read-only database table instance.
 		/// </summary>
+		/// <param name="id">The table identifer.</param>
 		/// <param name="localName">The local table name.</param>
 		/// <param name="databaseName">The database table name.</param>
 		/// <param name="schema">The schema name.</param>
 		/// <param name="database">The database name. The database name is ignored when using the default database.</param>
 		/// <param name="defaultDatabase">Indicates if any query for this table uses the default database.</param>
-		public DbTable(string localName, string databaseName, string schema, string database, bool defaultDatabase)
+		public DbTable(Guid id, string localName, string databaseName, string schema, string database, bool defaultDatabase)
 		{
 			// Set the table properties.
+			this.id = id;
 			this.localName = localName;
 			this.databaseName = databaseName;
 			this.schema = schema;
@@ -208,6 +247,10 @@ namespace InetCrawler.Database
 		/// Gets the table database object type.
 		/// </summary>
 		public Type Type { get { return this.type; } }
+		/// <summary>
+		/// Gets the table identifier.
+		/// </summary>
+		public Guid Id { get { return this.id; } }
 		/// <summary>
 		/// Gets the local table name.
 		/// </summary>
@@ -330,6 +373,9 @@ namespace InetCrawler.Database
 				// Check the document root.
 				if (document.Root.Name != DbTable<T>.xmlRoot) return;
 
+				// Check the configuration.
+				if (this.id.ToString() != document.Root.Attribute(DbTable<T>.xmlRootId).Value) return;
+
 				// Check the local name.
 				if (this.localName != document.Root.Attribute(DbTable<T>.xmlRootLocalName).Value) return;
 
@@ -373,7 +419,8 @@ namespace InetCrawler.Database
 			if (this.readOnly) return;
 
 			// Create the root XML element.
-			XElement element = new XElement(DbTable<T>.xmlRoot, 
+			XElement element = new XElement(DbTable<T>.xmlRoot,
+				new XAttribute(DbTable<T>.xmlRootId, this.id.ToString()),
 				new XAttribute(DbTable<T>.xmlRootLocalName, this.localName),
 				new XAttribute(DbTable<T>.xmlRootDatabaseName, this.databaseName),
 				new XAttribute(DbTable<T>.xmlRootSchema, this.schema),
@@ -493,7 +540,7 @@ namespace InetCrawler.Database
 		public void AddRelationship(IRelationship relationship)
 		{
 			// Check the relationship left table matches the current table.
-			if (relationship.TableLeft != this) throw new DbException("Cannot add a relationship because the left table does not match the current table.");
+			if (relationship.LeftTable != this) throw new DbException("Cannot add a relationship because the left table does not match the current table.");
 			// Add the relationship.
 			this.relationships.Add(relationship);
 		}

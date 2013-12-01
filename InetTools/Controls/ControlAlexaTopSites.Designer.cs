@@ -32,6 +32,8 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlAlexaTopSites));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panelTool = new DotNetApi.Windows.Controls.ThemeControl();
+			this.tabControl = new DotNetApi.Windows.Controls.ThemeTabControl();
+			this.tabPageAlexa = new System.Windows.Forms.TabPage();
 			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderRank = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderSite = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,13 +50,17 @@
 			this.comboBoxPages = new System.Windows.Forms.ToolStripComboBox();
 			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
+			this.tabPageHistory = new System.Windows.Forms.TabPage();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.panelTool.SuspendLayout();
+			this.tabControl.SuspendLayout();
+			this.tabPageAlexa.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -82,8 +88,7 @@
 			// 
 			// panelTool
 			// 
-			this.panelTool.Controls.Add(this.listView);
-			this.panelTool.Controls.Add(this.toolStrip);
+			this.panelTool.Controls.Add(this.tabControl);
 			this.panelTool.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelTool.Location = new System.Drawing.Point(0, 0);
 			this.panelTool.Name = "panelTool";
@@ -93,6 +98,29 @@
 			this.panelTool.Size = new System.Drawing.Size(600, 225);
 			this.panelTool.TabIndex = 0;
 			this.panelTool.Title = "Alexa Top Sites";
+			// 
+			// tabControl
+			// 
+			this.tabControl.Controls.Add(this.tabPageAlexa);
+			this.tabControl.Controls.Add(this.tabPageHistory);
+			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl.Location = new System.Drawing.Point(1, 22);
+			this.tabControl.Name = "tabControl";
+			this.tabControl.Padding = new System.Drawing.Point(0, 0);
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.Size = new System.Drawing.Size(598, 202);
+			this.tabControl.TabIndex = 2;
+			// 
+			// tabPageAlexa
+			// 
+			this.tabPageAlexa.Controls.Add(this.listView);
+			this.tabPageAlexa.Controls.Add(this.toolStrip);
+			this.tabPageAlexa.Location = new System.Drawing.Point(2, 23);
+			this.tabPageAlexa.Name = "tabPageAlexa";
+			this.tabPageAlexa.Size = new System.Drawing.Size(594, 177);
+			this.tabPageAlexa.TabIndex = 0;
+			this.tabPageAlexa.Text = "Alexa";
+			this.tabPageAlexa.UseVisualStyleBackColor = true;
 			// 
 			// listView
 			// 
@@ -104,10 +132,10 @@
 			this.listView.FullRowSelect = true;
 			this.listView.GridLines = true;
 			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(1, 47);
+			this.listView.Location = new System.Drawing.Point(0, 25);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(598, 177);
+			this.listView.Size = new System.Drawing.Size(594, 152);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -141,11 +169,12 @@
             this.labelPages,
             this.comboBoxPages,
             this.separator3,
-            this.buttonSave});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+            this.buttonSave,
+            this.toolStripButton1});
+			this.toolStrip.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(598, 25);
-			this.toolStrip.TabIndex = 0;
+			this.toolStrip.Size = new System.Drawing.Size(594, 25);
+			this.toolStrip.TabIndex = 1;
 			this.toolStrip.Text = "toolStrip1";
 			// 
 			// buttonStart
@@ -155,7 +184,6 @@
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(51, 22);
 			this.buttonStart.Text = "&Start";
-			this.buttonStart.Click += new System.EventHandler(this.OnStart);
 			// 
 			// buttonStop
 			// 
@@ -165,7 +193,6 @@
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(51, 22);
 			this.buttonStop.Text = "St&op";
-			this.buttonStop.Click += new System.EventHandler(this.OnStop);
 			// 
 			// separator1
 			// 
@@ -192,7 +219,6 @@
 			this.buttonRefreshCountries.Name = "buttonRefreshCountries";
 			this.buttonRefreshCountries.Size = new System.Drawing.Size(23, 22);
 			this.buttonRefreshCountries.Text = "Refresh countries";
-			this.buttonRefreshCountries.Click += new System.EventHandler(this.OnRefreshCountries);
 			// 
 			// separator2
 			// 
@@ -230,7 +256,16 @@
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(74, 22);
 			this.buttonSave.Text = "&Save as...";
-			this.buttonSave.Click += new System.EventHandler(this.OnSave);
+			// 
+			// tabPageHistory
+			// 
+			this.tabPageHistory.Location = new System.Drawing.Point(2, 23);
+			this.tabPageHistory.Name = "tabPageHistory";
+			this.tabPageHistory.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageHistory.Size = new System.Drawing.Size(594, 177);
+			this.tabPageHistory.TabIndex = 1;
+			this.tabPageHistory.Text = "History";
+			this.tabPageHistory.UseVisualStyleBackColor = true;
 			// 
 			// controlLog
 			// 
@@ -249,6 +284,16 @@
 			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml|Text files (*.txt)|*.txt";
 			this.saveFileDialog.Title = "Save Alexa Ranking";
 			// 
+			// toolStripButton1
+			// 
+			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton1.Text = "toolStripButton1";
+			this.toolStripButton1.Click += new System.EventHandler(this.OnTest);
+			// 
 			// ControlAlexaTopSites
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,7 +307,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
 			this.panelTool.ResumeLayout(false);
-			this.panelTool.PerformLayout();
+			this.tabControl.ResumeLayout(false);
+			this.tabPageAlexa.ResumeLayout(false);
+			this.tabPageAlexa.PerformLayout();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.ResumeLayout(false);
@@ -273,6 +320,14 @@
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private DotNetApi.Windows.Controls.ThemeControl panelTool;
+		private System.Windows.Forms.ListView listView;
+		private System.Windows.Forms.ColumnHeader columnHeaderRank;
+		private System.Windows.Forms.ColumnHeader columnHeaderSite;
+		private System.Windows.Forms.ImageList imageList;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog;
+		private InetAnalytics.Controls.Log.ControlLogList controlLog;
+		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
+		private System.Windows.Forms.TabPage tabPageAlexa;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ToolStripButton buttonStart;
 		private System.Windows.Forms.ToolStripButton buttonStop;
@@ -283,13 +338,9 @@
 		private System.Windows.Forms.ToolStripSeparator separator2;
 		private System.Windows.Forms.ToolStripLabel labelPages;
 		private System.Windows.Forms.ToolStripComboBox comboBoxPages;
-		private System.Windows.Forms.ListView listView;
-		private System.Windows.Forms.ColumnHeader columnHeaderRank;
-		private System.Windows.Forms.ColumnHeader columnHeaderSite;
-		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripSeparator separator3;
-		private System.Windows.Forms.SaveFileDialog saveFileDialog;
-		private InetAnalytics.Controls.Log.ControlLogList controlLog;
 		private System.Windows.Forms.ToolStripButton buttonSave;
+		private System.Windows.Forms.TabPage tabPageHistory;
+		private System.Windows.Forms.ToolStripButton toolStripButton1;
 	}
 }

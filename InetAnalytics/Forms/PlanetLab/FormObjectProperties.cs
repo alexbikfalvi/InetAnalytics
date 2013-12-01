@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using PlanetLab.Api;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 using InetAnalytics.Controls.PlanetLab;
 using InetCrawler;
 
@@ -29,7 +30,7 @@ namespace InetAnalytics.Forms.PlanetLab
 	/// <summary>
 	/// A form dialog that displays the information of a PlanetLab object.
 	/// </summary>
-	public partial class FormObjectProperties<T> : Form where T : ControlObjectProperties, new()
+	public partial class FormObjectProperties<T> : ThreadSafeForm where T : ControlObjectProperties, new()
 	{
 		/// <summary>
 		/// Creates a new form instance.

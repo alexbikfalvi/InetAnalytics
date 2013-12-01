@@ -19,13 +19,14 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms
 {
 	/// <summary>
 	/// A form dialog displaying an exception.
 	/// </summary>
-	public partial class FormExceptionProperties : Form
+	public partial class FormExceptionProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

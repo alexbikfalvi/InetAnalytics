@@ -78,6 +78,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StandardToolset.cs" />
+    <Compile Include="Tools\Alexa\AlexaHistoryDbObject.cs" />
+    <Compile Include="Tools\Alexa\AlexaRankDbObject.cs" />
     <Compile Include="Tools\Alexa\AlexaRankingRequestState.cs" />
     <Compile Include="Tools\Alexa\AlexaRequest.cs" />
     <Compile Include="Tools\Alexa\AlexaConfig.cs" />

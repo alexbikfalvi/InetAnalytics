@@ -23,13 +23,14 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
 	/// A form dialog that allows exporting a PlanetLab map.
 	/// </summary>
-	public partial class FormExportMap : Form
+	public partial class FormExportMap : ThreadSafeForm
 	{
 		private readonly MapControl.ExportProperties properties = new MapControl.ExportProperties();
 

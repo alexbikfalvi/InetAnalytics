@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using InetAnalytics.Controls;
 using InetCrawler.Database;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Database
 {
 	/// <summary>
 	/// A form dialog compare a table field with database information.
 	/// </summary>
-	public partial class FormCompareFields : Form
+	public partial class FormCompareFields : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

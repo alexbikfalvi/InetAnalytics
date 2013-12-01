@@ -46,6 +46,13 @@
     <Compile Include="Comments\CrawlerComments.cs" />
     <Compile Include="Comments\CrawlerCommentsList.cs" />
     <Compile Include="CrawlerApi.cs" />
+    <Compile Include="Database\DbRelationshipEventArgs.cs" />
+    <Compile Include="Database\DbRelationshipTemplate.cs" />
+    <Compile Include="Database\DbRelationshipTemplateEventArgs.cs" />
+    <Compile Include="Database\DbRelationshipTemplates.cs" />
+    <Compile Include="Database\DbTableTemplate.cs" />
+    <Compile Include="Database\DbTableTemplateEventArgs.cs" />
+    <Compile Include="Database\DbTableTemplates.cs" />
     <Compile Include="Events\CrawlerEvents.cs" />
     <Compile Include="CrawlerException.cs" />
     <Compile Include="CrawlerNetwork.cs" />
@@ -53,7 +60,7 @@
     <Compile Include="Database\DbPrimaryServerChangedEventArgs.cs" />
     <Compile Include="Database\DbServerDatabaseChangedEventArgs.cs" />
     <Compile Include="Database\DbServerEventArgs.cs" />
-    <Compile Include="Database\DbServerTableChangedEventArgs.cs" />
+    <Compile Include="Database\DbServerTableEventArgs.cs" />
     <Compile Include="Database\DbTableEventArgs.cs" />
     <Compile Include="Events\ControlEventArgs.cs" />
     <Compile Include="Events\PageSelectionEventArgs.cs" />

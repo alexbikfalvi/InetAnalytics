@@ -17,15 +17,15 @@
  */
 
 using System;
-using System.Windows.Forms;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms
 {
 	/// <summary>
 	/// A form showing an exception.
 	/// </summary>
-	public sealed partial class FormCrash : Form
+	public sealed partial class FormCrash : ThreadSafeForm
 	{
 		private Exception exception;
 

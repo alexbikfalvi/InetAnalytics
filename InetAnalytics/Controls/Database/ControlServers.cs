@@ -106,7 +106,7 @@ namespace InetAnalytics.Controls.Database
 		private readonly FormAddServer formAdd = new FormAddServer();
 		private readonly FormServerProperties formProperties = new FormServerProperties();
 
-		private readonly Dictionary<string, ServerControls> items = new Dictionary<string, ServerControls>();
+		private readonly Dictionary<Guid, ServerControls> items = new Dictionary<Guid, ServerControls>();
 
 		private TreeNode treeNode = null;
 		private static readonly string[] imageKeys = { "ServerDown", "ServerUp", "ServerWarning", "ServerBusy", "ServerBusy", "ServerBusy" };
@@ -148,9 +148,9 @@ namespace InetAnalytics.Controls.Database
 			this.crawler.Database.EventLogged += this.OnEventLogged;
 
 			// Add all the servers in the configuration.
-			foreach (KeyValuePair<string, DbServer> server in this.crawler.Database)
+			foreach (DbServer server in this.crawler.Database)
 			{
-				this.AddServer(server.Value);
+				this.AddServer(server);
 			}
 
 			// Add the event handlers for the servers.
@@ -181,7 +181,7 @@ namespace InetAnalytics.Controls.Database
 					this.crawler.Database.IsPrimary(server) ? "Primary" : "Backup",
 					server.State.ToString(),
 					server.Version,
-					server.Id
+					server.Id.ToString()
 				});
 			item.ImageKey = ControlServers.imageKeys[(int)server.State];
 			item.Tag = server.Id;
@@ -232,7 +232,7 @@ namespace InetAnalytics.Controls.Database
 		/// Removes the server with the specified ID.
 		/// </summary>
 		/// <param name="id">The server ID.</param>
-		private void RemoveServer(string id)
+		private void RemoveServer(Guid id)
 		{
 			// Remove the menu item for the specified database server.
 			this.listView.Items.Remove(this.items[id].Item);
@@ -411,8 +411,8 @@ namespace InetAnalytics.Controls.Database
 						ControlServers.logSource,
 						"Primary database server has changed from \'{0}\' to \'{1}\'.",
 						new object[] {
-							e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
-							e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
+							e.OldPrimary != null ? e.OldPrimary.Id.ToString() : string.Empty,
+							e.NewPrimary != null ? e.NewPrimary.Id.ToString() : string.Empty
 						}));
 				});
 		}
@@ -488,7 +488,7 @@ namespace InetAnalytics.Controls.Database
 			if (this.listView.SelectedItems.Count == 0) return;
 
 			// Get the selected server.
-			DbServer server = this.crawler.Database[this.listView.SelectedItems[0].Tag as string];
+			DbServer server = this.crawler.Database[(Guid)this.listView.SelectedItems[0].Tag];
 
 			// If there are more than one server, and the selected server is a primary server ask the user to change the primary.
 			if (this.crawler.Database.IsPrimary(server) && (this.crawler.Database.Count > 1))
@@ -580,7 +580,7 @@ namespace InetAnalytics.Controls.Database
 				MessageBoxDefaultButton.Button2))
 			{
 				// Get the server.
-				DbServer server = this.crawler.Database[this.listView.SelectedItems[0].Tag as string];
+				DbServer server = this.crawler.Database[(Guid)this.listView.SelectedItems[0].Tag];
 				// Change the primary server.
 				this.crawler.Database.SetPrimary(server);
 			}
@@ -597,7 +597,7 @@ namespace InetAnalytics.Controls.Database
 			if (this.listView.SelectedItems.Count == 0) return;
 
 			// Get the selected server.
-			DbServer server = this.crawler.Database[this.listView.SelectedItems[0].Tag as string];
+			DbServer server = this.crawler.Database[(Guid)this.listView.SelectedItems[0].Tag];
 
 			// Connect the database server.
 			this.DatabaseConnect(server);
@@ -614,7 +614,7 @@ namespace InetAnalytics.Controls.Database
 			if (this.listView.SelectedItems.Count == 0) return;
 
 			// Get the selected server.
-			DbServer server = this.crawler.Database[this.listView.SelectedItems[0].Tag as string];
+			DbServer server = this.crawler.Database[(Guid)this.listView.SelectedItems[0].Tag];
 
 			// Disconnect the database server.
 			this.DatabaseDisconnect(server);
@@ -631,7 +631,7 @@ namespace InetAnalytics.Controls.Database
 			if (this.listView.SelectedItems.Count == 0) return;
 
 			// Get the selected server.
-			DbServer server = this.crawler.Database[this.listView.SelectedItems[0].Tag as string];
+			DbServer server = this.crawler.Database[(Guid)this.listView.SelectedItems[0].Tag];
 
 			// Change the password for the selected server.
 			this.DatabaseChangePassword(server);
@@ -652,7 +652,7 @@ namespace InetAnalytics.Controls.Database
 			if (this.listView.SelectedItems.Count != 0)
 			{
 				// Get the server corresponding to this item.
-				DbServer server = this.crawler.Database[this.listView.SelectedItems[0].Tag as string];
+				DbServer server = this.crawler.Database[(Guid)this.listView.SelectedItems[0].Tag];
 
 				remove =
 					(server.State == DbServer.ServerState.Disconnected) ||
@@ -687,7 +687,7 @@ namespace InetAnalytics.Controls.Database
 			if (this.listView.SelectedItems.Count == 0) return;
 
 			// Get the server.
-			DbServer server = this.crawler.Database[this.listView.SelectedItems[0].Tag as string];
+			DbServer server = this.crawler.Database[(Guid)this.listView.SelectedItems[0].Tag];
 
 			// Show the properties dialog.
 			this.formProperties.ShowDialog(this, server, this.crawler.Database.IsPrimary(server));

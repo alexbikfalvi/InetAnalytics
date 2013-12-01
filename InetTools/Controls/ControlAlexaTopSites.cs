@@ -26,6 +26,8 @@ using InetCrawler.Tools;
 using InetCrawler.Status;
 using InetTools.Tools.Alexa;
 
+
+using DotNetApi.Windows.Forms;
 namespace InetTools.Controls
 {
 	/// <summary>
@@ -552,6 +554,14 @@ namespace InetTools.Controls
 						break;
 				}
 			}
+		}
+
+		private readonly NotificationForm form = new NotificationForm();
+
+		private void OnTest(object sender, EventArgs e)
+		{
+			form.ShowDialog(this, Properties.Resources.Canceled_48,
+				"Title", "Test", true);
 		}
 	}
 }

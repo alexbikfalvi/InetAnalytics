@@ -132,7 +132,7 @@ namespace InetAnalytics.Controls.Database
 			{
 				this.labelTitle.Text = newServer.Name;
 				this.textBoxName.Text = newServer.Name;
-				this.textBoxId.Text = newServer.Id;
+				this.textBoxId.Text = newServer.Id.ToString();
 				this.textBoxType.Text = DbConfig.ServerTypeNames[(int)newServer.Type];
 				this.textBoxDataSource.Text = newServer.DataSource;
 				this.textBoxUsername.Text = newServer.Username;

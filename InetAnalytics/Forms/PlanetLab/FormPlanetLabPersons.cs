@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using PlanetLab;
 using PlanetLab.Api;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
 	/// A form dialog allowing the selection of the PlanetLab person account.
 	/// </summary>
-	public sealed partial class FormPlanetLabPersons : Form
+	public sealed partial class FormPlanetLabPersons : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

@@ -23,13 +23,14 @@ using InetAnalytics.Events;
 using InetApi.YouTube.Api.V2.Data;
 using InetCrawler.Events;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms
 {
 	/// <summary>
 	/// A form dialog displaying a YouTube video.
 	/// </summary>
-	public partial class FormVideo : Form
+	public partial class FormVideo : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

@@ -20,6 +20,7 @@ using System;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 using InetCrawler.Tools;
 
 namespace InetAnalytics.Forms.Tools
@@ -27,7 +28,7 @@ namespace InetAnalytics.Forms.Tools
 	/// <summary>
 	/// A form dialog displaying a tool information.
 	/// </summary>
-	public partial class FormToolProperties : Form
+	public partial class FormToolProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

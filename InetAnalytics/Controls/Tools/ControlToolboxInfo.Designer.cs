@@ -31,9 +31,9 @@
 			this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-			this.labelDescription = new System.Windows.Forms.Label();
 			this.labelConfiguration = new System.Windows.Forms.Label();
 			this.settings = new InetAnalytics.Controls.Tools.ControlToolboxSettings();
+			this.labelDescription = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.SuspendLayout();
@@ -66,10 +66,10 @@
 			this.tableLayoutPanel.ColumnCount = 2;
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel.Controls.Add(this.labelTitle, 0, 0);
-			this.tableLayoutPanel.Controls.Add(this.labelDescription, 0, 1);
 			this.tableLayoutPanel.Controls.Add(this.labelConfiguration, 0, 2);
 			this.tableLayoutPanel.Controls.Add(this.settings, 0, 3);
+			this.tableLayoutPanel.Controls.Add(this.labelTitle, 0, 0);
+			this.tableLayoutPanel.Controls.Add(this.labelDescription, 0, 1);
 			this.tableLayoutPanel.Location = new System.Drawing.Point(75, 42);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
 			this.tableLayoutPanel.RowCount = 4;
@@ -82,17 +82,6 @@
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel.Size = new System.Drawing.Size(721, 554);
 			this.tableLayoutPanel.TabIndex = 5;
-			// 
-			// labelDescription
-			// 
-			this.labelDescription.AutoSize = true;
-			this.tableLayoutPanel.SetColumnSpan(this.labelDescription, 2);
-			this.labelDescription.Location = new System.Drawing.Point(3, 30);
-			this.labelDescription.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-			this.labelDescription.Name = "labelDescription";
-			this.labelDescription.Size = new System.Drawing.Size(390, 13);
-			this.labelDescription.TabIndex = 4;
-			this.labelDescription.Text = "You can use the toolbox to manage the analytics tools for Internet measurements.";
 			// 
 			// labelConfiguration
 			// 
@@ -119,6 +108,17 @@
 			this.settings.TabIndex = 12;
 			this.settings.Title = "";
 			// 
+			// labelDescription
+			// 
+			this.labelDescription.AutoSize = true;
+			this.tableLayoutPanel.SetColumnSpan(this.labelDescription, 2);
+			this.labelDescription.Location = new System.Drawing.Point(3, 30);
+			this.labelDescription.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+			this.labelDescription.Name = "labelDescription";
+			this.labelDescription.Size = new System.Drawing.Size(390, 13);
+			this.labelDescription.TabIndex = 4;
+			this.labelDescription.Text = "You can use the toolbox to manage the analytics tools for Internet measurements.";
+			// 
 			// ControlToolboxInfo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -126,7 +126,6 @@
 			this.Controls.Add(this.tableLayoutPanel);
 			this.Controls.Add(this.pictureBoxIcon);
 			this.Name = "ControlToolboxInfo";
-			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
 			this.ShowBorder = true;
 			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);

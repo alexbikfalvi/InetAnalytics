@@ -18,6 +18,7 @@
 
 using System;
 using Microsoft.Win32;
+using InetCrawler.Database;
 using InetCrawler.Log;
 using InetCrawler.Status;
 
@@ -52,6 +53,20 @@ namespace InetCrawler.Tools
 		/// <param name="parameters">The event parameters.</param>
 		/// <param name="exception">The event exception.</param>
 		LogEvent Log(LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null);
+
+		// Database.
+
+		/// <summary>
+		/// Adds the table template to the database.
+		/// </summary>
+		/// <param name="table">The database table template.</param>
+		void DatabaseAddTable(DbTableTemplate table);
+
+		/// <summary>
+		/// Removes the table template to the database.
+		/// </summary>
+		/// <param name="table">The database table template.</param>
+		void DatabaseRemoveTable(DbTableTemplate table);
 
 		// Status.
 

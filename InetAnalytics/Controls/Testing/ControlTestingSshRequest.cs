@@ -480,9 +480,6 @@ namespace InetAnalytics.Controls.Testing
 			// Disable the controls.
 			this.textBoxServer.Enabled = false;
 
-			this.buttonImport.Enabled = false;
-			this.buttonExport.Enabled = false;
-
 			this.buttonSave.Enabled = false;
 			this.buttonUndo.Enabled = false;
 
@@ -503,9 +500,6 @@ namespace InetAnalytics.Controls.Testing
 		{
 			// Enable the controls.
 			this.textBoxServer.Enabled = true;
-
-			this.buttonImport.Enabled = true;
-			this.buttonExport.Enabled = true;
 
 			this.buttonSave.Enabled = this.configurationChanged;
 			this.buttonUndo.Enabled = this.configurationChanged;

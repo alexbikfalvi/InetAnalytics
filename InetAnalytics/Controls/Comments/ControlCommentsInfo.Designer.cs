@@ -138,7 +138,6 @@
 			this.Controls.Add(this.pictureBoxIcon);
 			this.Enabled = false;
 			this.Name = "ControlCommentsInfo";
-			this.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
 			this.ShowBorder = true;
 			this.ShowTitle = true;
 			this.Size = new System.Drawing.Size(800, 600);

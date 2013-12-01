@@ -50,7 +50,7 @@ namespace InetCrawler.Database
 		protected RegistryKey key;
 
 		// Settings.
-		private string id;
+		private Guid id;
 		private string name;
 		private string dataSource;
 		private string username;
@@ -75,7 +75,7 @@ namespace InetCrawler.Database
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServer(RegistryKey key, string id, string logFile)
+		public DbServer(RegistryKey key, Guid id, string logFile)
 		{
 			// Set the server ID.
 			this.id = id;
@@ -86,14 +86,16 @@ namespace InetCrawler.Database
 			// Create the logger for this server.
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
-			this.logSource = @"Database\{0}".FormatWith(this.id);
+			this.logSource = @"Database\{0}".FormatWith(this.id.ToString());
 
 			// Create the database tables and relationships.
 			this.tables = new DbTables(this.key);
 			this.relationships = new DbRelationships(this.key, this.tables);
 
 			// Set the event handlers.
+			this.tables.TableAdded += this.OnTableAdded;
 			this.tables.TableChanged += this.OnTableChanged;
+			this.tables.TableRemoved += this.OnTableRemoved;
 
 			// Load the current configuration.
 			this.LoadInternalConfiguration();
@@ -113,7 +115,7 @@ namespace InetCrawler.Database
 		/// <param name="dateModified">The date when the server was last modified.</param>
 		public DbServer(
 			RegistryKey key,
-			string id,
+			Guid id,
 			string name,
 			string dataSource,
 			string username,
@@ -136,7 +138,7 @@ namespace InetCrawler.Database
 			// Create the logger for this server.
 			this.log = new Logger(logFile);
 			this.log.EventLogged += this.OnLog;
-			this.logSource = @"Database\{0}".FormatWith(this.id);
+			this.logSource = @"Database\{0}".FormatWith(this.id.ToString());
 
 			// Create the database tables and relationships.
 			this.tables = new DbTables(this.key);
@@ -152,7 +154,7 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the ID of the current database server.
 		/// </summary>
-		public string Id { get { return this.id; } }
+		public Guid Id { get { return this.id; } }
 		/// <summary>
 		/// Gets the type of the current database server.
 		/// </summary>
@@ -216,11 +218,11 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the list of database tables for this database server.
 		/// </summary>
-		public DbTables Tables { get { return this.tables; } }
+		public IEnumerable<ITable> Tables { get { return this.tables; } }
 		/// <summary>
 		/// Gets the list of database relationships for this database server.
 		/// </summary>
-		public DbRelationships Relationships { get { return this.relationships; } }
+		public IEnumerable<DbRelationship> Relationships { get { return this.relationships; } }
 		/// <summary>
 		/// Gets the database table for this server.
 		/// </summary>
@@ -257,9 +259,17 @@ namespace InetCrawler.Database
 		/// </summary>
 		public event DbServerDatabaseChangedEventHandler DatabaseChanged;
 		/// <summary>
+		/// An event raised when a server database table has been added.
+		/// </summary>
+		public event DbServerTableEventHandler TableAdded;
+		/// <summary>
+		/// An event raised when a server database table has been removed.
+		/// </summary>
+		public event DbServerTableEventHandler TableRemoved;
+		/// <summary>
 		/// An event raised when a server database table has changed.
 		/// </summary>
-		public event DbServerTableChangedEventHandler TableChanged;
+		public event DbServerTableEventHandler TableChanged;
 		/// <summary>
 		/// An event raised when the server begins opening the connection.
 		/// </summary>
@@ -392,6 +402,75 @@ namespace InetCrawler.Database
 		/// <param name="isolation">The transaction isolation level.</param>
 		/// <returns>A transaction object to use with subsequent commands within the transaction.</returns>
 		public abstract DbTransaction BeginTransaction(IsolationLevel isolation);
+
+		/// <summary>
+		/// Adds the specified table to the database server.
+		/// </summary>
+		/// <param name="table">The table.</param>
+		public void AddTable(ITable table)
+		{
+			// Validate the arguments.
+			if (null == table) throw new ArgumentNullException("table");
+
+			// Add the table to the tables list.
+			this.tables.Add(table);
+		}
+
+		/// <summary>
+		/// Adds a table to the database server based on the specified table template.
+		/// </summary>
+		/// <param name="template">The table template.</param>
+		public void AddTable(DbTableTemplate template)
+		{
+			// Validate the arguments.
+			if (null == template) throw new ArgumentNullException("template");
+
+			// Create the table and add it to the tables list.
+			this.tables.Add(DbTable.Create(template));
+		}
+
+		/// <summary>
+		/// Removes the specified table.
+		/// </summary>
+		/// <param name="table">The table.</param>
+		public void RemoveTable(ITable table)
+		{
+			// Validate the arguments.
+			if (null == table) throw new ArgumentNullException("table");
+
+			// Remove the table.
+			this.tables.Remove(table.Id);
+		}
+
+		/// <summary>
+		/// Removes the specified table based on the table template.
+		/// </summary>
+		/// <param name="template">The table template.</param>
+		public void RemoveTable(DbTableTemplate template)
+		{
+			// Validate the arguments.
+			if (null == template) throw new ArgumentNullException("template");
+
+			// Remove the table.
+			this.tables.Remove(template.Id);
+		}
+
+		/// <summary>
+		/// Adds a relationship to the database server.
+		/// </summary>
+		/// <param name="relationship">The relationship.</param>
+		public void AddRelationship(DbRelationship relationship)
+		{
+			// Validate the argument.
+			if (null == relationship) throw new ArgumentNullException("relationship");
+
+			// Check the relationship tables exist.
+			if (!this.tables.HasTable(relationship.TableLeft.Id)) throw new DbException("Cannot add a relationship because the left table does not exist.");
+			if (!this.tables.HasTable(relationship.TableRight.Id)) throw new DbException("Cannot add a relationship because the right table does not exist.");
+
+			// Add the relationship.
+			this.relationships.Add()
+		}
 
 		// Protected methods.
 
@@ -550,6 +629,28 @@ namespace InetCrawler.Database
 		}
 
 		/// <summary>
+		/// An event handler called when a table has been added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		void OnTableAdded(object sender, DbTableEventArgs e)
+		{
+			// Raise the server event.
+			if (this.TableAdded != null) this.TableAdded(this, new DbServerTableEventArgs(this, e.Table));
+		}
+
+		/// <summary>
+		/// An event handler called when a table has been removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		void OnTableRemoved(object sender, DbTableEventArgs e)
+		{
+			// Raise the server event.
+			if (this.TableRemoved != null) this.TableRemoved(this, new DbServerTableEventArgs(this, e.Table));
+		}
+
+		/// <summary>
 		/// An event handler called when a database table has changed.
 		/// </summary>
 		/// <param name="server">The sender object.</param>
@@ -557,7 +658,7 @@ namespace InetCrawler.Database
 		private void OnTableChanged(object sender, DbTableEventArgs e)
 		{
 			// Raise the server event.
-			if (this.TableChanged != null) this.TableChanged(this, new DbServerTableChangedEventArgs(this, e.Table));
+			if (this.TableChanged != null) this.TableChanged(this, new DbServerTableEventArgs(this, e.Table));
 		}
 	}
 }

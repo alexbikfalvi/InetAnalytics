@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 using InetCrawler.Tools;
 
 namespace InetAnalytics.Forms.Tools
@@ -26,7 +27,7 @@ namespace InetAnalytics.Forms.Tools
 	/// <summary>
 	/// A form dialog allowing the selection of a PlanetLab slice.
 	/// </summary>
-	public sealed partial class FormAddTool : Form
+	public sealed partial class FormAddTool : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

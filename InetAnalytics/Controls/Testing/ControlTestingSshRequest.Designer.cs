@@ -34,11 +34,11 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Security.SecureString secureString1 = new System.Security.SecureString();
+			System.Security.SecureString secureString2 = new System.Security.SecureString();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlTestingSshRequest));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panelTesting = new DotNetApi.Windows.Controls.ThemeControl();
-			this.tabControl = new System.Windows.Forms.TabControl();
+			this.tabControl = new DotNetApi.Windows.Controls.ThemeTabControl();
 			this.tabPageAuthentication = new System.Windows.Forms.TabPage();
 			this.buttonLoadKey = new System.Windows.Forms.Button();
 			this.secureTextBoxPassword = new DotNetApi.Windows.Controls.SecureTextBox();
@@ -51,18 +51,18 @@
 			this.radioPasswordAuthentication = new System.Windows.Forms.RadioButton();
 			this.tabPageConsole = new System.Windows.Forms.TabPage();
 			this.console = new InetAnalytics.Controls.ControlConsole();
-			this.buttonExport = new System.Windows.Forms.Button();
-			this.buttonImport = new System.Windows.Forms.Button();
-			this.buttonUndo = new System.Windows.Forms.Button();
-			this.buttonSave = new System.Windows.Forms.Button();
-			this.textBoxServer = new System.Windows.Forms.TextBox();
-			this.buttonConnect = new System.Windows.Forms.Button();
-			this.buttonDisconnect = new System.Windows.Forms.Button();
-			this.labelServer = new System.Windows.Forms.Label();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.toolStrip = new System.Windows.Forms.ToolStrip();
+			this.labelServer = new System.Windows.Forms.ToolStripLabel();
+			this.textBoxServer = new System.Windows.Forms.ToolStripTextBox();
+			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
+			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
+			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonSave = new System.Windows.Forms.ToolStripButton();
+			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -71,6 +71,7 @@
 			this.tabControl.SuspendLayout();
 			this.tabPageAuthentication.SuspendLayout();
 			this.tabPageConsole.SuspendLayout();
+			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -98,14 +99,7 @@
 			// panelTesting
 			// 
 			this.panelTesting.Controls.Add(this.tabControl);
-			this.panelTesting.Controls.Add(this.buttonExport);
-			this.panelTesting.Controls.Add(this.buttonImport);
-			this.panelTesting.Controls.Add(this.buttonUndo);
-			this.panelTesting.Controls.Add(this.buttonSave);
-			this.panelTesting.Controls.Add(this.textBoxServer);
-			this.panelTesting.Controls.Add(this.buttonConnect);
-			this.panelTesting.Controls.Add(this.buttonDisconnect);
-			this.panelTesting.Controls.Add(this.labelServer);
+			this.panelTesting.Controls.Add(this.toolStrip);
 			this.panelTesting.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelTesting.Location = new System.Drawing.Point(0, 0);
 			this.panelTesting.Name = "panelTesting";
@@ -118,15 +112,14 @@
 			// 
 			// tabControl
 			// 
-			this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabPageAuthentication);
 			this.tabControl.Controls.Add(this.tabPageConsole);
-			this.tabControl.Location = new System.Drawing.Point(7, 52);
+			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl.Location = new System.Drawing.Point(1, 47);
 			this.tabControl.Name = "tabControl";
+			this.tabControl.Padding = new System.Drawing.Point(0, 0);
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(508, 169);
+			this.tabControl.Size = new System.Drawing.Size(598, 177);
 			this.tabControl.TabIndex = 4;
 			// 
 			// tabPageAuthentication
@@ -141,10 +134,10 @@
 			this.tabPageAuthentication.Controls.Add(this.textBoxUsername);
 			this.tabPageAuthentication.Controls.Add(this.labelUsername);
 			this.tabPageAuthentication.Controls.Add(this.radioPasswordAuthentication);
-			this.tabPageAuthentication.Location = new System.Drawing.Point(4, 22);
+			this.tabPageAuthentication.Location = new System.Drawing.Point(2, 23);
 			this.tabPageAuthentication.Name = "tabPageAuthentication";
 			this.tabPageAuthentication.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageAuthentication.Size = new System.Drawing.Size(500, 143);
+			this.tabPageAuthentication.Size = new System.Drawing.Size(594, 152);
 			this.tabPageAuthentication.TabIndex = 0;
 			this.tabPageAuthentication.Text = "Authentication";
 			this.tabPageAuthentication.UseVisualStyleBackColor = true;
@@ -153,7 +146,7 @@
 			// 
 			this.buttonLoadKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonLoadKey.Enabled = false;
-			this.buttonLoadKey.Location = new System.Drawing.Point(419, 108);
+			this.buttonLoadKey.Location = new System.Drawing.Point(513, 108);
 			this.buttonLoadKey.Name = "buttonLoadKey";
 			this.buttonLoadKey.Size = new System.Drawing.Size(75, 23);
 			this.buttonLoadKey.TabIndex = 8;
@@ -165,7 +158,7 @@
 			// 
 			this.secureTextBoxPassword.Location = new System.Drawing.Point(110, 59);
 			this.secureTextBoxPassword.Name = "secureTextBoxPassword";
-			this.secureTextBoxPassword.SecureText = secureString1;
+			this.secureTextBoxPassword.SecureText = secureString2;
 			this.secureTextBoxPassword.Size = new System.Drawing.Size(214, 20);
 			this.secureTextBoxPassword.TabIndex = 4;
 			this.secureTextBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
@@ -181,7 +174,7 @@
 			this.textBoxKey.Name = "textBoxKey";
 			this.textBoxKey.ReadOnly = true;
 			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxKey.Size = new System.Drawing.Size(303, 29);
+			this.textBoxKey.Size = new System.Drawing.Size(397, 38);
 			this.textBoxKey.TabIndex = 7;
 			this.textBoxKey.WordWrap = false;
 			this.textBoxKey.TextChanged += new System.EventHandler(this.OnChanged);
@@ -220,7 +213,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUsername.Location = new System.Drawing.Point(110, 10);
 			this.textBoxUsername.Name = "textBoxUsername";
-			this.textBoxUsername.Size = new System.Drawing.Size(214, 20);
+			this.textBoxUsername.Size = new System.Drawing.Size(308, 20);
 			this.textBoxUsername.TabIndex = 1;
 			this.textBoxUsername.TextChanged += new System.EventHandler(this.OnChanged);
 			// 
@@ -249,9 +242,9 @@
 			// tabPageConsole
 			// 
 			this.tabPageConsole.Controls.Add(this.console);
-			this.tabPageConsole.Location = new System.Drawing.Point(4, 22);
+			this.tabPageConsole.Location = new System.Drawing.Point(2, 23);
 			this.tabPageConsole.Name = "tabPageConsole";
-			this.tabPageConsole.Size = new System.Drawing.Size(500, 143);
+			this.tabPageConsole.Size = new System.Drawing.Size(504, 144);
 			this.tabPageConsole.TabIndex = 1;
 			this.tabPageConsole.Text = "Console";
 			this.tabPageConsole.UseVisualStyleBackColor = true;
@@ -262,102 +255,10 @@
 			this.console.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.console.Location = new System.Drawing.Point(0, 0);
 			this.console.Name = "console";
-			this.console.Size = new System.Drawing.Size(500, 143);
+			this.console.Size = new System.Drawing.Size(504, 144);
 			this.console.TabIndex = 0;
 			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
 			this.console.Cancel += new System.EventHandler(this.OnCancelCommand);
-			// 
-			// buttonExport
-			// 
-			this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonExport.Location = new System.Drawing.Point(521, 170);
-			this.buttonExport.Name = "buttonExport";
-			this.buttonExport.Size = new System.Drawing.Size(75, 23);
-			this.buttonExport.TabIndex = 7;
-			this.buttonExport.Text = "&Export";
-			this.buttonExport.UseVisualStyleBackColor = true;
-			// 
-			// buttonImport
-			// 
-			this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonImport.Location = new System.Drawing.Point(521, 198);
-			this.buttonImport.Name = "buttonImport";
-			this.buttonImport.Size = new System.Drawing.Size(75, 23);
-			this.buttonImport.TabIndex = 8;
-			this.buttonImport.Text = "&Import";
-			this.buttonImport.UseVisualStyleBackColor = true;
-			// 
-			// buttonUndo
-			// 
-			this.buttonUndo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonUndo.Enabled = false;
-			this.buttonUndo.Location = new System.Drawing.Point(521, 82);
-			this.buttonUndo.Name = "buttonUndo";
-			this.buttonUndo.Size = new System.Drawing.Size(75, 23);
-			this.buttonUndo.TabIndex = 6;
-			this.buttonUndo.Text = "&Undo";
-			this.buttonUndo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonUndo.UseVisualStyleBackColor = true;
-			this.buttonUndo.Click += new System.EventHandler(this.OnUndo);
-			// 
-			// buttonSave
-			// 
-			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonSave.Enabled = false;
-			this.buttonSave.Location = new System.Drawing.Point(521, 53);
-			this.buttonSave.Name = "buttonSave";
-			this.buttonSave.Size = new System.Drawing.Size(75, 23);
-			this.buttonSave.TabIndex = 5;
-			this.buttonSave.Text = "&Save";
-			this.buttonSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonSave.UseVisualStyleBackColor = true;
-			this.buttonSave.Click += new System.EventHandler(this.OnSave);
-			// 
-			// textBoxServer
-			// 
-			this.textBoxServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxServer.Location = new System.Drawing.Point(80, 26);
-			this.textBoxServer.Name = "textBoxServer";
-			this.textBoxServer.Size = new System.Drawing.Size(354, 20);
-			this.textBoxServer.TabIndex = 1;
-			this.textBoxServer.TextChanged += new System.EventHandler(this.OnChanged);
-			// 
-			// buttonConnect
-			// 
-			this.buttonConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonConnect.Enabled = false;
-			this.buttonConnect.Image = global::InetAnalytics.Resources.Connect_16;
-			this.buttonConnect.Location = new System.Drawing.Point(440, 24);
-			this.buttonConnect.Name = "buttonConnect";
-			this.buttonConnect.Size = new System.Drawing.Size(75, 23);
-			this.buttonConnect.TabIndex = 2;
-			this.buttonConnect.Text = "&Connect";
-			this.buttonConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonConnect.UseVisualStyleBackColor = true;
-			this.buttonConnect.Click += new System.EventHandler(this.OnConnect);
-			// 
-			// buttonDisconnect
-			// 
-			this.buttonDisconnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonDisconnect.Enabled = false;
-			this.buttonDisconnect.Location = new System.Drawing.Point(521, 24);
-			this.buttonDisconnect.Name = "buttonDisconnect";
-			this.buttonDisconnect.Size = new System.Drawing.Size(75, 23);
-			this.buttonDisconnect.TabIndex = 3;
-			this.buttonDisconnect.Text = "&Disconnect";
-			this.buttonDisconnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.buttonDisconnect.UseVisualStyleBackColor = true;
-			this.buttonDisconnect.Click += new System.EventHandler(this.OnDisconnect);
-			// 
-			// labelServer
-			// 
-			this.labelServer.AutoSize = true;
-			this.labelServer.Location = new System.Drawing.Point(4, 29);
-			this.labelServer.Name = "labelServer";
-			this.labelServer.Size = new System.Drawing.Size(41, 13);
-			this.labelServer.TabIndex = 0;
-			this.labelServer.Text = "&Server:";
 			// 
 			// log
 			// 
@@ -386,6 +287,79 @@
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
 			// 
+			// toolStrip
+			// 
+			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.labelServer,
+            this.textBoxServer,
+            this.buttonConnect,
+            this.buttonDisconnect,
+            this.separator1,
+            this.buttonSave,
+            this.buttonUndo});
+			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Name = "toolStrip";
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.TabIndex = 10;
+			this.toolStrip.Text = "toolStrip1";
+			// 
+			// labelServer
+			// 
+			this.labelServer.Name = "labelServer";
+			this.labelServer.Size = new System.Drawing.Size(42, 22);
+			this.labelServer.Text = "&Server:";
+			// 
+			// textBoxServer
+			// 
+			this.textBoxServer.Name = "textBoxServer";
+			this.textBoxServer.Size = new System.Drawing.Size(200, 25);
+			this.textBoxServer.TextChanged += new System.EventHandler(this.OnChanged);
+			// 
+			// buttonConnect
+			// 
+			this.buttonConnect.Enabled = false;
+			this.buttonConnect.Image = global::InetAnalytics.Resources.Connect_16;
+			this.buttonConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonConnect.Name = "buttonConnect";
+			this.buttonConnect.Size = new System.Drawing.Size(72, 22);
+			this.buttonConnect.Text = "&Connect";
+			this.buttonConnect.Click += new System.EventHandler(this.OnConnect);
+			// 
+			// buttonDisconnect
+			// 
+			this.buttonDisconnect.Enabled = false;
+			this.buttonDisconnect.Image = global::InetAnalytics.Resources.Disconnect_16;
+			this.buttonDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonDisconnect.Name = "buttonDisconnect";
+			this.buttonDisconnect.Size = new System.Drawing.Size(86, 22);
+			this.buttonDisconnect.Text = "&Disconnect";
+			this.buttonDisconnect.Click += new System.EventHandler(this.OnDisconnect);
+			// 
+			// separator1
+			// 
+			this.separator1.Name = "separator1";
+			this.separator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonSave
+			// 
+			this.buttonSave.Enabled = false;
+			this.buttonSave.Image = global::InetAnalytics.Resources.Save_16;
+			this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonSave.Name = "buttonSave";
+			this.buttonSave.Size = new System.Drawing.Size(51, 22);
+			this.buttonSave.Text = "&Save";
+			this.buttonSave.Click += new System.EventHandler(this.OnSave);
+			// 
+			// buttonUndo
+			// 
+			this.buttonUndo.Enabled = false;
+			this.buttonUndo.Image = global::InetAnalytics.Resources.UndoLarge_16;
+			this.buttonUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonUndo.Name = "buttonUndo";
+			this.buttonUndo.Size = new System.Drawing.Size(56, 22);
+			this.buttonUndo.Text = "&Undo";
+			this.buttonUndo.Click += new System.EventHandler(this.OnUndo);
+			// 
 			// ControlTestingSshRequest
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -405,6 +379,8 @@
 			this.tabPageAuthentication.ResumeLayout(false);
 			this.tabPageAuthentication.PerformLayout();
 			this.tabPageConsole.ResumeLayout(false);
+			this.toolStrip.ResumeLayout(false);
+			this.toolStrip.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -417,15 +393,7 @@
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private System.Windows.Forms.Button buttonExport;
-		private System.Windows.Forms.Button buttonImport;
-		private System.Windows.Forms.Button buttonUndo;
-		private System.Windows.Forms.Button buttonSave;
-		private System.Windows.Forms.TextBox textBoxServer;
-		private System.Windows.Forms.Button buttonConnect;
-		private System.Windows.Forms.Button buttonDisconnect;
-		private System.Windows.Forms.Label labelServer;
-		private System.Windows.Forms.TabControl tabControl;
+		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageAuthentication;
 		private System.Windows.Forms.RadioButton radioPasswordAuthentication;
 		private System.Windows.Forms.Label labelUsername;
@@ -438,6 +406,14 @@
 		private System.Windows.Forms.Button buttonLoadKey;
 		private System.Windows.Forms.TabPage tabPageConsole;
 		private ControlConsole console;
+		private System.Windows.Forms.ToolStrip toolStrip;
+		private System.Windows.Forms.ToolStripLabel labelServer;
+		private System.Windows.Forms.ToolStripTextBox textBoxServer;
+		private System.Windows.Forms.ToolStripButton buttonConnect;
+		private System.Windows.Forms.ToolStripButton buttonDisconnect;
+		private System.Windows.Forms.ToolStripSeparator separator1;
+		private System.Windows.Forms.ToolStripButton buttonSave;
+		private System.Windows.Forms.ToolStripButton buttonUndo;
 
 	}
 }

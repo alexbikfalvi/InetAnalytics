@@ -36,7 +36,7 @@ namespace InetCrawler.Database
 		/// Creates a new event arguments instance.
 		/// </summary>
 		/// <param name="id">The database identifier.</param>
-		public DbIdEventArgs(string id)
+		public DbIdEventArgs(Guid id)
 		{
 			this.Id = id;
 		}
@@ -46,6 +46,6 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the database identifier.
 		/// </summary>
-		public string Id { get; private set; }
+		public Guid Id { get; private set; }
 	}
 }

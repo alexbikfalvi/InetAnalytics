@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Win32;
 using InetCrawler.Database.Data;
 
@@ -27,15 +28,14 @@ namespace InetCrawler.Database
 	/// <summary>
 	/// Represents the collection of database tables for a database server.
 	/// </summary>
-	public sealed class DbTables : IDisposable, IEnumerable<KeyValuePair<string, ITable>>
+	public sealed class DbTables : IDisposable, IEnumerable<ITable>
 	{
 		private static readonly string keyName = "Tables";
 		private RegistryKey key;
 
-		private readonly Dictionary<string, ITable> tables = new Dictionary<string,ITable>();
+		private readonly object sync = new object();
 
-		// YouTube tables.
-		private readonly DbTable<DbObjectStandardFeed> tableStandardFeeds = new DbTable<DbObjectStandardFeed>("Standard feeds");
+		private readonly Dictionary<Guid, ITable> tables = new Dictionary<Guid, ITable>();
 
 		/// <summary>
 		/// Creates a new database table collection, based on the given server registry key.
@@ -45,9 +45,6 @@ namespace InetCrawler.Database
 		{
 			// Create or open the registry key.
 			this.key = keyServer.CreateSubKey(DbTables.keyName);
-
-			// Add the static tables.
-			this.Add(this.tableStandardFeeds);
 		}
 
 		// Public properties.
@@ -55,16 +52,20 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the database table with the specified local name.
 		/// </summary>
-		/// <param name="localName">The table local name.</param>
+		/// <param name="id">The table identifier.</param>
 		/// <returns>The database table.</returns>
-		public ITable this[string localName] { get { return this.tables[localName]; } }
-		/// <summary>
-		/// Gets the standard feeds table.
-		/// </summary>
-		public DbTable<DbObjectStandardFeed> TableStandardFeeds { get { return this.tableStandardFeeds; } }
+		public ITable this[Guid id] { get { return this.tables[id]; } }
 
 		// Public events.
 
+		/// <summary>
+		/// An event raised when a database table was added.
+		/// </summary>
+		public event DbTableEventHandler TableAdded;
+		/// <summary>
+		/// An event raised when a database table was removed.
+		/// </summary>
+		public event DbTableEventHandler TableRemoved;
 		/// <summary>
 		/// An event raised when a database table has changed.
 		/// </summary>
@@ -87,9 +88,9 @@ namespace InetCrawler.Database
 		/// Returns the enumerator for the current table collection.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
-		public IEnumerator<KeyValuePair<string, ITable>> GetEnumerator()
+		public IEnumerator<ITable> GetEnumerator()
 		{
-			return this.tables.GetEnumerator();
+			return this.tables.Values.GetEnumerator();
 		}
 
 		/// <summary>
@@ -107,9 +108,9 @@ namespace InetCrawler.Database
 		public void SaveConfiguration()
 		{
 			// Save the configuration of all tables.
-			foreach (KeyValuePair<string, ITable> table in this.tables)
+			foreach (ITable table in this.tables.Values)
 			{
-				table.Value.SaveConfiguration(this.key.Name);
+				table.SaveConfiguration(this.key.Name);
 			}
 		}
 
@@ -119,9 +120,9 @@ namespace InetCrawler.Database
 		public void LoadConfiguration()
 		{
 			// Load the configuration of all tables.
-			foreach (KeyValuePair<string, ITable> table in this.tables)
+			foreach (ITable table in this.tables.Values)
 			{
-				table.Value.LoadConfiguration(this.key.Name);
+				table.LoadConfiguration(this.key.Name);
 			}
 		}
 
@@ -131,14 +132,80 @@ namespace InetCrawler.Database
 		/// <param name="table">The database table to add.</param>
 		public void Add(ITable table)
 		{
-			// Add the table to the tables list.
-			this.tables.Add(table.LocalName, table);
-			// Setup an event handler for the table.
-			table.TableChanged += this.OnTableChanged;
+			lock (this.sync)
+			{
+				// Check the table does not exist.
+				if (this.tables.ContainsKey(table.Id)) throw new DbException("A database table with the specified key already exists.");
+
+				// Add the table to the tables list.
+				this.tables.Add(table.Id, table);
+				// Setup an event handler for the table.
+				table.TableChanged += this.OnTableChanged;
+
+				// Raise a table added event.
+				if (null != this.TableAdded) this.TableAdded(this, new DbTableEventArgs(table));
+			}
+		}
+
+		/// <summary>
+		/// Removes the specified table from the tables list.
+		/// </summary>
+		/// <param name="id">The table identifier.</param>
+		public void Remove(Guid id)
+		{
+			lock (this.sync)
+			{
+				// The table.
+				ITable table;
+				
+				// Get the table corresponding to the specified identifier.
+				if (this.tables.TryGetValue(id, out table))
+				{
+					// Remove the table.
+					this.tables.Remove(id);
+					
+					// Raise a table removed event.
+					if (null != this.TableRemoved) this.TableRemoved(this, new DbTableEventArgs(table));
+				}
+			}
+		}
+
+		/// <summary>
+		/// Checks whether the specified table identifier exists.
+		/// </summary>
+		/// <param name="id">The table identifier.</param>
+		/// <returns><b>True</b> if the table exists, <b>false</b> otherwise.</returns>
+		public bool HasTable(Guid id)
+		{
+			lock (this.sync)
+			{
+				return this.tables.ContainsKey(id);
+			}
 		}
 
 		// Private methods.
 
+		/// <summary>
+		/// An event handler called when a table was added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableAdded(object sender, DbTableEventArgs e)
+		{
+			// Raise the event.
+			if (this.TableAdded != null) this.TableAdded(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when a table was removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableRemoved(object sender, DbTableEventArgs e)
+		{
+			// Raise the event.
+			if (this.TableRemoved != null) this.TableRemoved(sender, e);
+		}
 
 		/// <summary>
 		/// An event handler called when the configuration of a table has changed.

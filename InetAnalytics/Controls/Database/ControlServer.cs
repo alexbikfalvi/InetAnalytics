@@ -28,6 +28,7 @@ using InetAnalytics.Controls;
 using InetAnalytics.Forms.Database;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Controls;
 
 namespace InetAnalytics.Controls.Database
 {
@@ -95,6 +96,8 @@ namespace InetAnalytics.Controls.Database
 			this.server.ServerChanged += this.OnServerChanged;
 			this.server.StateChanged += this.OnServerStateChanged;
 			this.server.DatabaseChanged += this.OnDatabaseChanged;
+			this.server.TableAdded += this.OnTableAdded;
+			this.server.TableRemoved += this.OnTableRemoved;
 			this.server.TableChanged += this.OnTableChanged;
 			this.server.EventLogged += this.OnEventLogged;
 			this.crawler.Database.PrimaryServerChanged += this.OnPrimaryServerChanged;
@@ -251,23 +254,59 @@ namespace InetAnalytics.Controls.Database
 		}
 
 		/// <summary>
+		/// An event handler called when a database table has been added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableAdded(object sender, DbServerTableEventArgs e)
+		{
+			// Add a new list view item.
+			ListViewItem item = new ListViewItem(new string[] { e.Table.LocalName, e.Table.FieldCount.ToString() + " field(s)" });
+			item.ImageKey = e.Table.IsConfigured ? "TableSuccess" : "TableWarning";
+			item.Tag = e.Table;
+			this.listViewTables.Items.Add(item);
+		}
+
+		/// <summary>
+		/// An event handler called when a database table has been removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableRemoved(object sender, DbServerTableEventArgs e)
+		{
+			// Get the list view item corresponding to the table.
+			ListViewItem item = this.listViewTables.Items.FirstOrDefault((ListViewItem it) =>
+			{
+				return object.ReferenceEquals(it.Tag, e.Table);
+			});
+
+			// Remove the list view item.
+			this.listViewTables.Items.Remove(item);
+
+			// Call the table selection changed event handler.
+			this.OnTableSelectionChanged(sender, e);
+		}
+
+		/// <summary>
 		/// An event handler called when a database table has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnTableChanged(object sender, DbServerTableChangedEventArgs e)
+		private void OnTableChanged(object sender, DbServerTableEventArgs e)
 		{
-			// Update the corresponding list view item.
-			foreach (ListViewItem item in this.listViewTables.Items)
-			{
-				// If the item matches the database table.
-				if (e.Table == item.Tag as ITable)
+			// Get the list view item corresponding to the table.
+			ListViewItem item = this.listViewTables.Items.FirstOrDefault((ListViewItem it) =>
 				{
-					// Update the item.
-					item.SubItems[0].Text = e.Table.LocalName;
-					item.SubItems[1].Text = e.Table.FieldCount.ToString() + " field(s)";
-					item.ImageKey = e.Table.IsConfigured ? "TableSuccess" : "TableWarning";
-				}
+					return object.ReferenceEquals(it.Tag, e.Table);
+				});
+
+			// If the item exists.
+			if (null != item)
+			{
+				// Update the item.
+				item.SubItems[0].Text = e.Table.LocalName;
+				item.SubItems[1].Text = e.Table.FieldCount.ToString() + " field(s)";
+				item.ImageKey = e.Table.IsConfigured ? "TableSuccess" : "TableWarning";
 			}
 		}
 
@@ -280,11 +319,11 @@ namespace InetAnalytics.Controls.Database
 			if (this.listViewTables.Items.Count == 0)
 			{
 				// Add a new list view item for each table.
-				foreach (KeyValuePair<string, ITable> table in this.server.Tables)
+				foreach (ITable table in this.server.Tables)
 				{
-					ListViewItem item = new ListViewItem(new string[] { table.Value.LocalName, table.Value.FieldCount.ToString() + " field(s)" });
-					item.ImageKey = table.Value.IsConfigured ? "TableSuccess" : "TableWarning";
-					item.Tag = table.Value;
+					ListViewItem item = new ListViewItem(new string[] { table.LocalName, table.FieldCount.ToString() + " field(s)" });
+					item.ImageKey = table.IsConfigured ? "TableSuccess" : "TableWarning";
+					item.Tag = table;
 					this.listViewTables.Items.Add(item);
 				}
 			}
@@ -313,8 +352,8 @@ namespace InetAnalytics.Controls.Database
 			foreach (DbRelationship relationship in this.server.Relationships)
 			{
 				ListViewItem item = new ListViewItem(new string[] {
-					relationship.TableLeft.LocalName, relationship.FieldLeft,
-					relationship.TableRight.LocalName, relationship.FieldRight },
+					relationship.LeftTable.LocalName, relationship.LeftField,
+					relationship.RightTable.LocalName, relationship.RightField },
 					this.imageListSmall.Images.IndexOfKey("Relationship"));
 				item.Tag = relationship;
 				this.listViewRelationships.Items.Add(item);
@@ -340,8 +379,8 @@ namespace InetAnalytics.Controls.Database
 						ControlServer.logSource,
 						"Primary database server has changed from \'{0}\' to \'{1}\'.",
 						new object[] {
-							e.OldPrimary != null ? e.OldPrimary.Id : string.Empty,
-							e.NewPrimary != null ? e.NewPrimary.Id : string.Empty
+							e.OldPrimary != null ? e.OldPrimary.Id.ToString() : string.Empty,
+							e.NewPrimary != null ? e.NewPrimary.Id.ToString() : string.Empty
 						}));
 				});
 		}

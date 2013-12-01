@@ -23,13 +23,14 @@ using InetAnalytics.Controls;
 using InetCrawler.Database;
 using DotNetApi.Security;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Database
 {
 	/// <summary>
 	/// A form dialog displaying an exception.
 	/// </summary>
-	public partial class FormAddServer : Form
+	public partial class FormAddServer : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

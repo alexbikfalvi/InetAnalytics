@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using InetApi.YouTube.Api.V2.Data;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.YouTube
 {
 	/// <summary>
 	/// A form dialog displaying a log event.
 	/// </summary>
-	public partial class FormPlaylistProperties : Form
+	public partial class FormPlaylistProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

@@ -82,16 +82,16 @@ namespace InetAnalytics.Controls.Database
 			else
 			{
 				// Update the controls.
-				this.textBoxTableLeft.Text = newRelationship.TableLeft.LocalName;
-				this.textBoxTableRight.Text = newRelationship.TableRight.LocalName;
-				this.textBoxFieldLeft.Text = newRelationship.FieldLeft;
-				this.textBoxFieldRight.Text = newRelationship.FieldRight;
+				this.textBoxTableLeft.Text = newRelationship.LeftTable.LocalName;
+				this.textBoxTableRight.Text = newRelationship.RightTable.LocalName;
+				this.textBoxFieldLeft.Text = newRelationship.LeftField;
+				this.textBoxFieldRight.Text = newRelationship.RightField;
 				this.checkBoxReadOnly.Checked = newRelationship.ReadOnly;
 				this.labelTitle.Text = @"{0}\{1} ← {2}\{3}".FormatWith(
-					newRelationship.TableLeft.LocalName,
-					newRelationship.FieldLeft,
-					newRelationship.TableRight.LocalName,
-					newRelationship.FieldRight);
+					newRelationship.LeftTable.LocalName,
+					newRelationship.LeftField,
+					newRelationship.RightTable.LocalName,
+					newRelationship.RightField);
 				this.tabControl.Visible = true;
 			}
 			this.tabControl.SelectedTab = this.tabPageGeneral;

@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using PlanetLab.Api;
 using PlanetLab.Database;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
 	/// A form dialog that allows exporting the PlanetLab nodes.
 	/// </summary>
-	public partial class FormExportNodes : Form
+	public partial class FormExportNodes : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

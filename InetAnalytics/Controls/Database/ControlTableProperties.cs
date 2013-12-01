@@ -129,6 +129,7 @@ namespace InetAnalytics.Controls.Database
 
 			// Initialize the control.
 			this.labelTitle.Text = table.LocalName;
+			this.textBoxId.Text = table.Id.ToString();
 			this.textBoxNameLocal.Text = table.LocalName;
 			this.textBoxNameDatabase.Text = table.DatabaseName;
 			this.textBoxSchema.Text = table.Schema;
@@ -157,9 +158,9 @@ namespace InetAnalytics.Controls.Database
 			foreach (IRelationship relationship in table.Relationships)
 			{
 				ListViewItem item = new ListViewItem(new string[] {
-					relationship.TableRight.LocalName,
-					relationship.FieldLeft,
-					relationship.FieldRight });
+					relationship.RightTable.LocalName,
+					relationship.LeftField,
+					relationship.RightField });
 				item.ImageKey = "Relationship";
 				item.Tag = relationship;
 				this.listViewRelationships.Items.Add(item);

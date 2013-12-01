@@ -212,7 +212,6 @@
 			this.Controls.Add(this.toolStrip);
 			this.Enabled = false;
 			this.Name = "ControlToolboxSettings";
-			this.Padding = new System.Windows.Forms.Padding(1);
 			this.ShowBorder = true;
 			this.Size = new System.Drawing.Size(600, 400);
 			this.toolStrip.ResumeLayout(false);

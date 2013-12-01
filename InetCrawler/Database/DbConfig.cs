@@ -32,7 +32,7 @@ namespace InetCrawler.Database
 	/// <summary>
 	/// A class representing the list of database servers.
 	/// </summary>
-	public sealed class DbConfig : IDisposable, IEnumerable<KeyValuePair<string, DbServer>>
+	public sealed class DbConfig : IDisposable, IEnumerable<DbServer>
 	{
 		public enum DbServerType
 		{
@@ -42,9 +42,13 @@ namespace InetCrawler.Database
 		private readonly CrawlerConfig config;
 		private readonly RegistryKey key;
 
-		private readonly Dictionary<string, DbServer> servers = new Dictionary<string, DbServer>();
-		private IOrderedEnumerable<KeyValuePair<string, DbServer>> orderedServers = null;
+		private readonly Dictionary<Guid, DbServer> servers = new Dictionary<Guid, DbServer>();
+		private IOrderedEnumerable<DbServer> orderedServers = null;
 		private DbServer primary = null;
+
+		private readonly DbTableTemplates tables = new DbTableTemplates();
+		private readonly DbRelationshipTemplates relationships = new DbRelationshipTemplates();
+
 		private readonly object sync = new object();
 
 		private static readonly string[] dbServerTypeNames = {
@@ -71,6 +75,12 @@ namespace InetCrawler.Database
 			// Get the ID of the primary database server.
 			string primaryId = DotNetApi.Windows.Registry.GetString(this.key.Name, "Primary", null);
 
+			// Set the table templates event handlers.
+			this.tables.TemplateAdded += this.OnTableTemplateAdded;
+			this.tables.TemplateRemoved += this.OnTableTemplateRemoved;
+			this.relationships.TemplateAdded += this.OnRelationshipTemplateAdded;
+			this.relationships.TemplateRemoved += this.OnRelationshipTemplateRemoved;
+
 			// Create the servers list.
 			foreach (string id in this.key.GetSubKeyNames())
 			{
@@ -90,7 +100,7 @@ namespace InetCrawler.Database
 					switch (type)
 					{
 						case DbServerType.MsSql:
-							server = new DbServerSql(serverKey, id, logFile);
+							server = new DbServerSql(serverKey, new Guid(id), logFile);
 							break;
 						default: throw new CrawlerException("Cannot add a new database server. Unknown database server type \'{0}\'.".FormatWith(type));
 					}
@@ -146,7 +156,7 @@ namespace InetCrawler.Database
 		/// </summary>
 		/// <param name="id">The server ID.</param>
 		/// <returns>The database server.</returns>
-		public DbServer this[string id] { get { return this.servers[id]; } }
+		public DbServer this[Guid id] { get { return this.servers[id]; } }
 		/// <summary>
 		/// Gets the number of database servers.
 		/// </summary>
@@ -163,6 +173,10 @@ namespace InetCrawler.Database
 		/// Returns the primary database server.
 		/// </summary>
 		public DbServer Primary { get { return this.primary; } }
+		/// <summary>
+		/// Returns the list of table templates.
+		/// </summary>
+		public DbTableTemplates Tables { get { return this.tables; } }
 
 		// Public methods.
 
@@ -171,9 +185,9 @@ namespace InetCrawler.Database
 		/// </summary>
 		public void Reload()
 		{
-			foreach (KeyValuePair<string, DbServer> server in this.servers)
+			foreach (DbServer server in this.servers.Values)
 			{
-				server.Value.LoadConfiguration();
+				server.LoadConfiguration();
 			}
 		}
 
@@ -198,7 +212,7 @@ namespace InetCrawler.Database
 			// Change the primary server.
 			this.primary = server;
 			// Update the registry key.
-			Registry.SetValue(this.key.Name, "Primary", this.primary != null ? this.primary.Id : string.Empty, RegistryValueKind.String);
+			Registry.SetValue(this.key.Name, "Primary", this.primary != null ? this.primary.Id.ToString() : string.Empty, RegistryValueKind.String);
 			// Raise the primary server changed event.
 			if (this.PrimaryServerChanged != null) this.PrimaryServerChanged(this, new DbPrimaryServerChangedEventArgs(oldPrimary, this.primary));
 		}
@@ -216,10 +230,11 @@ namespace InetCrawler.Database
 		/// Returns the generic enumerator for the current list of database servers.
 		/// </summary>
 		/// <returns>The enumerator.</returns>
-		public IEnumerator<KeyValuePair<string, DbServer>> GetEnumerator()
+		public IEnumerator<DbServer> GetEnumerator()
 		{
 			// Order the server list.
-			this.orderedServers = Enumerable.OrderBy<KeyValuePair<string, DbServer>, DateTime>(this.servers, pair => pair.Value.DateCreated);
+			this.orderedServers = Enumerable.OrderBy<DbServer, DateTime>(this.servers.Values, pair => pair.DateCreated);
+			// Return the ordered list enumerator.
 			return this.orderedServers.GetEnumerator();
 		}
 
@@ -242,11 +257,11 @@ namespace InetCrawler.Database
 			)
 		{
 			// Generate the server ID.
-			string id = Guid.NewGuid().ToString();
+			Guid id = Guid.NewGuid();
 			// Check the server ID does not exist. Otherwise, throw an exception.
 			if (this.servers.ContainsKey(id)) throw new CrawlerException("Cannot add a new database server. The server ID \'{0}\' already exists.".FormatWith(id));
 			// Create the registry key for this server.
-			RegistryKey key = this.key.CreateSubKey(id);
+			RegistryKey key = this.key.CreateSubKey(id.ToString());
 			// Compute the database server log file.
 			string logFile = string.Format(this.config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
 			DbServer server;
@@ -270,7 +285,7 @@ namespace InetCrawler.Database
 				// Close the key.
 				key.Close();
 				// Delete the registry key.
-				this.key.DeleteSubKeyTree(id);
+				this.key.DeleteSubKeyTree(id.ToString());
 				// Re-throw the exception.
 				throw;
 			}
@@ -295,7 +310,7 @@ namespace InetCrawler.Database
 		/// <param name="callback">The callback function, if the operation is performed asynchronusly.</param>
 		public void Remove(DbServer server)
 		{
-			string id = server.Id;
+			Guid id = server.Id;
 			// Check that the server ID exists.
 			if(!this.servers.ContainsKey(id)) throw new CrawlerException("Cannot remove the database server. The server with ID \'{0}\' does not exist.".FormatWith(id));
 			// If there are more than one server, and this is the primary server, the user must select a different primary server first.
@@ -324,7 +339,7 @@ namespace InetCrawler.Database
 		/// <return>The result of the asynchronous call.</return>
 		public IAsyncResult RemoveAsync(DbServer server, DbServerCallback callback, object userState = null)
 		{
-			string id = server.Id;
+			Guid id = server.Id;
 			// Check that the server ID exists.
 			if (!this.servers.ContainsKey(id)) throw new CrawlerException("Cannot remove the database server. The server with ID \'{0}\' does not exist.".FormatWith(id));
 			// If there are more than one server, and this is the primary server, the user must select a different primary server first.
@@ -372,9 +387,9 @@ namespace InetCrawler.Database
 		public void Dispose()
 		{
 			// Dispose all database servers.
-			foreach (KeyValuePair<string, DbServer> pair in this.servers)
+			foreach (DbServer server in this.servers.Values)
 			{
-				pair.Value.Dispose();
+				server.Dispose();
 			}
 			// Close the registry key.
 			this.key.Close();			
@@ -394,22 +409,54 @@ namespace InetCrawler.Database
 			{
 				// Add the server to the dictionary.
 				this.servers.Add(server.Id, server);
+
+				// Add the server event handlers.
+				server.StateChanged += this.OnStateChanged;
+				server.ServerChanged += this.OnServerChanged;
+
+				// Add the current table templates to the server.
+				foreach (DbTableTemplate table in this.tables)
+				{
+					try { server.AddTable(table); }
+					catch { }
+				}
+
+				// Add the current relationships to the server.
+				foreach (DbRelationshipTemplate relationship in this.relationships)
+				{
+					try
+					{
+						// Get the table.
+						ITable leftTable = server.Tables[relationship.LeftTable.Id];
+						ITable rightTable = server.Tables[relationship.RightTable.Id];
+
+						// If any of the tables is null, ignore the template.
+						if (null == leftTable) continue;
+						if (null == rightTable) continue;
+
+						// Add the table to the server.
+						server.Relationships.Add(
+							leftTable,
+							rightTable,
+							relationship.LeftField,
+							relationship.RightField,
+							relationship.ReadOnly);
+					}
+					catch { }
+				}
 			}
-			// Add the server event handlers.
-			server.StateChanged += this.OnStateChanged;
-			server.ServerChanged += this.OnServerChanged;
 		}
 
 		/// <summary>
 		/// Removes the server with the specified ID from the servers list. The methods is thread-safe.
 		/// </summary>
 		/// <param name="id">The server ID.</param>
-		private void Remove(string id)
+		private void Remove(Guid id)
 		{
 			lock (this.sync)
 			{
 				// Remove the server configuration.
-				this.key.DeleteSubKeyTree(id);
+				this.key.DeleteSubKeyTree(id.ToString());
 				// Remove the server.
 				this.servers.Remove(id);
 			}
@@ -443,6 +490,92 @@ namespace InetCrawler.Database
 		private void OnEventLogged(object sender, LogEventArgs e)
 		{
 			if (this.EventLogged != null) this.EventLogged(this, e);
+		}
+
+		/// <summary>
+		/// An event handler called when adding a table template.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableTemplateAdded(object sender, DbTableTemplateEventArgs e)
+		{
+			lock (this.sync)
+			{
+				// For all the servers.
+				foreach (DbServer server in this.servers.Values)
+				{
+					try
+					{
+						// Create a new table based on the template.
+						ITable table = DbTable.Create(e.Template);
+						// Add the table to the server.
+						server.Tables.Add(table);
+					}
+					catch { }
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when removing a table template.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTableTemplateRemoved(object sender, DbTableTemplateEventArgs e)
+		{
+			lock (this.sync)
+			{
+				// For all the servers.
+				foreach (DbServer server in this.servers.Values)
+				{
+					// Remove the table to the server.
+					server.Tables.Remove(e.Template.Id);
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a relationship template has been added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipTemplateAdded(object sender, DbRelationshipTemplateEventArgs e)
+		{
+			lock (this.sync)
+			{
+				// For all the servers.
+				foreach (DbServer server in this.servers.Values)
+				{
+					try
+					{
+						// Get the table.
+						ITable leftTable = server.Tables[e.Template.LeftTable.Id];
+						ITable rightTable = server.Tables[e.Template.RightTable.Id];
+
+						// If any of the tables is null, ignore the template.
+						if (null == leftTable) continue;
+						if (null == rightTable) continue;
+
+						// Add the table to the server.
+						server.Relationships.Add(
+							leftTable,
+							rightTable,
+							e.Template.LeftField,
+							e.Template.RightField,
+							e.Template.ReadOnly);
+					}
+					catch { }
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a relationship template has been removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipTemplateRemoved(object sender, DbRelationshipTemplateEventArgs e)
+		{
 		}
 	}
 }

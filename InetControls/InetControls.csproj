@@ -46,6 +46,12 @@
     <Compile Include="Controls\ControlExceptionProperties.Designer.cs">
       <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Database\ControlChangePassword.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlChangePassword.Designer.cs">
+      <DependentUpon>ControlChangePassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Log\ControlLogEventProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -57,6 +63,16 @@
     </Compile>
     <Compile Include="Controls\Log\ControlLogList.Designer.cs">
       <DependentUpon>ControlLogList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Events\PasswordChangedEventArgs.cs" />
+    <Compile Include="Forms\Database\FormChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\FormChangePassword.Designer.cs">
+      <DependentUpon>FormChangePassword.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormExceptionProperties.cs">
       <SubType>Form</SubType>
@@ -81,11 +97,17 @@
     <EmbeddedResource Include="Controls\ControlExceptionProperties.resx">
       <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Database\ControlChangePassword.resx">
+      <DependentUpon>ControlChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Log\ControlLogEventProperties.resx">
       <DependentUpon>ControlLogEventProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
       <DependentUpon>ControlLogList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Database\FormChangePassword.resx">
+      <DependentUpon>FormChangePassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormExceptionProperties.resx">
       <DependentUpon>FormExceptionProperties.cs</DependentUpon>
@@ -304,6 +326,78 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\XmlNamespace_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PasswordChange_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PasswordChange_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PasswordChange_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PasswordChange_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

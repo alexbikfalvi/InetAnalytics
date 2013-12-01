@@ -20,13 +20,14 @@ using System;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Tools
 {
 	/// <summary>
 	/// A form dialog displaying a tool information.
 	/// </summary>
-	public partial class FormToolInfoProperties : Form
+	public partial class FormToolInfoProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

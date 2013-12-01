@@ -27,13 +27,14 @@ using PlanetLab;
 using PlanetLab.Api;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
 	/// A form dialog that allows exporting PlanetLab objects.
 	/// </summary>
-	public partial class FormExport : Form
+	public partial class FormExport : ThreadSafeForm
 	{
 		private IEnumerable<PlObject> list;
 

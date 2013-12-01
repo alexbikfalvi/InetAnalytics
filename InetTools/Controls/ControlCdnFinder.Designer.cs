@@ -34,9 +34,6 @@
 			this.panelTool = new DotNetApi.Windows.Controls.ThemeControl();
 			this.panelDomains = new System.Windows.Forms.Panel();
 			this.splitContainerDomains = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.themeTabControl1 = new DotNetApi.Windows.Controls.ThemeTabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.listViewSites = new System.Windows.Forms.ListView();
 			this.columnHeaderIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderSite = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -70,7 +67,6 @@
 			this.splitContainerDomains.Panel1.SuspendLayout();
 			this.splitContainerDomains.Panel2.SuspendLayout();
 			this.splitContainerDomains.SuspendLayout();
-			this.themeTabControl1.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -103,7 +99,7 @@
 			this.panelTool.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelTool.Location = new System.Drawing.Point(0, 0);
 			this.panelTool.Name = "panelTool";
-			this.panelTool.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelTool.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelTool.ShowBorder = true;
 			this.panelTool.ShowTitle = true;
 			this.panelTool.Size = new System.Drawing.Size(800, 425);
@@ -114,10 +110,10 @@
 			// 
 			this.panelDomains.Controls.Add(this.splitContainerDomains);
 			this.panelDomains.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelDomains.Location = new System.Drawing.Point(1, 47);
+			this.panelDomains.Location = new System.Drawing.Point(1, 48);
 			this.panelDomains.Name = "panelDomains";
 			this.panelDomains.Padding = new System.Windows.Forms.Padding(4);
-			this.panelDomains.Size = new System.Drawing.Size(798, 377);
+			this.panelDomains.Size = new System.Drawing.Size(798, 376);
 			this.panelDomains.TabIndex = 3;
 			// 
 			// splitContainerDomains
@@ -128,7 +124,6 @@
 			// 
 			// splitContainerDomains.Panel1
 			// 
-			this.splitContainerDomains.Panel1.Controls.Add(this.themeTabControl1);
 			this.splitContainerDomains.Panel1.Controls.Add(this.listViewSites);
 			this.splitContainerDomains.Panel1.Padding = new System.Windows.Forms.Padding(1);
 			// 
@@ -136,41 +131,11 @@
 			// 
 			this.splitContainerDomains.Panel2.Controls.Add(this.controlSite);
 			this.splitContainerDomains.Panel2.Padding = new System.Windows.Forms.Padding(1);
-			this.splitContainerDomains.Size = new System.Drawing.Size(790, 369);
+			this.splitContainerDomains.Size = new System.Drawing.Size(790, 368);
 			this.splitContainerDomains.SplitterDistance = 390;
 			this.splitContainerDomains.SplitterWidth = 5;
 			this.splitContainerDomains.TabIndex = 2;
 			this.splitContainerDomains.UseTheme = false;
-			// 
-			// themeTabControl1
-			// 
-			this.themeTabControl1.Controls.Add(this.tabPage1);
-			this.themeTabControl1.Controls.Add(this.tabPage2);
-			this.themeTabControl1.Location = new System.Drawing.Point(72, 85);
-			this.themeTabControl1.Name = "themeTabControl1";
-			this.themeTabControl1.SelectedIndex = 0;
-			this.themeTabControl1.Size = new System.Drawing.Size(200, 100);
-			this.themeTabControl1.TabIndex = 1;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(192, 74);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "tabPage1";
-			this.tabPage1.UseVisualStyleBackColor = true;
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(192, 74);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "tabPage2";
-			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// listViewSites
 			// 
@@ -187,7 +152,7 @@
 			this.listViewSites.Location = new System.Drawing.Point(1, 1);
 			this.listViewSites.MultiSelect = false;
 			this.listViewSites.Name = "listViewSites";
-			this.listViewSites.Size = new System.Drawing.Size(388, 367);
+			this.listViewSites.Size = new System.Drawing.Size(388, 366);
 			this.listViewSites.SmallImageList = this.imageList;
 			this.listViewSites.TabIndex = 0;
 			this.listViewSites.UseCompatibleStateImageBehavior = false;
@@ -228,7 +193,7 @@
 			this.controlSite.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlSite.Location = new System.Drawing.Point(1, 1);
 			this.controlSite.Name = "controlSite";
-			this.controlSite.Size = new System.Drawing.Size(393, 367);
+			this.controlSite.Size = new System.Drawing.Size(393, 366);
 			this.controlSite.TabIndex = 0;
 			// 
 			// toolStrip
@@ -244,7 +209,7 @@
             this.buttonStop,
             this.separator3,
             this.buttonSave});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
@@ -346,7 +311,7 @@
 			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlLog.Location = new System.Drawing.Point(0, 0);
 			this.controlLog.Name = "controlLog";
-			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.controlLog.ShowBorder = true;
 			this.controlLog.ShowTitle = true;
 			this.controlLog.Size = new System.Drawing.Size(800, 170);
@@ -382,7 +347,6 @@
 			this.splitContainerDomains.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerDomains)).EndInit();
 			this.splitContainerDomains.ResumeLayout(false);
-			this.themeTabControl1.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.ResumeLayout(false);
@@ -418,8 +382,5 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemSaveSites;
 		private System.Windows.Forms.ToolStripMenuItem menuItemSaveResources;
 		private System.Windows.Forms.ColumnHeader columnHeaderUrl;
-		private DotNetApi.Windows.Controls.ThemeTabControl themeTabControl1;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
 	}
 }

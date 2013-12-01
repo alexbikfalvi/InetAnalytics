@@ -21,13 +21,14 @@ using System.Windows.Forms;
 using InetApi.YouTube.Ajax;
 using DotNetApi;
 using DotNetApi.Windows;
+using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.YouTube
 {
 	/// <summary>
 	/// A form dialog displaying the properties of a history event.
 	/// </summary>
-	public partial class FormDiscoveryProperties : Form
+	public partial class FormDiscoveryProperties : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.

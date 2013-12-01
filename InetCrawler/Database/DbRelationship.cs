@@ -31,19 +31,19 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the left table of the database relationship.
 		/// </summary>
-		ITable TableLeft { get; }
+		ITable LeftTable { get; }
 		/// <summary>
 		/// Gets the right table of the database relationship.
 		/// </summary>
-		ITable TableRight { get; }
+		ITable RightTable { get; }
 		/// <summary>
 		/// Gets the left field of the database relationship.
 		/// </summary>
-		string FieldLeft { get; }
+		string LeftField { get; }
 		/// <summary>
 		/// Gets the right field of the database relationship.
 		/// </summary>
-		string FieldRight { get; }
+		string RightField { get; }
 		/// <summary>
 		/// Gets whether the relationship is read-only.
 		/// </summary>
@@ -56,16 +56,16 @@ namespace InetCrawler.Database
 	public class DbRelationship : IRelationship
 	{
 		private static readonly string xmlRelationship = "DbRelationship";
-		private static readonly string xmlLeftTable = "tableLeft";
-		private static readonly string xmlRightTable = "tableRight";
-		private static readonly string xmlLeftField = "fieldLeft";
-		private static readonly string xmlRightField = "fieldRight";
+		private static readonly string xmlLeftTable = "leftTable";
+		private static readonly string xmlRightTable = "rightTable";
+		private static readonly string xmlLeftField = "leftField";
+		private static readonly string xmlRightField = "rightField";
 
-		private ITable tableLeft;
-		private string fieldLeft;
+		private ITable leftTable;
+		private string leftField;
 
-		private ITable tableRight;
-		private string fieldRight;
+		private ITable rightTable;
+		private string rightField;
 
 		private bool readOnly = true;
 
@@ -74,27 +74,27 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Creates a new database relationship.
 		/// </summary>
-		/// <param name="tableLeft">The left table.</param>
-		/// <param name="tableRight">The right table.</param>
-		/// <param name="fieldLeft">The left field name.</param>
-		/// <param name="fieldRight">The right field name.</param>
+		/// <param name="leftTable">The left table.</param>
+		/// <param name="rightTable">The right table.</param>
+		/// <param name="leftField">The left field name.</param>
+		/// <param name="rightField">The right field name.</param>
 		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
-		public DbRelationship(ITable tableLeft, ITable tableRight, string fieldLeft, string fieldRight, bool readOnly)
+		public DbRelationship(ITable leftTable, ITable rightTable, string leftField, string rightField, bool readOnly)
 		{
 			// Check the tables exist.
-			if (null == tableLeft) throw new DbException("Cannot create a database relationship: the left table does not exist.");
-			if (null == tableRight) throw new DbException("Cannot create a database relationship: the right table does not exist.");
+			if (null == leftTable) throw new DbException("Cannot create a database relationship: the left table does not exist.");
+			if (null == rightTable) throw new DbException("Cannot create a database relationship: the right table does not exist.");
 			// Check the table fields exist.
-			if (null == tableLeft[fieldLeft]) throw new DbException("Cannot create a database relationship: the left field \'{0}\' does not exist in table \'{1}\'.".FormatWith(fieldLeft, tableLeft.LocalName));
-			if (null == tableRight[fieldRight]) throw new DbException("Cannot create a datbase relationship: the right field \'{0}\' does not exist in table \'{1}\'.".FormatWith(fieldRight, tableRight.LocalName));
+			if (null == leftTable[leftField]) throw new DbException("Cannot create a database relationship: the left field \'{0}\' does not exist in table \'{1}\'.".FormatWith(leftField, leftTable.LocalName));
+			if (null == rightTable[rightField]) throw new DbException("Cannot create a datbase relationship: the right field \'{0}\' does not exist in table \'{1}\'.".FormatWith(rightField, rightTable.LocalName));
 			// Set the relationship members.
-			this.tableLeft = tableLeft;
-			this.tableRight = tableRight;
-			this.fieldLeft = fieldLeft;
-			this.fieldRight = fieldRight;
+			this.leftTable = leftTable;
+			this.rightTable = rightTable;
+			this.leftField = leftField;
+			this.rightField = rightField;
 			this.readOnly = readOnly;
 			// Set the relationship on the left table.
-			this.tableLeft.AddRelationship(this);
+			this.leftTable.AddRelationship(this);
 		}
 
 		// Public properties.
@@ -102,19 +102,19 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the left table of the database relationship.
 		/// </summary>
-		public ITable TableLeft { get { return this.tableLeft; } }
+		public ITable LeftTable { get { return this.leftTable; } }
 		/// <summary>
 		/// Gets the right table of the database relationship.
 		/// </summary>
-		public ITable TableRight { get { return this.tableRight; } }
+		public ITable RightTable { get { return this.rightTable; } }
 		/// <summary>
 		/// Gets the left field of the database relationship.
 		/// </summary>
-		public string FieldLeft { get { return this.fieldLeft; } }
+		public string LeftField { get { return this.leftField; } }
 		/// <summary>
 		/// Gets the right field of the database relationship.
 		/// </summary>
-		public string FieldRight { get { return this.fieldRight; } }
+		public string RightField { get { return this.rightField; } }
 		/// <summary>
 		/// Gets whether the relationship is read-only.
 		/// </summary>
@@ -128,10 +128,10 @@ namespace InetCrawler.Database
 			{
 				// If there exists a current XML element, return that element, otherwise create a new one.
 				return this.xml != null? this.xml : (this.xml = new XElement(DbRelationship.xmlRelationship,
-					new XAttribute(DbRelationship.xmlLeftTable, this.tableLeft.LocalName),
-					new XAttribute(DbRelationship.xmlRightTable, this.tableRight.LocalName),
-					new XAttribute(DbRelationship.xmlLeftField, this.fieldLeft),
-					new XAttribute(DbRelationship.xmlRightField, this.fieldRight)));
+					new XAttribute(DbRelationship.xmlLeftTable, this.leftTable.Id.ToString()),
+					new XAttribute(DbRelationship.xmlRightTable, this.rightTable.Id.ToString()),
+					new XAttribute(DbRelationship.xmlLeftField, this.leftField),
+					new XAttribute(DbRelationship.xmlRightField, this.rightField)));
 			}
 		}
 
@@ -147,8 +147,8 @@ namespace InetCrawler.Database
 			// Verify the name of the XML element.
 			if (element.Name != DbRelationship.xmlRelationship) throw new DbException("Cannot create a database relationship because the name of XML element is \'{0}\'".FormatWith(element.Name));
 			// Get the names of the tables and fields.
-			string tableLeft = element.Attribute(DbRelationship.xmlLeftTable).Value;
-			string tableRight = element.Attribute(DbRelationship.xmlRightTable).Value;
+			Guid tableLeft = new Guid(element.Attribute(DbRelationship.xmlLeftTable).Value);
+			Guid tableRight = new Guid(element.Attribute(DbRelationship.xmlRightTable).Value);
 			string fieldLeft = element.Attribute(DbRelationship.xmlLeftField).Value;
 			string fieldRight = element.Attribute(DbRelationship.xmlRightField).Value;
 			// Check the tables exist.
