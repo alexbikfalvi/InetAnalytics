@@ -117,5 +117,18 @@ namespace InetCrawler.Tools
 		{
 			this.api.Database.Tables.Remove(table);
 		}
+
+		/// <summary>
+		/// Adds the table relationship to the database.
+		/// </summary>
+		/// <param name="leftTable">The left table template.</param>
+		/// <param name="rightTable">The right table template.</param>
+		/// <param name="leftField">The left field.</param>
+		/// <param name="rightField">The right field.</param>
+		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
+		public void DatabaseAddRelationship(DbTableTemplate leftTable, DbTableTemplate rightTable, string leftField, string rightField, bool readOnly)
+		{
+			this.api.Database.Relationships.Add(new DbRelationshipTemplate(leftTable, rightTable, leftField, rightField, readOnly));
+		}
 	}
 }

@@ -43,7 +43,7 @@ namespace InetTools.Controls
 		public void Clear()
 		{
 			this.pictureBox.Image = Properties.Resources.GlobeQuestion_48;
-			this.labelTitle.Text = "No site selected";
+			this.labelTitle.Text = "Site information not available";
 			this.textBoxSite.Text = string.Empty;
 			this.textBoxUrl.Text = string.Empty;
 			this.textBoxAssetCdn.Text = string.Empty;

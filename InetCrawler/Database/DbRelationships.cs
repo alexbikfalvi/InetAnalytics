@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.Win32;
@@ -36,7 +37,7 @@ namespace InetCrawler.Database
 		private static readonly string xmlRoot = "DbRelationships";
 
 		private DbTables tables;
-		private readonly List<DbRelationship> relationships = new List<DbRelationship>();
+		private readonly HashSet<DbRelationship> relationships = new HashSet<DbRelationship>();
 
 		private readonly object sync = new object();
 
@@ -97,6 +98,10 @@ namespace InetCrawler.Database
 			{
 				// Create the relationship.
 				DbRelationship relationship = new DbRelationship(tableLeft, tableRight, fieldLeft, fieldRight, readOnly);
+
+				// If the relationship already exists, do nothing.
+				if (this.relationships.Contains(relationship)) return;
+
 				// Add the relationship.
 				this.relationships.Add(relationship);
 				// Raise an event.
@@ -107,12 +112,51 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Removes any relationship containing the specified table.
 		/// </summary>
-		/// <param name="table">The table.</param>
-		public void Remove(ITable table)
+		/// <param name="table">The table identifier.</param>
+		public void Remove(Guid table)
 		{
 			lock (this.sync)
 			{
+				// Remove all relationships that correspond to the specified table.
+				this.relationships.RemoveWhere((DbRelationship relationship) =>
+					{
+						// If the relationship contains the table.
+						if ((relationship.LeftTable.Id == table) || (relationship.RightTable.Id == table))
+						{
+							// Call the remove event handler for this relationship.
+							if (null != this.RelationshipRemoved) this.RelationshipRemoved(this, new DbRelationshipEventArgs(relationship));
+							// Return true.
+							return true;
+						}
+						else return false;
+					});
+			}
+		}
 
+		/// <summary>
+		/// Removes the specified relationship.
+		/// </summary>
+		/// <param name="leftTable">The identifier of the left table.</param>
+		/// <param name="rightTable">The identifier of the right table.</param>
+		/// <param name="leftField">The left field.</param>
+		/// <param name="rightField">The right field.</param>
+		public void Remove(Guid leftTable, Guid rightTable, string leftField, string rightField)
+		{
+			lock (this.sync)
+			{
+				// Remove all relationships that correspond to the specified table.
+				this.relationships.RemoveWhere((DbRelationship relationship) =>
+				{
+					// If the relationship contains the table.
+					if ((relationship.LeftTable.Id == leftTable) && (relationship.RightTable.Id == rightTable) && (relationship.LeftField == leftField) && (relationship.RightField == rightField))
+					{
+						// Call the remove event handler for this relationship.
+						if (null != this.RelationshipRemoved) this.RelationshipRemoved(this, new DbRelationshipEventArgs(relationship));
+						// Return true.
+						return true;
+					}
+					else return false;
+				});
 			}
 		}
 

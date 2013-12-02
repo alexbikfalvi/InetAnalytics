@@ -3225,4 +3225,136 @@ Female, 45-54 years
   <data name="UndoLarge_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\UndoLarge_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GlobePlayStart_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStart_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobePlayStart_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStart_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobePlayStart_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStart_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobePlayStart_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStart_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeScript_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeScript_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeScript_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeScript_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeScript_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeScript_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobeScript_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobeScript_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobePlayStop_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStop_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobePlayStop_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStop_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobePlayStop_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStop_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlobePlayStop_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GlobePlayStop_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeAdd_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeAdd_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeAdd_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeAdd_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeAdd_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeAdd_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeAdd_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeAdd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeRemove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeRemove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeRemove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeRemove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeRemove_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeRemove_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptLargeRemove_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptLargeRemove_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterAdd_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterAdd_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterAdd_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterAdd_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterAdd_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterAdd_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterAdd_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterAdd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterRemove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterRemove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterRemove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterRemove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterRemove_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterRemove_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterRemove_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ParameterRemove_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Parameter_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Parameter_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Parameter_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Parameter_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Parameter_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Parameter_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Parameter_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Parameter_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptError_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptError_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptError_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptError_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptSuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptWarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptWarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptWarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScriptWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ScriptWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

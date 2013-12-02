@@ -53,9 +53,12 @@ namespace InetAnalytics.Forms.PlanetLab
 		public DialogResult ShowDialog(IWin32Window owner, PlDatabaseList<PlNode> nodes)
 		{
 			// Initialize the control.
-			this.control.Initialize(nodes);
-			// Call the base class methods.
-			return base.ShowDialog(owner);
+			if (this.control.Initialize(nodes))
+			{
+				// Call the base class methods.
+				return base.ShowDialog(owner);
+			}
+			else return DialogResult.Cancel;
 		}
 
 		/// <summary>

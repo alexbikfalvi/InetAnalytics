@@ -183,6 +183,20 @@ namespace InetCrawler.Database
 			}
 		}
 
+		/// <summary>
+		/// Tries to return the table with the specified identifier.
+		/// </summary>
+		/// <param name="id">The table identifier.</param>
+		/// <param name="table">The database table.</param>
+		/// <returns><b>True</b> if the table exists, <b>false</b> otherwise.</returns>
+		public bool TryGetTable(Guid id, out ITable table)
+		{
+			lock (this.sync)
+			{
+				return this.tables.TryGetValue(id, out table);
+			}
+		}
+
 		// Private methods.
 
 		/// <summary>

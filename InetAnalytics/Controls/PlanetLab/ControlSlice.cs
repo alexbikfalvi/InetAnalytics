@@ -149,8 +149,10 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		private Control.ControlCollection controls = null;
 
+		private readonly ControlSliceRun controlRun = new ControlSliceRun();
+
 		private TreeNode treeNodeSlice = null;
-		private TreeNode treeNodeTasks = null;
+		private TreeNode treeNodeRun = null;
 
 		private readonly object pendingSync = new object();
 		private readonly List<int> pendingNodes = new List<int>();
@@ -245,8 +247,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Update the information of the PlanetLab slice.
 			this.OnUpdateSlice();
 
-			// Create the tasks.
-			this.OnCreateTasks();
+			// Create the run option.
+			this.OnCreateRun();
 		}
 
 		// Protected methods.
@@ -1936,26 +1938,34 @@ namespace InetAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// A method called when creating the tasks.
+		/// A method called when creating the run option.
 		/// </summary>
-		private void OnCreateTasks()
+		private void OnCreateRun()
 		{
-			// Create the tasks tree node.
-			/*
-			this.treeNodeTasks = new TreeNode("Tasks");
-			this.treeNodeTasks.ImageKey = "GlobeTasks";
-			this.treeNodeTasks.SelectedImageKey = "GlobeTasks";
-			this.treeNodeSlice.Nodes.Add(this.treeNodeTasks);
-			this.treeNodeSlice.ExpandAll();*/
+			// Create the child tree nodes.
+			this.treeNodeRun = new TreeNode("Run");
+			this.treeNodeRun.ImageKey = "GlobeScript";
+			this.treeNodeRun.SelectedImageKey = "GlobeScript";
+			this.treeNodeRun.Tag = this.controlRun;
+
+			// Add the child tree nodes.
+			this.treeNodeSlice.Nodes.Add(this.treeNodeRun);
+			this.treeNodeSlice.ExpandAll();
+
+			// Initialize the controls.
+			this.controlRun.Initialize(this.crawler, this.slice, this.treeNodeRun);
+
+			// Add the controls.
+			this.controls.Add(this.controlRun);
 		}
 
 		/// <summary>
-		/// A method called when disposing the tasks.
+		/// A method called when disposing the run option.
 		/// </summary>
-		private void OnDisposeTasks()
+		private void OnDisposeRun()
 		{
-			// Delete the tasks tree node.
-			//this.treeNodeSlice.Nodes.Remove(this.treeNodeTasks);
+			// Dispose the run control.
+			this.controlRun.Dispose();
 		}
 	}
 }

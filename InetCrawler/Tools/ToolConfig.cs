@@ -28,7 +28,6 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public sealed class ToolConfig : IDisposable
 	{
-		private static readonly string logSourceToolset = @"Toolbox\{0}";
 		private static readonly string logSourceTool = @"Toolbox\{0}\{1}";
 
 		private readonly CrawlerApi api;

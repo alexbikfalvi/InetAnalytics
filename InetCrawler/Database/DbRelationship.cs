@@ -161,5 +161,35 @@ namespace InetCrawler.Database
 			// Return the relationship.
 			return relationship;
 		}
+
+		/// <summary>
+		/// Compares two relationship objects.
+		/// </summary>
+		/// <param name="obj">The object to compare.</param>
+		/// <returns><b>True</b> if the two objects are equal, <b>false</b> otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (null == obj) return false;
+			else if (!(obj is DbRelationship)) return false;
+			else
+			{
+				// Get the relationship object.
+				DbRelationship relationship = obj as DbRelationship;
+				// Check the tables and the fields are equal.
+				return object.ReferenceEquals(this.leftTable, relationship.leftTable) &&
+					object.ReferenceEquals(this.rightTable, relationship.rightTable) &&
+					(this.leftField == relationship.leftField) &&
+					(this.rightField == relationship.rightField);
+			}
+		}
+
+		/// <summary>
+		/// Gets the hash code for the relationship object.
+		/// </summary>
+		/// <returns>The hash code.</returns>
+		public override int GetHashCode()
+		{
+			return this.leftTable.GetHashCode() ^ this.rightTable.GetHashCode() ^ this.leftField.GetHashCode() ^ this.rightField.GetHashCode();
+		}
 	}
 }

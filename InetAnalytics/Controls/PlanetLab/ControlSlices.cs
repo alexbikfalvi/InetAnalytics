@@ -410,7 +410,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnAddSlice(PlSlice slice)
 		{
 			// Create a new tree node.
-			TreeNode node = new TreeNode(slice.Name);
+			TreeNode node = new TreeNode("Slice ({0})".FormatWith(slice.Name));
 			node.ImageKey = "GlobeObject";
 			node.SelectedImageKey = "GlobeObject";
 			this.treeNode.Nodes.Add(node);

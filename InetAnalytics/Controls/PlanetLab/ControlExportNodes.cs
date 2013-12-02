@@ -69,7 +69,12 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		// Public methods.
 
-		public void Initialize(PlDatabaseList<PlNode> nodes)
+		/// <summary>
+		/// Initializes the control with the list of nodes.
+		/// </summary>
+		/// <param name="nodes">The list of PlanetLab nodes.</param>
+		/// <returns><b>True</b> if the user selected to save the nodes, <b>false</b> otherwise.</returns>
+		public bool Initialize(PlDatabaseList<PlNode> nodes)
 		{
 			// Set the nodes.
 			this.Nodes = nodes;
@@ -87,7 +92,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.Result = DialogResult.Cancel;
 
 			// Save the list.
-			this.OnSave();
+			return this.OnSave();
 		}
 
 		// Private methods.
@@ -95,13 +100,14 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <summary>
 		/// An event handler called when the user clicks on the save button.
 		/// </summary>
-		private void OnSave()
+		/// <returns><b>True</b> if the user selected a file to save.</returns>
+		private bool OnSave()
 		{
 			// If the list of nodes is null, do nothing.
-			if (null == this.Nodes) return;
+			if (null == this.Nodes) return false;
 
 			// If the dialog is already saving a file, do nothing.
-			lock (this.sync) { if (this.saving) return; }
+			lock (this.sync) { if (this.saving) return false; }
 
 			// Show the save file dialog.
 			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
@@ -171,7 +177,7 @@ namespace InetAnalytics.Controls.PlanetLab
 													this.labelProgress.Text = "{0} of {1} completed ({2} error{3})".FormatWith(
 														countTotal, this.Nodes.Count, countError, countError.PluralSuffix());
 												});
-											
+
 											// Check the cancel flag.
 											lock (this.sync)
 											{
@@ -213,6 +219,13 @@ namespace InetAnalytics.Controls.PlanetLab
 							this.cancel = false;
 						}
 					});
+				// Return true.
+				return true;
+			}
+			else
+			{
+				// Return false.
+				return false;
 			}
 		}
 

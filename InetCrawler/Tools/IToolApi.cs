@@ -68,6 +68,16 @@ namespace InetCrawler.Tools
 		/// <param name="table">The database table template.</param>
 		void DatabaseRemoveTable(DbTableTemplate table);
 
+		/// <summary>
+		/// Adds the table relationship to the database.
+		/// </summary>
+		/// <param name="leftTable">The left table template.</param>
+		/// <param name="rightTable">The right table template.</param>
+		/// <param name="leftField">The left field.</param>
+		/// <param name="rightField">The right field.</param>
+		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
+		void DatabaseAddRelationship(DbTableTemplate leftTable, DbTableTemplate rightTable, string leftField, string rightField, bool readOnly);
+
 		// Status.
 
 		/// <summary>

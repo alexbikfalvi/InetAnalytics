@@ -35,8 +35,8 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Creates a new event arguments instance.
 		/// </summary>
+		/// <param name="server">The database server.</param>
 		/// <param name="table">The database table.</param>
-		/// <param name="newState">The new state.</param>
 		public DbServerTableEventArgs(DbServer server, ITable table)
 			: base(server)
 		{

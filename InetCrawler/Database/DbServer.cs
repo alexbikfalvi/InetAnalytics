@@ -97,6 +97,9 @@ namespace InetCrawler.Database
 			this.tables.TableChanged += this.OnTableChanged;
 			this.tables.TableRemoved += this.OnTableRemoved;
 
+			this.relationships.RelationshipAdded += this.OnRelationshipAdded;
+			this.relationships.RelationshipRemoved += this.OnRelationshipRemoved;
+
 			// Load the current configuration.
 			this.LoadInternalConfiguration();
 		}
@@ -143,6 +146,14 @@ namespace InetCrawler.Database
 			// Create the database tables and relationships.
 			this.tables = new DbTables(this.key);
 			this.relationships = new DbRelationships(this.key, this.tables);
+
+			// Set the event handlers.
+			this.tables.TableAdded += this.OnTableAdded;
+			this.tables.TableChanged += this.OnTableChanged;
+			this.tables.TableRemoved += this.OnTableRemoved;
+
+			this.relationships.RelationshipAdded += this.OnRelationshipAdded;
+			this.relationships.RelationshipRemoved += this.OnRelationshipRemoved;
 
 			// Save the configuration.
 			this.SaveInternalConfiguration();
@@ -270,6 +281,14 @@ namespace InetCrawler.Database
 		/// An event raised when a server database table has changed.
 		/// </summary>
 		public event DbServerTableEventHandler TableChanged;
+		/// <summary>
+		/// An event raised when a server database relationship has been added.
+		/// </summary>
+		public event DbServerRelationshipEventHandler RelationshipAdded;
+		/// <summary>
+		/// An event raised when a server database relationship has been removed.
+		/// </summary>
+		public event DbServerRelationshipEventHandler RelationshipRemoved; 
 		/// <summary>
 		/// An event raised when the server begins opening the connection.
 		/// </summary>
@@ -440,6 +459,9 @@ namespace InetCrawler.Database
 
 			// Remove the table.
 			this.tables.Remove(table.Id);
+
+			// Remove any relationship with the specified table.
+			this.relationships.Remove(table.Id);
 		}
 
 		/// <summary>
@@ -453,23 +475,66 @@ namespace InetCrawler.Database
 
 			// Remove the table.
 			this.tables.Remove(template.Id);
+
+			// Remove any relationship with the specified table.
+			this.relationships.Remove(template.Id);
 		}
 
 		/// <summary>
 		/// Adds a relationship to the database server.
 		/// </summary>
-		/// <param name="relationship">The relationship.</param>
-		public void AddRelationship(DbRelationship relationship)
+		/// <param name="leftTable">The left table.</param>
+		/// <param name="rightTable">The right table.</param>
+		/// <param name="leftField">The left field.</param>
+		/// <param name="rightField">The right field.</param>
+		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
+		public void AddRelationship(ITable leftTable, ITable rightTable, string leftField, string rightField, bool readOnly = true)
 		{
-			// Validate the argument.
-			if (null == relationship) throw new ArgumentNullException("relationship");
+			// Validate the arguments.
+			if (null == leftTable) throw new ArgumentNullException("leftTable");
+			if (null == rightTable) throw new ArgumentNullException("rightTable");
+			if (string.IsNullOrWhiteSpace(leftField)) new ArgumentException("The relationship field cannot be null or empty.", "leftField");
+			if (string.IsNullOrWhiteSpace(rightField)) new ArgumentException("The relationship field cannot be null or empty.", "rightField");
 
 			// Check the relationship tables exist.
-			if (!this.tables.HasTable(relationship.TableLeft.Id)) throw new DbException("Cannot add a relationship because the left table does not exist.");
-			if (!this.tables.HasTable(relationship.TableRight.Id)) throw new DbException("Cannot add a relationship because the right table does not exist.");
+			if (!this.tables.HasTable(leftTable.Id)) throw new DbException("Cannot add a relationship because the left table does not exist.");
+			if (!this.tables.HasTable(rightTable.Id)) throw new DbException("Cannot add a relationship because the right table does not exist.");
 
 			// Add the relationship.
-			this.relationships.Add()
+			this.relationships.Add(leftTable, rightTable, leftField, rightField, readOnly);
+		}
+
+		/// <summary>
+		/// Adds a relationship to the database server based on the specified template.
+		/// </summary>
+		/// <param name="template">The relationship template.</param>
+		public void AddRelationship(DbRelationshipTemplate template)
+		{
+			// Validate the arguments.
+			if (null == template) throw new ArgumentNullException("template");
+
+			// Find the relationship tables.
+			ITable leftTable;
+			ITable rightTable;
+
+			if (!this.tables.TryGetTable(template.LeftTable.Id, out leftTable)) throw new DbException("Cannot add a relationship because the left table does not exist.");
+			if (!this.tables.TryGetTable(template.RightTable.Id, out rightTable)) throw new DbException("Cannot add a relationship because the right table does not exist.");
+
+			// Add the relationship.
+			this.relationships.Add(leftTable, rightTable, template.LeftField, template.RightField, template.ReadOnly);
+		}
+
+		/// <summary>
+		/// Removes a relationship from the database server based on the specified template.
+		/// </summary>
+		/// <param name="template">The relationship template.</param>
+		public void RemoveRelationship(DbRelationshipTemplate template)
+		{
+			// Validate the arguments.
+			if (null == template) throw new ArgumentNullException("template");
+
+			// Remove the relationship.
+			this.relationships.Remove(template.LeftTable.Id, template.RightTable.Id, template.LeftField, template.RightField);
 		}
 
 		// Protected methods.
@@ -659,6 +724,28 @@ namespace InetCrawler.Database
 		{
 			// Raise the server event.
 			if (this.TableChanged != null) this.TableChanged(this, new DbServerTableEventArgs(this, e.Table));
+		}
+
+		/// <summary>
+		/// An event handler called when a database relatioship has been added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipAdded(object sender, DbRelationshipEventArgs e)
+		{
+			// Raise the server event.
+			if (this.RelationshipAdded != null) this.RelationshipAdded(this, new DbServerRelationshipEventArgs(this, e.Relationship));
+		}
+
+		/// <summary>
+		/// An event handler called when a database relationship has been removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipRemoved(object sender, DbRelationshipEventArgs e)
+		{
+			// Raise the server event.
+			if (this.RelationshipRemoved != null) this.RelationshipRemoved(this, new DbServerRelationshipEventArgs(this, e.Relationship));
 		}
 	}
 }

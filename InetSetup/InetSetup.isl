@@ -4557,7 +4557,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>Registry5</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Comments</td><td>PlaylistsFileName</td><td>C:\Users\Alex\AppData\Roaming\Alex Bikfalvi\Internet Analytics\Comments\Playlists.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry55</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Testing\WebRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry6</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0\24654a51-339d-4c75-a60c-559388b5afcb,1.0.0.0</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
-		<row><td>Registry7</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0\bd140334-43d9-4853-a124-aca4fd799034,1.0.0.0</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry72</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\YouTube</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry75</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\YouTube\V2</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry9</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0\9d988bac-87a5-470a-81b3-bae3fa30e92d,1.0.0.0</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>

@@ -99,6 +99,8 @@ namespace InetAnalytics.Controls.Database
 			this.server.TableAdded += this.OnTableAdded;
 			this.server.TableRemoved += this.OnTableRemoved;
 			this.server.TableChanged += this.OnTableChanged;
+			this.server.RelationshipAdded += this.OnRelationshipAdded;
+			this.server.RelationshipRemoved += this.OnRelationshipRemoved;
 			this.server.EventLogged += this.OnEventLogged;
 			this.crawler.Database.PrimaryServerChanged += this.OnPrimaryServerChanged;
 
@@ -343,13 +345,49 @@ namespace InetAnalytics.Controls.Database
 		}
 
 		/// <summary>
+		/// An event handler called when a relationship was added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipAdded(object sender, DbServerRelationshipEventArgs e)
+		{
+			// Add a new relationship item.
+			ListViewItem item = new ListViewItem(new string[] {
+					e.Relationship.LeftTable.LocalName, e.Relationship.LeftField,
+					e.Relationship.RightTable.LocalName, e.Relationship.RightField },
+				this.imageListSmall.Images.IndexOfKey("Relationship"));
+			item.Tag = e.Relationship;
+			this.listViewRelationships.Items.Add(item);
+		}
+
+		/// <summary>
+		/// An event handler called when a relationship was removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRelationshipRemoved(object sender, DbServerRelationshipEventArgs e)
+		{
+			// Find the corresponding relationship item.
+			ListViewItem item = this.listViewRelationships.Items.FirstOrDefault((ListViewItem it) =>
+				{
+					return object.ReferenceEquals(it.Tag, e.Relationship);
+				});
+			// If the item is not null.
+			if (null != item)
+			{
+				// Remove the item.
+				this.listViewRelationships.Items.Remove(item);
+			}
+		}
+
+		/// <summary>
 		/// An event handler called when the server relationship configuration has changed.
 		/// </summary>
 		private void OnRelationshipsChanged()
 		{
 			// Refresh the list of relationships.
 			this.listViewRelationships.Items.Clear();
-			foreach (DbRelationship relationship in this.server.Relationships)
+			foreach (IRelationship relationship in this.server.Relationships)
 			{
 				ListViewItem item = new ListViewItem(new string[] {
 					relationship.LeftTable.LocalName, relationship.LeftField,

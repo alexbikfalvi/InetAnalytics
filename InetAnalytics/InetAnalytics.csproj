@@ -91,11 +91,29 @@
     <Compile Include="Controls\Net\Ssh\ControlSsh.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\PlanetLab\Commands\CommandListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\Commands\CommandListBoxItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddCommand.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlAddCommand.Designer.cs">
+      <DependentUpon>ControlAddCommand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlAddSlice.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlAddSlice.Designer.cs">
       <DependentUpon>ControlAddSlice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlCommand.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlCommand.Designer.cs">
+      <DependentUpon>ControlCommand.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlExportNodes.cs">
       <SubType>UserControl</SubType>
@@ -156,6 +174,12 @@
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlPersonProperties.Designer.cs">
       <DependentUpon>ControlPersonProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceRun.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\ControlSliceRun.Designer.cs">
+      <DependentUpon>ControlSliceRun.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlanetLab\ControlSliceProperties.cs">
       <SubType>UserControl</SubType>
@@ -604,6 +628,12 @@
     <Compile Include="Forms\FormText.Designer.cs">
       <DependentUpon>FormText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddCommand.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormAddCommand.Designer.cs">
+      <DependentUpon>FormAddCommand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormPlanetLabPersons.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -827,8 +857,14 @@
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlAddCommand.resx">
+      <DependentUpon>ControlAddCommand.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlAddSlice.resx">
       <DependentUpon>ControlAddSlice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlCommand.resx">
+      <DependentUpon>ControlCommand.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlExportNodes.resx">
       <DependentUpon>ControlExportNodes.cs</DependentUpon>
@@ -860,6 +896,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlPersonProperties.resx">
       <DependentUpon>ControlPersonProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\ControlSliceRun.resx">
+      <DependentUpon>ControlSliceRun.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlSliceProperties.resx">
       <DependentUpon>ControlSliceProperties.cs</DependentUpon>
@@ -1087,6 +1127,9 @@
     <EmbeddedResource Include="Forms\FormText.resx">
       <DependentUpon>FormText.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormAddCommand.resx">
+      <DependentUpon>FormAddCommand.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormPlanetLabPersons.resx">
       <DependentUpon>FormPlanetLabPersons.cs</DependentUpon>
     </EmbeddedResource>
@@ -1225,6 +1268,50 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ScriptWarning_48.png" />
+    <None Include="Resources\ScriptWarning_32.png" />
+    <None Include="Resources\ScriptWarning_24.png" />
+    <None Include="Resources\ScriptWarning_16.png" />
+    <None Include="Resources\ScriptSuccess_48.png" />
+    <None Include="Resources\ScriptSuccess_32.png" />
+    <None Include="Resources\ScriptSuccess_24.png" />
+    <None Include="Resources\ScriptSuccess_16.png" />
+    <None Include="Resources\ScriptError_48.png" />
+    <None Include="Resources\ScriptError_32.png" />
+    <None Include="Resources\ScriptError_24.png" />
+    <None Include="Resources\ScriptError_16.png" />
+    <None Include="Resources\ParameterRemove_48.png" />
+    <None Include="Resources\ParameterRemove_32.png" />
+    <None Include="Resources\ParameterRemove_24.png" />
+    <None Include="Resources\ParameterRemove_16.png" />
+    <None Include="Resources\ParameterAdd_48.png" />
+    <None Include="Resources\ParameterAdd_32.png" />
+    <None Include="Resources\ParameterAdd_24.png" />
+    <None Include="Resources\ParameterAdd_16.png" />
+    <None Include="Resources\Parameter_48.png" />
+    <None Include="Resources\Parameter_32.png" />
+    <None Include="Resources\Parameter_24.png" />
+    <None Include="Resources\Parameter_16.png" />
+    <None Include="Resources\ScriptLargeRemove_48.png" />
+    <None Include="Resources\ScriptLargeRemove_32.png" />
+    <None Include="Resources\ScriptLargeRemove_24.png" />
+    <None Include="Resources\ScriptLargeRemove_16.png" />
+    <None Include="Resources\ScriptLargeAdd_48.png" />
+    <None Include="Resources\ScriptLargeAdd_32.png" />
+    <None Include="Resources\ScriptLargeAdd_24.png" />
+    <None Include="Resources\ScriptLargeAdd_16.png" />
+    <None Include="Resources\GlobePlayStop_48.png" />
+    <None Include="Resources\GlobePlayStop_32.png" />
+    <None Include="Resources\GlobePlayStop_24.png" />
+    <None Include="Resources\GlobePlayStop_16.png" />
+    <None Include="Resources\GlobeScript_48.png" />
+    <None Include="Resources\GlobeScript_32.png" />
+    <None Include="Resources\GlobeScript_24.png" />
+    <None Include="Resources\GlobeScript_16.png" />
+    <None Include="Resources\GlobePlayStart_48.png" />
+    <None Include="Resources\GlobePlayStart_32.png" />
+    <None Include="Resources\GlobePlayStart_24.png" />
+    <None Include="Resources\GlobePlayStart_16.png" />
     <None Include="Resources\UndoLarge_48.png" />
     <None Include="Resources\UndoLarge_32.png" />
     <None Include="Resources\UndoLarge_24.png" />

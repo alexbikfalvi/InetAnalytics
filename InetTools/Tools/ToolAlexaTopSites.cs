@@ -59,6 +59,10 @@ namespace InetTools.Tools
 			// Add the tables to the database.
 			this.Api.DatabaseAddTable(this.dbTableRanking);
 			this.Api.DatabaseAddTable(this.dbTableHistory);
+
+			this.Api.DatabaseAddRelationship(this.dbTableHistory, this.dbTableRanking, "Timestamp", "Timestamp", true);
+			this.Api.DatabaseAddRelationship(this.dbTableHistory, this.dbTableRanking, "Global", "Global", true);
+			this.Api.DatabaseAddRelationship(this.dbTableHistory, this.dbTableRanking, "Country", "Country", true);
 		}
 
 		// Public properties.

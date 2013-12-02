@@ -13,9 +13,31 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			// If disposing the managed resources.
+			if (disposing)
 			{
-				components.Dispose();
+				lock (this.sync)
+				{
+					// Dispose the cancellation token.
+					if (null != this.asyncCancel)
+					{
+						// Cancel the asynchronous operation.
+						asyncCancel.Cancel();
+						// If there exists an asynchronous operation in progress.
+						if (null != this.asyncResult)
+						{
+							// Wait for the operation to complete.
+							this.asyncResult.AsyncWaitHandle.WaitOne();
+						}
+						// Dispose the cancellation token.
+						asyncCancel.Dispose();
+					}
+				}
+				// Dispose the components.
+				if (this.components != null)
+				{
+					components.Dispose();
+				}
 			}
 			base.Dispose(disposing);
 		}
@@ -32,7 +54,8 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlCdnFinder));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panelTool = new DotNetApi.Windows.Controls.ThemeControl();
-			this.panelDomains = new System.Windows.Forms.Panel();
+			this.tabControl = new DotNetApi.Windows.Controls.ThemeTabControl();
+			this.tabPageSites = new System.Windows.Forms.TabPage();
 			this.splitContainerDomains = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listViewSites = new System.Windows.Forms.ListView();
 			this.columnHeaderIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -62,7 +85,8 @@
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.panelTool.SuspendLayout();
-			this.panelDomains.SuspendLayout();
+			this.tabControl.SuspendLayout();
+			this.tabPageSites.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerDomains)).BeginInit();
 			this.splitContainerDomains.Panel1.SuspendLayout();
 			this.splitContainerDomains.Panel2.SuspendLayout();
@@ -94,7 +118,7 @@
 			// 
 			// panelTool
 			// 
-			this.panelTool.Controls.Add(this.panelDomains);
+			this.panelTool.Controls.Add(this.tabControl);
 			this.panelTool.Controls.Add(this.toolStrip);
 			this.panelTool.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelTool.Location = new System.Drawing.Point(0, 0);
@@ -106,15 +130,27 @@
 			this.panelTool.TabIndex = 0;
 			this.panelTool.Title = "Content Delivery Networks Finder";
 			// 
-			// panelDomains
+			// tabControl
 			// 
-			this.panelDomains.Controls.Add(this.splitContainerDomains);
-			this.panelDomains.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelDomains.Location = new System.Drawing.Point(1, 48);
-			this.panelDomains.Name = "panelDomains";
-			this.panelDomains.Padding = new System.Windows.Forms.Padding(4);
-			this.panelDomains.Size = new System.Drawing.Size(798, 376);
-			this.panelDomains.TabIndex = 3;
+			this.tabControl.Controls.Add(this.tabPageSites);
+			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl.Location = new System.Drawing.Point(1, 48);
+			this.tabControl.Name = "tabControl";
+			this.tabControl.Padding = new System.Drawing.Point(0, 0);
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.Size = new System.Drawing.Size(798, 376);
+			this.tabControl.TabIndex = 3;
+			// 
+			// tabPageSites
+			// 
+			this.tabPageSites.Controls.Add(this.splitContainerDomains);
+			this.tabPageSites.Location = new System.Drawing.Point(2, 23);
+			this.tabPageSites.Name = "tabPageSites";
+			this.tabPageSites.Padding = new System.Windows.Forms.Padding(4);
+			this.tabPageSites.Size = new System.Drawing.Size(794, 351);
+			this.tabPageSites.TabIndex = 0;
+			this.tabPageSites.Text = "Sites";
+			this.tabPageSites.UseVisualStyleBackColor = true;
 			// 
 			// splitContainerDomains
 			// 
@@ -131,8 +167,8 @@
 			// 
 			this.splitContainerDomains.Panel2.Controls.Add(this.controlSite);
 			this.splitContainerDomains.Panel2.Padding = new System.Windows.Forms.Padding(1);
-			this.splitContainerDomains.Size = new System.Drawing.Size(790, 368);
-			this.splitContainerDomains.SplitterDistance = 390;
+			this.splitContainerDomains.Size = new System.Drawing.Size(786, 343);
+			this.splitContainerDomains.SplitterDistance = 388;
 			this.splitContainerDomains.SplitterWidth = 5;
 			this.splitContainerDomains.TabIndex = 2;
 			this.splitContainerDomains.UseTheme = false;
@@ -152,7 +188,7 @@
 			this.listViewSites.Location = new System.Drawing.Point(1, 1);
 			this.listViewSites.MultiSelect = false;
 			this.listViewSites.Name = "listViewSites";
-			this.listViewSites.Size = new System.Drawing.Size(388, 366);
+			this.listViewSites.Size = new System.Drawing.Size(386, 341);
 			this.listViewSites.SmallImageList = this.imageList;
 			this.listViewSites.TabIndex = 0;
 			this.listViewSites.UseCompatibleStateImageBehavior = false;
@@ -193,7 +229,7 @@
 			this.controlSite.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlSite.Location = new System.Drawing.Point(1, 1);
 			this.controlSite.Name = "controlSite";
-			this.controlSite.Size = new System.Drawing.Size(393, 366);
+			this.controlSite.Size = new System.Drawing.Size(391, 341);
 			this.controlSite.TabIndex = 0;
 			// 
 			// toolStrip
@@ -286,6 +322,7 @@
 			this.buttonSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemSaveSites,
             this.menuItemSaveResources});
+			this.buttonSave.Enabled = false;
 			this.buttonSave.Image = global::InetTools.Properties.Resources.Save_16;
 			this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonSave.Name = "buttonSave";
@@ -295,14 +332,14 @@
 			// menuItemSaveSites
 			// 
 			this.menuItemSaveSites.Name = "menuItemSaveSites";
-			this.menuItemSaveSites.Size = new System.Drawing.Size(136, 22);
+			this.menuItemSaveSites.Size = new System.Drawing.Size(152, 22);
 			this.menuItemSaveSites.Text = "Sites...";
 			this.menuItemSaveSites.Click += new System.EventHandler(this.OnSaveSites);
 			// 
 			// menuItemSaveResources
 			// 
 			this.menuItemSaveResources.Name = "menuItemSaveResources";
-			this.menuItemSaveResources.Size = new System.Drawing.Size(136, 22);
+			this.menuItemSaveResources.Size = new System.Drawing.Size(152, 22);
 			this.menuItemSaveResources.Text = "Resources...";
 			this.menuItemSaveResources.Click += new System.EventHandler(this.OnSaveResources);
 			// 
@@ -325,7 +362,7 @@
 			// 
 			// openFileDialog
 			// 
-			this.openFileDialog.Filter = "Alexa ranking XML files (*.xml)|*.xml";
+			this.openFileDialog.Filter = "Alexa ranking files (*.alx)|*.alx";
 			this.openFileDialog.Title = "Open Sites List";
 			// 
 			// ControlCdnFinder
@@ -342,7 +379,8 @@
 			this.splitContainer.ResumeLayout(false);
 			this.panelTool.ResumeLayout(false);
 			this.panelTool.PerformLayout();
-			this.panelDomains.ResumeLayout(false);
+			this.tabControl.ResumeLayout(false);
+			this.tabPageSites.ResumeLayout(false);
 			this.splitContainerDomains.Panel1.ResumeLayout(false);
 			this.splitContainerDomains.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerDomains)).EndInit();
@@ -375,12 +413,13 @@
 		private System.Windows.Forms.ToolStripButton buttonOpen;
 		private System.Windows.Forms.ColumnHeader columnHeaderResources;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerDomains;
-		private System.Windows.Forms.Panel panelDomains;
 		private System.Windows.Forms.ColumnHeader columnHeaderIndex;
 		private ControlCdnFinderSite controlSite;
 		private System.Windows.Forms.ToolStripDropDownButton buttonSave;
 		private System.Windows.Forms.ToolStripMenuItem menuItemSaveSites;
 		private System.Windows.Forms.ToolStripMenuItem menuItemSaveResources;
 		private System.Windows.Forms.ColumnHeader columnHeaderUrl;
+		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
+		private System.Windows.Forms.TabPage tabPageSites;
 	}
 }

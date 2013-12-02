@@ -177,6 +177,10 @@ namespace InetCrawler.Database
 		/// Returns the list of table templates.
 		/// </summary>
 		public DbTableTemplates Tables { get { return this.tables; } }
+		/// <summary>
+		/// Returns the list of relationship templates.
+		/// </summary>
+		public DbRelationshipTemplates Relationships { get { return this.relationships; } }
 
 		// Public methods.
 
@@ -417,32 +421,13 @@ namespace InetCrawler.Database
 				// Add the current table templates to the server.
 				foreach (DbTableTemplate table in this.tables)
 				{
-					try { server.AddTable(table); }
-					catch { }
+					server.AddTable(table);
 				}
 
 				// Add the current relationships to the server.
 				foreach (DbRelationshipTemplate relationship in this.relationships)
 				{
-					try
-					{
-						// Get the table.
-						ITable leftTable = server.Tables[relationship.LeftTable.Id];
-						ITable rightTable = server.Tables[relationship.RightTable.Id];
-
-						// If any of the tables is null, ignore the template.
-						if (null == leftTable) continue;
-						if (null == rightTable) continue;
-
-						// Add the table to the server.
-						server.Relationships.Add(
-							leftTable,
-							rightTable,
-							relationship.LeftField,
-							relationship.RightField,
-							relationship.ReadOnly);
-					}
-					catch { }
+					server.AddRelationship(relationship);
 				}
 			}
 		}
@@ -504,14 +489,10 @@ namespace InetCrawler.Database
 				// For all the servers.
 				foreach (DbServer server in this.servers.Values)
 				{
-					try
-					{
-						// Create a new table based on the template.
-						ITable table = DbTable.Create(e.Template);
-						// Add the table to the server.
-						server.Tables.Add(table);
-					}
-					catch { }
+					// Create a new table based on the template.
+					ITable table = DbTable.Create(e.Template);
+					// Add the table to the server.
+					server.AddTable(table);
 				}
 			}
 		}
@@ -529,7 +510,7 @@ namespace InetCrawler.Database
 				foreach (DbServer server in this.servers.Values)
 				{
 					// Remove the table to the server.
-					server.Tables.Remove(e.Template.Id);
+					server.RemoveTable(e.Template);
 				}
 			}
 		}
@@ -546,25 +527,7 @@ namespace InetCrawler.Database
 				// For all the servers.
 				foreach (DbServer server in this.servers.Values)
 				{
-					try
-					{
-						// Get the table.
-						ITable leftTable = server.Tables[e.Template.LeftTable.Id];
-						ITable rightTable = server.Tables[e.Template.RightTable.Id];
-
-						// If any of the tables is null, ignore the template.
-						if (null == leftTable) continue;
-						if (null == rightTable) continue;
-
-						// Add the table to the server.
-						server.Relationships.Add(
-							leftTable,
-							rightTable,
-							e.Template.LeftField,
-							e.Template.RightField,
-							e.Template.ReadOnly);
-					}
-					catch { }
+					server.AddRelationship(e.Template);
 				}
 			}
 		}
@@ -576,6 +539,14 @@ namespace InetCrawler.Database
 		/// <param name="e">The event arguments.</param>
 		private void OnRelationshipTemplateRemoved(object sender, DbRelationshipTemplateEventArgs e)
 		{
+			lock (this.sync)
+			{
+				// For all the servers.
+				foreach (DbServer server in this.servers.Values)
+				{
+					server.RemoveRelationship(e.Template);
+				}
+			}
 		}
 	}
 }

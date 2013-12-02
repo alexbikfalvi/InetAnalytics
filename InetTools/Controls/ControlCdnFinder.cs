@@ -666,12 +666,10 @@ namespace InetTools.Controls
 		{
 			// Set th dialog properties.
 			this.saveFileDialog.Title = "Save Sites Data";
-			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
+			this.saveFileDialog.Filter = "CDN Finder data files (*.cdn)|*.cdn";
 			// Show the dialog.
 			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				// Save the sites list.
-				//this.sites.
 			}
 		}
 

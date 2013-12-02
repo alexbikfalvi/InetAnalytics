@@ -36,7 +36,7 @@ namespace InetCrawler.Database
 		/// Creates a new event arguments instance.
 		/// </summary>
 		/// <param name="relationship">The database relationship.</param>
-		public DbRelationshipEventArgs(DbRelationship relationship)
+		public DbRelationshipEventArgs(IRelationship relationship)
 		{
 			this.Relationship = relationship;
 		}
@@ -46,6 +46,6 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets the database relationship.
 		/// </summary>
-		public DbRelationship Relationship { get; private set; }
+		public IRelationship Relationship { get; private set; }
 	}
 }

@@ -82,10 +82,12 @@
 			// 
 			// textBoxUrl
 			// 
+			this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUrl.Location = new System.Drawing.Point(112, 90);
 			this.textBoxUrl.Name = "textBoxUrl";
 			this.textBoxUrl.ReadOnly = true;
-			this.textBoxUrl.Size = new System.Drawing.Size(240, 20);
+			this.textBoxUrl.Size = new System.Drawing.Size(280, 20);
 			this.textBoxUrl.TabIndex = 4;
 			// 
 			// labelBaseCdn
@@ -99,10 +101,12 @@
 			// 
 			// textBoxBaseCdn
 			// 
+			this.textBoxBaseCdn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxBaseCdn.Location = new System.Drawing.Point(112, 142);
 			this.textBoxBaseCdn.Name = "textBoxBaseCdn";
 			this.textBoxBaseCdn.ReadOnly = true;
-			this.textBoxBaseCdn.Size = new System.Drawing.Size(240, 20);
+			this.textBoxBaseCdn.Size = new System.Drawing.Size(280, 20);
 			this.textBoxBaseCdn.TabIndex = 8;
 			// 
 			// labelAssetCdn
@@ -116,10 +120,12 @@
 			// 
 			// textBoxAssetCdn
 			// 
+			this.textBoxAssetCdn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAssetCdn.Location = new System.Drawing.Point(112, 116);
 			this.textBoxAssetCdn.Name = "textBoxAssetCdn";
 			this.textBoxAssetCdn.ReadOnly = true;
-			this.textBoxAssetCdn.Size = new System.Drawing.Size(240, 20);
+			this.textBoxAssetCdn.Size = new System.Drawing.Size(280, 20);
 			this.textBoxAssetCdn.TabIndex = 6;
 			// 
 			// labelSite
@@ -133,10 +139,12 @@
 			// 
 			// textBoxSite
 			// 
+			this.textBoxSite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxSite.Location = new System.Drawing.Point(112, 64);
 			this.textBoxSite.Name = "textBoxSite";
 			this.textBoxSite.ReadOnly = true;
-			this.textBoxSite.Size = new System.Drawing.Size(240, 20);
+			this.textBoxSite.Size = new System.Drawing.Size(280, 20);
 			this.textBoxSite.TabIndex = 2;
 			// 
 			// labelTitle

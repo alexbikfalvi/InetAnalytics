@@ -63,16 +63,16 @@ namespace InetCrawler.Database
 			// Set the event handler for the connection state.
 			this.connection.StateChange += this.OnConnectionStateChanged;
 			// Add tables to the tables list.
-			this.Tables.Add(this.tableDatabases);
-			this.Tables.Add(this.tableSchema);
-			this.Tables.Add(this.tableTypes);
-			this.Tables.Add(this.tableTables);
-			this.Tables.Add(this.tableColumns);
+			this.AddTable(this.tableDatabases);
+			this.AddTable(this.tableSchema);
+			this.AddTable(this.tableTypes);
+			this.AddTable(this.tableTables);
+			this.AddTable(this.tableColumns);
 			// Add relationships to the tables list.
-			this.Relationships.Add(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
-			this.Relationships.Add(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
-			this.Relationships.Add(this.tableTypes, this.tableColumns, "SystemTypeId", "SystemTypeId");
-			this.Relationships.Add(this.tableTypes, this.tableColumns, "UserTypeId", "UserTypeId");
+			this.AddRelationship(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
+			this.AddRelationship(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
+			this.AddRelationship(this.tableTypes, this.tableColumns, "SystemTypeId", "SystemTypeId");
+			this.AddRelationship(this.tableTypes, this.tableColumns, "UserTypeId", "UserTypeId");
 
 			// Load the current configuration.
 			this.LoadInternalConfiguration();
@@ -108,14 +108,14 @@ namespace InetCrawler.Database
 			// Set the event handler for the connection state.
 			this.connection.StateChange += this.OnConnectionStateChanged;
 			// Add tables to the tables list.
-			this.Tables.Add(this.tableDatabases);
-			this.Tables.Add(this.tableSchema);
-			this.Tables.Add(this.tableTypes);
-			this.Tables.Add(this.tableTables);
-			this.Tables.Add(this.tableColumns);
+			this.AddTable(this.tableDatabases);
+			this.AddTable(this.tableSchema);
+			this.AddTable(this.tableTypes);
+			this.AddTable(this.tableTables);
+			this.AddTable(this.tableColumns);
 			// Add relationships to the tables list.
-			this.Relationships.Add(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
-			this.Relationships.Add(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
+			this.AddRelationship(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
+			this.AddRelationship(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
 
 			// Save the configuration.
 			this.SaveInternalConfiguration();

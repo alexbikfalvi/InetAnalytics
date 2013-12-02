@@ -50,6 +50,7 @@
     <Compile Include="Database\DbRelationshipTemplate.cs" />
     <Compile Include="Database\DbRelationshipTemplateEventArgs.cs" />
     <Compile Include="Database\DbRelationshipTemplates.cs" />
+    <Compile Include="Database\DbServerRelationshipEventArgs.cs" />
     <Compile Include="Database\DbTableTemplate.cs" />
     <Compile Include="Database\DbTableTemplateEventArgs.cs" />
     <Compile Include="Database\DbTableTemplates.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
     <Compile Include="Log\LogEventArgs.cs" />
+    <Compile Include="PlanetLab\PlCommand.cs" />
     <Compile Include="PlanetLab\PlConfigSlice.cs" />
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />
     <Compile Include="Spider\SpiderEventArgs.cs" />
