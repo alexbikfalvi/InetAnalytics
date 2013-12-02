@@ -1264,9 +1264,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Icon.ico" />
     <None Include="Resources\ScriptWarning_48.png" />
     <None Include="Resources\ScriptWarning_32.png" />
