@@ -79,5 +79,27 @@ namespace InetAnalytics.Forms.PlanetLab
 			// Show the dialog.
 			return base.ShowDialog(owner);
 		}
+
+		/// <summary>
+		/// An event handler called when the command input has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnInputChanged(object sender, EventArgs e)
+		{
+			// Set the add button enabled state.
+			this.buttonAdd.Enabled = this.control.IsValid;
+		}
+
+		/// <summary>
+		/// An event handler called when the user clicks on the add button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAdd(object sender, EventArgs e)
+		{
+			// Save the command.
+			this.control.Save();
+		}
 	}
 }

@@ -19,6 +19,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using DotNetApi;
 using InetCrawler.PlanetLab;
 
 namespace InetAnalytics.Controls.PlanetLab.Commands
@@ -28,12 +29,6 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 	/// </summary>
 	public sealed class CommandListBox : ListBox
 	{
-		private static readonly Image[] icons = {
-													Resources.ScriptSuccess_32,
-													Resources.ScriptWarning_32,
-													Resources.ScriptError_32
-												};
-
 		/// <summary>
 		/// Creates a new image list box instance.
 		/// </summary>
@@ -85,41 +80,55 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 			// Get the image list box item.
 			CommandListBoxItem item = this.Items[e.Index] as CommandListBoxItem;
 
-			Rectangle rectText = new Rectangle(
-				e.Bounds.Left + 48,
-				e.Bounds.Top,
-				e.Bounds.Width - 56,
-				e.Bounds.Height);
-
 			Rectangle rectImage = new Rectangle(
 				e.Bounds.Left + 8,
 				e.Bounds.Top + 8,
 				32,
 				32);
+			Rectangle rectTextCommand = new Rectangle(
+				e.Bounds.Left + 48,
+				e.Bounds.Top,
+				e.Bounds.Width - 56,
+				20);
+			Rectangle rectTextInfo = new Rectangle(
+				e.Bounds.Left + 48,
+				e.Bounds.Top + 28,
+				e.Bounds.Width - 56,
+				20);
+			
+			// Draw the item background.
+			using (Brush brush = new SolidBrush(e.BackColor))
+			{
+				// Draw a background rectangle.
+				e.Graphics.FillRectangle(brush, e.Bounds);
+			}
 
-			//// Draw the image.
-			//if (null != item.Image)
-			//{
-			//	e.Graphics.DrawImage(item.Image, rectImage);
-			//}
+			// Draw the image.
+			e.Graphics.DrawImage(Resources.Parameter_32, rectImage);
 
-			//using (Brush brush = new SolidBrush(e.BackColor))
-			//{
-			//	// Draw a background rectangle.
-			//	e.Graphics.FillRectangle(brush, e.Bounds);
-			//}
-
-			//// Draw the text
-			//if (null != item.Text)
-			//{
-			//	TextRenderer.DrawText(
-			//		e.Graphics,
-			//		item.Text,
-			//		this.Font,
-			//		rectText,
-			//		e.ForeColor,
-			//		TextFormatFlags.EndEllipsis | TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
-			//}
+			// Draw the text
+			if (null != item.Command)
+			{
+				using (Font font = new Font(this.Font, FontStyle.Bold))
+				{
+					// Draw the command text.
+					TextRenderer.DrawText(
+						e.Graphics,
+						item.Command.Command,
+						font,
+						rectTextCommand,
+						e.ForeColor,
+						TextFormatFlags.EndEllipsis | TextFormatFlags.Left | TextFormatFlags.Bottom);
+				}
+				// Draw the command information.
+				TextRenderer.DrawText(
+					e.Graphics,
+					"The command has {0} parameter and {1} parameter sets.".FormatWith(item.Command.ParametersCount, item.Command.SetsCount),
+					this.Font,
+					rectTextInfo,
+					e.ForeColor,
+					TextFormatFlags.EndEllipsis | TextFormatFlags.Left | TextFormatFlags.Top);
+			}
 		}
 
 		///// <summary>

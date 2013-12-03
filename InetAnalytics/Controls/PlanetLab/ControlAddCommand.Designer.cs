@@ -30,7 +30,7 @@
 		{
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.controlCommand = new InetAnalytics.Controls.PlanetLab.ControlCommand();
+			this.control = new InetAnalytics.Controls.PlanetLab.ControlCommand();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -53,22 +53,25 @@
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
 			// 
-			// controlCommand
+			// control
 			// 
-			this.controlCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.controlCommand.Location = new System.Drawing.Point(3, 74);
-			this.controlCommand.Name = "controlCommand";
-			this.controlCommand.Size = new System.Drawing.Size(594, 323);
-			this.controlCommand.TabIndex = 1;
+			this.control.Command = null;
+			this.control.HideSave = true;
+			this.control.Location = new System.Drawing.Point(3, 74);
+			this.control.Name = "control";
+			this.control.Size = new System.Drawing.Size(594, 323);
+			this.control.TabIndex = 1;
+			this.control.InputChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// ControlAddCommand
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
-			this.Controls.Add(this.controlCommand);
+			this.Controls.Add(this.control);
 			this.Controls.Add(this.labelTitle);
 			this.Controls.Add(this.pictureBox);
 			this.MinimumSize = new System.Drawing.Size(0, 230);
@@ -84,6 +87,6 @@
 
 		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.Label labelTitle;
-		private PlanetLab.ControlCommand controlCommand;
+		private PlanetLab.ControlCommand control;
 	}
 }

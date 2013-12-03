@@ -34,12 +34,14 @@ namespace InetCrawler.PlanetLab
 			Error = 2
 		}
 
+		public static readonly string regexParamGood = @"{\d+}";
+		public static readonly string regexParamBad = @"{.*?(}|$)";
+
 		private CommandStatus status = CommandStatus.Warning;
 		
 		private string command = string.Empty;
 		
-		private int parametersCount = 0;
-		private int setsCount = 0;
+		private object[,] parameters = null;
 
 		/// <summary>
 		/// Creates a new empty command instance.
@@ -71,44 +73,54 @@ namespace InetCrawler.PlanetLab
 		public string Command
 		{
 			get { return this.command; }
+			set { this.command = value; }
 		}
 		/// <summary>
 		/// Gets the parameters count.
 		/// </summary>
 		public int ParametersCount
 		{
-			get { return this.parametersCount; }
+			get { return null != this.parameters ? this.parameters.GetLength(0) : 0; }
 		}
 		/// <summary>
 		/// Gets the sets count.
 		/// </summary>
 		public int SetsCount
 		{
-			get { return this.setsCount; }
+			get { return null != this.parameters ? this.parameters.GetLength(1) : 0; }
+		}
+		/// <summary>
+		/// Gets the parameters at the specified parametera and set indices.
+		/// </summary>
+		/// <param name="parameter">The parameter index.</param>
+		/// <param name="set">The set index.</param>
+		/// <returns>The parameter value or <b>null</b> if the parameter does not exist or is empty.</returns>
+		public object this[int parameter, int set]
+		{
+			get
+			{
+				if ((parameter < 0) || (parameter >= this.parameters.GetLength(0))) return null;
+				if ((set < 0) || (set >= this.parameters.GetLength(1))) return null;
+				return this.parameters[parameter, set];
+			}
+			set
+			{
+				if ((parameter < 0) || (parameter >= this.parameters.GetLength(0))) return;
+				if ((set < 0) || (set >= this.parameters.GetLength(1))) return;
+				this.parameters[parameter, set] = value;
+			}
 		}
 
 		// Public methods.
 
 		/// <summary>
-		/// Returns the number of parameters found in the specified string.
+		/// Resizes the command parameters to match the specified number of parameters and sets.
 		/// </summary>
-		/// <param name="command"></param>
-		/// <returns></returns>
-		//public static int GetParametersCount(string command)
-		//{
-
-		//}
-
-		/// <summary>
-		/// Gets the parameter at the specified set.
-		/// </summary>
-		/// <param name="parameter"></param>
-		/// <param name="set"></param>
-		/// <returns></returns>
-		public string GetParameter(int parameter, int set)
+		/// <param name="parameters">The number of parameters.</param>
+		/// <param name="sets">The number of sets.</param>
+		public void ResizeParameters(int parameters, int sets)
 		{
-			return string.Empty;
+			this.parameters = new object[parameters, sets];
 		}
-
 	}
 }

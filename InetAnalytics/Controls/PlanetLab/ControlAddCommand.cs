@@ -36,6 +36,14 @@ namespace InetAnalytics.Controls.Database
 			this.InitializeComponent();
 		}
 
+		// Public events.
+
+		/// <summary>
+		/// An event raised when the command input has changed. The event is raised when the user input changes and not when the command object has changed.
+		/// The command object only changes when the command is saved.
+		/// </summary>
+		public event EventHandler InputChanged;
+
 		// Public properties.
 
 		/// <summary>
@@ -43,8 +51,38 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		public PlCommand Command
 		{
-			get { return this.controlCommand.Command; }
-			set { this.controlCommand.Command = value; }
+			get { return this.control.Command; }
+			set { this.control.Command = value; }
+		}
+		/// <summary>
+		/// Gets whether the command format is valid and has at least one parameter set.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.control.IsValid; }
+		}
+
+		// Public methods.
+
+		/// <summary>
+		/// Saves the current command.
+		/// </summary>
+		public void Save()
+		{
+			this.control.Save();
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// An event handler called when the command input has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnInputChanged(object sender, EventArgs e)
+		{
+			// Raise the input changed event.
+			if (null != this.InputChanged) this.InputChanged(sender, e);
 		}
 	}
 }

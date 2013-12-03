@@ -3357,4 +3357,52 @@ Female, 45-54 years
   <data name="ScriptWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ScriptWarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TableAdd_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableAdd_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableAdd_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableAdd_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableAdd_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableAdd_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableAdd_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableAdd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableExport_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableExport_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableExport_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableExport_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableExport_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableExport_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableExport_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableExport_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableImport_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableImport_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableImport_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableImport_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableImport_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableImport_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableImport_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableImport_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableRemove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableRemove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableRemove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableRemove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableRemove_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableRemove_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableRemove_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TableRemove_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

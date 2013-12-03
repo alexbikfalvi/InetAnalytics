@@ -58,7 +58,7 @@
 			this.checkBoxNodesUpdate = new System.Windows.Forms.CheckBox();
 			this.tabPageCommands = new System.Windows.Forms.TabPage();
 			this.splitContainerCommands = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.controlCommand = new InetAnalytics.Controls.PlanetLab.ControlCommand();
+			this.commandList = new InetAnalytics.Controls.PlanetLab.Commands.CommandListBox();
 			this.tabPageLog = new System.Windows.Forms.TabPage();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
@@ -75,6 +75,7 @@
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.controlCommand = new InetAnalytics.Controls.PlanetLab.ControlCommand();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -89,6 +90,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.tabPageCommands.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerCommands)).BeginInit();
+			this.splitContainerCommands.Panel1.SuspendLayout();
 			this.splitContainerCommands.Panel2.SuspendLayout();
 			this.splitContainerCommands.SuspendLayout();
 			this.toolStrip.SuspendLayout();
@@ -305,6 +307,7 @@
 			// 
 			// splitContainerCommands.Panel1
 			// 
+			this.splitContainerCommands.Panel1.Controls.Add(this.commandList);
 			this.splitContainerCommands.Panel1.Padding = new System.Windows.Forms.Padding(1);
 			// 
 			// splitContainerCommands.Panel2
@@ -317,15 +320,19 @@
 			this.splitContainerCommands.TabIndex = 0;
 			this.splitContainerCommands.UseTheme = false;
 			// 
-			// controlCommand
+			// commandList
 			// 
-			this.controlCommand.Command = null;
-			this.controlCommand.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlCommand.Enabled = false;
-			this.controlCommand.Location = new System.Drawing.Point(0, 0);
-			this.controlCommand.Name = "controlCommand";
-			this.controlCommand.Size = new System.Drawing.Size(387, 341);
-			this.controlCommand.TabIndex = 0;
+			this.commandList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.commandList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.commandList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.commandList.FormattingEnabled = true;
+			this.commandList.IntegralHeight = false;
+			this.commandList.ItemHeight = 48;
+			this.commandList.Location = new System.Drawing.Point(1, 1);
+			this.commandList.Name = "commandList";
+			this.commandList.Size = new System.Drawing.Size(390, 339);
+			this.commandList.TabIndex = 0;
+			this.commandList.SelectedIndexChanged += new System.EventHandler(this.OnCommandSelectionChanged);
 			// 
 			// tabPageLog
 			// 
@@ -466,6 +473,16 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
+			// controlCommand
+			// 
+			this.controlCommand.Command = null;
+			this.controlCommand.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlCommand.HideSave = false;
+			this.controlCommand.Location = new System.Drawing.Point(0, 0);
+			this.controlCommand.Name = "controlCommand";
+			this.controlCommand.Size = new System.Drawing.Size(387, 341);
+			this.controlCommand.TabIndex = 0;
+			// 
 			// ControlSliceRun
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -490,6 +507,7 @@
 			this.splitContainerNodes.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			this.tabPageCommands.ResumeLayout(false);
+			this.splitContainerCommands.Panel1.ResumeLayout(false);
 			this.splitContainerCommands.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerCommands)).EndInit();
 			this.splitContainerCommands.ResumeLayout(false);
@@ -534,6 +552,7 @@
 		private System.Windows.Forms.ToolStripSeparator separator2;
 		private System.Windows.Forms.ToolStripButton buttonAddCommand;
 		private System.Windows.Forms.ToolStripButton buttonRemoveCommand;
+		private Commands.CommandListBox commandList;
 		private ControlCommand controlCommand;
 	}
 }

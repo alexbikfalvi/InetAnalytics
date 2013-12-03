@@ -634,6 +634,12 @@
     <Compile Include="Forms\PlanetLab\FormAddCommand.Designer.cs">
       <DependentUpon>FormAddCommand.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormImportParameters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormImportParameters.Designer.cs">
+      <DependentUpon>FormImportParameters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormPlanetLabPersons.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1130,6 +1136,9 @@
     <EmbeddedResource Include="Forms\PlanetLab\FormAddCommand.resx">
       <DependentUpon>FormAddCommand.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormImportParameters.resx">
+      <DependentUpon>FormImportParameters.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormPlanetLabPersons.resx">
       <DependentUpon>FormPlanetLabPersons.cs</DependentUpon>
     </EmbeddedResource>
@@ -1265,6 +1274,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\TableRemove_48.png" />
+    <None Include="Resources\TableRemove_32.png" />
+    <None Include="Resources\TableRemove_24.png" />
+    <None Include="Resources\TableRemove_16.png" />
+    <None Include="Resources\TableImport_48.png" />
+    <None Include="Resources\TableImport_32.png" />
+    <None Include="Resources\TableImport_24.png" />
+    <None Include="Resources\TableImport_16.png" />
+    <None Include="Resources\TableExport_48.png" />
+    <None Include="Resources\TableExport_32.png" />
+    <None Include="Resources\TableExport_24.png" />
+    <None Include="Resources\TableExport_16.png" />
+    <None Include="Resources\TableAdd_48.png" />
+    <None Include="Resources\TableAdd_32.png" />
+    <None Include="Resources\TableAdd_24.png" />
+    <None Include="Resources\TableAdd_16.png" />
     <None Include="Resources\ScriptWarning_48.png" />
     <None Include="Resources\ScriptWarning_32.png" />
     <None Include="Resources\ScriptWarning_24.png" />

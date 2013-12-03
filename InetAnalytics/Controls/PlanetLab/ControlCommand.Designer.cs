@@ -36,17 +36,21 @@
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonAddParameters = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemoveParameter = new System.Windows.Forms.ToolStripButton();
-			this.dataParemeters = new System.Windows.Forms.DataGridView();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonImportParameters = new System.Windows.Forms.ToolStripButton();
+			this.buttonClearParameters = new System.Windows.Forms.ToolStripButton();
+			this.dataParameters = new System.Windows.Forms.DataGridView();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.labelSpring = new System.Windows.Forms.ToolStripStatusLabel();
 			this.labelInfo = new System.Windows.Forms.ToolStripStatusLabel();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
 			this.toolStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataParemeters)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataParameters)).BeginInit();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -65,25 +69,29 @@
 			// 
 			// splitContainer.Panel2
 			// 
-			this.splitContainer.Panel2.Controls.Add(this.dataParemeters);
+			this.splitContainer.Panel2.Controls.Add(this.dataParameters);
 			this.splitContainer.Panel2.Controls.Add(this.statusStrip);
 			this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(1);
-			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 200;
+			this.splitContainer.Size = new System.Drawing.Size(700, 500);
+			this.splitContainer.SplitterDistance = 250;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 0;
 			this.splitContainer.UseTheme = false;
 			// 
 			// textBox
 			// 
+			this.textBox.BackColor = System.Drawing.Color.White;
 			this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.textBox.ColorCollection = null;
+			this.textBox.DefaultBackgroundColor = System.Drawing.Color.White;
+			this.textBox.DefaultForegroundColor = System.Drawing.Color.Black;
 			this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBox.Font = new System.Drawing.Font("Consolas", 10F);
 			this.textBox.ForeColor = System.Drawing.Color.Blue;
 			this.textBox.Location = new System.Drawing.Point(1, 26);
 			this.textBox.Name = "textBox";
-			this.textBox.Size = new System.Drawing.Size(598, 173);
-			this.textBox.TabIndex = 3;
+			this.textBox.Size = new System.Drawing.Size(698, 223);
+			this.textBox.TabIndex = 0;
 			this.textBox.Text = "";
 			this.textBox.TextChanged += new System.EventHandler(this.OnCommandChanged);
 			// 
@@ -94,11 +102,14 @@
             this.buttonUndo,
             this.separator1,
             this.buttonAddParameters,
-            this.buttonRemoveParameter});
+            this.buttonRemoveParameter,
+            this.separator2,
+            this.buttonImportParameters,
+            this.buttonClearParameters});
 			this.toolStrip.Location = new System.Drawing.Point(1, 1);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(598, 25);
-			this.toolStrip.TabIndex = 2;
+			this.toolStrip.Size = new System.Drawing.Size(698, 25);
+			this.toolStrip.TabIndex = 1;
 			this.toolStrip.Text = "toolStrip1";
 			// 
 			// buttonSave
@@ -132,8 +143,8 @@
 			this.buttonAddParameters.Image = global::InetAnalytics.Resources.ParameterAdd_16;
 			this.buttonAddParameters.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonAddParameters.Name = "buttonAddParameters";
-			this.buttonAddParameters.Size = new System.Drawing.Size(111, 22);
-			this.buttonAddParameters.Text = "&Add parameters";
+			this.buttonAddParameters.Size = new System.Drawing.Size(124, 22);
+			this.buttonAddParameters.Text = "&Add parameter set";
 			this.buttonAddParameters.Click += new System.EventHandler(this.OnAddParameter);
 			// 
 			// buttonRemoveParameter
@@ -142,19 +153,53 @@
 			this.buttonRemoveParameter.Image = global::InetAnalytics.Resources.ParameterRemove_16;
 			this.buttonRemoveParameter.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonRemoveParameter.Name = "buttonRemoveParameter";
-			this.buttonRemoveParameter.Size = new System.Drawing.Size(132, 22);
-			this.buttonRemoveParameter.Text = "&Remove parameters";
+			this.buttonRemoveParameter.Size = new System.Drawing.Size(145, 22);
+			this.buttonRemoveParameter.Text = "&Remove parameter set";
 			this.buttonRemoveParameter.Click += new System.EventHandler(this.OnRemoveParameters);
 			// 
-			// dataParemeters
+			// separator2
 			// 
-			this.dataParemeters.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.dataParemeters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataParemeters.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataParemeters.Location = new System.Drawing.Point(1, 1);
-			this.dataParemeters.Name = "dataParemeters";
-			this.dataParemeters.Size = new System.Drawing.Size(598, 171);
-			this.dataParemeters.TabIndex = 0;
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonImportParameters
+			// 
+			this.buttonImportParameters.Enabled = false;
+			this.buttonImportParameters.Image = global::InetAnalytics.Resources.TableImport_16;
+			this.buttonImportParameters.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonImportParameters.Name = "buttonImportParameters";
+			this.buttonImportParameters.Size = new System.Drawing.Size(125, 22);
+			this.buttonImportParameters.Text = "&Import parameters";
+			this.buttonImportParameters.Click += new System.EventHandler(this.OnImportParameters);
+			// 
+			// buttonClearParameters
+			// 
+			this.buttonClearParameters.Enabled = false;
+			this.buttonClearParameters.Image = global::InetAnalytics.Resources.TableRemove_16;
+			this.buttonClearParameters.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonClearParameters.Name = "buttonClearParameters";
+			this.buttonClearParameters.Size = new System.Drawing.Size(116, 22);
+			this.buttonClearParameters.Text = "&Clear parameters";
+			this.buttonClearParameters.Click += new System.EventHandler(this.OnClearParameters);
+			// 
+			// dataParameters
+			// 
+			this.dataParameters.AllowUserToAddRows = false;
+			this.dataParameters.AllowUserToDeleteRows = false;
+			this.dataParameters.AllowUserToResizeRows = false;
+			this.dataParameters.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.dataParameters.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			this.dataParameters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataParameters.Location = new System.Drawing.Point(1, 1);
+			this.dataParameters.MultiSelect = false;
+			this.dataParameters.Name = "dataParameters";
+			this.dataParameters.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			this.dataParameters.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+			this.dataParameters.Size = new System.Drawing.Size(698, 221);
+			this.dataParameters.TabIndex = 0;
+			this.dataParameters.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.OnParameterChanged);
+			this.dataParameters.SelectionChanged += new System.EventHandler(this.OnParameterChanged);
 			// 
 			// statusStrip
 			// 
@@ -162,9 +207,9 @@
             this.labelStatus,
             this.labelSpring,
             this.labelInfo});
-			this.statusStrip.Location = new System.Drawing.Point(1, 172);
+			this.statusStrip.Location = new System.Drawing.Point(1, 222);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(598, 22);
+			this.statusStrip.Size = new System.Drawing.Size(698, 22);
 			this.statusStrip.SizingGrip = false;
 			this.statusStrip.TabIndex = 1;
 			this.statusStrip.Text = "statusStrip1";
@@ -179,7 +224,7 @@
 			// labelSpring
 			// 
 			this.labelSpring.Name = "labelSpring";
-			this.labelSpring.Size = new System.Drawing.Size(497, 17);
+			this.labelSpring.Size = new System.Drawing.Size(628, 17);
 			this.labelSpring.Spring = true;
 			// 
 			// labelInfo
@@ -187,13 +232,18 @@
 			this.labelInfo.Name = "labelInfo";
 			this.labelInfo.Size = new System.Drawing.Size(0, 17);
 			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.Filter = "Text files (*.txt)|*.txt";
+			this.openFileDialog.Title = "Import Command Parameters";
+			// 
 			// ControlCommand
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlCommand";
-			this.Size = new System.Drawing.Size(600, 400);
+			this.Size = new System.Drawing.Size(700, 500);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel1.PerformLayout();
 			this.splitContainer.Panel2.ResumeLayout(false);
@@ -202,7 +252,7 @@
 			this.splitContainer.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataParemeters)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataParameters)).EndInit();
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
 			this.ResumeLayout(false);
@@ -212,7 +262,7 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private System.Windows.Forms.DataGridView dataParemeters;
+		private System.Windows.Forms.DataGridView dataParameters;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private DotNetApi.Windows.Controls.CodeTextBox textBox;
 		private System.Windows.Forms.ToolStripButton buttonSave;
@@ -224,5 +274,9 @@
 		private System.Windows.Forms.ToolStripStatusLabel labelStatus;
 		private System.Windows.Forms.ToolStripStatusLabel labelSpring;
 		private System.Windows.Forms.ToolStripStatusLabel labelInfo;
+		private System.Windows.Forms.ToolStripButton buttonImportParameters;
+		private System.Windows.Forms.ToolStripButton buttonClearParameters;
+		private System.Windows.Forms.ToolStripSeparator separator2;
+		private System.Windows.Forms.OpenFileDialog openFileDialog;
 	}
 }

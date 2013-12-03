@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using PlanetLab;
 using PlanetLab.Api;
+using InetAnalytics.Controls.PlanetLab.Commands;
 using InetAnalytics.Forms.PlanetLab;
 using InetCrawler;
 using InetCrawler.PlanetLab;
@@ -1100,16 +1101,51 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnAddCommand(object sender, EventArgs e)
 		{
+			// Switch to the command tab.
+			this.tabControl.SelectedTab = this.tabPageCommands;
+
 			// Show the add command dialog.
 			if (this.formAddCommand.ShowDialog(this) == DialogResult.OK)
 			{
-
+				// Add a new item to the list.
+				this.commandList.AddItem(this.formAddCommand.Command);
 			}
 		}
 
+		/// <summary>
+		/// An event handler called when removing a command.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnRemoveCommand(object sender, EventArgs e)
 		{
+			// Confirm the command removal.
+		}
 
+		/// <summary>
+		/// An event handler called when the command selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandSelectionChanged(object sender, EventArgs e)
+		{
+			// If there is a selected item.
+			if (this.commandList.SelectedIndex >= 0)
+			{
+				// Enable the buttons.
+				this.buttonRemoveCommand.Enabled = true;
+				// Get the selected item.
+				CommandListBoxItem item = this.commandList.Items[this.commandList.SelectedIndex] as CommandListBoxItem;
+				// Set the command.
+				this.controlCommand.Command = item.Command;
+			}
+			else
+			{
+				// Disable the buttons.
+				this.buttonRemoveCommand.Enabled = false;
+				// Set the command to null.
+				this.controlCommand.Command = null;
+			}
 		}
 	}
 }
