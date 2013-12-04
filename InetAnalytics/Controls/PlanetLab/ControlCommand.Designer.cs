@@ -42,7 +42,6 @@
 			this.dataParameters = new System.Windows.Forms.DataGridView();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-			this.labelSpring = new System.Windows.Forms.ToolStripStatusLabel();
 			this.labelInfo = new System.Windows.Forms.ToolStripStatusLabel();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -205,7 +204,6 @@
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelStatus,
-            this.labelSpring,
             this.labelInfo});
 			this.statusStrip.Location = new System.Drawing.Point(1, 222);
 			this.statusStrip.Name = "statusStrip";
@@ -221,16 +219,13 @@
 			this.labelStatus.Size = new System.Drawing.Size(55, 17);
 			this.labelStatus.Text = "Ready";
 			// 
-			// labelSpring
-			// 
-			this.labelSpring.Name = "labelSpring";
-			this.labelSpring.Size = new System.Drawing.Size(628, 17);
-			this.labelSpring.Spring = true;
-			// 
 			// labelInfo
 			// 
+			this.labelInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.labelInfo.Name = "labelInfo";
-			this.labelInfo.Size = new System.Drawing.Size(0, 17);
+			this.labelInfo.Size = new System.Drawing.Size(597, 17);
+			this.labelInfo.Spring = true;
+			this.labelInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// openFileDialog
 			// 
@@ -272,7 +267,6 @@
 		private System.Windows.Forms.ToolStripButton buttonRemoveParameter;
 		private System.Windows.Forms.StatusStrip statusStrip;
 		private System.Windows.Forms.ToolStripStatusLabel labelStatus;
-		private System.Windows.Forms.ToolStripStatusLabel labelSpring;
 		private System.Windows.Forms.ToolStripStatusLabel labelInfo;
 		private System.Windows.Forms.ToolStripButton buttonImportParameters;
 		private System.Windows.Forms.ToolStripButton buttonClearParameters;
