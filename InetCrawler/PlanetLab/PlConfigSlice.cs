@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ namespace InetCrawler.PlanetLab
 		private readonly PlSlice slice;
 		private readonly RegistryKey key;
 
+		private readonly PlConfigSliceCommands commands;
+
 		/// <summary>
 		/// Creates a new configuration slice instance.
 		/// </summary>
@@ -54,8 +56,11 @@ namespace InetCrawler.PlanetLab
 			if (null == (this.key = rootKey.OpenSubKey(this.slice.Id.Value.ToString(), RegistryKeyPermissionCheck.ReadWriteSubTree)))
 			{
 				// If the key does not exist, create the key.
-				rootKey.CreateSubKey(this.slice.Id.Value.ToString());
+				this.key = rootKey.CreateSubKey(this.slice.Id.Value.ToString());
 			}
+
+			// Create the slice commands configuration.
+			this.commands = new PlConfigSliceCommands(this.key, this.slice.Id.Value);
 		}
 
 		// Public event.
@@ -79,6 +84,13 @@ namespace InetCrawler.PlanetLab
 			get { return this.slice.Name; }
 		}
 		/// <summary>
+		/// Gets the PlanetLab slice commands.
+		/// </summary>
+		public PlConfigSliceCommands Commands
+		{
+			get { return this.commands; }
+		}
+		/// <summary>
 		/// Gets or sets the PlanetLab slice private key.
 		/// </summary>
 		public byte[] Key
@@ -94,6 +106,38 @@ namespace InetCrawler.PlanetLab
 				// Call the changed event handler.
 				this.OnChanged();
 			}
+		}
+		/// <summary>
+		/// Gets or sets whether the nodes status is updated before running a PlanetLab command.
+		/// </summary>
+		public bool UpdateNodesBeforeRun
+		{
+			get	{ return this.key.GetBoolean("UpdateNodesBeforeRun", true); }
+			set { this.key.SetBoolean("UpdateNodesBeforeRun", value); }
+		}
+		/// <summary>
+		/// Gets or sets whether PlanetLab commands will only run on boot nodes.
+		/// </summary>
+		public bool OnlyRunOnBootNodes
+		{
+			get { return this.key.GetBoolean("OnlyRunOnBootNodes", true); }
+			set { this.key.SetBoolean("OnlyRunOnBootNodes", value); }
+		}
+		/// <summary>
+		/// Gets or sets whether PlanetLab commands will run on a single node per site.
+		/// </summary>
+		public bool OnlyRunOneNodePerSite
+		{
+			get { return this.key.GetBoolean("OnlyRunOneNodePerSite", true); }
+			set { this.key.SetBoolean("OnlyRunOneNodePerSite", value); }
+		}
+		/// <summary>
+		/// Gets or sets the number of PlanetLab nodes on which the commands will be run in parallel.
+		/// </summary>
+		public int RunParallelNodes
+		{
+			get { return this.key.GetInteger("RunParallelNodes", 1); }
+			set { this.key.SetInteger("RunParallelNodes", value); }
 		}
 
 		// Public methods.
@@ -121,8 +165,10 @@ namespace InetCrawler.PlanetLab
 			this.OnDisposed();
 			// Remove the slice event handler.
 			this.slice.Changed -= this.OnSliceChanged;
+			// Dispose the slice commands.
+			this.commands.Dispose();
 			// Close the current key.
-			if (null != key) this.key.Close();
+			this.key.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}

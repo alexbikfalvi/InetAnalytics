@@ -433,8 +433,8 @@ namespace InetAnalytics.Controls.Database
 			// Ask the user to confirm changing the primary server.
 			if (DialogResult.Yes == MessageBox.Show(
 				this,
-				"Are you sure you want to change the primary database server? Database information will not be copied.",
-				"Confirm Primary Server Change",
+				"You are changing the primary database server. Do you want to continue? Database information will not be copied.",
+				"Confirm Changing the Primary Server",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button2))

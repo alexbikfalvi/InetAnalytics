@@ -34,18 +34,38 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 		/// </summary>
 		public CommandListBox()
 		{
+			// Set the control style.
+			base.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
 			// Set the object properties.
-			this.DrawMode = DrawMode.OwnerDrawFixed;
-			this.ItemHeight = 48;
-			this.IntegralHeight = false;
+			base.DrawMode = DrawMode.OwnerDrawFixed;
+			base.ItemHeight = 48;
+			base.IntegralHeight = false;
 		}
 
-		// Public events.
+		// Private properties.
 
 		/// <summary>
-		/// An event raised when the user activates an item.
+		/// Gets the draw mode.
 		/// </summary>
-		//public event ImageListBoxItemActivateEventHandler ItemActivate;
+		private new DrawMode DrawMode
+		{
+			get { return this.DrawMode; }
+		}
+		/// <summary>
+		/// Gets the item height.
+		/// </summary>
+		private new int ItemHeight
+		{
+			get { return this.ItemHeight; }
+		}
+		/// <summary>
+		/// Gets whether the list box displays an integral number of items.
+		/// </summary>
+		private new bool IntegralHeight
+		{
+			get { return this.IntegralHeight; }
+		}
 
 		// Public methods.
 
@@ -114,7 +134,7 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 					// Draw the command text.
 					TextRenderer.DrawText(
 						e.Graphics,
-						item.Command.Command,
+						item.Command.Command.Replace("\n", " / "),
 						font,
 						rectTextCommand,
 						e.ForeColor,
@@ -130,20 +150,5 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 					TextFormatFlags.EndEllipsis | TextFormatFlags.Left | TextFormatFlags.Top);
 			}
 		}
-
-		///// <summary>
-		///// An event handler called when the user double click on an item.
-		///// </summary>
-		///// <param name="e">The event arguments.</param>
-		//protected override void OnDoubleClick(EventArgs e)
-		//{
-		//	// Call the base class method.
-		//	base.OnDoubleClick(e);
-		//	// Activate the selected item.
-		//	if ((this.SelectedItem != null) && (this.ItemActivate != null))
-		//	{
-		//		this.ItemActivate(this, new ImageListBoxItemActivateEventArgs(this.SelectedItem as ImageListBoxItem));
-		//	}
-		//}
 	}
 }

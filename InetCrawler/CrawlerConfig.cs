@@ -38,48 +38,28 @@ namespace InetCrawler
 		public sealed class StaticConfig
 		{
 			public string ApplicationFolder { get { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\Internet Analytics"; } }
-
 			public string YouTubeUsername { get; internal set; }
-
 			public SecureString YouTubePassword { get; internal set; }
-
 			public string YouTubeCategoriesFileName { get; internal set; }
-
 			public SecureString YouTubeV2ApiKey { get; internal set; }
-
 			public string LogFileName { get; internal set; }
-
 			public string DatabaseLogFileName { get; internal set; }
-
 			public string CommentsVideosFileName { get; internal set; }
-
 			public string CommentsUsersFileName { get; internal set; }
-
 			public string CommentsPlaylistsFileName { get; internal set; }
-
 			public TimeSpan ConsoleMessageCloseDelay { get; internal set; }
-
 			public int ConsoleSideMenuVisibleItems { get; internal set; }
-
 			public int ConsoleSideMenuSelectedItem { get; internal set; }
-
 			public int[] ConsoleSideMenuSelectedNode { get; internal set; }
-
 			public string PlanetLabUsername { get; internal set; }
-
 			public SecureString PlanetLabPassword { get; internal set; }
-
 			public int PlanetLabPersonId { get; internal set; }
-
 			public string PlanetLabSitesFileName { get; internal set; }
-
 			public string PlanetLabNodesFileName { get; internal set; }
-
 			public string PlanetLabSlicesFileName { get; internal set; }
-
 			public string PlanetLabLocalPersonsFileName { get; internal set; }
-
 			public string PlanetLabLocalSlicesFileName { get; internal set; }
+			public string PlanetLabCommandsFolder { get; internal set; }
 		}
 
 		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
@@ -138,11 +118,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "FileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-{0}-{1}-{2}.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Log", "FileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-{0}-{1}-{2}.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "FileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\Log", "FileName", value);
 				CrawlerConfig.Static.LogFileName = value;
 			}
 		}
@@ -154,11 +134,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Log", "DatabaseFileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-Db-{0}-{1}-{2}-{3}.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Log", "DatabaseFileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-Db-{0}-{1}-{2}-{3}.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\Log", "DatabaseFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\Log", "DatabaseFileName", value);
 				CrawlerConfig.Static.DatabaseLogFileName = value;
 			}
 		}
@@ -170,11 +150,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\YouTube", "UserName", string.Empty);
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\YouTube", "UserName", string.Empty);
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\YouTube", "UserName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\YouTube", "UserName", value);
 				CrawlerConfig.Static.YouTubeUsername = value;
 			}
 		}
@@ -186,11 +166,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetSecureString(this.root + @"\YouTube", "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				return DotNetApi.Windows.RegistryExtensions.GetSecureString(this.root + @"\YouTube", "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetSecureString(this.root + @"\YouTube", "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				DotNetApi.Windows.RegistryExtensions.SetSecureString(this.root + @"\YouTube", "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 				CrawlerConfig.Static.YouTubePassword = value;
 			}
 		}
@@ -202,11 +182,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\YouTube\V2", "CategoriesFileName", CrawlerConfig.Static.ApplicationFolder + @"\YouTube\CategoriesV2.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\YouTube\V2", "CategoriesFileName", CrawlerConfig.Static.ApplicationFolder + @"\YouTube\CategoriesV2.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\YouTube\V2", "CategoriesFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\YouTube\V2", "CategoriesFileName", value);
 				CrawlerConfig.Static.YouTubeCategoriesFileName = value;
 			}
 		}
@@ -218,14 +198,16 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetSecureString(this.root + @"\YouTube\V2", "ApiKey", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				return DotNetApi.Windows.RegistryExtensions.GetSecureString(this.root + @"\YouTube\V2", "ApiKey", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetSecureString(this.root + @"\YouTube\V2", "ApiKey", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				DotNetApi.Windows.RegistryExtensions.SetSecureString(this.root + @"\YouTube\V2", "ApiKey", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 				CrawlerConfig.Static.YouTubeV2ApiKey = value;
 			}
 		}
+
+
 
 		/// <summary>
 		/// Gets or sets the videos comments file name.
@@ -234,11 +216,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "VideosFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Videos.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Comments", "VideosFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Videos.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\Comments", "VideosFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\Comments", "VideosFileName", value);
 				CrawlerConfig.Static.CommentsVideosFileName = value;
 			}
 		}
@@ -250,11 +232,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "UsersFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Users.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Comments", "UsersFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Users.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\Comments", "UsersFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\Comments", "UsersFileName", value);
 				CrawlerConfig.Static.CommentsUsersFileName = value;
 			}
 		}
@@ -266,11 +248,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root + @"\Comments", "PlaylistsFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Playlists.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Comments", "PlaylistsFileName", CrawlerConfig.Static.ApplicationFolder + @"\Comments\Playlists.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root + @"\Comments", "PlaylistsFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\Comments", "PlaylistsFileName", value);
 				CrawlerConfig.Static.CommentsPlaylistsFileName = value;
 			}
 		}
@@ -282,11 +264,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetTimeSpan(this.root + @"\Console", "MessageCloseDelay", TimeSpan.FromMilliseconds(1000));
+				return DotNetApi.Windows.RegistryExtensions.GetTimeSpan(this.root + @"\Console", "MessageCloseDelay", TimeSpan.FromMilliseconds(1000));
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetTimeSpan(this.root + @"\Console", "MessageCloseDelay", value);
+				DotNetApi.Windows.RegistryExtensions.SetTimeSpan(this.root + @"\Console", "MessageCloseDelay", value);
 				CrawlerConfig.Static.ConsoleMessageCloseDelay = value;
 			}
 		}
@@ -298,11 +280,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetInteger(this.root + @"\Console", "SideMenuVisibleItems", 4);
+				return DotNetApi.Windows.RegistryExtensions.GetInteger(this.root + @"\Console", "SideMenuVisibleItems", 4);
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetInteger(this.root + @"\Console", "SideMenuVisibleItems", value);
+				DotNetApi.Windows.RegistryExtensions.SetInteger(this.root + @"\Console", "SideMenuVisibleItems", value);
 				CrawlerConfig.Static.ConsoleSideMenuVisibleItems = value;
 			}
 		}
@@ -314,11 +296,11 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetInteger(this.root + @"\Console", "SideMenuSelectedItem", 0);
+				return DotNetApi.Windows.RegistryExtensions.GetInteger(this.root + @"\Console", "SideMenuSelectedItem", 0);
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetInteger(this.root + @"\Console", "SideMenuSelectedItem", value);
+				DotNetApi.Windows.RegistryExtensions.SetInteger(this.root + @"\Console", "SideMenuSelectedItem", value);
 				CrawlerConfig.Static.ConsoleSideMenuSelectedItem = value;
 			}
 		}
@@ -330,12 +312,12 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetInt32Array(this.root + @"\Console", "SideMenuSelectedNode", null);
+				return DotNetApi.Windows.RegistryExtensions.GetInt32Array(this.root + @"\Console", "SideMenuSelectedNode", null);
 			}
 			set
 			{
 				if (null == value) return;
-				DotNetApi.Windows.Registry.SetInt32Array(this.root + @"\Console", "SideMenuSelectedNode", value);
+				DotNetApi.Windows.RegistryExtensions.SetInt32Array(this.root + @"\Console", "SideMenuSelectedNode", value);
 				CrawlerConfig.Static.ConsoleSideMenuSelectedNode = value;
 			}
 		}

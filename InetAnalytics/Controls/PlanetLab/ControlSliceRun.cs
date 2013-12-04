@@ -17,8 +17,10 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using DotNetApi;
+using DotNetApi.Windows.Controls;
 using PlanetLab;
 using PlanetLab.Api;
 using InetAnalytics.Controls.PlanetLab.Commands;
@@ -34,6 +36,46 @@ namespace InetAnalytics.Controls.PlanetLab
 	/// </summary>
 	public sealed partial class ControlSliceRun : ControlRequest
 	{
+		/// <summary>
+		/// A class representing the node information.
+		/// </summary>
+		private sealed class NodeInfo
+		{
+			/// <summary>
+			/// Creates a new node info instance for the specified node.
+			/// </summary>
+			/// <param name="nodeId">The node identifier.</param>
+			/// <param name="siteId">The site identifier.</param>
+			/// <param name="node">The PlanetLab node.</param>
+			/// <param name="site">The PlanetLab site.</param>
+			public NodeInfo(int nodeId, int? siteId, PlNode node, PlSite site)
+			{
+				this.NodeId = nodeId;
+				this.SiteId = siteId;
+				this.Node = node;
+				this.Site = site;
+			}
+
+			// Public fields.
+
+			/// <summary>
+			/// The node identifier.
+			/// </summary>
+			public readonly int NodeId;
+			/// <summary>
+			/// The site identifier.
+			/// </summary>
+			public int? SiteId;
+			/// <summary>
+			/// A field representing the PlanetLab node.
+			/// </summary>
+			public PlNode Node = null;
+			/// <summary>
+			/// A field representing the PlanetLab site.
+			/// </summary>
+			public PlSite Site = null;
+		}
+
 		public static readonly string[] nodeImageKeys = new string[]
 		{
 			"NodeUnknown", "NodeBoot", "NodeSafeBoot", "NodeDisabled", "NodeReinstall"
@@ -49,8 +91,14 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		private TreeNode treeNode = null;
 
-		private readonly RequestState requestStateGetSlice;
+		private readonly object pendingSync = new object();
+		private readonly List<int> pendingNodes = new List<int>();
+		private readonly List<int> pendingSites = new List<int>();
 
+		//private readonly RequestState requestStateGetSlice;
+
+		private readonly FormObjectProperties<ControlNodeProperties> formNodeProperties = new FormObjectProperties<ControlNodeProperties>();
+		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 		private readonly FormAddCommand formAddCommand = new FormAddCommand();
 
 		// Public declarations
@@ -61,7 +109,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		public ControlSliceRun()
 		{
 			// Initialize component.
-			InitializeComponent();
+			this.InitializeComponent();
 
 			// Set the default control properties.
 			this.Visible = false;
@@ -76,13 +124,6 @@ namespace InetAnalytics.Controls.PlanetLab
 			//	null);
 		}
 
-		// Public events.
-
-		/// <summary>
-		/// An event raised when a console is selected.
-		/// </summary>
-		//public event PageSelectionEventHandler ConsoleSelected;
-
 		// Public methods.
 
 		/// <summary>
@@ -90,8 +131,9 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="crawler">The crawler object.</param>
 		/// <param name="slice">The slice.</param>
+		/// <param name="config">The slice configuration.</param>
 		/// <param name="treeNode">The tree node.</param>
-		public void Initialize(Crawler crawler, PlSlice slice, TreeNode treeNode)
+		public void Initialize(Crawler crawler, PlSlice slice, PlConfigSlice config, TreeNode treeNode)
 		{
 			// Save the parameters.
 			this.crawler = crawler;
@@ -104,7 +146,11 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.slice.Changed += this.OnSliceChanged;
 
 			// Set the slice configuration.
-			this.config = this.crawler.PlanetLab.GetSliceConfiguration(this.slice);
+			this.config = config;
+
+			// Set the commands event handlers.
+			this.config.Commands.CommandAdded += this.OnCommandAdded;
+			this.config.Commands.CommandRemoved += this.OnCommandRemoved;
 
 			// Set the tree node.
 			this.treeNode = treeNode;
@@ -115,8 +161,14 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Enable the control.
 			this.Enabled = true;
 
+			// Load the configuration.
+			this.OnLoadConfiguration(this, EventArgs.Empty);
+
 			// Update the information of the PlanetLab slice.
 			this.OnUpdateSlice();
+
+			// Update the information of the PlanetLab commands.
+			this.OnUpdateCommands();
 		}
 
 		// Protected methods.
@@ -130,6 +182,17 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonRefresh.Enabled = false;
 			this.buttonCancel.Enabled = true;
+			this.buttonStart.Enabled = false;
+			this.buttonPause.Enabled = false;
+			this.buttonStop.Enabled = false;
+			this.buttonAddCommand.Enabled = false;
+			this.buttonRemoveCommand.Enabled = false;
+			this.buttonProperties.Enabled = false;
+			this.buttonNodeProperties.Enabled = false;
+			this.buttonSiteProperties.Enabled = false;
+			this.menuItemNodeProperties.Enabled = false;
+			this.menuItemSiteProperties.Enabled = false;
+
 			// Call the base class method.
 			base.OnRequestStarted(state);
 		}
@@ -145,6 +208,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.buttonCancel.Enabled = false;
 			// Call the node selection changed event handler.
 			this.OnNodeSelectionChanged(this, EventArgs.Empty);
+			// Call the start conditions changed event handler.
+			this.OnStartConditionsChanged(this, EventArgs.Empty);
 			// Call the base class method.
 			base.OnRequestFinished(state);
 		}
@@ -156,15 +221,6 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnUpdateSlice()
 		{
-			// Set the slice information.
-			//this.textBoxName.Text = this.slice.Name;
-			//this.textBoxDescription.Text = this.slice.Description;
-			//this.textBoxUrl.Text = this.slice.Url;
-
-			//this.textBoxCreated.Text = this.slice.Created.HasValue ? this.slice.Created.Value.ToString() : string.Empty;
-			//this.textBoxExpires.Text = this.slice.Expires.HasValue ? this.slice.Expires.Value.ToString() : string.Empty;
-			//this.textBoxMaxNodes.Text = this.slice.MaxNodes.HasValue ? this.slice.MaxNodes.Value.ToString() : string.Empty;
-
 			// Update the list of nodes.
 			this.OnUpdateNodes();
 
@@ -180,102 +236,103 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Clear the current nodes.
 			this.OnClearNodes();
 
-			//// Synchronize access to the pending lists.
-			//lock (this.pendingSync)
-			//{
-			//	// Clear the list of pending nodes.
-			//	this.pendingNodes.Clear();
-			//	this.pendingSites.Clear();
+			// Synchronize access to the pending lists.
+			lock (this.pendingSync)
+			{
+				// Clear the list of pending nodes.
+				this.pendingNodes.Clear();
+				this.pendingSites.Clear();
 
-			//	// Add the list of nodes.
-			//	foreach (int nodeId in this.slice.NodeIds)
-			//	{
-			//		// The node.
-			//		PlNode node = this.crawler.PlanetLab.DbNodes.Find(nodeId);
-			//		// The site identifier.
-			//		int? siteId = null;
-			//		// The site.
-			//		PlSite site = null;
+				// Add the list of nodes.
+				foreach (int nodeId in this.slice.NodeIds)
+				{
+					// The node.
+					PlNode node = this.crawler.PlanetLab.DbNodes.Find(nodeId);
+					// The site identifier.
+					int? siteId = null;
+					// The site.
+					PlSite site = null;
 
-			//		// If the node is not null.
-			//		if (null != node)
-			//		{
-			//			// Get the site identifier.
-			//			siteId = node.SiteId;
-			//			// Add a node event handler.
-			//			node.Changed += this.OnNodeChanged;
+					// If the node is not null.
+					if (null != node)
+					{
+						// Get the site identifier.
+						siteId = node.SiteId;
+						// Add a node event handler.
+						node.Changed += this.OnNodeChanged;
 
-			//			// If the node has a site identifier.
-			//			if (node.SiteId.HasValue)
-			//			{
-			//				// Get the site from the database.
-			//				site = this.crawler.PlanetLab.DbSites.Find(node.SiteId.Value);
-			//				// If the site is not null.
-			//				if (null != site)
-			//				{
-			//					// Add a site event handler.
-			//					site.Changed += this.OnSiteChanged;
-			//				}
-			//				else
-			//				{
-			//					// Add the site to the pending sites.
-			//					this.pendingSites.Add(node.SiteId.Value);
-			//				}
-			//			}
-			//		}
-			//		else
-			//		{
-			//			// Add the node ID to the pending list.
-			//			this.pendingNodes.Add(nodeId);
-			//		}
+						// If the node has a site identifier.
+						if (node.SiteId.HasValue)
+						{
+							// Get the site from the database.
+							site = this.crawler.PlanetLab.DbSites.Find(node.SiteId.Value);
+							// If the site is not null.
+							if (null != site)
+							{
+								// Add a site event handler.
+								site.Changed += this.OnSiteChanged;
+							}
+							else
+							{
+								// Add the site to the pending sites.
+								this.pendingSites.Add(node.SiteId.Value);
+							}
+						}
+					}
+					else
+					{
+						// Add the node ID to the pending list.
+						this.pendingNodes.Add(nodeId);
+					}
 
-			//		// Create a new geo marker for this site.
-			//		MapMarker marker = null;
-			//		if (null != site)
-			//		{
-			//			// If the site has coordinates.
-			//			if (site.Latitude.HasValue && site.Longitude.HasValue)
-			//			{
-			//				// Create a circular marker.
-			//				marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-			//				marker.Name = "{0}{1}{2}".FormatWith(node.Hostname, Environment.NewLine, site.Name);
-			//				// Add the marker to the map.
-			//				this.mapControl.Markers.Add(marker);
-			//			}
-			//		}
+					// Create the node information.
+					NodeInfo info = new NodeInfo(nodeId, siteId, node, site);
 
-			//		// Create the node information.
-			//		NodeInfo info = new NodeInfo(nodeId, siteId, node, site, marker);
+					// Create the node list item.
+					ListViewItem nodeItem = new ListViewItem(new string[] {
+						nodeId.ToString(),
+						node != null ? node.Hostname : string.Empty,
+						site != null ? site.Name : string.Empty
+					});
+					nodeItem.ImageKey = node != null ? ControlSliceRun.nodeImageKeys[(int)node.GetBootState()] : ControlSliceRun.nodeImageKeys[0];
+					nodeItem.Tag = info;
+					nodeItem.Checked = true;
 
-			//		// Create a list item.
-			//		ListViewItem item = new ListViewItem(new string[] {
-			//			nodeId.ToString(),
-			//			node != null ? node.Hostname : string.Empty,
-			//			ControlSsh.ClientState.Disconnected.ToString()
-			//		});
-			//		item.ImageKey = node != null ? ControlSliceRun.nodeImageKeys[(int)node.GetBootState()] : ControlSliceRun.nodeImageKeys[0];
-			//		item.Tag = info;
+					// Add the node item.
+					this.listViewNodes.Items.Add(nodeItem);
 
-			//		// Add the list item.
-			//		this.listViewNodes.Items.Add(item);
+					// Create the progress list item.
+					ProgressItem progressItem = new ProgressItem(node != null ? node.Hostname : "Node {0}".FormatWith(nodeId), this.progressLegend);
 
-			//		// If the marker is not null, set the marker tag.
-			//		if (null != marker)
-			//		{
-			//			marker.Tag = item;
-			//		}
-			//	}
+					//progressItem.Tad
 
-			//	// Refresh the pending nodes and sites.
-			//	if (this.pendingNodes.Count > 0)
-			//	{
-			//		this.OnRefreshNodes();
-			//	}
-			//	else if (this.pendingSites.Count > 0)
-			//	{
-			//		this.OnRefreshSites();
-			//	}
-			//}
+					// Add the progress item.
+					this.listProgress.Items.Add(progressItem);
+				}
+
+				// Refresh the pending nodes and sites.
+				if (this.pendingNodes.Count > 0)
+				{
+					//this.OnRefreshNodes();
+				}
+				else if (this.pendingSites.Count > 0)
+				{
+					//this.OnRefreshSites();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Updates the information of the current PlanetLab commands.
+		/// </summary>
+		private void OnUpdateCommands()
+		{
+			// For all commands in the the slice configuration.
+			foreach (PlCommand command in this.config.Commands)
+			{
+				// Add a new item to the list.
+				this.listCommands.AddItem(command);
+			}
 		}
 
 		/// <summary>
@@ -296,27 +353,27 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeChanged(object sender, PlObjectEventArgs e)
 		{
-			//// Get the node.
-			//PlNode node = e.Object as PlNode;
-			//// Get the list item corresponding to the selected node.
-			//ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
-			//	{
-			//		// Get the node info.
-			//		NodeInfo info = it.Tag as NodeInfo;
-			//		// Check the tag node equals the current node.
-			//		return info.NodeId == node.Id;
-			//	});
-			//// Update the item information.
-			//if (null != item)
-			//{
-			//	// Get the node information.
-			//	NodeInfo info = item.Tag as NodeInfo;
+			// Get the node.
+			PlNode node = e.Object as PlNode;
+			// Get the list item corresponding to the selected node.
+			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+				{
+					// Get the node info.
+					NodeInfo info = it.Tag as NodeInfo;
+					// Check the tag node equals the current node.
+					return info.NodeId == node.Id;
+				});
+			// Update the item information.
+			if (null != item)
+			{
+				// Get the node information.
+				NodeInfo info = item.Tag as NodeInfo;
 
-			//	// Set the item information.
-			//	item.SubItems[0].Text = node.Id.Value.ToString();
-			//	item.SubItems[1].Text = node.Hostname;
-			//	item.ImageKey = ControlSliceRun.nodeImageKeys[(int)node.GetBootState()];
-			//}
+				// Set the item information.
+				item.SubItems[0].Text = node.Id.Value.ToString();
+				item.SubItems[1].Text = node.Hostname;
+				item.ImageKey = ControlSliceRun.nodeImageKeys[(int)node.GetBootState()];
+			}
 		}
 
 		/// <summary>
@@ -326,41 +383,25 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSiteChanged(object sender, PlObjectEventArgs e)
 		{
-			//// Get the site.
-			//PlSite site = e.Object as PlSite;
-			//// Get the list item corresponding to the selected node.
-			//ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
-			//{
-			//	// Get the node info.
-			//	NodeInfo info = it.Tag as NodeInfo;
-			//	// Check the tag node equals the current node.
-			//	return object.ReferenceEquals(info.Site, site);
-			//});
-			//// Update the item information.
-			//if (null != item)
-			//{
-			//	// Get the node information.
-			//	NodeInfo info = item.Tag as NodeInfo;
+			// Get the site.
+			PlSite site = e.Object as PlSite;
+			// Get the list item corresponding to the selected node.
+			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+			{
+				// Get the node info.
+				NodeInfo info = it.Tag as NodeInfo;
+				// Check the tag node equals the current node.
+				return object.ReferenceEquals(info.Site, site);
+			});
+			// Update the item information.
+			if (null != item)
+			{
+				// Get the node information.
+				NodeInfo info = item.Tag as NodeInfo;
 
-			//	// If the marker is not null.
-			//	if (null != info.Marker)
-			//	{
-			//		// Update the marker location.
-			//		info.Marker.Location = new MapPoint(site.Longitude.Value, site.Latitude.Value);
-			//	}
-			//	else
-			//	{
-			//		// If the site has coordinates.
-			//		if (site.Latitude.HasValue && site.Longitude.HasValue)
-			//		{
-			//			// Create a circular marker.
-			//			info.Marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-			//			info.Marker.Name = "{0}{1}{2}".FormatWith(info.Node.Hostname, Environment.NewLine, site.Name);
-			//			// Add the marker to the map.
-			//			this.mapControl.Markers.Add(marker);
-			//		}
-			//	}
-			//}
+				// Set the item information.
+				item.SubItems[2].Text = site.Name;
+			}
 		}
 
 		/// <summary>
@@ -368,49 +409,30 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnClearNodes()
 		{
-			//// Disable the node buttons.
-			//this.buttonConnect.Enabled = false;
-			//this.buttonDisconnect.Enabled = false;
-			//this.buttonProperties.Enabled = false;
-			//this.menuItemConnect.Enabled = false;
-			//this.menuItemDisconnect.Enabled = false;
-			//this.menuItemNodeProperties.Enabled = false;
-			//this.menuItemSiteProperties.Enabled = false;
+			// Disable the node buttons.
+			this.buttonProperties.Enabled = false;
+			this.buttonNodeProperties.Enabled = false;
+			this.buttonSiteProperties.Enabled = false;
+			this.menuItemNodeProperties.Enabled = false;
+			this.menuItemSiteProperties.Enabled = false;
 
-			//// Clear the map markers.
-			//this.mapControl.Markers.Clear();
-
-			//// For all node items.
-			//foreach (ListViewItem item in this.listViewNodes.Items)
-			//{
-			//	// Get the node info.
-			//	NodeInfo info = item.Tag as NodeInfo;
-			//	// Remove the event handlers.
-			//	if (info.Node != null)
-			//	{
-			//		info.Node.Changed -= this.OnNodeChanged;
-			//	}
-			//	if (info.Site != null)
-			//	{
-			//		info.Site.Changed -= this.OnSiteChanged;
-			//	}
-			//	// Dispose the map marker.
-			//	if (info.Marker != null)
-			//	{
-			//		info.Marker.Dispose();
-			//	}
-			//	// Close the control.
-			//	if (info.ConsoleControl != null)
-			//	{
-			//		// Get the console control.
-			//		ControlSession control = info.ConsoleControl;
-			//		// Close the control.
-			//		this.OnConsoleClose(item);
-			//	}
-			//}
-
-			//// Clear the list.
-			//this.listViewNodes.Items.Clear();
+			// For all node items.
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				// Get the node info.
+				NodeInfo info = item.Tag as NodeInfo;
+				// Remove the event handlers.
+				if (info.Node != null)
+				{
+					info.Node.Changed -= this.OnNodeChanged;
+				}
+				if (info.Site != null)
+				{
+					info.Site.Changed -= this.OnSiteChanged;
+				}
+			}
+			// Clear the list.
+			this.listViewNodes.Items.Clear();
 		}
 
 		/// <summary>
@@ -418,34 +440,21 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		private void OnDisposeNodes()
 		{
-		//	// For all node items.
-		//	foreach (ListViewItem item in this.listViewNodes.Items)
-		//	{
-		//		// Get the node info.
-		//		NodeInfo info = item.Tag as NodeInfo;
-		//		// Remove the event handlers.
-		//		if (info.Node != null)
-		//		{
-		//			info.Node.Changed -= this.OnNodeChanged;
-		//		}
-		//		if (info.Site != null)
-		//		{
-		//			info.Site.Changed -= this.OnSiteChanged;
-		//		}
-		//		// Dispose the map marker.
-		//		if (info.Marker != null)
-		//		{
-		//			info.Marker.Dispose();
-		//		}
-		//		// Close the control.
-		//		if (info.ConsoleControl != null)
-		//		{
-		//			// Get the console control.
-		//			ControlSession control = info.ConsoleControl;
-		//			// Close the control.
-		//			this.OnConsoleClose(item);
-		//		}
-		//	}
+			// For all node items.
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				// Get the node info.
+				NodeInfo info = item.Tag as NodeInfo;
+				// Remove the event handlers.
+				if (info.Node != null)
+				{
+					info.Node.Changed -= this.OnNodeChanged;
+				}
+				if (info.Site != null)
+				{
+					info.Site.Changed -= this.OnSiteChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -455,68 +464,35 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeSelectionChanged(object sender, EventArgs e)
 		{
-			//// If there exists an emphasized marker, de-emphasize it.
-			//if (this.marker != null)
-			//{
-			//	this.marker.Emphasized = false;
-			//	this.marker = null;
-			//}
-			//// If no site is selected.
-			//if (this.listViewNodes.SelectedItems.Count == 0)
-			//{
-			//	// Change the buttons enabled state.
-			//	this.buttonRemoveFromNodes.Enabled = false;
-			//	this.buttonConnect.Enabled = false;
-			//	this.buttonDisconnect.Enabled = false;
-			//	this.buttonProperties.Enabled = false;
-			//	this.menuItemConnect.Enabled = false;
-			//	this.menuItemDisconnect.Enabled = false;
-			//	this.menuItemNodeProperties.Enabled = false;
-			//	this.menuItemSiteProperties.Enabled = false;
-			//}
-			//else
-			//{
-			//	// Get the node info for this item.
-			//	NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
-			//	// If the node has a control.
-			//	if (null != info.ConsoleControl)
-			//	{
-			//		// Change the button enabled state.
-			//		this.buttonConnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Disconnected;
-			//		this.buttonDisconnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Connected;
-			//		this.menuItemConnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Disconnected;
-			//		this.menuItemDisconnect.Enabled = info.ConsoleControl.State == ControlSsh.ClientState.Connected;
-			//	}
-			//	else
-			//	{
-			//		// Change the button enabled state.
-			//		this.buttonConnect.Enabled = true;
-			//		this.buttonDisconnect.Enabled = false;
-			//		this.menuItemConnect.Enabled = true;
-			//		this.menuItemDisconnect.Enabled = false;
-			//	}
-			//	this.buttonRemoveFromNodes.Enabled = true;
-			//	this.buttonProperties.Enabled = true;
-			//	this.buttonNodeProperties.Enabled = true;
-			//	this.buttonSiteProperties.Enabled = info.Node != null;
-			//	this.menuItemNodeProperties.Enabled = true;
-			//	this.menuItemSiteProperties.Enabled = info.Node != null;
-
-			//	// If the marker is not null, emphasize the marker.
-			//	if (null != info.Marker)
-			//	{
-			//		this.marker = info.Marker;
-			//		this.marker.Emphasized = true;
-			//	}
-			//}
+			// If no site is selected.
+			if (this.listViewNodes.SelectedItems.Count == 0)
+			{
+				// Change the buttons enabled state.
+				this.buttonProperties.Enabled = false;
+				this.buttonNodeProperties.Enabled = false;
+				this.buttonSiteProperties.Enabled = false;
+				this.menuItemNodeProperties.Enabled = false;
+				this.menuItemSiteProperties.Enabled = false;
+			}
+			else
+			{
+				// Get the node info for this item.
+				NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
+				// Change the buttons enabled state.
+				this.buttonProperties.Enabled = true;
+				this.buttonNodeProperties.Enabled = true;
+				this.buttonSiteProperties.Enabled = info.Node != null;
+				this.menuItemNodeProperties.Enabled = true;
+				this.menuItemSiteProperties.Enabled = info.Node != null;
+			}
 		}
 
 		/// <summary>
-		/// An event handler called when the user refreshes PlanetLab slice information.
+		/// An event handler called when the user refreshes PlanetLab information.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnRefreshSlice(object sender, EventArgs e)
+		private void OnRefresh(object sender, EventArgs e)
 		{
 		//	// If there is no validated PlanetLab person account, show a message and return.
 		//	if (-1 == this.crawler.PlanetLab.PersonId)
@@ -1013,18 +989,18 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnMouseClick(object sender, MouseEventArgs e)
+		private void OnNodesMouseClick(object sender, MouseEventArgs e)
 		{
-			//if (e.Button == MouseButtons.Right)
-			//{
-			//	if (this.listViewNodes.FocusedItem != null)
-			//	{
-			//		if (this.listViewNodes.FocusedItem.Bounds.Contains(e.Location))
-			//		{
-			//			this.contextMenu.Show(this.listViewNodes, e.Location);
-			//		}
-			//	}
-			//}
+			if (e.Button == MouseButtons.Right)
+			{
+				if (this.listViewNodes.FocusedItem != null)
+				{
+					if (this.listViewNodes.FocusedItem.Bounds.Contains(e.Location))
+					{
+						this.contextMenuNodes.Show(this.listViewNodes, e.Location);
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -1034,23 +1010,23 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeProperties(object sender, EventArgs e)
 		{
-			//// If there is no selected item, do nothing.
-			//if (this.listViewNodes.SelectedItems.Count == 0) return;
-			
-			//// Get the node info for the selected item.
-			//NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
+			// If there is no selected item, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
 
-			//// If the node info does not have a node object.
-			//if (null == info.Node)
-			//{
-			//	// Show the node properties using the identifier.
-			//	this.formNodeProperties.ShowDialog(this, "Node", info.NodeId);
-			//}
-			//else
-			//{
-			//	// Show the node properties using the node object.
-			//	this.formNodeProperties.ShowDialog(this, "Node", info.Node);
-			//}
+			// Get the node info for the selected item.
+			NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
+
+			// If the node info does not have a node object.
+			if (null == info.Node)
+			{
+				// Show the node properties using the identifier.
+				this.formNodeProperties.ShowDialog(this, "Node", info.NodeId);
+			}
+			else
+			{
+				// Show the node properties using the node object.
+				this.formNodeProperties.ShowDialog(this, "Node", info.Node);
+			}
 		}
 
 		/// <summary>
@@ -1060,38 +1036,23 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSiteProperties(object sender, EventArgs e)
 		{
-			//// If there is no selected item, do nothing.
-			//if (this.listViewNodes.SelectedItems.Count == 0) return;
+			// If there is no selected item, do nothing.
+			if (this.listViewNodes.SelectedItems.Count == 0) return;
 
-			//// Get the node info for the selected item.
-			//NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
+			// Get the node info for the selected item.
+			NodeInfo info = this.listViewNodes.SelectedItems[0].Tag as NodeInfo;
 
-			//// If the node has a site object.
-			//if (null != info.Site)
-			//{
-			//	// Show the site properties.
-			//	this.formSiteProperties.ShowDialog(this, "Site", info.Site);
-			//}
-			//else if (info.SiteId.HasValue)
-			//{
-			//	// Show the site properties.
-			//	this.formSiteProperties.ShowDialog(this, "Site", info.SiteId.Value);
-			//}
-		}
-
-		private void OnStart(object sender, EventArgs e)
-		{
-
-		}
-
-		private void OnPause(object sender, EventArgs e)
-		{
-
-		}
-
-		private void OnStop(object sender, EventArgs e)
-		{
-
+			// If the node has a site object.
+			if (null != info.Site)
+			{
+				// Show the site properties.
+				this.formSiteProperties.ShowDialog(this, "Site", info.Site);
+			}
+			else if (info.SiteId.HasValue)
+			{
+				// Show the site properties.
+				this.formSiteProperties.ShowDialog(this, "Site", info.SiteId.Value);
+			}
 		}
 
 		/// <summary>
@@ -1107,8 +1068,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Show the add command dialog.
 			if (this.formAddCommand.ShowDialog(this) == DialogResult.OK)
 			{
-				// Add a new item to the list.
-				this.commandList.AddItem(this.formAddCommand.Command);
+				// Add the command to the slice configuration.
+				this.config.Commands.Add(this.formAddCommand.Command);
 			}
 		}
 
@@ -1119,7 +1080,66 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRemoveCommand(object sender, EventArgs e)
 		{
+			// If there is no selected command, do nothing.
+			if (this.listCommands.SelectedItems.Count == 0) return;
+
+			// Switch to the command tab.
+			this.tabControl.SelectedTab = this.tabPageCommands;
+
 			// Confirm the command removal.
+			if (MessageBox.Show(
+				this,
+				"You are removing the selected PlanetLab slice command. Do you want to continue?",
+				"Confirm Removing Command",
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+			{
+				// Get the selected item.
+				CommandListBoxItem item = this.listCommands.SelectedItems[0] as CommandListBoxItem;
+
+				// Remove the command.
+				this.config.Commands.Remove(item.Command);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a slice command was added.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandAdded(object sender, PlCommandEventArgs e)
+		{
+			// Add a new item to the list.
+			this.listCommands.AddItem(e.Command);
+			// Call the start conditions changed event handler.
+			this.OnStartConditionsChanged(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when a slice command was removed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandRemoved(object sender, PlCommandEventArgs e)
+		{
+			// Find the list box item corresponding to the selected.
+			CommandListBoxItem item = this.listCommands.Items.FirstOrDefault((object it) =>
+				{
+					// Get the selected item.
+					CommandListBoxItem commandItem = it as CommandListBoxItem;
+					// Check the item command matches the removed command.
+					return object.ReferenceEquals(commandItem.Command, e.Command);
+				}) as CommandListBoxItem;
+
+			// If the item is not null.
+			if (null != item)
+			{
+				// Remove the item.
+				this.listCommands.Items.Remove(item);
+				// Call the command selection changed event handler.
+				this.OnCommandSelectionChanged(sender, e);
+				// Call the start conditions changed event handler.
+				this.OnStartConditionsChanged(sender, e);
+			}
 		}
 
 		/// <summary>
@@ -1129,23 +1149,223 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnCommandSelectionChanged(object sender, EventArgs e)
 		{
+			// The new command.
+			PlCommand command;
+
 			// If there is a selected item.
-			if (this.commandList.SelectedIndex >= 0)
+			if (this.listCommands.SelectedIndex >= 0)
 			{
 				// Enable the buttons.
 				this.buttonRemoveCommand.Enabled = true;
 				// Get the selected item.
-				CommandListBoxItem item = this.commandList.Items[this.commandList.SelectedIndex] as CommandListBoxItem;
+				CommandListBoxItem item = this.listCommands.SelectedItems[0] as CommandListBoxItem;
 				// Set the command.
-				this.controlCommand.Command = item.Command;
+				command = item.Command;
 			}
 			else
 			{
 				// Disable the buttons.
 				this.buttonRemoveCommand.Enabled = false;
 				// Set the command to null.
-				this.controlCommand.Command = null;
+				command = null;
 			}
+
+			// If the new command is different from the current selected command.
+			if (command != this.controlCommand.Command)
+			{
+				// If the old command has changed.
+				if (this.controlCommand.HasChanged)
+				{
+					// Ask the user whether to save the old command.
+					if (MessageBox.Show(
+						this,
+						"The previous selected command has changed. Do you want to save the changes?",
+						"Save Command Changes",
+						MessageBoxButtons.YesNo,
+						MessageBoxIcon.Question,
+						MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+					{
+						// Save the changes.
+						this.controlCommand.Save();
+					}
+				}
+				// Set the new command.
+				this.controlCommand.Command = command;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the current command has been saved.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandSaved(object sender, EventArgs e)
+		{
+			// Refresh the command list box.
+			this.listCommands.Refresh();
+		}
+
+		/// <summary>
+		/// An event handler called when the run configuration has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnConfigurationChanged(object sender, EventArgs e)
+		{
+			// Enable the save and undo buttons.
+			this.buttonConfigSave.Enabled = true;
+			this.buttonConfigUndo.Enabled = true;
+		}
+
+		/// <summary>
+		/// An event handler called when saving the configuration.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSaveConfiguration(object sender, EventArgs e)
+		{
+			// Save the configuration.
+			this.config.UpdateNodesBeforeRun = this.checkBoxNodesUpdate.Checked;
+			this.config.OnlyRunOnBootNodes = this.checkBoxNodesBoot.Checked;
+			this.config.OnlyRunOneNodePerSite = this.checkBoxNodesSite.Checked;
+			this.config.RunParallelNodes = (int)this.numericUpDownNodesParallel.Value;
+		}
+
+		/// <summary>
+		/// An event handler called when loading the configuration.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnLoadConfiguration(object sender, EventArgs e)
+		{
+			// Load the configuration.
+			this.checkBoxNodesUpdate.Checked = this.config.UpdateNodesBeforeRun;
+			this.checkBoxNodesBoot.Checked = this.config.OnlyRunOnBootNodes;
+			this.checkBoxNodesSite.Checked = this.config.OnlyRunOneNodePerSite;
+			this.numericUpDownNodesParallel.Value = this.config.RunParallelNodes;
+			// Disable the save and undo buttons.
+			this.buttonConfigSave.Enabled = false;
+			this.buttonConfigUndo.Enabled = false;
+		}
+
+		/// <summary>
+		/// An event handler called when the node check has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeCheckChanged(object sender, ItemCheckedEventArgs e)
+		{
+			// Update the selection buttons.
+			this.buttonNodesSelectAll.Enabled = (this.listViewNodes.Items.Count > 0) && (this.listViewNodes.CheckedItems.Count < this.listViewNodes.Items.Count);
+			this.buttonNodesClearAll.Enabled = this.listViewNodes.CheckedItems.Count > 0;
+			// Call the start conditions changed event handler.
+			this.OnStartConditionsChanged(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when the start conditions have changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStartConditionsChanged(object sender, EventArgs e)
+		{
+			// Set the enabled state of the start button.
+			this.buttonStart.Enabled = (this.listViewNodes.CheckedItems.Count > 0) && (this.listCommands.Items.Count > 0);
+		}
+
+		/// <summary>
+		/// An event handler called when selecting all nodes.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectAllNodes(object sender, EventArgs e)
+		{
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				item.Checked = true;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when clearing all nodes.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnClearAllNodes(object sender, EventArgs e)
+		{
+			foreach (ListViewItem item in this.listViewNodes.Items)
+			{
+				item.Checked = false;
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when starting the execution of the PlanetLab commands.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStart(object sender, EventArgs e)
+		{
+			//this.OnRunStarted();
+		}
+
+		/// <summary>
+		/// An event handler called when pausing the execution of the PlanetLab commands.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnPause(object sender, EventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// An event handler called when stopping the execution of the PlanetLab commands.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStop(object sender, EventArgs e)
+		{
+
+		}
+
+		private void OnRunStarted()
+		{
+			// Switch the tab control to the progress tab.
+			this.tabControl.SelectedTab = this.tabPageProgress;
+
+			// Set the controls enabled state.
+			this.buttonStart.Enabled = false;
+			this.buttonPause.Enabled = true;
+			this.buttonStop.Enabled = true;
+
+			this.splitContainerNodes.Enabled = false;
+			this.splitContainerCommands.Enabled = false;
+		}
+
+		private void OnRunPaused()
+		{
+			// Set the controls enabled state.
+			this.buttonStart.Enabled = true;
+			this.buttonPause.Enabled = false;
+		}
+
+		private void OnRunResumed()
+		{
+			// Set the controls enabled state.
+			this.buttonStart.Enabled = false;
+			this.buttonPause.Enabled = true;
+		}
+
+		private void OnRunStopped()
+		{
+			// Set the controls enabled state.
+			this.buttonStart.Enabled = false;
+			this.buttonPause.Enabled = true;
+			this.buttonStop.Enabled = true;
+
+			this.splitContainerNodes.Enabled = true;
+			this.splitContainerCommands.Enabled = true;
 		}
 	}
 }

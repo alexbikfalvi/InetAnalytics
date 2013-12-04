@@ -676,8 +676,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Warn the user about the refresh.
 			if (MessageBox.Show(
 				this,
-				@"You will now refresh the information for slice '{0}'. This will remove the slice configuration and disconnect all current sessions. Click Yes to continue.".FormatWith(this.slice.Name),
-				"Refresh PlanetLab Slice",
+				@"You will are refreshing the information for slice '{0}'. This will remove the slice configuration and disconnect all current sessions. Do you want to continue?".FormatWith(this.slice.Name),
+				"Confirm Refreshing the PlanetLab Slice",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button2) == DialogResult.No)
@@ -1392,8 +1392,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Confirm the removal.
 			if (MessageBox.Show(
 				this,
-				"Remove the current slice from PlanetLab node {0}?".FormatWith(info.NodeId),
-				"Remove Slice from Node",
+				"You are removing the current slice from the PlanetLab node {0}. Do you want to continue?".FormatWith(info.NodeId),
+				"Confirm Removing the Slice from Node",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button2) == DialogResult.Yes)
@@ -1953,7 +1953,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.treeNodeSlice.ExpandAll();
 
 			// Initialize the controls.
-			this.controlRun.Initialize(this.crawler, this.slice, this.treeNodeRun);
+			this.controlRun.Initialize(this.crawler, this.slice, this.config, this.treeNodeRun);
 
 			// Add the controls.
 			this.controls.Add(this.controlRun);

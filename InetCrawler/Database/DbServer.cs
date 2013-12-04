@@ -645,12 +645,12 @@ namespace InetCrawler.Database
 			this.dateModified = DateTime.Now;
 
 			// Save basic configuration.
-			DotNetApi.Windows.Registry.SetString(this.key.Name, "Name", this.name);
-			DotNetApi.Windows.Registry.SetString(this.key.Name, "DataSource", this.dataSource);
-			DotNetApi.Windows.Registry.SetString(this.key.Name, "Username", this.username);
-			DotNetApi.Windows.Registry.SetSecureString(this.key.Name, "Password", this.password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateCreated", this.dateCreated);
-			DotNetApi.Windows.Registry.SetDateTime(this.key.Name, "DateModified", this.dateModified);
+			DotNetApi.Windows.RegistryExtensions.SetString(this.key.Name, "Name", this.name);
+			DotNetApi.Windows.RegistryExtensions.SetString(this.key.Name, "DataSource", this.dataSource);
+			DotNetApi.Windows.RegistryExtensions.SetString(this.key.Name, "Username", this.username);
+			DotNetApi.Windows.RegistryExtensions.SetSecureString(this.key.Name, "Password", this.password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			DotNetApi.Windows.RegistryExtensions.SetDateTime(this.key.Name, "DateCreated", this.dateCreated);
+			DotNetApi.Windows.RegistryExtensions.SetDateTime(this.key.Name, "DateModified", this.dateModified);
 
 			// Save tables and relationship configuration.
 			this.tables.SaveConfiguration();
@@ -672,12 +672,12 @@ namespace InetCrawler.Database
 		private void LoadInternalConfiguration()
 		{
 			// Load basic configuration.
-			this.name = DotNetApi.Windows.Registry.GetString(this.key.Name, "Name", null);
-			this.dataSource = DotNetApi.Windows.Registry.GetString(this.key.Name, "DataSource", null);
-			this.username = DotNetApi.Windows.Registry.GetString(this.key.Name, "Username", null);
-			this.password = DotNetApi.Windows.Registry.GetSecureString(this.key.Name, "Password", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
-			this.dateCreated = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateCreated", DateTime.Now);
-			this.dateModified = DotNetApi.Windows.Registry.GetDateTime(this.key.Name, "DateModified", DateTime.Now);
+			this.name = DotNetApi.Windows.RegistryExtensions.GetString(this.key.Name, "Name", null);
+			this.dataSource = DotNetApi.Windows.RegistryExtensions.GetString(this.key.Name, "DataSource", null);
+			this.username = DotNetApi.Windows.RegistryExtensions.GetString(this.key.Name, "Username", null);
+			this.password = DotNetApi.Windows.RegistryExtensions.GetSecureString(this.key.Name, "Password", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			this.dateCreated = DotNetApi.Windows.RegistryExtensions.GetDateTime(this.key.Name, "DateCreated", DateTime.Now);
+			this.dateModified = DotNetApi.Windows.RegistryExtensions.GetDateTime(this.key.Name, "DateModified", DateTime.Now);
 
 			// Load tables and relationships configuration.
 			this.tables.LoadConfiguration();

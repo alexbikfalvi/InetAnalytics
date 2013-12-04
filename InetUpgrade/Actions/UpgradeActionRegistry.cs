@@ -57,7 +57,7 @@ namespace InetUpgrade.Actions
 				));
 
 			// Move the registry key.
-			Registry.MoveKey(Registry.CurrentUser, oldPath, Registry.CurrentUser, newPath);
+			RegistryExtensions.MoveKey(RegistryExtensions.CurrentUser, oldPath, RegistryExtensions.CurrentUser, newPath);
 		}
 	}
 }

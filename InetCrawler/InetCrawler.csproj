@@ -70,7 +70,11 @@
     <Compile Include="Events\VideoEventArgs.cs" />
     <Compile Include="Log\LogEventArgs.cs" />
     <Compile Include="PlanetLab\PlCommand.cs" />
+    <Compile Include="PlanetLab\PlCommandEventArgs.cs" />
     <Compile Include="PlanetLab\PlConfigSlice.cs" />
+    <Compile Include="PlanetLab\PlConfigSliceCommands.cs" />
+    <Compile Include="PlanetLab\PlManager.cs" />
+    <Compile Include="PlanetLab\PlManagerState.cs" />
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />
     <Compile Include="Spider\SpiderEventArgs.cs" />
     <Compile Include="Status\CrawlerStatus.cs" />

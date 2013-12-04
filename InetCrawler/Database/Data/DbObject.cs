@@ -110,7 +110,7 @@ namespace InetCrawler.Database.Data
 			try
 			{
 				// Read the data from the registry to a buffer.
-				byte[] buffer = Registry.GetBytes(key, value, null);
+				byte[] buffer = RegistryExtensions.GetBytes(key, value, null);
 				// If the buffer is null, return null.
 				if (null == buffer) return null;
 				// Create a memory stream from where to deserialize the object.
@@ -147,7 +147,7 @@ namespace InetCrawler.Database.Data
 					// Serialize the current object to the file.
 					serializer.Serialize(stream, obj);
 					// Write the stream buffer to the registry.
-					Registry.SetBytes(key, value, stream.ToArray());
+					RegistryExtensions.SetBytes(key, value, stream.ToArray());
 				}
 			}
 			catch (Exception exception)

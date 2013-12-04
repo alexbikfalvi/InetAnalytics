@@ -65,8 +65,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string Url
 		{
-			get { return Registry.GetString(this.key, "Url", string.Empty); }
-			set { Registry.SetString(this.key, "Url", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "Url", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "Url", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -74,8 +74,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string Method
 		{
-			get { return Registry.GetString(this.key, "Method", "GET"); }
-			set { Registry.SetString(this.key, "Method", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "Method", "GET"); }
+			set { RegistryExtensions.SetString(this.key, "Method", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -83,8 +83,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string Data
 		{
-			get { return Registry.GetString(this.key, "Data", string.Empty); }
-			set { Registry.SetString(this.key, "Data", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "Data", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "Data", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -92,8 +92,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public int DataEncoding
 		{
-			get { return Registry.GetInteger(this.key, "DataEncoding", 65001); }
-			set { Registry.SetInteger(this.key, "DataEncoding", value); }
+			get { return RegistryExtensions.GetInteger(this.key, "DataEncoding", 65001); }
+			set { RegistryExtensions.SetInteger(this.key, "DataEncoding", value); }
 		}
 
 		/// <summary>
@@ -101,8 +101,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public bool AcceptHeaderChecked
 		{
-			get { return Registry.GetBoolean(this.key, "AcceptHeaderChecked", false); }
-			set { Registry.SetBoolean(this.key, "AcceptHeaderChecked", value); }
+			get { return RegistryExtensions.GetBoolean(this.key, "AcceptHeaderChecked", false); }
+			set { RegistryExtensions.SetBoolean(this.key, "AcceptHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -110,8 +110,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public bool ContentTypeHeaderChecked
 		{
-			get { return Registry.GetBoolean(this.key, "ContentTypeHeaderChecked", false); }
-			set { Registry.SetBoolean(this.key, "ContentTypeHeaderChecked", value); }
+			get { return RegistryExtensions.GetBoolean(this.key, "ContentTypeHeaderChecked", false); }
+			set { RegistryExtensions.SetBoolean(this.key, "ContentTypeHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -119,8 +119,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public bool DateHeaderChecked
 		{
-			get { return Registry.GetBoolean(this.key, "DateHeaderChecked", false); }
-			set { Registry.SetBoolean(this.key, "DateHeaderChecked", value); }
+			get { return RegistryExtensions.GetBoolean(this.key, "DateHeaderChecked", false); }
+			set { RegistryExtensions.SetBoolean(this.key, "DateHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -128,8 +128,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public bool ExpectHeaderChecked
 		{
-			get { return Registry.GetBoolean(this.key, "ExpectHeaderChecked", false); }
-			set { Registry.SetBoolean(this.key, "ExpectHeaderChecked", value); }
+			get { return RegistryExtensions.GetBoolean(this.key, "ExpectHeaderChecked", false); }
+			set { RegistryExtensions.SetBoolean(this.key, "ExpectHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -137,8 +137,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public bool RefererHeaderChecked
 		{
-			get { return Registry.GetBoolean(this.key, "RefererHeaderChecked", false); }
-			set { Registry.SetBoolean(this.key, "RefererHeaderChecked", value); }
+			get { return RegistryExtensions.GetBoolean(this.key, "RefererHeaderChecked", false); }
+			set { RegistryExtensions.SetBoolean(this.key, "RefererHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -146,8 +146,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public bool UserAgentHeaderChecked
 		{
-			get { return Registry.GetBoolean(this.key, "UserAgentHeaderChecked", false); }
-			set { Registry.SetBoolean(this.key, "UserAgentHeaderChecked", value); }
+			get { return RegistryExtensions.GetBoolean(this.key, "UserAgentHeaderChecked", false); }
+			set { RegistryExtensions.SetBoolean(this.key, "UserAgentHeaderChecked", value); }
 		}
 
 		/// <summary>
@@ -155,8 +155,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string AcceptHeaderValue
 		{
-			get { return Registry.GetString(this.key, "AcceptHeaderValue", string.Empty); }
-			set { Registry.SetString(this.key, "AcceptHeaderValue", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "AcceptHeaderValue", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "AcceptHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -164,8 +164,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string ContentTypeHeaderValue
 		{
-			get { return Registry.GetString(this.key, "ContentTypeHeaderValue", string.Empty); }
-			set { Registry.SetString(this.key, "ContentTypeHeaderValue", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "ContentTypeHeaderValue", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "ContentTypeHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -173,8 +173,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public DateTime DateHeaderValue
 		{
-			get { return Registry.GetDateTime(this.key, "DateHeaderValue", DateTime.Now); }
-			set { Registry.SetDateTime(this.key, "DateHeaderValue", value); }
+			get { return RegistryExtensions.GetDateTime(this.key, "DateHeaderValue", DateTime.Now); }
+			set { RegistryExtensions.SetDateTime(this.key, "DateHeaderValue", value); }
 		}
 
 		/// <summary>
@@ -182,8 +182,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string ExpectHeaderValue
 		{
-			get { return Registry.GetString(this.key, "ExpectHeaderValue", string.Empty); }
-			set { Registry.SetString(this.key, "ExpectHeaderValue", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "ExpectHeaderValue", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "ExpectHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -191,8 +191,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string RefererHeaderValue
 		{
-			get { return Registry.GetString(this.key, "RefererHeaderValue", string.Empty); }
-			set { Registry.SetString(this.key, "RefererHeaderValue", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "RefererHeaderValue", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "RefererHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -200,8 +200,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string UserAgentHeaderValue
 		{
-			get { return Registry.GetString(this.key, "UserAgentHeaderValue", string.Empty); }
-			set { Registry.SetString(this.key, "UserAgentHeaderValue", value != null ? value : string.Empty); }
+			get { return RegistryExtensions.GetString(this.key, "UserAgentHeaderValue", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "UserAgentHeaderValue", value != null ? value : string.Empty); }
 		}
 
 		/// <summary>
@@ -224,7 +224,7 @@ namespace InetCrawler.Testing
 			try
 			{
 				// Read the headers string from the registry.
-				string[] list = Registry.GetMultiString(this.key, "Headers", null);
+				string[] list = RegistryExtensions.GetMultiString(this.key, "Headers", null);
 				// If the list of headers is not null.
 				if (null != list)
 				{
@@ -261,7 +261,7 @@ namespace InetCrawler.Testing
 				list[index++] = "{0}:{1}".FormatWith(header.Key, header.Value);
 			}
 			// Write the headers string builder to the registry.
-			Registry.SetMultiString(this.key, "Headers", list);
+			RegistryExtensions.SetMultiString(this.key, "Headers", list);
 		}
 
 		/// <summary>

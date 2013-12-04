@@ -57,6 +57,9 @@
 			this.labelUserCommentsFile = new System.Windows.Forms.Label();
 			this.textBoxVideoCommentsFile = new System.Windows.Forms.TextBox();
 			this.labelVideoCommentsFile = new System.Windows.Forms.Label();
+			this.tabPagePlanetLab = new System.Windows.Forms.TabPage();
+			this.textBoxPlCommandsFolder = new System.Windows.Forms.TextBox();
+			this.labelPlCommandsFolder = new System.Windows.Forms.Label();
 			this.toolStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageGeneral.SuspendLayout();
@@ -65,6 +68,7 @@
 			this.groupBoxYt2.SuspendLayout();
 			this.tabPageLog.SuspendLayout();
 			this.tabPageComments.SuspendLayout();
+			this.tabPagePlanetLab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -72,7 +76,7 @@
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonSave,
             this.buttonUndo});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 0;
@@ -104,6 +108,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabPageGeneral);
+			this.tabControl.Controls.Add(this.tabPagePlanetLab);
 			this.tabControl.Controls.Add(this.tabPageYouTube);
 			this.tabControl.Controls.Add(this.tabPageLog);
 			this.tabControl.Controls.Add(this.tabPageComments);
@@ -127,7 +132,7 @@
 			// 
 			// numericMessageCloseDelay
 			// 
-			this.numericMessageCloseDelay.Location = new System.Drawing.Point(150, 14);
+			this.numericMessageCloseDelay.Location = new System.Drawing.Point(150, 6);
 			this.numericMessageCloseDelay.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -146,7 +151,7 @@
 			// labelMessageCloseDelay
 			// 
 			this.labelMessageCloseDelay.AutoSize = true;
-			this.labelMessageCloseDelay.Location = new System.Drawing.Point(16, 16);
+			this.labelMessageCloseDelay.Location = new System.Drawing.Point(16, 9);
 			this.labelMessageCloseDelay.Name = "labelMessageCloseDelay";
 			this.labelMessageCloseDelay.Size = new System.Drawing.Size(109, 13);
 			this.labelMessageCloseDelay.TabIndex = 0;
@@ -173,7 +178,7 @@
 			// 
 			this.textBoxYtCategories.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxYtCategories.Location = new System.Drawing.Point(150, 124);
+			this.textBoxYtCategories.Location = new System.Drawing.Point(150, 117);
 			this.textBoxYtCategories.Name = "textBoxYtCategories";
 			this.textBoxYtCategories.ReadOnly = true;
 			this.textBoxYtCategories.Size = new System.Drawing.Size(424, 20);
@@ -182,7 +187,7 @@
 			// labelYtCategories
 			// 
 			this.labelYtCategories.AutoSize = true;
-			this.labelYtCategories.Location = new System.Drawing.Point(16, 127);
+			this.labelYtCategories.Location = new System.Drawing.Point(16, 120);
 			this.labelYtCategories.Name = "labelYtCategories";
 			this.labelYtCategories.Size = new System.Drawing.Size(76, 13);
 			this.labelYtCategories.TabIndex = 8;
@@ -194,9 +199,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBoxYt2.Controls.Add(this.labelYt2Key);
 			this.groupBoxYt2.Controls.Add(this.textBoxYt2Key);
-			this.groupBoxYt2.Location = new System.Drawing.Point(6, 65);
+			this.groupBoxYt2.Location = new System.Drawing.Point(6, 58);
 			this.groupBoxYt2.Name = "groupBoxYt2";
-			this.groupBoxYt2.Size = new System.Drawing.Size(574, 53);
+			this.groupBoxYt2.Size = new System.Drawing.Size(572, 53);
 			this.groupBoxYt2.TabIndex = 7;
 			this.groupBoxYt2.TabStop = false;
 			this.groupBoxYt2.Text = "API version 2";
@@ -217,14 +222,14 @@
 			this.textBoxYt2Key.Location = new System.Drawing.Point(144, 19);
 			this.textBoxYt2Key.Name = "textBoxYt2Key";
 			this.textBoxYt2Key.SecureText = secureString1;
-			this.textBoxYt2Key.Size = new System.Drawing.Size(424, 20);
+			this.textBoxYt2Key.Size = new System.Drawing.Size(422, 20);
 			this.textBoxYt2Key.TabIndex = 7;
 			this.textBoxYt2Key.UseSystemPasswordChar = true;
 			this.textBoxYt2Key.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
 			// textBoxYtPassword
 			// 
-			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 39);
+			this.textBoxYtPassword.Location = new System.Drawing.Point(150, 32);
 			this.textBoxYtPassword.Name = "textBoxYtPassword";
 			this.textBoxYtPassword.SecureText = secureString2;
 			this.textBoxYtPassword.Size = new System.Drawing.Size(150, 20);
@@ -235,7 +240,7 @@
 			// labelYtPassword
 			// 
 			this.labelYtPassword.AutoSize = true;
-			this.labelYtPassword.Location = new System.Drawing.Point(16, 42);
+			this.labelYtPassword.Location = new System.Drawing.Point(16, 35);
 			this.labelYtPassword.Name = "labelYtPassword";
 			this.labelYtPassword.Size = new System.Drawing.Size(56, 13);
 			this.labelYtPassword.TabIndex = 5;
@@ -243,7 +248,7 @@
 			// 
 			// textBoxYtUserName
 			// 
-			this.textBoxYtUserName.Location = new System.Drawing.Point(150, 13);
+			this.textBoxYtUserName.Location = new System.Drawing.Point(150, 6);
 			this.textBoxYtUserName.Name = "textBoxYtUserName";
 			this.textBoxYtUserName.Size = new System.Drawing.Size(150, 20);
 			this.textBoxYtUserName.TabIndex = 3;
@@ -252,7 +257,7 @@
 			// labelYtUserName
 			// 
 			this.labelYtUserName.AutoSize = true;
-			this.labelYtUserName.Location = new System.Drawing.Point(16, 16);
+			this.labelYtUserName.Location = new System.Drawing.Point(16, 9);
 			this.labelYtUserName.Name = "labelYtUserName";
 			this.labelYtUserName.Size = new System.Drawing.Size(61, 13);
 			this.labelYtUserName.TabIndex = 2;
@@ -274,17 +279,17 @@
 			// 
 			this.textBoxLogFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxLogFile.Location = new System.Drawing.Point(150, 13);
+			this.textBoxLogFile.Location = new System.Drawing.Point(150, 6);
 			this.textBoxLogFile.Name = "textBoxLogFile";
 			this.textBoxLogFile.ReadOnly = true;
-			this.textBoxLogFile.Size = new System.Drawing.Size(400, 20);
+			this.textBoxLogFile.Size = new System.Drawing.Size(428, 20);
 			this.textBoxLogFile.TabIndex = 4;
 			this.textBoxLogFile.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
 			// labelLogFile
 			// 
 			this.labelLogFile.AutoSize = true;
-			this.labelLogFile.Location = new System.Drawing.Point(16, 16);
+			this.labelLogFile.Location = new System.Drawing.Point(16, 9);
 			this.labelLogFile.Name = "labelLogFile";
 			this.labelLogFile.Size = new System.Drawing.Size(44, 13);
 			this.labelLogFile.TabIndex = 3;
@@ -309,7 +314,7 @@
 			// labelPlaylistCommentsFile
 			// 
 			this.labelPlaylistCommentsFile.AutoSize = true;
-			this.labelPlaylistCommentsFile.Location = new System.Drawing.Point(16, 68);
+			this.labelPlaylistCommentsFile.Location = new System.Drawing.Point(16, 61);
 			this.labelPlaylistCommentsFile.Name = "labelPlaylistCommentsFile";
 			this.labelPlaylistCommentsFile.Size = new System.Drawing.Size(109, 13);
 			this.labelPlaylistCommentsFile.TabIndex = 9;
@@ -319,26 +324,26 @@
 			// 
 			this.textBoxPlaylistCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPlaylistCommentsFile.Location = new System.Drawing.Point(150, 65);
+			this.textBoxPlaylistCommentsFile.Location = new System.Drawing.Point(150, 58);
 			this.textBoxPlaylistCommentsFile.Name = "textBoxPlaylistCommentsFile";
 			this.textBoxPlaylistCommentsFile.ReadOnly = true;
-			this.textBoxPlaylistCommentsFile.Size = new System.Drawing.Size(430, 20);
+			this.textBoxPlaylistCommentsFile.Size = new System.Drawing.Size(428, 20);
 			this.textBoxPlaylistCommentsFile.TabIndex = 8;
 			// 
 			// textBoxUserCommentsFile
 			// 
 			this.textBoxUserCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxUserCommentsFile.Location = new System.Drawing.Point(150, 39);
+			this.textBoxUserCommentsFile.Location = new System.Drawing.Point(150, 32);
 			this.textBoxUserCommentsFile.Name = "textBoxUserCommentsFile";
 			this.textBoxUserCommentsFile.ReadOnly = true;
-			this.textBoxUserCommentsFile.Size = new System.Drawing.Size(430, 20);
+			this.textBoxUserCommentsFile.Size = new System.Drawing.Size(428, 20);
 			this.textBoxUserCommentsFile.TabIndex = 7;
 			// 
 			// labelUserCommentsFile
 			// 
 			this.labelUserCommentsFile.AutoSize = true;
-			this.labelUserCommentsFile.Location = new System.Drawing.Point(16, 42);
+			this.labelUserCommentsFile.Location = new System.Drawing.Point(16, 35);
 			this.labelUserCommentsFile.Name = "labelUserCommentsFile";
 			this.labelUserCommentsFile.Size = new System.Drawing.Size(99, 13);
 			this.labelUserCommentsFile.TabIndex = 6;
@@ -348,21 +353,52 @@
 			// 
 			this.textBoxVideoCommentsFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxVideoCommentsFile.Location = new System.Drawing.Point(150, 13);
+			this.textBoxVideoCommentsFile.Location = new System.Drawing.Point(150, 6);
 			this.textBoxVideoCommentsFile.Name = "textBoxVideoCommentsFile";
 			this.textBoxVideoCommentsFile.ReadOnly = true;
-			this.textBoxVideoCommentsFile.Size = new System.Drawing.Size(430, 20);
+			this.textBoxVideoCommentsFile.Size = new System.Drawing.Size(428, 20);
 			this.textBoxVideoCommentsFile.TabIndex = 5;
 			this.textBoxVideoCommentsFile.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
 			// labelVideoCommentsFile
 			// 
 			this.labelVideoCommentsFile.AutoSize = true;
-			this.labelVideoCommentsFile.Location = new System.Drawing.Point(16, 16);
+			this.labelVideoCommentsFile.Location = new System.Drawing.Point(16, 9);
 			this.labelVideoCommentsFile.Name = "labelVideoCommentsFile";
 			this.labelVideoCommentsFile.Size = new System.Drawing.Size(104, 13);
 			this.labelVideoCommentsFile.TabIndex = 4;
 			this.labelVideoCommentsFile.Text = "&Video comments file:";
+			// 
+			// tabPagePlanetLab
+			// 
+			this.tabPagePlanetLab.Controls.Add(this.textBoxPlCommandsFolder);
+			this.tabPagePlanetLab.Controls.Add(this.labelPlCommandsFolder);
+			this.tabPagePlanetLab.Location = new System.Drawing.Point(4, 22);
+			this.tabPagePlanetLab.Name = "tabPagePlanetLab";
+			this.tabPagePlanetLab.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPagePlanetLab.Size = new System.Drawing.Size(584, 320);
+			this.tabPagePlanetLab.TabIndex = 4;
+			this.tabPagePlanetLab.Text = "PlanetLab";
+			this.tabPagePlanetLab.UseVisualStyleBackColor = true;
+			// 
+			// textBoxPlCommandsFolder
+			// 
+			this.textBoxPlCommandsFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPlCommandsFolder.Location = new System.Drawing.Point(150, 6);
+			this.textBoxPlCommandsFolder.Name = "textBoxPlCommandsFolder";
+			this.textBoxPlCommandsFolder.ReadOnly = true;
+			this.textBoxPlCommandsFolder.Size = new System.Drawing.Size(428, 20);
+			this.textBoxPlCommandsFolder.TabIndex = 6;
+			// 
+			// labelPlCommandsFolder
+			// 
+			this.labelPlCommandsFolder.AutoSize = true;
+			this.labelPlCommandsFolder.Location = new System.Drawing.Point(16, 9);
+			this.labelPlCommandsFolder.Name = "labelPlCommandsFolder";
+			this.labelPlCommandsFolder.Size = new System.Drawing.Size(91, 13);
+			this.labelPlCommandsFolder.TabIndex = 5;
+			this.labelPlCommandsFolder.Text = "&Commands folder:";
 			// 
 			// ControlSettings
 			// 
@@ -390,6 +426,8 @@
 			this.tabPageLog.PerformLayout();
 			this.tabPageComments.ResumeLayout(false);
 			this.tabPageComments.PerformLayout();
+			this.tabPagePlanetLab.ResumeLayout(false);
+			this.tabPagePlanetLab.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -424,5 +462,8 @@
 		private System.Windows.Forms.Label labelYt2Key;
 		private System.Windows.Forms.TextBox textBoxYtCategories;
 		private System.Windows.Forms.Label labelYtCategories;
+		private System.Windows.Forms.TabPage tabPagePlanetLab;
+		private System.Windows.Forms.TextBox textBoxPlCommandsFolder;
+		private System.Windows.Forms.Label labelPlCommandsFolder;
 	}
 }

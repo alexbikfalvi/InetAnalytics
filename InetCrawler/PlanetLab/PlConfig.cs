@@ -113,6 +113,7 @@ namespace InetCrawler.PlanetLab
 			CrawlerConfig.Static.PlanetLabNodesFileName = this.NodesFileName;
 			CrawlerConfig.Static.PlanetLabLocalPersonsFileName = this.LocalPersonsFileName;
 			CrawlerConfig.Static.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
+			CrawlerConfig.Static.PlanetLabCommandsFolder = this.CommandsFolder;
 		}
 
 		// Public properties.
@@ -124,7 +125,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "UserName", string.Empty);
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "UserName", string.Empty);
 			}
 		}
 		/// <summary>
@@ -134,7 +135,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetSecureString(this.root, "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				return DotNetApi.Windows.RegistryExtensions.GetSecureString(this.root, "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			}
 		}
 		/// <summary>
@@ -144,7 +145,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetInteger(this.root, "PersonId", -1);
+				return DotNetApi.Windows.RegistryExtensions.GetInteger(this.root, "PersonId", -1);
 			}
 		}
 		/// <summary>
@@ -154,11 +155,11 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "SitesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Sites.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "SitesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Sites.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root, "SitesFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "SitesFileName", value);
 				CrawlerConfig.Static.PlanetLabSitesFileName = value;
 			}
 		}
@@ -169,11 +170,11 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "NodesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Nodes.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "NodesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Nodes.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root, "NodesFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "NodesFileName", value);
 				CrawlerConfig.Static.PlanetLabNodesFileName = value;
 			}
 		}
@@ -184,11 +185,11 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "SlicesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Slices.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "SlicesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Slices.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root, "SlicesFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "SlicesFileName", value);
 				CrawlerConfig.Static.PlanetLabSlicesFileName = value;
 			}
 		}
@@ -199,11 +200,11 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "LocalPersonsFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\LocalPersons.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "LocalPersonsFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\LocalPersons.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root, "LocalPersonsFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "LocalPersonsFileName", value);
 				CrawlerConfig.Static.PlanetLabLocalPersonsFileName = value;
 			}
 		}
@@ -214,12 +215,27 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.Registry.GetString(this.root, "LocalSlicesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\LocalSlices.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "LocalSlicesFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\LocalSlices.xml");
 			}
 			set
 			{
-				DotNetApi.Windows.Registry.SetString(this.root, "LocalSlicesFileName", value);
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "LocalSlicesFileName", value);
 				CrawlerConfig.Static.PlanetLabLocalSlicesFileName = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the PlanetLab commands.
+		/// </summary>
+		public string CommandsFolder
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "CommandsFolder", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Commands");
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "CommandsFolder", value);
+				CrawlerConfig.Static.PlanetLabCommandsFolder = value;
 			}
 		}
 		/// <summary>
@@ -312,10 +328,10 @@ namespace InetCrawler.PlanetLab
 		public void SaveCredentials(string username, SecureString password, PlList<PlPerson> persons, int person)
 		{
 			// Save the username.
-			DotNetApi.Windows.Registry.SetString(this.root, "UserName", username);
+			DotNetApi.Windows.RegistryExtensions.SetString(this.root, "UserName", username);
 			CrawlerConfig.Static.PlanetLabUsername = username;
 			// Save the password.
-			DotNetApi.Windows.Registry.SetSecureString(this.root, "Password", password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			DotNetApi.Windows.RegistryExtensions.SetSecureString(this.root, "Password", password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
 			CrawlerConfig.Static.PlanetLabPassword = password;
 			// Save the persons.
 			persons.Lock();
@@ -324,7 +340,7 @@ namespace InetCrawler.PlanetLab
 			try { this.LocalPersons.SaveToFile(this.LocalPersonsFileName); }
 			catch { }
 			// Save the person.
-			DotNetApi.Windows.Registry.SetInteger(this.root, "PersonId", person);
+			DotNetApi.Windows.RegistryExtensions.SetInteger(this.root, "PersonId", person);
 			CrawlerConfig.Static.PlanetLabPersonId = person;
 		}
 

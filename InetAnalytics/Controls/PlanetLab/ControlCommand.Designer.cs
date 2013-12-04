@@ -197,6 +197,7 @@
 			this.dataParameters.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.dataParameters.Size = new System.Drawing.Size(698, 221);
 			this.dataParameters.TabIndex = 0;
+			this.dataParameters.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnParameterChanged);
 			this.dataParameters.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.OnParameterChanged);
 			this.dataParameters.SelectionChanged += new System.EventHandler(this.OnParameterChanged);
 			// 
@@ -223,7 +224,7 @@
 			// 
 			this.labelInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.labelInfo.Name = "labelInfo";
-			this.labelInfo.Size = new System.Drawing.Size(597, 17);
+			this.labelInfo.Size = new System.Drawing.Size(628, 17);
 			this.labelInfo.Spring = true;
 			this.labelInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 

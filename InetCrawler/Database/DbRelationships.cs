@@ -166,7 +166,7 @@ namespace InetCrawler.Database
 		public void LoadConfiguration()
 		{
 			// Read the table registry value.
-			byte[] value = DotNetApi.Windows.Registry.GetBytes(this.key, DbRelationships.keyName, null);
+			byte[] value = DotNetApi.Windows.RegistryExtensions.GetBytes(this.key, DbRelationships.keyName, null);
 			// If the value is null, do nothing.
 			if (null == value) return;
 

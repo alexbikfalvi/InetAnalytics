@@ -72,6 +72,10 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// The command object only changes when the command is saved.
 		/// </summary>
 		public event EventHandler InputChanged;
+		/// <summary>
+		/// An event raised when the command has been saved, either through the Save button or by calling the Save method.
+		/// </summary>
+		public event EventHandler CommandSaved;
 
 		// Public properties.
 
@@ -98,6 +102,13 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			get { return this.isValid && ((this.dataParameters.Columns.Count > 0) ? this.dataParameters.Rows.Count > 0 : true); }
 		}
+		/// <summary>
+		/// Gets whether the current command has changed.
+		/// </summary>
+		public bool HasChanged
+		{
+			get { return this.buttonSave.Enabled; }
+		}
 
 		// Public methods.
 
@@ -110,7 +121,11 @@ namespace InetAnalytics.Controls.PlanetLab
 			if (this.command == null) return;
 
 			// If the command is not valid, do nothing.
-			if (!this.IsValid) return;
+			if (!this.IsValid)
+			{
+				MessageBox.Show(this, "The command is not valid or it has some parameters missing.", "Cannot Save Command", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
 			// Set the command.
 			this.command.Command = this.textBox.Text;
@@ -130,6 +145,9 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
 			this.buttonUndo.Enabled = false;
+
+			// Raise the command saved event.
+			if (null != this.CommandSaved) this.CommandSaved(this, EventArgs.Empty);
 		}
 
 		// Private methods.
@@ -398,7 +416,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.OnSetInfo(this.dataParameters.Columns.Count > 0 ? "The command has {0} parameter sets.".FormatWith(this.dataParameters.Rows.Count) : string.Empty);
 
 			// Enable the save and undo buttons.
-			this.buttonSave.Enabled = true;
+			this.buttonSave.Enabled = this.IsValid;
 			this.buttonUndo.Enabled = true;
 
 			// Raise the command changed event.

@@ -145,7 +145,7 @@
 			this.panelSlice.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelSlice.Location = new System.Drawing.Point(0, 0);
 			this.panelSlice.Name = "panelSlice";
-			this.panelSlice.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelSlice.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelSlice.ShowBorder = true;
 			this.panelSlice.ShowTitle = true;
 			this.panelSlice.Size = new System.Drawing.Size(800, 425);
@@ -156,10 +156,10 @@
 			// 
 			this.panelNodes.Controls.Add(this.splitContainerSlice);
 			this.panelNodes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelNodes.Location = new System.Drawing.Point(1, 151);
+			this.panelNodes.Location = new System.Drawing.Point(1, 152);
 			this.panelNodes.Name = "panelNodes";
 			this.panelNodes.Padding = new System.Windows.Forms.Padding(4);
-			this.panelNodes.Size = new System.Drawing.Size(798, 273);
+			this.panelNodes.Size = new System.Drawing.Size(798, 272);
 			this.panelNodes.TabIndex = 3;
 			// 
 			// splitContainerSlice
@@ -176,7 +176,7 @@
 			// splitContainerSlice.Panel2
 			// 
 			this.splitContainerSlice.Panel2.Controls.Add(this.mapControl);
-			this.splitContainerSlice.Size = new System.Drawing.Size(790, 265);
+			this.splitContainerSlice.Size = new System.Drawing.Size(790, 264);
 			this.splitContainerSlice.SplitterDistance = 266;
 			this.splitContainerSlice.SplitterWidth = 5;
 			this.splitContainerSlice.TabIndex = 2;
@@ -197,7 +197,7 @@
 			this.listViewNodes.Location = new System.Drawing.Point(0, 0);
 			this.listViewNodes.MultiSelect = false;
 			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(266, 265);
+			this.listViewNodes.Size = new System.Drawing.Size(266, 264);
 			this.listViewNodes.SmallImageList = this.imageList;
 			this.listViewNodes.TabIndex = 0;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
@@ -233,8 +233,9 @@
 			// 
 			this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.mapControl.Location = new System.Drawing.Point(0, 0);
+			this.mapControl.MapBounds = ((MapApi.MapRectangle)(resources.GetObject("mapControl.MapBounds")));
 			this.mapControl.Name = "mapControl";
-			this.mapControl.Size = new System.Drawing.Size(519, 265);
+			this.mapControl.Size = new System.Drawing.Size(519, 264);
 			this.mapControl.TabIndex = 0;
 			this.mapControl.MarkerClick += new System.EventHandler(this.OnMapMarkerClick);
 			this.mapControl.MarkerDoubleClick += new System.EventHandler(this.OnMapMarkerDoubleClick);
@@ -257,7 +258,7 @@
 			this.panelInformation.Controls.Add(this.labelName);
 			this.panelInformation.Controls.Add(this.textBoxName);
 			this.panelInformation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelInformation.Location = new System.Drawing.Point(1, 47);
+			this.panelInformation.Location = new System.Drawing.Point(1, 48);
 			this.panelInformation.MaximumSize = new System.Drawing.Size(0, 104);
 			this.panelInformation.Name = "panelInformation";
 			this.panelInformation.Size = new System.Drawing.Size(798, 104);
@@ -400,7 +401,7 @@
             this.buttonConnect,
             this.buttonDisconnect,
             this.buttonProperties});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
@@ -560,7 +561,7 @@
 			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlLog.Location = new System.Drawing.Point(0, 0);
 			this.controlLog.Name = "controlLog";
-			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.controlLog.ShowBorder = true;
 			this.controlLog.ShowTitle = true;
 			this.controlLog.Size = new System.Drawing.Size(800, 170);
@@ -601,7 +602,7 @@
             this.menuItemNodeProperties,
             this.menuItemSiteProperties});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(160, 98);
+			this.contextMenu.Size = new System.Drawing.Size(160, 120);
 			// 
 			// menuItemConnect
 			// 

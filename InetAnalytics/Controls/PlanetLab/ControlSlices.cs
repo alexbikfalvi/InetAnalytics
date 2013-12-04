@@ -459,8 +459,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Warn the user about the refresh.
 			if (MessageBox.Show(
 				this,
-				"You will now refresh the list with the slices to which you have access with your PlanetLab account. This will remove the configuration of slices that are no longer available and disconnect all current sessions. Click Yes to continue.",
-				"Refresh PlanetLab Slices",
+				"You are refreshing the list with the slices to which you have access with your PlanetLab account. This will remove the configuration of slices that are no longer available and disconnect all current sessions. Do you want to continue?",
+				"Confirm Refreshing the PlanetLab Slices",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button2) == DialogResult.No)
@@ -680,7 +680,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			if (MessageBox.Show(
 				this,
 				"You are removing the slice \'{0}\' from your slices list. Do you want to continue?".FormatWith(info.Slice.Name),
-				"Remove Slice",
+				"Confirm Removing the Slice",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 			{
 				// Remove the slice.

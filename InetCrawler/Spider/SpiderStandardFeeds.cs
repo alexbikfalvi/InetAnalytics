@@ -321,7 +321,7 @@ namespace InetCrawler.Spider
 		/// <returns><b>True</b> if the standard feed is selected, <b>false</b> otherwise.</returns>
 		public bool GetFeedSelected(YouTubeStandardFeed feed)
 		{
-			return DotNetApi.Windows.Registry.GetBoolean(this.crawler.Config.SpidersConfigPath + @"\StandardFeeds", feed.ToString(), false);
+			return DotNetApi.Windows.RegistryExtensions.GetBoolean(this.crawler.Config.SpidersConfigPath + @"\StandardFeeds", feed.ToString(), false);
 		}
 
 		/// <summary>
@@ -331,7 +331,7 @@ namespace InetCrawler.Spider
 		/// <param name="selected"><b>True</b> if the standard feed is selected, <b>false</b> otherwise.</param>
 		public void SetFeedSelected(YouTubeStandardFeed feed, bool selected)
 		{
-			DotNetApi.Windows.Registry.SetBoolean(this.crawler.Config.SpidersConfigPath + @"\StandardFeeds", feed.ToString(), selected);
+			DotNetApi.Windows.RegistryExtensions.SetBoolean(this.crawler.Config.SpidersConfigPath + @"\StandardFeeds", feed.ToString(), selected);
 		}
 
 		// Protected methods.

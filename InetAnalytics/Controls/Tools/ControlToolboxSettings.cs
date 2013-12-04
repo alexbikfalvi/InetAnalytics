@@ -158,8 +158,8 @@ namespace InetAnalytics.Controls.Tools
 			// Show a confirmation dialog.
 			if (MessageBox.Show(
 				this,
-				@"You are removing the tool '{0}' from toolbox. Upon removal all tasks executed by this tool will be closed and unsaved data will be lost.".FormatWith(info.Tool.Info.Name),
-				"Remove Toolbox Tool",
+				@"You are removing the tool '{0}' from toolbox. Upon removal all tasks executed by this tool will be closed and unsaved data will be lost. Do you want to continue?".FormatWith(info.Tool.Info.Name),
+				"Confirm Remove the Toolbox Tool",
 				MessageBoxButtons.OKCancel,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button2) == DialogResult.OK)

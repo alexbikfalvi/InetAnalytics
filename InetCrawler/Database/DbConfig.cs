@@ -73,7 +73,7 @@ namespace InetCrawler.Database
 			}
 
 			// Get the ID of the primary database server.
-			string primaryId = DotNetApi.Windows.Registry.GetString(this.key.Name, "Primary", null);
+			string primaryId = DotNetApi.Windows.RegistryExtensions.GetString(this.key.Name, "Primary", null);
 
 			// Set the table templates event handlers.
 			this.tables.TemplateAdded += this.OnTableTemplateAdded;
@@ -94,7 +94,7 @@ namespace InetCrawler.Database
 					// If the registry key could not be opened, continue to the next server.
 					if (null == serverKey) continue;
 					// Get the database server type.
-					DbServerType type = (DbServerType)DotNetApi.Windows.Registry.GetInteger(serverKey.Name, "Type", 0);
+					DbServerType type = (DbServerType)DotNetApi.Windows.RegistryExtensions.GetInteger(serverKey.Name, "Type", 0);
 					// Create a server instance for the specified configuration.
 					DbServer server;
 					switch (type)

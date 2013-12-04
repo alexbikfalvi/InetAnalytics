@@ -49,33 +49,54 @@
 			this.listViewNodes = new System.Windows.Forms.ListView();
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderSite = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.toolStripNodes = new System.Windows.Forms.ToolStrip();
+			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
+			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
+			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonNodesSelectAll = new System.Windows.Forms.ToolStripButton();
+			this.buttonNodesClearAll = new System.Windows.Forms.ToolStripButton();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonProperties = new System.Windows.Forms.ToolStripDropDownButton();
+			this.buttonNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttonSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripConfig = new System.Windows.Forms.ToolStrip();
+			this.buttonConfigSave = new System.Windows.Forms.ToolStripButton();
+			this.buttonConfigUndo = new System.Windows.Forms.ToolStripButton();
+			this.numericUpDownNodesParallel = new System.Windows.Forms.NumericUpDown();
 			this.labelNodesParallel = new System.Windows.Forms.Label();
 			this.checkBoxNodesSite = new System.Windows.Forms.CheckBox();
 			this.checkBoxNodesBoot = new System.Windows.Forms.CheckBox();
 			this.checkBoxNodesUpdate = new System.Windows.Forms.CheckBox();
 			this.tabPageCommands = new System.Windows.Forms.TabPage();
 			this.splitContainerCommands = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.commandList = new InetAnalytics.Controls.PlanetLab.Commands.CommandListBox();
+			this.listCommands = new InetAnalytics.Controls.PlanetLab.Commands.CommandListBox();
+			this.toolStripCommands = new System.Windows.Forms.ToolStrip();
+			this.buttonAddCommand = new System.Windows.Forms.ToolStripButton();
+			this.buttonRemoveCommand = new System.Windows.Forms.ToolStripButton();
+			this.controlCommand = new InetAnalytics.Controls.PlanetLab.ControlCommand();
+			this.tabPageProgress = new System.Windows.Forms.TabPage();
+			this.splitContainerProgress = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.listProgress = new DotNetApi.Windows.Controls.ProgressListBox();
 			this.tabPageLog = new System.Windows.Forms.TabPage();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
-			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
-			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
-			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
 			this.buttonPause = new System.Windows.Forms.ToolStripButton();
 			this.buttonStop = new System.Windows.Forms.ToolStripButton();
-			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonAddCommand = new System.Windows.Forms.ToolStripButton();
-			this.buttonRemoveCommand = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.controlCommand = new InetAnalytics.Controls.PlanetLab.ControlCommand();
+			this.contextMenuNodes = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.progressLegend = new DotNetApi.Windows.Controls.ProgressLegend();
+			this.progressLegendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.progressLegendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.progressLegendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.progressLegendItemError = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -87,13 +108,21 @@
 			this.splitContainerNodes.Panel1.SuspendLayout();
 			this.splitContainerNodes.Panel2.SuspendLayout();
 			this.splitContainerNodes.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+			this.toolStripNodes.SuspendLayout();
+			this.toolStripConfig.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesParallel)).BeginInit();
 			this.tabPageCommands.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerCommands)).BeginInit();
 			this.splitContainerCommands.Panel1.SuspendLayout();
 			this.splitContainerCommands.Panel2.SuspendLayout();
 			this.splitContainerCommands.SuspendLayout();
+			this.toolStripCommands.SuspendLayout();
+			this.tabPageProgress.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerProgress)).BeginInit();
+			this.splitContainerProgress.Panel1.SuspendLayout();
+			this.splitContainerProgress.SuspendLayout();
 			this.toolStrip.SuspendLayout();
+			this.contextMenuNodes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -136,6 +165,7 @@
 			// 
 			this.tabControl.Controls.Add(this.tabPageNodes);
 			this.tabControl.Controls.Add(this.tabPageCommands);
+			this.tabControl.Controls.Add(this.tabPageProgress);
 			this.tabControl.Controls.Add(this.tabPageLog);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl.Location = new System.Drawing.Point(1, 48);
@@ -150,7 +180,7 @@
 			this.tabPageNodes.Controls.Add(this.splitContainerNodes);
 			this.tabPageNodes.Location = new System.Drawing.Point(2, 23);
 			this.tabPageNodes.Name = "tabPageNodes";
-			this.tabPageNodes.Padding = new System.Windows.Forms.Padding(4);
+			this.tabPageNodes.Padding = new System.Windows.Forms.Padding(5);
 			this.tabPageNodes.Size = new System.Drawing.Size(794, 351);
 			this.tabPageNodes.TabIndex = 0;
 			this.tabPageNodes.Text = "Nodes";
@@ -160,25 +190,27 @@
 			// 
 			this.splitContainerNodes.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerNodes.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainerNodes.Location = new System.Drawing.Point(4, 4);
+			this.splitContainerNodes.Location = new System.Drawing.Point(5, 5);
 			this.splitContainerNodes.Name = "splitContainerNodes";
 			// 
 			// splitContainerNodes.Panel1
 			// 
 			this.splitContainerNodes.Panel1.Controls.Add(this.listViewNodes);
+			this.splitContainerNodes.Panel1.Controls.Add(this.toolStripNodes);
 			this.splitContainerNodes.Panel1.Padding = new System.Windows.Forms.Padding(1);
 			// 
 			// splitContainerNodes.Panel2
 			// 
 			this.splitContainerNodes.Panel2.AutoScroll = true;
-			this.splitContainerNodes.Panel2.Controls.Add(this.numericUpDown1);
+			this.splitContainerNodes.Panel2.Controls.Add(this.toolStripConfig);
+			this.splitContainerNodes.Panel2.Controls.Add(this.numericUpDownNodesParallel);
 			this.splitContainerNodes.Panel2.Controls.Add(this.labelNodesParallel);
 			this.splitContainerNodes.Panel2.Controls.Add(this.checkBoxNodesSite);
 			this.splitContainerNodes.Panel2.Controls.Add(this.checkBoxNodesBoot);
 			this.splitContainerNodes.Panel2.Controls.Add(this.checkBoxNodesUpdate);
 			this.splitContainerNodes.Panel2.Padding = new System.Windows.Forms.Padding(1);
-			this.splitContainerNodes.Size = new System.Drawing.Size(786, 343);
-			this.splitContainerNodes.SplitterDistance = 400;
+			this.splitContainerNodes.Size = new System.Drawing.Size(784, 341);
+			this.splitContainerNodes.SplitterDistance = 398;
 			this.splitContainerNodes.SplitterWidth = 5;
 			this.splitContainerNodes.TabIndex = 0;
 			this.splitContainerNodes.UseTheme = false;
@@ -186,36 +218,43 @@
 			// listViewNodes
 			// 
 			this.listViewNodes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listViewNodes.CheckBoxes = true;
 			this.listViewNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderId,
             this.columnHeaderHostname,
-            this.columnHeaderState});
+            this.columnHeaderSite});
 			this.listViewNodes.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewNodes.FullRowSelect = true;
 			this.listViewNodes.GridLines = true;
 			this.listViewNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listViewNodes.HideSelection = false;
-			this.listViewNodes.Location = new System.Drawing.Point(1, 1);
+			this.listViewNodes.Location = new System.Drawing.Point(1, 26);
 			this.listViewNodes.MultiSelect = false;
 			this.listViewNodes.Name = "listViewNodes";
-			this.listViewNodes.Size = new System.Drawing.Size(398, 341);
+			this.listViewNodes.Size = new System.Drawing.Size(396, 314);
 			this.listViewNodes.SmallImageList = this.imageList;
 			this.listViewNodes.TabIndex = 1;
 			this.listViewNodes.UseCompatibleStateImageBehavior = false;
 			this.listViewNodes.View = System.Windows.Forms.View.Details;
+			this.listViewNodes.ItemActivate += new System.EventHandler(this.OnNodeProperties);
+			this.listViewNodes.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.OnNodeCheckChanged);
+			this.listViewNodes.SelectedIndexChanged += new System.EventHandler(this.OnNodeSelectionChanged);
+			this.listViewNodes.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodesMouseClick);
 			// 
 			// columnHeaderId
 			// 
 			this.columnHeaderId.Text = "ID";
+			this.columnHeaderId.Width = 120;
 			// 
 			// columnHeaderHostname
 			// 
 			this.columnHeaderHostname.Text = "Hostname";
-			this.columnHeaderHostname.Width = 120;
+			this.columnHeaderHostname.Width = 180;
 			// 
-			// columnHeaderState
+			// columnHeaderSite
 			// 
-			this.columnHeaderState.Text = "State";
+			this.columnHeaderSite.Text = "Site";
+			this.columnHeaderSite.Width = 180;
 			// 
 			// imageList
 			// 
@@ -227,32 +266,156 @@
 			this.imageList.Images.SetKeyName(3, "NodeReinstall");
 			this.imageList.Images.SetKeyName(4, "NodeDisabled");
 			// 
-			// numericUpDown1
+			// toolStripNodes
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(10, 92);
-			this.numericUpDown1.Maximum = new decimal(new int[] {
+			this.toolStripNodes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonRefresh,
+            this.buttonCancel,
+            this.separator1,
+            this.buttonNodesSelectAll,
+            this.buttonNodesClearAll,
+            this.separator2,
+            this.buttonProperties});
+			this.toolStripNodes.Location = new System.Drawing.Point(1, 1);
+			this.toolStripNodes.Name = "toolStripNodes";
+			this.toolStripNodes.Size = new System.Drawing.Size(396, 25);
+			this.toolStripNodes.TabIndex = 2;
+			this.toolStripNodes.Text = "toolStrip1";
+			// 
+			// buttonRefresh
+			// 
+			this.buttonRefresh.Image = global::InetAnalytics.Resources.Refresh_16;
+			this.buttonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRefresh.Name = "buttonRefresh";
+			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
+			this.buttonRefresh.Text = "&Refresh";
+			this.buttonRefresh.Click += new System.EventHandler(this.OnRefresh);
+			// 
+			// buttonCancel
+			// 
+			this.buttonCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.buttonCancel.Enabled = false;
+			this.buttonCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonCancel.Image")));
+			this.buttonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonCancel.Name = "buttonCancel";
+			this.buttonCancel.Size = new System.Drawing.Size(47, 22);
+			this.buttonCancel.Text = "&Cancel";
+			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
+			// 
+			// separator1
+			// 
+			this.separator1.Name = "separator1";
+			this.separator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonNodesSelectAll
+			// 
+			this.buttonNodesSelectAll.Enabled = false;
+			this.buttonNodesSelectAll.Image = global::InetAnalytics.Resources.SelectAll_16;
+			this.buttonNodesSelectAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonNodesSelectAll.Name = "buttonNodesSelectAll";
+			this.buttonNodesSelectAll.Size = new System.Drawing.Size(73, 22);
+			this.buttonNodesSelectAll.Text = "&Select all";
+			this.buttonNodesSelectAll.Click += new System.EventHandler(this.OnSelectAllNodes);
+			// 
+			// buttonNodesClearAll
+			// 
+			this.buttonNodesClearAll.Enabled = false;
+			this.buttonNodesClearAll.Image = global::InetAnalytics.Resources.ClearAll_16;
+			this.buttonNodesClearAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonNodesClearAll.Name = "buttonNodesClearAll";
+			this.buttonNodesClearAll.Size = new System.Drawing.Size(69, 22);
+			this.buttonNodesClearAll.Text = "&Clear all";
+			this.buttonNodesClearAll.Click += new System.EventHandler(this.OnClearAllNodes);
+			// 
+			// separator2
+			// 
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonProperties
+			// 
+			this.buttonProperties.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonNodeProperties,
+            this.buttonSiteProperties});
+			this.buttonProperties.Enabled = false;
+			this.buttonProperties.Image = global::InetAnalytics.Resources.Properties_16;
+			this.buttonProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonProperties.Name = "buttonProperties";
+			this.buttonProperties.Size = new System.Drawing.Size(89, 22);
+			this.buttonProperties.Text = "&Properties";
+			// 
+			// buttonNodeProperties
+			// 
+			this.buttonNodeProperties.Name = "buttonNodeProperties";
+			this.buttonNodeProperties.Size = new System.Drawing.Size(159, 22);
+			this.buttonNodeProperties.Text = "Node properties";
+			this.buttonNodeProperties.Click += new System.EventHandler(this.OnNodeProperties);
+			// 
+			// buttonSiteProperties
+			// 
+			this.buttonSiteProperties.Name = "buttonSiteProperties";
+			this.buttonSiteProperties.Size = new System.Drawing.Size(159, 22);
+			this.buttonSiteProperties.Text = "Site properties";
+			this.buttonSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
+			// 
+			// toolStripConfig
+			// 
+			this.toolStripConfig.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonConfigSave,
+            this.buttonConfigUndo});
+			this.toolStripConfig.Location = new System.Drawing.Point(1, 1);
+			this.toolStripConfig.Name = "toolStripConfig";
+			this.toolStripConfig.Size = new System.Drawing.Size(379, 25);
+			this.toolStripConfig.TabIndex = 5;
+			this.toolStripConfig.Text = "toolStrip1";
+			// 
+			// buttonConfigSave
+			// 
+			this.buttonConfigSave.Enabled = false;
+			this.buttonConfigSave.Image = global::InetAnalytics.Resources.Save_16;
+			this.buttonConfigSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonConfigSave.Name = "buttonConfigSave";
+			this.buttonConfigSave.Size = new System.Drawing.Size(51, 22);
+			this.buttonConfigSave.Text = "&Save";
+			this.buttonConfigSave.Click += new System.EventHandler(this.OnSaveConfiguration);
+			// 
+			// buttonConfigUndo
+			// 
+			this.buttonConfigUndo.Enabled = false;
+			this.buttonConfigUndo.Image = global::InetAnalytics.Resources.UndoLarge_16;
+			this.buttonConfigUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonConfigUndo.Name = "buttonConfigUndo";
+			this.buttonConfigUndo.Size = new System.Drawing.Size(56, 22);
+			this.buttonConfigUndo.Text = "&Undo";
+			this.buttonConfigUndo.Click += new System.EventHandler(this.OnLoadConfiguration);
+			// 
+			// numericUpDownNodesParallel
+			// 
+			this.numericUpDownNodesParallel.Location = new System.Drawing.Point(10, 117);
+			this.numericUpDownNodesParallel.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-			this.numericUpDown1.Minimum = new decimal(new int[] {
+			this.numericUpDownNodesParallel.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(150, 20);
-			this.numericUpDown1.TabIndex = 4;
-			this.numericUpDown1.Value = new decimal(new int[] {
+			this.numericUpDownNodesParallel.Name = "numericUpDownNodesParallel";
+			this.numericUpDownNodesParallel.Size = new System.Drawing.Size(150, 20);
+			this.numericUpDownNodesParallel.TabIndex = 4;
+			this.numericUpDownNodesParallel.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
+			this.numericUpDownNodesParallel.ValueChanged += new System.EventHandler(this.OnConfigurationChanged);
 			// 
 			// labelNodesParallel
 			// 
 			this.labelNodesParallel.AutoSize = true;
-			this.labelNodesParallel.Location = new System.Drawing.Point(7, 76);
+			this.labelNodesParallel.Location = new System.Drawing.Point(7, 101);
 			this.labelNodesParallel.Name = "labelNodesParallel";
 			this.labelNodesParallel.Size = new System.Drawing.Size(308, 13);
 			this.labelNodesParallel.TabIndex = 3;
@@ -261,32 +424,35 @@
 			// checkBoxNodesSite
 			// 
 			this.checkBoxNodesSite.AutoSize = true;
-			this.checkBoxNodesSite.Location = new System.Drawing.Point(10, 56);
+			this.checkBoxNodesSite.Location = new System.Drawing.Point(10, 81);
 			this.checkBoxNodesSite.Name = "checkBoxNodesSite";
 			this.checkBoxNodesSite.Size = new System.Drawing.Size(199, 17);
 			this.checkBoxNodesSite.TabIndex = 2;
 			this.checkBoxNodesSite.Text = "Use a &single PlanetLab node per site";
 			this.checkBoxNodesSite.UseVisualStyleBackColor = true;
+			this.checkBoxNodesSite.CheckedChanged += new System.EventHandler(this.OnConfigurationChanged);
 			// 
 			// checkBoxNodesBoot
 			// 
 			this.checkBoxNodesBoot.AutoSize = true;
-			this.checkBoxNodesBoot.Location = new System.Drawing.Point(10, 33);
+			this.checkBoxNodesBoot.Location = new System.Drawing.Point(10, 58);
 			this.checkBoxNodesBoot.Name = "checkBoxNodesBoot";
 			this.checkBoxNodesBoot.Size = new System.Drawing.Size(268, 17);
 			this.checkBoxNodesBoot.TabIndex = 1;
 			this.checkBoxNodesBoot.Text = "Only use the PlanetLab nodes that are in &boot state";
 			this.checkBoxNodesBoot.UseVisualStyleBackColor = true;
+			this.checkBoxNodesBoot.CheckedChanged += new System.EventHandler(this.OnConfigurationChanged);
 			// 
 			// checkBoxNodesUpdate
 			// 
 			this.checkBoxNodesUpdate.AutoSize = true;
-			this.checkBoxNodesUpdate.Location = new System.Drawing.Point(10, 10);
+			this.checkBoxNodesUpdate.Location = new System.Drawing.Point(10, 35);
 			this.checkBoxNodesUpdate.Name = "checkBoxNodesUpdate";
 			this.checkBoxNodesUpdate.Size = new System.Drawing.Size(267, 17);
 			this.checkBoxNodesUpdate.TabIndex = 0;
 			this.checkBoxNodesUpdate.Text = "&Update the PlanetLab nodes information before run";
 			this.checkBoxNodesUpdate.UseVisualStyleBackColor = true;
+			this.checkBoxNodesUpdate.CheckedChanged += new System.EventHandler(this.OnConfigurationChanged);
 			// 
 			// tabPageCommands
 			// 
@@ -307,7 +473,8 @@
 			// 
 			// splitContainerCommands.Panel1
 			// 
-			this.splitContainerCommands.Panel1.Controls.Add(this.commandList);
+			this.splitContainerCommands.Panel1.Controls.Add(this.listCommands);
+			this.splitContainerCommands.Panel1.Controls.Add(this.toolStripCommands);
 			this.splitContainerCommands.Panel1.Padding = new System.Windows.Forms.Padding(1);
 			// 
 			// splitContainerCommands.Panel2
@@ -320,19 +487,104 @@
 			this.splitContainerCommands.TabIndex = 0;
 			this.splitContainerCommands.UseTheme = false;
 			// 
-			// commandList
+			// listCommands
 			// 
-			this.commandList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.commandList.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.commandList.FormattingEnabled = true;
-			this.commandList.IntegralHeight = false;
-			this.commandList.ItemHeight = 48;
-			this.commandList.Location = new System.Drawing.Point(1, 1);
-			this.commandList.Name = "commandList";
-			this.commandList.Size = new System.Drawing.Size(390, 339);
-			this.commandList.TabIndex = 0;
-			this.commandList.SelectedIndexChanged += new System.EventHandler(this.OnCommandSelectionChanged);
+			this.listCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listCommands.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.listCommands.FormattingEnabled = true;
+			this.listCommands.IntegralHeight = false;
+			this.listCommands.ItemHeight = 48;
+			this.listCommands.Location = new System.Drawing.Point(1, 26);
+			this.listCommands.Name = "listCommands";
+			this.listCommands.Size = new System.Drawing.Size(390, 314);
+			this.listCommands.TabIndex = 0;
+			this.listCommands.SelectedIndexChanged += new System.EventHandler(this.OnCommandSelectionChanged);
+			// 
+			// toolStripCommands
+			// 
+			this.toolStripCommands.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonAddCommand,
+            this.buttonRemoveCommand});
+			this.toolStripCommands.Location = new System.Drawing.Point(1, 1);
+			this.toolStripCommands.Name = "toolStripCommands";
+			this.toolStripCommands.Size = new System.Drawing.Size(390, 25);
+			this.toolStripCommands.TabIndex = 1;
+			this.toolStripCommands.Text = "toolStrip1";
+			// 
+			// buttonAddCommand
+			// 
+			this.buttonAddCommand.Image = global::InetAnalytics.Resources.ScriptLargeAdd_16;
+			this.buttonAddCommand.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonAddCommand.Name = "buttonAddCommand";
+			this.buttonAddCommand.Size = new System.Drawing.Size(107, 22);
+			this.buttonAddCommand.Text = "&Add command";
+			this.buttonAddCommand.Click += new System.EventHandler(this.OnAddCommand);
+			// 
+			// buttonRemoveCommand
+			// 
+			this.buttonRemoveCommand.Enabled = false;
+			this.buttonRemoveCommand.Image = global::InetAnalytics.Resources.ScriptLargeRemove_16;
+			this.buttonRemoveCommand.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRemoveCommand.Name = "buttonRemoveCommand";
+			this.buttonRemoveCommand.Size = new System.Drawing.Size(128, 22);
+			this.buttonRemoveCommand.Text = "&Remove command";
+			this.buttonRemoveCommand.Click += new System.EventHandler(this.OnRemoveCommand);
+			// 
+			// controlCommand
+			// 
+			this.controlCommand.Command = null;
+			this.controlCommand.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlCommand.HideSave = false;
+			this.controlCommand.Location = new System.Drawing.Point(0, 0);
+			this.controlCommand.Name = "controlCommand";
+			this.controlCommand.Size = new System.Drawing.Size(387, 341);
+			this.controlCommand.TabIndex = 0;
+			this.controlCommand.CommandSaved += new System.EventHandler(this.OnCommandSaved);
+			// 
+			// tabPageProgress
+			// 
+			this.tabPageProgress.Controls.Add(this.splitContainerProgress);
+			this.tabPageProgress.Location = new System.Drawing.Point(2, 23);
+			this.tabPageProgress.Name = "tabPageProgress";
+			this.tabPageProgress.Padding = new System.Windows.Forms.Padding(5);
+			this.tabPageProgress.Size = new System.Drawing.Size(794, 351);
+			this.tabPageProgress.TabIndex = 4;
+			this.tabPageProgress.Text = "Progress";
+			this.tabPageProgress.UseVisualStyleBackColor = true;
+			// 
+			// splitContainerProgress
+			// 
+			this.splitContainerProgress.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerProgress.Location = new System.Drawing.Point(5, 5);
+			this.splitContainerProgress.Name = "splitContainerProgress";
+			// 
+			// splitContainerProgress.Panel1
+			// 
+			this.splitContainerProgress.Panel1.Controls.Add(this.listProgress);
+			this.splitContainerProgress.Panel1.Padding = new System.Windows.Forms.Padding(1);
+			// 
+			// splitContainerProgress.Panel2
+			// 
+			this.splitContainerProgress.Panel2.Padding = new System.Windows.Forms.Padding(1);
+			this.splitContainerProgress.Size = new System.Drawing.Size(784, 341);
+			this.splitContainerProgress.SplitterDistance = 392;
+			this.splitContainerProgress.SplitterWidth = 5;
+			this.splitContainerProgress.TabIndex = 1;
+			this.splitContainerProgress.UseTheme = false;
+			// 
+			// listProgress
+			// 
+			this.listProgress.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listProgress.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listProgress.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.listProgress.FormattingEnabled = true;
+			this.listProgress.IntegralHeight = false;
+			this.listProgress.ItemHeight = 48;
+			this.listProgress.Location = new System.Drawing.Point(1, 1);
+			this.listProgress.Name = "listProgress";
+			this.listProgress.Size = new System.Drawing.Size(390, 339);
+			this.listProgress.TabIndex = 0;
 			// 
 			// tabPageLog
 			// 
@@ -347,45 +599,14 @@
 			// toolStrip
 			// 
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonRefresh,
-            this.buttonCancel,
-            this.separator1,
             this.buttonStart,
             this.buttonPause,
-            this.buttonStop,
-            this.separator2,
-            this.buttonAddCommand,
-            this.buttonRemoveCommand});
+            this.buttonStop});
 			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
 			this.toolStrip.Text = "toolStrip1";
-			// 
-			// buttonRefresh
-			// 
-			this.buttonRefresh.Image = global::InetAnalytics.Resources.Refresh_16;
-			this.buttonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonRefresh.Name = "buttonRefresh";
-			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
-			this.buttonRefresh.Text = "&Refresh";
-			this.buttonRefresh.Click += new System.EventHandler(this.OnRefreshSlice);
-			// 
-			// buttonCancel
-			// 
-			this.buttonCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.buttonCancel.Enabled = false;
-			this.buttonCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonCancel.Image")));
-			this.buttonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new System.Drawing.Size(47, 22);
-			this.buttonCancel.Text = "&Cancel";
-			this.buttonCancel.Click += new System.EventHandler(this.OnCancel);
-			// 
-			// separator1
-			// 
-			this.separator1.Name = "separator1";
-			this.separator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// buttonStart
 			// 
@@ -416,30 +637,6 @@
 			this.buttonStop.Size = new System.Drawing.Size(51, 22);
 			this.buttonStop.Text = "St&op";
 			this.buttonStop.Click += new System.EventHandler(this.OnStop);
-			// 
-			// separator2
-			// 
-			this.separator2.Name = "separator2";
-			this.separator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// buttonAddCommand
-			// 
-			this.buttonAddCommand.Image = global::InetAnalytics.Resources.ScriptLargeAdd_16;
-			this.buttonAddCommand.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonAddCommand.Name = "buttonAddCommand";
-			this.buttonAddCommand.Size = new System.Drawing.Size(107, 22);
-			this.buttonAddCommand.Text = "&Add command";
-			this.buttonAddCommand.Click += new System.EventHandler(this.OnAddCommand);
-			// 
-			// buttonRemoveCommand
-			// 
-			this.buttonRemoveCommand.Enabled = false;
-			this.buttonRemoveCommand.Image = global::InetAnalytics.Resources.ScriptLargeRemove_16;
-			this.buttonRemoveCommand.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonRemoveCommand.Name = "buttonRemoveCommand";
-			this.buttonRemoveCommand.Size = new System.Drawing.Size(128, 22);
-			this.buttonRemoveCommand.Text = "&Remove command";
-			this.buttonRemoveCommand.Click += new System.EventHandler(this.OnRemoveCommand);
 			// 
 			// controlLog
 			// 
@@ -473,15 +670,57 @@
 			this.legendItemPending.Color = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			this.legendItemPending.Text = "Pending";
 			// 
-			// controlCommand
+			// contextMenuNodes
 			// 
-			this.controlCommand.Command = null;
-			this.controlCommand.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlCommand.HideSave = false;
-			this.controlCommand.Location = new System.Drawing.Point(0, 0);
-			this.controlCommand.Name = "controlCommand";
-			this.controlCommand.Size = new System.Drawing.Size(387, 341);
-			this.controlCommand.TabIndex = 0;
+			this.contextMenuNodes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemNodeProperties,
+            this.menuItemSiteProperties});
+			this.contextMenuNodes.Name = "contextMenu";
+			this.contextMenuNodes.Size = new System.Drawing.Size(160, 48);
+			// 
+			// menuItemNodeProperties
+			// 
+			this.menuItemNodeProperties.Image = global::InetAnalytics.Resources.Properties_16;
+			this.menuItemNodeProperties.Name = "menuItemNodeProperties";
+			this.menuItemNodeProperties.Size = new System.Drawing.Size(159, 22);
+			this.menuItemNodeProperties.Text = "Node pr&operties";
+			this.menuItemNodeProperties.Click += new System.EventHandler(this.OnNodeProperties);
+			// 
+			// menuItemSiteProperties
+			// 
+			this.menuItemSiteProperties.Image = global::InetAnalytics.Resources.Properties_16;
+			this.menuItemSiteProperties.Name = "menuItemSiteProperties";
+			this.menuItemSiteProperties.Size = new System.Drawing.Size(159, 22);
+			this.menuItemSiteProperties.Text = "Site prop&erties";
+			this.menuItemSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
+			// 
+			// progressLegend
+			// 
+			this.progressLegend.Items.AddRange(new DotNetApi.Windows.Controls.ProgressLegendItem[] {
+            this.progressLegendItemPending,
+            this.progressLegendItemSuccess,
+            this.progressLegendItemWarning,
+            this.progressLegendItemError});
+			// 
+			// progressLegendItemPending
+			// 
+			this.progressLegendItemPending.Color = System.Drawing.Color.LightGray;
+			this.progressLegendItemPending.Text = null;
+			// 
+			// progressLegendItemSuccess
+			// 
+			this.progressLegendItemSuccess.Color = System.Drawing.Color.ForestGreen;
+			this.progressLegendItemSuccess.Text = null;
+			// 
+			// progressLegendItemWarning
+			// 
+			this.progressLegendItemWarning.Color = System.Drawing.Color.Gold;
+			this.progressLegendItemWarning.Text = null;
+			// 
+			// progressLegendItemError
+			// 
+			this.progressLegendItemError.Color = System.Drawing.Color.DarkRed;
+			this.progressLegendItemError.Text = null;
 			// 
 			// ControlSliceRun
 			// 
@@ -501,18 +740,31 @@
 			this.tabControl.ResumeLayout(false);
 			this.tabPageNodes.ResumeLayout(false);
 			this.splitContainerNodes.Panel1.ResumeLayout(false);
+			this.splitContainerNodes.Panel1.PerformLayout();
 			this.splitContainerNodes.Panel2.ResumeLayout(false);
 			this.splitContainerNodes.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerNodes)).EndInit();
 			this.splitContainerNodes.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+			this.toolStripNodes.ResumeLayout(false);
+			this.toolStripNodes.PerformLayout();
+			this.toolStripConfig.ResumeLayout(false);
+			this.toolStripConfig.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesParallel)).EndInit();
 			this.tabPageCommands.ResumeLayout(false);
 			this.splitContainerCommands.Panel1.ResumeLayout(false);
+			this.splitContainerCommands.Panel1.PerformLayout();
 			this.splitContainerCommands.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerCommands)).EndInit();
 			this.splitContainerCommands.ResumeLayout(false);
+			this.toolStripCommands.ResumeLayout(false);
+			this.toolStripCommands.PerformLayout();
+			this.tabPageProgress.ResumeLayout(false);
+			this.splitContainerProgress.Panel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerProgress)).EndInit();
+			this.splitContainerProgress.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+			this.contextMenuNodes.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -528,8 +780,6 @@
 		private System.Windows.Forms.ImageList imageList;
 		private Log.ControlLogList controlLog;
 		private DotNetApi.Windows.Controls.ThemeControl panelRun;
-		private System.Windows.Forms.ToolStripButton buttonRefresh;
-		private System.Windows.Forms.ToolStripButton buttonCancel;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageNodes;
 		private System.Windows.Forms.TabPage tabPageCommands;
@@ -541,18 +791,41 @@
 		private System.Windows.Forms.ListView listViewNodes;
 		private System.Windows.Forms.ColumnHeader columnHeaderId;
 		private System.Windows.Forms.ColumnHeader columnHeaderHostname;
-		private System.Windows.Forms.ColumnHeader columnHeaderState;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown numericUpDownNodesParallel;
 		private System.Windows.Forms.Label labelNodesParallel;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerCommands;
-		private System.Windows.Forms.ToolStripSeparator separator1;
 		private System.Windows.Forms.ToolStripButton buttonStart;
 		private System.Windows.Forms.ToolStripButton buttonStop;
 		private System.Windows.Forms.ToolStripButton buttonPause;
+		private Commands.CommandListBox listCommands;
+		private ControlCommand controlCommand;
+		private System.Windows.Forms.ColumnHeader columnHeaderSite;
+		private System.Windows.Forms.ToolStrip toolStripConfig;
+		private System.Windows.Forms.ToolStripButton buttonConfigSave;
+		private System.Windows.Forms.ToolStripButton buttonConfigUndo;
+		private System.Windows.Forms.ContextMenuStrip contextMenuNodes;
+		private System.Windows.Forms.ToolStripMenuItem menuItemNodeProperties;
+		private System.Windows.Forms.ToolStripMenuItem menuItemSiteProperties;
+		private System.Windows.Forms.ToolStrip toolStripNodes;
+		private System.Windows.Forms.ToolStripButton buttonNodesSelectAll;
+		private System.Windows.Forms.ToolStripButton buttonNodesClearAll;
+		private System.Windows.Forms.TabPage tabPageProgress;
+		private DotNetApi.Windows.Controls.ProgressListBox listProgress;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerProgress;
+		private DotNetApi.Windows.Controls.ProgressLegend progressLegend;
+		private DotNetApi.Windows.Controls.ProgressLegendItem progressLegendItemPending;
+		private DotNetApi.Windows.Controls.ProgressLegendItem progressLegendItemSuccess;
+		private DotNetApi.Windows.Controls.ProgressLegendItem progressLegendItemWarning;
+		private DotNetApi.Windows.Controls.ProgressLegendItem progressLegendItemError;
 		private System.Windows.Forms.ToolStripSeparator separator2;
+		private System.Windows.Forms.ToolStripDropDownButton buttonProperties;
+		private System.Windows.Forms.ToolStripMenuItem buttonNodeProperties;
+		private System.Windows.Forms.ToolStripMenuItem buttonSiteProperties;
+		private System.Windows.Forms.ToolStripButton buttonRefresh;
+		private System.Windows.Forms.ToolStripSeparator separator1;
+		private System.Windows.Forms.ToolStripButton buttonCancel;
+		private System.Windows.Forms.ToolStrip toolStripCommands;
 		private System.Windows.Forms.ToolStripButton buttonAddCommand;
 		private System.Windows.Forms.ToolStripButton buttonRemoveCommand;
-		private Commands.CommandListBox commandList;
-		private ControlCommand controlCommand;
 	}
 }

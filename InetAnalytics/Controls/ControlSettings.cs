@@ -69,6 +69,7 @@ namespace InetAnalytics.Controls
 			this.textBoxVideoCommentsFile.Text = this.crawler.Config.CommentsVideosFileName;
 			this.textBoxUserCommentsFile.Text = this.crawler.Config.CommentsUsersFileName;
 			this.textBoxPlaylistCommentsFile.Text = this.crawler.Config.CommentsPlaylistsFileName;
+			this.textBoxPlCommandsFolder.Text = this.crawler.PlanetLab.CommandsFolder;
 		}
 
 		/// <summary>
@@ -85,6 +86,7 @@ namespace InetAnalytics.Controls
 			this.crawler.Config.CommentsVideosFileName = this.textBoxVideoCommentsFile.Text;
 			this.crawler.Config.CommentsUsersFileName = this.textBoxUserCommentsFile.Text;
 			this.crawler.Config.CommentsPlaylistsFileName = this.textBoxPlaylistCommentsFile.Text;
+			this.crawler.PlanetLab.CommandsFolder = this.textBoxPlCommandsFolder.Text;
 		}
 
 		/// <summary>

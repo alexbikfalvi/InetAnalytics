@@ -1274,6 +1274,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ClearAll_48.png" />
+    <None Include="Resources\ClearAll_32.png" />
+    <None Include="Resources\ClearAll_24.png" />
+    <None Include="Resources\ClearAll_16.png" />
+    <None Include="Resources\SelectAll_48.png" />
+    <None Include="Resources\SelectAll_32.png" />
+    <None Include="Resources\SelectAll_24.png" />
+    <None Include="Resources\SelectAll_16.png" />
+    <None Include="Resources\Uncheck_48.png" />
+    <None Include="Resources\Uncheck_32.png" />
+    <None Include="Resources\Uncheck_24.png" />
+    <None Include="Resources\Uncheck_16.png" />
+    <None Include="Resources\Check_48.png" />
+    <None Include="Resources\Check_32.png" />
+    <None Include="Resources\Check_24.png" />
+    <None Include="Resources\Check_16.png" />
     <None Include="Resources\TableRemove_48.png" />
     <None Include="Resources\TableRemove_32.png" />
     <None Include="Resources\TableRemove_24.png" />

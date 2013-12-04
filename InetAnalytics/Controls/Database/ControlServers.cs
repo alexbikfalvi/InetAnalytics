@@ -450,7 +450,7 @@ namespace InetAnalytics.Controls.Database
 				if (DialogResult.No == MessageBox.Show(
 					this,
 					"The new database server is marked as primary, but a different primary server already exists. Do you want to change the primary server?",
-					"Confirm Primary Server Change",
+					"Confirm Changing the Primary Server",
 					MessageBoxButtons.YesNo,
 					MessageBoxIcon.Question,
 					MessageBoxDefaultButton.Button2))
@@ -505,8 +505,8 @@ namespace InetAnalytics.Controls.Database
 			// Ask the user to confirm removing the server.
 			if (DialogResult.Yes == MessageBox.Show(
 				this,
-				"Are you sure you want to remove the selected server?",
-				"Confirm Removing Database Server",
+				"You are remove the selected database server. Do you want to continue?",
+				"Confirm Removing the Database Server",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button2))
@@ -573,8 +573,8 @@ namespace InetAnalytics.Controls.Database
 			// Ask the user to confirm changing the primary server.
 			if (DialogResult.Yes == MessageBox.Show(
 				this,
-				"Are you sure you want to change the primary database server? Database information will not be copied.",
-				"Confirm Primary Server Change",
+				"You are changing the primary database server. Do you want to continue? Database information will not be copied.",
+				"Confirm Changing the Primary Server",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button2))

@@ -361,7 +361,7 @@ namespace InetCrawler.Database
 			// If the table is read-only, do nothing.
 			if (this.readOnly) return;
 			// Read the table registry value.
-			byte[] value = Registry.GetBytes(key, this.localName, null);
+			byte[] value = RegistryExtensions.GetBytes(key, this.localName, null);
 			// If the value is null, do nothing.
 			if (null == value) return;
 
@@ -440,7 +440,7 @@ namespace InetCrawler.Database
 			// Create a new XML document for this table.
 			XDocument document = new XDocument(element);
 			// Write the document to registry.
-			Registry.SetBytes(key, this.localName, Encoding.UTF8.GetBytes(document.ToString()));
+			RegistryExtensions.SetBytes(key, this.localName, Encoding.UTF8.GetBytes(document.ToString()));
 			// Raise the table changed event.
 			if (this.TableChanged != null) this.TableChanged(this, new DbTableEventArgs(this));
 		}

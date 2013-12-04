@@ -59,8 +59,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string Server
 		{
-			get { return Registry.GetString(this.key, "Server", string.Empty); }
-			set { Registry.SetString(this.key, "Server", value); }
+			get { return RegistryExtensions.GetString(this.key, "Server", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "Server", value); }
 		}
 
 		/// <summary>
@@ -68,8 +68,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public AuthenticationType Authentication
 		{
-			get { return (AuthenticationType)Registry.GetInteger(this.key, "Authentication", 0); }
-			set { Registry.SetInteger(this.key, "Authentication", (int)value); }
+			get { return (AuthenticationType)RegistryExtensions.GetInteger(this.key, "Authentication", 0); }
+			set { RegistryExtensions.SetInteger(this.key, "Authentication", (int)value); }
 		}
 
 		/// <summary>
@@ -77,8 +77,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public string Username
 		{
-			get { return Registry.GetString(this.key, "Username", string.Empty); }
-			set { Registry.SetString(this.key, "Username", value); }
+			get { return RegistryExtensions.GetString(this.key, "Username", string.Empty); }
+			set { RegistryExtensions.SetString(this.key, "Username", value); }
 		}
 
 		/// <summary>
@@ -86,8 +86,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public SecureString Password
 		{
-			get { return Registry.GetSecureString(this.key, "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
-			set { Registry.SetSecureString(this.key, "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			get { return RegistryExtensions.GetSecureString(this.key, "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			set { RegistryExtensions.SetSecureString(this.key, "Password", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
 		}
 
 		/// <summary>
@@ -95,8 +95,8 @@ namespace InetCrawler.Testing
 		/// </summary>
 		public byte[] Key
 		{
-			get { return Registry.GetSecureByteArray(this.key, "Key", CrawlerTestingSshRequest.defaultKey, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
-			set { Registry.SetSecureByteArray(this.key, "Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			get { return RegistryExtensions.GetSecureByteArray(this.key, "Key", CrawlerTestingSshRequest.defaultKey, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
+			set { RegistryExtensions.SetSecureByteArray(this.key, "Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV); }
 		}
 	}
 }
