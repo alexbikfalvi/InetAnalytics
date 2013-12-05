@@ -245,8 +245,10 @@ namespace InetCrawler
 			// If the network is available.
 			if (NetworkInterface.GetIsNetworkAvailable())
 			{
+#if !DEBUG
 				// Check the ICMP connectivity.
 				this.internetAvailableIcmp = this.OnUpdateInternetAvailabilityIcmp();
+#endif
 				// Check the HTTP connectivity.
 				this.internetAvailableHttp = this.OnUpdateInternetAvailabilityHttp();
 				// Check the HTTPs connectivity.

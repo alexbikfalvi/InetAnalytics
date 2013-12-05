@@ -206,7 +206,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				LogEventLevel.Important,
 				LogEventType.Error,
 				ControlSites.logSource,
-				"Refreshing the list of PlanetLab sites failed. {1}",
+				"Refreshing the list of PlanetLab sites failed. {0}",
 				new object[] { exception.Message },
 				exception);
 		}

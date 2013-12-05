@@ -50,6 +50,7 @@
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderHostname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderSite = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStripNodes = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
@@ -79,6 +80,7 @@
 			this.tabPageProgress = new System.Windows.Forms.TabPage();
 			this.splitContainerProgress = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listProgress = new DotNetApi.Windows.Controls.ProgressListBox();
+			this.progress = new DotNetApi.Windows.Controls.NotificationPanel();
 			this.tabPageLog = new System.Windows.Forms.TabPage();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
@@ -93,10 +95,10 @@
 			this.menuItemNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.progressLegend = new DotNetApi.Windows.Controls.ProgressLegend();
-			this.progressLegendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressLegendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressLegendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressLegendItemError = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.progressLegendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -222,7 +224,8 @@
 			this.listViewNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderId,
             this.columnHeaderHostname,
-            this.columnHeaderSite});
+            this.columnHeaderSite,
+            this.columnHeaderState});
 			this.listViewNodes.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewNodes.FullRowSelect = true;
 			this.listViewNodes.GridLines = true;
@@ -255,6 +258,10 @@
 			// 
 			this.columnHeaderSite.Text = "Site";
 			this.columnHeaderSite.Width = 180;
+			// 
+			// columnHeaderState
+			// 
+			this.columnHeaderState.Text = "State";
 			// 
 			// imageList
 			// 
@@ -545,6 +552,7 @@
 			// tabPageProgress
 			// 
 			this.tabPageProgress.Controls.Add(this.splitContainerProgress);
+			this.tabPageProgress.Controls.Add(this.progress);
 			this.tabPageProgress.Location = new System.Drawing.Point(2, 23);
 			this.tabPageProgress.Name = "tabPageProgress";
 			this.tabPageProgress.Padding = new System.Windows.Forms.Padding(5);
@@ -556,7 +564,7 @@
 			// splitContainerProgress
 			// 
 			this.splitContainerProgress.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerProgress.Location = new System.Drawing.Point(5, 5);
+			this.splitContainerProgress.Location = new System.Drawing.Point(5, 69);
 			this.splitContainerProgress.Name = "splitContainerProgress";
 			// 
 			// splitContainerProgress.Panel1
@@ -567,7 +575,7 @@
 			// splitContainerProgress.Panel2
 			// 
 			this.splitContainerProgress.Panel2.Padding = new System.Windows.Forms.Padding(1);
-			this.splitContainerProgress.Size = new System.Drawing.Size(784, 341);
+			this.splitContainerProgress.Size = new System.Drawing.Size(784, 277);
 			this.splitContainerProgress.SplitterDistance = 392;
 			this.splitContainerProgress.SplitterWidth = 5;
 			this.splitContainerProgress.TabIndex = 1;
@@ -583,8 +591,20 @@
 			this.listProgress.ItemHeight = 48;
 			this.listProgress.Location = new System.Drawing.Point(1, 1);
 			this.listProgress.Name = "listProgress";
-			this.listProgress.Size = new System.Drawing.Size(390, 339);
+			this.listProgress.Size = new System.Drawing.Size(390, 275);
 			this.listProgress.TabIndex = 0;
+			// 
+			// progress
+			// 
+			this.progress.Dock = System.Windows.Forms.DockStyle.Top;
+			this.progress.Image = global::InetAnalytics.Resources.Globe_48;
+			this.progress.Location = new System.Drawing.Point(5, 5);
+			this.progress.MaximumSize = new System.Drawing.Size(0, 64);
+			this.progress.Message = "Select the PlanetLab nodes and the commands you want to run and click Start.";
+			this.progress.MinimumSize = new System.Drawing.Size(0, 64);
+			this.progress.Name = "progress";
+			this.progress.Size = new System.Drawing.Size(784, 64);
+			this.progress.TabIndex = 2;
 			// 
 			// tabPageLog
 			// 
@@ -697,30 +717,30 @@
 			// progressLegend
 			// 
 			this.progressLegend.Items.AddRange(new DotNetApi.Windows.Controls.ProgressLegendItem[] {
-            this.progressLegendItemPending,
             this.progressLegendItemSuccess,
             this.progressLegendItemWarning,
-            this.progressLegendItemError});
-			// 
-			// progressLegendItemPending
-			// 
-			this.progressLegendItemPending.Color = System.Drawing.Color.LightGray;
-			this.progressLegendItemPending.Text = null;
+            this.progressLegendItemError,
+            this.progressLegendItemPending});
 			// 
 			// progressLegendItemSuccess
 			// 
 			this.progressLegendItemSuccess.Color = System.Drawing.Color.ForestGreen;
-			this.progressLegendItemSuccess.Text = null;
+			this.progressLegendItemSuccess.Text = "Success";
 			// 
 			// progressLegendItemWarning
 			// 
 			this.progressLegendItemWarning.Color = System.Drawing.Color.Gold;
-			this.progressLegendItemWarning.Text = null;
+			this.progressLegendItemWarning.Text = "Warning";
 			// 
 			// progressLegendItemError
 			// 
 			this.progressLegendItemError.Color = System.Drawing.Color.DarkRed;
-			this.progressLegendItemError.Text = null;
+			this.progressLegendItemError.Text = "Error";
+			// 
+			// progressLegendItemPending
+			// 
+			this.progressLegendItemPending.Color = System.Drawing.Color.LightGray;
+			this.progressLegendItemPending.Text = "Pending";
 			// 
 			// ControlSliceRun
 			// 
@@ -827,5 +847,7 @@
 		private System.Windows.Forms.ToolStrip toolStripCommands;
 		private System.Windows.Forms.ToolStripButton buttonAddCommand;
 		private System.Windows.Forms.ToolStripButton buttonRemoveCommand;
+		private System.Windows.Forms.ColumnHeader columnHeaderState;
+		private DotNetApi.Windows.Controls.NotificationPanel progress;
 	}
 }

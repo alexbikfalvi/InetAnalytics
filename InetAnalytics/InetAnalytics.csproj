@@ -1274,6 +1274,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\GlobePlayPause_48.png" />
+    <None Include="Resources\GlobePlayPause_32.png" />
+    <None Include="Resources\GlobePlayPause_24.png" />
+    <None Include="Resources\GlobePlayPause_16.png" />
     <None Include="Resources\ClearAll_48.png" />
     <None Include="Resources\ClearAll_32.png" />
     <None Include="Resources\ClearAll_24.png" />

@@ -597,7 +597,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				LogEventLevel.Important,
 				LogEventType.Error,
 				ControlSlices.logSource,
-				"Refreshing the list of PlanetLab slices failed. {1}",
+				"Refreshing the list of PlanetLab slices failed. {0}",
 				new object[] { exception.Message },
 				exception));
 		}

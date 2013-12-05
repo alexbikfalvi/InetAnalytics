@@ -34,6 +34,7 @@ using InetAnalytics.Events;
 using InetAnalytics.Forms;
 using InetAnalytics.Forms.PlanetLab;
 using InetCrawler;
+using InetCrawler.Log;
 using InetCrawler.PlanetLab;
 using InetCrawler.Status;
 using MapApi;
@@ -139,6 +140,8 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		// Private variables.
 
+		private static readonly string logSource = @"PlanetLab\Slice({0})";
+
 		private Crawler crawler = null;
 		private CrawlerStatusHandler status = null;
 
@@ -200,13 +203,6 @@ namespace InetAnalytics.Controls.PlanetLab
 				this.OnRefreshSliceRequestException,
 				null);
 		}
-
-		// Public events.
-
-		/// <summary>
-		/// An event raised when a console is selected.
-		/// </summary>
-		//public event PageSelectionEventHandler ConsoleSelected;
 
 		// Public methods.
 
@@ -696,6 +692,13 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Update the status.
 			this.status.Send(CrawlerStatus.StatusType.Busy, "Refreshing the slice information...", Resources.GlobeClock_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Refreshing the slice information."
+				));
 
 			// Begin an asynchronous PlanetLab request.
 			this.BeginRequest(
@@ -739,6 +742,12 @@ namespace InetAnalytics.Controls.PlanetLab
 					{
 						// Update the current slice.
 						this.slice.Parse(slices.Values[0].Value as XmlRpcStruct);
+						// Log
+						this.controlLog.Add(this.crawler.Log.Add(
+							LogEventLevel.Verbose,
+							LogEventType.Success,
+							ControlSlice.logSource.FormatWith(this.slice.Id),
+							"Refreshing the slice information completed successfully."));
 						// Return.
 						return;
 					}
@@ -747,6 +756,25 @@ namespace InetAnalytics.Controls.PlanetLab
 			}
 			// Update the status.
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information failed.", Resources.GlobeError_16);
+			if (null == response.Fault)
+			{
+				// Log
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					ControlSlice.logSource.FormatWith(this.slice.Id),
+					"Refreshing the slice information failed."));
+			}
+			else
+			{
+				// Log
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					ControlSlice.logSource.FormatWith(this.slice.Id),
+					"Refreshing the slice information failed with code {0} ({1}).",
+					new object[] { response.Fault.FaultCode, response.Fault.FaultString }));
+			}
 		}
 
 		/// <summary>
@@ -757,6 +785,13 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Update the status.
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information was canceled.", Resources.GlobeCanceled_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Canceled,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Refreshing the slice information was canceled."
+				));
 		}
 
 		/// <summary>
@@ -768,6 +803,14 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Update the status.
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information failed.", Resources.GlobeError_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Important,
+				LogEventType.Error,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Refreshing the slice information failed. {0}",
+				new object[] { exception.Message },
+				exception));
 		}
 
 		/// <summary>
@@ -787,6 +830,13 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Refreshing the nodes information...",
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
+				// Log.
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSlice.logSource.FormatWith(this.slice.Id),
+					"Refreshing the nodes information."
+					));
 
 				// Create the request state.
 				IdsRequestState requestState = new IdsRequestState(
@@ -835,6 +885,12 @@ namespace InetAnalytics.Controls.PlanetLab
 						"Refreshing the nodes information failed.",
 						Resources.GlobeLab_16,
 						Resources.GlobeError_16);
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Refreshing the nodes information failed. The received response was empty."));
 					// Return.
 					return;
 				}
@@ -926,6 +982,12 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Refreshing the nodes information completed successfully.",
 					Resources.GlobeLab_16,
 					Resources.GlobeSuccess_16);
+				// Log
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					ControlSlice.logSource.FormatWith(this.slice.Id),
+					"Refreshing the nodes information completed successfully."));
 			}
 			else
 			{
@@ -936,6 +998,25 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Refreshing the nodes information failed.",
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
+				if (null == response.Fault)
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Refreshing the nodes information failed."));
+				}
+				else
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Refreshing the nodes information failed with code {0} ({1}).",
+						new object[] { response.Fault.FaultCode, response.Fault.FaultString }));
+				}
 			}
 		}
 
@@ -952,6 +1033,13 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Refreshing the nodes information was canceled.",
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Canceled,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Refreshing the nodes information was canceled."
+				));
 		}
 
 		/// <summary>
@@ -968,6 +1056,14 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Refreshing the nodes information failed.",
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Important,
+				LogEventType.Error,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Refreshing the nodes information failed. {0}",
+				new object[] { exception.Message },
+				exception));
 		}
 
 		/// <summary>
@@ -1003,6 +1099,13 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Refreshing the sites information...",
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
+				// Log.
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSlice.logSource.FormatWith(this.slice.Id),
+					"Refreshing the sites information."
+					));
 
 				// Create the request state.
 				IdsRequestState requestState = new IdsRequestState(
@@ -1051,6 +1154,12 @@ namespace InetAnalytics.Controls.PlanetLab
 						"Refreshing the sites information failed.",
 						Resources.GlobeLab_16,
 						Resources.GlobeError_16);
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Refreshing the sites information failed. The received response was empty."));
 					// Return.
 					return;
 				}
@@ -1112,6 +1221,12 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Refreshing the sites information completed successfully.",
 					Resources.GlobeLab_16,
 					Resources.GlobeSuccess_16);
+				// Log
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					ControlSlice.logSource.FormatWith(this.slice.Id),
+					"Refreshing the sites information completed successfully."));
 			}
 			else
 			{
@@ -1122,6 +1237,25 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Refreshing the sites information failed.",
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
+				if (null == response.Fault)
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Refreshing the sites information failed."));
+				}
+				else
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Refreshing the sites information failed with code {0} ({1}).",
+						new object[] { response.Fault.FaultCode, response.Fault.FaultString }));
+				}
 			}
 		}
 
@@ -1138,6 +1272,13 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Refreshing the sites information was canceled.",
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Canceled,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Refreshing the sites information was canceled."
+				));
 		}
 
 		/// <summary>
@@ -1154,6 +1295,14 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Refreshing the sites information failed.",
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Important,
+				LogEventType.Error,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Refreshing the sites information failed. {0}",
+				new object[] { exception.Message },
+				exception));
 		}
 
 		/// <summary>
@@ -1242,6 +1391,13 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Adding slice {0} to {1} PlanetLab node{2}...".FormatWith(slice.Id, ids.Length, ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeClock_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Adding slice {0} to the PlanetLab node{1} {2}.",
+				new object[] { slice.Id, ids.Length.PluralSuffix(), ids }));
 
 			// Create the request state.
 			IdsRequestState requestState = new IdsRequestState(
@@ -1284,6 +1440,13 @@ namespace InetAnalytics.Controls.PlanetLab
 						"Adding slice {0} to {1} PlanetLab node{2} succeeded.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Adding slice {0} to the PlanetLab node{1} {2} completed successfully.",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
 
 					// Set the request as successful.
 					requestState.Success = true;
@@ -1303,6 +1466,13 @@ namespace InetAnalytics.Controls.PlanetLab
 						"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Adding slice {0} to the PlanetLab node{1} {2} failed. The PlanetLab server responded, however the operation was not successful.",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
 				}
 			}
 			else
@@ -1314,6 +1484,26 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Adding slice {0} to {1} PlanetLab node{2} failed.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
+				if (null == response.Fault)
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Adding slice {0} to the PlanetLab node{1} {2} failed.",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
+				}
+				else
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Adding slice {0} to the PlanetLab node{1} {2} failed with code {3} ({4}).",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids, response.Fault.FaultCode, response.Fault.FaultString }));
+				}
 			}
 		}
 
@@ -1332,6 +1522,13 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Adding the slice {0} to {1} PlanetLab node{2} was canceled.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Canceled,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Adding the slice {0} to the PlanetLab node{1} {2} was canceled.",
+				new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
 		}
 
 		/// <summary>
@@ -1350,6 +1547,14 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Adding the slice {0} to {1} PlanetLab node{2} failed.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Important,
+				LogEventType.Error,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Adding the slice {0} to the PlanetLab node{1} {2} failed. {3}",
+				new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids, exception.Message },
+				exception));
 		}
 
 		/// <summary>
@@ -1405,9 +1610,16 @@ namespace InetAnalytics.Controls.PlanetLab
 				this.status.Send(
 					CrawlerStatus.StatusType.Busy,
 					"Showing {0} PlanetLab slices.".FormatWith(this.crawler.PlanetLab.LocalSlices.Count),
-					"Removing slice {0} from the PlanetLab nodes...",
+					"Removing slice {0} from {1} PlanetLab node{2}...".FormatWith(slice.Id, ids.Length, ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
+				// Log.
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSlice.logSource.FormatWith(this.slice.Id),
+					"Removing slice {0} from the PlanetLab node{1} {2}.",
+					new object[] { slice.Id, ids.Length.PluralSuffix(), ids }));
 
 				// Create the request state.
 				IdsRequestState requestState = new IdsRequestState(
@@ -1451,6 +1663,13 @@ namespace InetAnalytics.Controls.PlanetLab
 						"Removing slice {0} from {1} PlanetLab node{2} succeeded.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Removing slice {0} from the PlanetLab node{1} {2} completed successfully.",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
 
 					// Set the request as successful.
 					requestState.Success = true;
@@ -1470,6 +1689,13 @@ namespace InetAnalytics.Controls.PlanetLab
 						"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Removing slice {0} from the PlanetLab node{1} {2} failed. The PlanetLab server responded, however the operation was not successful.",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
 				}
 			}
 			else
@@ -1481,6 +1707,26 @@ namespace InetAnalytics.Controls.PlanetLab
 					"Removing slice {0} from {1} PlanetLab node{2} failed.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 					Resources.GlobeLab_16,
 					Resources.GlobeError_16);
+				if (null == response.Fault)
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Removing slice {0} from the PlanetLab node{1} {2} failed.",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
+				}
+				else
+				{
+					// Log
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSlice.logSource.FormatWith(this.slice.Id),
+						"Removing slice {0} from the PlanetLab node{1} {2} failed with code {3} ({4}).",
+						new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids, response.Fault.FaultCode, response.Fault.FaultString }));
+				}
 			}
 		}
 
@@ -1499,6 +1745,13 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Removing the slice {0} from {1} PlanetLab node{2} was canceled.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Canceled,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Removing the slice {0} from the PlanetLab node{1} {2} was canceled.",
+				new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids }));
 		}
 
 		/// <summary>
@@ -1517,6 +1770,14 @@ namespace InetAnalytics.Controls.PlanetLab
 				"Removing the slice {0} from {1} PlanetLab node{2} failed.".FormatWith(this.slice.Id, requestState.Ids.Length, requestState.Ids.Length.PluralSuffix()),
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Important,
+				LogEventType.Error,
+				ControlSlice.logSource.FormatWith(this.slice.Id),
+				"Removing the slice {0} from the PlanetLab node{1} {2} failed. {3}",
+				new object[] { this.slice.Id, requestState.Ids.Length.PluralSuffix(), requestState.Ids, exception.Message },
+				exception));
 		}
 
 		/// <summary>

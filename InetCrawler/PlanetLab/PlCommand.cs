@@ -122,6 +122,13 @@ namespace InetCrawler.PlanetLab
 				this.OnSetParameter(parameter, set, value);
 			}
 		}
+		/// <summary>
+		/// Gets whether the command is enabled.
+		/// </summary>
+		public bool Enabled
+		{
+			get { return true; }
+		}
 
 		// Public methods.
 

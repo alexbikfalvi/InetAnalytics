@@ -18,6 +18,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
@@ -26,6 +28,7 @@ using PlanetLab.Api;
 using InetAnalytics.Controls.PlanetLab.Commands;
 using InetAnalytics.Forms.PlanetLab;
 using InetCrawler;
+using InetCrawler.Log;
 using InetCrawler.PlanetLab;
 using InetCrawler.Status;
 
@@ -83,6 +86,8 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		// Private variables.
 
+		private static readonly string logSource = @"PlanetLab\Slice({0})\Run";
+
 		private Crawler crawler = null;
 		private CrawlerStatusHandler status = null;
 
@@ -95,7 +100,11 @@ namespace InetAnalytics.Controls.PlanetLab
 		private readonly List<int> pendingNodes = new List<int>();
 		private readonly List<int> pendingSites = new List<int>();
 
-		//private readonly RequestState requestStateGetSlice;
+		private PlManager manager;
+		private readonly object managerSync = new object();
+		private PlManagerState managerState = null;
+
+		private readonly List<ProgressItem> managerProgressItems = new List<ProgressItem>();
 
 		private readonly FormObjectProperties<ControlNodeProperties> formNodeProperties = new FormObjectProperties<ControlNodeProperties>();
 		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
@@ -114,14 +123,6 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Set the default control properties.
 			this.Visible = false;
 			this.Dock = DockStyle.Fill;
-
-			// Create the get slices request state.
-			//this.requestStateGetSlice = new RequestState(
-			//	null,
-			//	this.OnRefreshSliceRequestResult,
-			//	this.OnRefreshSliceRequestCanceled,
-			//	this.OnRefreshSliceRequestException,
-			//	null);
 		}
 
 		// Public methods.
@@ -151,6 +152,27 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Set the commands event handlers.
 			this.config.Commands.CommandAdded += this.OnCommandAdded;
 			this.config.Commands.CommandRemoved += this.OnCommandRemoved;
+
+			// Create the manager.
+			this.manager = new PlManager(this.crawler);
+
+			// Add the PlanetLab manager event handlers.
+			this.manager.Starting += this.OnRunStarting;
+			this.manager.Started += this.OnRunStarted;
+			this.manager.Pausing += this.OnRunPausing;
+			this.manager.Paused += this.OnRunPaused;
+			this.manager.Resuming += this.OnRunResuming;
+			this.manager.Resumed += this.OnRunResumed;
+			this.manager.Stopping += this.OnRunStopping;
+			this.manager.Stopped += this.OnRunStopped;
+
+			this.manager.NodesUpdateStarted += this.OnNodesUpdateStarted;
+			this.manager.NodesUpdateCanceled += this.OnNodesUpdateCanceled;
+			this.manager.NodesUpdateFinishedSuccess += this.OnNodesUpdateFinishedSuccess;
+			this.manager.NodesUpdateFinishedFail += this.OnNodesUpdateFinishedFail;
+
+			this.manager.NodeEnabled += this.OnNodeEnabled;
+			this.manager.NodeDisabled += this.OnNodeDisabled;
 
 			// Set the tree node.
 			this.treeNode = treeNode;
@@ -292,7 +314,8 @@ namespace InetAnalytics.Controls.PlanetLab
 					ListViewItem nodeItem = new ListViewItem(new string[] {
 						nodeId.ToString(),
 						node != null ? node.Hostname : string.Empty,
-						site != null ? site.Name : string.Empty
+						site != null ? site.Name : string.Empty,
+						node != null ? node.BootState : string.Empty
 					});
 					nodeItem.ImageKey = node != null ? ControlSliceRun.nodeImageKeys[(int)node.GetBootState()] : ControlSliceRun.nodeImageKeys[0];
 					nodeItem.Tag = info;
@@ -300,14 +323,6 @@ namespace InetAnalytics.Controls.PlanetLab
 
 					// Add the node item.
 					this.listViewNodes.Items.Add(nodeItem);
-
-					// Create the progress list item.
-					ProgressItem progressItem = new ProgressItem(node != null ? node.Hostname : "Node {0}".FormatWith(nodeId), this.progressLegend);
-
-					//progressItem.Tad
-
-					// Add the progress item.
-					this.listProgress.Items.Add(progressItem);
 				}
 
 				// Refresh the pending nodes and sites.
@@ -353,27 +368,32 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeChanged(object sender, PlObjectEventArgs e)
 		{
-			// Get the node.
-			PlNode node = e.Object as PlNode;
-			// Get the list item corresponding to the selected node.
-			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+			// Execute on the UI thread.
+			this.Invoke(() =>
 				{
-					// Get the node info.
-					NodeInfo info = it.Tag as NodeInfo;
-					// Check the tag node equals the current node.
-					return info.NodeId == node.Id;
-				});
-			// Update the item information.
-			if (null != item)
-			{
-				// Get the node information.
-				NodeInfo info = item.Tag as NodeInfo;
+					// Get the node.
+					PlNode node = e.Object as PlNode;
+					// Get the list item corresponding to the selected node.
+					ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+						{
+							// Get the node info.
+							NodeInfo info = it.Tag as NodeInfo;
+							// Check the tag node equals the current node.
+							return info.NodeId == node.Id;
+						});
+					// Update the item information.
+					if (null != item)
+					{
+						// Get the node information.
+						NodeInfo info = item.Tag as NodeInfo;
 
-				// Set the item information.
-				item.SubItems[0].Text = node.Id.Value.ToString();
-				item.SubItems[1].Text = node.Hostname;
-				item.ImageKey = ControlSliceRun.nodeImageKeys[(int)node.GetBootState()];
-			}
+						// Set the item information.
+						item.SubItems[0].Text = node.Id.Value.ToString();
+						item.SubItems[1].Text = node.Hostname;
+						item.SubItems[2].Text = node.BootState;
+						item.ImageKey = ControlSliceRun.nodeImageKeys[(int)node.GetBootState()];
+					}
+				});
 		}
 
 		/// <summary>
@@ -383,25 +403,29 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSiteChanged(object sender, PlObjectEventArgs e)
 		{
-			// Get the site.
-			PlSite site = e.Object as PlSite;
-			// Get the list item corresponding to the selected node.
-			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
-			{
-				// Get the node info.
-				NodeInfo info = it.Tag as NodeInfo;
-				// Check the tag node equals the current node.
-				return object.ReferenceEquals(info.Site, site);
-			});
-			// Update the item information.
-			if (null != item)
-			{
-				// Get the node information.
-				NodeInfo info = item.Tag as NodeInfo;
+			// Execute on the UI thread.
+			this.Invoke(() =>
+				{
+					// Get the site.
+					PlSite site = e.Object as PlSite;
+					// Get the list item corresponding to the selected node.
+					ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+					{
+						// Get the node info.
+						NodeInfo info = it.Tag as NodeInfo;
+						// Check the tag node equals the current node.
+						return object.ReferenceEquals(info.Site, site);
+					});
+					// Update the item information.
+					if (null != item)
+					{
+						// Get the node information.
+						NodeInfo info = item.Tag as NodeInfo;
 
-				// Set the item information.
-				item.SubItems[2].Text = site.Name;
-			}
+						// Set the item information.
+						item.SubItems[2].Text = site.Name;
+					}
+				});
 		}
 
 		/// <summary>
@@ -1229,6 +1253,9 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.config.OnlyRunOnBootNodes = this.checkBoxNodesBoot.Checked;
 			this.config.OnlyRunOneNodePerSite = this.checkBoxNodesSite.Checked;
 			this.config.RunParallelNodes = (int)this.numericUpDownNodesParallel.Value;
+			// Disable the save and undo buttons.
+			this.buttonConfigSave.Enabled = false;
+			this.buttonConfigUndo.Enabled = false;
 		}
 
 		/// <summary>
@@ -1300,72 +1327,535 @@ namespace InetAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when starting the execution of the PlanetLab commands.
+		/// An event handler called when starting the PlanetLab commands.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
-			//this.OnRunStarted();
+			lock (this.managerSync)
+			{
+				// If the manager state is not null.
+				if (null == this.managerState)
+				{
+
+					// Create a list of nodes.
+					List<PlNode> nodes = new List<PlNode>();
+
+					// Clear the progress list.
+					this.listProgress.Items.Clear();
+					// Clear the list of progress items.
+					this.managerProgressItems.Clear();
+
+					// For all the selected nodes.
+					foreach (ListViewItem item in this.listViewNodes.CheckedItems)
+					{
+						// Get the node information.
+						NodeInfo info = item.Tag as NodeInfo;
+
+						// If the node information does not have the PlanetLab node.
+						if (null == info.Node)
+						{
+							// Show an error message.
+							MessageBox.Show(this, "Cannot start the PlanetLab commands because the information on PlanetLab node {0} is missing. Refresh the slice information and try again.", "Cannot Execute PlanetLab Commands".FormatWith(info.NodeId), MessageBoxButtons.OK, MessageBoxIcon.Error);
+							// Log an event.
+							this.controlLog.Add(this.crawler.Log.Add(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								ControlSliceRun.logSource.FormatWith(this.slice.Id),
+								"Cannot start the PlanetLab commands because the information on PlanetLab node {0} is missing. Refresh the slice information and try again.",
+								new object[] { info.NodeId }));
+							// Return.
+							return;
+						}
+
+						// Else, add the node to the list.
+						nodes.Add(info.Node);
+					}
+
+					// For all the selected nodes.
+					foreach (PlNode node in nodes)
+					{
+						// Create a progress list item.
+						ProgressItem item = new ProgressItem(node.Hostname, this.progressLegend);
+						// Set the item tag.
+						item.Tag = node;
+						// Set the item default progress.
+						item.Progress.Default = this.progressLegend.Items.Count - 1;
+						// Add the item to the list.
+						this.managerProgressItems.Add(item);
+					}
+
+					// Add the items to the progress list.
+					this.listProgress.Items.AddRange(this.managerProgressItems.ToArray());
+
+					try
+					{
+						// Start the manager.
+						this.managerState = this.manager.Start(this.config, nodes);
+					}
+					catch (Exception exception)
+					{
+						// Log an event.
+						this.controlLog.Add(this.crawler.Log.Add(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							ControlSliceRun.logSource.FormatWith(this.slice.Id),
+							"An error occurred while starting the PlanetLab commands. {0}",
+							new object[] { exception.Message },
+							exception));
+					}
+				}
+				else
+				{
+					try
+					{
+						// Else, call the manager.
+						this.manager.Resume(this.managerState);
+					}
+					catch (Exception exception)
+					{
+						// Log an event.
+						this.controlLog.Add(this.crawler.Log.Add(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							ControlSliceRun.logSource.FormatWith(this.slice.Id),
+							"An error occurred while resuming the PlanetLab commands. {0}",
+							new object[] { exception.Message },
+							exception));
+					}
+				}
+			}
 		}
 
 		/// <summary>
-		/// An event handler called when pausing the execution of the PlanetLab commands.
+		/// An event handler called when pausing the PlanetLab commands.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnPause(object sender, EventArgs e)
 		{
+			lock (this.managerSync)
+			{
+				// If the manager state is null, show an error message.
+				if (null == this.managerState)
+				{
+					// Show an error message.
+					MessageBox.Show(this, "Cannot pause the PlanetLab commands because there is no run in progress.", "Cannot Pause PlanetLab Commands", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					// Log an event.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"Cannot pause the PlanetLab commands because there is no run in progress."));
+					// Return.
+					return;
+				}
 
+				try
+				{
+					// Else, call the manager.
+					this.manager.Pause(this.managerState);
+				}
+				catch (Exception exception)
+				{
+					// Log an event.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"An error occurred while pausing the PlanetLab commands. {0}",
+						new object[] { exception.Message },
+						exception));
+				}
+			}
 		}
 
 		/// <summary>
-		/// An event handler called when stopping the execution of the PlanetLab commands.
+		/// An event handler called when stopping the PlanetLab commands.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnStop(object sender, EventArgs e)
 		{
+			lock (this.managerSync)
+			{
+				// If the manager state is null, show an error message.
+				if (null == this.managerState)
+				{
+					// Show an error message.
+					MessageBox.Show(this, "Cannot stop the PlanetLab commands because there is no run in progress.", "Cannot Stop PlanetLab Commands", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					// Log an event.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"Cannot stop the PlanetLab commands because there is no run in progress."));
+					// Return.
+					return;
+				}
 
+				try
+				{
+					// Else, call the manager.
+					this.manager.Stop(this.managerState);
+				}
+				catch (Exception exception)
+				{
+					// Log an event.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"An error occurred while stopping the PlanetLab commands. {0}",
+						new object[] { exception.Message },
+						exception));
+				}
+			}
 		}
 
-		private void OnRunStarted()
+		/// <summary>
+		/// An event handler called when the run is starting.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunStarting(object sender, PlManagerEventArgs e)
 		{
 			// Switch the tab control to the progress tab.
 			this.tabControl.SelectedTab = this.tabPageProgress;
 
 			// Set the controls enabled state.
 			this.buttonStart.Enabled = false;
-			this.buttonPause.Enabled = true;
-			this.buttonStop.Enabled = true;
 
 			this.splitContainerNodes.Enabled = false;
 			this.splitContainerCommands.Enabled = false;
+
+			// Show the progress dialog.
+			this.progress.Show(Resources.GlobeClock_48, "Starting the PlanetLab commands...");
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlSliceRun.logSource.FormatWith(this.slice.Id),
+				"Starting the PlanetLab commands."));
+			// Status.
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Starting the PlanetLab commands...", Resources.GlobeClock_16);
 		}
 
-		private void OnRunPaused()
+		/// <summary>
+		/// An event handler called when the run has started.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunStarted(object sender, PlManagerEventArgs e)
 		{
-			// Set the controls enabled state.
-			this.buttonStart.Enabled = true;
-			this.buttonPause.Enabled = false;
+			this.Invoke(() =>
+				{
+					// Set the controls enabled state.
+					this.buttonPause.Enabled = true;
+					this.buttonStop.Enabled = true;
+
+					// Show the progress dialog.
+					this.progress.Show(Resources.GlobePlayStart_48, "Running the PlanetLab commands.", false);
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab commands started sucessfully."));
+					// Status.
+					this.status.Send(CrawlerStatus.StatusType.Busy, "Running the PlanetLab commands.", Resources.GlobePlayStart_16);
+				});
 		}
 
-		private void OnRunResumed()
+		/// <summary>
+		/// An event handler called when the run is pausing.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunPausing(object sender, PlManagerEventArgs e)
 		{
-			// Set the controls enabled state.
-			this.buttonStart.Enabled = false;
-			this.buttonPause.Enabled = true;
+			this.Invoke(() =>
+				{
+					// Set the controls enabled state.
+					this.buttonPause.Enabled = false;
+					// Show the progress dialog.
+					this.progress.Show(Resources.GlobeClock_48, "Pausing the PlanetLab commands...");
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"Pausing the PlanetLab commands."));
+					// Status.
+					this.status.Send(CrawlerStatus.StatusType.Busy, "Pausing the PlanetLab commands...", Resources.GlobeClock_16);
+				});
 		}
 
-		private void OnRunStopped()
+		/// <summary>
+		/// An event handler called when the run has paused.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunPaused(object sender, PlManagerEventArgs e)
 		{
-			// Set the controls enabled state.
-			this.buttonStart.Enabled = false;
-			this.buttonPause.Enabled = true;
-			this.buttonStop.Enabled = true;
+			this.Invoke(() =>
+				{
+					// Set the controls enabled state.
+					this.buttonStart.Enabled = true;
 
-			this.splitContainerNodes.Enabled = true;
-			this.splitContainerCommands.Enabled = true;
+					// Show the progress dialog.
+					this.progress.Show(Resources.GlobePlayPause_48, "The PlanetLab commands paused.", false);
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab commands paused sucessfully."));
+					// Status.
+					this.status.Send(CrawlerStatus.StatusType.Busy, "The PlanetLab commands paused.", Resources.GlobePlayPause_16);
+				});
+		}
+
+		/// <summary>
+		/// An event handler called when the run is resuming.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunResuming(object sender, PlManagerEventArgs e)
+		{
+			this.Invoke(() =>
+				{
+					// Set the controls enabled state.
+					this.buttonStart.Enabled = false;
+
+					// Show the progress dialog.
+					this.progress.Show(Resources.GlobeClock_48, "Resuming the PlanetLab commands...");
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"Resuming the PlanetLab commands."));
+					// Status.
+					this.status.Send(CrawlerStatus.StatusType.Busy, "Resuming the PlanetLab commands...", Resources.GlobeClock_16);
+				});
+		}
+
+		/// <summary>
+		/// An event handler called when the run has resumed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunResumed(object sender, PlManagerEventArgs e)
+		{
+			this.Invoke(() =>
+				{
+					// Set the controls enabled state.
+					this.buttonPause.Enabled = true;
+
+					// Show the progress dialog.
+					this.progress.Show(Resources.GlobePlayStart_48, "The PlanetLab commands running.", false);
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab commands resumed sucessfully."));
+					// Status.
+					this.status.Send(CrawlerStatus.StatusType.Busy, "The PlanetLab commands running.", Resources.GlobePlayStart_16);
+				});
+		}
+
+		/// <summary>
+		/// An event handler called when the run is stopping.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunStopping(object sender, PlManagerEventArgs e)
+		{
+			this.Invoke(() =>
+				{
+					// Set the controls enabled state.
+					this.buttonStop.Enabled = false;
+					this.buttonPause.Enabled = false;
+
+					// Show the progress dialog.
+					this.progress.Show(Resources.GlobeClock_48, "Stopping the PlanetLab commands...");
+					// Log.
+					this.controlLog.Add(this.crawler.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"Stopping the PlanetLab commands."));
+					// Status.
+					this.status.Send(CrawlerStatus.StatusType.Busy, "Stopping the PlanetLab commands...", Resources.GlobeClock_16);
+				});
+		}
+
+		/// <summary>
+		/// An event handler called when the run has stopped.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRunStopped(object sender, PlManagerEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Set the controls enabled state.
+				this.buttonStart.Enabled = true;
+
+				this.splitContainerNodes.Enabled = true;
+				this.splitContainerCommands.Enabled = true;
+
+				// Show the progress dialog.
+				this.progress.Show(Resources.GlobePlayStop_48, "The PlanetLab commands stopped.", false);
+				// Log.
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab commands stopped successfully."));
+				// Status.
+				this.status.Send(CrawlerStatus.StatusType.Normal, "The PlanetLab commands stopped.", Resources.GlobePlayStop_16);
+
+				// Clear the state information.
+				lock (this.managerSync)
+				{
+					this.managerState.Dispose();
+					this.managerState = null;
+				}
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when started updating the PlanetLab nodes information.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodesUpdateStarted(object sender, PlManagerEventArgs e)
+		{
+			// Show the progress.
+			this.progress.Show(Resources.GlobeClock_48, "Updating the information for the selected PlanetLab nodes.");
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Information,
+				ControlSliceRun.logSource.FormatWith(this.slice.Id),
+				"Updating the information for the selected PlanetLab nodes."));
+		}
+
+		/// <summary>
+		/// An event handler called when canceled updating the PlanetLab nodes information.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodesUpdateCanceled(object sender, PlManagerEventArgs e)
+		{
+			// Show the progress.
+			this.progress.Show(Resources.GlobeCanceled_48, "Updating the information for the selected PlanetLab nodes was canceled.", false);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Canceled,
+				ControlSliceRun.logSource.FormatWith(this.slice.Id),
+				"Updating the information for the selected PlanetLab nodes was canceled."));
+		}
+
+		/// <summary>
+		/// An event handler called when finished updating the PlanetLab nodes information, and the operation succeeded.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodesUpdateFinishedSuccess(object sender, PlManagerEventArgs e)
+		{
+			// Show the progress.
+			this.progress.Show(Resources.GlobeSuccess_48, "Updating the information for the selected PlanetLab nodes completed successfully.", false);
+			// Log.
+			this.controlLog.Add(this.crawler.Log.Add(
+				LogEventLevel.Verbose,
+				LogEventType.Success,
+				ControlSliceRun.logSource.FormatWith(this.slice.Id),
+				"Updating the information for the selected PlanetLab nodes completed successfully."));
+		}
+
+		/// <summary>
+		/// An event handler called when finished updating the PlanetLab nodes information, and the operation failed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodesUpdateFinishedFail(object sender, PlManagerEventArgs e)
+		{
+			// Show the progress.
+			this.progress.Show(Resources.GlobeError_48, "Updating the information for the selected PlanetLab nodes failed.", false);
+
+			if (e.Exception != null)
+			{
+				// Log.
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"Updating the information for the selected PlanetLab nodes failed. {0}",
+					new object[] { e.Exception.Message },
+					e.Exception));
+			}
+			else if (string.IsNullOrWhiteSpace(e.Message))
+			{
+				// Log.
+				this.controlLog.Add(this.crawler.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"Updating the information for the selected PlanetLab nodes failed. {0}",
+					new object[] { e.Message }));
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node is enabled to run commands.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeEnabled(object sender, PlManagerNodeEventArgs e)
+		{
+			this.Invoke(() =>
+				{
+					// Find the progress item corresponding to this node.
+					ProgressItem item = this.managerProgressItems.FirstOrDefault((ProgressItem it) =>
+					{
+						return object.ReferenceEquals(it.Tag, e.Node);
+					});
+					// If the item is not null.
+					if (null != item)
+					{
+						item.Progress.Count = e.Count;
+						item.Enabled = true;
+					}
+				});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node is disabled to run commands.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeDisabled(object sender, PlManagerNodeEventArgs e)
+		{
+			this.Invoke(() =>
+				{
+					// Find the progress item corresponding to this node.
+					ProgressItem item = this.managerProgressItems.FirstOrDefault((ProgressItem it) =>
+					{
+						return object.ReferenceEquals(it.Tag, e.Node);
+					});
+					// If the item is not null.
+					if (null != item)
+					{
+						item.Subtext = "Not in boot state";
+						item.Enabled = false;
+					}
+				});
 		}
 	}
 }

@@ -74,7 +74,10 @@
     <Compile Include="PlanetLab\PlConfigSlice.cs" />
     <Compile Include="PlanetLab\PlConfigSliceCommands.cs" />
     <Compile Include="PlanetLab\PlManager.cs" />
+    <Compile Include="PlanetLab\PlManagerNodeEventArgs.cs" />
+    <Compile Include="PlanetLab\PlManagerNodeState.cs" />
     <Compile Include="PlanetLab\PlManagerState.cs" />
+    <Compile Include="PlanetLab\PlManagerEventArgs.cs" />
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />
     <Compile Include="Spider\SpiderEventArgs.cs" />
     <Compile Include="Status\CrawlerStatus.cs" />
@@ -169,6 +172,10 @@
     <ProjectReference Include="..\..\PlanetLab\PlanetLab\PlanetLab.csproj">
       <Project>{8d8a9a27-a8ca-4a27-95e5-c2246bdabc85}</Project>
       <Name>PlanetLab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Renci.SshNet\Renci.SshNet.csproj">
+      <Project>{2f5f8c90-0bd1-424f-997c-7bc6280919d1}</Project>
+      <Name>Renci.SshNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
