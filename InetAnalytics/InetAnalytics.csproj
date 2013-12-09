@@ -97,6 +97,12 @@
     <Compile Include="Controls\PlanetLab\Commands\CommandListBoxItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\PlanetLab\Commands\ControlCommandResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetLab\Commands\ControlCommandResult.Designer.cs">
+      <DependentUpon>ControlCommandResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetLab\ControlAddCommand.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -862,6 +868,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlServerProperties.resx">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetLab\Commands\ControlCommandResult.resx">
+      <DependentUpon>ControlCommandResult.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetLab\ControlAddCommand.resx">
       <DependentUpon>ControlAddCommand.cs</DependentUpon>

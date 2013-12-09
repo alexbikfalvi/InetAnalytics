@@ -24,19 +24,38 @@ namespace InetCrawler.PlanetLab
 	/// <summary>
 	/// A class representing the state for a PlanetLab command.
 	/// </summary>
-	public sealed class PlManagerCommandState
+	public sealed class PlManagerSubcommandState
 	{
 		/// <summary>
 		/// Creates a new command state instance.
 		/// </summary>
 		/// <param name="command">The secure shell command.</param>
-		public PlManagerCommandState(SshCommand command)
+		/// <param name="duration">The subcommand duration.</param>
+		/// <param name="retries">The number of retries for this command.</param>
+		public PlManagerSubcommandState(SshCommand command, TimeSpan duration, int retries)
 		{
 			this.Command = command.CommandText;
 			this.Timeout = command.CommandTimeout;
 			this.ExitStatus = command.ExitStatus;
 			this.Result = command.Result;
 			this.Error = command.Error;
+			this.Duration = duration;
+			this.Retries = retries;
+		}
+
+		/// <summary>
+		/// Creates a new command state instance.
+		/// </summary>
+		/// <param name="command">The secure shell command.</param>
+		/// <param name="exception">The subcommand exception.</param>
+		public PlManagerSubcommandState(SshCommand command, Exception exception)
+		{
+			this.Command = command.CommandText;
+			this.Timeout = command.CommandTimeout;
+			this.ExitStatus = command.ExitStatus;
+			this.Result = command.Result;
+			this.Error = command.Error;
+			this.Exception = exception;
 		}
 
 		// Public properties.
@@ -45,6 +64,10 @@ namespace InetCrawler.PlanetLab
 		/// Gets the command text.
 		/// </summary>
 		public string Command { get; private set; }
+		/// <summary>
+		/// Gets the command exception.
+		/// </summary>
+		public Exception Exception { get; private set; }
 		/// <summary>
 		/// Gets the command timeout.
 		/// </summary>
@@ -61,5 +84,13 @@ namespace InetCrawler.PlanetLab
 		/// Gets the command error.
 		/// </summary>
 		public string Error { get; private set; }
+		/// <summary>
+		/// Gets the subcommand duration.
+		/// </summary>
+		public TimeSpan Duration { get; private set; }
+		/// <summary>
+		/// Gets the number of retries for this command.
+		/// </summary>
+		public int Retries { get; private set; }
 	}
 }

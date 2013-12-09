@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using DotNetApi.Web;
 using PlanetLab.Api;
@@ -88,6 +89,13 @@ namespace InetCrawler.PlanetLab
 		// Public properties.
 
 		/// <summary>
+		/// Gets the synchronization object for this manager state.
+		/// </summary>
+		public object Sync
+		{
+			get { return this.sync; }
+		}
+		/// <summary>
 		/// Gets the slice configuration.
 		/// </summary>
 		public PlConfigSlice Slice
@@ -109,15 +117,25 @@ namespace InetCrawler.PlanetLab
 		{
 			get { return this.nodes; }
 		}
+		/// <summary>
+		/// Gets the collection of node states.
+		/// </summary>
+		public IEnumerable<PlManagerNodeState> NodeStates
+		{
+			get { return this.nodeStates; }
+		}
 
 		// Internal properties.
 
 		/// <summary>
-		/// Gets the synchronization object for this manager state.
+		/// Gets whether the manager is paused. It is a thread-safe property and it does not require a lock.
 		/// </summary>
-		internal object Sync { get { return this.sync; } }
+		internal bool IsPaused
+		{
+			get { return this.isPaused; }
+		}
 		/// <summary>
-		/// Gets or sets whether the manager is stopped. It is a thread-safe property and it does not require a lock.
+		/// Gets whether the manager is stopped. It is a thread-safe property and it does not require a lock.
 		/// </summary>
 		internal bool IsStopped
 		{
@@ -230,9 +248,17 @@ namespace InetCrawler.PlanetLab
 		}
 
 		/// <summary>
+		/// Waits for the execution of the manager to resume.
+		/// </summary>
+		internal void WaitPause()
+		{
+			this.waitPause.WaitOne();
+		}
+
+		/// <summary>
 		/// Waits for the excution of the manager to complete.
 		/// </summary>
-		internal void Wait()
+		internal void WaitStop()
 		{
 			// Wait for all asynchronous operations to complete.
 			this.waitAsync.WaitOne();
@@ -397,6 +423,30 @@ namespace InetCrawler.PlanetLab
 
 				// Remove the corresponding site from the running list.
 				this.runningSites.Remove(this.nodeStates[index].Node.SiteId.Value);
+
+				// Update the wait handle.
+				this.UpdateWaitNodes();
+			}
+		}
+
+		/// <summary>
+		/// Cancels all pending nodes, moving them to the skipped list.
+		/// </summary>
+		internal void CancelPendingNodes()
+		{
+			lock (this.sync)
+			{
+				// While there are nodes in the pending list.
+				while (this.pendingNodes.Count > 0)
+				{
+					// Get the first pending node.
+					int index = this.pendingNodes.First();
+
+					// Remove the node from the pending list.
+					if (!this.pendingNodes.Remove(index)) throw new InvalidOperationException("PlanetLab manager internal error: node not found in the pending list.");
+					// Add the node to the skipped list.
+					if (!this.skippedNodes.Add(index)) throw new InvalidOperationException("PlanetLab manager internal error: node already exists in the skipped list.");
+				}
 
 				// Update the wait handle.
 				this.UpdateWaitNodes();

@@ -18,42 +18,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using InetCrawler.Tools;
-using InetTools.Tools;
+using System.Net;
 
-namespace InetTools
+namespace InetTools.Tools.Mercury
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// A class that represents a Mercury traceroute.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
-		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
-		)]
-	public sealed class StandardToolset : Toolset
+	public sealed class MercuryTraceroute
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolCdnFinder),
-			typeof(ToolMercuryClient)
-		};
+		public string sourceHostname;
+		public IPAddress sourceIp;
+		public string destinationHostname;
+		public IPAddress destinationIp;
+		public readonly List<MercuryTracerouteHop> hops = new List<MercuryTracerouteHop>();
 
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Creates a new traceroute instance by parsing the specified data.
 		/// </summary>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(string name)
-			: base(name)
+		/// <param name="data"></param>
+		public MercuryTraceroute(string data)
 		{
-			foreach (Type tool in StandardToolset.tools)
-			{
-				this.Add(tool);
-			}
+
 		}
 	}
 }

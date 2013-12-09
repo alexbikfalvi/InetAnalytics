@@ -22,16 +22,16 @@ using PlanetLab.Api;
 namespace InetCrawler.PlanetLab
 {
 	/// <summary>
-	/// A delegate for the PlanetLab manager command event handlers.
+	/// A delegate for the PlanetLab manager subcommand event handlers.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void PlManagerCommandEventHandler(object sender, PlManagerCommandEventArgs e);
+	public delegate void PlManagerSubcommandEventHandler(object sender, PlManagerSubcommandEventArgs e);
 
 	/// <summary>
-	/// A class representing the PlanetLab manager command event arguments.
+	/// A class representing the PlanetLab manager subcommand event arguments.
 	/// </summary>
-	public class PlManagerCommandEventArgs : EventArgs
+	public class PlManagerSubcommandEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Creates a new PlanetLab manager node event arguments instance.
@@ -40,31 +40,14 @@ namespace InetCrawler.PlanetLab
 		/// <param name="node">The PlanetLab node.</param>
 		/// <param name="command">The PlanetLab command.</param>
 		/// <param name="set">The PlanetLab command parameter set.</param>
-		public PlManagerCommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set)
+		/// <param name="subcommand">The PlanetLab subcommand state.</param>
+		public PlManagerSubcommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set, PlManagerSubcommandState subcommand)
 		{
 			this.State = state;
 			this.Node = node;
 			this.Command = command;
 			this.Set = set;
-		}
-
-		/// <summary>
-		/// Creates a new PlanetLab manager node event arguments instance.
-		/// </summary>
-		/// <param name="state">The manager state.</param>
-		/// <param name="node">The PlanetLab node.</param>
-		/// <param name="command">The PlanetLab command.</param>
-		/// <param name="set">The PlanetLab command parameter set.</param>
-		/// <param name="success">The number of successful subcommands.</param>
-		/// <param name="failed">The number of failed subcommands.</param>
-		public PlManagerCommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set, int success, int failed)
-		{
-			this.State = state;
-			this.Node = node;
-			this.Command = command;
-			this.Set = set;
-			this.Success = success;
-			this.Failed = failed;
+			this.Subcommand = subcommand;
 		}
 
 		/// <summary>
@@ -75,7 +58,7 @@ namespace InetCrawler.PlanetLab
 		/// <param name="command">The PlanetLab command.</param>
 		/// <param name="set">The PlanetLab command parameter set.</param>
 		/// <param name="exception">The command exception.</param>
-		public PlManagerCommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set, Exception exception)
+		public PlManagerSubcommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set, Exception exception)
 		{
 			this.State = state;
 			this.Node = node;
@@ -103,13 +86,9 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		public int Set { get; private set; }
 		/// <summary>
-		/// The number of successful subcommands.
+		/// The PlanetLab subcommand state.
 		/// </summary>
-		public int Success { get; private set; }
-		/// <summary>
-		/// The number of failed subcommands.
-		/// </summary>
-		public int Failed { get; private set; }
+		public PlManagerSubcommandState Subcommand { get; private set; }
 		/// <summary>
 		/// The exception that occurred during the execution of the PlanetLab command.
 		/// </summary>

@@ -124,7 +124,7 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 			}
 
 			// Draw the image.
-			e.Graphics.DrawImage(Resources.Parameter_32, rectImage);
+			e.Graphics.DrawImage(Resources.ScriptLarge_32, rectImage);
 
 			// Draw the text
 			if (null != item.Command)

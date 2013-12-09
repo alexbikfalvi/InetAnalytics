@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using PlanetLab.Api;
 
@@ -25,9 +26,11 @@ namespace InetCrawler.PlanetLab
 	/// <summary>
 	/// A class representing the state of command execution on a PlanetLab node.
 	/// </summary>
-	internal sealed class PlManagerNodeState
+	public sealed class PlManagerNodeState
 	{
 		private readonly PlNode node;
+		private readonly List<PlManagerSubcommandState> subcommands = new List<PlManagerSubcommandState>();
+		private readonly object sync = new object();
 
 		/// <summary>
 		/// Creates a new node state instance.
@@ -44,12 +47,32 @@ namespace InetCrawler.PlanetLab
 			this.FailureCount = 0;
 		}
 
-		// Internal properties.
+		// Public properties.
 
+		/// <summary>
+		/// Gets the synchronization object.
+		/// </summary>
+		public object Sync
+		{
+			get { return this.sync; }
+		}
+		/// <summary>
+		/// Gets the collection of subcommands that were executed on this node.
+		/// </summary>
+		public IEnumerable<PlManagerSubcommandState> Subcommands
+		{
+			get { return this.subcommands; }
+		}
 		/// <summary>
 		/// Gets the PlanetLab node.
 		/// </summary>
-		internal PlNode Node { get { return this.node; } }
+		public PlNode Node
+		{
+			get { return this.node; }
+		}
+
+		// Internal properties.
+
 		/// <summary>
 		/// Gets the current command index.
 		/// </summary>
@@ -70,5 +93,19 @@ namespace InetCrawler.PlanetLab
 		/// Gets the failure count.
 		/// </summary>
 		internal int FailureCount { get; set; }
+
+		// Internal methods.
+
+		/// <summary>
+		/// Adds a subcommand to the collection of subcommands.
+		/// </summary>
+		/// <param name="subcommand">The subcommand.</param>
+		public void AddSubcommand(PlManagerSubcommandState subcommand)
+		{
+			lock (this.sync)
+			{
+				this.subcommands.Add(subcommand);
+			}
+		}
 	}
 }

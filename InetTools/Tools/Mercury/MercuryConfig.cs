@@ -17,43 +17,37 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
+using DotNetApi.Windows;
 using InetCrawler.Tools;
-using InetTools.Tools;
 
-namespace InetTools
+namespace InetTools.Tools.Mercury
 {
 	/// <summary>
-	/// The main class for the standard toolset library.
+	/// A class representing the configuration for the Mercury client tool.
 	/// </summary>
-	[ToolsetInfo(
-		"1FA6DD5F-F500-4920-85A4-72A2D46AC08D",
-		1, 0, 0, 0,
-		"Internet Analytics Toolbox",
-		"The standard toolset for the Internet Analytics toolbox.",
-		"Internet Analytics",
-		"Alex Bikfalvi"
-		)]
-	public sealed class StandardToolset : Toolset
+	public sealed class MercuryConfig
 	{
-		private static Type[] tools = new Type[] {
-			typeof(ToolAlexaTopSites),
-			typeof(ToolCdnFinder),
-			typeof(ToolMercuryClient)
-		};
+		private readonly IToolApi api;
 
 		/// <summary>
-		/// Creates a new standard toolset.
+		/// Creates a new CDN Finder configuration instance.
 		/// </summary>
-		/// <param name="name">The toolset name.</param>
-		public StandardToolset(string name)
-			: base(name)
+		/// <param name="api">The tools API.</param>
+		public MercuryConfig(IToolApi api)
 		{
-			foreach (Type tool in StandardToolset.tools)
-			{
-				this.Add(tool);
-			}
+			this.api = api;
+		}
+
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets or sets the server URL.
+		/// </summary>
+		public string ServerUrl
+		{
+			get { return this.api.Key.GetString("ServerUrl", "http://mercury.upf.edu/mercury/api/traceroute/uploadTrace"); }
+			set { this.api.Key.SetString("ServerUrl", value); }
 		}
 	}
 }

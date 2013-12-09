@@ -160,6 +160,14 @@ namespace InetCrawler.PlanetLab
 			get { return this.key.GetInteger("RunParallelNodes", 1); }
 			set { this.key.SetInteger("RunParallelNodes", value); }
 		}
+		/// <summary>
+		/// Gets or sets the number of retries for a PlanetLab command.
+		/// </summary>
+		public int CommandRetries
+		{
+			get { return this.key.GetInteger("CommandRetries", 3); }
+			set { this.key.SetInteger("CommandRetries", value); }
+		}
 
 		// Public methods.
 

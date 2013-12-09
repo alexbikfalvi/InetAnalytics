@@ -41,6 +41,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlMercuryClient.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlMercuryClient.Designer.cs">
+      <DependentUpon>ControlMercuryClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlCdnFinder.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -94,8 +100,12 @@
     <Compile Include="Tools\CdnFinder\CdnFinderSites.cs" />
     <Compile Include="Tools\CdnFinder\CdnFinderRequest.cs" />
     <Compile Include="Tools\CdnFinder\CdnFinderResource.cs" />
+    <Compile Include="Tools\Mercury\MercuryConfig.cs" />
+    <Compile Include="Tools\Mercury\MercuryTraceroute.cs" />
+    <Compile Include="Tools\Mercury\MercuryTracerouteHop.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
     <Compile Include="Tools\ToolCdnFinder.cs" />
+    <Compile Include="Tools\ToolMercuryClient.cs" />
     <Compile Include="Tools\ToolWebCrawler.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +131,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ControlMercuryClient.resx">
+      <DependentUpon>ControlMercuryClient.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlCdnFinder.resx">
       <DependentUpon>ControlCdnFinder.cs</DependentUpon>
     </EmbeddedResource>
@@ -368,6 +381,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\GlobeQuestion_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlobeUpload_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlobeUpload_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlobeUpload_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlobeUpload_48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

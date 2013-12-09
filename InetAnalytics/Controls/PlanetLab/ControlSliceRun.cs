@@ -174,9 +174,18 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.manager.NodeEnabled += this.OnNodeEnabled;
 			this.manager.NodeDisabled += this.OnNodeDisabled;
 			this.manager.NodeSkipped += this.OnNodeSkipped;
-			this.manager.NodeRunning += this.OnNodeRunning;
-			this.manager.NodeCompletedSuccess += this.OnNodeCompletedSuccess;
-			this.manager.NodeCompletedFail += this.OnNodeCompletedFail;
+			this.manager.NodeStarted += this.OnNodeStarted;
+			this.manager.NodeCanceled += this.OnNodeCanceled;
+			this.manager.NodeFinishedSuccess += this.OnNodeFinishedSuccess;
+			this.manager.NodeFinishedFail += this.OnNodeFinishedFail;
+
+			this.manager.CommandStarted += this.OnCommandStarted;
+			this.manager.CommandCanceled += this.OnCommandCanceled;
+			this.manager.CommandFinishedSuccess += this.OnCommandFinishedSuccess;
+			this.manager.CommandFinishedFail += this.OnCommandFinishedFail;
+
+			this.manager.SubcommandSuccess += this.OnSubcommandSuccess;
+			this.manager.SubcommandFail += this.OnSubcommandFail;
 
 			// Set the tree node.
 			this.treeNode = treeNode;
@@ -1257,6 +1266,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.config.OnlyRunOnBootNodes = this.checkBoxNodesBoot.Checked;
 			this.config.OnlyRunOneNodePerSite = this.checkBoxNodesSite.Checked;
 			this.config.RunParallelNodes = (int)this.numericUpDownNodesParallel.Value;
+			this.config.CommandRetries = (int)this.numericUpDownNodesRetries.Value;
 			// Disable the save and undo buttons.
 			this.buttonConfigSave.Enabled = false;
 			this.buttonConfigUndo.Enabled = false;
@@ -1274,6 +1284,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.checkBoxNodesBoot.Checked = this.config.OnlyRunOnBootNodes;
 			this.checkBoxNodesSite.Checked = this.config.OnlyRunOneNodePerSite;
 			this.numericUpDownNodesParallel.Value = this.config.RunParallelNodes;
+			this.numericUpDownNodesRetries.Value = this.config.CommandRetries;
 			// Disable the save and undo buttons.
 			this.buttonConfigSave.Enabled = false;
 			this.buttonConfigUndo.Enabled = false;
@@ -1350,6 +1361,12 @@ namespace InetAnalytics.Controls.PlanetLab
 					this.listProgress.Items.Clear();
 					// Clear the list of progress items.
 					this.managerProgressItems.Clear();
+					// Clear the combo-box items.
+					this.comboBoxNodes.Items.Clear();
+
+					// Clear the results.
+					this.listViewResults.Items.Clear();
+					this.controlResult.Clear();
 
 					// For all the selected nodes.
 					foreach (ListViewItem item in this.listViewNodes.CheckedItems)
@@ -1388,6 +1405,9 @@ namespace InetAnalytics.Controls.PlanetLab
 						item.Progress.Default = this.progressLegend.Items.Count - 1;
 						// Add the item to the list.
 						this.managerProgressItems.Add(item);
+
+						// Create a combo box item.
+						this.comboBoxNodes.Items.Add(node.Hostname);
 					}
 
 					// Add the items to the progress list.
@@ -1900,7 +1920,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnNodeRunning(object sender, PlManagerNodeEventArgs e)
+		private void OnNodeStarted(object sender, PlManagerNodeEventArgs e)
 		{
 			this.Invoke(() =>
 			{
@@ -1915,11 +1935,30 @@ namespace InetAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// An event handler called when a PlanetLab node completed the commands successfully.
+		/// An event handler called when a PlanetLab node has been canceled.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments,</param>
+		private void OnNodeCanceled(object sender, PlManagerNodeEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Log an event.
+				this.controlLog.Add(this.config.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Canceled,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab node {0} ({1}) canceled running the PlanetLab commands.",
+					new object[] { e.Node.Id, e.Node.Hostname }));
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node finished the commands successfully.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnNodeCompletedSuccess(object sender, PlManagerNodeEventArgs e)
+		private void OnNodeFinishedSuccess(object sender, PlManagerNodeEventArgs e)
 		{
 			this.Invoke(() =>
 			{
@@ -1928,7 +1967,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					LogEventLevel.Verbose,
 					LogEventType.Success,
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
-					"The PlanetLab node {0} ({1}) completed running the PlanetLab commands successfully.",
+					"The PlanetLab node {0} ({1}) finished running the PlanetLab commands successfully.",
 					new object[] { e.Node.Id, e.Node.Hostname }));
 			});
 		}
@@ -1938,7 +1977,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnNodeCompletedFail(object sender, PlManagerNodeEventArgs e)
+		private void OnNodeFinishedFail(object sender, PlManagerNodeEventArgs e)
 		{
 			this.Invoke(() =>
 			{
@@ -1951,6 +1990,237 @@ namespace InetAnalytics.Controls.PlanetLab
 					new object[] { e.Node.Id, e.Node.Hostname, e.Exception.Message },
 					e.Exception));
 			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab command has started.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandStarted(object sender, PlManagerCommandEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Log an event.
+				this.controlLog.Add(this.config.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab node {0} ({1}) started running the PlanetLab command \'{2}\' with parameter set {3}.",
+					new object[] { e.Node.Id, e.Node.Hostname, e.Command.Command, e.Set }));
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab command was canceled.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandCanceled(object sender, PlManagerCommandEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Log an event.
+				this.controlLog.Add(this.config.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Canceled,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab node {0} ({1}) canceled running the PlanetLab command \'{2}\' with parameter set {3}.",
+					new object[] { e.Node.Id, e.Node.Hostname, e.Command.Command, e.Set }));
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab command finished successfully.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandFinishedSuccess(object sender, PlManagerCommandEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// If the number of failed subcommand is zero.
+				if (0 == e.Failed)
+				{
+					// Log an event.
+					this.controlLog.Add(this.config.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Success,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab node {0} ({1}) succeeded running the PlanetLab command \'{2}\' with parameter set {3}. {4} subcommands succeeded.",
+						new object[] { e.Node.Id, e.Node.Hostname, e.Command.Command, e.Set, e.Success }));
+				}
+				else
+				{
+					// Log an event.
+					this.controlLog.Add(this.config.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.SuccessWarning,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab node {0} ({1}) succeeded running the PlanetLab command \'{2}\' with parameter set {3}. {4} subcommands succeeded and {5} subcommands failed.",
+						new object[] { e.Node.Id, e.Node.Hostname, e.Command.Command, e.Set, e.Success, e.Failed }));
+				}
+				// Find the progress item corresponding to this node.
+				ProgressItem item = this.managerProgressItems.FirstOrDefault((ProgressItem it) =>
+				{
+					return object.ReferenceEquals(it.Tag, e.Node);
+				});
+				// If the item is not null, increment the progress.
+				if (null != item)
+				{
+					item.Progress.Change(0 == e.Failed ? 0 : 1);
+				}
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab command finished with failure.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCommandFinishedFail(object sender, PlManagerCommandEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Log an event.
+				this.controlLog.Add(this.config.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab node {0} ({1}) failed running the PlanetLab command \'{2}\' with parameter set {3}. {4}",
+					new object[] { e.Node.Id, e.Node.Hostname, e.Command.Command, e.Exception },
+					e.Exception));
+				// Find the progress item corresponding to this node.
+				ProgressItem item = this.managerProgressItems.FirstOrDefault((ProgressItem it) =>
+				{
+					return object.ReferenceEquals(it.Tag, e.Node);
+				});
+				// If the item is not null, increment the progress.
+				if (null != item)
+				{
+					item.Progress.Change(2);
+				}
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab subcommand finished successfully.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSubcommandSuccess(object sender, PlManagerSubcommandEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// If the selected result node equals the current node.
+				if (e.Node.Hostname == this.comboBoxNodes.SelectedItem)
+				{
+					// Update the result subcommands.
+					this.OnAddResult(e.Subcommand);
+				}
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab command finished with failure.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSubcommandFail(object sender, PlManagerSubcommandEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// If the selected result node equals the current node.
+				if (e.Node.Hostname == this.comboBoxNodes.SelectedItem)
+				{
+					// Update the result subcommands.
+					this.OnAddResult(e.Subcommand);
+				}
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when the results node has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnResultsNodeChanged(object sender, EventArgs e)
+		{
+			// Clear the result.
+			this.listViewResults.Items.Clear();
+			this.controlResult.Clear();
+
+			// If the selected item is null, do nothing.
+			if (null == this.comboBoxNodes.SelectedItem) return;
+
+			lock (this.managerSync)
+			{
+				// If the current manager state is null, do nothing.
+				if (null == this.managerState) return;
+
+				lock (this.managerState.Sync)
+				{
+					// Else, find the node state corresponding to the selected node.
+					PlManagerNodeState node = this.managerState.NodeStates.FirstOrDefault((PlManagerNodeState state) =>
+						{
+							return state.Node.Hostname == this.comboBoxNodes.SelectedItem;
+						});
+
+					// If the node state is null, do nothing.
+					if (null == node) return;
+
+					lock (node.Sync)
+					{
+						// Else, update the subcommand results.
+						foreach (PlManagerSubcommandState subcommand in node.Subcommands)
+						{
+							// Add the subcommand information.
+							this.OnAddResult(subcommand);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Adds a subcommand result to the results list.
+		/// </summary>
+		/// <param name="subcommand">The subcommand.</param>
+		private void OnAddResult(PlManagerSubcommandState subcommand)
+		{
+			// Create a new result item.
+			ListViewItem item = new ListViewItem(new string[] {
+				subcommand.Command,
+				subcommand.ExitStatus.ToString(),
+				subcommand.Duration.ToString()
+			});
+
+			item.Tag = subcommand;
+			item.ImageKey = subcommand.Exception == null ? subcommand.ExitStatus == 0 ?
+				"Success" : "Warning" : "Error";
+
+			// Add the result item.
+			this.listViewResults.Items.Add(item);
+		}
+
+		/// <summary>
+		/// An event handler called when the selected command has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelectedCommandChanged(object sender, EventArgs e)
+		{
+			// If there is no selected item.
+			if (this.listViewResults.SelectedItems.Count == 0)
+			{
+				// Clear the command result.
+				this.controlResult.Clear();
+			}
+			else
+			{
+				// Set the selected result.
+				this.controlResult.Result = this.listViewResults.SelectedItems[0].Tag as PlManagerSubcommandState;
+			}
 		}
 	}
 }

@@ -85,10 +85,11 @@
 			this.listViewResults = new System.Windows.Forms.ListView();
 			this.columnHeaderCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderExitStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.textBoxResult = new DotNetApi.Windows.Controls.CodeTextBox();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.columnHeaderDuration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.controlResult = new InetAnalytics.Controls.PlanetLab.Commands.ControlCommandResult();
+			this.tableResults = new System.Windows.Forms.TableLayoutPanel();
 			this.comboBoxNodes = new System.Windows.Forms.ComboBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.labelResults = new System.Windows.Forms.Label();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
 			this.buttonPause = new System.Windows.Forms.ToolStripButton();
@@ -106,6 +107,8 @@
 			this.progressLegendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressLegendItemError = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressLegendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
+			this.labelNodesRetries = new System.Windows.Forms.Label();
+			this.numericUpDownNodesRetries = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -132,9 +135,10 @@
 			this.splitContainerProgress.Panel1.SuspendLayout();
 			this.splitContainerProgress.Panel2.SuspendLayout();
 			this.splitContainerProgress.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
+			this.tableResults.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.contextMenuNodes.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesRetries)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -214,6 +218,8 @@
 			// splitContainerNodes.Panel2
 			// 
 			this.splitContainerNodes.Panel2.AutoScroll = true;
+			this.splitContainerNodes.Panel2.Controls.Add(this.numericUpDownNodesRetries);
+			this.splitContainerNodes.Panel2.Controls.Add(this.labelNodesRetries);
 			this.splitContainerNodes.Panel2.Controls.Add(this.toolStripConfig);
 			this.splitContainerNodes.Panel2.Controls.Add(this.numericUpDownNodesParallel);
 			this.splitContainerNodes.Panel2.Controls.Add(this.labelNodesParallel);
@@ -602,7 +608,7 @@
 			// tabPageResults
 			// 
 			this.tabPageResults.Controls.Add(this.splitContainerProgress);
-			this.tabPageResults.Controls.Add(this.tableLayoutPanel1);
+			this.tabPageResults.Controls.Add(this.tableResults);
 			this.tabPageResults.Location = new System.Drawing.Point(2, 23);
 			this.tabPageResults.Name = "tabPageResults";
 			this.tabPageResults.Padding = new System.Windows.Forms.Padding(3);
@@ -624,7 +630,7 @@
 			// 
 			// splitContainerProgress.Panel2
 			// 
-			this.splitContainerProgress.Panel2.Controls.Add(this.textBoxResult);
+			this.splitContainerProgress.Panel2.Controls.Add(this.controlResult);
 			this.splitContainerProgress.Panel2.Padding = new System.Windows.Forms.Padding(1);
 			this.splitContainerProgress.Size = new System.Drawing.Size(788, 318);
 			this.splitContainerProgress.SplitterDistance = 394;
@@ -637,7 +643,8 @@
 			this.listViewResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listViewResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderCommand,
-            this.columnHeaderExitStatus});
+            this.columnHeaderExitStatus,
+            this.columnHeaderDuration});
 			this.listViewResults.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewResults.FullRowSelect = true;
 			this.listViewResults.GridLines = true;
@@ -647,9 +654,11 @@
 			this.listViewResults.MultiSelect = false;
 			this.listViewResults.Name = "listViewResults";
 			this.listViewResults.Size = new System.Drawing.Size(392, 316);
+			this.listViewResults.SmallImageList = this.imageList;
 			this.listViewResults.TabIndex = 0;
 			this.listViewResults.UseCompatibleStateImageBehavior = false;
 			this.listViewResults.View = System.Windows.Forms.View.Details;
+			this.listViewResults.SelectedIndexChanged += new System.EventHandler(this.OnSelectedCommandChanged);
 			// 
 			// columnHeaderCommand
 			// 
@@ -659,39 +668,37 @@
 			// columnHeaderExitStatus
 			// 
 			this.columnHeaderExitStatus.Text = "Exit status";
+			this.columnHeaderExitStatus.Width = 100;
 			// 
-			// textBoxResult
+			// columnHeaderDuration
 			// 
-			this.textBoxResult.BackColor = System.Drawing.Color.White;
-			this.textBoxResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.textBoxResult.ColorCollection = null;
-			this.textBoxResult.DefaultBackgroundColor = System.Drawing.Color.White;
-			this.textBoxResult.DefaultForegroundColor = System.Drawing.Color.Black;
-			this.textBoxResult.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxResult.Font = new System.Drawing.Font("Consolas", 10F);
-			this.textBoxResult.ForeColor = System.Drawing.Color.Black;
-			this.textBoxResult.Location = new System.Drawing.Point(1, 1);
-			this.textBoxResult.Name = "textBoxResult";
-			this.textBoxResult.ReadOnly = true;
-			this.textBoxResult.Size = new System.Drawing.Size(387, 316);
-			this.textBoxResult.TabIndex = 0;
-			this.textBoxResult.Text = "";
+			this.columnHeaderDuration.Text = "Duration";
+			this.columnHeaderDuration.Width = 100;
 			// 
-			// tableLayoutPanel1
+			// controlResult
 			// 
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Controls.Add(this.comboBoxNodes, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 1;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(788, 27);
-			this.tableLayoutPanel1.TabIndex = 4;
+			this.controlResult.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlResult.Location = new System.Drawing.Point(1, 1);
+			this.controlResult.Name = "controlResult";
+			this.controlResult.Result = null;
+			this.controlResult.Size = new System.Drawing.Size(387, 316);
+			this.controlResult.TabIndex = 0;
+			// 
+			// tableResults
+			// 
+			this.tableResults.AutoSize = true;
+			this.tableResults.ColumnCount = 2;
+			this.tableResults.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableResults.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableResults.Controls.Add(this.comboBoxNodes, 1, 0);
+			this.tableResults.Controls.Add(this.labelResults, 0, 0);
+			this.tableResults.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tableResults.Location = new System.Drawing.Point(3, 3);
+			this.tableResults.Name = "tableResults";
+			this.tableResults.RowCount = 1;
+			this.tableResults.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableResults.Size = new System.Drawing.Size(788, 27);
+			this.tableResults.TabIndex = 4;
 			// 
 			// comboBoxNodes
 			// 
@@ -702,16 +709,17 @@
 			this.comboBoxNodes.Name = "comboBoxNodes";
 			this.comboBoxNodes.Size = new System.Drawing.Size(709, 21);
 			this.comboBoxNodes.TabIndex = 1;
+			this.comboBoxNodes.SelectedIndexChanged += new System.EventHandler(this.OnResultsNodeChanged);
 			// 
-			// label1
+			// labelResults
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 0);
-			this.label1.Name = "label1";
-			this.label1.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
-			this.label1.Size = new System.Drawing.Size(67, 19);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "&Select node:";
+			this.labelResults.AutoSize = true;
+			this.labelResults.Location = new System.Drawing.Point(3, 0);
+			this.labelResults.Name = "labelResults";
+			this.labelResults.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+			this.labelResults.Size = new System.Drawing.Size(67, 19);
+			this.labelResults.TabIndex = 0;
+			this.labelResults.Text = "&Select node:";
 			// 
 			// toolStrip
 			// 
@@ -839,6 +847,37 @@
 			this.progressLegendItemPending.Color = System.Drawing.Color.LightGray;
 			this.progressLegendItemPending.Text = "Pending";
 			// 
+			// labelNodesRetries
+			// 
+			this.labelNodesRetries.AutoSize = true;
+			this.labelNodesRetries.Location = new System.Drawing.Point(7, 140);
+			this.labelNodesRetries.Name = "labelNodesRetries";
+			this.labelNodesRetries.Size = new System.Drawing.Size(260, 13);
+			this.labelNodesRetries.TabIndex = 6;
+			this.labelNodesRetries.Text = "If a command fails, &retry the following number of times:";
+			// 
+			// numericUpDownNodesRetries
+			// 
+			this.numericUpDownNodesRetries.Location = new System.Drawing.Point(10, 156);
+			this.numericUpDownNodesRetries.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.numericUpDownNodesRetries.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownNodesRetries.Name = "numericUpDownNodesRetries";
+			this.numericUpDownNodesRetries.Size = new System.Drawing.Size(150, 20);
+			this.numericUpDownNodesRetries.TabIndex = 7;
+			this.numericUpDownNodesRetries.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
 			// ControlSliceRun
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -882,11 +921,12 @@
 			this.splitContainerProgress.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerProgress)).EndInit();
 			this.splitContainerProgress.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
+			this.tableResults.ResumeLayout(false);
+			this.tableResults.PerformLayout();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenuNodes.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesRetries)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -951,12 +991,15 @@
 		private DotNetApi.Windows.Controls.NotificationPanel progress;
 		private DotNetApi.Windows.Controls.ProgressListBox listProgress;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerProgress;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.TableLayoutPanel tableResults;
 		private System.Windows.Forms.ComboBox comboBoxNodes;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label labelResults;
 		private System.Windows.Forms.ListView listViewResults;
 		private System.Windows.Forms.ColumnHeader columnHeaderCommand;
 		private System.Windows.Forms.ColumnHeader columnHeaderExitStatus;
-		private DotNetApi.Windows.Controls.CodeTextBox textBoxResult;
+		private System.Windows.Forms.ColumnHeader columnHeaderDuration;
+		private Commands.ControlCommandResult controlResult;
+		private System.Windows.Forms.NumericUpDown numericUpDownNodesRetries;
+		private System.Windows.Forms.Label labelNodesRetries;
 	}
 }

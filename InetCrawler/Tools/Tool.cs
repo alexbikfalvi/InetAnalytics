@@ -30,6 +30,7 @@ namespace InetCrawler.Tools
 		private readonly ToolInfoAttribute info;
 		private readonly ToolsetInfoAttribute toolset;
 		private readonly IToolApi api;
+		private readonly Dictionary<Guid, ToolMethod> methods = new Dictionary<Guid, ToolMethod>();
 
 		/// <summary>
 		/// Creates a new tool instance.
@@ -67,6 +68,10 @@ namespace InetCrawler.Tools
 		/// Gets the toolset information.
 		/// </summary>
 		public ToolsetInfoAttribute Toolset { get { return this.toolset; } }
+		/// <summary>
+		/// Gets the tool methods.
+		/// </summary>
+		public IEnumerable<ToolMethod> Methods { get { return this.methods.Values; } }
 
 		// Protected properties.
 
@@ -132,6 +137,17 @@ namespace InetCrawler.Tools
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
 		protected virtual void Dispose(bool disposing)
 		{
+		}
+
+		/// <summary>
+		/// Adds a method to the current tool.
+		/// </summary>
+		/// <param name="id">The method identifier.</param>
+		/// <param name="name">The method name.</param>
+		/// <param name="action">The method action.</param>
+		protected void AddMethod(Guid id, string name, ToolMethodAction action)
+		{
+			this.methods.Add(id, new ToolMethod(id, name, action));
 		}
 	}
 }
