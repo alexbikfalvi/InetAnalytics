@@ -59,6 +59,8 @@ namespace InetCrawler
 			public string PlanetLabSlicesFileName { get; internal set; }
 			public string PlanetLabLocalPersonsFileName { get; internal set; }
 			public string PlanetLabLocalSlicesFileName { get; internal set; }
+			public string PlanetLabSlicesFolder { get; internal set; }
+			public string PlanetLabSlicesLogFileName { get; internal set; }
 			public string PlanetLabCommandsFolder { get; internal set; }
 		}
 
@@ -118,7 +120,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Log", "FileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-{0}-{1}-{2}.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Log", "FileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\Log-{0}-{1}-{2}.xml");
 			}
 			set
 			{
@@ -134,7 +136,7 @@ namespace InetCrawler
 		{
 			get
 			{
-				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Log", "DatabaseFileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\YtLog-Db-{0}-{1}-{2}-{3}.xml");
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Log", "DatabaseFileName", CrawlerConfig.Static.ApplicationFolder + @"\Log\Log-Db-{0}-{1}-{2}-{3}.xml");
 			}
 			set
 			{

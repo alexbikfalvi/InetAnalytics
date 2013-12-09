@@ -85,6 +85,18 @@ namespace InetCrawler.PlanetLab
 			this.listLocalSlices.Added += this.OnSlicesAdded;
 			this.listLocalSlices.Removed += this.OnSlicesRemoved;
 
+			// Initialize the static configuration.
+			CrawlerConfig.Static.PlanetLabUsername = this.Username;
+			CrawlerConfig.Static.PlanetLabPassword = this.Password;
+			CrawlerConfig.Static.PlanetLabPersonId = this.PersonId;
+			CrawlerConfig.Static.PlanetLabSitesFileName = this.SitesFileName;
+			CrawlerConfig.Static.PlanetLabNodesFileName = this.NodesFileName;
+			CrawlerConfig.Static.PlanetLabLocalPersonsFileName = this.LocalPersonsFileName;
+			CrawlerConfig.Static.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
+			CrawlerConfig.Static.PlanetLabSlicesFolder = this.SlicesFolder;
+			CrawlerConfig.Static.PlanetLabSlicesLogFileName = this.SlicesLogFileName;
+			CrawlerConfig.Static.PlanetLabCommandsFolder = this.CommandsFolder;
+
 			// Load the PlanetLab sites configuration.
 			try { this.listSites.LoadFromFile(this.SitesFileName); }
 			catch { }
@@ -104,16 +116,6 @@ namespace InetCrawler.PlanetLab
 			// Load the PlanetLab local slices configuration.
 			try { this.listLocalSlices.LoadFromFile(this.LocalSlicesFileName); }
 			catch { }
-
-			// Initialize the static configuration.
-			CrawlerConfig.Static.PlanetLabUsername = this.Username;
-			CrawlerConfig.Static.PlanetLabPassword = this.Password;
-			CrawlerConfig.Static.PlanetLabPersonId = this.PersonId;
-			CrawlerConfig.Static.PlanetLabSitesFileName = this.SitesFileName;
-			CrawlerConfig.Static.PlanetLabNodesFileName = this.NodesFileName;
-			CrawlerConfig.Static.PlanetLabLocalPersonsFileName = this.LocalPersonsFileName;
-			CrawlerConfig.Static.PlanetLabLocalSlicesFileName = this.LocalSlicesFileName;
-			CrawlerConfig.Static.PlanetLabCommandsFolder = this.CommandsFolder;
 		}
 
 		// Public properties.
@@ -224,7 +226,37 @@ namespace InetCrawler.PlanetLab
 			}
 		}
 		/// <summary>
-		/// Gets or sets the PlanetLab commands.
+		/// Gets or sets the PlanetLab slices folder.
+		/// </summary>
+		public string SlicesFolder
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "SlicesFolder", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Slices");
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "SlicesFolder", value);
+				CrawlerConfig.Static.PlanetLabSlicesFolder = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the PlanetLab slices log file name.
+		/// </summary>
+		public string SlicesLogFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "SlicesLogFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\Slices\Log-{0}-{1}-{2}-{3}.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "SlicesLogFileName", value);
+				CrawlerConfig.Static.PlanetLabSlicesLogFileName = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the PlanetLab commands folder.
 		/// </summary>
 		public string CommandsFolder
 		{

@@ -66,10 +66,13 @@ namespace InetAnalytics.Controls
 			this.textBoxYt2Key.SecureText = this.crawler.Config.YouTubeV2ApiKey;
 			this.textBoxYtCategories.Text = this.crawler.Config.YouTubeCategoriesFileName;
 			this.textBoxLogFile.Text = this.crawler.Config.LogFileName;
+			this.textBoxDatabaseLogFile.Text = this.crawler.Config.DatabaseLogFileName;
 			this.textBoxVideoCommentsFile.Text = this.crawler.Config.CommentsVideosFileName;
 			this.textBoxUserCommentsFile.Text = this.crawler.Config.CommentsUsersFileName;
 			this.textBoxPlaylistCommentsFile.Text = this.crawler.Config.CommentsPlaylistsFileName;
-			this.textBoxPlCommandsFolder.Text = this.crawler.PlanetLab.CommandsFolder;
+			this.textBoxPlanetLabSlicesFolder.Text = this.crawler.PlanetLab.SlicesFolder;
+			this.textBoxPlanetLabSlicesLogFile.Text = this.crawler.PlanetLab.SlicesLogFileName;
+			this.textBoxPlanetLabCommandsFolder.Text = this.crawler.PlanetLab.CommandsFolder;
 		}
 
 		/// <summary>
@@ -83,10 +86,13 @@ namespace InetAnalytics.Controls
 			this.crawler.Config.YouTubeV2ApiKey = this.textBoxYt2Key.SecureText;
 			this.crawler.Config.YouTubeCategoriesFileName = this.textBoxYtCategories.Text;
 			this.crawler.Config.LogFileName = this.textBoxLogFile.Text;
+			this.crawler.Config.DatabaseLogFileName = this.textBoxDatabaseLogFile.Text;
 			this.crawler.Config.CommentsVideosFileName = this.textBoxVideoCommentsFile.Text;
 			this.crawler.Config.CommentsUsersFileName = this.textBoxUserCommentsFile.Text;
 			this.crawler.Config.CommentsPlaylistsFileName = this.textBoxPlaylistCommentsFile.Text;
-			this.crawler.PlanetLab.CommandsFolder = this.textBoxPlCommandsFolder.Text;
+			this.crawler.PlanetLab.SlicesFolder = this.textBoxPlanetLabSlicesFolder.Text;
+			this.crawler.PlanetLab.SlicesLogFileName = this.textBoxPlanetLabSlicesLogFile.Text;
+			this.crawler.PlanetLab.CommandsFolder = this.textBoxPlanetLabCommandsFolder.Text;
 		}
 
 		/// <summary>

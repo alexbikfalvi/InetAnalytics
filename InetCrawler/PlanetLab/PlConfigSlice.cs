@@ -18,9 +18,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Windows;
+using InetCrawler.Log;
 using PlanetLab;
 using PlanetLab.Api;
 
@@ -33,6 +35,8 @@ namespace InetCrawler.PlanetLab
 	{
 		private readonly PlSlice slice;
 		private readonly RegistryKey key;
+
+		private readonly Logger log;
 
 		private readonly PlConfigSliceCommands commands;
 
@@ -59,6 +63,16 @@ namespace InetCrawler.PlanetLab
 				this.key = rootKey.CreateSubKey(this.slice.Id.Value.ToString());
 			}
 
+			// Check the commands directory exists.
+			if (!Directory.Exists(CrawlerConfig.Static.PlanetLabSlicesFolder))
+			{
+				// If the directory does not exist, create it.
+				Directory.CreateDirectory(CrawlerConfig.Static.PlanetLabSlicesFolder);
+			}
+
+			// Create the slice log.
+			this.log = new Logger(CrawlerConfig.Static.PlanetLabSlicesLogFileName.FormatWith(this.slice.Id, "{0}", "{1}", "{2}"));
+
 			// Create the slice commands configuration.
 			this.commands = new PlConfigSliceCommands(this.key, this.slice.Id.Value);
 		}
@@ -82,6 +96,13 @@ namespace InetCrawler.PlanetLab
 		public string Name
 		{
 			get { return this.slice.Name; }
+		}
+		/// <summary>
+		/// Gets the slice log.
+		/// </summary>
+		public Logger Log
+		{
+			get { return this.log; }
 		}
 		/// <summary>
 		/// Gets the PlanetLab slice commands.
@@ -165,6 +186,8 @@ namespace InetCrawler.PlanetLab
 			this.OnDisposed();
 			// Remove the slice event handler.
 			this.slice.Changed -= this.OnSliceChanged;
+			// Close the log.
+			this.log.Dispose();
 			// Dispose the slice commands.
 			this.commands.Dispose();
 			// Close the current key.

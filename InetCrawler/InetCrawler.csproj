@@ -74,8 +74,11 @@
     <Compile Include="PlanetLab\PlConfigSlice.cs" />
     <Compile Include="PlanetLab\PlConfigSliceCommands.cs" />
     <Compile Include="PlanetLab\PlManager.cs" />
+    <Compile Include="PlanetLab\PlManagerCommandEventArgs.cs" />
+    <Compile Include="PlanetLab\PlManagerCommandState.cs" />
     <Compile Include="PlanetLab\PlManagerNodeEventArgs.cs" />
     <Compile Include="PlanetLab\PlManagerNodeState.cs" />
+    <Compile Include="PlanetLab\PlManagerSiteState.cs" />
     <Compile Include="PlanetLab\PlManagerState.cs" />
     <Compile Include="PlanetLab\PlManagerEventArgs.cs" />
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />

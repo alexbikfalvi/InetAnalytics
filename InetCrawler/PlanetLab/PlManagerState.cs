@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using DotNetApi.Web;
 using PlanetLab.Api;
 
 namespace InetCrawler.PlanetLab
@@ -47,15 +48,26 @@ namespace InetCrawler.PlanetLab
 
 		private readonly object sync = new object();
 
-		private readonly HashSet<int> completedSites = new HashSet<int>();
-		private readonly List<PlManagerNodeState> pendingNodes = new List<PlManagerNodeState>();
+		private volatile ExecutionStatus status = ExecutionStatus.Stopped;
 
 		private volatile bool isPaused = false;
-		private volatile bool isCanceled = false;
+		private volatile bool isStopped = false;
 
-		private readonly ManualResetEvent pauseWait = new ManualResetEvent(false);
+		private readonly ManualResetEvent waitPause = new ManualResetEvent(true);
+		private readonly ManualResetEvent waitAsync = new ManualResetEvent(true);
+		private readonly ManualResetEvent waitNodes = new ManualResetEvent(true);
 
-		private ExecutionStatus status = ExecutionStatus.Stopped;
+		private readonly HashSet<AsyncWebOperation> asyncOperations = new HashSet<AsyncWebOperation>();
+
+		private readonly List<PlManagerNodeState> nodeStates = new List<PlManagerNodeState>();
+
+		private readonly HashSet<int> pendingNodes = new HashSet<int>();
+		private readonly HashSet<int> runningNodes = new HashSet<int>();
+		private readonly HashSet<int> completedNodes = new HashSet<int>();
+		private readonly HashSet<int> skippedNodes = new HashSet<int>();
+
+		private readonly HashSet<int> runningSites = new HashSet<int>();
+		private readonly HashSet<int> completedSites = new HashSet<int>();
 
 		/// <summary>
 		/// Creates a new manager state for the specified slice.
@@ -105,37 +117,47 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		internal object Sync { get { return this.sync; } }
 		/// <summary>
-		/// Gets or sets the result of a PlanetLab asynchronous operation.
+		/// Gets or sets whether the manager is stopped. It is a thread-safe property and it does not require a lock.
 		/// </summary>
-		internal IAsyncResult PlanetLabAsyncResult { get; set; }
+		internal bool IsStopped
+		{
+			get { return this.isStopped; }
+		}
+		/// <summary>
+		/// Gets the number of pending PlanetLab nodes.
+		/// </summary>
+		internal int PendingCount
+		{
+			get { lock (this.sync) { return this.pendingNodes.Count; } }
+		}
+		/// <summary>
+		/// Gets the number of running PlanetLab nodes.
+		/// </summary>
+		internal int RunningCount
+		{
+			get { lock (this.sync) { return this.runningNodes.Count; } }
+		}
+		/// <summary>
+		/// Gets the number of completed PlanetLab nodes.
+		/// </summary>
+		internal int CompletedCount
+		{
+			get { lock (this.sync) { return this.completedNodes.Count; } }
+		}
+		/// <summary>
+		/// Gets the number of skipped PlanetLab nodes.
+		/// </summary>
+		internal int SkippedCount
+		{
+			get { lock (this.sync) { return this.skippedNodes.Count; } }
+		}
 		/// <summary>
 		/// Gets the list of pending nodes.
 		/// </summary>
-		internal List<PlManagerNodeState> PendingNodes { get { return this.pendingNodes; } }
-		/// <summary>
-		/// Gets the list of completed sites.
-		/// </summary>
-		internal HashSet<int> CompletedSites { get { return this.completedSites; } }
-		/// <summary>
-		/// Gets or sets whether the manager is paused.
-		/// </summary>
-		internal bool IsPaused
+		internal IEnumerable<int> PendingNodes
 		{
-			get { return this.isPaused; }
-			set { this.isPaused = value; }
+			get { return this.pendingNodes; }
 		}
-		/// <summary>
-		/// Gets or sets whether the manager is canceled.
-		/// </summary>
-		internal bool IsCanceled
-		{
-			get { return this.isCanceled; }
-			set { this.isCanceled = value; }
-		}
-		/// <summary>
-		/// Gets the pause wait manual reset event.
-		/// </summary>
-		internal ManualResetEvent PauseWait { get { return this.pauseWait; } }
 
 		// Public methods.
 
@@ -144,10 +166,282 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		public void Dispose()
 		{
-			// Dispose the wait handles.
-			this.pauseWait.Dispose();
+			// Close the wait handles.
+			this.waitPause.Close();
+			this.waitAsync.Close();
+			this.waitNodes.Close();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
+		}
+
+		// Internal methods.
+
+		/// <summary>
+		/// Pauses the execution of the PlanetLab manager by resetting the pause wait handle and
+		/// setting the pause flag to true.
+		/// </summary>
+		internal void Pause()
+		{
+			// Reset the pause wait handle to unsignaled state.
+			this.waitPause.Reset();
+			// Set the pause flag to true.
+			lock (this.sync)
+			{
+				this.isPaused = true;
+			}
+		}
+
+		/// <summary>
+		/// Resumes the execution of the PlanetLab manager by setting the pause wait handle to
+		/// the signaled state and the pause flag to false.
+		/// </summary>
+		internal void Resume()
+		{
+			// Set the pause flag to false.
+			lock (this.sync)
+			{
+				this.isPaused = false;
+			}
+			// Set the pause wait handle to the signaled state.
+			this.waitPause.Set();
+		}
+
+		/// <summary>
+		/// Stops the execution of the PlanetLab manager by cancelling all asynchronous operations,
+		/// setting the stop flag to true, the pause  flag to false, and setting the pause wait handle
+		/// to a signaled state.
+		/// </summary>
+		internal void Stop()
+		{
+			lock (this.sync)
+			{
+				// Cancel all asynchronous operations.
+				foreach (AsyncWebOperation operation in this.asyncOperations)
+				{
+					operation.Cancel();
+				}
+
+				// Set the pause and stop flags.
+				this.isPaused = false;
+				this.isStopped = true;
+			}
+			// Set the pause wait handle to the signaled state.
+			this.waitPause.Set();
+		}
+
+		/// <summary>
+		/// Waits for the excution of the manager to complete.
+		/// </summary>
+		internal void Wait()
+		{
+			// Wait for all asynchronous operations to complete.
+			this.waitAsync.WaitOne();
+			// Wait for all node operations to complete.
+			this.waitNodes.WaitOne();
+		}
+
+		/// <summary>
+		/// Adds an asynchronous web operation.
+		/// </summary>
+		/// <param name="request">The asynchronous request.</param>
+		/// <param name="result">The asynchronous result.</param>
+		/// <returns>The asynchronous operation.</returns>
+		internal AsyncWebOperation BeginAsyncOperation(AsyncWebRequest request, IAsyncResult result)
+		{
+			// Create the asynchronous web operation.
+			AsyncWebOperation operation = new AsyncWebOperation(request, result);
+
+			lock (this.sync)
+			{
+				// Verify that the operation does not exist.
+				if (this.asyncOperations.Contains(operation)) throw new InvalidOperationException("Cannot begin an asynchronous operation because the same operation already exists.");
+
+				// Add the operation to the list.
+				this.asyncOperations.Add(operation);
+
+				// Set the wait handle to the non-signaled state.
+				this.waitAsync.Reset();
+			}
+
+			return operation;
+		}
+
+		/// <summary>
+		/// Removes an asynchronous web operation.
+		/// </summary>
+		/// <param name="operation">The asynchronous operation.</param>
+		internal void EndAsyncOperation(AsyncWebOperation operation)
+		{
+			lock (this.sync)
+			{
+				// Remove the operation.
+				this.asyncOperations.Remove(operation);
+
+				// If the operations list is empty.
+				if (this.asyncOperations.Count == 0)
+				{
+					// Set the wait handle to the signaled state.
+					this.waitAsync.Set();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Adds the specified PlanetLab node to the pending state.
+		/// </summary>
+		/// <param name="node">The PlanetLab node.</param>
+		internal void AddNode(PlNode node)
+		{
+			lock (this.sync)
+			{
+				// Create a new state for this node.
+				PlManagerNodeState nodeState = new PlManagerNodeState(node);
+				// Add the node to the nodes state list.
+				this.nodeStates.Add(nodeState);
+				// Add the state index to the list of pending nodes.
+				this.pendingNodes.Add(this.nodeStates.Count - 1);
+			}
+		}
+
+		/// <summary>
+		/// Gets the state for the PlanetLab node at the specified index.
+		/// </summary>
+		/// <param name="index">The node index.</param>
+		/// <returns>The PlanetLab node state.</returns>
+		internal PlManagerNodeState GetNode(int index)
+		{
+			lock (this.sync)
+			{
+				return this.nodeStates[index];
+			}
+		}
+
+		/// <summary>
+		/// Updates the specified node from the pending to the running state.
+		/// </summary>
+		/// <param name="index">The node index.</param>
+		internal void UpdateNodePendingToRunning(int index)
+		{
+			lock (this.sync)
+			{
+				// If the running list is empty.
+				if (this.runningNodes.Count == 0)
+				{
+					// Reset the nodes wait handle.
+					this.waitNodes.Reset();
+				}
+
+				// Remove the node from the pending list.
+				if (!this.pendingNodes.Remove(index)) throw new InvalidOperationException("PlanetLab manager internal error: node not found in the pending list.");
+				// Add the node to the running list.
+				if (!this.runningNodes.Add(index)) throw new InvalidOperationException("PlanetLab manager internal error: node already exists in the running list.");
+				
+				// Add the corresponding site to the running list.
+				this.runningSites.Add(this.nodeStates[index].Node.SiteId.Value);
+			}
+		}
+
+		/// <summary>
+		/// Updates the specified node from the pending to the skipped state.
+		/// </summary>
+		/// <param name="index">The node index.</param>
+		internal void UpdateNodePendingToSkipped(int index)
+		{
+			lock (this.sync)
+			{
+				// Remove the node from the pending list.
+				if (!this.pendingNodes.Remove(index)) throw new InvalidOperationException("PlanetLab manager internal error: node not found in the pending list.");
+				// Add the node to the running list.
+				if (!this.skippedNodes.Add(index)) throw new InvalidOperationException("PlanetLab manager internal error: node already exists in the skipped list.");
+
+				// Update the wait handle.
+				this.UpdateWaitNodes();
+			}
+		}
+
+		/// <summary>
+		/// Updates the specified node from the running to the completed state.
+		/// </summary>
+		/// <param name="index">The node index.</param>
+		internal void UpdateNodeRunningToCompleted(int index)
+		{
+			lock (this.sync)
+			{
+				// Remove the node from the running list.
+				if (!this.runningNodes.Remove(index)) throw new InvalidOperationException("PlanetLab manager internal error: node not found in the running list.");
+				// Add the node to the completed list.
+				if (!this.completedNodes.Add(index)) throw new InvalidOperationException("PlanetLab manager internal error: node already exists in the completed list.");
+
+				// Remove the corresponding site from the running list.
+				this.runningSites.Remove(this.nodeStates[index].Node.SiteId.Value);
+				// Add the corresponding site to the completed list.
+				this.completedSites.Add(this.nodeStates[index].Node.SiteId.Value);
+
+				// Update the wait handle.
+				this.UpdateWaitNodes();
+			}
+		}
+
+		/// <summary>
+		/// Updates the specified node from the running to the skipped state.
+		/// </summary>
+		/// <param name="index">The node index.</param>
+		internal void UpdateNodeRunningToSkipped(int index)
+		{
+			lock (this.sync)
+			{
+				// Remove the node from the running list.
+				if (!this.runningNodes.Remove(index)) throw new InvalidOperationException("PlanetLab manager internal error: node not found in the running list.");
+				// Add the node to the skipped list.
+				if (!this.skippedNodes.Add(index)) throw new InvalidOperationException("PlanetLab manager internal error: node already exists in the skipped list.");
+
+				// Remove the corresponding site from the running list.
+				this.runningSites.Remove(this.nodeStates[index].Node.SiteId.Value);
+
+				// Update the wait handle.
+				this.UpdateWaitNodes();
+			}
+		}
+
+		/// <summary>
+		/// Indicates whether the specified site has a node in the running state.
+		/// </summary>
+		/// <param name="site">The site identifier.</param>
+		/// <returns><b>True</b> if the site has a node in the running state, <b>false</b> otherwise.</returns>
+		internal bool IsSiteRunning(int site)
+		{
+			lock (this.sync)
+			{
+				return this.runningSites.Contains(site);
+			}
+		}
+
+		/// <summary>
+		/// Indicates whether the specified site has a node in the completed state.
+		/// </summary>
+		/// <param name="site">The site identifier.</param>
+		/// <returns><b>True</b> if the site has a node in the completed state, <b>false</b> otherwise.</returns>
+		internal bool IsSiteCompleted(int site)
+		{
+			lock (this.sync)
+			{
+				return this.completedSites.Contains(site);
+			}
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Updates the status of the nodes wait handle.
+		/// </summary>
+		private void UpdateWaitNodes()
+		{
+			// If the pending and running lists are empty.
+			if ((0 == this.pendingNodes.Count) && (0 == this.runningNodes.Count))
+			{
+				// Set the wait handle to the signaled state.
+				this.waitNodes.Set();
+			}
 		}
 	}
 }

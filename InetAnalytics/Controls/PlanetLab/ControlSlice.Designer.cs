@@ -18,6 +18,8 @@
 			{
 				// Dispose the run option.
 				this.OnDisposeRun();
+				// Dispose the log option.
+				this.OnDisposeLog();
 				// Dispose the nodes.
 				this.OnDisposeNodes();
 				// Remove the slice event handler.
@@ -87,7 +89,7 @@
 			this.buttonProperties = new System.Windows.Forms.ToolStripDropDownButton();
 			this.buttonNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttonSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLogList = new InetAnalytics.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -130,7 +132,7 @@
 			// 
 			// splitContainer.Panel2
 			// 
-			this.splitContainer.Panel2.Controls.Add(this.controlLog);
+			this.splitContainer.Panel2.Controls.Add(this.controlLogList);
 			this.splitContainer.Panel2Border = false;
 			this.splitContainer.Size = new System.Drawing.Size(800, 600);
 			this.splitContainer.SplitterDistance = 425;
@@ -556,17 +558,17 @@
 			this.buttonSiteProperties.Text = "Site properties";
 			this.buttonSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
 			// 
-			// controlLog
+			// controlLogList
 			// 
-			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlLog.Location = new System.Drawing.Point(0, 0);
-			this.controlLog.Name = "controlLog";
-			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
-			this.controlLog.ShowBorder = true;
-			this.controlLog.ShowTitle = true;
-			this.controlLog.Size = new System.Drawing.Size(800, 170);
-			this.controlLog.TabIndex = 0;
-			this.controlLog.Title = "Log";
+			this.controlLogList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLogList.Location = new System.Drawing.Point(0, 0);
+			this.controlLogList.Name = "controlLogList";
+			this.controlLogList.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
+			this.controlLogList.ShowBorder = true;
+			this.controlLogList.ShowTitle = true;
+			this.controlLogList.Size = new System.Drawing.Size(800, 170);
+			this.controlLogList.TabIndex = 0;
+			this.controlLogList.Title = "Log";
 			// 
 			// legendItemSuccess
 			// 
@@ -602,7 +604,7 @@
             this.menuItemNodeProperties,
             this.menuItemSiteProperties});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(160, 120);
+			this.contextMenu.Size = new System.Drawing.Size(160, 98);
 			// 
 			// menuItemConnect
 			// 
@@ -683,7 +685,7 @@
 		private System.Windows.Forms.ToolStripButton buttonCancel;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripSeparator separator1;
-		private Log.ControlLogList controlLog;
+		private Log.ControlLogList controlLogList;
 		private System.Windows.Forms.ToolStripButton buttonRemoveFromNodes;
 		private System.Windows.Forms.ToolStripDropDownButton buttonAddToNodes;
 		private System.Windows.Forms.ContextMenuStrip contextMenuAddToNodes;

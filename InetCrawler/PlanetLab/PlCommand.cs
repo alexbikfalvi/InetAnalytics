@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using DotNetApi;
 
 namespace InetCrawler.PlanetLab
 {
@@ -90,6 +91,13 @@ namespace InetCrawler.PlanetLab
 			set { this.OnSetCommand(value); }
 		}
 		/// <summary>
+		/// Indicates whether the command has parameteres.
+		/// </summary>
+		public bool HasParameters
+		{
+			get { return this.parameters != null; }
+		}
+		/// <summary>
 		/// Gets the parameters count.
 		/// </summary>
 		public int ParametersCount
@@ -140,7 +148,7 @@ namespace InetCrawler.PlanetLab
 		public void ResizeParameters(int parameters, int sets)
 		{
 			// Resize the parameters array.
-			this.parameters = new string[parameters, sets];
+			this.parameters = (parameters > 0) && (sets > 0) ? new object[parameters, sets] : null;
 			// Raise the command changed event.
 			if (null != this.Changed) this.Changed(this, new PlCommandEventArgs(this));
 		}
@@ -225,6 +233,24 @@ namespace InetCrawler.PlanetLab
 				}
 			}
 			else this.parameters = null;
+		}
+
+		/// <summary>
+		/// Gets the command formatted with the specified parameter set.
+		/// </summary>
+		/// <param name="set">The parameter set.</param>
+		/// <returns>The formatted command.</returns>
+		public string GetCommand(int set)
+		{
+			// Create the list of parameters.
+			object[] param = new object[this.ParametersCount];
+			// Add the parameters.
+			for (int index = 0; index < this.ParametersCount; index++)
+			{
+				param[index] = this.parameters[index, set];
+			}
+			// Return the formatted command.
+			return this.command.FormatWith(param);
 		}
 
 		// Private methods.

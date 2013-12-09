@@ -17,58 +17,49 @@
  */
 
 using System;
-using System.Threading;
-using PlanetLab.Api;
+using Renci.SshNet;
 
 namespace InetCrawler.PlanetLab
 {
 	/// <summary>
-	/// A class representing the state of command execution on a PlanetLab node.
+	/// A class representing the state for a PlanetLab command.
 	/// </summary>
-	internal sealed class PlManagerNodeState
+	public sealed class PlManagerCommandState
 	{
-		private readonly PlNode node;
-
 		/// <summary>
-		/// Creates a new node state instance.
+		/// Creates a new command state instance.
 		/// </summary>
-		/// <param name="node">The PlanetLab node.</param>
-		internal PlManagerNodeState(PlNode node)
+		/// <param name="command">The secure shell command.</param>
+		public PlManagerCommandState(SshCommand command)
 		{
-			this.node = node;
-
-			this.CommandIndex = 0;
-			this.ParameterIndex = 0;
-			this.SuccessCount = 0;
-			this.WarningCount = 0;
-			this.FailureCount = 0;
+			this.Command = command.CommandText;
+			this.Timeout = command.CommandTimeout;
+			this.ExitStatus = command.ExitStatus;
+			this.Result = command.Result;
+			this.Error = command.Error;
 		}
 
-		// Internal properties.
+		// Public properties.
 
 		/// <summary>
-		/// Gets the PlanetLab node.
+		/// Gets the command text.
 		/// </summary>
-		internal PlNode Node { get { return this.node; } }
+		public string Command { get; private set; }
 		/// <summary>
-		/// Gets the current command index.
+		/// Gets the command timeout.
 		/// </summary>
-		internal int CommandIndex { get; set; }
+		public TimeSpan Timeout { get; private set; }
 		/// <summary>
-		/// Gets the current parameter set index.
+		/// Gets the command exit status.
 		/// </summary>
-		internal int ParameterIndex { get; set; }
+		public int ExitStatus { get; private set; }
 		/// <summary>
-		/// Gets the success count.
+		/// Gets the command result.
 		/// </summary>
-		internal int SuccessCount { get; set; }
+		public string Result { get; private set; }
 		/// <summary>
-		/// Gets the warning count.
+		/// Gets the command error.
 		/// </summary>
-		internal int WarningCount { get; set; }
-		/// <summary>
-		/// Gets the failure count.
-		/// </summary>
-		internal int FailureCount { get; set; }
+		public string Error { get; private set; }
 	}
 }

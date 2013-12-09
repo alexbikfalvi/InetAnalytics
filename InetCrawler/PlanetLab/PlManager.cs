@@ -18,6 +18,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using DotNetApi;
@@ -105,13 +107,45 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		public event PlManagerEventHandler NodesUpdateCanceled;
 		/// <summary>
-		/// An event raised when indicating whether a node is enabled to execute commands.
+		/// An event raised when a node is enabled to execute commands.
 		/// </summary>
 		public event PlManagerNodeEventHandler NodeEnabled;
 		/// <summary>
-		/// An event raised when indicating whether a node is disabled to execute commands.
+		/// An event raised when a node is disabled to execute commands.
 		/// </summary>
 		public event PlManagerNodeEventHandler NodeDisabled;
+		/// <summary>
+		/// An event raised when a node has been skipped to execute commands.
+		/// </summary>
+		public event PlManagerNodeEventHandler NodeSkipped;
+		/// <summary>
+		/// An event raised when a node started executing commands.
+		/// </summary>
+		public event PlManagerNodeEventHandler NodeRunning;
+		/// <summary>
+		/// An event raised when a node was canceled in executing commands.
+		/// </summary>
+		public event PlManagerNodeEventHandler NodeCanceled;
+		/// <summary>
+		/// An event raised when a node completed executing the commands with success.
+		/// </summary>
+		public event PlManagerNodeEventHandler NodeCompletedSuccess;
+		/// <summary>
+		/// An event raised when a node completed executing the commands with failure.
+		/// </summary>
+		public event PlManagerNodeEventHandler NodeCompletedFail;
+		/// <summary>
+		/// An event raised when a command was started on a PlanetLab node.
+		/// </summary>
+		public event PlManagerCommandEventHandler CommandStarted;
+		/// <summary>
+		/// An event raised when a command completed with success on a PlanetLab node.
+		/// </summary>
+		public event PlManagerCommandEventHandler CommandCompletedSuccess;
+		/// <summary>
+		/// An event raised when a command completed with failure on a PlanetLab node.
+		/// </summary>
+		public event PlManagerCommandEventHandler CommandCompletedFail;
 
 		// Public methods.
 
@@ -151,13 +185,17 @@ namespace InetCrawler.PlanetLab
 			else
 			{
 				// Execute the commands.
-				this.OnExecuteCommands(state);
+				this.OnRunNodes(state);
 			}
 
 			// Return the manager state.
 			return state;
 		}
 
+		/// <summary>
+		/// Pauses the execution of the PlanetLab commands.
+		/// </summary>
+		/// <param name="state">The manager state.</param>
 		public void Pause(PlManagerState state)
 		{
 			lock (state.Sync)
@@ -186,6 +224,10 @@ namespace InetCrawler.PlanetLab
 			}
 		}
 
+		/// <summary>
+		/// Resumes the execution of PlanetLab commands.
+		/// </summary>
+		/// <param name="state">The manager state.</param>
 		public void Resume(PlManagerState state)
 		{
 			lock (state.Sync)
@@ -214,6 +256,10 @@ namespace InetCrawler.PlanetLab
 			}
 		}
 
+		/// <summary>
+		/// Stops the execution of PlanetLab commands.
+		/// </summary>
+		/// <param name="state">The manager state.</param>
 		public void Stop(PlManagerState state)
 		{
 			lock (state.Sync)
@@ -245,79 +291,47 @@ namespace InetCrawler.PlanetLab
 
 		// Private methods.
 
+		/// <summary>
+		/// Tries to pause the execution of PlanetLab commands.
+		/// </summary>
+		/// <param name="state">The manager state.</param>
+		/// <param name="action">The action to take after the execution was paused.</param>
 		private void TryPause(PlManagerState state, Action action)
 		{
-			// Reset the pause wait handle.
-			state.PauseWait.Reset();
-			lock (state.Sync)
-			{
-				// Set the paused state to true.
-				state.IsPaused = true;
-			}
+			// Pause the execution through the manager state.
+			state.Pause();
 			// Execute the action.
 			action();
 		}
 
+		/// <summary>
+		/// Tries to resume the execution of PlanetLab commands.
+		/// </summary>
+		/// <param name="state">The manager state/</param>
+		/// <param name="action">The action to take after the execution was resumed.</param>
 		private void TryResume(PlManagerState state, Action action)
 		{
-			lock (state.Sync)
-			{
-				// Set the paused state to false.
-				state.IsPaused = false;
-			}
-			// Signal the pause wait handle.
-			state.PauseWait.Set();
+			// Resume the execution through the manager state.
+			state.Resume();
 			// Execute the action.
 			action();
 		}
 
+		/// <summary>
+		/// Tries to stop the execution of PlanetLab commands.
+		/// </summary>
+		/// <param name="state">The manager state.</param>
+		/// <param name="action">The action to take after execution was stopped.</param>
 		private void TryStop(PlManagerState state, Action action)
 		{
 			// Execute on the thread pool.
 			ThreadPool.QueueUserWorkItem((object threadState) =>
 				{
-					// A copy of the current pending nodes.
-					PlManagerNodeState[] pendingNodes;
+					// Stop the manager execution.
+					state.Stop();
 
-					lock (state.Sync)
-					{
-						// Set the state to cancel.
-						state.IsCanceled = true;
-
-						// If there is a PlanetLab request in progress.
-						if (state.PlanetLabAsyncResult != null)
-						{
-							// Cancel the request.
-							this.requestGetNodes.Cancel(state.PlanetLabAsyncResult);
-							// Wait for the request to complete.
-							state.PlanetLabAsyncResult.AsyncWaitHandle.WaitOne();
-						}
-
-						// Create a copy of current pending nodes.
-						pendingNodes = new PlManagerNodeState[state.PendingNodes.Count];
-						state.PendingNodes.CopyTo(pendingNodes);
-					}
-
-					// For all the pending nodes.
-					foreach (PlManagerNodeState nodeState in pendingNodes)
-					{
-						lock (nodeState.Sync)
-						{
-							// If the node is not running, skip to the next node.
-							if (nodeState.State != PlManagerNodeState.NodeState.Running) continue;
-						}
-						// Otherwise, wait for the node to complete.
-						nodeState.Wait.WaitOne();
-					}
-
-					lock (state.Sync)
-					{
-						// Dispose the node states.
-						foreach (PlManagerNodeState nodeState in state.PendingNodes)
-						{
-							nodeState.Dispose();
-						}
-					}
+					// Wait for the manager execution to complete.
+					state.Wait();
 
 					// Execute the action.
 					action();
@@ -342,8 +356,11 @@ namespace InetCrawler.PlanetLab
 				// Raise an event.
 				if (null != this.NodesUpdateStarted) this.NodesUpdateStarted(this, new PlManagerEventArgs(state));
 
+				// The asynchronous operation.
+				AsyncWebOperation asyncOperation = new AsyncWebOperation();
+
 				// Begin an asynchronous request for the PlanetLab nodes information.
-				state.PlanetLabAsyncResult = this.requestGetNodes.Begin(
+				asyncOperation = state.BeginAsyncOperation(this.requestGetNodes, this.requestGetNodes.Begin(
 					this.crawler.PlanetLab.Username,
 					this.crawler.PlanetLab.Password,
 					PlNode.GetFilter(PlNode.Fields.NodeId, nodes.ToArray()),
@@ -417,17 +434,14 @@ namespace InetCrawler.PlanetLab
 						}
 						finally
 						{
-							lock (state.Sync)
-							{
-								// Set the PlanetLab asynchronous result to null.
-								state.PlanetLabAsyncResult = null;
-							}
+							// End the asynchronous operation.
+							state.EndAsyncOperation(asyncOperation);
 
 							// If the operation was successful.
 							if (success)
 							{
 								// Execute the commands.
-								this.OnExecuteCommands(state);
+								this.OnRunNodes(state);
 							}
 							else
 							{
@@ -435,26 +449,26 @@ namespace InetCrawler.PlanetLab
 								this.Stop(state);
 							}
 						}
-					});
+					}));
 			}
 		}
 
 		/// <summary>
-		/// Executes the commands on the PlanetLab nodes.
+		/// Runs the commands on the PlanetLab nodes.
 		/// </summary>
 		/// <param name="state">The manager state.</param>
-		private void OnExecuteCommands(PlManagerState state)
+		private void OnRunNodes(PlManagerState state)
 		{
 			lock (state.Sync)
 			{
-				// If the command has been canceled, return.
-				if (state.IsCanceled) return;
+				// If the command has been stopped, return.
+				if (state.IsStopped) return;
 
 				// Compute the number of commands to execute.
 				int commandCount = 0;
 				foreach (PlCommand command in state.Slice.Commands)
 				{
-					commandCount += command.SetsCount;
+					commandCount += command.HasParameters ? command.SetsCount : 1;
 				}
 
 				// Create a list of the pending nodes.
@@ -472,63 +486,255 @@ namespace InetCrawler.PlanetLab
 					// Raise a node enabled event.
 					if (null != this.NodeEnabled) this.NodeEnabled(this, new PlManagerNodeEventArgs(state, node, commandCount));
 					
-					// Create a new node state information for this node.
-					PlManagerNodeState nodeState = new PlManagerNodeState(node);
+					// Add the node to the list of pending nodes.
+					state.AddNode(node);
+				}
+			}
 
-					// Add the node state to the list of pending nodes.
-					state.PendingNodes.Add(nodeState);
+			// Compute the availability of worker threads for parallel processing.
+			int availableWorkerThreads;
+			int availableCompletionPortThreads;
+			int maxWorkerThreads;
+			int maxCompletionPortThreads;
+			int maxParallel = Math.Max(state.Slice.RunParallelNodes, state.PendingCount);
+
+			// Get the number of threads available on the thread pool.
+			ThreadPool.GetAvailableThreads(out availableWorkerThreads, out availableCompletionPortThreads);
+			// Get the maximum number of threads on the thread pool.
+			ThreadPool.GetMaxThreads(out maxWorkerThreads, out maxCompletionPortThreads);
+
+			// If the number of available worker threads is smaller than the number of parallel nodes.
+			if (availableWorkerThreads < maxParallel)
+			{
+				// Increment the number of maximum threads.
+				ThreadPool.SetMaxThreads(
+					maxWorkerThreads + maxParallel - availableWorkerThreads,
+					maxCompletionPortThreads
+					);
+			}
+
+			lock (state.Sync)
+			{
+				// If the list of pending nodes is empty, stop.
+				if (0 == state.PendingCount)
+				{
+					this.Stop(state);
 				}
 
-				// Begin run the commands on the pending nodes.
-				for (int index = 0; (index < state.Slice.RunParallelNodes) && (index < state.PendingNodes.Count); index++)
+				// Get a cached copy of all the pending PlanetLab nodes.
+				int[] pendingCache = state.PendingNodes.ToArray();
+
+				// For all the pending nodes.
+				for (int index = 0; (index < pendingCache.Length) && (state.RunningCount < state.Slice.RunParallelNodes); index++)
 				{
-					// Execute the command on the specified node.
-					this.OnExecuteCommandsNode(state, index);
+					// Get the node state corresponding to the pending node.
+					PlManagerNodeState nodeState = state.GetNode(pendingCache[index]);
+
+					// If the slice configuration only allows one node per site.
+					if (state.Slice.OnlyRunOneNodePerSite)
+					{
+						// If the node site is completed.
+						if (state.IsSiteCompleted(nodeState.Node.SiteId.Value))
+						{
+							// Change the node from the pending to the skipped state.
+							state.UpdateNodePendingToSkipped(index);
+							// Raise an event indicating that the node has been skipped.
+							if (null != this.NodeSkipped) this.NodeSkipped(this, new PlManagerNodeEventArgs(state, nodeState.Node));
+							// Skip the loop to the next node.
+							continue;
+						}
+						// If the node site is running.
+						if (state.IsSiteRunning(nodeState.Node.SiteId.Value))
+						{
+							// Postpone the node for later, and skip the loop to the next node.
+							continue;
+						}
+					}
+
+					// Change the node from the pending to the running state.
+					state.UpdateNodePendingToRunning(index);
+
+					// Execute the commands on specified node.
+					this.OnRunNode(state, index);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Executes the commands on the PlanetLab node at the specified index.
+		/// Runs the commands on the PlanetLab node at the specified index.
 		/// </summary>
 		/// <param name="state">The state.</param>
 		/// <param name="index">The node state index.</param>
-		private void OnExecuteCommandsNode(PlManagerState state, int index)
+		private void OnRunNode(PlManagerState state, int index)
 		{
 			lock (state.Sync)
 			{
 				// If the operation has been canceled, return.
-				if (state.IsCanceled) return;
+				if (state.IsStopped) return;
 
 				// Get the node state.
-				PlManagerNodeState nodeState = state.PendingNodes[index];
+				PlManagerNodeState nodeState = state.GetNode(index);
 				
 				// Execute the secure shell connection on the thread pool.
 				ThreadPool.QueueUserWorkItem((object threadState) =>
 					{
-						lock (nodeState.Sync)
-						{
-							// If the operation has been canceled, return.
-							if (state.IsCanceled) return;
-							// Else, set the state to running.
-							nodeState.State = PlManagerNodeState.NodeState.Running;
-						}
-
 						try
 						{
-							// Execute the node.
+							// Create the private key connection information.
+							ConnectionInfo connectionInfo;
+							// Create a memory stream with the key data.
+							using (MemoryStream memoryStream = new MemoryStream(state.Slice.Key))
+							{
+								// Create the private key file.
+								using (PrivateKeyFile keyFile = new PrivateKeyFile(memoryStream))
+								{
+									// Create a key connection info.
+									connectionInfo = new PrivateKeyConnectionInfo(nodeState.Node.Hostname, state.Slice.Name, keyFile);
+								}
+							}							
+
+							// Open an SSH client to the PlanetLab node.
+							using (SshClient sshClient = new SshClient(connectionInfo))
+							{
+								// Connect the client.
+								sshClient.Connect();
+
+								// For all the slice commands.
+								foreach (PlCommand command in state.Slice.Commands)
+								{
+									// If the command has parameters.
+									if (command.HasParameters)
+									{
+										// Format the command with all parameter sets.
+										for (int indexSet = 0; indexSet < command.SetsCount; index++)
+										{
+											// If the operation has been canceled, return.
+											if (state.IsStopped)
+											{
+												// Raise the canceled event.
+												if (null != this.NodeCanceled) this.NodeCanceled(this, new PlManagerNodeEventArgs(state, nodeState.Node));
+												// Return.
+												return;
+											}
+
+											// Run the command with the current parameters set.
+											this.OnRunCommand(state, nodeState, command, indexSet, sshClient);
+										}
+									}
+									else
+									{
+										// Run the command without parameters.
+										this.OnRunCommand(state, nodeState, command, -1, sshClient);
+									}
+								}
+
+								// Disconnect the client.
+								sshClient.Disconnect();
+							}
+
+							// Remove the node from the running list.
+							state.UpdateNodeRunningToCompleted(index);
+
+							// Raise the success event.
+							if (null != this.NodeCompletedSuccess) this.NodeCompletedSuccess(this, new PlManagerNodeEventArgs(state, nodeState.Node));
+						}
+						catch (Exception exception)
+						{
+							// Remove the node from the running list.
+							state.UpdateNodeRunningToSkipped(index);
+
+							// Raise the fail event.
+							if (null != this.NodeCompletedFail) this.NodeCompletedFail(this, new PlManagerNodeEventArgs(state, nodeState.Node, exception));
 						}
 						finally
 						{
-							// Set the state to completed.
-							lock (nodeState.Sync)
+							lock (state.Sync)
 							{
-								nodeState.State = PlManagerNodeState.NodeState.Completed;
+								// If the list of pending nodes is empty, stop.
+								if (0 == state.PendingCount)
+								{
+									this.Stop(state);
+								}
+
+								// Get a cached copy of all the pending PlanetLab nodes.
+								int[] pendingCache = state.PendingNodes.ToArray();
+
+								// Find the next pending node to execute commands.
+								foreach (int newIndex in pendingCache)
+								{
+									// Get the node state corresponding to the pending node.
+									PlManagerNodeState newNode = state.GetNode(newIndex);
+
+									// If the slice configuration only allows one node per site.
+									if (state.Slice.OnlyRunOneNodePerSite)
+									{
+										// If the node site is completed.
+										if (state.IsSiteCompleted(newNode.Node.SiteId.Value))
+										{
+											// Change the node from the pending to the skipped state.
+											state.UpdateNodePendingToSkipped(newIndex);
+											// Raise an event indicating that the node has been skipped.
+											if (null != this.NodeSkipped) this.NodeSkipped(this, new PlManagerNodeEventArgs(state, newNode.Node));
+											// Skip the loop to the next node.
+											continue;
+										}
+										// If the node site is running.
+										if (state.IsSiteRunning(newNode.Node.SiteId.Value))
+										{
+											// Postpone the node for later, and skip the loop to the next node.
+											continue;
+										}
+									}
+
+									// Change the node from the pending to the running state.
+									state.UpdateNodePendingToRunning(newIndex);
+
+									// Execute the commands on specified node.
+									this.OnRunNode(state, newIndex);
+
+									// Exit the loop.
+									break;
+								}
 							}
-							// Signal the wait handle.
-							nodeState.Wait.Set();
 						}
 					});
+			}
+		}
+
+		/// <summary>
+		/// Runs a command on the specified PlanetLab node.
+		/// </summary>
+		/// <param name="state">The manager state.</param>
+		/// <param name="node">The PlanetLab node state.</param>
+		/// <param name="command">The PlanetLab command.</param>
+		/// <param name="set">The command parameter set.</param>
+		/// <param name="sshClient">The SSH client.</param>
+		private void OnRunCommand(PlManagerState state, PlManagerNodeState node, PlCommand command, int set, SshClient sshClient)
+		{
+			// Raise the command started event.
+			if (null != this.CommandStarted) this.CommandStarted(this, new PlManagerCommandEventArgs(state, node.Node, command, set));
+			try
+			{
+				// Compute the command text.
+				string commandText = set >= 0 ? command.GetCommand(set) : command.Command;
+
+				// Create a new command.
+				using (SshCommand sshCommand = sshClient.CreateCommand(commandText))
+				{
+					// Execute the command.
+					sshCommand.Execute();
+
+					// Create a new command state.
+					PlManagerCommandState commandState = new PlManagerCommandState(sshCommand);
+
+					// Raise a command completed event.
+					if (null != this.CommandCompletedSuccess) this.CommandCompletedSuccess(this, new PlManagerCommandEventArgs(state, node.Node, command, set, commandState));
+				}
+			}
+			catch (Exception exception)
+			{
+				// Raise a command completed event.
+				if (null != this.CommandCompletedFail) this.CommandCompletedFail(this, new PlManagerCommandEventArgs(state, node.Node, command, set, exception));
 			}
 		}
 	}

@@ -86,7 +86,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		// Private variables.
 
-		private static readonly string logSource = @"PlanetLab\Slice({0})\Run";
+		private static readonly string logSource = @"PlanetLab\Slice({0})";
 
 		private Crawler crawler = null;
 		private CrawlerStatusHandler status = null;
@@ -173,6 +173,10 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			this.manager.NodeEnabled += this.OnNodeEnabled;
 			this.manager.NodeDisabled += this.OnNodeDisabled;
+			this.manager.NodeSkipped += this.OnNodeSkipped;
+			this.manager.NodeRunning += this.OnNodeRunning;
+			this.manager.NodeCompletedSuccess += this.OnNodeCompletedSuccess;
+			this.manager.NodeCompletedFail += this.OnNodeCompletedFail;
 
 			// Set the tree node.
 			this.treeNode = treeNode;
@@ -1359,7 +1363,7 @@ namespace InetAnalytics.Controls.PlanetLab
 							// Show an error message.
 							MessageBox.Show(this, "Cannot start the PlanetLab commands because the information on PlanetLab node {0} is missing. Refresh the slice information and try again.", "Cannot Execute PlanetLab Commands".FormatWith(info.NodeId), MessageBoxButtons.OK, MessageBoxIcon.Error);
 							// Log an event.
-							this.controlLog.Add(this.crawler.Log.Add(
+							this.controlLog.Add(this.config.Log.Add(
 								LogEventLevel.Important,
 								LogEventType.Error,
 								ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1397,7 +1401,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					catch (Exception exception)
 					{
 						// Log an event.
-						this.controlLog.Add(this.crawler.Log.Add(
+						this.controlLog.Add(this.config.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
 							ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1416,7 +1420,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					catch (Exception exception)
 					{
 						// Log an event.
-						this.controlLog.Add(this.crawler.Log.Add(
+						this.controlLog.Add(this.config.Log.Add(
 							LogEventLevel.Important,
 							LogEventType.Error,
 							ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1443,7 +1447,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show an error message.
 					MessageBox.Show(this, "Cannot pause the PlanetLab commands because there is no run in progress.", "Cannot Pause PlanetLab Commands", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					// Log an event.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1460,7 +1464,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				catch (Exception exception)
 				{
 					// Log an event.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1486,7 +1490,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show an error message.
 					MessageBox.Show(this, "Cannot stop the PlanetLab commands because there is no run in progress.", "Cannot Stop PlanetLab Commands", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					// Log an event.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1503,7 +1507,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				catch (Exception exception)
 				{
 					// Log an event.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1533,7 +1537,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Show the progress dialog.
 			this.progress.Show(Resources.GlobeClock_48, "Starting the PlanetLab commands...");
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLog.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1558,7 +1562,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show the progress dialog.
 					this.progress.Show(Resources.GlobePlayStart_48, "Running the PlanetLab commands.", false);
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Success,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1582,7 +1586,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show the progress dialog.
 					this.progress.Show(Resources.GlobeClock_48, "Pausing the PlanetLab commands...");
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Information,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1607,7 +1611,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show the progress dialog.
 					this.progress.Show(Resources.GlobePlayPause_48, "The PlanetLab commands paused.", false);
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Success,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1632,7 +1636,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show the progress dialog.
 					this.progress.Show(Resources.GlobeClock_48, "Resuming the PlanetLab commands...");
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Information,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1657,7 +1661,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show the progress dialog.
 					this.progress.Show(Resources.GlobePlayStart_48, "The PlanetLab commands running.", false);
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Success,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1683,7 +1687,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Show the progress dialog.
 					this.progress.Show(Resources.GlobeClock_48, "Stopping the PlanetLab commands...");
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Information,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1711,7 +1715,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				// Show the progress dialog.
 				this.progress.Show(Resources.GlobePlayStop_48, "The PlanetLab commands stopped.", false);
 				// Log.
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLog.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Success,
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1738,7 +1742,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Show the progress.
 			this.progress.Show(Resources.GlobeClock_48, "Updating the information for the selected PlanetLab nodes.");
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLog.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1755,7 +1759,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Show the progress.
 			this.progress.Show(Resources.GlobeCanceled_48, "Updating the information for the selected PlanetLab nodes was canceled.", false);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLog.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Canceled,
 				ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1772,7 +1776,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Show the progress.
 			this.progress.Show(Resources.GlobeSuccess_48, "Updating the information for the selected PlanetLab nodes completed successfully.", false);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLog.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Success,
 				ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1792,7 +1796,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			if (e.Exception != null)
 			{
 				// Log.
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLog.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Information,
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1803,7 +1807,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			else if (string.IsNullOrWhiteSpace(e.Message))
 			{
 				// Log.
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLog.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Information,
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
@@ -1832,6 +1836,13 @@ namespace InetAnalytics.Controls.PlanetLab
 						item.Progress.Count = e.Count;
 						item.Enabled = true;
 					}
+					// Log an event.
+					this.controlLog.Add(this.config.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab node {0} ({1}) is enabled for running commands.",
+						new object[] { e.Node.Id, e.Node.Hostname }));
 				});
 		}
 
@@ -1855,7 +1866,91 @@ namespace InetAnalytics.Controls.PlanetLab
 						item.Subtext = "Not in boot state";
 						item.Enabled = false;
 					}
+					// Log an event.
+					this.controlLog.Add(this.config.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Warning,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab node {0} ({1}) is disabled for running commands because it is not in the boot state.",
+						new object[] { e.Node.Id, e.Node.Hostname }));
 				});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node is skipped.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeSkipped(object sender, PlManagerNodeEventArgs e)
+		{
+			this.Invoke(() =>
+				{
+					// Log an event.
+					this.controlLog.Add(this.config.Log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						ControlSliceRun.logSource.FormatWith(this.slice.Id),
+						"The PlanetLab node {0} ({1}) has been skipped for running commands because a previous node in the same slice was successful.",
+						new object[] { e.Node.Id, e.Node.Hostname }));
+				});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node is running commands.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeRunning(object sender, PlManagerNodeEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Log an event.
+				this.controlLog.Add(this.config.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Information,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab node {0} ({1}) started running the PlanetLab commands.",
+					new object[] { e.Node.Id, e.Node.Hostname }));
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node completed the commands successfully.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeCompletedSuccess(object sender, PlManagerNodeEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Log an event.
+				this.controlLog.Add(this.config.Log.Add(
+					LogEventLevel.Verbose,
+					LogEventType.Success,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab node {0} ({1}) completed running the PlanetLab commands successfully.",
+					new object[] { e.Node.Id, e.Node.Hostname }));
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when a PlanetLab node failed in executing the commands.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNodeCompletedFail(object sender, PlManagerNodeEventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Log an event.
+				this.controlLog.Add(this.config.Log.Add(
+					LogEventLevel.Normal,
+					LogEventType.Error,
+					ControlSliceRun.logSource.FormatWith(this.slice.Id),
+					"The PlanetLab node {0} ({1}) failed while running the PlanetLab commands. {2}",
+					new object[] { e.Node.Id, e.Node.Hostname, e.Exception.Message },
+					e.Exception));
+			});
 		}
 	}
 }

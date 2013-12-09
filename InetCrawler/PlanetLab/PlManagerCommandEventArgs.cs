@@ -22,26 +22,30 @@ using PlanetLab.Api;
 namespace InetCrawler.PlanetLab
 {
 	/// <summary>
-	/// A delegate for the PlanetLab manager node event handlers.
+	/// A delegate for the PlanetLab manager command event handlers.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void PlManagerNodeEventHandler(object sender, PlManagerNodeEventArgs e);
+	public delegate void PlManagerCommandEventHandler(object sender, PlManagerCommandEventArgs e);
 
 	/// <summary>
-	/// A class representing the PlanetLab manager node event arguments.
+	/// A class representing the PlanetLab manager command event arguments.
 	/// </summary>
-	public class PlManagerNodeEventArgs : EventArgs
+	public class PlManagerCommandEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Creates a new PlanetLab manager node event arguments instance.
 		/// </summary>
 		/// <param name="state">The manager state.</param>
 		/// <param name="node">The PlanetLab node.</param>
-		public PlManagerNodeEventArgs(PlManagerState state, PlNode node)
+		/// <param name="command">The PlanetLab command.</param>
+		/// <param name="set">The PlanetLab command parameter set.</param>
+		public PlManagerCommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set)
 		{
 			this.State = state;
 			this.Node = node;
+			this.Command = command;
+			this.Set = set;
 		}
 
 		/// <summary>
@@ -49,24 +53,32 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		/// <param name="state">The manager state.</param>
 		/// <param name="node">The PlanetLab node.</param>
-		/// <param name="count">The number of commands to execute on the PlanetLab node.</param>
-		public PlManagerNodeEventArgs(PlManagerState state, PlNode node, int count)
+		/// <param name="command">The PlanetLab command.</param>
+		/// <param name="set">The PlanetLab command parameter set.</param>
+		/// <param name="result">The command result.</param>
+		public PlManagerCommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set, PlManagerCommandState result)
 		{
 			this.State = state;
 			this.Node = node;
-			this.Count = count;
+			this.Command = command;
+			this.Set = set;
+			this.Result = result;
 		}
-		
+
 		/// <summary>
 		/// Creates a new PlanetLab manager node event arguments instance.
 		/// </summary>
 		/// <param name="state">The manager state.</param>
 		/// <param name="node">The PlanetLab node.</param>
-		/// <param name="exception">The exception.</param>
-		public PlManagerNodeEventArgs(PlManagerState state, PlNode node, Exception exception)
+		/// <param name="command">The PlanetLab command.</param>
+		/// <param name="set">The PlanetLab command parameter set.</param>
+		/// <param name="exception">The command exception.</param>
+		public PlManagerCommandEventArgs(PlManagerState state, PlNode node, PlCommand command, int set, Exception exception)
 		{
 			this.State = state;
 			this.Node = node;
+			this.Command = command;
+			this.Set = set;
 			this.Exception = exception;
 		}
 
@@ -81,11 +93,19 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		public PlNode Node { get; private set; }
 		/// <summary>
-		/// The number of commands to execute on the PlanetLab node.
+		/// The PlanetLab command.
 		/// </summary>
-		public int Count { get; private set; }
+		public PlCommand Command { get; private set; }
 		/// <summary>
-		/// Gets the exception that occurred for the PlanetLab node.
+		/// The PlanetLab command parameter set.
+		/// </summary>
+		public int Set { get; private set; }
+		/// <summary>
+		/// The command result.
+		/// </summary>
+		public PlManagerCommandState Result { get; private set; }
+		/// <summary>
+		/// The exception that occurred during the execution of the PlanetLab command.
 		/// </summary>
 		public Exception Exception { get; private set; }
 	}

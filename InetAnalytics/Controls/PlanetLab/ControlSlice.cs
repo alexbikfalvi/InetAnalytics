@@ -30,6 +30,7 @@ using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Requests;
 using InetAnalytics.Controls.Net.Ssh;
+using InetAnalytics.Controls.Log;
 using InetAnalytics.Events;
 using InetAnalytics.Forms;
 using InetAnalytics.Forms.PlanetLab;
@@ -153,9 +154,11 @@ namespace InetAnalytics.Controls.PlanetLab
 		private Control.ControlCollection controls = null;
 
 		private readonly ControlSliceRun controlRun = new ControlSliceRun();
+		private readonly ControlLog controlLog = new ControlLog();
 
 		private TreeNode treeNodeSlice = null;
 		private TreeNode treeNodeRun = null;
+		private TreeNode treeNodeLog = null;
 
 		private readonly object pendingSync = new object();
 		private readonly List<int> pendingNodes = new List<int>();
@@ -245,6 +248,9 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Create the run option.
 			this.OnCreateRun();
+
+			// Create the log option.
+			this.OnCreateLog();
 		}
 
 		// Protected methods.
@@ -693,7 +699,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(CrawlerStatus.StatusType.Busy, "Refreshing the slice information...", Resources.GlobeClock_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -743,7 +749,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						// Update the current slice.
 						this.slice.Parse(slices.Values[0].Value as XmlRpcStruct);
 						// Log
-						this.controlLog.Add(this.crawler.Log.Add(
+						this.controlLogList.Add(this.config.Log.Add(
 							LogEventLevel.Verbose,
 							LogEventType.Success,
 							ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -759,7 +765,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			if (null == response.Fault)
 			{
 				// Log
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLogList.Add(this.config.Log.Add(
 					LogEventLevel.Important,
 					LogEventType.Error,
 					ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -768,7 +774,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			else
 			{
 				// Log
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLogList.Add(this.config.Log.Add(
 					LogEventLevel.Important,
 					LogEventType.Error,
 					ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -786,7 +792,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information was canceled.", Resources.GlobeCanceled_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Canceled,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -804,7 +810,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Update the status.
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information failed.", Resources.GlobeError_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Important,
 				LogEventType.Error,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -831,7 +837,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
 				// Log.
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLogList.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Information,
 					ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -886,7 +892,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						Resources.GlobeLab_16,
 						Resources.GlobeError_16);
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -983,7 +989,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					Resources.GlobeLab_16,
 					Resources.GlobeSuccess_16);
 				// Log
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLogList.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Success,
 					ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1001,7 +1007,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				if (null == response.Fault)
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1010,7 +1016,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				else
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1034,7 +1040,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Canceled,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1057,7 +1063,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Important,
 				LogEventType.Error,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1100,7 +1106,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
 				// Log.
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLogList.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Information,
 					ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1155,7 +1161,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						Resources.GlobeLab_16,
 						Resources.GlobeError_16);
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1222,7 +1228,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					Resources.GlobeLab_16,
 					Resources.GlobeSuccess_16);
 				// Log
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLogList.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Success,
 					ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1240,7 +1246,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				if (null == response.Fault)
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1249,7 +1255,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				else
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1273,7 +1279,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Canceled,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1296,7 +1302,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Important,
 				LogEventType.Error,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1392,7 +1398,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeClock_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1441,7 +1447,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Success,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1467,7 +1473,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1487,7 +1493,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				if (null == response.Fault)
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1497,7 +1503,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				else
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1523,7 +1529,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Canceled,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1548,7 +1554,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Important,
 				LogEventType.Error,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1614,7 +1620,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					Resources.GlobeLab_16,
 					Resources.GlobeClock_16);
 				// Log.
-				this.controlLog.Add(this.crawler.Log.Add(
+				this.controlLogList.Add(this.config.Log.Add(
 					LogEventLevel.Verbose,
 					LogEventType.Information,
 					ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1664,7 +1670,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						Resources.GlobeLab_16,
 						Resources.GlobeSuccess_16);
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Success,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1690,7 +1696,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						Resources.GlobeLab_16,
 						Resources.GlobeWarning_16);
 					// Log.
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1710,7 +1716,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				if (null == response.Fault)
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1720,7 +1726,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				else
 				{
 					// Log
-					this.controlLog.Add(this.crawler.Log.Add(
+					this.controlLogList.Add(this.config.Log.Add(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1746,7 +1752,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeCanceled_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Verbose,
 				LogEventType.Canceled,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -1771,7 +1777,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				Resources.GlobeLab_16,
 				Resources.GlobeError_16);
 			// Log.
-			this.controlLog.Add(this.crawler.Log.Add(
+			this.controlLogList.Add(this.config.Log.Add(
 				LogEventLevel.Important,
 				LogEventType.Error,
 				ControlSlice.logSource.FormatWith(this.slice.Id),
@@ -2213,11 +2219,33 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.treeNodeSlice.Nodes.Add(this.treeNodeRun);
 			this.treeNodeSlice.ExpandAll();
 
-			// Initialize the controls.
+			// Initialize the control.
 			this.controlRun.Initialize(this.crawler, this.slice, this.config, this.treeNodeRun);
 
-			// Add the controls.
+			// Add the control.
 			this.controls.Add(this.controlRun);
+		}
+
+		/// <summary>
+		/// A method called when creating the log option.
+		/// </summary>
+		private void OnCreateLog()
+		{
+			// Create the child tree nodes.
+			this.treeNodeLog = new TreeNode("Log");
+			this.treeNodeLog.ImageKey = "Log";
+			this.treeNodeLog.SelectedImageKey = "Log";
+			this.treeNodeLog.Tag = this.controlLog;
+
+			// Add the child tree nodes.
+			this.treeNodeSlice.Nodes.Add(this.treeNodeLog);
+			this.treeNodeSlice.ExpandAll();
+
+			// Initialize the control.
+			this.controlLog.Initialize(this.crawler.Config, this.config.Log);
+
+			// Add the controls.
+			this.controls.Add(this.controlLog);
 		}
 
 		/// <summary>
@@ -2227,6 +2255,15 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Dispose the run control.
 			this.controlRun.Dispose();
+		}
+
+		/// <summary>
+		/// A method called when disposing the log option.
+		/// </summary>
+		private void OnDisposeLog()
+		{
+			// Dispose the log control.
+			this.controlLog.Dispose();
 		}
 	}
 }

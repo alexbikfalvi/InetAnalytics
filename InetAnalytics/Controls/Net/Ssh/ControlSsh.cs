@@ -368,7 +368,6 @@ namespace InetAnalytics.Controls.Net.Ssh
 							// If the string null or empty, continue.
 							if (string.IsNullOrEmpty(data))
 							{
-								this.OnCommandDataInternal(command, "!");
 								continue;
 							}
 							// Call the event handler event handler.
