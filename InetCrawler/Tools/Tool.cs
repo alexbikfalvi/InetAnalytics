@@ -144,8 +144,9 @@ namespace InetCrawler.Tools
 		/// </summary>
 		/// <param name="id">The method identifier.</param>
 		/// <param name="name">The method name.</param>
+		/// <param name="description">The method description.</param>
 		/// <param name="action">The method action.</param>
-		protected void AddMethod(Guid id, string name, ToolMethodAction action)
+		protected void AddMethod(Guid id, string name, string description, ToolMethodAction action)
 		{
 			this.methods.Add(id, new ToolMethod(id, name, action));
 		}

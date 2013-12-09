@@ -859,5 +859,34 @@ namespace InetTools.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This method uploads a new traceroute to the Mercury web service.
+        ///
+        ///Syntax: UploadTraceroute(srcIp, dstIp, srcHostname, dstHostname, traceroute)
+        ///
+        ///Parameters:
+        ///srcIp - the source IP address
+        ///dstIp - the destination IP address
+        ///srcHostname - the source hostname
+        ///dstHostname - the destination hostname
+        ///traceroute - the output of the traceroute command
+        ///
+        ///Returns: true if the operation was successful, false otherwise..
+        /// </summary>
+        internal static string ToolMercuryClientMethodUploadTracerouteDescription {
+            get {
+                return ResourceManager.GetString("ToolMercuryClientMethodUploadTracerouteDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UploadTraceroute.
+        /// </summary>
+        internal static string ToolMercuryClientMethodUploadTracerouteName {
+            get {
+                return ResourceManager.GetString("ToolMercuryClientMethodUploadTracerouteName", resourceCulture);
+            }
+        }
     }
 }

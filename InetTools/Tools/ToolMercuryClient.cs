@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using InetCrawler.Tools;
 using InetTools.Controls;
@@ -52,6 +53,9 @@ namespace InetTools.Tools
 
 			// Create the control.
 			this.control = new ControlMercuryClient(api, this.config);
+
+			// Create the tool methods.
+			this.AddMethod(new Guid("5AD386C4-EA86-4C31-A0A1-DCD6CF1107B2"), Properties.Resources.ToolMercuryClientMethodUploadTracerouteName, Properties.Resources.ToolMercuryClientMethodUploadTracerouteDescription, this.UploadTraceroute);
 
 			//// Create the Alexa ranking database table.
 			//this.dbTableRanking = new DbTableTemplate<AlexaRankDbObject>(new Guid("7D65B301-C4C9-4823-9D64-0EB4E2CA43F4"), "Alexa ranking");
@@ -92,6 +96,19 @@ namespace InetTools.Tools
 			}
 			// Call the base clas method.
 			base.Dispose(disposing);
+		}
+
+		// Private method.
+
+		/// <summary>
+		/// Uploads a traceroute to the Mercury web service.
+		/// </summary>
+		/// <param name="token">The cancellation token.</param>
+		/// <param name="arguments">The method arguments.</param>
+		/// <returns>The method result.</returns>
+		private object UploadTraceroute(CancellationToken token, params object[] arguments)
+		{
+			return false;
 		}
 	}
 }

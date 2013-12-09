@@ -17,14 +17,17 @@
  */
 
 using System;
+using System.Threading;
 
 namespace InetCrawler.Tools
 {
 	/// <summary>
 	/// A deleate for a tool method action.
 	/// </summary>
+	/// <param name="cancel">The cancellation token.</param>
 	/// <param name="arguments">The method arguments.</param>
-	public delegate void ToolMethodAction(object[] arguments);
+	/// <returns>The method result.</returns>
+	public delegate object ToolMethodAction(CancellationToken cancel, object[] arguments);
 
 	/// <summary>
 	/// A class representing a tool method.
@@ -64,15 +67,88 @@ namespace InetCrawler.Tools
 
 		// Public methods.
 
+		/// <summary>
+		/// Runs a synchronous call for the tool method.
+		/// </summary>
+		/// <param name="arguments">The arguments.</param>
+		/// <returns>The method result.</returns>
+		public object Call(params object[] arguments)
+		{
+			// Call the method action without a cancellation token.
+			return this.action(CancellationToken.None, arguments);
+		}
 
 		/// <summary>
-		/// Calls the tool method.
+		/// Begins an asynchronous call for the tool method.
 		/// </summary>
+		/// <param name="callback">The callback method for an asynchronoud request.</param>
+		/// <param name="state">The user state.</param>
 		/// <param name="arguments">The method arguments.</param>
-		public void Call(params object[] arguments)
+		public IAsyncResult BeginCall(AsyncCallback callback, object state, params object[] arguments)
 		{
-			// Call the method handler.
-			this.action(arguments);
+			// Create a new tool method state.
+			ToolMethodState asyncState = new ToolMethodState(state);
+
+			// Execute the method asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object userState) =>
+				{
+					try
+					{
+						// Call the method handler with the state cancellation token.
+						asyncState.Result = this.action(asyncState.CancellationToken, arguments);
+					}
+					catch (Exception exception)
+					{
+						// Set the exception.
+						asyncState.Exception = exception;
+					}
+					finally
+					{
+						// Complete the operation.
+						asyncState.Complete();
+						// Call the callback method.
+						if (null != callback) callback(asyncState);
+						// Dispose of the asynchronous state.
+						asyncState.Dispose();
+					}
+				});
+			
+			// Return the asynchronous result.
+			return asyncState;
+		}
+
+		/// <summary>
+		/// Ends an asynchronous call for the tool method.
+		/// </summary>
+		/// <param name="result">The asynchronous result.</param>
+		/// <returns>The method result.</returns>
+		public object EndCall(IAsyncResult result)
+		{
+			// Get the asynchronous state.
+			ToolMethodState asyncState = result as ToolMethodState;
+			
+			// If the asynchronous operation has an exception.
+			if (null != asyncState.Exception)
+			{
+				// Rethrow the exception.
+				throw asyncState.Exception;
+			}
+
+			// Return the operation result.
+			return asyncState.Result;
+		}
+
+		/// <summary>
+		/// Cancels the specified asynchronous operation.
+		/// </summary>
+		/// <param name="result">The asynchronous result.</param>
+		public void Cancel(IAsyncResult result)
+		{
+			// Get the asynchronous state.
+			ToolMethodState asyncState = result as ToolMethodState;
+
+			// Cancel the asynchronous operation.
+			asyncState.Cancel();
 		}
 	}
 }

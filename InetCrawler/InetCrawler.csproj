@@ -164,6 +164,7 @@
     <Compile Include="Tools\ToolId.cs" />
     <Compile Include="Tools\ToolInfoAttribute.cs" />
     <Compile Include="Tools\ToolMethod.cs" />
+    <Compile Include="Tools\ToolMethodState.cs" />
     <Compile Include="Tools\Toolset.cs" />
     <Compile Include="Tools\ToolsetConfig.cs" />
     <Compile Include="Tools\ToolsetInfoAttribute.cs" />
