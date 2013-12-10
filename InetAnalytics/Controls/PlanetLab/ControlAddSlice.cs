@@ -180,7 +180,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;
 			this.buttonCancel.Enabled = false;
-			this.buttonSelect.Enabled = this.listView.Items.Count > 0;
+			this.buttonSelect.Enabled = this.listView.SelectedItems.Count > 0;
 			this.buttonClose.Enabled = true;
 			// Raise the PlanetLab request finished event.
 			if (this.RequestFinished != null) this.RequestFinished(this, EventArgs.Empty);

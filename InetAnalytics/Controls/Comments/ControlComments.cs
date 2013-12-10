@@ -51,7 +51,7 @@ namespace InetAnalytics.Controls.Comments
 			// Default settings.
 			this.Dock = DockStyle.Fill;
 			this.Visible = false;
-			this.formAdd.CommentAdded += new CommentEventHandler(this.OnCommentAdded);
+			//this.formAdd.CommentAdded += new CommentEventHandler(this.OnCommentAdded);
 		}
 
 		/// <summary>
@@ -88,8 +88,13 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="video">The video.</param>
 		public void AddComment(string video)
 		{
-			this.formAdd.ShowDialog(this, video, Environment.UserName);
+			if (this.formAdd.ShowDialog(this, video, Environment.UserName) == DialogResult.OK)
+			{
+				this.OnAddComment(this.formAdd.Comment);
+			}
 		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when a new comment is added.
@@ -98,7 +103,10 @@ namespace InetAnalytics.Controls.Comments
 		/// <param name="e">The event arguments.</param>
 		private void OnAdd(object sender, EventArgs e)
 		{
-			this.formAdd.ShowDialog(this, string.Empty, Environment.UserName);
+			if (this.formAdd.ShowDialog(this, string.Empty, Environment.UserName) == DialogResult.OK)
+			{
+				this.OnAddComment(this.formAdd.Comment);
+			}
 		}
 
 		/// <summary>
@@ -135,20 +143,19 @@ namespace InetAnalytics.Controls.Comments
 		}
 
 		/// <summary>
-		/// An event handler called when after new comment has been added.
+		/// An event handler called when a new comment has been added.
 		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnCommentAdded(object sender, CommentEventArgs e)
+		/// <param name="comment">The comment.</param>
+		private void OnAddComment(CrawlerComment comment)
 		{
 			try
 			{
 				// Add the comment to the comments list.
-				this.comments.AddComment(e.Comment);
+				this.comments.AddComment(comment);
 
 				// Add a new list view item.
-				ListViewItem item = new ListViewItem(new string[] { e.Comment.Time.ToString(), e.Comment.Item, e.Comment.User, e.Comment.Text }, 0);
-				item.Tag = e.Comment;
+				ListViewItem item = new ListViewItem(new string[] { comment.Time.ToString(), comment.Item, comment.User, comment.Text }, 0);
+				item.Tag = comment;
 				this.listView.Items.Add(item);
 
 				this.buttonExport.Enabled = true;

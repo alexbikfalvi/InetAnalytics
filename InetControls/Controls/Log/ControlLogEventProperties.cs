@@ -56,7 +56,9 @@ namespace InetAnalytics.Controls.Log
 		/// </summary>
 		public ControlLogEventProperties()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
+			// Set the link label.
 			this.linkLabel.Width = this.linkLabel.PreferredWidth + 20;
 			this.linkLabel.Height = this.linkLabel.PreferredHeight > 16 ? this.linkLabel.PreferredHeight : 16;
 		}

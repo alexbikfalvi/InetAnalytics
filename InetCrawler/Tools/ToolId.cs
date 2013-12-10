@@ -29,9 +29,8 @@ namespace InetCrawler.Tools
 		/// <summary>
 		/// Creates a new tool information structure.
 		/// </summary>
-		/// <param name="id">The identifier.</param>
+		/// <param name="guid">The identifier.</param>
 		/// <param name="version">The tool version.</param>
-		/// <p
 		public ToolId(Guid guid, Version version)
 			: this()
 		{

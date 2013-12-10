@@ -80,6 +80,25 @@ namespace InetAnalytics.Forms.PlanetLab
 			return base.ShowDialog(owner);
 		}
 
+		// Private methods.
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
 		/// <summary>
 		/// An event handler called when the command input has changed.
 		/// </summary>

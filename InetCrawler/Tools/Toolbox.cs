@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Win32;
 using DotNetApi;
@@ -239,6 +240,20 @@ namespace InetCrawler.Tools
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Finds the tool with the specified identifier and version.
+		/// </summary>
+		/// <param name="guid">The tool identifier.</param>
+		/// <param name="version">The tool version.</param>
+		/// <returns>The tool or <b>null</b> if the tool does not exist.</returns>
+		public Tool GetTool(Guid guid, Version version)
+		{
+			return this.FirstOrDefault((Tool tool) =>
+				{
+					return (tool.Info.Id.Guid == guid) && (tool.Info.Id.Version == version);
+				});
 		}
 
 		// Private methods.

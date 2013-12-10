@@ -42,7 +42,6 @@
 			this.buttonClose.TabIndex = 0;
 			this.buttonClose.Text = "Close";
 			this.buttonClose.UseVisualStyleBackColor = true;
-			this.buttonClose.Click += new System.EventHandler(this.OnClose);
 			// 
 			// textBox
 			// 

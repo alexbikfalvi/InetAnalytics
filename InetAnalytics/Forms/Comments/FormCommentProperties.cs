@@ -73,5 +73,43 @@ namespace InetAnalytics.Forms.Comments
 			// Open the dialog.
 			return base.ShowDialog(owner);
 		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
+			return base.ShowDialog(owner);
+		}
 	}
 }

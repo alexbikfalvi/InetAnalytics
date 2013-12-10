@@ -37,16 +37,21 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		public FormVideo()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);
 		}
 
+		// Public events.
+
 		/// <summary>
 		/// An event raised to view the user profile.
 		/// </summary>
 		public event StringEventHandler ViewProfile;
+
+		// Public methods.
 
 		/// <summary>
 		/// Shows the form as a dialog and the specified video.
@@ -67,6 +72,44 @@ namespace InetAnalytics.Forms
 			return base.ShowDialog(owner);
 		}
 
+		// Private methods.
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
+			return base.ShowDialog(owner);
+		}
+
 		/// <summary>
 		/// An event handler called to view the user profile.
 		/// </summary>
@@ -74,13 +117,10 @@ namespace InetAnalytics.Forms
 		/// <param name="e">The event arguments.</param>
 		private void OnViewProfile(object sender, StringEventArgs e)
 		{
-			if (this.ViewProfile != null)
-			{
-				// Close the dialog.
-				this.Close();
-				// Raise the event.
-				if (null != this.ViewProfile) this.ViewProfile(sender, e);
-			}
+			// Close the dialog.
+			this.Close();
+			// Raise the event.
+			if (null != this.ViewProfile) this.ViewProfile(sender, e);
 		}
 	}
 }

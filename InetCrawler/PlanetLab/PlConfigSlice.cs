@@ -168,6 +168,14 @@ namespace InetCrawler.PlanetLab
 			get { return this.key.GetInteger("CommandRetries", 3); }
 			set { this.key.SetInteger("CommandRetries", value); }
 		}
+		/// <summary>
+		/// Gets or sets the tool methods used by the current slice.
+		/// </summary>
+		public string[] ToolMethods
+		{
+			get { return this.key.GetMultiString("ToolMethods", null); }
+			set { this.key.SetMultiString("ToolMethods", value); }
+		}
 
 		// Public methods.
 

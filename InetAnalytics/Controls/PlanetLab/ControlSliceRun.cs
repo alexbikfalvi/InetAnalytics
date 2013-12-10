@@ -196,6 +196,9 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Enable the control.
 			this.Enabled = true;
 
+			// Initialize the tools control.
+			this.controlMethods.Initialize(this.crawler.Toolbox, this.config.ToolMethods);
+
 			// Load the configuration.
 			this.OnLoadConfiguration(this, EventArgs.Empty);
 
@@ -1905,6 +1908,17 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			this.Invoke(() =>
 				{
+					// Find the progress item corresponding to this node.
+					ProgressItem item = this.managerProgressItems.FirstOrDefault((ProgressItem it) =>
+					{
+						return object.ReferenceEquals(it.Tag, e.Node);
+					});
+					// If the item is not null.
+					if (null != item)
+					{
+						item.Subtext = "Node skipped";
+						item.Enabled = false;
+					}
 					// Log an event.
 					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
@@ -1981,6 +1995,17 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			this.Invoke(() =>
 			{
+				// Find the progress item corresponding to this node.
+				ProgressItem item = this.managerProgressItems.FirstOrDefault((ProgressItem it) =>
+				{
+					return object.ReferenceEquals(it.Tag, e.Node);
+				});
+				// If the item is not null.
+				if (null != item)
+				{
+					item.Subtext = "Node failed";
+					item.Enabled = false;
+				}
 				// Log an event.
 				this.controlLog.Add(this.config.Log.Add(
 					LogEventLevel.Normal,
@@ -2113,7 +2138,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.Invoke(() =>
 			{
 				// If the selected result node equals the current node.
-				if (e.Node.Hostname == this.comboBoxNodes.SelectedItem)
+				if (e.Node.Hostname == this.comboBoxNodes.SelectedItem as string)
 				{
 					// Update the result subcommands.
 					this.OnAddResult(e.Subcommand);
@@ -2131,7 +2156,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.Invoke(() =>
 			{
 				// If the selected result node equals the current node.
-				if (e.Node.Hostname == this.comboBoxNodes.SelectedItem)
+				if (e.Node.Hostname == this.comboBoxNodes.SelectedItem as string)
 				{
 					// Update the result subcommands.
 					this.OnAddResult(e.Subcommand);
@@ -2163,7 +2188,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Else, find the node state corresponding to the selected node.
 					PlManagerNodeState node = this.managerState.NodeStates.FirstOrDefault((PlManagerNodeState state) =>
 						{
-							return state.Node.Hostname == this.comboBoxNodes.SelectedItem;
+							return state.Node.Hostname == this.comboBoxNodes.SelectedItem as string;
 						});
 
 					// If the node state is null, do nothing.
@@ -2221,6 +2246,17 @@ namespace InetAnalytics.Controls.PlanetLab
 				// Set the selected result.
 				this.controlResult.Result = this.listViewResults.SelectedItems[0].Tag as PlManagerSubcommandState;
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the tool methods have changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnMethodsChanged(object sender, EventArgs e)
+		{
+			// Save the selected methods.
+			this.config.ToolMethods = this.controlMethods.Save();
 		}
 	}
 }

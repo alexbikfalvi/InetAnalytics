@@ -62,6 +62,8 @@
 			this.buttonProperties = new System.Windows.Forms.ToolStripDropDownButton();
 			this.buttonNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttonSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
+			this.numericUpDownNodesRetries = new System.Windows.Forms.NumericUpDown();
+			this.labelNodesRetries = new System.Windows.Forms.Label();
 			this.toolStripConfig = new System.Windows.Forms.ToolStrip();
 			this.buttonConfigSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonConfigUndo = new System.Windows.Forms.ToolStripButton();
@@ -90,6 +92,8 @@
 			this.tableResults = new System.Windows.Forms.TableLayoutPanel();
 			this.comboBoxNodes = new System.Windows.Forms.ComboBox();
 			this.labelResults = new System.Windows.Forms.Label();
+			this.tabPageTools = new System.Windows.Forms.TabPage();
+			this.controlMethods = new InetAnalytics.Controls.Tools.ControlMethods();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
 			this.buttonPause = new System.Windows.Forms.ToolStripButton();
@@ -107,8 +111,6 @@
 			this.progressLegendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressLegendItemError = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.progressLegendItemPending = new DotNetApi.Windows.Controls.ProgressLegendItem();
-			this.labelNodesRetries = new System.Windows.Forms.Label();
-			this.numericUpDownNodesRetries = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -121,6 +123,7 @@
 			this.splitContainerNodes.Panel2.SuspendLayout();
 			this.splitContainerNodes.SuspendLayout();
 			this.toolStripNodes.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesRetries)).BeginInit();
 			this.toolStripConfig.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesParallel)).BeginInit();
 			this.tabPageCommands.SuspendLayout();
@@ -136,9 +139,9 @@
 			this.splitContainerProgress.Panel2.SuspendLayout();
 			this.splitContainerProgress.SuspendLayout();
 			this.tableResults.SuspendLayout();
+			this.tabPageTools.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.contextMenuNodes.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesRetries)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -183,6 +186,7 @@
 			this.tabControl.Controls.Add(this.tabPageCommands);
 			this.tabControl.Controls.Add(this.tabPageProgress);
 			this.tabControl.Controls.Add(this.tabPageResults);
+			this.tabControl.Controls.Add(this.tabPageTools);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl.Location = new System.Drawing.Point(1, 48);
 			this.tabControl.Name = "tabControl";
@@ -383,6 +387,37 @@
 			this.buttonSiteProperties.Size = new System.Drawing.Size(159, 22);
 			this.buttonSiteProperties.Text = "Site properties";
 			this.buttonSiteProperties.Click += new System.EventHandler(this.OnSiteProperties);
+			// 
+			// numericUpDownNodesRetries
+			// 
+			this.numericUpDownNodesRetries.Location = new System.Drawing.Point(10, 156);
+			this.numericUpDownNodesRetries.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.numericUpDownNodesRetries.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownNodesRetries.Name = "numericUpDownNodesRetries";
+			this.numericUpDownNodesRetries.Size = new System.Drawing.Size(150, 20);
+			this.numericUpDownNodesRetries.TabIndex = 7;
+			this.numericUpDownNodesRetries.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// labelNodesRetries
+			// 
+			this.labelNodesRetries.AutoSize = true;
+			this.labelNodesRetries.Location = new System.Drawing.Point(7, 140);
+			this.labelNodesRetries.Name = "labelNodesRetries";
+			this.labelNodesRetries.Size = new System.Drawing.Size(260, 13);
+			this.labelNodesRetries.TabIndex = 6;
+			this.labelNodesRetries.Text = "If a command fails, &retry the following number of times:";
 			// 
 			// toolStripConfig
 			// 
@@ -721,6 +756,27 @@
 			this.labelResults.TabIndex = 0;
 			this.labelResults.Text = "&Select node:";
 			// 
+			// tabPageTools
+			// 
+			this.tabPageTools.Controls.Add(this.controlMethods);
+			this.tabPageTools.Location = new System.Drawing.Point(2, 23);
+			this.tabPageTools.Name = "tabPageTools";
+			this.tabPageTools.Padding = new System.Windows.Forms.Padding(5);
+			this.tabPageTools.Size = new System.Drawing.Size(794, 351);
+			this.tabPageTools.TabIndex = 5;
+			this.tabPageTools.Text = "Tools";
+			this.tabPageTools.UseVisualStyleBackColor = true;
+			// 
+			// controlMethods
+			// 
+			this.controlMethods.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlMethods.Enabled = false;
+			this.controlMethods.Location = new System.Drawing.Point(5, 5);
+			this.controlMethods.Name = "controlMethods";
+			this.controlMethods.Size = new System.Drawing.Size(784, 341);
+			this.controlMethods.TabIndex = 0;
+			this.controlMethods.Changed += new System.EventHandler(this.OnMethodsChanged);
+			// 
 			// toolStrip
 			// 
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -847,37 +903,6 @@
 			this.progressLegendItemPending.Color = System.Drawing.Color.LightGray;
 			this.progressLegendItemPending.Text = "Pending";
 			// 
-			// labelNodesRetries
-			// 
-			this.labelNodesRetries.AutoSize = true;
-			this.labelNodesRetries.Location = new System.Drawing.Point(7, 140);
-			this.labelNodesRetries.Name = "labelNodesRetries";
-			this.labelNodesRetries.Size = new System.Drawing.Size(260, 13);
-			this.labelNodesRetries.TabIndex = 6;
-			this.labelNodesRetries.Text = "If a command fails, &retry the following number of times:";
-			// 
-			// numericUpDownNodesRetries
-			// 
-			this.numericUpDownNodesRetries.Location = new System.Drawing.Point(10, 156);
-			this.numericUpDownNodesRetries.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-			this.numericUpDownNodesRetries.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numericUpDownNodesRetries.Name = "numericUpDownNodesRetries";
-			this.numericUpDownNodesRetries.Size = new System.Drawing.Size(150, 20);
-			this.numericUpDownNodesRetries.TabIndex = 7;
-			this.numericUpDownNodesRetries.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
 			// ControlSliceRun
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -903,6 +928,7 @@
 			this.splitContainerNodes.ResumeLayout(false);
 			this.toolStripNodes.ResumeLayout(false);
 			this.toolStripNodes.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesRetries)).EndInit();
 			this.toolStripConfig.ResumeLayout(false);
 			this.toolStripConfig.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesParallel)).EndInit();
@@ -923,10 +949,10 @@
 			this.splitContainerProgress.ResumeLayout(false);
 			this.tableResults.ResumeLayout(false);
 			this.tableResults.PerformLayout();
+			this.tabPageTools.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenuNodes.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNodesRetries)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1001,5 +1027,7 @@
 		private Commands.ControlCommandResult controlResult;
 		private System.Windows.Forms.NumericUpDown numericUpDownNodesRetries;
 		private System.Windows.Forms.Label labelNodesRetries;
+		private System.Windows.Forms.TabPage tabPageTools;
+		private Tools.ControlMethods controlMethods;
 	}
 }

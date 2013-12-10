@@ -18,7 +18,7 @@
 
 using System;
 //using System.Linq;
-//using System.Net;
+using System.Net;
 //using System.Net.Sockets;
 //using System.Threading;
 //using System.Windows.Forms;
@@ -117,6 +117,19 @@ namespace InetTools.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
+			try
+			{
+				// Try and parse the traceroute.
+				MercuryTraceroute traceroute = new MercuryTraceroute(null, IPAddress.Parse("0.0.0.0"), this.codeTextBox.Text);
+
+				// Set the traceroute.
+				this.controlTraceroute.Set(traceroute);
+			}
+			catch (Exception exception)
+			{
+
+			}
+
 			//// Call the request started event handler.
 			//this.OnRequestStarted();
 

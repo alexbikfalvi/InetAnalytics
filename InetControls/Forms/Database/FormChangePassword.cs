@@ -41,7 +41,8 @@ namespace InetAnalytics.Forms.Database
 		/// </summary>
 		public FormChangePassword()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);
@@ -80,6 +81,42 @@ namespace InetAnalytics.Forms.Database
 		// Private methods.
 
 		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
+			return base.ShowDialog(owner);
+		}
+
+		/// <summary>
 		/// An event handler called when the user clicks on the change button.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -112,8 +149,8 @@ namespace InetAnalytics.Forms.Database
 			}
 			// Raise the add event.
 			if (this.PasswordChanged != null) this.PasswordChanged(this, new PasswordChangedEventArgs(this.control.Old, this.control.New, this.state));
-			// Close the dialog.
-			this.Close();
+			// Set the dialog result.
+			this.DialogResult = DialogResult.OK;
 		}
 
 		/// <summary>

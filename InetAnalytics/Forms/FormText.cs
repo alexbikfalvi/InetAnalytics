@@ -32,6 +32,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		public FormText()
 		{
+			// Initialize the component.
 			this.InitializeComponent();
 		}
 
@@ -57,13 +58,39 @@ namespace InetAnalytics.Forms
 		// Private methods.
 
 		/// <summary>
-		/// An event handler called when the user clicks the close button.
+		/// Shows the form.
 		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnClose(object sender, EventArgs e)
+		private new void Show()
 		{
-			this.Close();
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
+			return base.ShowDialog(owner);
 		}
 	}
 }

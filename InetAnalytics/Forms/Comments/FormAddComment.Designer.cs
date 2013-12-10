@@ -67,6 +67,7 @@
 			this.control.Name = "control";
 			this.control.Size = new System.Drawing.Size(385, 221);
 			this.control.TabIndex = 0;
+			this.control.Type = InetCrawler.Comments.CrawlerComment.CommentType.Video;
 			this.control.User = "";
 			this.control.InputChanged += new System.EventHandler(this.OnInputChanged);
 			// 

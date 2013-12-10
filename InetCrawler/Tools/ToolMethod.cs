@@ -34,36 +34,51 @@ namespace InetCrawler.Tools
 	/// </summary>
 	public sealed class ToolMethod
 	{
-		private readonly Guid id;
+		private readonly Tool tool;
+		private readonly ToolMethodId id;
 		private readonly string name;
+		private readonly string description;
 		private readonly ToolMethodAction action;
 
 		/// <summary>
 		/// Createa a new tool method instance.
 		/// </summary>
+		/// <param name="tool">The tool.</param>
 		/// <param name="id">The tool method identifier.</param>
 		/// <param name="name">The method name.</param>
+		/// <param name="description">The method description.</param>
 		/// <param name="action">The action.</param>
-		public ToolMethod(Guid id, string name, ToolMethodAction action)
+		public ToolMethod(Tool tool, Guid id, string name, string description, ToolMethodAction action)
 		{
 			// Validate the arguments.
+			if (null == tool) throw new ArgumentNullException("tool");
 			if (null == action) throw new ArgumentNullException("action");
 
-			this.id = id;
+			this.tool = tool;
+			this.id = new ToolMethodId(tool.Info.Id.Guid, tool.Info.Id.Version, id);
 			this.name = name;
+			this.description = description;
 			this.action = action;
 		}
 
 		// Public properties.
 
 		/// <summary>
+		/// Gets the tool.
+		/// </summary>
+		public Tool Tool { get { return this.tool; } }
+		/// <summary>
 		/// Gets the tool method identifier.
 		/// </summary>
-		public Guid Id { get { return this.id; } }
+		public ToolMethodId Id { get { return this.id; } }
 		/// <summary>
 		/// Gets the tool method name.
 		/// </summary>
 		public string Name { get { return this.name; } }
+		/// <summary>
+		/// Gets the tool method description.
+		/// </summary>
+		public string Description { get { return this.description; } }
 
 		// Public methods.
 

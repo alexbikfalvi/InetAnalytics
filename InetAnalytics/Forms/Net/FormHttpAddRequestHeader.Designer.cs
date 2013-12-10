@@ -55,7 +55,6 @@
 			this.buttonAdd.TabIndex = 1;
 			this.buttonAdd.Text = "&Add";
 			this.buttonAdd.UseVisualStyleBackColor = true;
-			this.buttonAdd.Click += new System.EventHandler(this.OnAddClick);
 			// 
 			// control
 			// 
@@ -72,7 +71,7 @@
 			this.control.Value = "";
 			this.control.InputChanged += new System.EventHandler(this.OnInputChanged);
 			// 
-			// FormAddHttpRequestHeader
+			// FormHttpAddRequestHeader
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -83,7 +82,7 @@
 			this.Controls.Add(this.buttonCancel);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "FormAddHttpRequestHeader";
+			this.Name = "FormHttpAddRequestHeader";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "Add HTTP Request Header";

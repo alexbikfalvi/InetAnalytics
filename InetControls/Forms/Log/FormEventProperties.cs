@@ -35,11 +35,14 @@ namespace InetAnalytics.Forms.Log
 		/// </summary>
 		public FormEventProperties()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);
 		}
+
+		// Public methods.
 
 		/// <summary>
 		/// Shows the form as a dialog and the specified event.
@@ -57,6 +60,44 @@ namespace InetAnalytics.Forms.Log
 			// Set the title.
 			this.Text = "{0} Event at {1} Properties".FormatWith(LogEvent.GetDescription(evt.Type), evt.Timestamp.ToString());
 			// Open the dialog.
+			return base.ShowDialog(owner);
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
 			return base.ShowDialog(owner);
 		}
 	}

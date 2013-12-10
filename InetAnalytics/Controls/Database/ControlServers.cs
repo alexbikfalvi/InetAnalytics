@@ -160,9 +160,6 @@ namespace InetAnalytics.Controls.Database
 			this.crawler.Database.PrimaryServerChanged += this.OnPrimaryServerChanged;
 			this.crawler.Database.ServerRemoved += this.OnServerRemoved;
 
-			// Add the event handler for the server add form.
-			this.formAdd.ServerAdded += this.OnAdded;
-
 			// Reload the server configurations.
 			this.crawler.Database.Reload();
 		}
@@ -425,55 +422,48 @@ namespace InetAnalytics.Controls.Database
 		private void OnAdd(object sender, EventArgs e)
 		{
 			// Show the server add dialog.
-			this.formAdd.ShowDialog(
+			if (this.formAdd.ShowDialog(
 				this,
 				this.crawler.Database.Count == 0 ? true : false,
 				this.crawler.Database.Count == 0 ? false : true
-				);
-		}
-
-		/// <summary>
-		/// An event handler called when a new server has been added.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnAdded(object sender, EventArgs e)
-		{
-			// Show a message.
-			this.ShowMessage(Resources.ServerAdd_48, "Database", "Adding a new database server...");
-
-			// Check if the new server changes the primary server.
-			bool primary = this.formAdd.IsPrimary;
-			if (primary && this.crawler.Database.HasPrimary)
+				) == DialogResult.OK)
 			{
-				// If the user does not confirm changing the primary server.
-				if (DialogResult.No == MessageBox.Show(
-					this,
-					"The new database server is marked as primary, but a different primary server already exists. Do you want to change the primary server?",
-					"Confirm Changing the Primary Server",
-					MessageBoxButtons.YesNo,
-					MessageBoxIcon.Question,
-					MessageBoxDefaultButton.Button2))
+				// Show a message.
+				this.ShowMessage(Resources.ServerAdd_48, "Database", "Adding a new database server...");
+
+				// Check if the new server changes the primary server.
+				bool primary = this.formAdd.IsPrimary;
+				if (primary && this.crawler.Database.HasPrimary)
 				{
-					// Set the primary to false.
-					primary = false;
+					// If the user does not confirm changing the primary server.
+					if (DialogResult.No == MessageBox.Show(
+						this,
+						"The new database server is marked as primary, but a different primary server already exists. Do you want to change the primary server?",
+						"Confirm Changing the Primary Server",
+						MessageBoxButtons.YesNo,
+						MessageBoxIcon.Question,
+						MessageBoxDefaultButton.Button2))
+					{
+						// Set the primary to false.
+						primary = false;
+					}
 				}
-			}
-			try
-			{
-				// Try add the new server.
-				this.crawler.Database.Add(
-					this.formAdd.Type,
-					this.formAdd.ServerName,
-					this.formAdd.DataSource,
-					this.formAdd.Username,
-					this.formAdd.Password,
-					primary);
-			}
-			catch (Exception exception)
-			{
-				// Catch all exceptions and show an error message.
-				MessageBox.Show(this, exception.Message, "Add Database Server Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				try
+				{
+					// Try add the new server.
+					this.crawler.Database.Add(
+						this.formAdd.Type,
+						this.formAdd.ServerName,
+						this.formAdd.DataSource,
+						this.formAdd.Username,
+						this.formAdd.Password,
+						primary);
+				}
+				catch (Exception exception)
+				{
+					// Catch all exceptions and show an error message.
+					MessageBox.Show(this, exception.Message, "Add Database Server Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 			}
 		}
 

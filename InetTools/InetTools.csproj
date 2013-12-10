@@ -41,6 +41,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlMercuryClientTraceroute.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlMercuryClientTraceroute.Designer.cs">
+      <DependentUpon>ControlMercuryClientTraceroute.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlMercuryClient.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ControlMercuryClientTraceroute.resx">
+      <DependentUpon>ControlMercuryClientTraceroute.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlMercuryClient.resx">
       <DependentUpon>ControlMercuryClient.cs</DependentUpon>
     </EmbeddedResource>
@@ -393,6 +402,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\GlobeUpload_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPin_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPin_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPin_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPin_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinError_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinError_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinError_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinError_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinSuccess_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinSuccess_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinSuccess_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPinSuccess_48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

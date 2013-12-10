@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using DotNetApi;
 
 namespace InetCrawler.Tools
 {
@@ -129,6 +130,34 @@ namespace InetCrawler.Tools
 			GC.SuppressFinalize(this);
 		}
 
+		/// <summary>
+		/// Converts the current tool to a string.
+		/// </summary>
+		/// <returns>The string.</returns>
+		public override string ToString()
+		{
+			return "{0} (version {1})".FormatWith(this.info.Name, this.info.Id.Version);
+		}
+
+		/// <summary>
+		/// Finds the tool method with the specified identifier.
+		/// </summary>
+		/// <param name="guid">The method identifier.</param>
+		/// <returns>The method, or <b>null</b> if the method does not exist.</returns>
+		public ToolMethod GetMethod(Guid guid)
+		{
+			ToolMethod method;
+
+			if (this.methods.TryGetValue(guid, out method))
+			{
+				return method;
+			}
+			else
+			{
+				return null;
+			}
+		}
+
 		// Protected methods.
 
 		/// <summary>
@@ -148,7 +177,7 @@ namespace InetCrawler.Tools
 		/// <param name="action">The method action.</param>
 		protected void AddMethod(Guid id, string name, string description, ToolMethodAction action)
 		{
-			this.methods.Add(id, new ToolMethod(id, name, action));
+			this.methods.Add(id, new ToolMethod(this, id, name, description, action));
 		}
 	}
 }

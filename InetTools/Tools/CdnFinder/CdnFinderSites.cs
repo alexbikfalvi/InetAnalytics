@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 
 namespace InetTools.Tools.CdnFinder
@@ -29,6 +30,7 @@ namespace InetTools.Tools.CdnFinder
 	public sealed class CdnFinderSites : IEnumerable<CdnFinderSite>
 	{
 		private readonly List<CdnFinderSite> sites = new List<CdnFinderSite>();
+		private readonly HashSet<string> resources = new HashSet<string>();
 
 		/// <summary>
 		/// Creates a new empty sites list.
@@ -43,6 +45,10 @@ namespace InetTools.Tools.CdnFinder
 		/// Gets the number of sites in the collection.
 		/// </summary>
 		public int Count { get { return this.sites.Count; } }
+		/// <summary>
+		/// Gets the collection of resources.
+		/// </summary>
+		public IEnumerable<string> Resources { get { return this.resources; } }
 
 		// Public methods.
 
@@ -76,7 +82,18 @@ namespace InetTools.Tools.CdnFinder
 			// Parse all sites.
 			foreach (XElement child in element.Elements("domains"))
 			{
-				sites.sites.Add(CdnFinderSite.Parse(child));
+				// Parse the site.
+				CdnFinderSite site = CdnFinderSite.Parse(child);
+				// Add the site.
+				sites.sites.Add(site);
+				// Add the site resources.
+				foreach (CdnFinderResource resource in site.Resources)
+				{
+					// If the resources already exists, do nothing.
+					if (sites.resources.Contains(resource.Hostname)) continue;
+					// Add the resource.
+					sites.resources.Add(resource.Hostname);
+				}
 			}
 			// Return the sites list.
 			return sites;
@@ -93,6 +110,79 @@ namespace InetTools.Tools.CdnFinder
 			XDocument xml = XDocument.Parse(data);
 			// Parse the document.
 			return CdnFinderSites.Parse(xml.Root);
+		}
+
+		/// <summary>
+		/// Saves the sites information to the specified file.
+		/// </summary>
+		/// <param name="fileName">The file name.</param>
+		public void SaveSites(string fileName)
+		{
+			// Create the root XML element.
+			XElement sites = new XElement("Sites");
+
+			// For all sites.
+			foreach (CdnFinderSite site in this)
+			{
+				// Create the resources element.
+				XElement resources = new XElement("Resources");
+
+				// For all site resources.
+				foreach (CdnFinderResource resource in site.Resources)
+				{
+					// Create the CNAMEs element.
+					XElement cnames = new XElement("CNames");
+
+					// For all CNAMEs.
+					foreach (string cname in resource.CNames)
+					{
+						cnames.Add(new XElement("CName", cname));
+					}
+
+					// Add the resource element.
+					resources.Add(new XElement("Resource",
+						new XAttribute("Hostname", resource.Hostname != null ? resource.Hostname : string.Empty),
+						new XAttribute("Count", resource.Count),
+						new XAttribute("Size", resource.Size),
+						new XAttribute("Cdn", resource.Cdn != null ? resource.Cdn : string.Empty),
+						new XAttribute("HeaderGuess", resource.HeaderGuess != null ? resource.HeaderGuess : string.Empty),
+						new XAttribute("IsBase", resource.IsBase),
+						cnames));
+				}
+
+				// Add the site element.
+				sites.Add(new XElement("Site",
+					new XAttribute("Success", site.Success),
+					new XElement("Name", site.Site),
+					new XElement("AssetCdn", site.AssetCdn != null ? site.AssetCdn : string.Empty),
+					new XElement("BaseCdn", site.BaseCdn != null ? site.BaseCdn : string.Empty),
+					resources
+					));
+			}
+
+			// Create a new XML document for the sites data.
+			XDocument document = new XDocument(sites);
+
+			// Save the document.
+			document.Save(fileName, SaveOptions.None);
+		}
+
+
+		/// <summary>
+		/// Saves the resources to the specified text file.
+		/// </summary>
+		/// <param name="fileName">The file name.</param>
+		public void SaveResources(string fileName)
+		{
+			// Create a new file.
+			using (StreamWriter file = new StreamWriter(fileName, false))
+			{
+				// Add all elements.
+				foreach (string resource in this.resources)
+				{
+					file.WriteLine(resource);
+				}
+			}
 		}
 	}
 }

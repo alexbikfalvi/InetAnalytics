@@ -22,6 +22,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
@@ -622,6 +623,9 @@ namespace InetTools.Controls
 						item.SubItems[3].Text = "(unknown)";
 					}
 				}
+
+				// Enable the save button.
+				this.buttonSave.Enabled = true;
 			}
 
 			// Call the site selection changed event handler.
@@ -664,12 +668,29 @@ namespace InetTools.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnSaveSites(object sender, EventArgs e)
 		{
+			// If the sites data is null, do nothing.
+			if (null == this.sites) return;
 			// Set th dialog properties.
 			this.saveFileDialog.Title = "Save Sites Data";
 			this.saveFileDialog.Filter = "CDN Finder data files (*.cdn)|*.cdn";
 			// Show the dialog.
 			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
+				try
+				{
+					// Save the sites to an XML file.
+					this.sites.SaveSites(this.saveFileDialog.FileName);
+				}
+				catch (Exception exception)
+				{
+					// Show an error message.
+					MessageBox.Show(
+						this,
+						"Saving the CDN file sites information failed. {0}".FormatWith(exception.Message),
+						"Save Sites Data",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
+				}
 			}
 		}
 
@@ -680,13 +701,29 @@ namespace InetTools.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnSaveResources(object sender, EventArgs e)
 		{
+			// If the sites data is null, do nothing.
+			if (null == this.sites) return;
 			// Set th dialog properties.
 			this.saveFileDialog.Title = "Save Sites Resources";
 			this.saveFileDialog.Filter = "Text files (*.txt)|*.txt";
 			// Show the dialog.
 			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-
+				try
+				{
+					// Save the resources to a text file.
+					this.sites.SaveResources(this.saveFileDialog.FileName);
+				}
+				catch (Exception exception)
+				{
+					// Show an error message.
+					MessageBox.Show(
+						this,
+						"Saving the CDN file sites information failed. {0}".FormatWith(exception.Message),
+						"Save Sites Data",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
+				}
 			}
 		}
 	}

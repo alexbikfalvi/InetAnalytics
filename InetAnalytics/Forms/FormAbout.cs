@@ -28,9 +28,13 @@ namespace InetAnalytics.Forms
 	/// </summary>
 	public partial class FormAbout : ThreadSafeForm
 	{
+		/// <summary>
+		/// Creates a new form instance.
+		/// </summary>
 		public FormAbout()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);

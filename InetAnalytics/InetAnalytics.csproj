@@ -367,12 +367,6 @@
     <Compile Include="Controls\Tools\ControlToolboxSettings.Designer.cs">
       <DependentUpon>ControlToolboxSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Tools\ControlToolMethods.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Tools\ControlToolMethods.Designer.cs">
-      <DependentUpon>ControlToolMethods.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Tools\ControlToolProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -864,11 +858,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Controls\ControlConsole.resx">
       <DependentUpon>ControlConsole.cs</DependentUpon>
     </EmbeddedResource>
@@ -1014,9 +1003,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Tools\ControlToolboxSettings.resx">
       <DependentUpon>ControlToolboxSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Tools\ControlToolMethods.resx">
-      <DependentUpon>ControlToolMethods.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Tools\ControlToolProperties.resx">
       <DependentUpon>ControlToolProperties.cs</DependentUpon>
@@ -1266,17 +1252,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CustomToolNamespace>InetAnalytics</CustomToolNamespace>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1292,6 +1274,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ArrowBluePrevious_48.png" />
+    <None Include="Resources\ArrowBluePrevious_32.png" />
+    <None Include="Resources\ArrowBluePrevious_24.png" />
+    <None Include="Resources\ArrowBluePrevious_16.png" />
+    <None Include="Resources\ArrowBlueNext_48.png" />
+    <None Include="Resources\ArrowBlueNext_32.png" />
+    <None Include="Resources\ArrowBlueNext_24.png" />
+    <None Include="Resources\ArrowBlueNext_16.png" />
     <None Include="Resources\GlobePlayPause_48.png" />
     <None Include="Resources\GlobePlayPause_32.png" />
     <None Include="Resources\GlobePlayPause_24.png" />
@@ -2192,14 +2182,6 @@
     <None Include="Resources\Refresh_32.png" />
     <None Include="Resources\Refresh_24.png" />
     <None Include="Resources\Refresh_16.png" />
-    <None Include="Resources\ArrowPrevious_48.png" />
-    <None Include="Resources\ArrowPrevious_32.png" />
-    <None Include="Resources\ArrowPrevious_24.png" />
-    <None Include="Resources\ArrowPrevious_16.png" />
-    <None Include="Resources\ArrowNext_48.png" />
-    <None Include="Resources\ArrowNext_32.png" />
-    <None Include="Resources\ArrowNext_24.png" />
-    <None Include="Resources\ArrowNext_16.png" />
     <None Include="Resources\Dislike_48.png" />
     <None Include="Resources\Dislike_32.png" />
     <None Include="Resources\Dislike_24.png" />

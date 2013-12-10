@@ -37,7 +37,8 @@ namespace InetAnalytics.Forms.Database
 		/// </summary>
 		public FormTableProperties()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);
@@ -65,6 +66,44 @@ namespace InetAnalytics.Forms.Database
 			return base.ShowDialog(owner);
 		}
 
+		// Private methods.
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
+			return base.ShowDialog(owner);
+		}
+
 		/// <summary>
 		/// An event handler called when the configuration has changed.
 		/// </summary>
@@ -83,22 +122,7 @@ namespace InetAnalytics.Forms.Database
 		private void OnOk(object sender, EventArgs e)
 		{
 			// Save the configuration and exit.
-			if (this.buttonApply.Enabled)
-			{
-				this.OnApply(sender, e);
-			}
-			this.Close();
-		}
-
-		/// <summary>
-		/// An event handler called when the user clicks on the Cancel button.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnCancel(object sender, EventArgs e)
-		{
-			// Discard the changes and exit.
-			this.Close();
+			this.OnApply(sender, e);
 		}
 
 		/// <summary>

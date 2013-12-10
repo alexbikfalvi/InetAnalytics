@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -30,28 +31,23 @@ namespace InetTools.Tools.Mercury
 	/// </summary>
 	public struct MercuryTracerouteHop
 	{
-		private static readonly char[] separatorLine = { ' ', '\n' };
-		private static readonly char[] separatorAddress = { '(', ')' };
-		private static readonly char[] separatorAs = { '[', ']', '/', '*' };
-		private static readonly char[] separatorAsNumber = { 'A', 'S' };
+		private static readonly string regexHop = @"[0-9]+  ";
+		private static readonly string regexLinuxDestination = @"  .+? \([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\)";
+		private static readonly string regexIp = @"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+";
+		private static readonly string regexAs = @"\[AS.+\]";
+		private static readonly string regexRtt = @"[0-9]+.[0-9]* ms";
 
-		/// <summary>
-		/// Creates a new traceroute hop instance.
-		/// </summary>
-		/// <param name="data">The traceroute data line.</param>
-		public MercuryTracerouteHop(string data)
-			: this()
-		{
-			// Parse the data string.
-			this.Parse(data);
-		}
+		private static readonly char[] separatorSpace = { ' ' };
+		private static readonly char[] separatorSpaceRoundBrackets = { ' ', '(', ')' };
+		private static readonly char[] separatorAsNumbers = { 'A', 'S', '/', '[', ']' };
+		private static readonly char[] separatorRtt = { ' ', 'm', 's' };
 
 		// Public fields.
 
 		/// <summary>
-		/// The hop TTL.
+		/// The hop number.
 		/// </summary>
-		public int Ttl { get; private set; }
+		public int Number { get; private set; }
 		/// <summary>
 		/// The hop hostname.
 		/// </summary>
@@ -67,124 +63,164 @@ namespace InetTools.Tools.Mercury
 		/// <summary>
 		/// The hop RTT values.
 		/// </summary>
-		public TimeSpan?[] Rtt { get; private set; }
+		public TimeSpan[] Rtt { get; private set; }
+
+		// Public methods.
+
+		/// <summary>
+		/// Parses the data string from a Linux traceroute hop.
+		/// </summary>
+		/// <param name="data">The traceroute data.</param>
+		/// <returns>A traceroute hop.</returns>
+		public static MercuryTracerouteHop ParseLinux(string data)
+		{
+			// Create a traceroute hop.
+			MercuryTracerouteHop hop = new MercuryTracerouteHop();
+
+			// Parse the hop number.
+			hop.Number = MercuryTracerouteHop.ParseLinuxHopNumber(data);
+			// Parse the destination.
+			hop.ParseDestination(data);
+			// Parse the autonomous system numbers.
+			hop.ParseAsNumbers(data);
+			// Parse the round-trip time.
+			hop.ParseRtt(data);
+
+			// Return the hop.
+			return hop;
+		}
 
 		// Private methods.
 
 		/// <summary>
-		/// Parses the data string into a traceroute hop structure.
+		/// Parses the destination hostname and IP address.
 		/// </summary>
-		/// <param name="data">The data string.</param>
-		private void Parse(string data)
+		/// <param name="data">The hop data string.</param>
+		private void ParseDestination(string data)
 		{
-			// Validate the arguments.
-			if (null == data) throw new ArgumentNullException(data);
+			// Get the matching IP address.
+			Match match = Regex.Match(data, MercuryTracerouteHop.regexLinuxDestination);
 
-			// Split the data string into tokens.
-			string[] tokens = data.Split(MercuryTracerouteHop.separatorLine, StringSplitOptions.RemoveEmptyEntries);
-
-			// If the tokens list is empty, throw an exception.
-			if (tokens.Length == 0) throw new FormatException("The specified string is not a traceroute hop data ({0}).".FormatWith(data));
-
-			// The first token is always the hop TTL.
-			this.Ttl =  int.Parse(tokens[0]);
-
-			// A flag indicating whether the hop information has been parsed.
-			bool found = false;
-
-			// The RTT list.
-			List<TimeSpan?> rtt = new List<TimeSpan?>();
-
-			// Parse the remaining tokens.
-			for (int index = 0; index < tokens.Length; )
+			// If the hop string matches a destination.
+			if (match.Success)
 			{
-				// If the token is equal to a star.
-				if (tokens[index++] == "*")
-				{
-					// The current RTT is unknown.
-					rtt.Add(null);
-					// Continue to the next token.
-					continue;
-				}
-				else if (!found)
-				{
-					// Parse the hop information.
-					this.ParseHop(ref tokens, ref index);
-
-					// Set the found token to true.
-					found = true;
-				}
-				else
-				{
-					// Parse the RTT information.
-					this.ParseRtt(ref tokens, ref index, ref rtt);
-				}
-			}
-		}
-
-		private void ParseHop(ref string[] tokens, ref int index)
-		{
-			// If the next token matches round brackets.
-			if (MercuryTracerouteHop.IsMatch(ref tokens, index + 1, @"\(.+\)"))
-			{
-				// The current token represents the hostname.
-				this.Hostname = tokens[index++];
-				// The next token represents the IP address.
-				this.Address = IPAddress.Parse(tokens[index++].Split(MercuryTracerouteHop.separatorAddress, StringSplitOptions.RemoveEmptyEntries).First());
+				// Get the tokens.
+				string[] tokens = match.Value.Split(MercuryTracerouteHop.separatorSpaceRoundBrackets, StringSplitOptions.RemoveEmptyEntries);
+				// Check the match contains two tokens.
+				if (tokens.Length < 2) throw new FormatException("The data string \'{0}\' does not contain a complete destination.".FormatWith(data));
+				// Get the hostname from the first token.
+				this.Hostname = tokens[tokens.Length - 2];
+				// Get the IP address from the second token.
+				this.Address = IPAddress.Parse(tokens[tokens.Length - 1]);
 			}
 			else
 			{
-				// The current token represents the IP address.
-				this.Address = IPAddress.Parse(tokens[index++]);
+				// The IP address.
+				IPAddress address;
+				// Parse the IP address.
+				MercuryTracerouteHop.TryParseIp(data, out address);
+				// Set the address.
+				this.Address = address;
+				// Set the hostname to null.
+				this.Hostname = null;
 			}
-
-			// If the next token matches square brackets.
-			if (MercuryTracerouteHop.IsMatch(ref tokens, index, @"\[.+\]"))
-			{
-				// Parse the next token for information on the AS numbers.
-				this.ParseAs(tokens[index++].Split(MercuryTracerouteHop.separatorAs));
-			}
-		}
-
-		private void ParseAs(string[] tokens)
-		{
-			List<int> asNumbers = new List<int>();
-
-			// For all tokens corresponding to an AS number.
-			foreach (string token in tokens)
-			{
-				// Check the token corresponds to an AS number.
-				if (MercuryTracerouteHop.IsMatch(token, "AS[0-9]+"))
-				{
-					asNumbers.Add(int.Parse(token.Split(MercuryTracerouteHop.separatorAsNumber, StringSplitOptions.RemoveEmptyEntries).First()));
-				}
-			}
-		}
-
-		private void ParseRtt(ref string[] tokens, ref int index, ref List<TimeSpan?> rtt)
-		{
-
-		}
-
-		private static bool IsMatch(string token, string pattern)
-		{
-			// Else use the regular expressions to match the token.
-			return Regex.Match(token, pattern, RegexOptions.CultureInvariant).Length == token.Length;
 		}
 
 		/// <summary>
-		/// Checks whether the token at the specified index matches the regular expression.
+		/// Parses the autonomous system numbers.
 		/// </summary>
-		/// <param name="tokens">The list of tokens.</param>
-		/// <param name="index">The index</param>
-		/// <param name="pattern">The regular expression pattern.</param>
-		/// <returns><b>True</b> if the token matches, <b>false</b> otherwise or if the token does not exist.</returns>
-		private static bool IsMatch(ref string[] tokens, int index, string pattern)
+		/// <param name="data">The hop data string.</param>
+		private void ParseAsNumbers(string data)
 		{
-			// If the index is outside the list of tokens, return false.
-			if (index >= tokens.Length) return false;
-			// Else use the regular expressions to match the token.
-			return MercuryTracerouteHop.IsMatch(tokens[index], pattern);
+			// Get the matching autonomous system numbers.
+			Match match = Regex.Match(data, MercuryTracerouteHop.regexAs);
+
+			// If the hop string matches the AS numbers.
+			if (match.Success)
+			{
+				// Get the tokens.
+				string[] tokens = match.Value.Split(MercuryTracerouteHop.separatorAsNumbers, StringSplitOptions.RemoveEmptyEntries);
+				// Allocate the AS numbers array.
+				this.AutonomousSystems = new int[tokens.Length];
+				// Parse each token.
+				for (int index = 0; index < tokens.Length; index++)
+				{
+					this.AutonomousSystems[index] = int.Parse(tokens[index]);
+				}
+			}
+			else
+			{
+				// Set the AS numbers to null.
+				this.AutonomousSystems = null;
+			}
+		}
+
+		/// <summary>
+		/// Parses the round-trip time.
+		/// </summary>
+		/// <param name="data">The hop data string.</param>
+		private void ParseRtt(string data)
+		{
+			// Get the matches for the RTT information.
+			MatchCollection matches = Regex.Matches(data, MercuryTracerouteHop.regexRtt);
+
+			// If the number of matches is greater than zero.
+			if (matches.Count > 0)
+			{
+				// Allocate the RTT array.
+				this.Rtt = new TimeSpan[matches.Count];
+
+				// Parse each match.
+				int index = 0;
+				foreach (Match match in matches)
+				{
+					this.Rtt[index++] = TimeSpan.FromMilliseconds(double.Parse(match.Value.Split(MercuryTracerouteHop.separatorRtt, StringSplitOptions.RemoveEmptyEntries).First(), CultureInfo.InvariantCulture));
+				}
+			}
+			else
+			{
+				// Set the RTT data to null.
+				this.Rtt = null;
+			}
+		}
+
+		/// <summary>
+		/// Parses a bracketed IP address in the specified data string.
+		/// </summary>
+		/// <param name="data">The data string.</param>
+		/// <param name="address">The IP address.</param>
+		/// <returns><b>True</b> if the parsing was successful, <b>false</b> otherwise.</returns>
+		private static bool TryParseIp(string data, out IPAddress address)
+		{
+			// Get the matching IP address.
+			Match match = Regex.Match(data, MercuryTracerouteHop.regexIp);
+
+			if (match.Success)
+			{
+				// Parse the IP address.
+				return IPAddress.TryParse(match.Value, out address);
+			}
+
+			// Set the IP address to null.
+			address = null;
+			// Return false.
+			return false;
+		}
+
+		/// <summary>
+		/// Parses the hop number.
+		/// </summary>
+		/// <param name="data">The hop data string.</param>
+		private static int ParseLinuxHopNumber(string data)
+		{
+			// Find the match for the hop number.
+			Match match = Regex.Match(data, MercuryTracerouteHop.regexHop);
+
+			// If the match is not successful, throw a format exception.
+			if (!match.Success) throw new FormatException("The traceroute line \'{0}\' does not contain a hop number.".FormatWith(data));
+
+			// Else, parse the first token.
+			return int.Parse(match.Value.Split(MercuryTracerouteHop.separatorSpace, StringSplitOptions.RemoveEmptyEntries).First());
 		}
 	}
 }

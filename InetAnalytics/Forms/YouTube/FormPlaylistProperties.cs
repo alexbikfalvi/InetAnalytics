@@ -35,7 +35,8 @@ namespace InetAnalytics.Forms.YouTube
 		/// </summary>
 		public FormPlaylistProperties()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);
@@ -49,14 +50,49 @@ namespace InetAnalytics.Forms.YouTube
 		/// <returns>The dialog result.</returns>
 		public DialogResult ShowDialog(IWin32Window owner, Playlist playlist)
 		{
-			// If the playlist is null, do nothing.
-			if (null == playlist) return DialogResult.Abort;
-
 			// Set the playlist.
 			this.controlPlaylist.Playlist = playlist;
 			// Set the title.
 			this.Text = "Playlist {0} Properties".FormatWith(playlist.Id);
 			// Open the dialog.
+			return base.ShowDialog(owner);
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
 			return base.ShowDialog(owner);
 		}
 	}

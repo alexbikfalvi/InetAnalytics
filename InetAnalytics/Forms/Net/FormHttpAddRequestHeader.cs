@@ -34,7 +34,8 @@ namespace InetAnalytics.Forms.Net
 		/// </summary>
 		public FormHttpAddRequestHeader()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);
@@ -46,7 +47,6 @@ namespace InetAnalytics.Forms.Net
 		/// Gets the HTTP request header.
 		/// </summary>
 		public string Header { get { return this.control.Header; } }
-
 		/// <summary>
 		/// Gets the header value.
 		/// </summary>
@@ -89,15 +89,33 @@ namespace InetAnalytics.Forms.Net
 			return base.ShowDialog(owner);
 		}
 
+		// Private methods.
+
+
 		/// <summary>
-		/// An event handler called when the user clicks on the add button.
+		/// Shows the form.
 		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnAddClick(object sender, EventArgs e)
+		private new void Show()
 		{
-			// Close the dialog.
-			this.Close();
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
 		}
 
 		/// <summary>

@@ -310,6 +310,42 @@
   <data name="PlayStop_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayStop_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PushPinError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinError_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPinError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinError_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPinError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinError_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPinError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinError_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPinSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinSuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPinSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinSuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPinSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinSuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPinSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPinSuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPin_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPin_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPin_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPin_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPin_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPin_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PushPin_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PushPin_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Refresh_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Refresh_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

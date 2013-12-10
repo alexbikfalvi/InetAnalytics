@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -64,6 +65,18 @@
     <Compile Include="Controls\Log\ControlLogList.Designer.cs">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Tools\ControlMethods.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlMethods.Designer.cs">
+      <DependentUpon>ControlMethods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlAddMethod.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Tools\ControlAddMethod.Designer.cs">
+      <DependentUpon>ControlAddMethod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Tools\ControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,8 +99,14 @@
     <Compile Include="Forms\Log\FormEventProperties.Designer.cs">
       <DependentUpon>FormEventProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Tools\FormAddMethod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\FormAddMethod.Designer.cs">
+      <DependentUpon>FormAddMethod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources.Designer.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -106,6 +125,12 @@
     <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Tools\ControlMethods.resx">
+      <DependentUpon>ControlMethods.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Tools\ControlAddMethod.resx">
+      <DependentUpon>ControlAddMethod.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Database\FormChangePassword.resx">
       <DependentUpon>FormChangePassword.cs</DependentUpon>
     </EmbeddedResource>
@@ -115,7 +140,10 @@
     <EmbeddedResource Include="Forms\Log\FormEventProperties.resx">
       <DependentUpon>FormEventProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources.resx">
+    <EmbeddedResource Include="Forms\Tools\FormAddMethod.resx">
+      <DependentUpon>FormAddMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>InetAnalytics</CustomToolNamespace>
@@ -136,34 +164,100 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventInformation_32.png" />
+    <None Include="Resources\Cube_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventSuccess_32.png" />
+    <None Include="Resources\Connect_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventCanceled_32.png" />
+    <None Include="Resources\Connect_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventError_32.png" />
+    <None Include="Resources\Connect_32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventErrorWarning_32.png" />
+    <None Include="Resources\Connect_48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventSuccessWarning_32.png" />
+    <None Include="Resources\Copy_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventWarning_32.png" />
+    <None Include="Resources\Copy_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EventStop_32.png" />
+    <None Include="Resources\Copy_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseBusy_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseError_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DatabaseSuccess_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error_48.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EventCanceled_16.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EventCanceled_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventCanceled_32.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EventCanceled_48.png" />
@@ -175,6 +269,9 @@
     <None Include="Resources\EventError_24.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\EventError_32.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\EventError_48.png" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +281,9 @@
     <None Include="Resources\EventErrorWarning_24.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\EventErrorWarning_32.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\EventErrorWarning_48.png" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +291,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EventInformation_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventInformation_32.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EventInformation_48.png" />
@@ -226,6 +329,9 @@
     <None Include="Resources\EventStop_24.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\EventStop_32.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\EventStop_48.png" />
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +339,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EventSuccess_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventSuccess_32.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EventSuccess_48.png" />
@@ -244,6 +353,9 @@
     <None Include="Resources\EventSuccessWarning_24.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\EventSuccessWarning_32.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\EventSuccessWarning_48.png" />
   </ItemGroup>
   <ItemGroup>
@@ -253,19 +365,10 @@
     <None Include="Resources\EventWarning_24.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\EventWarning_32.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\EventWarning_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Copy_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Copy_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Copy_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Copy_48.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Exception_16.png" />
@@ -292,16 +395,16 @@
     <None Include="Resources\Log_48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Error_16.png" />
+    <None Include="Resources\PasswordChange_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Error_24.png" />
+    <None Include="Resources\PasswordChange_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Error_32.png" />
+    <None Include="Resources\PasswordChange_32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Error_48.png" />
+    <None Include="Resources\PasswordChange_48.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Properties_16.png" />
@@ -328,76 +431,37 @@
     <None Include="Resources\XmlNamespace_48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PasswordChange_16.png" />
+    <None Include="Resources\Cube_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PasswordChange_24.png" />
+    <None Include="Resources\Cube_32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PasswordChange_32.png" />
+    <None Include="Resources\Cube_48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PasswordChange_48.png" />
+    <None Include="Resources\CubeAdd_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Disconnect_16.png" />
+    <None Include="Resources\CubeAdd_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Disconnect_24.png" />
+    <None Include="Resources\CubeAdd_32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Disconnect_32.png" />
+    <None Include="Resources\CubeAdd_48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Disconnect_48.png" />
+    <None Include="Resources\CubeRemove_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\DatabaseSuccess_16.png" />
+    <None Include="Resources\CubeRemove_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\DatabaseSuccess_24.png" />
+    <None Include="Resources\CubeRemove_32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\DatabaseSuccess_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseSuccess_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseError_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseError_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseError_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseError_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseBusy_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseBusy_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseBusy_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DatabaseBusy_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_48.png" />
+    <None Include="Resources\CubeRemove_48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

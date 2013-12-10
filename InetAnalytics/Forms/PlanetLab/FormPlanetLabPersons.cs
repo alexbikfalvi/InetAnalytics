@@ -35,7 +35,8 @@ namespace InetAnalytics.Forms.PlanetLab
 		/// </summary>
 		public FormPlanetLabPersons()
 		{
-			InitializeComponent();
+			// Initialize the component.
+			this.InitializeComponent();
 
 			// Set the font.
 			Window.SetFont(this);
@@ -69,6 +70,42 @@ namespace InetAnalytics.Forms.PlanetLab
 		// Private methods.
 
 		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		private new void Show()
+		{
+			base.Show();
+		}
+
+		/// <summary>
+		/// Shows the form.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		private new void Show(IWin32Window owner)
+		{
+			base.Show(owner);
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog()
+		{
+			return base.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		/// <param name="owner">The owner.</param>
+		/// <returns>The dialog result.</returns>
+		private new DialogResult ShowDialog(IWin32Window owner)
+		{
+			return base.ShowDialog(owner);
+		}
+
+		/// <summary>
 		/// An event handler called when the user cancels the selection.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
@@ -77,8 +114,6 @@ namespace InetAnalytics.Forms.PlanetLab
 		{
 			// Set the dialog result.
 			this.DialogResult = DialogResult.Cancel;
-			// Close the form.
-			this.Close();
 		}
 
 		/// <summary>
@@ -92,8 +127,6 @@ namespace InetAnalytics.Forms.PlanetLab
 			this.Result = e.Object;
 			// Set the dialog result.
 			this.DialogResult = DialogResult.OK;
-			// Close the form.
-			this.Close();
 		}
 	}
 }

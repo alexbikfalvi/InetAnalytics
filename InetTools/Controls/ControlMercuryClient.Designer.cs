@@ -56,7 +56,9 @@
 			this.panelTool = new DotNetApi.Windows.Controls.ThemeControl();
 			this.tabControl = new DotNetApi.Windows.Controls.ThemeTabControl();
 			this.tabPageTraceroute = new System.Windows.Forms.TabPage();
+			this.splitContainerTraceroute = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.codeTextBox = new DotNetApi.Windows.Controls.CodeTextBox();
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelServer = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxUrl = new System.Windows.Forms.ToolStripTextBox();
@@ -64,9 +66,9 @@
 			this.buttonUpload = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.controlTraceroute = new InetTools.Controls.ControlMercuryClientTraceroute();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -74,6 +76,10 @@
 			this.panelTool.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageTraceroute.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerTraceroute)).BeginInit();
+			this.splitContainerTraceroute.Panel1.SuspendLayout();
+			this.splitContainerTraceroute.Panel2.SuspendLayout();
+			this.splitContainerTraceroute.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -126,7 +132,7 @@
 			// 
 			// tabPageTraceroute
 			// 
-			this.tabPageTraceroute.Controls.Add(this.codeTextBox);
+			this.tabPageTraceroute.Controls.Add(this.splitContainerTraceroute);
 			this.tabPageTraceroute.Location = new System.Drawing.Point(2, 23);
 			this.tabPageTraceroute.Name = "tabPageTraceroute";
 			this.tabPageTraceroute.Padding = new System.Windows.Forms.Padding(4);
@@ -134,6 +140,27 @@
 			this.tabPageTraceroute.TabIndex = 0;
 			this.tabPageTraceroute.Text = "Traceroute";
 			this.tabPageTraceroute.UseVisualStyleBackColor = true;
+			// 
+			// splitContainerTraceroute
+			// 
+			this.splitContainerTraceroute.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerTraceroute.Location = new System.Drawing.Point(4, 4);
+			this.splitContainerTraceroute.Name = "splitContainerTraceroute";
+			// 
+			// splitContainerTraceroute.Panel1
+			// 
+			this.splitContainerTraceroute.Panel1.Controls.Add(this.codeTextBox);
+			this.splitContainerTraceroute.Panel1.Padding = new System.Windows.Forms.Padding(1);
+			// 
+			// splitContainerTraceroute.Panel2
+			// 
+			this.splitContainerTraceroute.Panel2.Controls.Add(this.controlTraceroute);
+			this.splitContainerTraceroute.Panel2.Padding = new System.Windows.Forms.Padding(1);
+			this.splitContainerTraceroute.Size = new System.Drawing.Size(786, 343);
+			this.splitContainerTraceroute.SplitterDistance = 388;
+			this.splitContainerTraceroute.SplitterWidth = 5;
+			this.splitContainerTraceroute.TabIndex = 3;
+			this.splitContainerTraceroute.UseTheme = false;
 			// 
 			// codeTextBox
 			// 
@@ -145,12 +172,21 @@
 			this.codeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.codeTextBox.Font = new System.Drawing.Font("Consolas", 10F);
 			this.codeTextBox.ForeColor = System.Drawing.Color.Black;
-			this.codeTextBox.Location = new System.Drawing.Point(4, 4);
+			this.codeTextBox.Location = new System.Drawing.Point(1, 1);
 			this.codeTextBox.Name = "codeTextBox";
-			this.codeTextBox.Size = new System.Drawing.Size(786, 343);
-			this.codeTextBox.TabIndex = 0;
+			this.codeTextBox.Size = new System.Drawing.Size(386, 341);
+			this.codeTextBox.TabIndex = 1;
 			this.codeTextBox.Text = "";
 			this.codeTextBox.TextChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "GlobeQuestion");
+			this.imageList.Images.SetKeyName(1, "GlobeSuccess");
+			this.imageList.Images.SetKeyName(2, "GlobeWarning");
+			this.imageList.Images.SetKeyName(3, "GlobeError");
 			// 
 			// toolStrip
 			// 
@@ -214,15 +250,6 @@
 			this.controlLog.TabIndex = 0;
 			this.controlLog.Title = "Event Log";
 			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "GlobeQuestion");
-			this.imageList.Images.SetKeyName(1, "GlobeSuccess");
-			this.imageList.Images.SetKeyName(2, "GlobeWarning");
-			this.imageList.Images.SetKeyName(3, "GlobeError");
-			// 
 			// saveFileDialog
 			// 
 			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
@@ -232,6 +259,15 @@
 			// 
 			this.openFileDialog.Filter = "Alexa ranking files (*.alx)|*.alx";
 			this.openFileDialog.Title = "Open Sites List";
+			// 
+			// controlTraceroute
+			// 
+			this.controlTraceroute.AutoScroll = true;
+			this.controlTraceroute.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlTraceroute.Location = new System.Drawing.Point(1, 1);
+			this.controlTraceroute.Name = "controlTraceroute";
+			this.controlTraceroute.Size = new System.Drawing.Size(391, 341);
+			this.controlTraceroute.TabIndex = 0;
 			// 
 			// ControlMercuryClient
 			// 
@@ -249,6 +285,10 @@
 			this.panelTool.PerformLayout();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageTraceroute.ResumeLayout(false);
+			this.splitContainerTraceroute.Panel1.ResumeLayout(false);
+			this.splitContainerTraceroute.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerTraceroute)).EndInit();
+			this.splitContainerTraceroute.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.ResumeLayout(false);
@@ -271,6 +311,8 @@
 		private System.Windows.Forms.ToolStripLabel labelServer;
 		private System.Windows.Forms.ToolStripTextBox textBoxUrl;
 		private System.Windows.Forms.ToolStripSeparator separator1;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerTraceroute;
 		private DotNetApi.Windows.Controls.CodeTextBox codeTextBox;
+		private ControlMercuryClientTraceroute controlTraceroute;
 	}
 }

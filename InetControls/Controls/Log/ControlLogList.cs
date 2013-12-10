@@ -40,12 +40,15 @@ namespace InetAnalytics.Controls.Log
 		/// </summary>
 		public ControlLogList()
 		{
-			InitializeComponent();
-
+			// Initialize the component.
+			this.InitializeComponent();
+			// Set the combo box index.
 			this.comboBox.SelectedIndex = 0;
-
+			// Set the maximum items.
 			this.MaximumItems = ControlLogList.maximumValues[this.comboBox.SelectedIndex];
 		}
+
+		// Public methods.
 
 		/// <summary>
 		/// Adds a new event to the event log. The method is thread-safe.
@@ -69,6 +72,8 @@ namespace InetAnalytics.Controls.Log
 				});
 		}
 
+		// Private properties.
+
 		/// <summary>
 		/// Gets or sets the maximum number of log items.
 		/// </summary>
@@ -82,6 +87,8 @@ namespace InetAnalytics.Controls.Log
 				this.maximumItems = value;
 			}
 		}
+
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the maximum number of log items has changed.
