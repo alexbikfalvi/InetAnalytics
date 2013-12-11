@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Text;
 using DotNetApi;
 using DotNetApi.Web;
-using InetTools.Tools.CdnFinder;
 
 namespace InetTools.Tools.CdnFinder
 {

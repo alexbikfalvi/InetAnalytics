@@ -107,6 +107,7 @@
     <Compile Include="Tools\CdnFinder\CdnFinderRequest.cs" />
     <Compile Include="Tools\CdnFinder\CdnFinderResource.cs" />
     <Compile Include="Tools\Mercury\MercuryConfig.cs" />
+    <Compile Include="Tools\Mercury\MercuryRequest.cs" />
     <Compile Include="Tools\Mercury\MercuryTraceroute.cs" />
     <Compile Include="Tools\Mercury\MercuryTracerouteHop.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
