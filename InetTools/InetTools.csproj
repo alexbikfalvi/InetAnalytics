@@ -124,6 +124,10 @@
       <Project>{193bb801-054f-4729-9d5d-fce1e32594bf}</Project>
       <Name>HtmlAgilityPack</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Newtonsoft.JsonNet\Newtonsoft.Json\Newtonsoft.Json.Net40.csproj">
+      <Project>{a9ae40ff-1a21-414a-9fe7-3be13644cc6d}</Project>
+      <Name>Newtonsoft.Json.Net40</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>InetApi</Name>

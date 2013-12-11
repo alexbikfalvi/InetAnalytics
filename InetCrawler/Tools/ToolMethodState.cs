@@ -87,6 +87,17 @@ namespace InetCrawler.Tools
 			GC.SuppressFinalize(this);
 		}
 
+		/// <summary>
+		/// Cancels the asynchronous operation.
+		/// </summary>
+		public void Cancel()
+		{
+			// If the operation has completed, return.
+			if (this.IsCompleted) return;
+			// Cancel the operation.
+			this.cancel.Cancel();
+		}
+
 		// Internal methods.
 
 		/// <summary>
@@ -98,17 +109,6 @@ namespace InetCrawler.Tools
 			this.IsCompleted = true;
 			// Set the wait handle to the signaled state.
 			this.wait.Set();
-		}
-
-		/// <summary>
-		/// Cancels the asynchronous operation.
-		/// </summary>
-		internal void Cancel()
-		{
-			// If the operation has completed, return.
-			if (this.IsCompleted) return;
-			// Cancel the operation.
-			this.cancel.Cancel();
 		}
 	}
 }

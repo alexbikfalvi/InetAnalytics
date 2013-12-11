@@ -4527,22 +4527,15 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S0">Value</col>
 		<col def="s72">Component_</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>Registry1</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry10</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Database</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry11</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Database</td><td>Primary</td><td>0e7a98f0-8366-4aa0-96fc-4d8025f75a4a</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry15</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry11</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Database</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry13</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0\704886cd-9f15-444b-a0df-a5068fe8e775,1.0.0.0</td><td>ServerUrl</td><td>http://mercury.upf.edu/mercury/api/traceroute/uploadTrace</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry17</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>FileName</td><td>[INSTALLDIR]InetTools.dll</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry18</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>TypeName</td><td>InetTools.StandardToolset</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry19</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>Id</td><td>1fa6dd5f-f500-4920-85a4-72a2d46ac08d</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry2</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Comments</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry20</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0</td><td>Version</td><td>1.0.0.0</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry3</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Comments</td><td>VideosFileName</td><td>C:\Users\Alex\AppData\Roaming\Alex Bikfalvi\Internet Analytics\Comments\Videos.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry30</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Log</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry31</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Log</td><td>FileName</td><td>C:\Users\Alex\AppData\Roaming\Alex Bikfalvi\Internet Analytics\Log\YtLog-{0}-{1}-{2}.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry32</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\PlanetLab</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry36</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\PlanetLab\Slices</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry38</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Spiders</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry39</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Spiders\StandardFeeds</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry36</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\PlanetLab\Slices</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry4</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Comments</td><td>UsersFileName</td><td>C:\Users\Alex\AppData\Roaming\Alex Bikfalvi\Internet Analytics\Comments\Users.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry40</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Spiders\StandardFeeds</td><td>TopRated</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry41</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Spiders\StandardFeeds</td><td>TopFavories</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
@@ -4552,14 +4545,12 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>Registry45</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Spiders\StandardFeeds</td><td>MostDiscussed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry46</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Spiders\StandardFeeds</td><td>RecentlyFeatured</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 		<row><td>Registry47</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Spiders\StandardFeeds</td><td>MostResponsed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry48</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Testing</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry49</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Testing\SshRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry49</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Testing\SshRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry5</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Comments</td><td>PlaylistsFileName</td><td>C:\Users\Alex\AppData\Roaming\Alex Bikfalvi\Internet Analytics\Comments\Playlists.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry55</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Testing\WebRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
+		<row><td>Registry55</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Testing\WebRequest</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
 		<row><td>Registry6</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0\24654a51-339d-4c75-a60c-559388b5afcb,1.0.0.0</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
-		<row><td>Registry72</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\YouTube</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry75</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\YouTube\V2</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
-		<row><td>Registry9</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0\9d988bac-87a5-470a-81b3-bae3fa30e92d,1.0.0.0</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry75</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\YouTube\V2</td><td/><td/><td>ISX_DEFAULTCOMPONENT1</td><td>1</td></row>
+		<row><td>Registry9</td><td>1</td><td>Software\Alex Bikfalvi\Internet Analytics\Toolbox\1fa6dd5f-f500-4920-85a4-72a2d46ac08d,1.0.0.0\9d988bac-87a5-470a-81b3-bae3fa30e92d,1.0.0.0</td><td>ServerUrl</td><td>http://inetanalytics.nets.upf.edu/bulkUpload</td><td>ISX_DEFAULTCOMPONENT1</td><td>0</td></row>
 	</table>
 
 	<table name="RemoveFile">

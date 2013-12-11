@@ -981,31 +981,28 @@ namespace InetTools.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This method uploads a new traceroute to the Mercury web service.
+        ///   Looks up a localized string similar to This method uploads a new traceroute collected from a PlanetLab node to the Mercury web service.
         ///
-        ///Syntax: UploadTraceroute(srcIp, dstIp, srcHostname, dstHostname, traceroute)
+        ///Syntax: UploadTracerouteFromPlanetLab(object[] parameters)
         ///
         ///Parameters:
-        ///srcIp - the source IP address
-        ///dstIp - the destination IP address
-        ///srcHostname - the source hostname
-        ///dstHostname - the destination hostname
-        ///traceroute - the output of the traceroute command
+        ///nodeHostname - the hostname of the PlanetLab node
+        ///tracerouteData - the output of the traceroute command
         ///
         ///Returns: true if the operation was successful, false otherwise..
         /// </summary>
-        internal static string ToolMercuryClientMethodUploadTracerouteDescription {
+        internal static string ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription {
             get {
-                return ResourceManager.GetString("ToolMercuryClientMethodUploadTracerouteDescription", resourceCulture);
+                return ResourceManager.GetString("ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UploadTraceroute.
+        ///   Looks up a localized string similar to UploadTracerouteFromPlanetLab.
         /// </summary>
-        internal static string ToolMercuryClientMethodUploadTracerouteName {
+        internal static string ToolMercuryClientMethodUploadTracerouteFromPlanetLabName {
             get {
-                return ResourceManager.GetString("ToolMercuryClientMethodUploadTracerouteName", resourceCulture);
+                return ResourceManager.GetString("ToolMercuryClientMethodUploadTracerouteFromPlanetLabName", resourceCulture);
             }
         }
     }

@@ -63,7 +63,7 @@ namespace InetTools.Tools.Mercury
 		/// <summary>
 		/// The hop RTT values.
 		/// </summary>
-		public TimeSpan[] Rtt { get; private set; }
+		public double[] Rtt { get; private set; }
 
 		// Public methods.
 
@@ -168,13 +168,13 @@ namespace InetTools.Tools.Mercury
 			if (matches.Count > 0)
 			{
 				// Allocate the RTT array.
-				this.Rtt = new TimeSpan[matches.Count];
+				this.Rtt = new double[matches.Count];
 
 				// Parse each match.
 				int index = 0;
 				foreach (Match match in matches)
 				{
-					this.Rtt[index++] = TimeSpan.FromMilliseconds(double.Parse(match.Value.Split(MercuryTracerouteHop.separatorRtt, StringSplitOptions.RemoveEmptyEntries).First(), CultureInfo.InvariantCulture));
+					this.Rtt[index++] = double.Parse(match.Value.Split(MercuryTracerouteHop.separatorRtt, StringSplitOptions.RemoveEmptyEntries).First(), CultureInfo.InvariantCulture);
 				}
 			}
 			else

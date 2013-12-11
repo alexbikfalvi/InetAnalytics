@@ -99,7 +99,8 @@ namespace InetCrawler.Tools
 		/// <param name="callback">The callback method for an asynchronoud request.</param>
 		/// <param name="state">The user state.</param>
 		/// <param name="arguments">The method arguments.</param>
-		public IAsyncResult BeginCall(AsyncCallback callback, object state, params object[] arguments)
+		/// <returns>The tool method state.</returns>
+		public ToolMethodState BeginCall(AsyncCallback callback, object state, params object[] arguments)
 		{
 			// Create a new tool method state.
 			ToolMethodState asyncState = new ToolMethodState(state);

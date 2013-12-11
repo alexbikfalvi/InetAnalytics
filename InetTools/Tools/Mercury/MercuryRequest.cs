@@ -17,8 +17,11 @@
  */
 
 using System;
+using System.Linq;
+using System.Text;
 using DotNetApi;
 using DotNetApi.Web;
+using Newtonsoft.Json.Linq;
 
 namespace InetTools.Tools.Mercury
 {
@@ -50,29 +53,26 @@ namespace InetTools.Tools.Mercury
 			// Set the request headers.
 			asyncState.Request.Method = "POST";
 			asyncState.Request.Accept = "text/html,application/xhtml+xml,application/xml";
-			//asyncState.Request.ContentType = "multipart/form-data; boundary={0}".FormatWith(boundary);
+			asyncState.Request.ContentType = "application/json;charset=UTF-8";
 
-			//// Compute the send data.
-			//StringBuilder builder = new StringBuilder();
-			//builder.AppendFormat("--{0}{1}", boundary, Environment.NewLine);
-			//builder.AppendLine("Content-Disposition: form-data; name=\"file\"; filename=\"sites\"");
-			//builder.AppendLine("Content-Type: text/plain");
-			//builder.AppendLine();
-			//foreach (object site in sites)
-			//{
-			//	if (!string.IsNullOrWhiteSpace(site.ToString()))
-			//	{
-			//		builder.AppendLine(site.ToString());
-			//	}
-			//}
-			//builder.AppendFormat("--{0}{1}", boundary, Environment.NewLine);
-			//builder.AppendLine("Content-Disposition: form-data; name=\"format\"");
-			//builder.AppendLine();
-			//builder.AppendLine("xml");
-			//builder.AppendFormat("--{0}--{1}", boundary, Environment.NewLine);
+			// Create the traceroute JSON object.
+			JObject obj = new JObject(
+				new JProperty("srcIp", traceroute.SourceIp != null ? traceroute.SourceIp.ToString() : "none"),
+				new JProperty("dstIp", traceroute.DestinationIp.ToString()),
+				new JProperty("srcName", traceroute.SourceHostname),
+				new JProperty("dstName", traceroute.DestinationHostname),
+				new JProperty("hops",
+					new JArray(from hop in traceroute.Hops select new JObject(
+						new JProperty("id", hop.Number.ToString()),
+						new JProperty("ip", hop.Address != null ? hop.Address.ToString() : "none"),
+						new JProperty("asn", hop.AutonomousSystems != null ? new JArray(from asn in hop.AutonomousSystems select asn.ToString()) : new JArray()),
+						new JProperty("rtt", hop.Rtt != null ? new JArray(from rtt in hop.Rtt select rtt.ToString()) : new JArray())
+						)
+					)
+				));
 
-			//// Append the send data.
-			//asyncState.SendData.Append(builder.ToString(), Encoding.UTF8);
+			// Append the send data.
+			asyncState.SendData.Append(obj.ToString(), Encoding.UTF8);
 
 			// Begin the request.
 			return base.Begin(asyncState);
@@ -82,17 +82,13 @@ namespace InetTools.Tools.Mercury
 		/// Completes the web request and returns the result.
 		/// </summary>
 		/// <param name="result">The result of the asynchronous web operation.</param>
-		/// <returns><b>True</b> if the operation was successful.</returns>
-		public bool End(IAsyncResult result)
+		public new void End(IAsyncResult result)
 		{
 			// The data.
 			string data;
 
 			// Call the base class end method.
 			base.End(result, out data);
-
-			// Parse the data into the list of CDN Finder sites.
-			return true;
 		}
 	}
 }

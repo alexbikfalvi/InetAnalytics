@@ -102,6 +102,19 @@ namespace InetTools.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
+			// Compute the number of pages to download.
+			int pages;
+			if(!int.TryParse(this.comboBoxPages.Text, out pages))
+			{
+				MessageBox.Show(this, "The number of pages is not an integer.", "Number of Pages Format", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			if ((pages <= 0) || (pages > 20))
+			{
+				MessageBox.Show(this, "You can request between 1 and 20 pages.", "Number of Pages", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			// Call the request started event handler.
 			this.OnRequestStarted();
 
@@ -111,9 +124,6 @@ namespace InetTools.Controls
 				this.listView.Items.Clear();
 				// Disable the save button.
 				this.buttonSave.Enabled = false;
-
-				// Compute the number of pages to download.
-				int pages = int.Parse(this.comboBoxPages.SelectedItem as string);
 
 				// If the selected index is zero.
 				if (this.comboBoxCountries.SelectedIndex == 0)

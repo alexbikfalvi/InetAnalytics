@@ -394,21 +394,18 @@
   <data name="Success_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Success_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ToolMercuryClientMethodUploadTracerouteDescription" xml:space="preserve">
-    <value>This method uploads a new traceroute to the Mercury web service.
+  <data name="ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription" xml:space="preserve">
+    <value>This method uploads a new traceroute collected from a PlanetLab node to the Mercury web service.
 
-Syntax: UploadTraceroute(srcIp, dstIp, srcHostname, dstHostname, traceroute)
+Syntax: UploadTracerouteFromPlanetLab(object[] parameters)
 
 Parameters:
-srcIp - the source IP address
-dstIp - the destination IP address
-srcHostname - the source hostname
-dstHostname - the destination hostname
-traceroute - the output of the traceroute command
+nodeHostname - the hostname of the PlanetLab node
+tracerouteData - the output of the traceroute command
 
 Returns: true if the operation was successful, false otherwise.</value>
   </data>
-  <data name="ToolMercuryClientMethodUploadTracerouteName" xml:space="preserve">
-    <value>UploadTraceroute</value>
+  <data name="ToolMercuryClientMethodUploadTracerouteFromPlanetLabName" xml:space="preserve">
+    <value>UploadTracerouteFromPlanetLab</value>
   </data>
 </root>

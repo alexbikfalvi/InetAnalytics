@@ -801,7 +801,7 @@ namespace InetCrawler.PlanetLab
 							while ((retry++ < state.Slice.CommandRetries) && (sshCommand.ExitStatus != 0));
 
 							// Create a new command state.
-							PlManagerSubcommandState subcommandState = new PlManagerSubcommandState(sshCommand, duration, retry - 1);
+							PlManagerSubcommandState subcommandState = new PlManagerSubcommandState(node, sshCommand, duration, retry - 1);
 
 							// Increment the number of successful subcommands.
 							success++;
@@ -815,7 +815,7 @@ namespace InetCrawler.PlanetLab
 						catch (Exception exception)
 						{
 							// Create a new subcommand state.
-							PlManagerSubcommandState subcommandState = new PlManagerSubcommandState(sshCommand, exception);
+							PlManagerSubcommandState subcommandState = new PlManagerSubcommandState(node, sshCommand, exception);
 
 							// Increment the number of failed subcommands.
 							fail++;

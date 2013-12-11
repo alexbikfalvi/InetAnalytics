@@ -248,7 +248,6 @@
 			// 
 			// comboBoxPages
 			// 
-			this.comboBoxPages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxPages.Items.AddRange(new object[] {
             "1",
             "5",

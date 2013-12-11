@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
@@ -31,6 +32,7 @@ using InetCrawler;
 using InetCrawler.Log;
 using InetCrawler.PlanetLab;
 using InetCrawler.Status;
+using InetCrawler.Tools;
 
 namespace InetAnalytics.Controls.PlanetLab
 {
@@ -103,6 +105,10 @@ namespace InetAnalytics.Controls.PlanetLab
 		private PlManager manager;
 		private readonly object managerSync = new object();
 		private PlManagerState managerState = null;
+
+		private readonly List<ToolMethodState> toolStates = new List<ToolMethodState>();
+		private readonly object toolSync = new object();
+		private readonly ManualResetEvent toolWait = new ManualResetEvent(true);
 
 		private readonly List<ProgressItem> managerProgressItems = new List<ProgressItem>();
 
@@ -1701,6 +1707,16 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRunStopping(object sender, PlManagerEventArgs e)
 		{
+			// If there are pending tool method calls.
+			lock (this.toolSync)
+			{
+				// Cancel all method.
+				foreach (ToolMethodState asyncState in this.toolStates)
+				{
+					asyncState.Cancel();
+				}
+			}
+
 			this.Invoke(() =>
 				{
 					// Set the controls enabled state.
@@ -1727,6 +1743,9 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnRunStopped(object sender, PlManagerEventArgs e)
 		{
+			// Wait for the tool method to complete.
+			this.toolWait.WaitOne();
+
 			this.Invoke(() =>
 			{
 				// Set the controls enabled state.
@@ -1820,8 +1839,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Log.
 				this.controlLog.Add(this.config.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
+					LogEventLevel.Important,
+					LogEventType.Error,
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
 					"Updating the information for the selected PlanetLab nodes failed. {0}",
 					new object[] { e.Exception.Message },
@@ -1831,8 +1850,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Log.
 				this.controlLog.Add(this.config.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Information,
+					LogEventLevel.Important,
+					LogEventType.Error,
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
 					"Updating the information for the selected PlanetLab nodes failed. {0}",
 					new object[] { e.Message }));
@@ -1891,7 +1910,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					}
 					// Log an event.
 					this.controlLog.Add(this.config.Log.Add(
-						LogEventLevel.Verbose,
+						LogEventLevel.Normal,
 						LogEventType.Warning,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"The PlanetLab node {0} ({1}) is disabled for running commands because it is not in the boot state.",
@@ -1922,7 +1941,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					// Log an event.
 					this.controlLog.Add(this.config.Log.Add(
 						LogEventLevel.Verbose,
-						LogEventType.Information,
+						LogEventType.Canceled,
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"The PlanetLab node {0} ({1}) has been skipped for running commands because a previous node in the same slice was successful.",
 						new object[] { e.Node.Id, e.Node.Hostname }));
@@ -2109,8 +2128,8 @@ namespace InetAnalytics.Controls.PlanetLab
 			{
 				// Log an event.
 				this.controlLog.Add(this.config.Log.Add(
-					LogEventLevel.Verbose,
-					LogEventType.Success,
+					LogEventLevel.Important,
+					LogEventType.Error,
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
 					"The PlanetLab node {0} ({1}) failed running the PlanetLab command \'{2}\' with parameter set {3}. {4}",
 					new object[] { e.Node.Id, e.Node.Hostname, e.Command.Command, e.Exception },
@@ -2136,7 +2155,13 @@ namespace InetAnalytics.Controls.PlanetLab
 		private void OnSubcommandSuccess(object sender, PlManagerSubcommandEventArgs e)
 		{
 			this.Invoke(() =>
-			{
+			{		
+				// If the subcommand was successful.
+				if ((e.Subcommand.Exception == null) && (e.Subcommand.Result != null) && (e.Subcommand.ExitStatus == 0))
+				{
+					// Send the result command to the tools.
+					this.OnSendResultTools(e.Subcommand);
+				}
 				// If the selected result node equals the current node.
 				if (e.Node.Hostname == this.comboBoxNodes.SelectedItem as string)
 				{
@@ -2226,6 +2251,97 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Add the result item.
 			this.listViewResults.Items.Add(item);
+		}
+
+		/// <summary>
+		/// Sends the subcommand to the connected tools.
+		/// </summary>
+		/// <param name="subcommand">The subcommand.</param>
+		private void OnSendResultTools(PlManagerSubcommandState subcommand)
+		{
+			// For all the connected tool methods.
+			foreach(ToolMethod method in this.controlMethods.Methods)
+			{
+				lock (this.toolSync)
+				{
+					try
+					{
+						// Call the tool method asynchronously.
+						ToolMethodState asyncState = method.BeginCall((IAsyncResult result) =>
+							{
+								try
+								{
+									// End the call.
+									if ((bool)method.EndCall(result))
+									{
+										// Log an event.
+										this.controlLog.Add(this.config.Log.Add(
+											LogEventLevel.Verbose,
+											LogEventType.Success,
+											ControlSliceRun.logSource.FormatWith(this.slice.Id),
+											@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' and processed successfully.",
+											new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name }));
+									}
+									else
+									{
+										// Log an event.
+										this.controlLog.Add(this.config.Log.Add(
+											LogEventLevel.Normal,
+											LogEventType.Warning,
+											ControlSliceRun.logSource.FormatWith(this.slice.Id),
+											@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' but the processing failed.",
+											new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name }));
+									}
+								}
+								catch (Exception exception)
+								{
+									// Log an event.
+									this.controlLog.Add(this.config.Log.Add(
+										LogEventLevel.Important,
+										LogEventType.Error,
+										ControlSliceRun.logSource.FormatWith(this.slice.Id),
+										@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' and failed. {4}",
+										new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name, exception.Message },
+										exception));
+								}
+								finally
+								{
+									lock (this.toolSync)
+									{
+										// Remove the method state from the list of tool method states.
+										this.toolStates.Remove(result as ToolMethodState);
+										// If the list of tool states is empty.
+										if (this.toolStates.Count == 0)
+										{
+											// Set the wait handle.
+											this.toolWait.Set();
+										}
+									}
+								}
+							}, subcommand, subcommand.Node.Node.Hostname, subcommand.Result);
+
+						// If the list of tool states is empty.
+						if (this.toolStates.Count == 0)
+						{
+							// Reset the wait handle.
+							this.toolWait.Reset();
+						}
+						// Add the state to the list of tool method states.
+						this.toolStates.Add(asyncState);
+					}
+					catch (Exception exception)
+					{
+						// Log an event.
+						this.controlLog.Add(this.config.Log.Add(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							ControlSliceRun.logSource.FormatWith(this.slice.Id),
+							@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' and failed. {4}",
+							new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name, exception.Message },
+							exception));
+					}
+				}
+			}
 		}
 
 		/// <summary>

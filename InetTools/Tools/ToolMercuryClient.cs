@@ -17,8 +17,10 @@
  */
 
 using System;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using DotNetApi.Web;
 using InetCrawler.Tools;
 using InetTools.Controls;
 using InetTools.Tools.Mercury;
@@ -37,8 +39,8 @@ namespace InetTools.Tools
 	public sealed class ToolMercuryClient : Tool
 	{
 		private readonly MercuryConfig config;
-
 		private readonly ControlMercuryClient control;
+		private readonly MercuryRequest request = new MercuryRequest();
 
 		/// <summary>
 		/// Creates a new tool instance.
@@ -55,7 +57,11 @@ namespace InetTools.Tools
 			this.control = new ControlMercuryClient(api, this.config);
 
 			// Create the tool methods.
-			this.AddMethod(new Guid("5AD386C4-EA86-4C31-A0A1-DCD6CF1107B2"), Properties.Resources.ToolMercuryClientMethodUploadTracerouteName, Properties.Resources.ToolMercuryClientMethodUploadTracerouteDescription, this.UploadTraceroute);
+			this.AddMethod(
+				new Guid("5AD386C4-EA86-4C31-A0A1-DCD6CF1107B2"),
+				Properties.Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabName,
+				Properties.Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription,
+				this.UploadTracerouteFromPlanetLab);
 
 			//// Create the Alexa ranking database table.
 			//this.dbTableRanking = new DbTableTemplate<AlexaRankDbObject>(new Guid("7D65B301-C4C9-4823-9D64-0EB4E2CA43F4"), "Alexa ranking");
@@ -106,9 +112,67 @@ namespace InetTools.Tools
 		/// <param name="token">The cancellation token.</param>
 		/// <param name="arguments">The method arguments.</param>
 		/// <returns>The method result.</returns>
-		private object UploadTraceroute(CancellationToken token, params object[] arguments)
+		private object UploadTracerouteFromPlanetLab(CancellationToken token, params object[] arguments)
 		{
-			return false;
+			// Check the number of arguments.
+			if (arguments.Length != 2) throw new ArgumentException("This method takes only 2 arguments.");
+
+			// Get the parameters.
+			string sourceHostname = arguments[0] as string;
+			string data = arguments[1] as string;
+
+			// Check the arguments.
+			if (null == sourceHostname) throw new ArgumentNullException("The source hostname argument is null or of the wrong type.");
+			if (null == data) throw new ArgumentNullException("The traceroute data argument is null or of the wrong type.");
+
+			// Resolve the IP address of the PlanetLab node.
+			IPAddress[] sourceIps = Dns.GetHostAddresses(sourceHostname);
+
+			// Create the traceroute.
+			MercuryTraceroute traceroute = new MercuryTraceroute(sourceHostname, sourceIps.Length > 0 ? sourceIps[0] : null, data);
+
+			// The success flag.
+			bool success = false;
+			// The exception.
+			Exception exception = null;
+
+			// Create a wait handle.
+			using (ManualResetEvent wait = new ManualResetEvent(false))
+			{
+				// Upload the data to Mercury.
+				IAsyncResult asyncResult = this.request.Begin(new Uri(this.config.ServerUrl), traceroute, (AsyncWebResult result) =>
+					{
+						try
+						{
+							// Complete the request.
+							this.request.End(result);
+							// Set the success to true.
+							success = true;
+						}
+						catch (Exception ex)
+						{
+							// Set the exception.
+							exception = ex;
+						}
+						finally
+						{
+							// Set the wait handle to the signaled state.
+							wait.Set();
+						}
+					});
+
+				// Wait for the request to complete.
+				wait.WaitOne();
+			}
+
+			// If an exception occurred during the request.
+			if (null != exception)
+			{
+				throw exception;
+			}
+
+			// Return the success flag.
+			return success;
 		}
 	}
 }

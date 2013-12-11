@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Xml.Linq;
 
@@ -118,50 +119,66 @@ namespace InetTools.Tools.CdnFinder
 		/// <param name="fileName">The file name.</param>
 		public void SaveSites(string fileName)
 		{
-			// Create the root XML element.
-			XElement sites = new XElement("Sites");
+			//// Create the root XML element.
+			//XElement sites = new XElement("Sites");
 
-			// For all sites.
-			foreach (CdnFinderSite site in this)
-			{
-				// Create the resources element.
-				XElement resources = new XElement("Resources");
+			//// For all sites.
+			//foreach (CdnFinderSite site in this)
+			//{
+			//	// Create the resources element.
+			//	XElement resources = new XElement("Resources");
 
-				// For all site resources.
-				foreach (CdnFinderResource resource in site.Resources)
-				{
-					// Create the CNAMEs element.
-					XElement cnames = new XElement("CNames");
+			//	// For all site resources.
+			//	foreach (CdnFinderResource resource in site.Resources)
+			//	{
+			//		// Create the CNAMEs element.
+			//		XElement cnames = new XElement("CNames");
 
-					// For all CNAMEs.
-					foreach (string cname in resource.CNames)
-					{
-						cnames.Add(new XElement("CName", cname));
-					}
+			//		// For all CNAMEs.
+			//		foreach (string cname in resource.CNames)
+			//		{
+			//			cnames.Add(new XElement("CName", cname));
+			//		}
 
-					// Add the resource element.
-					resources.Add(new XElement("Resource",
+			//		// Add the resource element.
+			//		resources.Add(new XElement("Resource",
+			//			new XAttribute("Hostname", resource.Hostname != null ? resource.Hostname : string.Empty),
+			//			new XAttribute("Count", resource.Count),
+			//			new XAttribute("Size", resource.Size),
+			//			new XAttribute("Cdn", resource.Cdn != null ? resource.Cdn : string.Empty),
+			//			new XAttribute("HeaderGuess", resource.HeaderGuess != null ? resource.HeaderGuess : string.Empty),
+			//			new XAttribute("IsBase", resource.IsBase),
+			//			cnames));
+			//	}
+
+			//	// Add the site element.
+			//	sites.Add(new XElement("Site",
+			//		new XAttribute("Success", site.Success),
+			//		new XElement("Name", site.Site),
+			//		new XElement("AssetCdn", site.AssetCdn != null ? site.AssetCdn : string.Empty),
+			//		new XElement("BaseCdn", site.BaseCdn != null ? site.BaseCdn : string.Empty),
+			//		resources
+			//		));
+			//}
+
+			// Create a new XML document for the sites data.
+			XDocument document = new XDocument(
+				new XElement("Sites", from site in this select new XElement("Site",
+					new XAttribute("Success", site.Success),
+					new XElement("Name", site.Site),
+					new XElement("AssetCdn", site.AssetCdn != null ? site.AssetCdn : string.Empty),
+					new XElement("BaseCdn", site.BaseCdn != null ? site.BaseCdn : string.Empty),
+					new XElement("Resources", from resource in site.Resources select new XElement("Resource",
 						new XAttribute("Hostname", resource.Hostname != null ? resource.Hostname : string.Empty),
 						new XAttribute("Count", resource.Count),
 						new XAttribute("Size", resource.Size),
 						new XAttribute("Cdn", resource.Cdn != null ? resource.Cdn : string.Empty),
 						new XAttribute("HeaderGuess", resource.HeaderGuess != null ? resource.HeaderGuess : string.Empty),
 						new XAttribute("IsBase", resource.IsBase),
-						cnames));
-				}
-
-				// Add the site element.
-				sites.Add(new XElement("Site",
-					new XAttribute("Success", site.Success),
-					new XElement("Name", site.Site),
-					new XElement("AssetCdn", site.AssetCdn != null ? site.AssetCdn : string.Empty),
-					new XElement("BaseCdn", site.BaseCdn != null ? site.BaseCdn : string.Empty),
-					resources
-					));
-			}
-
-			// Create a new XML document for the sites data.
-			XDocument document = new XDocument(sites);
+						new XElement("CNames", from cname in resource.CNames select new XElement("CName", cname))
+						))
+					))
+				);
 
 			// Save the document.
 			document.Save(fileName, SaveOptions.None);

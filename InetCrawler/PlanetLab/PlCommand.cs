@@ -181,14 +181,11 @@ namespace InetCrawler.PlanetLab
 				}
 			}
 
-			// Create the root XML element.
-			XElement root = new XElement(PlCommand.xmlRoot,
+			// Create the document.
+			XDocument document = new XDocument(new XElement(PlCommand.xmlRoot,
 				new XAttribute(PlCommand.xmlId, this.id.ToString()),
 				new XElement(PlCommand.xmlCommand, this.command),
-				parameters);
-
-			// Create the document.
-			XDocument document = new XDocument(root);
+				parameters));
 
 			// Save the document to the file.
 			document.Save(fileName);

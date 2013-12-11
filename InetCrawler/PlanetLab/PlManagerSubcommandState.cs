@@ -29,11 +29,13 @@ namespace InetCrawler.PlanetLab
 		/// <summary>
 		/// Creates a new command state instance.
 		/// </summary>
+		/// <param name="node">The PlanetLab node state.</param>
 		/// <param name="command">The secure shell command.</param>
 		/// <param name="duration">The subcommand duration.</param>
 		/// <param name="retries">The number of retries for this command.</param>
-		public PlManagerSubcommandState(SshCommand command, TimeSpan duration, int retries)
+		public PlManagerSubcommandState(PlManagerNodeState node, SshCommand command, TimeSpan duration, int retries)
 		{
+			this.Node = node;
 			this.Command = command.CommandText;
 			this.Timeout = command.CommandTimeout;
 			this.ExitStatus = command.ExitStatus;
@@ -46,10 +48,12 @@ namespace InetCrawler.PlanetLab
 		/// <summary>
 		/// Creates a new command state instance.
 		/// </summary>
+		/// <param name="node">The PlanetLab node state.</param>
 		/// <param name="command">The secure shell command.</param>
 		/// <param name="exception">The subcommand exception.</param>
-		public PlManagerSubcommandState(SshCommand command, Exception exception)
+		public PlManagerSubcommandState(PlManagerNodeState node, SshCommand command, Exception exception)
 		{
+			this.Node = node;
 			this.Command = command.CommandText;
 			this.Timeout = command.CommandTimeout;
 			this.ExitStatus = command.ExitStatus;
@@ -60,6 +64,10 @@ namespace InetCrawler.PlanetLab
 
 		// Public properties.
 
+		/// <summary>
+		/// Gets the PlanetLab node.
+		/// </summary>
+		public PlManagerNodeState Node { get; private set; }
 		/// <summary>
 		/// Gets the command text.
 		/// </summary>
