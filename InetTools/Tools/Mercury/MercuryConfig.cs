@@ -42,12 +42,21 @@ namespace InetTools.Tools.Mercury
 		// Public properties.
 
 		/// <summary>
-		/// Gets or sets the server URL.
+		/// Gets or sets the server URL to upload a session.
 		/// </summary>
-		public string ServerUrl
+		public string UploadSessionUrl
 		{
-			get { return this.api.Key.GetString("ServerUrl", "http://mercury.upf.edu/mercury/api/traceroute/uploadTrace"); }
-			set { this.api.Key.SetString("ServerUrl", value); }
+			get { return this.api.Key.GetString("UploadSessionUrl", "http://mercury.upf.edu/mercury/api/traceroute/addTracerouteSession"); }
+			set { this.api.Key.SetString("UploadSessionUrl", value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the server URL to upload a traceroute.
+		/// </summary>
+		public string UploadTracerouteUrl
+		{
+			get { return this.api.Key.GetString("UploadTracerouteUrl", "http://mercury.upf.edu/mercury/api/traceroute/uploadTrace"); }
+			set { this.api.Key.SetString("UploadTracerouteUrl", value); }
 		}
 	}
 }

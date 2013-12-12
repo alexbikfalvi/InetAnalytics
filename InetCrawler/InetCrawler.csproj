@@ -75,6 +75,7 @@
     <Compile Include="PlanetLab\PlConfigSliceCommands.cs" />
     <Compile Include="PlanetLab\PlManager.cs" />
     <Compile Include="PlanetLab\PlManagerCommandEventArgs.cs" />
+    <Compile Include="PlanetLab\PlManagerHistory.cs" />
     <Compile Include="PlanetLab\PlManagerSubcommandState.cs" />
     <Compile Include="PlanetLab\PlManagerNodeEventArgs.cs" />
     <Compile Include="PlanetLab\PlManagerNodeState.cs" />
@@ -164,6 +165,8 @@
     <Compile Include="Tools\ToolId.cs" />
     <Compile Include="Tools\ToolInfoAttribute.cs" />
     <Compile Include="Tools\ToolMethod.cs" />
+    <Compile Include="Tools\ToolMethodInfo.cs" />
+    <Compile Include="Tools\ToolMethodTrigger.cs" />
     <Compile Include="Tools\ToolMethodId.cs" />
     <Compile Include="Tools\ToolMethodState.cs" />
     <Compile Include="Tools\Toolset.cs" />

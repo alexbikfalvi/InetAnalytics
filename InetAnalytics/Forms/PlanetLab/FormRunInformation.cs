@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,22 +18,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
+using PlanetLab;
+using PlanetLab.Api;
+using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
-using InetCrawler.Tools;
 
-namespace InetAnalytics.Forms.Tools
+namespace InetAnalytics.Forms.PlanetLab
 {
 	/// <summary>
-	/// A form dialog to add a tool metohod.
+	/// A form dialog that collects information on a PlanetLab run session.
 	/// </summary>
-	public partial class FormAddMethod : ThreadSafeForm
+	public partial class FormRunInformation : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddMethod()
+		public FormRunInformation()
 		{
 			// Initialize the component.
 			this.InitializeComponent();
@@ -45,38 +51,55 @@ namespace InetAnalytics.Forms.Tools
 		// Public properties.
 
 		/// <summary>
-		/// Gets the selected tool method.
+		/// Gets the session identifier.
 		/// </summary>
-		public ToolMethod Method
+		public Guid Id
 		{
-			get { return this.control.Method; }
+			get
+			{
+				Guid id;
+				Guid.TryParse(this.textBoxId.Text, out id);
+				return id;
+			}
 		}
 		/// <summary>
-		/// Gets the selected tool trigger.
+		/// Gets the session author.
 		/// </summary>
-		public ToolMethodTrigger Trigger
+		public string Author
 		{
-			get { return this.control.Trigger; }
+			get { return this.textBoxAuthor.Text; }
+		}
+		/// <summary>
+		/// Gets the session description.
+		/// </summary>
+		public string Description
+		{
+			get { return this.textBoxDescription.Text; }
 		}
 
 		// Public methods.
 
 		/// <summary>
-		/// Shows a dialog to add a tool method from the specified toolbox.
+		/// Shows the form as a dialog to select the author and description of a PlanetLab experiment.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="toolbox">The toolbox.</param>
-		/// <param name="triggers">The list of triggers.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, Toolbox toolbox, IEnumerable<ToolMethodTrigger> triggers)
+		public new DialogResult ShowDialog(IWin32Window owner)
 		{
-			// Initialize the control.
-			this.control.Initialize(toolbox, triggers);
-			// Show the dialog.
+			// Clear the dialog.
+			this.buttonContinue.Enabled = false;
+			this.textBoxId.Text = Guid.NewGuid().ToString();
+			this.textBoxAuthor.Text = Environment.UserName;
+			this.textBoxDescription.Clear();
+
+			// Call the input changed event handler.
+			this.OnInputChanged(this, EventArgs.Empty);
+
+			// Call the base class method.
 			return base.ShowDialog(owner);
 		}
 
-		// Private method.
+		// Private methods.
 
 		/// <summary>
 		/// Shows the form.
@@ -105,24 +128,18 @@ namespace InetAnalytics.Forms.Tools
 		}
 
 		/// <summary>
-		/// Shows the dialog.
-		/// </summary>
-		/// <param name="owner">The owner.</param>
-		/// <returns>The dialog result.</returns>
-		private new DialogResult ShowDialog(IWin32Window owner)
-		{
-			return base.ShowDialog(owner);
-		}
-
-		/// <summary>
-		/// An event handler called when the user input has changed.
+		/// An event handler called when the input has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
 		private void OnInputChanged(object sender, EventArgs e)
 		{
-			// Enable the add button.
-			this.buttonAdd.Enabled = this.control.Method != null;
+			Guid id;
+			// Update the enabled state of the continue button.
+			this.buttonContinue.Enabled =
+				Guid.TryParse(this.textBoxId.Text, out id) &&
+				(!string.IsNullOrWhiteSpace(this.textBoxAuthor.Text)) &&
+				(!string.IsNullOrWhiteSpace(this.textBoxDescription.Text));
 		}
 	}
 }

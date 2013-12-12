@@ -17,6 +17,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using InetCrawler.Tools;
 
@@ -48,6 +50,10 @@ namespace InetAnalytics.Controls.Tools
 		// Public properties.
 
 		/// <summary>
+		/// Gets the selected tool trigger.
+		/// </summary>
+		public ToolMethodTrigger Trigger { get; private set; }
+		/// <summary>
 		/// Gets the selected tool method.
 		/// </summary>
 		public ToolMethod Method { get; private set; }
@@ -58,10 +64,24 @@ namespace InetAnalytics.Controls.Tools
 		/// Initializes the control with the specified toolbox.
 		/// </summary>
 		/// <param name="toolbox">The toolbox.</param>
-		public void Initialize(Toolbox toolbox)
+		/// <param name="triggers">The list of triggers.</param>
+		public void Initialize(Toolbox toolbox, IEnumerable<ToolMethodTrigger> triggers)
 		{
+			// Check the list of triggers is not empty.
+			if (triggers.Count() == 0) throw new ArgumentException("The list of triggers cannot be empty.");
+
 			// Set the toolbox.
 			this.toolbox = toolbox;
+
+			// Update the list of triggers.
+			this.comboBoxTrigger.Items.Clear();
+			foreach (ToolMethodTrigger trigger in triggers)
+			{
+				this.comboBoxTrigger.Items.Add(trigger);
+			}
+
+			// Select the first trigger.
+			this.comboBoxTrigger.SelectedIndex = 0;
 
 			// Update the list of tools.
 			this.comboBoxTool.Items.Clear();
@@ -73,8 +93,25 @@ namespace InetAnalytics.Controls.Tools
 			// Clear the list of methods.
 			this.listViewMethods.Items.Clear();
 
+			// Call the trigger selection changed.
+			this.OnTriggerSelectionChanged(this, EventArgs.Empty);
+
 			// Call the method selection changed.
 			this.OnMethodSelectionChanged(this, EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// An event handler called when the trigger selection has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnTriggerSelectionChanged(object sender, EventArgs e)
+		{
+			// If there is no selected tool, do nothing.
+			if (this.comboBoxTrigger.SelectedIndex < 0) return;
+
+			// Get the selected trigger.
+			this.Trigger = (ToolMethodTrigger)this.comboBoxTrigger.SelectedItem;
 		}
 
 		/// <summary>

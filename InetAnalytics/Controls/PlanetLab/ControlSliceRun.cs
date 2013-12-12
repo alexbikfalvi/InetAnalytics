@@ -115,6 +115,20 @@ namespace InetAnalytics.Controls.PlanetLab
 		private readonly FormObjectProperties<ControlNodeProperties> formNodeProperties = new FormObjectProperties<ControlNodeProperties>();
 		private readonly FormObjectProperties<ControlSiteProperties> formSiteProperties = new FormObjectProperties<ControlSiteProperties>();
 		private readonly FormAddCommand formAddCommand = new FormAddCommand();
+		private readonly FormRunInformation formRunInformation = new FormRunInformation();
+
+		private readonly static ToolMethodTrigger toolTriggerSession = new ToolMethodTrigger(new Guid("78F0C301-EDF3-4E74-AD61-E2E4E0130EE9"), "On create PlanetLab session");
+		private readonly static ToolMethodTrigger toolTriggerCommand = new ToolMethodTrigger(new Guid("1503CF3F-5F93-46C4-AE18-7E2C58097719"), "On finish PlanetLab command");
+
+		private readonly static ToolMethodTrigger[] toolTriggers = {
+																	   ControlSliceRun.toolTriggerSession,
+																	   ControlSliceRun.toolTriggerCommand
+																   };
+
+		private Guid sessionId;
+		private string sessionAuthor;
+		private string sessionDescription;
+		private DateTime sessionTimestamp;
 
 		// Public declarations
 
@@ -203,7 +217,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.Enabled = true;
 
 			// Initialize the tools control.
-			this.controlMethods.Initialize(this.crawler.Toolbox, this.config.ToolMethods);
+			this.controlMethods.Initialize(this.crawler.Toolbox, this.config.ToolMethods, ControlSliceRun.toolTriggers);
 
 			// Load the configuration.
 			this.OnLoadConfiguration(this, EventArgs.Empty);
@@ -1357,12 +1371,24 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
+			// Get the session information.
+			if (this.formRunInformation.ShowDialog(this) != DialogResult.OK)
+			{
+				// Return;
+				return;
+			}
+
+			// Save the session information.
+			this.sessionId = this.formRunInformation.Id;
+			this.sessionAuthor = this.formRunInformation.Author;
+			this.sessionDescription = this.formRunInformation.Description;
+			this.sessionTimestamp = DateTime.Now;
+
 			lock (this.managerSync)
 			{
 				// If the manager state is not null.
 				if (null == this.managerState)
 				{
-
 					// Create a list of nodes.
 					List<PlNode> nodes = new List<PlNode>();
 
@@ -1598,6 +1624,9 @@ namespace InetAnalytics.Controls.PlanetLab
 						"The PlanetLab commands started sucessfully."));
 					// Status.
 					this.status.Send(CrawlerStatus.StatusType.Busy, "Running the PlanetLab commands.", Resources.GlobePlayStart_16);
+
+					// Send the session information to the connected tools.
+					this.OnSendSessionTools();
 				});
 		}
 
@@ -2211,10 +2240,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				lock (this.managerState.Sync)
 				{
 					// Else, find the node state corresponding to the selected node.
-					PlManagerNodeState node = this.managerState.NodeStates.FirstOrDefault((PlManagerNodeState state) =>
-						{
-							return state.Node.Hostname == this.comboBoxNodes.SelectedItem as string;
-						});
+					PlManagerNodeState node = this.managerState.NodeStates.FirstOrDefault(state => state.Node.Hostname == this.comboBoxNodes.SelectedItem as string);
 
 					// If the node state is null, do nothing.
 					if (null == node) return;
@@ -2254,25 +2280,115 @@ namespace InetAnalytics.Controls.PlanetLab
 		}
 
 		/// <summary>
-		/// Sends the subcommand to the connected tools.
+		/// Sens the session information to the connected tools.
 		/// </summary>
-		/// <param name="subcommand">The subcommand.</param>
-		private void OnSendResultTools(PlManagerSubcommandState subcommand)
+		private void OnSendSessionTools()
 		{
 			// For all the connected tool methods.
-			foreach(ToolMethod method in this.controlMethods.Methods)
+			foreach (ToolMethodInfo info in this.controlMethods.Methods.Where(inf => inf.Trigger == ControlSliceRun.toolTriggerSession))
 			{
 				lock (this.toolSync)
 				{
 					try
 					{
 						// Call the tool method asynchronously.
-						ToolMethodState asyncState = method.BeginCall((IAsyncResult result) =>
+						ToolMethodState asyncState = info.Method.BeginCall((IAsyncResult result) =>
+						{
+							try
+							{
+								// End the call.
+								if ((bool)info.Method.EndCall(result))
+								{
+									// Log an event.
+									this.controlLog.Add(this.config.Log.Add(
+										LogEventLevel.Verbose,
+										LogEventType.Success,
+										ControlSliceRun.logSource.FormatWith(this.slice.Id),
+										@"The PlanetLab session information was sent to method '{0}' of tool '{1}' and processed successfully.",
+										new object[] { info.Method.Name, info.Method.Tool.Info.Name }));
+								}
+								else
+								{
+									// Log an event.
+									this.controlLog.Add(this.config.Log.Add(
+										LogEventLevel.Normal,
+										LogEventType.Warning,
+										ControlSliceRun.logSource.FormatWith(this.slice.Id),
+										@"The PlanetLab session information was sent to method '{0}' of tool '{1}' but the processing failed.",
+										new object[] { info.Method.Name, info.Method.Tool.Info.Name }));
+								}
+							}
+							catch (Exception exception)
+							{
+								// Log an event.
+								this.controlLog.Add(this.config.Log.Add(
+									LogEventLevel.Important,
+									LogEventType.Error,
+									ControlSliceRun.logSource.FormatWith(this.slice.Id),
+									@"The PlanetLab session information was sent to method '{0}' of tool '{1}' and failed. {2}",
+									new object[] { info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
+									exception));
+							}
+							finally
+							{
+								lock (this.toolSync)
+								{
+									// Remove the method state from the list of tool method states.
+									this.toolStates.Remove(result as ToolMethodState);
+									// If the list of tool states is empty.
+									if (this.toolStates.Count == 0)
+									{
+										// Set the wait handle.
+										this.toolWait.Set();
+									}
+								}
+							}
+						}, null, this.sessionId, this.sessionAuthor, this.sessionDescription, this.sessionTimestamp);
+
+						// If the list of tool states is empty.
+						if (this.toolStates.Count == 0)
+						{
+							// Reset the wait handle.
+							this.toolWait.Reset();
+						}
+						// Add the state to the list of tool method states.
+						this.toolStates.Add(asyncState);
+					}
+					catch (Exception exception)
+					{
+						// Log an event.
+						this.controlLog.Add(this.config.Log.Add(
+							LogEventLevel.Important,
+							LogEventType.Error,
+							ControlSliceRun.logSource.FormatWith(this.slice.Id),
+							@"The PlanetLab session information was sent to method '{0}' of tool '{1}' and failed. {2}",
+							new object[] { info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
+							exception));
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Sends the subcommand to the connected tools.
+		/// </summary>
+		/// <param name="subcommand">The subcommand.</param>
+		private void OnSendResultTools(PlManagerSubcommandState subcommand)
+		{
+			// For all the connected tool methods.
+			foreach (ToolMethodInfo info in this.controlMethods.Methods.Where(inf => inf.Trigger == ControlSliceRun.toolTriggerCommand))
+			{
+				lock (this.toolSync)
+				{
+					try
+					{
+						// Call the tool method asynchronously.
+						ToolMethodState asyncState = info.Method.BeginCall((IAsyncResult result) =>
 							{
 								try
 								{
 									// End the call.
-									if ((bool)method.EndCall(result))
+									if ((bool)info.Method.EndCall(result))
 									{
 										// Log an event.
 										this.controlLog.Add(this.config.Log.Add(
@@ -2280,7 +2396,7 @@ namespace InetAnalytics.Controls.PlanetLab
 											LogEventType.Success,
 											ControlSliceRun.logSource.FormatWith(this.slice.Id),
 											@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' and processed successfully.",
-											new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name }));
+											new object[] { subcommand.Command, subcommand.Node.Node.Hostname, info.Method.Name, info.Method.Tool.Info.Name }));
 									}
 									else
 									{
@@ -2290,7 +2406,7 @@ namespace InetAnalytics.Controls.PlanetLab
 											LogEventType.Warning,
 											ControlSliceRun.logSource.FormatWith(this.slice.Id),
 											@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' but the processing failed.",
-											new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name }));
+											new object[] { subcommand.Command, subcommand.Node.Node.Hostname, info.Method.Name, info.Method.Tool.Info.Name }));
 									}
 								}
 								catch (Exception exception)
@@ -2301,7 +2417,7 @@ namespace InetAnalytics.Controls.PlanetLab
 										LogEventType.Error,
 										ControlSliceRun.logSource.FormatWith(this.slice.Id),
 										@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' and failed. {4}",
-										new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name, exception.Message },
+										new object[] { subcommand.Command, subcommand.Node.Node.Hostname, info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
 										exception));
 								}
 								finally
@@ -2318,7 +2434,7 @@ namespace InetAnalytics.Controls.PlanetLab
 										}
 									}
 								}
-							}, subcommand, subcommand.Node.Node.Hostname, subcommand.Result);
+							}, subcommand, this.sessionId, subcommand.Node.Node.Hostname, subcommand.Result);
 
 						// If the list of tool states is empty.
 						if (this.toolStates.Count == 0)
@@ -2337,7 +2453,7 @@ namespace InetAnalytics.Controls.PlanetLab
 							LogEventType.Error,
 							ControlSliceRun.logSource.FormatWith(this.slice.Id),
 							@"The result of the command {0} on PlanetLab node {1} was sent to method '{2}' of tool '{3}' and failed. {4}",
-							new object[] { subcommand.Command, subcommand.Node.Node.Hostname, method.Name, method.Tool.Info.Name, exception.Message },
+							new object[] { subcommand.Command, subcommand.Node.Node.Hostname, info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
 							exception));
 					}
 				}

@@ -34,12 +34,13 @@
 			this.columnHeaderMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderTool = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.textBoxDescription = new System.Windows.Forms.TextBox();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonAdd = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemove = new System.Windows.Forms.ToolStripButton();
 			this.toolSplitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.columnHeaderTrigger = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.toolSplitContainer)).BeginInit();
 			this.toolSplitContainer.Panel1.SuspendLayout();
@@ -51,6 +52,7 @@
 			// 
 			this.listViewMethods.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listViewMethods.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderTrigger,
             this.columnHeaderMethod,
             this.columnHeaderTool,
             this.columnHeaderVersion});
@@ -82,6 +84,12 @@
 			// 
 			this.columnHeaderVersion.Text = "Version";
 			this.columnHeaderVersion.Width = 120;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "Cube");
 			// 
 			// textBoxDescription
 			// 
@@ -148,11 +156,10 @@
 			this.toolSplitContainer.TabIndex = 8;
 			this.toolSplitContainer.UseTheme = false;
 			// 
-			// imageList
+			// columnHeaderTrigger
 			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Cube");
+			this.columnHeaderTrigger.Text = "Trigger";
+			this.columnHeaderTrigger.Width = 200;
 			// 
 			// ControlMethods
 			// 
@@ -186,5 +193,6 @@
 		private System.Windows.Forms.ToolStripButton buttonRemove;
 		private DotNetApi.Windows.Controls.ToolSplitContainer toolSplitContainer;
 		private System.Windows.Forms.ImageList imageList;
+		private System.Windows.Forms.ColumnHeader columnHeaderTrigger;
 	}
 }

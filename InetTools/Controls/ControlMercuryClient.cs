@@ -25,6 +25,7 @@ using DotNetApi.Windows.Controls;
 using InetCrawler.Log;
 using InetCrawler.Tools;
 using InetCrawler.Status;
+using InetTools.Forms;
 using InetTools.Tools.Mercury;
 
 namespace InetTools.Controls
@@ -41,6 +42,8 @@ namespace InetTools.Controls
 
 		private readonly MercuryRequest request = new MercuryRequest();
 		private IAsyncResult result = null;
+
+		private readonly FormMercuryClientSettings formSettings = new FormMercuryClientSettings();
 
 		private readonly object sync = new object();
 
@@ -99,7 +102,7 @@ namespace InetTools.Controls
 		/// </summary>
 		private void OnLoadConfiguration()
 		{
-			this.textBoxUrl.Text = this.config.ServerUrl;
+			this.textBoxUrl.Text = this.config.UploadTracerouteUrl;
 		}
 
 		/// <summary>
@@ -107,7 +110,7 @@ namespace InetTools.Controls
 		/// </summary>
 		private void OnSaveConfiguration()
 		{
-			this.config.ServerUrl = this.textBoxUrl.Text;
+			this.config.UploadTracerouteUrl = this.textBoxUrl.Text;
 		}
 
 		/// <summary>
@@ -135,7 +138,7 @@ namespace InetTools.Controls
 			try
 			{
 				// Try and parse the traceroute.
-				traceroute = new MercuryTraceroute(null, IPAddress.Parse("0.0.0.0"), this.codeTextBox.Text);
+				traceroute = new MercuryTraceroute(Guid.Empty, null, IPAddress.Parse("0.0.0.0"), this.codeTextBox.Text);
 
 				// Set the traceroute.
 				this.controlTraceroute.Set(traceroute);
@@ -149,7 +152,7 @@ namespace InetTools.Controls
 			}
 
 			// Save the server URL.
-			this.config.ServerUrl = this.textBoxUrl.Text;
+			this.config.UploadTracerouteUrl = this.textBoxUrl.Text;
 
 			// Call the request started event handler.
 			this.OnRequestStarted();
@@ -166,7 +169,7 @@ namespace InetTools.Controls
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				@"Uploading the traceroute to the Mercury server '{0}'.",
-				new object[] { this.config.ServerUrl }
+				new object[] { this.config.UploadTracerouteUrl }
 				));
 
 			// Compute the server URI.
@@ -177,7 +180,7 @@ namespace InetTools.Controls
 				lock (this.sync)
 				{
 					// Begin the request.
-					this.result = this.request.Begin(uri, traceroute, this.OnCallback);
+					this.result = this.request.BeginUploadTraceroute(uri, traceroute, this.OnCallback);
 				}
 			}
 			catch (Exception exception)
@@ -201,7 +204,7 @@ namespace InetTools.Controls
 					LogEventLevel.Important,
 					LogEventType.Error,
 					@"Uploading the traceroute to the Mercury server '{0}' failed. {1}",
-					new object[] { this.config.ServerUrl, exception.Message },
+					new object[] { this.config.UploadTracerouteUrl, exception.Message },
 					exception
 					));
 			}
@@ -245,7 +248,7 @@ namespace InetTools.Controls
 					LogEventLevel.Verbose,
 					LogEventType.Success,
 					@"Uploading the traceroute to the Mercury server '{0}' completed successfully.",
-					new object[] {  this.config.ServerUrl }
+					new object[] {  this.config.UploadTracerouteUrl }
 					));
 			}
 			catch (WebException exception)
@@ -271,7 +274,7 @@ namespace InetTools.Controls
 						LogEventLevel.Normal,
 						LogEventType.Canceled,
 						@"Uploading the traceroute to the Mercury server '{0}' was canceled.",
-						new object[] { this.config.ServerUrl }
+						new object[] { this.config.UploadTracerouteUrl }
 						));
 				}
 				else
@@ -295,7 +298,7 @@ namespace InetTools.Controls
 						LogEventLevel.Important,
 						LogEventType.Error,
 						@"Uploading the traceroute to the Mercury server '{0}' failed. {1}",
-						new object[] { this.config.ServerUrl, exception.Message },
+						new object[] { this.config.UploadTracerouteUrl, exception.Message },
 						exception
 						));
 				}
@@ -321,7 +324,7 @@ namespace InetTools.Controls
 					LogEventLevel.Important,
 					LogEventType.Error,
 					@"Uploading the traceroute to the Mercury server '{0}' failed. {0}",
-					new object[] { this.config.ServerUrl, exception.Message },
+					new object[] { this.config.UploadTracerouteUrl, exception.Message },
 					exception
 					));
 			}
@@ -359,6 +362,22 @@ namespace InetTools.Controls
 		{
 			// Changed the enabled state of the start button.
 			this.buttonUpload.Enabled = (!string.IsNullOrWhiteSpace(this.textBoxUrl.Text)) && (!string.IsNullOrWhiteSpace(this.codeTextBox.Text));
+		}
+
+
+		/// <summary>
+		/// An event handler called when the user clicks on the settings button.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSettingsClick(object sender, EventArgs e)
+		{
+			// Show the settings dialog.
+			if (this.formSettings.ShowDialog(this, this.config) == DialogResult.OK)
+			{
+				// Upload the configuration.
+				this.textBoxUrl.Text = this.config.UploadTracerouteUrl;
+			}
 		}
 	}
 }

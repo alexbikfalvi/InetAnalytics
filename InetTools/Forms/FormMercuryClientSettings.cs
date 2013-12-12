@@ -19,21 +19,21 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Forms;
-using InetTools.Tools.CdnFinder;
+using InetTools.Tools.Mercury;
 
 namespace InetTools.Forms
 {
 	/// <summary>
-	/// A form displaying a settings for the CDN Finder tool.
+	/// A form displaying the settings for the Mercury client tool.
 	/// </summary>
-	public partial class FormCdnFinderSettings : ThreadSafeForm
+	public partial class FormMercuryClientSettings : ThreadSafeForm
 	{
-		private CdnFinderConfig config = null;
+		private MercuryConfig config = null;
 
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormCdnFinderSettings()
+		public FormMercuryClientSettings()
 		{
 			this.InitializeComponent();
 		}
@@ -44,18 +44,16 @@ namespace InetTools.Forms
 		/// Shows the dialog with the specified title and text.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="config">The CDN Finder configuration.</param>
+		/// <param name="config">The Mercury client configuration.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, CdnFinderConfig config)
+		public DialogResult ShowDialog(IWin32Window owner, MercuryConfig config)
 		{
 			// Set the configuration.
 			this.config = config;
 
 			// Set the properties.
-			this.numericUpDownTimeout.Value = this.config.Timeout;
-			this.comboBoxProtocol.Text = this.config.Protocol;
-			this.textBoxPrefix.Text = string.Join(";", this.config.Subdomains);
-			this.checkBoxAutoRedirect.Checked = this.config.AutoRedirect;
+			this.textBoxSessionUrl.Text = this.config.UploadSessionUrl;
+			this.textBoxTracerouteUrl.Text = this.config.UploadTracerouteUrl;
 
 			// Reset the buttons.
 			this.buttonApply.Enabled = false;
@@ -98,10 +96,8 @@ namespace InetTools.Forms
 		private void OnApplyClick(object sender, EventArgs e)
 		{
 			// Save the changes.
-			this.config.Timeout = (int)this.numericUpDownTimeout.Value;
-			this.config.Protocol = this.comboBoxProtocol.Text;
-			this.config.Subdomains = this.textBoxPrefix.Text.Split(';');
-			this.config.AutoRedirect = this.checkBoxAutoRedirect.Checked;
+			this.config.UploadSessionUrl = this.textBoxSessionUrl.Text;
+			this.config.UploadTracerouteUrl = this.textBoxTracerouteUrl.Text;
 
 			// Disable the apply button.
 			this.buttonApply.Enabled = false;

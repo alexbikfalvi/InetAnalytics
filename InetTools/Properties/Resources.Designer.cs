@@ -981,13 +981,42 @@ namespace InetTools.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This method uploads the identifier of a new PlanetLab measurement session to the Mercury web service.
+        ///
+        ///Syntax: UploadSessionFromPlanetLab(object[] parameters)
+        ///
+        ///Parameters:
+        ///id - a GUID representing the session identifier
+        ///author - a string representing the session author
+        ///description - a string representing the session description
+        ///timestamp - a date-time representing the session start time
+        ///
+        ///Returns: true if the operation was successful, false otherwise..
+        /// </summary>
+        internal static string ToolMercuryClientMethodUploadSessionFromPlanetLabDescription {
+            get {
+                return ResourceManager.GetString("ToolMercuryClientMethodUploadSessionFromPlanetLabDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UploadSessionFromPlanetLab.
+        /// </summary>
+        internal static string ToolMercuryClientMethodUploadSessionFromPlanetLabName {
+            get {
+                return ResourceManager.GetString("ToolMercuryClientMethodUploadSessionFromPlanetLabName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This method uploads a new traceroute collected from a PlanetLab node to the Mercury web service.
         ///
         ///Syntax: UploadTracerouteFromPlanetLab(object[] parameters)
         ///
         ///Parameters:
-        ///nodeHostname - the hostname of the PlanetLab node
-        ///tracerouteData - the output of the traceroute command
+        ///identifier - a GUID representing the traceroute session identifier
+        ///nodeHostname - a string representing the hostname of the PlanetLab node
+        ///tracerouteData - a string representing the output of the traceroute command
         ///
         ///Returns: true if the operation was successful, false otherwise..
         /// </summary>

@@ -38,14 +38,17 @@ namespace InetTools.Tools.Mercury
 		}
 
 		/// <summary>
-		/// Begins a new request to the specified Mercury server.
+		/// Begins a new request to the specified Mercury server to upload a session.
 		/// </summary>
 		/// <param name="uri">The Mercury server URI.</param>
-		/// <param name="traceroute">The traceroute to upload.</param>
+		/// <param name="id">The session identifier.</param>
+		/// <param name="author">The session author.</param>
+		/// <param name="description">The session description.</param>
+		/// <param name="timestamp">The session timestamp.</param>
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous web operation.</returns>
-		public IAsyncResult Begin(Uri uri, MercuryTraceroute traceroute, AsyncWebRequestCallback callback, object userState = null)
+		public IAsyncResult BeginUploadSession(Uri uri, Guid id, string author, string description, DateTime timestamp, AsyncWebRequestCallback callback, object userState = null)
 		{
 			// Create the request state.
 			AsyncWebResult asyncState = new AsyncWebResult(uri, callback, userState);
@@ -57,6 +60,40 @@ namespace InetTools.Tools.Mercury
 
 			// Create the traceroute JSON object.
 			JObject obj = new JObject(
+				new JProperty("sessionId", id.ToString()),
+				new JProperty("author", author),
+				new JProperty("description", description),
+				new JProperty("dateStart", timestamp.ToUniversalTime().ToString(@"yyyy-MM-ddTHH:mm:ss.fffZ"))
+				);
+
+			// Append the send data.
+			asyncState.SendData.Append(obj.ToString(), Encoding.UTF8);
+
+			// Begin the request.
+			return base.Begin(asyncState);
+		}
+
+		/// <summary>
+		/// Begins a new request to the specified Mercury server to upload a traceroute.
+		/// </summary>
+		/// <param name="uri">The Mercury server URI.</param>
+		/// <param name="traceroute">The traceroute to upload.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The result of the asynchronous web operation.</returns>
+		public IAsyncResult BeginUploadTraceroute(Uri uri, MercuryTraceroute traceroute, AsyncWebRequestCallback callback, object userState = null)
+		{
+			// Create the request state.
+			AsyncWebResult asyncState = new AsyncWebResult(uri, callback, userState);
+
+			// Set the request headers.
+			asyncState.Request.Method = "POST";
+			asyncState.Request.Accept = "text/html,application/xhtml+xml,application/xml";
+			asyncState.Request.ContentType = "application/json;charset=UTF-8";
+
+			// Create the traceroute JSON object.
+			JObject obj = new JObject(
+				new JProperty("sessionId", traceroute.Id.ToString()),
 				new JProperty("srcIp", traceroute.SourceIp != null ? traceroute.SourceIp.ToString() : "none"),
 				new JProperty("dstIp", traceroute.DestinationIp.ToString()),
 				new JProperty("srcName", traceroute.SourceHostname),

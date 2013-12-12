@@ -120,6 +120,7 @@
 			this.Controls.Add(this.buttonCancel);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(400, 350);
 			this.Name = "FormExportMap";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;

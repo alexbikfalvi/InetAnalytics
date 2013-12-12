@@ -13,9 +13,13 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing && (components != null))
+			if (disposing)
 			{
-				components.Dispose();
+				// Dispose the components.
+				if (components != null)
+				{
+					components.Dispose();
+				}
 			}
 			base.Dispose(disposing);
 		}
@@ -45,7 +49,7 @@
 			// 
 			this.numericUpDownTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDownTimeout.Location = new System.Drawing.Point(15, 30);
+			this.numericUpDownTimeout.Location = new System.Drawing.Point(12, 30);
 			this.numericUpDownTimeout.Maximum = new decimal(new int[] {
             3600000,
             0,
@@ -57,7 +61,7 @@
             0,
             0});
 			this.numericUpDownTimeout.Name = "numericUpDownTimeout";
-			this.numericUpDownTimeout.Size = new System.Drawing.Size(407, 20);
+			this.numericUpDownTimeout.Size = new System.Drawing.Size(410, 20);
 			this.numericUpDownTimeout.TabIndex = 1;
 			this.numericUpDownTimeout.Value = new decimal(new int[] {
             10000,
@@ -69,7 +73,7 @@
 			// labelTimeout
 			// 
 			this.labelTimeout.AutoSize = true;
-			this.labelTimeout.Location = new System.Drawing.Point(12, 14);
+			this.labelTimeout.Location = new System.Drawing.Point(9, 14);
 			this.labelTimeout.Name = "labelTimeout";
 			this.labelTimeout.Size = new System.Drawing.Size(109, 13);
 			this.labelTimeout.TabIndex = 0;
@@ -114,16 +118,16 @@
 			// 
 			this.textBoxPrefix.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPrefix.Location = new System.Drawing.Point(15, 109);
+			this.textBoxPrefix.Location = new System.Drawing.Point(12, 109);
 			this.textBoxPrefix.Name = "textBoxPrefix";
-			this.textBoxPrefix.Size = new System.Drawing.Size(407, 20);
+			this.textBoxPrefix.Size = new System.Drawing.Size(410, 20);
 			this.textBoxPrefix.TabIndex = 5;
 			this.textBoxPrefix.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
 			// labelPrefix
 			// 
 			this.labelPrefix.AutoSize = true;
-			this.labelPrefix.Location = new System.Drawing.Point(12, 93);
+			this.labelPrefix.Location = new System.Drawing.Point(9, 93);
 			this.labelPrefix.Name = "labelPrefix";
 			this.labelPrefix.Size = new System.Drawing.Size(355, 13);
 			this.labelPrefix.TabIndex = 4;
@@ -132,7 +136,7 @@
 			// checkBoxAutoRedirect
 			// 
 			this.checkBoxAutoRedirect.AutoSize = true;
-			this.checkBoxAutoRedirect.Location = new System.Drawing.Point(15, 135);
+			this.checkBoxAutoRedirect.Location = new System.Drawing.Point(12, 135);
 			this.checkBoxAutoRedirect.Name = "checkBoxAutoRedirect";
 			this.checkBoxAutoRedirect.Size = new System.Drawing.Size(227, 17);
 			this.checkBoxAutoRedirect.TabIndex = 6;
@@ -143,7 +147,7 @@
 			// labelProtocol
 			// 
 			this.labelProtocol.AutoSize = true;
-			this.labelProtocol.Location = new System.Drawing.Point(12, 53);
+			this.labelProtocol.Location = new System.Drawing.Point(9, 53);
 			this.labelProtocol.Name = "labelProtocol";
 			this.labelProtocol.Size = new System.Drawing.Size(49, 13);
 			this.labelProtocol.TabIndex = 2;
@@ -157,9 +161,9 @@
 			this.comboBoxProtocol.Items.AddRange(new object[] {
             "http",
             "https"});
-			this.comboBoxProtocol.Location = new System.Drawing.Point(15, 69);
+			this.comboBoxProtocol.Location = new System.Drawing.Point(12, 69);
 			this.comboBoxProtocol.Name = "comboBoxProtocol";
-			this.comboBoxProtocol.Size = new System.Drawing.Size(407, 21);
+			this.comboBoxProtocol.Size = new System.Drawing.Size(410, 21);
 			this.comboBoxProtocol.TabIndex = 3;
 			// 
 			// FormCdnFinderSettings

@@ -54,6 +54,7 @@
 			this.Controls.Add(this.control);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(450, 250);
 			this.Name = "FormExportNodes";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;

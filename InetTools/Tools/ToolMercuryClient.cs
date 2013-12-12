@@ -58,22 +58,15 @@ namespace InetTools.Tools
 
 			// Create the tool methods.
 			this.AddMethod(
+				new Guid("24FDC1EC-FA12-4A42-B410-3A868B9576D9"),
+				Properties.Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabName,
+				Properties.Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabDescription,
+				this.UploadSessionFromPlanetLab);
+			this.AddMethod(
 				new Guid("5AD386C4-EA86-4C31-A0A1-DCD6CF1107B2"),
 				Properties.Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabName,
 				Properties.Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription,
 				this.UploadTracerouteFromPlanetLab);
-
-			//// Create the Alexa ranking database table.
-			//this.dbTableRanking = new DbTableTemplate<AlexaRankDbObject>(new Guid("7D65B301-C4C9-4823-9D64-0EB4E2CA43F4"), "Alexa ranking");
-			//this.dbTableHistory = new DbTableTemplate<AlexaHistoryDbObject>(new Guid("BD058EA2-0D75-4671-80A0-5A94A979B7E9"), "Alexa history");
-
-			//// Add the tables to the database.
-			//this.Api.DatabaseAddTable(this.dbTableRanking);
-			//this.Api.DatabaseAddTable(this.dbTableHistory);
-
-			//this.Api.DatabaseAddRelationship(this.dbTableHistory, this.dbTableRanking, "Timestamp", "Timestamp", true);
-			//this.Api.DatabaseAddRelationship(this.dbTableHistory, this.dbTableRanking, "Global", "Global", true);
-			//this.Api.DatabaseAddRelationship(this.dbTableHistory, this.dbTableRanking, "Country", "Country", true);
 		}
 
 		// Public properties.
@@ -93,10 +86,6 @@ namespace InetTools.Tools
 		{
 			if (disposing)
 			{
-				// Remove the tables to the database.
-				//this.Api.DatabaseRemoveTable(this.dbTableRanking);
-				//this.Api.DatabaseRemoveTable(this.dbTableHistory);
-
 				// Dispose the control.
 				this.control.Dispose();
 			}
@@ -107,29 +96,31 @@ namespace InetTools.Tools
 		// Private method.
 
 		/// <summary>
-		/// Uploads a traceroute to the Mercury web service.
+		/// Uploads a session information to the Mercury web service.
 		/// </summary>
 		/// <param name="token">The cancellation token.</param>
 		/// <param name="arguments">The method arguments.</param>
 		/// <returns>The method result.</returns>
-		private object UploadTracerouteFromPlanetLab(CancellationToken token, params object[] arguments)
+		private object UploadSessionFromPlanetLab(CancellationToken token, params object[] arguments)
 		{
 			// Check the number of arguments.
-			if (arguments.Length != 2) throw new ArgumentException("This method takes only 2 arguments.");
+			if (arguments.Length != 4) throw new ArgumentException("This method takes only 4 arguments.");
+
+			// Cheeck the arguments type.
+			if (!(arguments[0] is Guid)) throw new ArgumentNullException("The session identifier argument is of the wrong type (it must be a GUID).");
+			if (!(arguments[1] is string)) throw new ArgumentNullException("The author argument is of the wrong type (it must be a string).");
+			if (!(arguments[2] is string)) throw new ArgumentNullException("The description argument is of the wrong type (it must be a string).");
+			if (!(arguments[3] is DateTime)) throw new ArgumentNullException("The timestamp argument is of the wrong type (it must be a date-time).");
 
 			// Get the parameters.
-			string sourceHostname = arguments[0] as string;
-			string data = arguments[1] as string;
+			Guid id = (Guid)arguments[0];
+			string author = arguments[1] as string;
+			string description = arguments[2] as string;
+			DateTime timestamp = (DateTime)arguments[3];
 
 			// Check the arguments.
-			if (null == sourceHostname) throw new ArgumentNullException("The source hostname argument is null or of the wrong type.");
-			if (null == data) throw new ArgumentNullException("The traceroute data argument is null or of the wrong type.");
-
-			// Resolve the IP address of the PlanetLab node.
-			IPAddress[] sourceIps = Dns.GetHostAddresses(sourceHostname);
-
-			// Create the traceroute.
-			MercuryTraceroute traceroute = new MercuryTraceroute(sourceHostname, sourceIps.Length > 0 ? sourceIps[0] : null, data);
+			if (null == author) throw new ArgumentNullException("The author argument is null.");
+			if (null == description) throw new ArgumentNullException("The description argument is null.");
 
 			// The success flag.
 			bool success = false;
@@ -140,7 +131,82 @@ namespace InetTools.Tools
 			using (ManualResetEvent wait = new ManualResetEvent(false))
 			{
 				// Upload the data to Mercury.
-				IAsyncResult asyncResult = this.request.Begin(new Uri(this.config.ServerUrl), traceroute, (AsyncWebResult result) =>
+				IAsyncResult asyncResult = this.request.BeginUploadSession(new Uri(this.config.UploadSessionUrl), id, author, description, timestamp, (AsyncWebResult result) =>
+				{
+					try
+					{
+						// Complete the request.
+						this.request.End(result);
+						// Set the success to true.
+						success = true;
+					}
+					catch (Exception ex)
+					{
+						// Set the exception.
+						exception = ex;
+					}
+					finally
+					{
+						// Set the wait handle to the signaled state.
+						wait.Set();
+					}
+				});
+
+				// Wait for the request to complete.
+				wait.WaitOne();
+			}
+
+			// If an exception occurred during the request.
+			if (null != exception)
+			{
+				throw exception;
+			}
+
+			// Return the success flag.
+			return success;
+		}
+
+		/// <summary>
+		/// Uploads a traceroute to the Mercury web service.
+		/// </summary>
+		/// <param name="token">The cancellation token.</param>
+		/// <param name="arguments">The method arguments.</param>
+		/// <returns>The method result.</returns>
+		private object UploadTracerouteFromPlanetLab(CancellationToken token, params object[] arguments)
+		{
+			// Check the number of arguments.
+			if (arguments.Length != 3) throw new ArgumentException("This method takes only 3 arguments.");
+
+			// Cheeck the arguments type.
+			if (!(arguments[0] is Guid)) throw new ArgumentNullException("The identifier argument is of the wrong type (it must be a GUID).");
+			if (!(arguments[1] is string)) throw new ArgumentNullException("The source hostname argument is of the wrong type (it must be a string).");
+			if (!(arguments[2] is string)) throw new ArgumentNullException("The traceroute data argument is of the wrong type (it must be a string).");
+
+			// Get the parameters.
+			Guid id = (Guid)arguments[0];
+			string sourceHostname = arguments[1] as string;
+			string data = arguments[2] as string;
+
+			// Check the arguments.
+			if (null == sourceHostname) throw new ArgumentNullException("The source hostname argument is null.");
+			if (null == data) throw new ArgumentNullException("The traceroute data argument is null.");
+
+			// Resolve the IP address of the PlanetLab node.
+			IPAddress[] sourceIps = Dns.GetHostAddresses(sourceHostname);
+
+			// Create the traceroute.
+			MercuryTraceroute traceroute = new MercuryTraceroute(id, sourceHostname, sourceIps.Length > 0 ? sourceIps[0] : null, data);
+
+			// The success flag.
+			bool success = false;
+			// The exception.
+			Exception exception = null;
+
+			// Create a wait handle.
+			using (ManualResetEvent wait = new ManualResetEvent(false))
+			{
+				// Upload the data to Mercury.
+				IAsyncResult asyncResult = this.request.BeginUploadTraceroute(new Uri(this.config.UploadTracerouteUrl), traceroute, (AsyncWebResult result) =>
 					{
 						try
 						{

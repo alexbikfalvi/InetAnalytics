@@ -640,6 +640,12 @@
     <Compile Include="Forms\PlanetLab\FormAddCommand.Designer.cs">
       <DependentUpon>FormAddCommand.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PlanetLab\FormRunInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetLab\FormRunInformation.Designer.cs">
+      <DependentUpon>FormRunInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetLab\FormImportParameters.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1139,6 +1145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormAddCommand.resx">
       <DependentUpon>FormAddCommand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetLab\FormRunInformation.resx">
+      <DependentUpon>FormRunInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetLab\FormImportParameters.resx">
       <DependentUpon>FormImportParameters.cs</DependentUpon>

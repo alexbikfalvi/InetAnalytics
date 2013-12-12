@@ -33,6 +33,8 @@
 						asyncCancel.Dispose();
 					}
 				}
+				// Dispose the forms.
+				this.formSettings.Dispose();
 				// Dispose the components.
 				if (this.components != null)
 				{
@@ -265,11 +267,10 @@
 			// 
 			// buttonSettings
 			// 
-			this.buttonSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.buttonSettings.Image = global::InetTools.Properties.Resources.Settings_16;
 			this.buttonSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonSettings.Name = "buttonSettings";
-			this.buttonSettings.Size = new System.Drawing.Size(23, 22);
+			this.buttonSettings.Size = new System.Drawing.Size(69, 22);
 			this.buttonSettings.Text = "&Settings";
 			this.buttonSettings.Click += new System.EventHandler(this.OnSettingsClick);
 			// 
@@ -332,14 +333,14 @@
 			// menuItemSaveSites
 			// 
 			this.menuItemSaveSites.Name = "menuItemSaveSites";
-			this.menuItemSaveSites.Size = new System.Drawing.Size(152, 22);
+			this.menuItemSaveSites.Size = new System.Drawing.Size(136, 22);
 			this.menuItemSaveSites.Text = "Sites...";
 			this.menuItemSaveSites.Click += new System.EventHandler(this.OnSaveSites);
 			// 
 			// menuItemSaveResources
 			// 
 			this.menuItemSaveResources.Name = "menuItemSaveResources";
-			this.menuItemSaveResources.Size = new System.Drawing.Size(152, 22);
+			this.menuItemSaveResources.Size = new System.Drawing.Size(136, 22);
 			this.menuItemSaveResources.Text = "Resources...";
 			this.menuItemSaveResources.Click += new System.EventHandler(this.OnSaveResources);
 			// 

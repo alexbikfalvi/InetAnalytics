@@ -18,21 +18,17 @@
 			{
 				lock (this.sync)
 				{
-					//// Dispose the cancellation token.
-					//if (null != this.asyncCancel)
-					//{
-					//	// Cancel the asynchronous operation.
-					//	asyncCancel.Cancel();
-					//	// If there exists an asynchronous operation in progress.
-					//	if (null != this.asyncResult)
-					//	{
-					//		// Wait for the operation to complete.
-					//		this.asyncResult.AsyncWaitHandle.WaitOne();
-					//	}
-					//	// Dispose the cancellation token.
-					//	asyncCancel.Dispose();
-					//}
+					// Dispose the cancellation token.
+					if (null != this.result)
+					{
+						// Cancel the asynchronous operation.
+						this.request.Cancel(this.result);
+						// Wait for the operation to complete.
+						this.result.AsyncWaitHandle.WaitOne();
+					}
 				}
+				// Dispose the forms.
+				this.formSettings.Dispose();
 				// Dispose the components.
 				if (this.components != null)
 				{
@@ -58,17 +54,18 @@
 			this.tabPageTraceroute = new System.Windows.Forms.TabPage();
 			this.splitContainerTraceroute = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.codeTextBox = new DotNetApi.Windows.Controls.CodeTextBox();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.controlTraceroute = new InetTools.Controls.ControlMercuryClientTraceroute();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelServer = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxUrl = new System.Windows.Forms.ToolStripTextBox();
+			this.buttonSettings = new System.Windows.Forms.ToolStripButton();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonUpload = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
 			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.controlTraceroute = new InetTools.Controls.ControlMercuryClientTraceroute();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -179,20 +176,21 @@
 			this.codeTextBox.Text = "";
 			this.codeTextBox.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
-			// imageList
+			// controlTraceroute
 			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "GlobeQuestion");
-			this.imageList.Images.SetKeyName(1, "GlobeSuccess");
-			this.imageList.Images.SetKeyName(2, "GlobeWarning");
-			this.imageList.Images.SetKeyName(3, "GlobeError");
+			this.controlTraceroute.AutoScroll = true;
+			this.controlTraceroute.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlTraceroute.Location = new System.Drawing.Point(1, 1);
+			this.controlTraceroute.Name = "controlTraceroute";
+			this.controlTraceroute.Size = new System.Drawing.Size(391, 341);
+			this.controlTraceroute.TabIndex = 0;
 			// 
 			// toolStrip
 			// 
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelServer,
             this.textBoxUrl,
+            this.buttonSettings,
             this.separator1,
             this.buttonUpload,
             this.buttonCancel});
@@ -213,6 +211,15 @@
 			this.textBoxUrl.Name = "textBoxUrl";
 			this.textBoxUrl.Size = new System.Drawing.Size(200, 25);
 			this.textBoxUrl.TextChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// buttonSettings
+			// 
+			this.buttonSettings.Image = global::InetTools.Properties.Resources.Settings_16;
+			this.buttonSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonSettings.Name = "buttonSettings";
+			this.buttonSettings.Size = new System.Drawing.Size(69, 22);
+			this.buttonSettings.Text = "&Settings";
+			this.buttonSettings.Click += new System.EventHandler(this.OnSettingsClick);
 			// 
 			// separator1
 			// 
@@ -250,6 +257,15 @@
 			this.controlLog.TabIndex = 0;
 			this.controlLog.Title = "Event Log";
 			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "GlobeQuestion");
+			this.imageList.Images.SetKeyName(1, "GlobeSuccess");
+			this.imageList.Images.SetKeyName(2, "GlobeWarning");
+			this.imageList.Images.SetKeyName(3, "GlobeError");
+			// 
 			// saveFileDialog
 			// 
 			this.saveFileDialog.Filter = "XML files (*.xml)|*.xml";
@@ -259,15 +275,6 @@
 			// 
 			this.openFileDialog.Filter = "Alexa ranking files (*.alx)|*.alx";
 			this.openFileDialog.Title = "Open Sites List";
-			// 
-			// controlTraceroute
-			// 
-			this.controlTraceroute.AutoScroll = true;
-			this.controlTraceroute.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlTraceroute.Location = new System.Drawing.Point(1, 1);
-			this.controlTraceroute.Name = "controlTraceroute";
-			this.controlTraceroute.Size = new System.Drawing.Size(391, 341);
-			this.controlTraceroute.TabIndex = 0;
 			// 
 			// ControlMercuryClient
 			// 
@@ -308,11 +315,12 @@
 		private InetAnalytics.Controls.Log.ControlLogList controlLog;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageTraceroute;
-		private System.Windows.Forms.ToolStripLabel labelServer;
-		private System.Windows.Forms.ToolStripTextBox textBoxUrl;
 		private System.Windows.Forms.ToolStripSeparator separator1;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerTraceroute;
 		private DotNetApi.Windows.Controls.CodeTextBox codeTextBox;
 		private ControlMercuryClientTraceroute controlTraceroute;
+		private System.Windows.Forms.ToolStripButton buttonSettings;
+		private System.Windows.Forms.ToolStripLabel labelServer;
+		private System.Windows.Forms.ToolStripTextBox textBoxUrl;
 	}
 }

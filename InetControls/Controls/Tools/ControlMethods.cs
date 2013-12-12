@@ -18,7 +18,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using DotNetApi;
 using InetCrawler.Tools;
 using InetAnalytics.Forms.Tools;
 
@@ -30,7 +32,9 @@ namespace InetAnalytics.Controls.Tools
 	public partial class ControlMethods : UserControl
 	{
 		private Toolbox toolbox;
-		private readonly Dictionary<ToolMethodId, ToolMethod> methods = new Dictionary<ToolMethodId, ToolMethod>();
+		private IEnumerable<ToolMethodTrigger> triggers;
+
+		private readonly HashSet<ToolMethodInfo> methods = new HashSet<ToolMethodInfo>();
 
 		private readonly FormAddMethod formAddMethod = new FormAddMethod();
 
@@ -55,7 +59,7 @@ namespace InetAnalytics.Controls.Tools
 		/// <summary>
 		/// Gets the enumeration of selected methods.
 		/// </summary>
-		public IEnumerable<ToolMethod> Methods { get { return this.methods.Values; } }
+		public IEnumerable<ToolMethodInfo> Methods { get { return this.methods; } }
 
 		// Public methods.
 
@@ -64,10 +68,14 @@ namespace InetAnalytics.Controls.Tools
 		/// </summary>
 		/// <param name="toolbox">The toolbox.</param>
 		/// <param name="methods">The list of methods.</param>
-		public void Initialize(Toolbox toolbox, string[] methods)
+		/// <param name="triggers">The list of triggers.</param>
+		public void Initialize(Toolbox toolbox, string[] methods, IEnumerable<ToolMethodTrigger> triggers)
 		{
 			// Set the toolbox.
 			this.toolbox = toolbox;
+
+			// Set the triggers.
+			this.triggers = triggers;
 			
 			// Load the list of methods.
 			this.Load(methods);
@@ -88,10 +96,18 @@ namespace InetAnalytics.Controls.Tools
 			// Else, for each method identifier.
 			foreach (string id in methods)
 			{
-				// The method identifier structure.
+				// The trigger and method identifiers.
+				Guid triggerId;
 				ToolMethodId methodId;
-				// Try parse the method identifier.
-				if (!ToolMethodId.TryParse(id, out methodId)) continue;
+
+				// Try parse the trigger and method identifier.
+				if (!ToolMethodInfo.TryParse(id, out triggerId, out methodId)) continue;
+
+				// Get the trigger.
+				ToolMethodTrigger trigger = this.triggers.FirstOrDefault(trg => trg.Id == triggerId);
+
+				// If the trigger is default, continue.
+				if (default(ToolMethodTrigger) == trigger) continue;
 
 				// Get the tool corresponding to the method.
 				Tool tool = this.toolbox.GetTool(methodId.GuidTool, methodId.Version);
@@ -106,7 +122,7 @@ namespace InetAnalytics.Controls.Tools
 				if (null == method) continue;
 
 				// Add the method.
-				this.OnAddMethod(method);
+				this.OnAddMethod(trigger, method);
 			}
 		}
 
@@ -122,10 +138,10 @@ namespace InetAnalytics.Controls.Tools
 			// For all methods.
 			for (int index = 0; index < this.listViewMethods.Items.Count; index++)
 			{
-				// Get the method.
-				ToolMethod method = this.listViewMethods.Items[index].Tag as ToolMethod;
+				// Get the method information.
+				ToolMethodInfo info = this.listViewMethods.Items[index].Tag as ToolMethodInfo;
 				// Set the method identifier.
-				methods[index] = method.Id.ToString();
+				methods[index] = info.ToString();
 			}
 
 			// Return the string array.
@@ -142,33 +158,38 @@ namespace InetAnalytics.Controls.Tools
 		private void OnAdd(object sender, EventArgs e)
 		{
 			// Show the add method dialog.
-			if (this.formAddMethod.ShowDialog(this, this.toolbox) == DialogResult.OK)
+			if (this.formAddMethod.ShowDialog(this, this.toolbox, this.triggers) == DialogResult.OK)
 			{
 				// Add the method.
-				this.OnAddMethod(this.formAddMethod.Method);
+				this.OnAddMethod(this.formAddMethod.Trigger, this.formAddMethod.Method);
 			}
 		}
 
 		/// <summary>
 		/// Adds a new method to the list of methods.
 		/// </summary>
+		/// <param name="trigger">The trigger.</param>
 		/// <param name="method">The method.</param>
-		private void OnAddMethod(ToolMethod method)
+		private void OnAddMethod(ToolMethodTrigger trigger, ToolMethod method)
 		{
+			// Compute the method information.
+			ToolMethodInfo info = new ToolMethodInfo(trigger, method);
+
 			// Check whether the item already exists.
-			if (this.methods.ContainsKey(method.Id)) return;
+			if (this.methods.Contains(info)) return;
 
 			// Add the item to the dictionary.
-			this.methods.Add(method.Id, method);
+			this.methods.Add(info);
 
 			// Add the method item.
 			ListViewItem item = new ListViewItem(new string[] {
-					method.Name,
-					method.Tool.Info.Name,
-					method.Tool.Info.Id.Version.ToString()
-				});
+				trigger.Description,
+				method.Name,
+				method.Tool.Info.Name,
+				method.Tool.Info.Id.Version.ToString()
+			});
 			item.ImageKey = "Cube";
-			item.Tag = method;
+			item.Tag = info;
 			this.listViewMethods.Items.Add(item);
 
 			// Raise the event.
@@ -185,11 +206,11 @@ namespace InetAnalytics.Controls.Tools
 			// If there is no selected method, do nothing.
 			if (this.listViewMethods.SelectedItems.Count == 0) return;
 			
-			// Get the selected method.
-			ToolMethod method = this.listViewMethods.SelectedItems[0].Tag as ToolMethod;
+			// Get the selected method information.
+			ToolMethodInfo info = this.listViewMethods.SelectedItems[0].Tag as ToolMethodInfo;
 
 			// Remove the specified method.
-			this.methods.Remove(method.Id);
+			this.methods.Remove(info);
 
 			// Remove the item.
 			this.listViewMethods.Items.Remove(this.listViewMethods.SelectedItems[0]);
@@ -211,10 +232,10 @@ namespace InetAnalytics.Controls.Tools
 			// If there exists a selected method.
 			if (this.listViewMethods.SelectedItems.Count > 0)
 			{
-				// Get the selected method.
-				ToolMethod method = this.listViewMethods.SelectedItems[0].Tag as ToolMethod;
+				// Get the selected method information.
+				ToolMethodInfo info = this.listViewMethods.SelectedItems[0].Tag as ToolMethodInfo;
 				// Set the method description.
-				this.textBoxDescription.Text = method.Description;
+				this.textBoxDescription.Text = info.Method.Description;
 				// Set the remove button enabled state.
 				this.buttonRemove.Enabled = true;
 			}

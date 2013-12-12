@@ -446,27 +446,30 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeChanged(object sender, PlObjectEventArgs e)
 		{
-			// Get the node.
-			PlNode node = e.Object as PlNode;
-			// Get the list item corresponding to the selected node.
-			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+			this.Invoke(() =>
 				{
-					// Get the node info.
-					NodeInfo info = it.Tag as NodeInfo;
-					// Check the tag node equals the current node.
-					return info.NodeId == node.Id;
-				});
-			// Update the item information.
-			if (null != item)
-			{
-				// Get the node information.
-				NodeInfo info = item.Tag as NodeInfo;
+					// Get the node.
+					PlNode node = e.Object as PlNode;
+					// Get the list item corresponding to the selected node.
+					ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+						{
+							// Get the node info.
+							NodeInfo info = it.Tag as NodeInfo;
+							// Check the tag node equals the current node.
+							return info.NodeId == node.Id;
+						});
+					// Update the item information.
+					if (null != item)
+					{
+						// Get the node information.
+						NodeInfo info = item.Tag as NodeInfo;
 
-				// Set the item information.
-				item.SubItems[0].Text = node.Id.Value.ToString();
-				item.SubItems[1].Text = node.Hostname;
-				item.ImageKey = ControlSlice.nodeImageKeys[(int)node.GetBootState()];
-			}
+						// Set the item information.
+						item.SubItems[0].Text = node.Id.Value.ToString();
+						item.SubItems[1].Text = node.Hostname;
+						item.ImageKey = ControlSlice.nodeImageKeys[(int)node.GetBootState()];
+					}
+				});
 		}
 
 		/// <summary>
@@ -476,41 +479,44 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnSiteChanged(object sender, PlObjectEventArgs e)
 		{
-			// Get the site.
-			PlSite site = e.Object as PlSite;
-			// Get the list item corresponding to the selected node.
-			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
-			{
-				// Get the node info.
-				NodeInfo info = it.Tag as NodeInfo;
-				// Check the tag node equals the current node.
-				return object.ReferenceEquals(info.Site, site);
-			});
-			// Update the item information.
-			if (null != item)
-			{
-				// Get the node information.
-				NodeInfo info = item.Tag as NodeInfo;
-
-				// If the marker is not null.
-				if (null != info.Marker)
+			this.Invoke(() =>
 				{
-					// Update the marker location.
-					info.Marker.Location = new MapPoint(site.Longitude.Value, site.Latitude.Value);
-				}
-				else
-				{
-					// If the site has coordinates.
-					if (site.Latitude.HasValue && site.Longitude.HasValue)
+					// Get the site.
+					PlSite site = e.Object as PlSite;
+					// Get the list item corresponding to the selected node.
+					ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
 					{
-						// Create a circular marker.
-						info.Marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
-						info.Marker.Name = "{0}{1}{2}".FormatWith(info.Node.Hostname, Environment.NewLine, site.Name);
-						// Add the marker to the map.
-						this.mapControl.Markers.Add(marker);
+						// Get the node info.
+						NodeInfo info = it.Tag as NodeInfo;
+						// Check the tag node equals the current node.
+						return object.ReferenceEquals(info.Site, site);
+					});
+					// Update the item information.
+					if (null != item)
+					{
+						// Get the node information.
+						NodeInfo info = item.Tag as NodeInfo;
+
+						// If the marker is not null.
+						if (null != info.Marker)
+						{
+							// Update the marker location.
+							info.Marker.Location = new MapPoint(site.Longitude.Value, site.Latitude.Value);
+						}
+						else
+						{
+							// If the site has coordinates.
+							if (site.Latitude.HasValue && site.Longitude.HasValue)
+							{
+								// Create a circular marker.
+								info.Marker = new MapBulletMarker(new MapPoint(site.Longitude.Value, site.Latitude.Value));
+								info.Marker.Name = "{0}{1}{2}".FormatWith(info.Node.Hostname, Environment.NewLine, site.Name);
+								// Add the marker to the map.
+								this.mapControl.Markers.Add(marker);
+							}
+						}
 					}
-				}
-			}
+				});
 		}
 
 		/// <summary>

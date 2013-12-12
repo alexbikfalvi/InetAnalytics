@@ -20,6 +20,13 @@
 				this.OnDisposeNodes();
 				// Remove the slice event handler.
 				this.slice.Changed -= this.OnSliceChanged;
+				// Dispose the forms.
+				this.formNodeProperties.Dispose();
+				this.formSiteProperties.Dispose();
+				this.formAddCommand.Dispose();
+				this.formRunInformation.Dispose();
+				// Dispose the wait handles.
+				this.toolWait.Dispose();
 				// If the components are not null.
 				if (components != null)
 				{

@@ -40,6 +40,7 @@ namespace InetTools.Tools.Mercury
 		private static readonly char[] separatorRoundBrackets = { '(', ')' };
 		private static readonly char[] separatorSpace = { ' ' };
 
+		public readonly Guid id;
 		public readonly string sourceHostname;
 		public readonly IPAddress sourceIp;
 		public string destinationHostname;
@@ -51,12 +52,14 @@ namespace InetTools.Tools.Mercury
 		/// <summary>
 		/// Creates a new traceroute instance by parsing the specified data.
 		/// </summary>
+		/// <param name="id">The traceroute identifier.</param>
 		/// <param name="sourceHostname">The source hostname.</param>
 		/// <param name="sourceIp">The source IP address.</param>
 		/// <param name="data">The traceroute data.</param>
-		public MercuryTraceroute(string sourceHostname, IPAddress sourceIp, string data)
+		public MercuryTraceroute(Guid id, string sourceHostname, IPAddress sourceIp, string data)
 		{
 			// Set the source information.
+			this.id = id;
 			this.sourceHostname = sourceHostname;
 			this.sourceIp = sourceIp;
 
@@ -71,6 +74,10 @@ namespace InetTools.Tools.Mercury
 
 		// Public methods.
 
+		/// <summary>
+		/// Gets the traceroute identifier.
+		/// </summary>
+		public Guid Id { get { return this.id; } }
 		/// <summary>
 		/// Gets the source IP address.
 		/// </summary>

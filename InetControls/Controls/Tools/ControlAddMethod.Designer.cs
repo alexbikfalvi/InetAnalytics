@@ -36,10 +36,12 @@
 			this.listViewMethods = new System.Windows.Forms.ListView();
 			this.columnHeaderMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.groupBoxDescription = new System.Windows.Forms.GroupBox();
 			this.textBoxDescription = new System.Windows.Forms.TextBox();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.comboBoxTrigger = new System.Windows.Forms.ComboBox();
+			this.labelTrigger = new System.Windows.Forms.Label();
 			this.groupBoxDescription.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -57,7 +59,7 @@
 			// labelTool
 			// 
 			this.labelTool.AutoSize = true;
-			this.labelTool.Location = new System.Drawing.Point(17, 76);
+			this.labelTool.Location = new System.Drawing.Point(17, 103);
 			this.labelTool.Name = "labelTool";
 			this.labelTool.Size = new System.Drawing.Size(60, 13);
 			this.labelTool.TabIndex = 3;
@@ -69,7 +71,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxTool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxTool.FormattingEnabled = true;
-			this.comboBoxTool.Location = new System.Drawing.Point(99, 73);
+			this.comboBoxTool.Location = new System.Drawing.Point(99, 100);
 			this.comboBoxTool.Name = "comboBoxTool";
 			this.comboBoxTool.Size = new System.Drawing.Size(348, 21);
 			this.comboBoxTool.TabIndex = 4;
@@ -86,10 +88,10 @@
 			this.listViewMethods.FullRowSelect = true;
 			this.listViewMethods.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listViewMethods.HideSelection = false;
-			this.listViewMethods.Location = new System.Drawing.Point(3, 100);
+			this.listViewMethods.Location = new System.Drawing.Point(3, 127);
 			this.listViewMethods.MultiSelect = false;
 			this.listViewMethods.Name = "listViewMethods";
-			this.listViewMethods.Size = new System.Drawing.Size(444, 141);
+			this.listViewMethods.Size = new System.Drawing.Size(444, 114);
 			this.listViewMethods.SmallImageList = this.imageList;
 			this.listViewMethods.TabIndex = 5;
 			this.listViewMethods.UseCompatibleStateImageBehavior = false;
@@ -105,6 +107,12 @@
 			// 
 			this.columnHeaderId.Text = "ID";
 			this.columnHeaderId.Width = 120;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "Cube");
 			// 
 			// groupBoxDescription
 			// 
@@ -140,16 +148,33 @@
 			this.pictureBox.TabIndex = 2;
 			this.pictureBox.TabStop = false;
 			// 
-			// imageList
+			// comboBoxTrigger
 			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Cube");
+			this.comboBoxTrigger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxTrigger.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxTrigger.FormattingEnabled = true;
+			this.comboBoxTrigger.Location = new System.Drawing.Point(99, 73);
+			this.comboBoxTrigger.Name = "comboBoxTrigger";
+			this.comboBoxTrigger.Size = new System.Drawing.Size(348, 21);
+			this.comboBoxTrigger.TabIndex = 7;
+			this.comboBoxTrigger.SelectedIndexChanged += new System.EventHandler(this.OnTriggerSelectionChanged);
+			// 
+			// labelTrigger
+			// 
+			this.labelTrigger.AutoSize = true;
+			this.labelTrigger.Location = new System.Drawing.Point(17, 76);
+			this.labelTrigger.Name = "labelTrigger";
+			this.labelTrigger.Size = new System.Drawing.Size(39, 13);
+			this.labelTrigger.TabIndex = 8;
+			this.labelTrigger.Text = "&When:";
 			// 
 			// ControlAddMethod
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.labelTrigger);
+			this.Controls.Add(this.comboBoxTrigger);
 			this.Controls.Add(this.groupBoxDescription);
 			this.Controls.Add(this.listViewMethods);
 			this.Controls.Add(this.labelTool);
@@ -178,5 +203,7 @@
 		private System.Windows.Forms.GroupBox groupBoxDescription;
 		private System.Windows.Forms.TextBox textBoxDescription;
 		private System.Windows.Forms.ImageList imageList;
+		private System.Windows.Forms.ComboBox comboBoxTrigger;
+		private System.Windows.Forms.Label labelTrigger;
 	}
 }

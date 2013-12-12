@@ -181,6 +181,7 @@
 			this.Controls.Add(this.buttonCancel);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(400, 500);
 			this.Name = "FormExport";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;

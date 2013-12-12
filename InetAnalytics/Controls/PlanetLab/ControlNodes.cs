@@ -239,28 +239,31 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnNodeChanged(object sender, PlObjectEventArgs e)
 		{
-			// Get the node.
-			PlNode node = e.Object as PlNode;
-			// Find the list view item corresponding to the node.
-			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
-			{
-				// Return true if the item corresponds to the same node.
-				return object.ReferenceEquals(node, it.Tag);
-			});
-			// If the item is not null.
-			if (null != item)
-			{
-				// Update the item.
-				item.SubItems[0].Text = node.Id.HasValue ? node.Id.Value.ToString() : string.Empty;
-				item.SubItems[1].Text = node.Hostname;
-				item.SubItems[2].Text = node.BootState;
-				item.SubItems[3].Text = node.Model;
-				item.SubItems[4].Text = node.Version;
-				item.SubItems[5].Text = node.DateCreated.HasValue ? node.DateCreated.Value.ToString() : string.Empty;
-				item.SubItems[6].Text = node.LastUpdated.HasValue ? node.LastUpdated.Value.ToString() : string.Empty;
-				item.SubItems[7].Text = node.NodeType;
-				item.ImageKey = ControlNodes.nodeImageKeys[(int)node.GetBootState()];
-			}
+			this.Invoke(() =>
+				{
+					// Get the node.
+					PlNode node = e.Object as PlNode;
+					// Find the list view item corresponding to the node.
+					ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
+					{
+						// Return true if the item corresponds to the same node.
+						return object.ReferenceEquals(node, it.Tag);
+					});
+					// If the item is not null.
+					if (null != item)
+					{
+						// Update the item.
+						item.SubItems[0].Text = node.Id.HasValue ? node.Id.Value.ToString() : string.Empty;
+						item.SubItems[1].Text = node.Hostname;
+						item.SubItems[2].Text = node.BootState;
+						item.SubItems[3].Text = node.Model;
+						item.SubItems[4].Text = node.Version;
+						item.SubItems[5].Text = node.DateCreated.HasValue ? node.DateCreated.Value.ToString() : string.Empty;
+						item.SubItems[6].Text = node.LastUpdated.HasValue ? node.LastUpdated.Value.ToString() : string.Empty;
+						item.SubItems[7].Text = node.NodeType;
+						item.ImageKey = ControlNodes.nodeImageKeys[(int)node.GetBootState()];
+					}
+				});
 		}
 
 		/// <summary>

@@ -250,10 +250,7 @@ namespace InetCrawler.Tools
 		/// <returns>The tool or <b>null</b> if the tool does not exist.</returns>
 		public Tool GetTool(Guid guid, Version version)
 		{
-			return this.FirstOrDefault((Tool tool) =>
-				{
-					return (tool.Info.Id.Guid == guid) && (tool.Info.Id.Version == version);
-				});
+			return this.FirstOrDefault(tool => (tool.Info.Id.Guid == guid) && (tool.Info.Id.Version == version));
 		}
 
 		// Private methods.
