@@ -452,7 +452,7 @@ namespace InetAnalytics.Forms
 			this.controlSideComments.Nodes.Add(this.treeNodeComments);
 
 			// Set the status event handler.
-			this.crawler.Status.Message += this.OnStatusMessage;
+			this.crawler.Status.MessageChanged += this.OnStatusMessage;
 
 			// Set the crawler event handlers.
 
@@ -581,6 +581,21 @@ namespace InetAnalytics.Forms
 		/// <param name="e">The event arguments.</param>
 		protected override void OnClosing(CancelEventArgs e)
 		{
+			// Check the status is locked.
+			if (this.crawler.Status.IsLocked)
+			{
+				// Show a message.
+				MessageBox.Show(
+					this,
+					"The Internet Analytics is executing one or more background operations. You must stop them before closing the program.",
+					"Internet Analytics Background",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Warning);
+				// Cancel the closing request.
+				e.Cancel = true;
+				// Return.
+				return;
+			}
 			// Save the configuration.
 			this.crawler.Config.ConsoleSideMenuVisibleItems = this.sideMenu.VisibleItems;
 			this.crawler.Config.ConsoleSideMenuSelectedItem = this.sideMenu.SelectedIndex ?? 0;
@@ -1115,6 +1130,7 @@ namespace InetAnalytics.Forms
 		/// <param name="e">The event arguments.</param>
 		private void OnExit(object sender, EventArgs e)
 		{
+			// Close the main window.
 			this.Close();
 		}
 
@@ -1125,6 +1141,7 @@ namespace InetAnalytics.Forms
 		/// <param name="e">The event arguments.</param>
 		private void OpenAboutForm(object sender, EventArgs e)
 		{
+			// Show the about dialog.
 			this.formAbout.ShowDialog(this);
 		}
 

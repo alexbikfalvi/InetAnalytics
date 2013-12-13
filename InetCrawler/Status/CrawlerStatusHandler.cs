@@ -32,20 +32,31 @@ namespace InetCrawler.Status
 	/// </summary>
 	public sealed class CrawlerStatusHandler
 	{
-		private object owner;
+		private readonly object owner;
+		private readonly CrawlerStatusHandlerAction actionSend;
+		private readonly CrawlerStatusHandlerAction actionLock;
+
+		private readonly object sync = new object();
+
 		private CrawlerStatusMessage message;
-		private CrawlerStatusHandlerAction status;
+		private volatile bool locked = false;
 
 		/// <summary>
 		/// Creates a new object instance for the specified ownwer.
 		/// </summary>
 		/// <param name="owner">The owner object.</param>
-		/// <param name="status">The status event handler.</param>
-		internal CrawlerStatusHandler(object owner, CrawlerStatusHandlerAction status)
+		/// <param name="actionSend">The action handler for sending a status message.</param>
+		/// <param name="actionLock">The action handler for changing the status lock.</param>
+		internal CrawlerStatusHandler(object owner, CrawlerStatusHandlerAction actionSend, CrawlerStatusHandlerAction actionLock)
 		{
+			// Set the owner.
 			this.owner = owner;
-			this.status = status;
+			// Set the action handlers.
+			this.actionSend = actionSend;
+			this.actionLock = actionLock;
 		}
+
+		// Public properties.
 
 		/// <summary>
 		/// Gets the owner object of the current handle.
@@ -55,6 +66,10 @@ namespace InetCrawler.Status
 		/// Gets the current status message for this handler.
 		/// </summary>
 		public CrawlerStatusMessage Message { get { return this.message; } }
+		/// <summary>
+		/// Gets whether the status locks the application.
+		/// </summary>
+		public bool Locked { get { return this.locked; } }
 
 		// Public methods.
 
@@ -65,10 +80,13 @@ namespace InetCrawler.Status
 		/// <param name="text">The left text.</param>
 		public void Send(CrawlerStatus.StatusType type, string text)
 		{
-			// Set the message.
-			this.message = new CrawlerStatusMessage(type, text);
-			// Call the delegate.
-			this.status(this);
+			lock (this.sync)
+			{
+				// Set the message.
+				this.message = new CrawlerStatusMessage(type, text);
+				// Call the delegate.
+				this.actionSend(this);
+			}
 		}
 
 		/// <summary>
@@ -79,10 +97,13 @@ namespace InetCrawler.Status
 		/// <param name="image">The left image.</param>
 		public void Send(CrawlerStatus.StatusType type, string text, Image image)
 		{
-			// Set the message.
-			this.message = new CrawlerStatusMessage(type, text, image);
-			// Call the delegate.
-			this.status(this);
+			lock (this.sync)
+			{
+				// Set the message.
+				this.message = new CrawlerStatusMessage(type, text, image);
+				// Call the delegate.
+				this.actionSend(this);
+			}
 		}
 
 		/// <summary>
@@ -95,10 +116,49 @@ namespace InetCrawler.Status
 		/// <param name="rightImage">The right image.</param>
 		public void Send(CrawlerStatus.StatusType type, string leftText, string rightText, Image leftImage = null, Image rightImage = null)
 		{
-			// Set the message.
-			this.message = new CrawlerStatusMessage(type, leftText, rightText, leftImage, rightImage);
-			// Call the delegate.
-			this.status(this);
+			lock (this.sync)
+			{
+				// Set the message.
+				this.message = new CrawlerStatusMessage(type, leftText, rightText, leftImage, rightImage);
+				// Call the delegate.
+				this.actionSend(this);
+			}
+		}
+
+		/// <summary>
+		/// Prevents the application from closing when running a background operation.
+		/// </summary>
+		public void Lock()
+		{
+			lock (this.sync)
+			{
+				// If the lock is not set.
+				if (!this.locked)
+				{
+					// Set the lock.
+					this.locked = true;
+					// Call the delegate.
+					this.actionLock(this);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Allows the application to close  when not running a background operation.
+		/// </summary>
+		public void Unlock()
+		{
+			lock (this.sync)
+			{
+				// If the lock is set.
+				if (this.locked)
+				{
+					// Clear the lock.
+					this.locked = false;
+					// Call the delegate.
+					this.actionLock(this);
+				}
+			}
 		}
 	}
 

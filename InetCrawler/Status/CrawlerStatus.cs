@@ -39,8 +39,11 @@ namespace InetCrawler.Status
 			Unknown = 3
 		}
 
+		private readonly object sync = new object();
+
 		private readonly Dictionary<object, CrawlerStatusHandler> handlers = new Dictionary<object, CrawlerStatusHandler>();
-		private CrawlerStatusHandlerAction status;
+		private readonly HashSet<object> locks = new HashSet<object>();
+
 		private CrawlerStatusHandler handler = null;
 		private bool disposed = false;
 
@@ -49,12 +52,25 @@ namespace InetCrawler.Status
 		/// </summary>
 		public CrawlerStatus()
 		{
-			this.status = new CrawlerStatusHandlerAction(this.OnSend);
 		}
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets whether there exist a status lock.
+		/// </summary>
+		public bool IsLocked { get { lock (this.sync) { return this.locks.Count > 0; } } }
 
 		// Public events.
 
-		public event StatusMessageEventHandler Message;
+		/// <summary>
+		/// An event raised when a handler sends a status message.
+		/// </summary>
+		public event StatusMessageEventHandler MessageChanged;
+		/// <summary>
+		/// An event raised when the lock status has changed.
+		/// </summary>
+		public event EventHandler LockChanged;
 
 		// Public methods.
 
@@ -78,7 +94,7 @@ namespace InetCrawler.Status
 			if (!this.handlers.TryGetValue(owner, out handler))
 			{
 				// If the handler is not found, create a new handler for the given owner.
-				handler = new CrawlerStatusHandler(owner, this.status);
+				handler = new CrawlerStatusHandler(owner, this.OnMessageChanged, this.OnLockChanged);
 				// Add the handler to the collection.
 				this.handlers.Add(owner, handler);
 			}
@@ -92,18 +108,21 @@ namespace InetCrawler.Status
 		/// <param name="owner">The owner object.</param>
 		public void Activate(object owner)
 		{
-			CrawlerStatusHandler handler;
-			// Try and get the handler for the specified owner.
-			if (this.handlers.TryGetValue(owner, out handler))
+			lock (this.sync)
 			{
-				this.handler = handler;
+				CrawlerStatusHandler handler;
+				// Try and get the handler for the specified owner.
+				if (this.handlers.TryGetValue(owner, out handler))
+				{
+					this.handler = handler;
+				}
+				else
+				{
+					this.handler = null;
+				}
+				// Send a notification.
+				this.OnMessageChanged();
 			}
-			else
-			{
-				this.handler = null;
-			}
-			// Send a notification.
-			this.OnSend();
 		}
 
 		/// <summary>
@@ -112,16 +131,19 @@ namespace InetCrawler.Status
 		/// <param name="owner">The owner object.</param>
 		public void Deactivate(object owner)
 		{
-			// If there exists a current handler.
-			if (null != this.handler)
+			lock (this.sync)
 			{
-				// If handler owner is the specified owner.
-				if (this.handler.Owner.Equals(owner))
+				// If there exists a current handler.
+				if (null != this.handler)
 				{
-					// Set the handler to null.
-					this.handler = null;
-					// Send a notification.
-					this.OnSend();
+					// If handler owner is the specified owner.
+					if (this.handler.Owner.Equals(owner))
+					{
+						// Set the handler to null.
+						this.handler = null;
+						// Send a notification.
+						this.OnMessageChanged();
+					}
 				}
 			}
 		}
@@ -131,30 +153,71 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// An event handler called when receiving a status message from a handler.
 		/// </summary>
-		/// <param name="handler">The handler that sent the notification.</param>
-		private void OnSend(CrawlerStatusHandler handler)
+		/// <param name="handler">The handler that changed the message.</param>
+		private void OnMessageChanged(CrawlerStatusHandler handler)
 		{
 			// If the object is disposed, do nothing.
 			if (this.disposed) return;
-			// If this is the currenty selected handler, send the notification.
-			if (this.handler == handler)
+
+			lock (this.sync)
 			{
-				this.OnSend();
+				// If this is the currenty selected handler, raise an event.
+				if (this.handler == handler)
+				{
+					this.OnMessageChanged();
+				}
 			}
 		}
 
 		/// <summary>
-		/// An event handler called when raising a notification event.
+		/// An event handler called when raising a message changed event.
 		/// </summary>
-		private void OnSend()
+		private void OnMessageChanged()
 		{
 			// If there exists an event handler.
-			if (null != this.Message)
+			if (null != this.MessageChanged)
 			{
 				// If the handler is not null.
-				if (null != this.handler) this.Message(this, new CrawlerStatusMessageEventArgs(this.handler.Message));
-				else this.Message(this, new CrawlerStatusMessageEventArgs(null));
+				if (null != this.handler) this.MessageChanged(this, new CrawlerStatusMessageEventArgs(this.handler.Message));
+				else this.MessageChanged(this, new CrawlerStatusMessageEventArgs(null));
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when a status handler changes the lock state.
+		/// </summary>
+		/// <param name="handler">The handler that changed the lock.</param>
+		private void OnLockChanged(CrawlerStatusHandler handler)
+		{
+			lock (this.sync)
+			{
+				// If the handler lock is set.
+				if (handler.Locked)
+				{
+					// Add the handler owner to the list of locks.
+					if (this.locks.Add(handler.Owner))
+					{
+						this.OnLockChanged();
+					}
+				}
+				else
+				{
+					// Remove the handler owner from the list of locks.
+					if (this.locks.Remove(handler.Owner))
+					{
+						this.OnLockChanged();
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when raising a lock changed event.
+		/// </summary>
+		private void OnLockChanged()
+		{
+			// Raise the event.
+			if (null != this.LockChanged) this.LockChanged(this, EventArgs.Empty);
 		}
 	}
 }
