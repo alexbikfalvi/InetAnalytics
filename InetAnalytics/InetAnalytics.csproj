@@ -1283,6 +1283,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\RunConcurrentStop_48.png" />
+    <None Include="Resources\RunConcurrentStop_32.png" />
+    <None Include="Resources\RunConcurrentStop_24.png" />
+    <None Include="Resources\RunConcurrentStop_16.png" />
+    <None Include="Resources\RunConcurrentStart_48.png" />
+    <None Include="Resources\RunConcurrentStart_32.png" />
+    <None Include="Resources\RunConcurrentStart_24.png" />
+    <None Include="Resources\RunConcurrentStart_16.png" />
+    <None Include="Resources\RunConcurrent_48.png" />
+    <None Include="Resources\RunConcurrent_32.png" />
+    <None Include="Resources\RunConcurrent_24.png" />
+    <None Include="Resources\RunConcurrent_16.png" />
     <None Include="Resources\ArrowBluePrevious_48.png" />
     <None Include="Resources\ArrowBluePrevious_32.png" />
     <None Include="Resources\ArrowBluePrevious_24.png" />

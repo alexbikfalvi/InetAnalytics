@@ -681,8 +681,8 @@ namespace InetCrawler.PlanetLab
 								if (!state.IsStopped)
 								{
 
-									// If the list of pending nodes is empty, stop.
-									if (0 == state.PendingCount)
+									// If the list of pending nodes and running nodes is empty, stop.
+									if ((0 == state.PendingCount) && (0 == state.RunningCount))
 									{
 										this.Stop(state);
 									}

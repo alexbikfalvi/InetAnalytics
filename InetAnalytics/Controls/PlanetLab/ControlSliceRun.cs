@@ -1450,11 +1450,18 @@ namespace InetAnalytics.Controls.PlanetLab
 
 					try
 					{
+
+						// Request a status lock.
+						this.status.Lock();
+
 						// Start the manager.
 						this.managerState = this.manager.Start(this.config, nodes);
 					}
 					catch (Exception exception)
 					{
+						// Release the status lock.
+						this.status.Unlock();
+
 						// Log an event.
 						this.controlLog.Add(this.config.Log.Add(
 							LogEventLevel.Important,
@@ -1777,6 +1784,9 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			this.Invoke(() =>
 			{
+				// Release the status lock.
+				this.status.Unlock();
+
 				// Set the controls enabled state.
 				this.buttonStart.Enabled = true;
 
@@ -2304,8 +2314,8 @@ namespace InetAnalytics.Controls.PlanetLab
 										LogEventLevel.Verbose,
 										LogEventType.Success,
 										ControlSliceRun.logSource.FormatWith(this.slice.Id),
-										@"The PlanetLab session information was sent to method '{0}' of tool '{1}' and processed successfully.",
-										new object[] { info.Method.Name, info.Method.Tool.Info.Name }));
+										@"The PlanetLab session information with ID {0} was sent to method '{1}' of tool '{2}' and processed successfully.",
+										new object[] { this.sessionId, info.Method.Name, info.Method.Tool.Info.Name }));
 								}
 								else
 								{
@@ -2314,8 +2324,8 @@ namespace InetAnalytics.Controls.PlanetLab
 										LogEventLevel.Normal,
 										LogEventType.Warning,
 										ControlSliceRun.logSource.FormatWith(this.slice.Id),
-										@"The PlanetLab session information was sent to method '{0}' of tool '{1}' but the processing failed.",
-										new object[] { info.Method.Name, info.Method.Tool.Info.Name }));
+										@"The PlanetLab session information with ID {0} was sent to method '{1}' of tool '{2}' but the processing failed.",
+										new object[] { this.sessionId, info.Method.Name, info.Method.Tool.Info.Name }));
 								}
 							}
 							catch (Exception exception)
@@ -2325,8 +2335,8 @@ namespace InetAnalytics.Controls.PlanetLab
 									LogEventLevel.Important,
 									LogEventType.Error,
 									ControlSliceRun.logSource.FormatWith(this.slice.Id),
-									@"The PlanetLab session information was sent to method '{0}' of tool '{1}' and failed. {2}",
-									new object[] { info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
+									@"The PlanetLab session information with ID {0} was sent to method '{1}' of tool '{2}' and failed. {3}",
+									new object[] { this.sessionId, info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
 									exception));
 							}
 							finally
@@ -2361,8 +2371,8 @@ namespace InetAnalytics.Controls.PlanetLab
 							LogEventLevel.Important,
 							LogEventType.Error,
 							ControlSliceRun.logSource.FormatWith(this.slice.Id),
-							@"The PlanetLab session information was sent to method '{0}' of tool '{1}' and failed. {2}",
-							new object[] { info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
+							@"The PlanetLab session information with ID {0} was sent to method '{1}' of tool '{2}' and failed. {3}",
+							new object[] { this.sessionId, info.Method.Name, info.Method.Tool.Info.Name, exception.Message },
 							exception));
 					}
 				}

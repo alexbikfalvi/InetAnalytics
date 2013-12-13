@@ -60,6 +60,10 @@ namespace InetCrawler.Status
 		/// Gets whether there exist a status lock.
 		/// </summary>
 		public bool IsLocked { get { lock (this.sync) { return this.locks.Count > 0; } } }
+		/// <summary>
+		/// Gets the number of locks.
+		/// </summary>
+		public int LockCount { get { lock (this.sync) { return this.locks.Count; } } }
 
 		// Public events.
 

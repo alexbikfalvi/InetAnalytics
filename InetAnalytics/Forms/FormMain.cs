@@ -452,7 +452,8 @@ namespace InetAnalytics.Forms
 			this.controlSideComments.Nodes.Add(this.treeNodeComments);
 
 			// Set the status event handler.
-			this.crawler.Status.MessageChanged += this.OnStatusMessage;
+			this.crawler.Status.MessageChanged += this.OnStatusMessageChanged;
+			this.crawler.Status.LockChanged += OnStatusLockChanged;
 
 			// Set the crawler event handlers.
 
@@ -587,7 +588,7 @@ namespace InetAnalytics.Forms
 				// Show a message.
 				MessageBox.Show(
 					this,
-					"The Internet Analytics is executing one or more background operations. You must stop them before closing the program.",
+					"The Internet Analytics is running one or more background operations. You must stop them before closing the program.",
 					"Internet Analytics Background",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Warning);
@@ -660,7 +661,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnStatusMessage(object sender, CrawlerStatusMessageEventArgs e)
+		private void OnStatusMessageChanged(object sender, CrawlerStatusMessageEventArgs e)
 		{
 			// Call the code on the UI thread.
 			this.Invoke(() =>
@@ -678,18 +679,21 @@ namespace InetAnalytics.Forms
 									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+									this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 									break;
 								case CrawlerStatus.StatusType.Normal:
 									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
 									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
+									this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 									break;
 								case CrawlerStatus.StatusType.Busy:
 									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripBusyBackground;
 									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
 									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
 									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
+									this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
 									break;
 							}
 							// Set the new status.
@@ -706,11 +710,37 @@ namespace InetAnalytics.Forms
 						this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 						this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 						this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
+						this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 						this.statusLabelLeft.Image = Resources.Information_16;
 						this.statusLabelLeft.Text = "Ready.";
 						this.statusLabelRight.Image = null;
 						this.statusLabelRight.Text = null;
 						this.status = CrawlerStatus.StatusType.Ready;
+					}
+				});
+		}
+
+		/// <summary>
+		/// An event handler called when the status lock has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStatusLockChanged(object sender, EventArgs e)
+		{
+			this.Invoke(() =>
+				{
+					// Get the number of locks.
+					int count = this.crawler.Status.LockCount;
+					// Update the lock information.
+					if (count > 0)
+					{
+						this.statusLabelRun.Text = "{0} background task{1}".FormatWith(count, count.PluralSuffix());
+						this.statusLabelRun.Image = Resources.RunConcurrentStart_16;
+					}
+					else
+					{
+						this.statusLabelRun.Text = "No background tasks";
+						this.statusLabelRun.Image = Resources.RunConcurrentStop_16;
 					}
 				});
 		}

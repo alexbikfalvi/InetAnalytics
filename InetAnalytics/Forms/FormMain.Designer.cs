@@ -45,9 +45,11 @@ namespace InetAnalytics.Forms
 			this.statusLabelLeft = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelMiddle = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusLabelRun = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.sideMenu = new DotNetApi.Windows.Controls.SideMenu();
+			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
 			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
@@ -66,6 +68,7 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
+			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemComments = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.labelNotAvailable = new System.Windows.Forms.Label();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -81,8 +84,6 @@ namespace InetAnalytics.Forms
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlSideLog = new InetAnalytics.Controls.ControlSideCalendar();
-			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.toolTipNetworkStatus = new InetAnalytics.Controls.Net.NetworkStatusToolTip(this.components);
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
@@ -128,6 +129,7 @@ namespace InetAnalytics.Forms
             this.statusLabelLeft,
             this.statusLabelMiddle,
             this.statusLabelRight,
+            this.statusLabelRun,
             this.statusLabelConnection});
 			this.statusStrip.Location = new System.Drawing.Point(0, 0);
 			this.statusStrip.Name = "statusStrip";
@@ -146,7 +148,7 @@ namespace InetAnalytics.Forms
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(857, 17);
+			this.statusLabelMiddle.Size = new System.Drawing.Size(691, 17);
 			this.statusLabelMiddle.Spring = true;
 			// 
 			// statusLabelRight
@@ -154,6 +156,13 @@ namespace InetAnalytics.Forms
 			this.statusLabelRight.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.statusLabelRight.Name = "statusLabelRight";
 			this.statusLabelRight.Size = new System.Drawing.Size(0, 17);
+			// 
+			// statusLabelRun
+			// 
+			this.statusLabelRun.Image = global::InetAnalytics.Resources.RunConcurrentStop_16;
+			this.statusLabelRun.Name = "statusLabelRun";
+			this.statusLabelRun.Size = new System.Drawing.Size(135, 17);
+			this.statusLabelRun.Text = "No background tasks";
 			// 
 			// statusLabelConnection
 			// 
@@ -220,6 +229,19 @@ namespace InetAnalytics.Forms
 			this.sideMenu.TabIndex = 0;
 			this.sideMenu.Title = "";
 			this.sideMenu.VisibleItems = 8;
+			// 
+			// controlSideLog
+			// 
+			this.controlSideLog.AutoScroll = true;
+			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlSideLog.Location = new System.Drawing.Point(0, 22);
+			this.controlSideLog.Name = "controlSideLog";
+			this.controlSideLog.Size = new System.Drawing.Size(246, 64);
+			this.controlSideLog.TabIndex = 2;
+			this.controlSideLog.Visible = false;
+			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
+			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
+			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideComments
 			// 
@@ -526,6 +548,14 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemConfiguration.Index = -1;
 			this.sideMenuItemConfiguration.Text = "Configuration";
 			// 
+			// sideMenuItemLog
+			// 
+			this.sideMenuItemLog.Control = this.controlSideLog;
+			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
+			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
+			this.sideMenuItemLog.Index = -1;
+			this.sideMenuItemLog.Text = "Log";
+			// 
 			// sideMenuItemComments
 			// 
 			this.sideMenuItemComments.Control = this.controlSideComments;
@@ -646,27 +676,6 @@ namespace InetAnalytics.Forms
 			this.menuItemYouTube.Size = new System.Drawing.Size(191, 22);
 			this.menuItemYouTube.Text = "Open in YouTube";
 			// 
-			// controlSideLog
-			// 
-			this.controlSideLog.AutoScroll = true;
-			this.controlSideLog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideLog.Location = new System.Drawing.Point(0, 22);
-			this.controlSideLog.Name = "controlSideLog";
-			this.controlSideLog.Size = new System.Drawing.Size(246, 64);
-			this.controlSideLog.TabIndex = 2;
-			this.controlSideLog.Visible = false;
-			this.controlSideLog.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateChanged);
-			this.controlSideLog.DateRefresh += new System.Windows.Forms.DateRangeEventHandler(this.OnLogDateRefresh);
-			this.controlSideLog.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// sideMenuItemLog
-			// 
-			this.sideMenuItemLog.Control = this.controlSideLog;
-			this.sideMenuItemLog.ImageLarge = global::InetAnalytics.Resources.Log_32;
-			this.sideMenuItemLog.ImageSmall = global::InetAnalytics.Resources.Log_16;
-			this.sideMenuItemLog.Index = -1;
-			this.sideMenuItemLog.Text = "Log";
-			// 
 			// toolTipNetworkStatus
 			// 
 			this.toolTipNetworkStatus.OwnerDraw = true;
@@ -750,6 +759,7 @@ namespace InetAnalytics.Forms
 		private DotNetApi.Windows.Controls.SideTreeView controlSideTasks;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemToolbox;
 		private DotNetApi.Windows.Controls.SideTreeView controlSideToolbox;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabelRun;
 	}
 }
 
