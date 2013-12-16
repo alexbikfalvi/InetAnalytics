@@ -96,6 +96,8 @@ namespace InetCrawler.PlanetLab
 			CrawlerConfig.Static.PlanetLabSlicesFolder = this.SlicesFolder;
 			CrawlerConfig.Static.PlanetLabSlicesLogFileName = this.SlicesLogFileName;
 			CrawlerConfig.Static.PlanetLabCommandsFolder = this.CommandsFolder;
+			CrawlerConfig.Static.PlanetLabHistoryFileName = this.HistoryFileName;
+			CrawlerConfig.Static.PlanetLabHistoryRunFileName = this.HistoryRunFileName;
 
 			// Load the PlanetLab sites configuration.
 			try { this.listSites.LoadFromFile(this.SitesFileName); }
@@ -268,6 +270,36 @@ namespace InetCrawler.PlanetLab
 			{
 				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "CommandsFolder", value);
 				CrawlerConfig.Static.PlanetLabCommandsFolder = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the PlanetLab history file name.
+		/// </summary>
+		public string HistoryFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "HistoryFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\History\Index.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "HistoryFileName", value);
+				CrawlerConfig.Static.PlanetLabHistoryFileName = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the PlanetLab history run file name.
+		/// </summary>
+		public string HistoryRunFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root, "HistoryRunFileName", CrawlerConfig.Static.ApplicationFolder + @"\PlanetLab\History\History-{0}-{1}-{2}-{3}-{4}-{5}-{6}-{7}-{8}-{9}-{10}-{11}-{12}.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root, "HistoryRunFileName", value);
+				CrawlerConfig.Static.PlanetLabHistoryRunFileName = value;
 			}
 		}
 		/// <summary>

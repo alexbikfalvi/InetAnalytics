@@ -25,7 +25,10 @@
 				this.formSiteProperties.Dispose();
 				this.formAddCommand.Dispose();
 				this.formRunInformation.Dispose();
+				// Dispose the manager history.
+				this.managerHistory.Dispose();
 				// Dispose the wait handles.
+				this.toolWait.WaitOne();
 				this.toolWait.Dispose();
 				// If the components are not null.
 				if (components != null)

@@ -62,6 +62,8 @@ namespace InetCrawler
 			public string PlanetLabSlicesFolder { get; internal set; }
 			public string PlanetLabSlicesLogFileName { get; internal set; }
 			public string PlanetLabCommandsFolder { get; internal set; }
+			public string PlanetLabHistoryFileName { get; internal set; }
+			public string PlanetLabHistoryRunFileName { get; internal set; }
 		}
 
 		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };

@@ -179,6 +179,7 @@ namespace InetCrawler.PlanetLab
 			{
 				// Update the manager status.
 				state.Status = PlManagerState.ExecutionStatus.Starting;
+				state.StartTime = DateTime.Now;
 
 				// Call the starting event handler.
 				if (null != this.Starting) this.Starting(this, new PlManagerEventArgs(state));
@@ -295,6 +296,7 @@ namespace InetCrawler.PlanetLab
 						{
 							// Else, change the status.
 							state.Status = PlManagerState.ExecutionStatus.Stopped;
+							state.FinishTime = DateTime.Now;
 
 							// Raise the event.
 							if (null != this.Stopped) this.Stopped(this, new PlManagerEventArgs(state));

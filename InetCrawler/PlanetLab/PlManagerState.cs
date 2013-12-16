@@ -124,6 +124,14 @@ namespace InetCrawler.PlanetLab
 		{
 			get { return this.nodeStates; }
 		}
+		/// <summary>
+		/// Gets the start time.
+		/// </summary>
+		public DateTime StartTime { get; internal set; }
+		/// <summary>
+		/// Gets the finish time.
+		/// </summary>
+		public DateTime FinishTime { get; internal set; }
 
 		// Internal properties.
 

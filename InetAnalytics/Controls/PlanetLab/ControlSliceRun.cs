@@ -105,6 +105,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		private PlManager manager;
 		private readonly object managerSync = new object();
 		private PlManagerState managerState = null;
+		private PlManagerHistory managerHistory;
 
 		private readonly List<ToolMethodState> toolStates = new List<ToolMethodState>();
 		private readonly object toolSync = new object();
@@ -206,6 +207,9 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			this.manager.SubcommandSuccess += this.OnSubcommandSuccess;
 			this.manager.SubcommandFail += this.OnSubcommandFail;
+
+			// Create the manager history.
+			this.managerHistory = new PlManagerHistory(slice);
 
 			// Set the tree node.
 			this.treeNode = treeNode;
@@ -1807,6 +1811,9 @@ namespace InetAnalytics.Controls.PlanetLab
 				// Clear the state information.
 				lock (this.managerSync)
 				{
+					// Add the state information to the manager history.
+					this.managerHistory.Add(this.managerState);
+					// Dispose the manager.
 					this.managerState.Dispose();
 					this.managerState = null;
 				}

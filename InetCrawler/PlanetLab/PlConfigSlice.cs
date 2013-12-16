@@ -91,6 +91,13 @@ namespace InetCrawler.PlanetLab
 		// Public properties.
 
 		/// <summary>
+		/// Gets the slice identifier.
+		/// </summary>
+		public int Id
+		{
+			get { return this.slice.Id.Value; }
+		}
+		/// <summary>
 		/// Gets the slice name.
 		/// </summary>
 		public string Name
