@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +47,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlMercuryAnalytics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlMercuryAnalytics.Designer.cs">
+      <DependentUpon>ControlMercuryAnalytics.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlMercuryClientTraceroute.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,6 +130,7 @@
     <Compile Include="Tools\Mercury\MercuryTracerouteHop.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
     <Compile Include="Tools\ToolCdnFinder.cs" />
+    <Compile Include="Tools\ToolMercuryAnalytics.cs" />
     <Compile Include="Tools\ToolMercuryClient.cs" />
     <Compile Include="Tools\ToolWebCrawler.cs" />
   </ItemGroup>
@@ -134,6 +147,10 @@
       <Project>{a9ae40ff-1a21-414a-9fe7-3be13644cc6d}</Project>
       <Name>Newtonsoft.Json.Net40</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Renci.SshNet\Renci.SshNet.csproj">
+      <Project>{2f5f8c90-0bd1-424f-997c-7bc6280919d1}</Project>
+      <Name>Renci.SshNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>InetApi</Name>
@@ -148,6 +165,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ControlMercuryAnalytics.resx">
+      <DependentUpon>ControlMercuryAnalytics.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlMercuryClientTraceroute.resx">
       <DependentUpon>ControlMercuryClientTraceroute.cs</DependentUpon>
     </EmbeddedResource>
@@ -178,6 +198,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\GlobeClock_16.png" />
   </ItemGroup>
   <ItemGroup>
@@ -452,6 +473,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\PushPinSuccess_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Disconnect_48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -28,7 +28,7 @@ using InetTools.Tools.Mercury;
 namespace InetTools.Tools
 {
 	/// <summary>
-	/// A tool that collects the top web sites from the Alexa ranking.
+	/// A tool that uploads topology data to the Mercury web service.
 	/// </summary>
 	[ToolInfo(
 		"704886CD-9F15-444B-A0DF-A5068FE8E775",

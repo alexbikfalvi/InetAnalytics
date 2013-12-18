@@ -27,7 +27,7 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 	/// </summary>
 	public partial class ControlCommandResult : UserControl
 	{
-		private PlManagerSubcommandState result = null;
+		private PlManagerHistorySubcommand result = null;
 
 		/// <summary>
 		/// Creates a new result instance.
@@ -45,7 +45,7 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 		/// <summary>
 		/// Gets or sets the result for a PlanetLab subcommand.
 		/// </summary>
-		public PlManagerSubcommandState Result
+		public PlManagerHistorySubcommand Result
 		{
 			get { return this.result; }
 			set { this.OnSetResult(value); }
@@ -67,7 +67,7 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 		/// Sets the current result.
 		/// </summary>
 		/// <param name="result">The result.</param>
-		private void OnSetResult(PlManagerSubcommandState result)
+		private void OnSetResult(PlManagerHistorySubcommand result)
 		{
 			// Else, if the result is not null.
 			if (null != result)
@@ -77,7 +77,7 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 				this.textBoxCommand.Text = result.Command;
 				this.textBoxDuration.Text = result.Duration.ToString();
 				this.textBoxExitStatus.Text = result.ExitStatus.ToString();
-				this.textBoxException.Text = result.Exception != null ? result.Exception.Message : "(none)";
+				this.textBoxException.Text = result.Exception != null ? result.Exception : "(none)";
 				this.textBoxError.Text = result.Error;
 				this.textBoxResult.Text = result.Result;
 				this.textBoxRetries.Text = result.Retries.ToString();

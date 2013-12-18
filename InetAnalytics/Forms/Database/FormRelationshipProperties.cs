@@ -49,7 +49,7 @@ namespace InetAnalytics.Forms.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="table">The database relationship.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServer server, IRelationship relationship)
+		public DialogResult ShowDialog(IWin32Window owner, DbServerSql server, IRelationship relationship)
 		{
 			// If the table is null, do nothing.
 			if (null == relationship) return DialogResult.Abort;

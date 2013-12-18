@@ -231,6 +231,9 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Update the information of the PlanetLab commands.
 			this.OnUpdateCommands();
+
+			// Update the information of the PlanetLab history.
+			this.OnUpdateHistory();
 		}
 
 		// Protected methods.
@@ -1812,7 +1815,9 @@ namespace InetAnalytics.Controls.PlanetLab
 				lock (this.managerSync)
 				{
 					// Add the state information to the manager history.
-					this.managerHistory.Add(this.managerState);
+					PlManagerHistoryId historyId = this.managerHistory.Add(this.managerState);
+					// Add the history identifier to the history tab.
+					this.OnAddHistory(historyId);
 					// Dispose the manager.
 					this.managerState.Dispose();
 					this.managerState = null;
@@ -2288,7 +2293,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				subcommand.Duration.ToString()
 			});
 
-			item.Tag = subcommand;
+			item.Tag = new PlManagerHistorySubcommand(subcommand);
 			item.ImageKey = subcommand.Exception == null ? subcommand.ExitStatus == 0 ?
 				"Success" : "Warning" : "Error";
 
@@ -2493,7 +2498,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			else
 			{
 				// Set the selected result.
-				this.controlResult.Result = this.listViewResults.SelectedItems[0].Tag as PlManagerSubcommandState;
+				this.controlResult.Result = this.listViewResults.SelectedItems[0].Tag as PlManagerHistorySubcommand;
 			}
 		}
 
@@ -2506,6 +2511,130 @@ namespace InetAnalytics.Controls.PlanetLab
 		{
 			// Save the selected methods.
 			this.config.ToolMethods = this.controlMethods.Save();
+		}
+
+		/// <summary>
+		/// Updates the history for this slice.
+		/// </summary>
+		private void OnUpdateHistory()
+		{
+			// Clear the list of runs.
+			this.comboBoxHistoryRun.Items.Clear();
+
+
+			// Add all history identifiers.
+			foreach (PlManagerHistoryId id in this.managerHistory.Runs)
+			{
+				this.OnAddHistory(id);
+			}
+		}
+
+		/// <summary>
+		/// Adds a new run with the specified identifier.
+		/// </summary>
+		/// <param name="id">The history identifier.</param>
+		private void OnAddHistory(PlManagerHistoryId id)
+		{
+			// Add the identifier to the combo box.
+			this.comboBoxHistoryRun.Items.Add(id);
+		}
+
+		/// <summary>
+		/// An event handler called when the selected history run has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnHistoryRunChanged(object sender, EventArgs e)
+		{
+			// Clear the history controls.
+			this.comboBoxHistoryNode.Items.Clear();
+			this.listViewHistoryCommands.Items.Clear();
+			this.controlHistoryCommandResult.Clear();
+
+			// If the selected index is less than zero, do nothing.
+			if (this.comboBoxHistoryRun.SelectedIndex < 0) return;
+
+			// Else, get the history identifier.
+			PlManagerHistoryId id = (PlManagerHistoryId) this.comboBoxHistoryRun.SelectedItem;
+
+			try
+			{
+				// Open the history run.
+				using (PlManagerHistoryRun run = this.managerHistory.Open(id))
+				{
+					// Update the history nodes.
+					foreach (PlManagerHistoryNode node in run.Nodes)
+					{
+						this.comboBoxHistoryNode.Items.Add(node);
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+				// If an error occurrs, show a message boz.
+				MessageBox.Show(
+					this,
+					"Cannot open the history run with start time {0} and finish time {1}. {2}".FormatWith(id.StartTime, id.FinishTime, exception.Message),
+					"Cannot Open History",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the selected history node has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnHistoryNodeChanged(object sender, EventArgs e)
+		{
+			// Clear the history controls.
+			this.listViewHistoryCommands.Items.Clear();
+			this.controlHistoryCommandResult.Clear();
+
+			// If the selected index is less than zero, do nothing.
+			if (this.comboBoxHistoryNode.SelectedIndex < 0) return;
+
+			// Else, get the history identifier.
+			PlManagerHistoryNode node = this.comboBoxHistoryNode.SelectedItem as PlManagerHistoryNode;
+
+			// Update the list of subcommands.
+			foreach (PlManagerHistorySubcommand subcommand in node.Subcommands)
+			{
+				// Create a new result item.
+				ListViewItem item = new ListViewItem(new string[] {
+					subcommand.Command,
+					subcommand.ExitStatus.ToString(),
+					subcommand.Duration.ToString()
+				});
+
+				item.Tag = subcommand;
+				item.ImageKey = subcommand.Exception == null ? subcommand.ExitStatus == 0 ?
+					"Success" : "Warning" : "Error";
+
+				// Add the subcommand history item.
+				this.listViewHistoryCommands.Items.Add(item);
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the selected command has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnHistoryCommandChanged(object sender, EventArgs e)
+		{
+			// If there is no selected item.
+			if (this.listViewHistoryCommands.SelectedItems.Count == 0)
+			{
+				// Clear the command result.
+				this.controlHistoryCommandResult.Clear();
+			}
+			else
+			{
+				// Set the selected result.
+				this.controlHistoryCommandResult.Result = this.listViewHistoryCommands.SelectedItems[0].Tag as PlManagerHistorySubcommand;
+			}
 		}
 	}
 }

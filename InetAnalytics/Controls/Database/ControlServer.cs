@@ -40,7 +40,7 @@ namespace InetAnalytics.Controls.Database
 		private static readonly string logSource = "Database";
 
 		private Crawler crawler;
-		private DbServer server;
+		private DbServerSql server;
 
 		private readonly FormServerProperties formProperties = new FormServerProperties();
 		private readonly FormDatabaseProperties formDatabaseProperties = new FormDatabaseProperties();
@@ -80,7 +80,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="crawler">The crawler instance.</param>
 		/// <param name="server">The database server.</param>
 		/// <param name="treeNode">The tree node corresponding to this server.</param>
-		public void Initialize(Crawler crawler, DbServer server, TreeNode treeNode)
+		public void Initialize(Crawler crawler, DbServerSql server, TreeNode treeNode)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
@@ -124,7 +124,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when connecting to the database server succeeded.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectSucceeded(DbServer server)
+		protected override void OnConnectSucceeded(DbServerSql server)
 		{
 			// Enable the refresh database button.
 			this.buttonDatabaseRefresh.Enabled = true;
@@ -134,7 +134,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when connecting to the database server failed.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectFailed(DbServer server)
+		protected override void OnConnectFailed(DbServerSql server)
 		{
 			// Disable the refresh database button.
 			this.buttonDatabaseRefresh.Enabled = false;
@@ -147,7 +147,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The result data.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected override void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
+		protected override void OnQuerySucceeded(DbServerSql server, DbQuery query, DbDataObject result, int recordsAffected)
 		{
 			// Add the databases to the list.
 			for (int row = 0; row < result.RowCount; row++)
@@ -174,7 +174,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		protected override void OnQueryFailed(DbServer server, DbQuery query, Exception exception)
+		protected override void OnQueryFailed(DbServerSql server, DbQuery query, Exception exception)
 		{
 			// Enable the refresh button.
 			this.buttonDatabaseRefresh.Enabled = true;
@@ -205,16 +205,16 @@ namespace InetAnalytics.Controls.Database
 			this.Invoke(() =>
 				{
 					this.buttonConnect.Enabled =
-						(this.server.State == DbServer.ServerState.Disconnected) ||
-						(this.server.State == DbServer.ServerState.Failed);
-					this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
+						(this.server.State == DbServerSql.ServerState.Disconnected) ||
+						(this.server.State == DbServerSql.ServerState.Failed);
+					this.buttonDisconnect.Enabled = this.server.State == DbServerSql.ServerState.Connected;
 					this.buttonChangePassword.Enabled =
-						(this.server.State == DbServer.ServerState.Disconnected) ||
-						(this.server.State == DbServer.ServerState.Failed);
+						(this.server.State == DbServerSql.ServerState.Disconnected) ||
+						(this.server.State == DbServerSql.ServerState.Failed);
 					this.pictureBox.Image = ControlServer.images[(int)this.server.State];
 					this.tabControl.Enabled =
-						(this.server.State != DbServer.ServerState.Connecting) &&
-						(this.server.State != DbServer.ServerState.Disconnecting);
+						(this.server.State != DbServerSql.ServerState.Connecting) &&
+						(this.server.State != DbServerSql.ServerState.Disconnecting);
 				});
 		}
 

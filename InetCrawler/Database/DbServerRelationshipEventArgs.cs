@@ -37,7 +37,7 @@ namespace InetCrawler.Database
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="relationship">The database relationship.</param>
-		public DbServerRelationshipEventArgs(DbServer server, IRelationship relationship)
+		public DbServerRelationshipEventArgs(DbServerSql server, IRelationship relationship)
 			: base(server)
 		{
 			this.Relationship = relationship;

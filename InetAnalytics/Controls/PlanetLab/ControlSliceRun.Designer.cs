@@ -93,7 +93,7 @@
 			this.listProgress = new DotNetApi.Windows.Controls.ProgressListBox();
 			this.progress = new DotNetApi.Windows.Controls.NotificationPanel();
 			this.tabPageResults = new System.Windows.Forms.TabPage();
-			this.splitContainerProgress = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.splitContainerResults = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listViewResults = new System.Windows.Forms.ListView();
 			this.columnHeaderCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderExitStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -104,6 +104,18 @@
 			this.labelResults = new System.Windows.Forms.Label();
 			this.tabPageTools = new System.Windows.Forms.TabPage();
 			this.controlMethods = new InetAnalytics.Controls.Tools.ControlMethods();
+			this.tabPageHistory = new System.Windows.Forms.TabPage();
+			this.splitContainerHistory = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.listViewHistoryCommands = new System.Windows.Forms.ListView();
+			this.columnHeaderHistoryCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderHistoryExitStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderHistoryDuration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.controlHistoryCommandResult = new InetAnalytics.Controls.PlanetLab.Commands.ControlCommandResult();
+			this.tableHistory = new System.Windows.Forms.TableLayoutPanel();
+			this.comboBoxHistoryNode = new System.Windows.Forms.ComboBox();
+			this.labelHistoryNode = new System.Windows.Forms.Label();
+			this.comboBoxHistoryRun = new System.Windows.Forms.ComboBox();
+			this.labelHistoryRun = new System.Windows.Forms.Label();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
 			this.buttonPause = new System.Windows.Forms.ToolStripButton();
@@ -144,12 +156,18 @@
 			this.toolStripCommands.SuspendLayout();
 			this.tabPageProgress.SuspendLayout();
 			this.tabPageResults.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainerProgress)).BeginInit();
-			this.splitContainerProgress.Panel1.SuspendLayout();
-			this.splitContainerProgress.Panel2.SuspendLayout();
-			this.splitContainerProgress.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerResults)).BeginInit();
+			this.splitContainerResults.Panel1.SuspendLayout();
+			this.splitContainerResults.Panel2.SuspendLayout();
+			this.splitContainerResults.SuspendLayout();
 			this.tableResults.SuspendLayout();
 			this.tabPageTools.SuspendLayout();
+			this.tabPageHistory.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerHistory)).BeginInit();
+			this.splitContainerHistory.Panel1.SuspendLayout();
+			this.splitContainerHistory.Panel2.SuspendLayout();
+			this.splitContainerHistory.SuspendLayout();
+			this.tableHistory.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.contextMenuNodes.SuspendLayout();
 			this.SuspendLayout();
@@ -197,6 +215,7 @@
 			this.tabControl.Controls.Add(this.tabPageProgress);
 			this.tabControl.Controls.Add(this.tabPageResults);
 			this.tabControl.Controls.Add(this.tabPageTools);
+			this.tabControl.Controls.Add(this.tabPageHistory);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl.Location = new System.Drawing.Point(1, 48);
 			this.tabControl.Name = "tabControl";
@@ -652,7 +671,7 @@
 			// 
 			// tabPageResults
 			// 
-			this.tabPageResults.Controls.Add(this.splitContainerProgress);
+			this.tabPageResults.Controls.Add(this.splitContainerResults);
 			this.tabPageResults.Controls.Add(this.tableResults);
 			this.tabPageResults.Location = new System.Drawing.Point(2, 23);
 			this.tabPageResults.Name = "tabPageResults";
@@ -662,26 +681,26 @@
 			this.tabPageResults.Text = "Results";
 			this.tabPageResults.UseVisualStyleBackColor = true;
 			// 
-			// splitContainerProgress
+			// splitContainerResults
 			// 
-			this.splitContainerProgress.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerProgress.Location = new System.Drawing.Point(3, 30);
-			this.splitContainerProgress.Name = "splitContainerProgress";
+			this.splitContainerResults.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerResults.Location = new System.Drawing.Point(3, 30);
+			this.splitContainerResults.Name = "splitContainerResults";
 			// 
-			// splitContainerProgress.Panel1
+			// splitContainerResults.Panel1
 			// 
-			this.splitContainerProgress.Panel1.Controls.Add(this.listViewResults);
-			this.splitContainerProgress.Panel1.Padding = new System.Windows.Forms.Padding(1);
+			this.splitContainerResults.Panel1.Controls.Add(this.listViewResults);
+			this.splitContainerResults.Panel1.Padding = new System.Windows.Forms.Padding(1);
 			// 
-			// splitContainerProgress.Panel2
+			// splitContainerResults.Panel2
 			// 
-			this.splitContainerProgress.Panel2.Controls.Add(this.controlResult);
-			this.splitContainerProgress.Panel2.Padding = new System.Windows.Forms.Padding(1);
-			this.splitContainerProgress.Size = new System.Drawing.Size(788, 318);
-			this.splitContainerProgress.SplitterDistance = 394;
-			this.splitContainerProgress.SplitterWidth = 5;
-			this.splitContainerProgress.TabIndex = 0;
-			this.splitContainerProgress.UseTheme = false;
+			this.splitContainerResults.Panel2.Controls.Add(this.controlResult);
+			this.splitContainerResults.Panel2.Padding = new System.Windows.Forms.Padding(1);
+			this.splitContainerResults.Size = new System.Drawing.Size(788, 318);
+			this.splitContainerResults.SplitterDistance = 394;
+			this.splitContainerResults.SplitterWidth = 5;
+			this.splitContainerResults.TabIndex = 0;
+			this.splitContainerResults.UseTheme = false;
 			// 
 			// listViewResults
 			// 
@@ -786,6 +805,146 @@
 			this.controlMethods.Size = new System.Drawing.Size(784, 341);
 			this.controlMethods.TabIndex = 0;
 			this.controlMethods.Changed += new System.EventHandler(this.OnMethodsChanged);
+			// 
+			// tabPageHistory
+			// 
+			this.tabPageHistory.Controls.Add(this.splitContainerHistory);
+			this.tabPageHistory.Controls.Add(this.tableHistory);
+			this.tabPageHistory.Location = new System.Drawing.Point(2, 23);
+			this.tabPageHistory.Name = "tabPageHistory";
+			this.tabPageHistory.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageHistory.Size = new System.Drawing.Size(794, 351);
+			this.tabPageHistory.TabIndex = 6;
+			this.tabPageHistory.Text = "History";
+			this.tabPageHistory.UseVisualStyleBackColor = true;
+			// 
+			// splitContainerHistory
+			// 
+			this.splitContainerHistory.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerHistory.Location = new System.Drawing.Point(3, 57);
+			this.splitContainerHistory.Name = "splitContainerHistory";
+			// 
+			// splitContainerHistory.Panel1
+			// 
+			this.splitContainerHistory.Panel1.Controls.Add(this.listViewHistoryCommands);
+			this.splitContainerHistory.Panel1.Padding = new System.Windows.Forms.Padding(1);
+			// 
+			// splitContainerHistory.Panel2
+			// 
+			this.splitContainerHistory.Panel2.Controls.Add(this.controlHistoryCommandResult);
+			this.splitContainerHistory.Panel2.Padding = new System.Windows.Forms.Padding(1);
+			this.splitContainerHistory.Size = new System.Drawing.Size(788, 291);
+			this.splitContainerHistory.SplitterDistance = 394;
+			this.splitContainerHistory.SplitterWidth = 5;
+			this.splitContainerHistory.TabIndex = 6;
+			this.splitContainerHistory.UseTheme = false;
+			// 
+			// listViewHistoryCommands
+			// 
+			this.listViewHistoryCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listViewHistoryCommands.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderHistoryCommand,
+            this.columnHeaderHistoryExitStatus,
+            this.columnHeaderHistoryDuration});
+			this.listViewHistoryCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listViewHistoryCommands.FullRowSelect = true;
+			this.listViewHistoryCommands.GridLines = true;
+			this.listViewHistoryCommands.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listViewHistoryCommands.HideSelection = false;
+			this.listViewHistoryCommands.Location = new System.Drawing.Point(1, 1);
+			this.listViewHistoryCommands.MultiSelect = false;
+			this.listViewHistoryCommands.Name = "listViewHistoryCommands";
+			this.listViewHistoryCommands.Size = new System.Drawing.Size(392, 289);
+			this.listViewHistoryCommands.SmallImageList = this.imageList;
+			this.listViewHistoryCommands.TabIndex = 0;
+			this.listViewHistoryCommands.UseCompatibleStateImageBehavior = false;
+			this.listViewHistoryCommands.View = System.Windows.Forms.View.Details;
+			this.listViewHistoryCommands.SelectedIndexChanged += new System.EventHandler(this.OnHistoryCommandChanged);
+			// 
+			// columnHeaderHistoryCommand
+			// 
+			this.columnHeaderHistoryCommand.Text = "Command";
+			this.columnHeaderHistoryCommand.Width = 200;
+			// 
+			// columnHeaderHistoryExitStatus
+			// 
+			this.columnHeaderHistoryExitStatus.Text = "Exit status";
+			this.columnHeaderHistoryExitStatus.Width = 100;
+			// 
+			// columnHeaderHistoryDuration
+			// 
+			this.columnHeaderHistoryDuration.Text = "Duration";
+			this.columnHeaderHistoryDuration.Width = 100;
+			// 
+			// controlHistoryCommandResult
+			// 
+			this.controlHistoryCommandResult.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlHistoryCommandResult.Location = new System.Drawing.Point(1, 1);
+			this.controlHistoryCommandResult.Name = "controlHistoryCommandResult";
+			this.controlHistoryCommandResult.Result = null;
+			this.controlHistoryCommandResult.Size = new System.Drawing.Size(387, 289);
+			this.controlHistoryCommandResult.TabIndex = 0;
+			// 
+			// tableHistory
+			// 
+			this.tableHistory.AutoSize = true;
+			this.tableHistory.ColumnCount = 2;
+			this.tableHistory.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableHistory.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableHistory.Controls.Add(this.comboBoxHistoryNode, 1, 1);
+			this.tableHistory.Controls.Add(this.labelHistoryNode, 0, 1);
+			this.tableHistory.Controls.Add(this.comboBoxHistoryRun, 1, 0);
+			this.tableHistory.Controls.Add(this.labelHistoryRun, 0, 0);
+			this.tableHistory.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tableHistory.Location = new System.Drawing.Point(3, 3);
+			this.tableHistory.Name = "tableHistory";
+			this.tableHistory.RowCount = 2;
+			this.tableHistory.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableHistory.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableHistory.Size = new System.Drawing.Size(788, 54);
+			this.tableHistory.TabIndex = 5;
+			// 
+			// comboBoxHistoryNode
+			// 
+			this.comboBoxHistoryNode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.comboBoxHistoryNode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxHistoryNode.FormattingEnabled = true;
+			this.comboBoxHistoryNode.Location = new System.Drawing.Point(76, 30);
+			this.comboBoxHistoryNode.Name = "comboBoxHistoryNode";
+			this.comboBoxHistoryNode.Size = new System.Drawing.Size(709, 21);
+			this.comboBoxHistoryNode.TabIndex = 3;
+			this.comboBoxHistoryNode.SelectedIndexChanged += new System.EventHandler(this.OnHistoryNodeChanged);
+			// 
+			// labelHistoryNode
+			// 
+			this.labelHistoryNode.AutoSize = true;
+			this.labelHistoryNode.Location = new System.Drawing.Point(3, 27);
+			this.labelHistoryNode.Name = "labelHistoryNode";
+			this.labelHistoryNode.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+			this.labelHistoryNode.Size = new System.Drawing.Size(67, 19);
+			this.labelHistoryNode.TabIndex = 2;
+			this.labelHistoryNode.Text = "Select &node:";
+			// 
+			// comboBoxHistoryRun
+			// 
+			this.comboBoxHistoryRun.Dock = System.Windows.Forms.DockStyle.Top;
+			this.comboBoxHistoryRun.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxHistoryRun.FormattingEnabled = true;
+			this.comboBoxHistoryRun.Location = new System.Drawing.Point(76, 3);
+			this.comboBoxHistoryRun.Name = "comboBoxHistoryRun";
+			this.comboBoxHistoryRun.Size = new System.Drawing.Size(709, 21);
+			this.comboBoxHistoryRun.TabIndex = 1;
+			this.comboBoxHistoryRun.SelectedIndexChanged += new System.EventHandler(this.OnHistoryRunChanged);
+			// 
+			// labelHistoryRun
+			// 
+			this.labelHistoryRun.AutoSize = true;
+			this.labelHistoryRun.Location = new System.Drawing.Point(3, 0);
+			this.labelHistoryRun.Name = "labelHistoryRun";
+			this.labelHistoryRun.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+			this.labelHistoryRun.Size = new System.Drawing.Size(58, 19);
+			this.labelHistoryRun.TabIndex = 0;
+			this.labelHistoryRun.Text = "Select &run:";
 			// 
 			// toolStrip
 			// 
@@ -953,13 +1112,21 @@
 			this.tabPageProgress.ResumeLayout(false);
 			this.tabPageResults.ResumeLayout(false);
 			this.tabPageResults.PerformLayout();
-			this.splitContainerProgress.Panel1.ResumeLayout(false);
-			this.splitContainerProgress.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainerProgress)).EndInit();
-			this.splitContainerProgress.ResumeLayout(false);
+			this.splitContainerResults.Panel1.ResumeLayout(false);
+			this.splitContainerResults.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerResults)).EndInit();
+			this.splitContainerResults.ResumeLayout(false);
 			this.tableResults.ResumeLayout(false);
 			this.tableResults.PerformLayout();
 			this.tabPageTools.ResumeLayout(false);
+			this.tabPageHistory.ResumeLayout(false);
+			this.tabPageHistory.PerformLayout();
+			this.splitContainerHistory.Panel1.ResumeLayout(false);
+			this.splitContainerHistory.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerHistory)).EndInit();
+			this.splitContainerHistory.ResumeLayout(false);
+			this.tableHistory.ResumeLayout(false);
+			this.tableHistory.PerformLayout();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.contextMenuNodes.ResumeLayout(false);
@@ -1026,7 +1193,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderState;
 		private DotNetApi.Windows.Controls.NotificationPanel progress;
 		private DotNetApi.Windows.Controls.ProgressListBox listProgress;
-		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerProgress;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerResults;
 		private System.Windows.Forms.TableLayoutPanel tableResults;
 		private System.Windows.Forms.ComboBox comboBoxNodes;
 		private System.Windows.Forms.Label labelResults;
@@ -1039,5 +1206,17 @@
 		private System.Windows.Forms.Label labelNodesRetries;
 		private System.Windows.Forms.TabPage tabPageTools;
 		private Tools.ControlMethods controlMethods;
+		private System.Windows.Forms.TabPage tabPageHistory;
+		private System.Windows.Forms.TableLayoutPanel tableHistory;
+		private System.Windows.Forms.ComboBox comboBoxHistoryRun;
+		private System.Windows.Forms.Label labelHistoryRun;
+		private System.Windows.Forms.Label labelHistoryNode;
+		private System.Windows.Forms.ComboBox comboBoxHistoryNode;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerHistory;
+		private System.Windows.Forms.ListView listViewHistoryCommands;
+		private System.Windows.Forms.ColumnHeader columnHeaderHistoryCommand;
+		private System.Windows.Forms.ColumnHeader columnHeaderHistoryExitStatus;
+		private System.Windows.Forms.ColumnHeader columnHeaderHistoryDuration;
+		private Commands.ControlCommandResult controlHistoryCommandResult;
 	}
 }

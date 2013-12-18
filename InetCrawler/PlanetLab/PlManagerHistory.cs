@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using DotNetApi.Concurrent.Generic;
 using DotNetApi.Xml;
 using PlanetLab.Api;
 
@@ -32,7 +31,7 @@ namespace InetCrawler.PlanetLab
 	[XmlRoot("PlanetLabHistory")]
 	public sealed class PlManagerHistory : IDisposable
 	{
-		private ConcurrentList<PlManagerHistoryId> runs = new ConcurrentList<PlManagerHistoryId>();
+		private List<PlManagerHistoryId> runs = new List<PlManagerHistoryId>();
 
 		/// <summary>
 		/// Creates a new PlanetLab manager history instance for the specified folder.
@@ -67,7 +66,7 @@ namespace InetCrawler.PlanetLab
 		/// Gets the history runs collection.
 		/// </summary>
 		[XmlArray("Runs"), XmlArrayItem("Run")]
-		public IList<PlManagerHistoryId> Runs { get { return this.runs; } }
+		public List<PlManagerHistoryId> Runs { get { return this.runs; } }
 
 		// Public methods.
 
@@ -76,18 +75,10 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		public void Dispose()
 		{
-			this.runs.Lock();
-			try
+			// Save to file the list of runs.
+			using (FileStream file = new FileStream(CrawlerConfig.Static.PlanetLabHistoryFileName, FileMode.Create))
 			{
-				// Save to file the list of runs.
-				using (FileStream file = new FileStream(CrawlerConfig.Static.PlanetLabHistoryFileName, FileMode.Create))
-				{
-					this.Serialize(file);
-				}
-			}
-			finally
-			{
-				this.runs.Unlock();
+				this.Serialize(file);
 			}
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
@@ -97,7 +88,8 @@ namespace InetCrawler.PlanetLab
 		/// Adds a new manager state to the the manager history.
 		/// </summary>
 		/// <param name="state">The manager state.</param>
-		public void Add(PlManagerState state)
+		/// <returns>The manager history identifier.</returns>
+		public PlManagerHistoryId Add(PlManagerState state)
 		{
 			// Create a new run identifier for the specified state.
 			PlManagerHistoryId id = new PlManagerHistoryId(state.Slice.Id, state.StartTime, state.FinishTime);
@@ -118,6 +110,24 @@ namespace InetCrawler.PlanetLab
 
 			// Add the history to the list.
 			this.runs.Add(id);
+
+			// Return the identifier.
+			return id;
+		}
+
+		/// <summary>
+		/// Opens the history run with the specified identifier.
+		/// </summary>
+		/// <param name="id">The history identifier.</param>
+		/// <returns>The manager history run.</returns>
+		public PlManagerHistoryRun Open(PlManagerHistoryId id)
+		{
+			// Open the history from the file.
+			using (FileStream file = new FileStream(id.FileName, FileMode.Open))
+			{
+				// Deserialize the history run.
+				return file.Deserialize<PlManagerHistoryRun>();
+			}
 		}
 	}
 }

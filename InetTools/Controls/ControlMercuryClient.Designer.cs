@@ -114,7 +114,7 @@
 			this.panelTool.ShowTitle = true;
 			this.panelTool.Size = new System.Drawing.Size(800, 425);
 			this.panelTool.TabIndex = 0;
-			this.panelTool.Title = "Content Delivery Networks Finder";
+			this.panelTool.Title = "Mercury Client";
 			// 
 			// tabControl
 			// 

@@ -27,7 +27,14 @@ namespace InetCrawler.PlanetLab
 	public sealed class PlManagerHistorySubcommand
 	{
 		/// <summary>
-		/// Creates a new subcommand history from the specicified subcommand state.
+		/// Creates an empty subcommand history.
+		/// </summary>
+		public PlManagerHistorySubcommand()
+		{
+		}
+
+		/// <summary>
+		/// Creates a new subcommand history from the specified subcommand state.
 		/// </summary>
 		/// <param name="state">The subcommand state.</param>
 		public PlManagerHistorySubcommand(PlManagerSubcommandState state)

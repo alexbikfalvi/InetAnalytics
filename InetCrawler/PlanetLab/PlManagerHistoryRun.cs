@@ -33,6 +33,13 @@ namespace InetCrawler.PlanetLab
 		private readonly List<PlManagerHistoryNode> nodes = new List<PlManagerHistoryNode>();
 
 		/// <summary>
+		/// Creates an empty new manager history run instance.
+		/// </summary>
+		public PlManagerHistoryRun()
+		{
+		}
+
+		/// <summary>
 		/// Creates a new manager history run instance.
 		/// </summary>
 		/// <param name="state">The manager state.</param>
@@ -71,7 +78,7 @@ namespace InetCrawler.PlanetLab
 		/// Gets the nodes history.
 		/// </summary>
 		[XmlArray("Nodes", IsNullable = true), XmlArrayItem("Node")]
-		public IList<PlManagerHistoryNode> Nodes { get { return this.nodes; } }
+		public List<PlManagerHistoryNode> Nodes { get { return this.nodes; } }
 
 		// Public methods.
 

@@ -72,5 +72,16 @@ namespace InetCrawler.PlanetLab
 					);
 			}
 		}
+
+		// Public methods.
+
+		/// <summary>
+		/// Converts this history identifier to a string.
+		/// </summary>
+		/// <returns>The string.</returns>
+		public override string ToString()
+		{
+			return "Started at: {0} - Finished at: {1}".FormatWith(this.StartTime, this.FinishTime);
+		}
 	}
 }

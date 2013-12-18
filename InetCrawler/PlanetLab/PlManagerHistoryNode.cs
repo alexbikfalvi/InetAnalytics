@@ -31,6 +31,13 @@ namespace InetCrawler.PlanetLab
 		private readonly List<PlManagerHistorySubcommand> subcommands = new List<PlManagerHistorySubcommand>();
 
 		/// <summary>
+		/// Creates an empty node history.
+		/// </summary>
+		public PlManagerHistoryNode()
+		{
+		}
+
+		/// <summary>
 		/// Creates a new node history from the specified node state.
 		/// </summary>
 		/// <param name="state">The node state.</param>
@@ -81,6 +88,17 @@ namespace InetCrawler.PlanetLab
 		/// Gets the list of subcommands.
 		/// </summary>
 		[XmlArray("Subcommands", IsNullable = true), XmlArrayItem("Subcommand")]
-		public IList<PlManagerHistorySubcommand> Subcommands { get { return this.subcommands; } }
+		public List<PlManagerHistorySubcommand> Subcommands { get { return this.subcommands; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Converts this history node to a string.
+		/// </summary>
+		/// <returns>The string.</returns>
+		public override string ToString()
+		{
+			return this.Hostname;
+		}
 	}
 }
