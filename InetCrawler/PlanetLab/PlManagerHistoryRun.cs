@@ -27,6 +27,7 @@ namespace InetCrawler.PlanetLab
 	/// <summary>
 	/// A class representing the history of a PlanetLab manager run.
 	/// </summary>
+	[XmlRoot("PlanetLabRun")]
 	public sealed class PlManagerHistoryRun : IDisposable
 	{
 		private readonly List<PlManagerHistoryNode> nodes = new List<PlManagerHistoryNode>();
@@ -41,6 +42,7 @@ namespace InetCrawler.PlanetLab
 			if (null == state) throw new ArgumentNullException("state");
 
 			// Set the properties.
+			this.Slice = state.Slice.Id;
 			this.StartTime = state.StartTime;
 			this.FinishTime = state.FinishTime;
 
@@ -68,7 +70,7 @@ namespace InetCrawler.PlanetLab
 		/// <summary>
 		/// Gets the nodes history.
 		/// </summary>
-		[XmlArray("Nodes"), XmlArrayItem("Node")]
+		[XmlArray("Nodes", IsNullable = true), XmlArrayItem("Node")]
 		public IList<PlManagerHistoryNode> Nodes { get { return this.nodes; } }
 
 		// Public methods.

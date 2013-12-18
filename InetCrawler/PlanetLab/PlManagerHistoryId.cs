@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Xml.Serialization;
 using DotNetApi;
 
 namespace InetCrawler.PlanetLab
@@ -45,14 +46,17 @@ namespace InetCrawler.PlanetLab
 		/// <summary>
 		/// Gets the slice.
 		/// </summary>
+		[XmlAttribute("Slice")]
 		public int Slice { get; private set; }
 		/// <summary>
 		/// Gets the start time.
 		/// </summary>
+		[XmlAttribute("StartTime")]
 		public DateTime StartTime { get; private set; }
 		/// <summary>
 		/// Gets the finish time.
 		/// </summary>
+		[XmlAttribute("FinishTime")]
 		public DateTime FinishTime { get; private set; }
 		/// <summary>
 		/// Gets the file name corresponding to this identifier.

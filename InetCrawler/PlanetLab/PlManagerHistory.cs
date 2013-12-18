@@ -17,7 +17,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 using DotNetApi.Concurrent.Generic;
 using DotNetApi.Xml;
 using PlanetLab.Api;
@@ -27,6 +29,7 @@ namespace InetCrawler.PlanetLab
 	/// <summary>
 	/// A class representing the execution history of the PlanetLab manager.
 	/// </summary>
+	[XmlRoot("PlanetLabHistory")]
 	public sealed class PlManagerHistory : IDisposable
 	{
 		private ConcurrentList<PlManagerHistoryId> runs = new ConcurrentList<PlManagerHistoryId>();
@@ -39,7 +42,32 @@ namespace InetCrawler.PlanetLab
 		{
 			// Validate the arguments.
 			if (null == slice) throw new ArgumentNullException("slice");
+
+			try
+			{
+				// If the file exists.
+				if (File.Exists(CrawlerConfig.Static.PlanetLabHistoryFileName))
+				{
+					// Load from file the list of runs.
+					using (FileStream file = new FileStream(CrawlerConfig.Static.PlanetLabHistoryFileName, FileMode.Open))
+					{
+						file.Deserialize<PlManagerHistory>(this);
+					}
+				}
+			}
+			catch
+			{
+				// Catch all exceptions.
+			}
 		}
+
+		// Public properties.
+
+		/// <summary>
+		/// Gets the history runs collection.
+		/// </summary>
+		[XmlArray("Runs"), XmlArrayItem("Run")]
+		public IList<PlManagerHistoryId> Runs { get { return this.runs; } }
 
 		// Public methods.
 
@@ -48,19 +76,19 @@ namespace InetCrawler.PlanetLab
 		/// </summary>
 		public void Dispose()
 		{
-			//// Save all history runs.
-			//this.runs.Lock();
-			//try
-			//{
-			//	foreach (PlManagerHistoryRun run in this.runs)
-			//	{
-			//		run.Dispose();
-			//	}
-			//}
-			//finally
-			//{
-			//	this.runs.Unlock();
-			//}
+			this.runs.Lock();
+			try
+			{
+				// Save to file the list of runs.
+				using (FileStream file = new FileStream(CrawlerConfig.Static.PlanetLabHistoryFileName, FileMode.Create))
+				{
+					this.Serialize(file);
+				}
+			}
+			finally
+			{
+				this.runs.Unlock();
+			}
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}
@@ -75,15 +103,16 @@ namespace InetCrawler.PlanetLab
 			PlManagerHistoryId id = new PlManagerHistoryId(state.Slice.Id, state.StartTime, state.FinishTime);
 
 			// Save the history to the file.
-			PlManagerHistoryRun run = new PlManagerHistoryRun(state);
-
-			// Ensure the file directory exists.
-			if (DotNetApi.IO.Directory.EnsureFileDirectoryExists(id.FileName))
+			using (PlManagerHistoryRun run = new PlManagerHistoryRun(state))
 			{
-				// Create the new file.
-				using (FileStream file = new FileStream(id.FileName, FileMode.Create))
+				// Ensure the file directory exists.
+				if (DotNetApi.IO.Directory.EnsureFileDirectoryExists(id.FileName))
 				{
-					run.Serialize(file);
+					// Create the new file.
+					using (FileStream file = new FileStream(id.FileName, FileMode.Create))
+					{
+						run.Serialize(file);
+					}
 				}
 			}
 

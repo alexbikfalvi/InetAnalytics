@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace InetCrawler.PlanetLab
 {
@@ -39,6 +39,13 @@ namespace InetCrawler.PlanetLab
 			// Validate the argument.
 			if (null == state) throw new ArgumentNullException("state");
 
+			// Set the properties.
+			this.Id = state.Node.Id.Value;
+			this.Hostname = state.Node.Hostname;
+			this.Success = state.SuccessCount;
+			this.Warning = state.WarningCount;
+			this.Fail = state.FailureCount;
+
 			// Create the node history commands.
 			this.subcommands.AddRange(from subcommand in state.Subcommands select new PlManagerHistorySubcommand(subcommand));
 		}
@@ -48,26 +55,32 @@ namespace InetCrawler.PlanetLab
 		/// <summary>
 		/// Gets the node identifier.
 		/// </summary>
+		[XmlAttribute("Id")]
 		public int Id { get; private set; }
 		/// <summary>
 		/// Gets the node hostname.
 		/// </summary>
+		[XmlElement("Hostname", IsNullable = true)]
 		public string Hostname { get; private set; }
 		/// <summary>
 		/// Gets the node success count.
 		/// </summary>
+		[XmlAttribute("Success")]
 		public int Success { get; private set; }
 		/// <summary>
 		/// Gets the node warning count.
 		/// </summary>
+		[XmlAttribute("Warning")]
 		public int Warning { get; private set; }
 		/// <summary>
 		/// Gets the node failure count.
 		/// </summary>
+		[XmlAttribute("Fail")]
 		public int Fail { get; private set; }
 		/// <summary>
 		/// Gets the list of subcommands.
 		/// </summary>
-		public IList<PlManagerHistorySubcommand> Subcommands { get; private set; }
+		[XmlArray("Subcommands", IsNullable = true), XmlArrayItem("Subcommand")]
+		public IList<PlManagerHistorySubcommand> Subcommands { get { return this.subcommands; } }
 	}
 }

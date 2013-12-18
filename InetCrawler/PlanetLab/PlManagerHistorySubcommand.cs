@@ -17,7 +17,7 @@
  */
 
 using System;
-using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace InetCrawler.PlanetLab
 {
@@ -26,22 +26,16 @@ namespace InetCrawler.PlanetLab
 	/// </summary>
 	public sealed class PlManagerHistorySubcommand
 	{
-		//public static readonly string xmlName = "Subcommand";
-		//public static readonly string xmlCommand = "Command";
-		//public static readonly string xmlException = "Exception";
-		//public static readonly string xmlTimeout = "Timeout";
-		//public static readonly string xmlExitStatus = "ExitStatus";
-		//public static readonly string xmlResult = "Result";
-		//public static readonly string xmlError = "Error";
-		//public static readonly string xmlDuration = "Duration";
-		//public static readonly string xmlRetries = "Retries";
-
 		/// <summary>
 		/// Creates a new subcommand history from the specicified subcommand state.
 		/// </summary>
 		/// <param name="state">The subcommand state.</param>
 		public PlManagerHistorySubcommand(PlManagerSubcommandState state)
 		{
+			// Validate the argument.
+			if (null == state) throw new ArgumentNullException("state");
+
+			// Set the properties.
 			this.Command = state.Command;
 			this.Exception = state.Exception != null ? state.Exception.Message : null;
 			this.Timeout = state.Timeout;
@@ -52,69 +46,47 @@ namespace InetCrawler.PlanetLab
 			this.Retries = state.Retries;
 		}
 
-		/// <summary>
-		/// Creates a new subcommand history from the specified XML element.
-		/// </summary>
-		/// <param name="xml">The XML element.</param>
-		public PlManagerHistorySubcommand(XElement xml)
-		{
-
-		}
-
 		// Public properties.
 
 		/// <summary>
 		/// Gets the command text.
 		/// </summary>
+		[XmlElement("Command", IsNullable = true)]
 		public string Command { get; private set; }
 		/// <summary>
 		/// Gets the command exception.
 		/// </summary>
+		[XmlElement("Exception", IsNullable = true)]
 		public string Exception { get; private set; }
 		/// <summary>
 		/// Gets the command timeout.
 		/// </summary>
+		[XmlAttribute("Timeout")]
 		public TimeSpan Timeout { get; private set; }
 		/// <summary>
 		/// Gets the command exit status.
 		/// </summary>
+		[XmlAttribute("ExitStatus")]
 		public int ExitStatus { get; private set; }
 		/// <summary>
 		/// Gets the command result.
 		/// </summary>
+		[XmlElement("Result", IsNullable = true)]
 		public string Result { get; private set; }
 		/// <summary>
 		/// Gets the command error.
 		/// </summary>
+		[XmlElement("Error", IsNullable = true)]
 		public string Error { get; private set; }
 		/// <summary>
 		/// Gets the subcommand duration.
 		/// </summary>
+		[XmlAttribute("Duration")]
 		public TimeSpan Duration { get; private set; }
 		/// <summary>
 		/// Gets the number of retries for this command.
 		/// </summary>
+		[XmlAttribute("Retries")]
 		public int Retries { get; private set; }
-
-		// Public methods.
-
-		///// <summary>
-		///// Converts the current object to the corresponding XML element.
-		///// </summary>
-		///// <returns>The XML element.</returns>
-		//public XElement ToXml()
-		//{
-		//	// Create the XML element.
-		//	return new XElement(PlManagerHistorySubcommand.xmlName,
-		//		new XElement(PlManagerHistorySubcommand.xmlCommand, this.Command),
-		//		new XElement(PlManagerHistorySubcommand.xmlException, this.Exception),
-		//		new XAttribute(PlManagerHistorySubcommand.xmlTimeout, this.Timeout),
-		//		new XAttribute(PlManagerHistorySubcommand.xmlExitStatus, this.ExitStatus),
-		//		new XElement(PlManagerHistorySubcommand.xmlResult, this.Result),
-		//		new XElement(PlManagerHistorySubcommand.xmlError, this.Error),
-		//		new XAttribute(PlManagerHistorySubcommand.xmlDuration, this.Duration),
-		//		new XAttribute(PlManagerHistorySubcommand.xmlRetries, this.Retries)
-		//		);
-		//}
 	}
 }
