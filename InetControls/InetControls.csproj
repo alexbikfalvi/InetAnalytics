@@ -77,7 +77,7 @@
     <Compile Include="Controls\Tools\ControlAddMethod.Designer.cs">
       <DependentUpon>ControlAddMethod.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlSql.cs">
+    <Compile Include="Controls\Tools\ControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Events\PasswordChangedEventArgs.cs" />

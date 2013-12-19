@@ -51,7 +51,7 @@ namespace InetAnalytics.Forms.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="table">The database table.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServerSql server, ITable table)
+		public DialogResult ShowDialog(IWin32Window owner, DbServer server, ITable table)
 		{
 			// If the table is null, do nothing.
 			if (null == table) return DialogResult.Abort;

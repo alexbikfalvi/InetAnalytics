@@ -33,7 +33,7 @@ namespace InetAnalytics.Controls.Database
 	{
 		private delegate void QuerySuccessAction(DbDataObject result, int recordsAffected);
 
-		private DbServerSql server;
+		private DbServer server;
 		private ITable table;
 		
 		private readonly FormDatabaseSelect formDatabaseSelect = new FormDatabaseSelect();
@@ -76,7 +76,7 @@ namespace InetAnalytics.Controls.Database
 		/// <summary>
 		/// Gets the current database server.
 		/// </summary>
-		public DbServerSql Server { get { return this.server; } }
+		public DbServer Server { get { return this.server; } }
 		/// <summary>
 		/// Gets the new database table name.
 		/// </summary>
@@ -112,7 +112,7 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="table">The table.</param>
-		public void Select(DbServerSql server, ITable table)
+		public void Select(DbServer server, ITable table)
 		{
 			// Set the parameters.
 			this.server = server;
@@ -213,7 +213,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when started connecting to the database server.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectStarted(DbServerSql server)
+		protected override void OnConnectStarted(DbServer server)
 		{
 			// Disable the control.
 			this.tabControl.Enabled = false;
@@ -225,7 +225,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when connecting to the database server completed successfully.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectSucceeded(DbServerSql server)
+		protected override void OnConnectSucceeded(DbServer server)
 		{
 			// Enable the control.
 			this.tabControl.Enabled = true;
@@ -237,7 +237,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when connecting to the database server failed.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectFailed(DbServerSql server)
+		protected override void OnConnectFailed(DbServer server)
 		{
 			// Enable the control.
 			this.tabControl.Enabled = true;
@@ -251,7 +251,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="command">The database command.</param>
-		protected override void OnQueryStarted(DbServerSql server, DbQuery query, DbCommand command)
+		protected override void OnQueryStarted(DbServer server, DbQuery query, DbCommand command)
 		{
 			// Disable the control.
 			this.tabControl.Enabled = false;
@@ -266,7 +266,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The database result.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected override void OnQuerySucceeded(DbServerSql server, DbQuery query, DbDataObject result, int recordsAffected)
+		protected override void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
 		{
 			// Enable the control.
 			this.tabControl.Enabled = true;
@@ -291,7 +291,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		protected override void OnQueryFailed(DbServerSql server, DbQuery query, Exception exception)
+		protected override void OnQueryFailed(DbServer server, DbQuery query, Exception exception)
 		{
 			// Enable the control.
 			this.tabControl.Enabled = true;

@@ -54,46 +54,46 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when started connecting to the database server.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected virtual void OnConnectStarted(DbServerSql server) { }
+		protected virtual void OnConnectStarted(DbServer server) { }
 		/// <summary>
 		/// A method called when connecting to the database has succeeded.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected virtual void OnConnectSucceeded(DbServerSql server) { }
+		protected virtual void OnConnectSucceeded(DbServer server) { }
 		/// <summary>
 		/// A method called when connecting to the database has failed.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected virtual void OnConnectFailed(DbServerSql server) { }
+		protected virtual void OnConnectFailed(DbServer server) { }
 		/// <summary>
 		/// A method called when started disconnecting from the database server.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected virtual void OnDisconnectStarted(DbServerSql server) { }
+		protected virtual void OnDisconnectStarted(DbServer server) { }
 		/// <summary>
 		/// A method called when disconnecting from the database has succeeded.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected virtual void OnDisconnectSucceeded(DbServerSql server) { }
+		protected virtual void OnDisconnectSucceeded(DbServer server) { }
 		/// <summary>
 		/// A method called when disconnecting from the database has failed.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected virtual void OnDisconnectFailed(DbServerSql server) { }
+		protected virtual void OnDisconnectFailed(DbServer server) { }
 		/// <summary>
 		/// A method called when the execution of the database query starts.
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="command">The database command.</param>
-		protected virtual void OnQueryStarted(DbServerSql server, DbQuery query, DbCommand command) { }
+		protected virtual void OnQueryStarted(DbServer server, DbQuery query, DbCommand command) { }
 		/// <summary>
 		/// A method called when the execution of the database query succeeded and the data is raw.
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="result">The result data.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected virtual void OnQuerySucceeded(DbServerSql server, DbQuery query, DbDataRaw result, int recordsAffected) { }
+		protected virtual void OnQuerySucceeded(DbServer server, DbQuery query, DbDataRaw result, int recordsAffected) { }
 		/// <summary>
 		/// A method called when the execution of the database query succeeded and the data is object.
 		/// </summary>
@@ -101,14 +101,14 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The result data.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected virtual void OnQuerySucceeded(DbServerSql server, DbQuery query, DbDataObject result, int recordsAffected) { }
+		protected virtual void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected) { }
 		/// <summary>
 		/// A method called when the executiopn of the database query has failed.
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		protected virtual void OnQueryFailed(DbServerSql server, DbQuery query, Exception exception) { }
+		protected virtual void OnQueryFailed(DbServer server, DbQuery query, Exception exception) { }
 		/// <summary>
 		/// A method called when the user cancels a current database query.
 		/// </summary>
@@ -120,7 +120,7 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="userState">The user state.</param>
-		protected void DatabaseConnect(DbServerSql server, object userState = null)
+		protected void DatabaseConnect(DbServer server, object userState = null)
 		{
 			// Call the connecting method.
 			this.OnConnectStarted(server);
@@ -152,7 +152,7 @@ namespace InetAnalytics.Controls.Database
 		/// Disconnects from the current database.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected void DatabaseDisconnect(DbServerSql server)
+		protected void DatabaseDisconnect(DbServer server)
 		{
 			// Call the disconnecting method.
 			this.OnDisconnectStarted(server);
@@ -185,10 +185,10 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
-		protected void DatabaseQuery(DbServerSql server, DbQuery query)
+		protected void DatabaseQuery(DbServer server, DbQuery query)
 		{
 			// If the database server is not connected.
-			if (server.State != DbServerSql.ServerState.Connected)
+			if (server.State != DbServer.ServerState.Connected)
 			{
 				// Connect to the database and pass the query as the user state.
 				this.DatabaseConnect(server, query);
@@ -344,7 +344,7 @@ namespace InetAnalytics.Controls.Database
 		/// Changes the password of the specified database server.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected void DatabaseChangePassword(DbServerSql server)
+		protected void DatabaseChangePassword(DbServer server)
 		{
 			// Change the password for the selected server.
 			this.formChangePassword.ShowDialog(this, server.Password, server);
@@ -501,7 +501,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The database result.</param>
 		/// <param name="recordsAffected">The number of records read.</param>
-		private void DatabaseQuerySuccess(DbServerSql server, DbQuery query, DbDataRaw result, int recordsAffected)
+		private void DatabaseQuerySuccess(DbServer server, DbQuery query, DbDataRaw result, int recordsAffected)
 		{
 			// Execute the code on the UI thread.
 			this.Invoke(() =>
@@ -518,7 +518,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The database result.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		private void DatabaseQuerySuccess(DbServerSql server, DbQuery query, DbDataObject result, int recordsAffected)
+		private void DatabaseQuerySuccess(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
 		{
 			// Execute the code on the UI thread.
 			this.Invoke(() =>
@@ -533,7 +533,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		private void DatabaseQueryFail(DbServerSql server, DbQuery query, Exception exception)
+		private void DatabaseQueryFail(DbServer server, DbQuery query, Exception exception)
 		{
 			// Execute the code on the UI thread.
 			this.Invoke(() =>
@@ -550,7 +550,7 @@ namespace InetAnalytics.Controls.Database
 		private void OnPasswordChanged(object sender, PasswordChangedEventArgs e)
 		{
 			// Get the database server.
-			DbServerSql server = e.State as DbServerSql;
+			DbServer server = e.State as DbServer;
 			// Show a password changing message.
 			this.ShowMessage(Resources.Connect_48, "Database", "Changing the password for the database server \'{0}\'...".FormatWith(server.Name));
 			try

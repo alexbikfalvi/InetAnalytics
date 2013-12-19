@@ -38,7 +38,7 @@ namespace InetCrawler.Database
 		/// </summary>
 		/// <param name="oldDatabase">The old database.</param>
 		/// <param name="newDatabase">The new database.</param>
-		public DbServerDatabaseChangedEventArgs(DbServerSql server, DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
+		public DbServerDatabaseChangedEventArgs(DbServer server, DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
 			: base(server)
 		{
 			this.OldDatabase = oldDatabase;

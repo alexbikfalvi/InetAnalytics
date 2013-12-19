@@ -19,25 +19,38 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Security;
+using System.Text;
 using System.Threading;
 using Microsoft.Win32;
 using DotNetApi;
+using DotNetApi.Security;
+using InetCrawler.Log;
 using InetCrawler.Database.Data;
 
 namespace InetCrawler.Database
 {
 	/// <summary>
-	/// A class representing a SQL database server.
+	/// A class representing an SQL Server.
 	/// </summary>
-	public abstract class DbServerSql : DbServer
+	public sealed class DbServerSql : DbServer
 	{
-		// Database tables and relationships.
-		private DbTables tables;
-		private DbRelationships relationships;
+		private SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
+		private SqlConnection connection = new SqlConnection();
+		private readonly object sync = new object();
+
+		private DbObjectDatabase database = null;
+
+		// SQL Server tables.
+		private DbTable<DbObjectSqlDatabase> tableDatabases = new DbTable<DbObjectSqlDatabase>(new Guid("C9283AEE-E380-4345-91CF-90C0F93E49FC"), "Databases", "databases", "sys", "master", false);
+		private DbTable<DbObjectSqlType> tableTypes = new DbTable<DbObjectSqlType>(new Guid("566803E8-AAA0-4B63-B8D8-C380729997D6"), "Types", "types", "sys", "master", false);
+		private DbTable<DbObjectSqlSchema> tableSchema = new DbTable<DbObjectSqlSchema>(new Guid("8523364A-022E-45ED-9F3E-3AF12EA132AD"), "Schemas", "schemas", "sys", "master", false);
+		private DbTable<DbObjectSqlTable> tableTables = new DbTable<DbObjectSqlTable>(new Guid("10F8B1EC-9106-4039-A884-0DF76BB65200"), "Tables", "tables", "sys", "master", true);
+		private DbTable<DbObjectSqlColumn> tableColumns = new DbTable<DbObjectSqlColumn>(new Guid("096C8091-1158-47ED-BB05-4F338674148D"), "Columns", "columns", "sys", "master", true);
 
 		/// <summary>
-		/// Creates a database server with the specified name and configuration.
+		/// Creates a new server instance.
 		/// </summary>
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
@@ -45,17 +58,21 @@ namespace InetCrawler.Database
 		public DbServerSql(RegistryKey key, Guid id, string logFile)
 			: base(key, id, logFile)
 		{
-			// Create the database tables and relationships.
-			this.tables = new DbTables(key);
-			this.relationships = new DbRelationships(key, this.tables);
-
-			// Set the event handlers.
-			this.tables.TableAdded += this.OnTableAdded;
-			this.tables.TableChanged += this.OnTableChanged;
-			this.tables.TableRemoved += this.OnTableRemoved;
-
-			this.relationships.RelationshipAdded += this.OnRelationshipAdded;
-			this.relationships.RelationshipRemoved += this.OnRelationshipRemoved;
+			// Initialize the server with the current configuration.
+			this.OnInitialized();
+			// Set the event handler for the connection state.
+			this.connection.StateChange += this.OnConnectionStateChanged;
+			// Add tables to the tables list.
+			this.AddTable(this.tableDatabases);
+			this.AddTable(this.tableSchema);
+			this.AddTable(this.tableTypes);
+			this.AddTable(this.tableTables);
+			this.AddTable(this.tableColumns);
+			// Add relationships to the tables list.
+			this.AddRelationship(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
+			this.AddRelationship(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
+			this.AddRelationship(this.tableTypes, this.tableColumns, "SystemTypeId", "SystemTypeId");
+			this.AddRelationship(this.tableTypes, this.tableColumns, "UserTypeId", "UserTypeId");
 
 			// Load the current configuration.
 			this.LoadInternalConfiguration();
@@ -86,102 +103,93 @@ namespace InetCrawler.Database
 			)
 			: base(key, id, name, dataSource, username, password, logFile, dateCreated, dateModified)
 		{
-			// Create the database tables and relationships.
-			this.tables = new DbTables(this.Key);
-			this.relationships = new DbRelationships(this.Key, this.tables);
-
-			// Set the event handlers.
-			this.tables.TableAdded += this.OnTableAdded;
-			this.tables.TableChanged += this.OnTableChanged;
-			this.tables.TableRemoved += this.OnTableRemoved;
-
-			this.relationships.RelationshipAdded += this.OnRelationshipAdded;
-			this.relationships.RelationshipRemoved += this.OnRelationshipRemoved;
+			// Initialize the server with the current configuration.
+			this.OnInitialized();
+			// Set the event handler for the connection state.
+			this.connection.StateChange += this.OnConnectionStateChanged;
+			// Add tables to the tables list.
+			this.AddTable(this.tableDatabases);
+			this.AddTable(this.tableSchema);
+			this.AddTable(this.tableTypes);
+			this.AddTable(this.tableTables);
+			this.AddTable(this.tableColumns);
+			// Add relationships to the tables list.
+			this.AddRelationship(this.tableSchema, this.tableTables, "SchemaId", "SchemaId");
+			this.AddRelationship(this.tableColumns, this.tableTables, "ObjectId", "ObjectId");
 
 			// Save the configuration.
 			this.SaveInternalConfiguration();
 		}
 
-
 		// Public properties.
 
 		/// <summary>
-		/// Gets the default database for this server.
+		/// Gets the type of the database server.
 		/// </summary>
-		public abstract DbObjectDatabase Database { get; set; }
+		public override DbConfig.DbServerType Type { get { return DbConfig.DbServerType.MsSql; } }
 		/// <summary>
-		/// Gets the list of database tables for this database server.
+		/// Gets the server version.
 		/// </summary>
-		public IEnumerable<ITable> Tables { get { return this.tables; } }
+		public override string Version
+		{
+			get
+			{
+				try
+				{
+					switch (this.connection.State)
+					{
+						case ConnectionState.Open:
+						case ConnectionState.Executing:
+						case ConnectionState.Fetching:
+							return this.connection.ServerVersion;
+						default:
+							return string.Empty;
+					}
+				}
+				catch (InvalidOperationException) { return string.Empty; }
+			}
+		}
 		/// <summary>
-		/// Gets the list of database relationships for this database server.
+		/// Gets the default database for this database server.
 		/// </summary>
-		public IEnumerable<DbRelationship> Relationships { get { return this.relationships; } }
+		public override DbObjectDatabase Database
+		{
+			get { return this.database; }
+			set
+			{
+				// Save the old database.
+				DbObjectDatabase oldDb = this.database;
+				// Change the current database.
+				this.database = value;
+				// Raise a database change event.
+				this.OnDatabaseChanged(oldDb, value);
+				// Save the configuration.
+				this.SaveConfiguration();
+			}
+		}
 		/// <summary>
 		/// Gets the database table for this server.
 		/// </summary>
-		public abstract ITable TableDatabase { get; }
+		public override ITable TableDatabase { get { return this.tableDatabases; } }
 		/// <summary>
 		/// Gets the schema table for this server.
 		/// </summary>
-		public abstract ITable TableSchema { get; }
+		public override ITable TableSchema { get { return this.tableSchema; } }
 		/// <summary>
 		/// Gets the type table for this server.
 		/// </summary>
-		public abstract ITable TableTypes { get; }
+		public override ITable TableTypes { get { return this.tableTypes; } }
 		/// <summary>
 		/// Gets the tables table for this server.
 		/// </summary>
-		public abstract ITable TableTables { get; }
+		public override ITable TableTables { get { return this.tableTables; } }
 		/// <summary>
 		/// Gets the columns table for this server.
 		/// </summary>
-		public abstract ITable TableColumns { get; }
-
-		// Public events.
-
-		/// <summary>
-		/// An event raised when the server connection state has changed.
-		/// </summary>
-		public event DbServerStateEventHandler StateChanged;
-		/// <summary>
-		/// An event raised when the server default database has changed.
-		/// </summary>
-		public event DbServerDatabaseChangedEventHandler DatabaseChanged;
-		/// <summary>
-		/// An event raised when a server database table has been added.
-		/// </summary>
-		public event DbServerTableEventHandler TableAdded;
-		/// <summary>
-		/// An event raised when a server database table has been removed.
-		/// </summary>
-		public event DbServerTableEventHandler TableRemoved;
-		/// <summary>
-		/// An event raised when a server database table has changed.
-		/// </summary>
-		public event DbServerTableEventHandler TableChanged;
-		/// <summary>
-		/// An event raised when a server database relationship has been added.
-		/// </summary>
-		public event DbServerRelationshipEventHandler RelationshipAdded;
-		/// <summary>
-		/// An event raised when a server database relationship has been removed.
-		/// </summary>
-		public event DbServerRelationshipEventHandler RelationshipRemoved; 
-		/// <summary>
-		/// An event raised when the server begins opening the connection.
-		/// </summary>
-		public event DbServerEventHandler Opening;
-		/// <summary>
-		/// An event raised when the server begins reopening the connection.
-		/// </summary>
-		public event DbServerEventHandler Reopening;
-		/// <summary>
-		/// An event raised when the server begins closing the connection.
-		/// </summary>
-		public event DbServerEventHandler Closing;
+		public override ITable TableColumns { get { return this.tableColumns; } }
 
 		// Public methods.
+
 
 		/// <summary>
 		/// Loads the server configuration.
@@ -206,9 +214,58 @@ namespace InetCrawler.Database
 		}
 
 		/// <summary>
-		/// Opens the connection to the database server synchronously.
+		/// Opens the connection to the database server.
 		/// </summary>
-		public abstract void Open();
+		public override void Open()
+		{
+			// Call the event handler.
+			base.OnOpening();
+
+			lock (this.sync)
+			{
+				try
+				{
+					// Initialize the server.
+					this.OnInitialized();
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Connecting);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Connecting to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+					// Open the database connection.
+					this.connection.Open();
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Normal,
+						LogEventType.Success,
+						this.logSource,
+						"Connected to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+				}
+				catch (SqlException exception)
+				{
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Failed);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Opening the connection to the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
+			}
+		}
 
 		/// <summary>
 		/// Opens the connection to the database server asynchronously.
@@ -216,12 +273,89 @@ namespace InetCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult Open(DbServerCallback callback, object userState = null);
+		public override IAsyncResult Open(DbServerCallback callback, object userState = null)
+		{
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
+			// Begin open the connection asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+				{
+					// Execute asynchronously on the thread pool.
+					try
+					{
+						// Open the connection.
+						this.Open();
+					}
+					catch (Exception exception)
+					{
+						// If an exception occurs, set the callback exception.
+						asyncState.Exception = new DbException("Opening the connection to the database server \'{0}\' failed.".FormatWith(this.Name), exception);
+					}
+					// Complete the asynchronous operation.
+					asyncState.Complete();
+					// Call the callback method with the given state.
+					if (callback != null) callback(asyncState);
+				});
+			return asyncState;
+		}
 
 		/// <summary>
 		/// Reopens the connection to the database asynchronously.
 		/// </summary>
-		public abstract void Reopen();
+		public override void Reopen()
+		{
+			// Call the event handler.
+			base.OnReopening();
+
+			lock (this.sync)
+			{
+				try
+				{
+					// Change the state of the server to disconnecting.
+					base.OnStateChange(ServerState.Disconnecting);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Reconnecting to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+					// Open the database connection.
+					this.connection.Close();
+					// Initialize the server.
+					this.OnInitialized();
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Connecting);
+					// Open the database connection.
+					this.connection.Open();
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Normal,
+						LogEventType.Success,
+						this.logSource,
+						"Reconnected to the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+				}
+				catch (SqlException exception)
+				{
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Failed);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Reopening the connection to the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
+			}
+		}
 
 		/// <summary>
 		/// Reopens the connection to the database server asynchronously.
@@ -229,220 +363,30 @@ namespace InetCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult Reopen(DbServerCallback callback, object userState = null);
-
-		/// <summary>
-		/// Closes the connection to the database server asynchronously.
-		/// </summary>
-		/// <param name="callback">The callback method.</param>
-		/// <param name="userState">The user state.</param>
-		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult Close(DbServerCallback callback, object userState = null);
-
-		/// <summary>
-		/// Changes the current password of the database server asynchronously.
-		/// </summary>
-		/// <param name="newPassword">The new password.</param>
-		/// <param name="callback">The callback method.</param>
-		/// <param name="userState">The user state.</param>
-		/// <returns>The asynchronous result.</returns>
-		public abstract IAsyncResult ChangePassword(SecureString newPassword, DbServerCallback callback, object userState = null);
-
-		/// <summary>
-		/// Creates a new database command with the specified query.
-		/// </summary>
-		/// <param name="query">The database query.</param>
-		/// <returns>The database command.</returns>
-		public abstract DbCommand CreateCommand(DbQuery query);
-
-		/// <summary>
-		/// Creates a new database command with the specified query and transaction.
-		/// </summary>
-		/// <param name="query">The database query.</param>
-		/// <param name="transaction">The database transaction.</param>
-		/// <returns>The database command.</returns>
-		public abstract DbCommand CreateCommand(DbQuery query, DbTransaction transaction);
-
-		/// <summary>
-		/// Creates and begins a new database transaction.
-		/// </summary>
-		/// <param name="isolation">The transaction isolation level.</param>
-		/// <returns>A transaction object to use with subsequent commands within the transaction.</returns>
-		public abstract DbTransaction BeginTransaction(IsolationLevel isolation);
-
-		/// <summary>
-		/// Adds the specified table to the database server.
-		/// </summary>
-		/// <param name="table">The table.</param>
-		public void AddTable(ITable table)
+		public override IAsyncResult Reopen(DbServerCallback callback, object userState = null)
 		{
-			// Validate the arguments.
-			if (null == table) throw new ArgumentNullException("table");
-
-			// Add the table to the tables list.
-			this.tables.Add(table);
-		}
-
-		/// <summary>
-		/// Adds a table to the database server based on the specified table template.
-		/// </summary>
-		/// <param name="template">The table template.</param>
-		public void AddTable(DbTableTemplate template)
-		{
-			// Validate the arguments.
-			if (null == template) throw new ArgumentNullException("template");
-
-			// Create the table and add it to the tables list.
-			this.tables.Add(DbTable.Create(template));
-		}
-
-		/// <summary>
-		/// Removes the specified table.
-		/// </summary>
-		/// <param name="table">The table.</param>
-		public void RemoveTable(ITable table)
-		{
-			// Validate the arguments.
-			if (null == table) throw new ArgumentNullException("table");
-
-			// Remove the table.
-			this.tables.Remove(table.Id);
-
-			// Remove any relationship with the specified table.
-			this.relationships.Remove(table.Id);
-		}
-
-		/// <summary>
-		/// Removes the specified table based on the table template.
-		/// </summary>
-		/// <param name="template">The table template.</param>
-		public void RemoveTable(DbTableTemplate template)
-		{
-			// Validate the arguments.
-			if (null == template) throw new ArgumentNullException("template");
-
-			// Remove the table.
-			this.tables.Remove(template.Id);
-
-			// Remove any relationship with the specified table.
-			this.relationships.Remove(template.Id);
-		}
-
-		/// <summary>
-		/// Adds a relationship to the database server.
-		/// </summary>
-		/// <param name="leftTable">The left table.</param>
-		/// <param name="rightTable">The right table.</param>
-		/// <param name="leftField">The left field.</param>
-		/// <param name="rightField">The right field.</param>
-		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
-		public void AddRelationship(ITable leftTable, ITable rightTable, string leftField, string rightField, bool readOnly = true)
-		{
-			// Validate the arguments.
-			if (null == leftTable) throw new ArgumentNullException("leftTable");
-			if (null == rightTable) throw new ArgumentNullException("rightTable");
-			if (string.IsNullOrWhiteSpace(leftField)) new ArgumentException("The relationship field cannot be null or empty.", "leftField");
-			if (string.IsNullOrWhiteSpace(rightField)) new ArgumentException("The relationship field cannot be null or empty.", "rightField");
-
-			// Check the relationship tables exist.
-			if (!this.tables.HasTable(leftTable.Id)) throw new DbException("Cannot add a relationship because the left table does not exist.");
-			if (!this.tables.HasTable(rightTable.Id)) throw new DbException("Cannot add a relationship because the right table does not exist.");
-
-			// Add the relationship.
-			this.relationships.Add(leftTable, rightTable, leftField, rightField, readOnly);
-		}
-
-		/// <summary>
-		/// Adds a relationship to the database server based on the specified template.
-		/// </summary>
-		/// <param name="template">The relationship template.</param>
-		public void AddRelationship(DbRelationshipTemplate template)
-		{
-			// Validate the arguments.
-			if (null == template) throw new ArgumentNullException("template");
-
-			// Find the relationship tables.
-			ITable leftTable;
-			ITable rightTable;
-
-			if (!this.tables.TryGetTable(template.LeftTable.Id, out leftTable)) throw new DbException("Cannot add a relationship because the left table does not exist.");
-			if (!this.tables.TryGetTable(template.RightTable.Id, out rightTable)) throw new DbException("Cannot add a relationship because the right table does not exist.");
-
-			// Add the relationship.
-			this.relationships.Add(leftTable, rightTable, template.LeftField, template.RightField, template.ReadOnly);
-		}
-
-		/// <summary>
-		/// Removes a relationship from the database server based on the specified template.
-		/// </summary>
-		/// <param name="template">The relationship template.</param>
-		public void RemoveRelationship(DbRelationshipTemplate template)
-		{
-			// Validate the arguments.
-			if (null == template) throw new ArgumentNullException("template");
-
-			// Remove the relationship.
-			this.relationships.Remove(template.LeftTable.Id, template.RightTable.Id, template.LeftField, template.RightField);
-		}
-
-		// Protected methods.
-
-		/// <summary>
-		/// A method called when the server object is being initialized.
-		/// </summary>
-		protected abstract void OnInitialized();
-
-		/// <summary>
-		/// Disposes the current object.
-		/// </summary>
-		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				// Dispose the database tables.
-				this.tables.Dispose();
-			}
-			// Call the base class method.
-			base.Dispose(disposing);
-		}
-
-		/// <summary>
-		/// An event handler called when the current database has changed.
-		/// </summary>
-		/// <param name="oldDatabase">The old database.</param>
-		/// <param name="newDatabase">The new database.</param>
-		protected void OnDatabaseChanged(DbObjectDatabase oldDatabase, DbObjectDatabase newDatabase)
-		{
-			// Call the event.
-			if (this.DatabaseChanged != null) this.DatabaseChanged(this, new DbServerDatabaseChangedEventArgs(this, oldDatabase, newDatabase));
-		}
-
-		/// <summary>
-		/// An event handler called when the server begins opening the connection.
-		/// </summary>
-		protected void OnOpening()
-		{
-			// Call the event.
-			if (this.Opening != null) this.Opening(this, new DbServerEventArgs(this));
-		}
-
-		/// <summary>
-		/// An event handler called when the server begins reopening the connection.
-		/// </summary>
-		protected void OnReopening()
-		{
-			// Call the event.
-			if (this.Reopening != null) this.Reopening(this, new DbServerEventArgs(this));
-		}
-
-		/// <summary>
-		/// An event handler called when the server begins closing the connection.
-		/// </summary>
-		protected void OnClosing()
-		{
-			// Call the event.
-			if (this.Closing != null) this.Closing(this, new DbServerEventArgs(this));
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
+			// Begin open the connection asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+				{
+					// Execute asynchronously on the thread pool.
+					try
+					{
+						// Reopen the connection.
+						this.Reopen();
+					}
+					catch (Exception exception)
+					{
+						// If an exception occurs, set the callback exception.
+						asyncState.Exception = new DbException("Reopening the connection to the database server \'{0}\' failed.".FormatWith(this.Name), exception);
+					}
+					// Complete the asynchronous operation.
+					asyncState.Complete();
+					// Call the callback method with the given state.
+					if (callback != null) callback(asyncState);
+				});
+			return asyncState;
 		}
 
 		// Private methods.
@@ -452,9 +396,8 @@ namespace InetCrawler.Database
 		/// </summary>
 		private void SaveInternalConfiguration()
 		{
-			// Save tables and relationship configuration.
-			this.tables.SaveConfiguration();
-			this.relationships.SaveConfiguration();
+			// Save the default databas
+			if (this.database != null) DbObject.SaveToRegistry<DbObjectSqlDatabase>(this.database as DbObjectSqlDatabase, this.key.Name, "Database");
 		}
 
 		/// <summary>
@@ -462,64 +405,265 @@ namespace InetCrawler.Database
 		/// </summary>
 		private void LoadInternalConfiguration()
 		{
-			// Load tables and relationships configuration.
-			this.tables.LoadConfiguration();
-			this.relationships.LoadConfiguration();
+			// Load the default database.
+			this.database = DbObject.CreateFromRegistry<DbObjectSqlDatabase>(this.key.Name, "Database");
 		}
 
 		/// <summary>
-		/// An event handler called when a table has been added.
+		/// Closes the connection to the database server synchronously.
+		/// </summary>
+		private void Close()
+		{
+			// Call the event handler.
+			base.OnClosing();
+
+			lock (this.sync)
+			{
+				try
+				{
+					// Change the state of the server to disconnecting.
+					base.OnStateChange(ServerState.Disconnecting);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Disconnecting from the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+					// Close the database connection.
+					this.connection.Close();
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Normal,
+						LogEventType.Success,
+						this.logSource,
+						"Disconnected from the database server with ID \'{0}\'.",
+						new object[] { this.Id }
+						);
+				}
+				catch (SqlException exception)
+				{
+					// Change the state of the server to connecting.
+					base.OnStateChange(ServerState.Failed);
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Disconnecting from the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Closes the connection to the database server asynchronously.
+		/// </summary>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public override IAsyncResult Close(DbServerCallback callback, object userState = null)
+		{
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
+			// Begin open the connection asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+				{
+					// Execute asynchronously on the thread pool.
+					try
+					{
+						// Close the connection.
+						this.Close();
+					}
+					catch (Exception exception)
+					{
+						// If an exception occurs, set the callback exception.
+						asyncState.Exception = new DbException("Closing the connection to the database server \'{0}\' failed.".FormatWith(this.Name), exception); ;
+					}
+					// Complete the asynchronous operation.
+					asyncState.Complete();
+					// Call the callback method with the given state.
+					if (callback != null) callback(asyncState);
+				});
+			return asyncState;
+		}
+
+		/// <summary>
+		/// Changes the current password of the database server asynchronously.
+		/// </summary>
+		/// <param name="newPassword">The new password.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="userState">The user state.</param>
+		/// <returns>The asynchronous result.</returns>
+		public override IAsyncResult ChangePassword(SecureString newPassword, DbServerCallback callback, object userState = null)
+		{
+			// Create a new asynchrounous state for this operation.
+			DbServerAsyncState asyncState = new DbServerAsyncState(this, userState);
+			// Begin changing the password asynchronously on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
+			{
+				// Execute asynchronously on the thread pool.
+				try
+				{
+					// Change the database server password.
+					this.ChangePassword(newPassword);
+				}
+				catch (Exception exception)
+				{
+					// If an exception occurs, set the callback exception.
+					asyncState.Exception = new DbException("Changing the password for the database server \'{0}\' failed.".FormatWith(this.Name), exception); ;
+				}
+				// Complete the asynchronous operation.
+				asyncState.Complete();
+				// Call the callback method with the given state.
+				if (callback != null) callback(asyncState);
+			});
+			return asyncState;
+		}
+
+		/// <summary>
+		/// Creates a new database command with the specified query.
+		/// </summary>
+		/// <param name="query">The database query.</param>
+		/// <returns>The database command.</returns>
+		public override DbCommand CreateCommand(DbQuery query)
+		{
+			return new DbCommandSql(this.connection, query);
+		}
+
+		/// <summary>
+		/// Creates a new database command with the specified query and transaction.
+		/// </summary>
+		/// <param name="query">The database query.</param>
+		/// <param name="transaction">The database transaction.</param>
+		/// <returns>The database command.</returns>
+		public override DbCommand CreateCommand(DbQuery query, DbTransaction transaction)
+		{
+			return new DbCommandSql(this.connection, query, transaction as DbTransactionSql);
+		}
+
+		/// <summary>
+		/// Creates and begins a new database transaction.
+		/// </summary>
+		/// <param name="isolation">The transaction isolation level.</param>
+		/// <returns>A transaction object to use with subsequent commands within the transaction.</returns>
+		public override DbTransaction BeginTransaction(IsolationLevel isolation)
+		{
+			return new DbTransactionSql(this.connection, isolation);
+		}
+
+		// Protected methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// If the server connection is not closed.
+				if (this.connection.State != ConnectionState.Closed)
+				{
+					// Close the server connection synchronously.
+					this.Close();
+				}
+			}
+			// Call the base class method.
+			base.Dispose(disposing);
+		}
+
+		/// <summary>
+		/// Initializes the server configuration.
+		/// </summary>
+		protected sealed override void OnInitialized()
+		{
+			// Create the connection string for this server.
+			this.connectionString.DataSource = this.DataSource;
+			this.connectionString.UserID = this.Username;
+			this.connectionString.Password = this.Password.ConvertToUnsecureString();
+
+			// Set the connection for the connection string.
+			this.connection.ConnectionString = this.connectionString.ConnectionString;
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Changes the current password of the database server.
+		/// </summary>
+		/// <param name="newPassword">The new password.</param>
+		private void ChangePassword(SecureString newPassword)
+		{
+			lock (this.sync)
+			{
+				try
+				{
+					// Initialize the server.
+					this.OnInitialized();
+					// Change the server password.
+					SqlConnection.ChangePassword(this.connectionString.ConnectionString, newPassword.ConvertToUnsecureString());
+					// If the password change was successfull, update the configuration.
+					this.Password = newPassword;
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Verbose,
+						LogEventType.Information,
+						this.logSource,
+						"Changing the password for the database server with ID \'{0}\' completed successfully.",
+						new object[] { this.Id }
+						);
+					// Save the configuration.
+					this.SaveConfiguration();
+				}
+				catch (Exception exception)
+				{
+					// Log the event.
+					this.log.Add(
+						LogEventLevel.Important,
+						LogEventType.Error,
+						this.logSource,
+						"Changing the password for the database server with ID \'{0}\' failed. {1}",
+						new object[] { this.Id, exception.Message },
+						exception
+						);
+					// Rethrow the exception.
+					throw;
+				}
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when the state of the database connection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnTableAdded(object sender, DbTableEventArgs e)
+		private void OnConnectionStateChanged(object sender, StateChangeEventArgs e)
 		{
-			// Raise the server event.
-			if (this.TableAdded != null) this.TableAdded(this, new DbServerTableEventArgs(this, e.Table));
-		}
-
-		/// <summary>
-		/// An event handler called when a table has been removed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		void OnTableRemoved(object sender, DbTableEventArgs e)
-		{
-			// Raise the server event.
-			if (this.TableRemoved != null) this.TableRemoved(this, new DbServerTableEventArgs(this, e.Table));
-		}
-
-		/// <summary>
-		/// An event handler called when a database table has changed.
-		/// </summary>
-		/// <param name="server">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnTableChanged(object sender, DbTableEventArgs e)
-		{
-			// Raise the server event.
-			if (this.TableChanged != null) this.TableChanged(this, new DbServerTableEventArgs(this, e.Table));
-		}
-
-		/// <summary>
-		/// An event handler called when a database relatioship has been added.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnRelationshipAdded(object sender, DbRelationshipEventArgs e)
-		{
-			// Raise the server event.
-			if (this.RelationshipAdded != null) this.RelationshipAdded(this, new DbServerRelationshipEventArgs(this, e.Relationship));
-		}
-
-		/// <summary>
-		/// An event handler called when a database relationship has been removed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnRelationshipRemoved(object sender, DbRelationshipEventArgs e)
-		{
-			// Raise the server event.
-			if (this.RelationshipRemoved != null) this.RelationshipRemoved(this, new DbServerRelationshipEventArgs(this, e.Relationship));
+			switch (e.CurrentState)
+			{
+				case ConnectionState.Connecting:
+					this.OnStateChange(ServerState.Connecting);
+					break;
+				case ConnectionState.Open:
+					this.OnStateChange(ServerState.Connected);
+					break;
+				case ConnectionState.Closed:
+					this.OnStateChange(ServerState.Disconnected);
+					break;
+				case ConnectionState.Broken:
+					this.OnStateChange(ServerState.Failed);
+					break;
+				case ConnectionState.Executing:
+				case ConnectionState.Fetching:
+					this.OnStateChange(ServerState.Busy);
+					break;
+			}
 		}
 	}
 }

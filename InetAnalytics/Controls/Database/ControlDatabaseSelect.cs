@@ -32,7 +32,7 @@ namespace InetAnalytics.Controls.Database
 	/// </summary>
 	public sealed partial class ControlDatabaseSelect : ControlDatabase
 	{
-		private DbServerSql server = null;
+		private DbServer server = null;
 		private DbCommand command = null;
 		private DbQuery query = null;
 		private DbDataObject result = null;
@@ -75,7 +75,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="table">The database table.</param>
 		/// <param name="result">The database results, if any.</param>
-		public void Select(DbServerSql server, ITable table, DbDataObject result)
+		public void Select(DbServer server, ITable table, DbDataObject result)
 		{
 			// Create a select all query for all field in the current table.
 			DbQuery query = DbQuery.CreateSelectAll(table, server.Database);
@@ -94,7 +94,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database table.</param>
 		/// <param name="result">The database results, if any.</param>
-		public void Select(DbServerSql server, DbQuery query, DbDataObject result)
+		public void Select(DbServer server, DbQuery query, DbDataObject result)
 		{
 			// Check the database table is configured.
 			if (!query.Table.IsConfigured) throw new DbException("Cannot select the list of database objects for table \'{0}\', because the table is not configured.".FormatWith(query.Table.LocalName));
@@ -152,7 +152,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when started connecting to the database server.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectStarted(DbServerSql server)
+		protected override void OnConnectStarted(DbServer server)
 		{
 			// Disable the buttons.
 			this.buttonRefresh.Enabled = false;
@@ -165,7 +165,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when connecting to the database has succeeded.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectSucceeded(DbServerSql server)
+		protected override void OnConnectSucceeded(DbServer server)
 		{
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;
@@ -178,7 +178,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when connecting to the database has failed.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		protected override void OnConnectFailed(DbServerSql server)
+		protected override void OnConnectFailed(DbServer server)
 		{
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;
@@ -193,7 +193,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="command">The database command.</param>
-		protected override void OnQueryStarted(DbServerSql server, DbQuery query, DbCommand command)
+		protected override void OnQueryStarted(DbServer server, DbQuery query, DbCommand command)
 		{
 			// Save the current command.
 			this.command = command;
@@ -213,7 +213,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The database result.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected override void OnQuerySucceeded(DbServerSql server, DbQuery query, DbDataObject result, int recordsAffected)
+		protected override void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
 		{
 			// Set the current result.
 			this.result = result;
@@ -252,7 +252,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		protected override void OnQueryFailed(DbServerSql server, DbQuery query, Exception exception)
+		protected override void OnQueryFailed(DbServer server, DbQuery query, Exception exception)
 		{
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;

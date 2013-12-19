@@ -30,7 +30,7 @@ namespace InetAnalytics.Controls.Database
 	/// </summary>
 	public partial class ControlServerProperties : ThreadSafeControl
 	{
-		private DbServerSql server;
+		private DbServer server;
 		private static readonly Image[] images = {
 													 Resources.ServerDown_32,
 													 Resources.ServerUp_32,
@@ -52,13 +52,13 @@ namespace InetAnalytics.Controls.Database
 		/// <summary>
 		/// Gets or sets the current database server.
 		/// </summary>
-		public DbServerSql Server
+		public DbServer Server
 		{
 			get { return this.server; }
 			set
 			{
 				// Save the old value.
-				DbServerSql old = this.server;
+				DbServer old = this.server;
 				// Set the new server.
 				this.server = value;
 				// Call the event handler.
@@ -103,7 +103,7 @@ namespace InetAnalytics.Controls.Database
 		/// Call this method to update the state of the database server.
 		/// </summary>
 		/// <param name="server">The database server.</param>
-		public void StateChanged(DbServerSql server)
+		public void StateChanged(DbServer server)
 		{
 			// If the server is different from the current one, do nothing.
 			if (server != this.server) return;
@@ -118,7 +118,7 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="oldServer">The old server.</param>
 		/// <param name="newServer">The new server.</param>
-		protected virtual void OnServerSet(DbServerSql oldServer, DbServerSql newServer)
+		protected virtual void OnServerSet(DbServer oldServer, DbServer newServer)
 		{
 			// If the server has not changed, do nothing.
 			if (oldServer == newServer) return;

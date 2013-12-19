@@ -46,12 +46,10 @@
     <Compile Include="Comments\CrawlerComments.cs" />
     <Compile Include="Comments\CrawlerCommentsList.cs" />
     <Compile Include="CrawlerApi.cs" />
-    <Compile Include="Database\DbConfigSql.cs" />
     <Compile Include="Database\DbRelationshipEventArgs.cs" />
     <Compile Include="Database\DbRelationshipTemplate.cs" />
     <Compile Include="Database\DbRelationshipTemplateEventArgs.cs" />
     <Compile Include="Database\DbRelationshipTemplates.cs" />
-    <Compile Include="Database\DbServer.cs" />
     <Compile Include="Database\DbServerRelationshipEventArgs.cs" />
     <Compile Include="Database\DbTableTemplate.cs" />
     <Compile Include="Database\DbTableTemplateEventArgs.cs" />
@@ -117,9 +115,9 @@
     <Compile Include="Database\DbReaderSql.cs" />
     <Compile Include="Database\DbRelationship.cs" />
     <Compile Include="Database\DbRelationships.cs" />
-    <Compile Include="Database\DbServerSql.cs" />
+    <Compile Include="Database\DbServer.cs" />
     <Compile Include="Database\DbServerAsyncState.cs" />
-    <Compile Include="Database\DbServerMsSql.cs" />
+    <Compile Include="Database\DbServerSql.cs" />
     <Compile Include="Database\DbConfig.cs" />
     <Compile Include="Database\DbServerStateEventArgs.cs" />
     <Compile Include="Database\DbDataRaw.cs" />
