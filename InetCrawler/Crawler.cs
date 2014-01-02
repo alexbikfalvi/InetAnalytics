@@ -25,7 +25,6 @@ using InetCrawler.Log;
 using InetCrawler.PlanetLab;
 using InetCrawler.Spider;
 using InetCrawler.Status;
-using InetCrawler.Testing;
 using InetCrawler.Tools;
 using InetCrawler.YouTube;
 
@@ -47,7 +46,6 @@ namespace InetCrawler
 		private readonly Spiders spiders;
 		private readonly CrawlerStatus status;
 		private readonly CrawlerComments comments;
-		private readonly CrawlerTesting testing;
 		
 		private readonly static CrawlerNetwork network = new CrawlerNetwork();
 
@@ -84,9 +82,6 @@ namespace InetCrawler
 
 			// Create the crawler spiders.
 			this.spiders = new Spiders(this);
-
-			// Create the crawler testing.
-			this.testing = new CrawlerTesting(rootKey, rootPath + @"\Testing");
 
 			// Create the crawler API.
 			this.api = new CrawlerApi(this.config, this.dbConfig, this.log, this.status);
@@ -137,10 +132,6 @@ namespace InetCrawler
 		/// Returns the crawler comments.
 		/// </summary>
 		public CrawlerComments Comments { get { return this.comments; } }
-		/// <summary>
-		/// Returns the crawler testing configuration.
-		/// </summary>
-		public CrawlerTesting Testing { get { return this.testing; } }
 		/// <summary>
 		/// Gets the network information.
 		/// </summary>

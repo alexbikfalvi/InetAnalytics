@@ -118,304 +118,100 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Connect_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\connect_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Connect_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\connect_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Connect_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\connect_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Connect_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\connect_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\connect_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Copy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\copy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Copy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\copy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Copy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\copy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Copy_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\copy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\copy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CubeAdd_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeAdd_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CubeAdd_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeAdd_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CubeAdd_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeAdd_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\cubeadd_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CubeAdd_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeAdd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\cubeadd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CubeRemove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeRemove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CubeRemove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeRemove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CubeRemove_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeRemove_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CubeRemove_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CubeRemove_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cube_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cube_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cube_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cube_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cube_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cube_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cube_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cube_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseBusy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasebusy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseBusy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasebusy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseBusy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasebusy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\cuberemove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DatabaseBusy_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasebusy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databaseerror_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databaseerror_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databaseerror_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\databasebusy_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DatabaseError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databaseerror_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasesuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasesuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasesuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\databaseerror_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DatabaseSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\databasesuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Disconnect_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\disconnect_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Disconnect_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\disconnect_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Disconnect_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\disconnect_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\databasesuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Disconnect_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\disconnect_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Error_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\error_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Error_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\error_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\disconnect_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Error_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\error_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Error_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\error_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventCanceled_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventcanceled_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventCanceled_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventcanceled_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\error_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventCanceled_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventcanceled_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventCanceled_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventcanceled_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventErrorWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerrorwarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventErrorWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerrorwarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventcanceled_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventErrorWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerrorwarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventErrorWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerrorwarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerror_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventError_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerror_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventerrorwarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerror_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventError_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventerror_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventInformation_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventinformation_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventInformation_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventinformation_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventerror_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventInformation_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventinformation_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventInformation_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventinformation_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventMagenta_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmagenta_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventMagenta_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmagenta_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventinformation_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventMagenta_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmagenta_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventMagenta_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmagenta_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventMessage_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmessage_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventMessage_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmessage_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventMessage_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmessage_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventMessage_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventmessage_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventStop_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventstop_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventStop_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventstop_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventmagenta_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventStop_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventstop_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventStop_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventstop_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventSuccessWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccesswarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventSuccessWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccesswarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventstop_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventSuccessWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccesswarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventSuccessWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccesswarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventSuccess_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccess_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventsuccesswarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventsuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventWarning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventwarning_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventWarning_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventwarning_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventsuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EventWarning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventwarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EventWarning_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eventwarning_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\eventwarning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Exception_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\exception_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Exception_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\exception_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\exception_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Exception_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\exception_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\exception_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Exception_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\exception_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="HeaderAdd_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\headeradd_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Header_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\header_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Log_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\log_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Log_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\log_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Log_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\log_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Log_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\log_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PasswordChange_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\passwordchange_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PasswordChange_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\passwordchange_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PasswordChange_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\passwordchange_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\log_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PasswordChange_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\passwordchange_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\passwordchange_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayStart_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\playstart_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayStop_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\playstop_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Properties_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\properties_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\properties_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Properties_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\properties_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ServerBusy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\serverbusy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Properties_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\properties_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ServerError_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\servererror_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Properties_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\properties_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="XmlNamespace_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\xmlnamespace_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="XmlNamespace_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\xmlnamespace_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ServerSuccess_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\serversuccess_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="XmlNamespace_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\xmlnamespace_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="XmlNamespace_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\xmlnamespace_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\ineticons\resources\xmlnamespace_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

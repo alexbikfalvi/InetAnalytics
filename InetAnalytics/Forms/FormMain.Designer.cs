@@ -53,7 +53,6 @@ namespace InetAnalytics.Forms
 			this.controlSideComments = new DotNetApi.Windows.Controls.SideTreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.controlSideConfiguration = new DotNetApi.Windows.Controls.SideTreeView();
-			this.controlSideTesting = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideSpiders = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideYouTube = new DotNetApi.Windows.Controls.SideTreeView();
 			this.controlSideTasks = new DotNetApi.Windows.Controls.SideTreeView();
@@ -65,7 +64,6 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemToolbox = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemTasks = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemYouTube = new DotNetApi.Windows.Controls.SideMenuItem();
-			this.sideMenuItemTesting = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemSpiders = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemConfiguration = new DotNetApi.Windows.Controls.SideMenuItem();
 			this.sideMenuItemLog = new DotNetApi.Windows.Controls.SideMenuItem();
@@ -148,7 +146,7 @@ namespace InetAnalytics.Forms
 			// statusLabelMiddle
 			// 
 			this.statusLabelMiddle.Name = "statusLabelMiddle";
-			this.statusLabelMiddle.Size = new System.Drawing.Size(691, 17);
+			this.statusLabelMiddle.Size = new System.Drawing.Size(722, 17);
 			this.statusLabelMiddle.Spring = true;
 			// 
 			// statusLabelRight
@@ -198,7 +196,6 @@ namespace InetAnalytics.Forms
 			this.sideMenu.Controls.Add(this.controlSideLog);
 			this.sideMenu.Controls.Add(this.controlSideComments);
 			this.sideMenu.Controls.Add(this.controlSideConfiguration);
-			this.sideMenu.Controls.Add(this.controlSideTesting);
 			this.sideMenu.Controls.Add(this.controlSideSpiders);
 			this.sideMenu.Controls.Add(this.controlSideYouTube);
 			this.sideMenu.Controls.Add(this.controlSideTasks);
@@ -213,7 +210,6 @@ namespace InetAnalytics.Forms
             this.sideMenuItemToolbox,
             this.sideMenuItemTasks,
             this.sideMenuItemYouTube,
-            this.sideMenuItemTesting,
             this.sideMenuItemSpiders,
             this.sideMenuItemConfiguration,
             this.sideMenuItemLog,
@@ -350,25 +346,6 @@ namespace InetAnalytics.Forms
 			this.controlSideConfiguration.TabIndex = 1;
 			this.controlSideConfiguration.Visible = false;
 			this.controlSideConfiguration.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
-			// 
-			// controlSideTesting
-			// 
-			this.controlSideTesting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.controlSideTesting.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlSideTesting.FullRowSelect = true;
-			this.controlSideTesting.HideSelection = false;
-			this.controlSideTesting.ImageIndex = 0;
-			this.controlSideTesting.ImageList = this.imageList;
-			this.controlSideTesting.ItemHeight = 20;
-			this.controlSideTesting.Location = new System.Drawing.Point(0, 22);
-			this.controlSideTesting.Name = "controlSideTesting";
-			this.controlSideTesting.SelectedImageIndex = 0;
-			this.controlSideTesting.ShowLines = false;
-			this.controlSideTesting.ShowRootLines = false;
-			this.controlSideTesting.Size = new System.Drawing.Size(246, 64);
-			this.controlSideTesting.TabIndex = 6;
-			this.controlSideTesting.Visible = false;
-			this.controlSideTesting.ControlChanged += new DotNetApi.Windows.Controls.ControlChangedEventHandler(this.OnControlChanged);
 			// 
 			// controlSideSpiders
 			// 
@@ -523,14 +500,6 @@ namespace InetAnalytics.Forms
 			this.sideMenuItemYouTube.ImageSmall = global::InetAnalytics.Resources.ServersVideo_16;
 			this.sideMenuItemYouTube.Index = -1;
 			this.sideMenuItemYouTube.Text = "YouTube";
-			// 
-			// sideMenuItemTesting
-			// 
-			this.sideMenuItemTesting.Control = this.controlSideTesting;
-			this.sideMenuItemTesting.ImageLarge = global::InetAnalytics.Resources.TestsLarge_32;
-			this.sideMenuItemTesting.ImageSmall = global::InetAnalytics.Resources.TestsLarge_16;
-			this.sideMenuItemTesting.Index = -1;
-			this.sideMenuItemTesting.Text = "Testing";
 			// 
 			// sideMenuItemSpiders
 			// 
@@ -740,13 +709,11 @@ namespace InetAnalytics.Forms
 		private DotNetApi.Windows.Controls.SideTreeView controlSideComments;
 		private DotNetApi.Windows.Controls.SideTreeView controlSideDatabase;
 		private DotNetApi.Windows.Controls.SideTreeView controlSideSpiders;
-		private DotNetApi.Windows.Controls.SideTreeView controlSideTesting;
 		private DotNetApi.Windows.Controls.SideTreeView controlSidePlanetLab;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemYouTube;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemDatabase;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemSpiders;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemPlanetLab;
-		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemTesting;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemConfiguration;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemLog;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemComments;

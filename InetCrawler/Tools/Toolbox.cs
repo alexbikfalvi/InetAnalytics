@@ -42,6 +42,9 @@ namespace InetCrawler.Tools
 		private readonly RegistryKey key;
 		private readonly Dictionary<ToolId, ToolsetConfig> toolsets = new Dictionary<ToolId, ToolsetConfig>();
 
+		private IEnumerable<Tool> tools = null;
+		private IOrderedEnumerable<Tool> orderedTools = null;
+
 		/// <summary>
 		/// Creates a new toolbox instance.
 		/// </summary>
@@ -150,7 +153,15 @@ namespace InetCrawler.Tools
 		/// <returns>The enumerator.</returns>
 		public IEnumerator<Tool> GetEnumerator()
 		{
-			return new ToolboxEnumerator(this.toolsets.Values);
+			lock (this.sync)
+			{
+				// Unordered tools list.
+				this.tools = new ToolboxEnumerable(this.toolsets.Values);
+				// Order the tools list.
+				this.orderedTools = Enumerable.OrderBy<Tool, string>(this.tools, selector => selector.Info.Name);
+				// Return the ordered list enumerator.
+				return this.orderedTools.GetEnumerator();
+			}
 		}
 
 		/// <summary>

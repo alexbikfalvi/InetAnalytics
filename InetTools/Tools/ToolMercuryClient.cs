@@ -21,8 +21,9 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using DotNetApi.Web;
+using InetAnalytics;
 using InetCrawler.Tools;
-using InetTools.Controls;
+using InetTools.Controls.Mercury;
 using InetTools.Tools.Mercury;
 
 namespace InetTools.Tools
@@ -54,18 +55,18 @@ namespace InetTools.Tools
 			this.config = new MercuryConfig(api);
 
 			// Create the control.
-			this.control = new ControlMercuryClient(api, this.config);
+			this.control = new ControlMercuryClient(this.config);
 
 			// Create the tool methods.
 			this.AddMethod(
 				new Guid("24FDC1EC-FA12-4A42-B410-3A868B9576D9"),
-				Properties.Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabName,
-				Properties.Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabDescription,
+				Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabName,
+				Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabDescription,
 				this.UploadSessionFromPlanetLab);
 			this.AddMethod(
 				new Guid("5AD386C4-EA86-4C31-A0A1-DCD6CF1107B2"),
-				Properties.Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabName,
-				Properties.Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription,
+				Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabName,
+				Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription,
 				this.UploadTracerouteFromPlanetLab);
 		}
 

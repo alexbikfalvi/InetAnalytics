@@ -107,7 +107,7 @@
 			// buttonStop
 			// 
 			this.buttonStop.Enabled = false;
-			this.buttonStop.Image = global::InetAnalytics.Resources.QueryStop_24;
+			this.buttonStop.Image = global::InetAnalytics.Resources.QueryStop_16;
 			this.buttonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(84, 22);

@@ -41,7 +41,9 @@ namespace InetTools
 			typeof(ToolAlexaTopSites),
 			typeof(ToolCdnFinder),
 			typeof(ToolMercuryClient),
-			typeof(ToolMercuryAnalytics)
+			typeof(ToolMercuryAnalytics),
+			typeof(ToolSshClient),
+			typeof(ToolWebClient)
 		};
 
 		/// <summary>

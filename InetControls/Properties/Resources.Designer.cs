@@ -63,36 +63,6 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Connect_16 {
-            get {
-                object obj = ResourceManager.GetObject("Connect_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Connect_24 {
-            get {
-                object obj = ResourceManager.GetObject("Connect_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Connect_32 {
-            get {
-                object obj = ResourceManager.GetObject("Connect_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Connect_48 {
             get {
                 object obj = ResourceManager.GetObject("Connect_48", resourceCulture);
@@ -113,99 +83,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Copy_24 {
-            get {
-                object obj = ResourceManager.GetObject("Copy_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Copy_32 {
-            get {
-                object obj = ResourceManager.GetObject("Copy_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Copy_48 {
-            get {
-                object obj = ResourceManager.GetObject("Copy_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Cube_16 {
-            get {
-                object obj = ResourceManager.GetObject("Cube_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Cube_24 {
-            get {
-                object obj = ResourceManager.GetObject("Cube_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Cube_32 {
-            get {
-                object obj = ResourceManager.GetObject("Cube_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Cube_48 {
-            get {
-                object obj = ResourceManager.GetObject("Cube_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap CubeAdd_16 {
             get {
                 object obj = ResourceManager.GetObject("CubeAdd_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CubeAdd_24 {
-            get {
-                object obj = ResourceManager.GetObject("CubeAdd_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CubeAdd_32 {
-            get {
-                object obj = ResourceManager.GetObject("CubeAdd_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,99 +113,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CubeRemove_24 {
-            get {
-                object obj = ResourceManager.GetObject("CubeRemove_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CubeRemove_32 {
-            get {
-                object obj = ResourceManager.GetObject("CubeRemove_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CubeRemove_48 {
-            get {
-                object obj = ResourceManager.GetObject("CubeRemove_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseBusy_16 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseBusy_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseBusy_24 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseBusy_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseBusy_32 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseBusy_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap DatabaseBusy_48 {
             get {
                 object obj = ResourceManager.GetObject("DatabaseBusy_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseError_16 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseError_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseError_24 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseError_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseError_32 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseError_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -343,69 +133,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DatabaseSuccess_16 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseSuccess_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseSuccess_24 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseSuccess_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DatabaseSuccess_32 {
-            get {
-                object obj = ResourceManager.GetObject("DatabaseSuccess_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap DatabaseSuccess_48 {
             get {
                 object obj = ResourceManager.GetObject("DatabaseSuccess_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Disconnect_16 {
-            get {
-                object obj = ResourceManager.GetObject("Disconnect_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Disconnect_24 {
-            get {
-                object obj = ResourceManager.GetObject("Disconnect_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Disconnect_32 {
-            get {
-                object obj = ResourceManager.GetObject("Disconnect_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -423,59 +153,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Error_16 {
-            get {
-                object obj = ResourceManager.GetObject("Error_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Error_24 {
-            get {
-                object obj = ResourceManager.GetObject("Error_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Error_32 {
             get {
                 object obj = ResourceManager.GetObject("Error_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Error_48 {
-            get {
-                object obj = ResourceManager.GetObject("Error_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventCanceled_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventCanceled_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventCanceled_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventCanceled_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -493,69 +173,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap EventCanceled_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventCanceled_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventError_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventError_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventError_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventError_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap EventError_32 {
             get {
                 object obj = ResourceManager.GetObject("EventError_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventError_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventError_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventErrorWarning_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventErrorWarning_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventErrorWarning_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventErrorWarning_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -573,69 +193,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap EventErrorWarning_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventErrorWarning_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventInformation_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventInformation_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventInformation_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventInformation_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap EventInformation_32 {
             get {
                 object obj = ResourceManager.GetObject("EventInformation_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventInformation_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventInformation_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventMagenta_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventMagenta_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventMagenta_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventMagenta_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -653,109 +213,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap EventMagenta_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventMagenta_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventMessage_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventMessage_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventMessage_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventMessage_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventMessage_32 {
-            get {
-                object obj = ResourceManager.GetObject("EventMessage_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventMessage_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventMessage_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventStop_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventStop_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventStop_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventStop_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap EventStop_32 {
             get {
                 object obj = ResourceManager.GetObject("EventStop_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventStop_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventStop_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventSuccess_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventSuccess_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventSuccess_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventSuccess_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -773,69 +233,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap EventSuccess_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventSuccess_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventSuccessWarning_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventSuccessWarning_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventSuccessWarning_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventSuccessWarning_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap EventSuccessWarning_32 {
             get {
                 object obj = ResourceManager.GetObject("EventSuccessWarning_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventSuccessWarning_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventSuccessWarning_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventWarning_16 {
-            get {
-                object obj = ResourceManager.GetObject("EventWarning_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EventWarning_24 {
-            get {
-                object obj = ResourceManager.GetObject("EventWarning_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -853,29 +253,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap EventWarning_48 {
-            get {
-                object obj = ResourceManager.GetObject("EventWarning_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Exception_16 {
             get {
                 object obj = ResourceManager.GetObject("Exception_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Exception_24 {
-            get {
-                object obj = ResourceManager.GetObject("Exception_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -893,9 +273,19 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Exception_48 {
+        internal static System.Drawing.Bitmap Header_32 {
             get {
-                object obj = ResourceManager.GetObject("Exception_48", resourceCulture);
+                object obj = ResourceManager.GetObject("Header_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HeaderAdd_48 {
+            get {
+                object obj = ResourceManager.GetObject("HeaderAdd_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -913,69 +303,29 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Log_24 {
-            get {
-                object obj = ResourceManager.GetObject("Log_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Log_32 {
-            get {
-                object obj = ResourceManager.GetObject("Log_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Log_48 {
-            get {
-                object obj = ResourceManager.GetObject("Log_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PasswordChange_16 {
-            get {
-                object obj = ResourceManager.GetObject("PasswordChange_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PasswordChange_24 {
-            get {
-                object obj = ResourceManager.GetObject("PasswordChange_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PasswordChange_32 {
-            get {
-                object obj = ResourceManager.GetObject("PasswordChange_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap PasswordChange_48 {
             get {
                 object obj = ResourceManager.GetObject("PasswordChange_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlayStart_16 {
+            get {
+                object obj = ResourceManager.GetObject("PlayStart_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlayStop_16 {
+            get {
+                object obj = ResourceManager.GetObject("PlayStop_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -993,9 +343,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Properties_24 {
+        internal static System.Drawing.Bitmap ServerBusy_32 {
             get {
-                object obj = ResourceManager.GetObject("Properties_24", resourceCulture);
+                object obj = ResourceManager.GetObject("ServerBusy_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1003,9 +353,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Properties_32 {
+        internal static System.Drawing.Bitmap ServerError_32 {
             get {
-                object obj = ResourceManager.GetObject("Properties_32", resourceCulture);
+                object obj = ResourceManager.GetObject("ServerError_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1013,29 +363,9 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Properties_48 {
+        internal static System.Drawing.Bitmap ServerSuccess_32 {
             get {
-                object obj = ResourceManager.GetObject("Properties_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap XmlNamespace_16 {
-            get {
-                object obj = ResourceManager.GetObject("XmlNamespace_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap XmlNamespace_24 {
-            get {
-                object obj = ResourceManager.GetObject("XmlNamespace_24", resourceCulture);
+                object obj = ResourceManager.GetObject("ServerSuccess_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1046,16 +376,6 @@ namespace InetAnalytics {
         internal static System.Drawing.Bitmap XmlNamespace_32 {
             get {
                 object obj = ResourceManager.GetObject("XmlNamespace_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap XmlNamespace_48 {
-            get {
-                object obj = ResourceManager.GetObject("XmlNamespace_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

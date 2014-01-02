@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Forms;
 using InetCrawler.Tools;
-using InetTools.Controls;
+using InetTools.Controls.CdnFinder;
 using InetTools.Tools.CdnFinder;
 
 namespace InetTools.Tools

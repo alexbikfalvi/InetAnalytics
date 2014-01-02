@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Forms;
 using InetCrawler.Tools;
-using InetTools.Controls;
+using InetTools.Controls.Mercury;
 using InetTools.Tools.Mercury;
 
 namespace InetTools.Tools

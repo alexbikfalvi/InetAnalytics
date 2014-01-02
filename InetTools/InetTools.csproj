@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MongoDB.Bson">
-      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,46 +41,58 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ControlMercuryAnalytics.cs">
+    <Compile Include="Controls\Mercury\ControlMercuryAnalytics.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlMercuryAnalytics.Designer.cs">
+    <Compile Include="Controls\Mercury\ControlMercuryAnalytics.Designer.cs">
       <DependentUpon>ControlMercuryAnalytics.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlMercuryClientTraceroute.cs">
+    <Compile Include="Controls\Mercury\ControlMercuryClientTraceroute.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlMercuryClientTraceroute.Designer.cs">
+    <Compile Include="Controls\Mercury\ControlMercuryClientTraceroute.Designer.cs">
       <DependentUpon>ControlMercuryClientTraceroute.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlMercuryClient.cs">
+    <Compile Include="Controls\Mercury\ControlMercuryClient.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlMercuryClient.Designer.cs">
+    <Compile Include="Controls\Mercury\ControlMercuryClient.Designer.cs">
       <DependentUpon>ControlMercuryClient.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlCdnFinder.cs">
+    <Compile Include="Controls\CdnFinder\ControlCdnFinder.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlCdnFinder.Designer.cs">
+    <Compile Include="Controls\CdnFinder\ControlCdnFinder.Designer.cs">
       <DependentUpon>ControlCdnFinder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlCdnFinderSite.cs">
+    <Compile Include="Controls\CdnFinder\ControlCdnFinderSite.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlCdnFinderSite.Designer.cs">
+    <Compile Include="Controls\CdnFinder\ControlCdnFinderSite.Designer.cs">
       <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlWebCrawler.cs">
+    <Compile Include="Controls\Ssh\ControlSshClient.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlWebCrawler.Designer.cs">
+    <Compile Include="Controls\Ssh\ControlSshClient.Designer.cs">
+      <DependentUpon>ControlSshClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Web\ControlWebClient.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Web\ControlWebClient.Designer.cs">
+      <DependentUpon>ControlWebClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Web\ControlWebCrawler.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Web\ControlWebCrawler.Designer.cs">
       <DependentUpon>ControlWebCrawler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlAlexaTopSites.cs">
+    <Compile Include="Controls\Alexa\ControlAlexaTopSites.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlAlexaTopSites.Designer.cs">
+    <Compile Include="Controls\Alexa\ControlAlexaTopSites.Designer.cs">
       <DependentUpon>ControlAlexaTopSites.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormMercuryClientSettings.cs">
@@ -128,11 +134,15 @@
     <Compile Include="Tools\Mercury\MercuryRequest.cs" />
     <Compile Include="Tools\Mercury\MercuryTraceroute.cs" />
     <Compile Include="Tools\Mercury\MercuryTracerouteHop.cs" />
+    <Compile Include="Tools\Ssh\SshClientConfig.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
     <Compile Include="Tools\ToolCdnFinder.cs" />
     <Compile Include="Tools\ToolMercuryAnalytics.cs" />
     <Compile Include="Tools\ToolMercuryClient.cs" />
+    <Compile Include="Tools\ToolSshClient.cs" />
+    <Compile Include="Tools\ToolWebClient.cs" />
     <Compile Include="Tools\ToolWebCrawler.cs" />
+    <Compile Include="Tools\Web\WebClientConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
@@ -165,25 +175,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\ControlMercuryAnalytics.resx">
+    <EmbeddedResource Include="Controls\Mercury\ControlMercuryAnalytics.resx">
       <DependentUpon>ControlMercuryAnalytics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlMercuryClientTraceroute.resx">
+    <EmbeddedResource Include="Controls\Mercury\ControlMercuryClientTraceroute.resx">
       <DependentUpon>ControlMercuryClientTraceroute.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlMercuryClient.resx">
+    <EmbeddedResource Include="Controls\Mercury\ControlMercuryClient.resx">
       <DependentUpon>ControlMercuryClient.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlCdnFinder.resx">
+    <EmbeddedResource Include="Controls\CdnFinder\ControlCdnFinder.resx">
       <DependentUpon>ControlCdnFinder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlCdnFinderSite.resx">
+    <EmbeddedResource Include="Controls\CdnFinder\ControlCdnFinderSite.resx">
       <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlWebCrawler.resx">
+    <EmbeddedResource Include="Controls\Ssh\ControlSshClient.resx">
+      <DependentUpon>ControlSshClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Web\ControlWebClient.resx">
+      <DependentUpon>ControlWebClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Web\ControlWebCrawler.resx">
       <DependentUpon>ControlWebCrawler.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ControlAlexaTopSites.resx">
+    <EmbeddedResource Include="Controls\Alexa\ControlAlexaTopSites.resx">
       <DependentUpon>ControlAlexaTopSites.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMercuryClientSettings.resx">
@@ -195,308 +211,3298 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>InetAnalytics</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Resources\GlobeClock_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStart_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStart_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStart_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStart_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStop_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStop_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStop_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayStop_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeClock_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeClock_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeClock_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeCanceled_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeCanceled_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeCanceled_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeCanceled_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeError_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeError_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeError_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeError_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeSuccess_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeSuccess_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeSuccess_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeSuccess_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeWarning_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeWarning_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeWarning_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeWarning_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Refresh_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Refresh_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Refresh_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Refresh_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Export_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Export_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Export_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Export_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Import_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Import_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Import_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Import_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Busy_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Busy_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Busy_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Busy_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Error_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Error_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Error_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Error_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Success_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Success_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Success_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Success_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Canceled_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Canceled_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Canceled_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Canceled_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Information_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Information_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Information_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Information_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Settings_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Settings_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Settings_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Settings_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Open_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Open_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Open_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Open_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeQuestion_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeQuestion_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeQuestion_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeQuestion_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeUpload_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeUpload_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeUpload_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GlobeUpload_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPin_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPin_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPin_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPin_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinError_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinError_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinError_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinError_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinSuccess_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinSuccess_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinSuccess_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PushPinSuccess_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Connect_48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Disconnect_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Disconnect_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Disconnect_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Disconnect_48.png" />
+    <None Include="..\InetIcons\Resources\ArrowBlueDown_16.png">
+      <Link>Resources\ArrowBlueDown_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueDown_24.png">
+      <Link>Resources\ArrowBlueDown_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueDown_32.png">
+      <Link>Resources\ArrowBlueDown_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueDown_48.png">
+      <Link>Resources\ArrowBlueDown_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueNext_16.png">
+      <Link>Resources\ArrowBlueNext_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueNext_24.png">
+      <Link>Resources\ArrowBlueNext_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueNext_32.png">
+      <Link>Resources\ArrowBlueNext_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueNext_48.png">
+      <Link>Resources\ArrowBlueNext_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBluePrevious_16.png">
+      <Link>Resources\ArrowBluePrevious_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBluePrevious_24.png">
+      <Link>Resources\ArrowBluePrevious_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBluePrevious_32.png">
+      <Link>Resources\ArrowBluePrevious_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBluePrevious_48.png">
+      <Link>Resources\ArrowBluePrevious_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueUp_16.png">
+      <Link>Resources\ArrowBlueUp_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueUp_24.png">
+      <Link>Resources\ArrowBlueUp_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueUp_32.png">
+      <Link>Resources\ArrowBlueUp_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowBlueUp_48.png">
+      <Link>Resources\ArrowBlueUp_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenDown_16.png">
+      <Link>Resources\ArrowGreenDown_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenDown_24.png">
+      <Link>Resources\ArrowGreenDown_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenDown_32.png">
+      <Link>Resources\ArrowGreenDown_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenDown_48.png">
+      <Link>Resources\ArrowGreenDown_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenNext_16.png">
+      <Link>Resources\ArrowGreenNext_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenNext_24.png">
+      <Link>Resources\ArrowGreenNext_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenNext_32.png">
+      <Link>Resources\ArrowGreenNext_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenNext_48.png">
+      <Link>Resources\ArrowGreenNext_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenPrevious_16.png">
+      <Link>Resources\ArrowGreenPrevious_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenPrevious_24.png">
+      <Link>Resources\ArrowGreenPrevious_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenPrevious_32.png">
+      <Link>Resources\ArrowGreenPrevious_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenPrevious_48.png">
+      <Link>Resources\ArrowGreenPrevious_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenUp_16.png">
+      <Link>Resources\ArrowGreenUp_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenUp_24.png">
+      <Link>Resources\ArrowGreenUp_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenUp_32.png">
+      <Link>Resources\ArrowGreenUp_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ArrowGreenUp_48.png">
+      <Link>Resources\ArrowGreenUp_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Book_16.png">
+      <Link>Resources\Book_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Book_24.png">
+      <Link>Resources\Book_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Book_32.png">
+      <Link>Resources\Book_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Book_48.png">
+      <Link>Resources\Book_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Busy_16.png">
+      <Link>Resources\Busy_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Busy_24.png">
+      <Link>Resources\Busy_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Busy_32.png">
+      <Link>Resources\Busy_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Busy_48.png">
+      <Link>Resources\Busy_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Calendar_16.png">
+      <Link>Resources\Calendar_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Calendar_24.png">
+      <Link>Resources\Calendar_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Calendar_32.png">
+      <Link>Resources\Calendar_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Calendar_48.png">
+      <Link>Resources\Calendar_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Canceled_16.png">
+      <Link>Resources\Canceled_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Canceled_24.png">
+      <Link>Resources\Canceled_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Canceled_32.png">
+      <Link>Resources\Canceled_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Canceled_48.png">
+      <Link>Resources\Canceled_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Categories_16.png">
+      <Link>Resources\Categories_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Categories_24.png">
+      <Link>Resources\Categories_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Categories_32.png">
+      <Link>Resources\Categories_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Categories_48.png">
+      <Link>Resources\Categories_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Category_16.png">
+      <Link>Resources\Category_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Category_24.png">
+      <Link>Resources\Category_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Category_32.png">
+      <Link>Resources\Category_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Category_48.png">
+      <Link>Resources\Category_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Check_16.png">
+      <Link>Resources\Check_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Check_24.png">
+      <Link>Resources\Check_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Check_32.png">
+      <Link>Resources\Check_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Check_48.png">
+      <Link>Resources\Check_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClearAll_16.png">
+      <Link>Resources\ClearAll_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClearAll_24.png">
+      <Link>Resources\ClearAll_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClearAll_32.png">
+      <Link>Resources\ClearAll_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClearAll_48.png">
+      <Link>Resources\ClearAll_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockLarge_16.png">
+      <Link>Resources\ClockLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockLarge_24.png">
+      <Link>Resources\ClockLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockLarge_32.png">
+      <Link>Resources\ClockLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockLarge_48.png">
+      <Link>Resources\ClockLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockMedium_16.png">
+      <Link>Resources\ClockMedium_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockMedium_24.png">
+      <Link>Resources\ClockMedium_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockMedium_32.png">
+      <Link>Resources\ClockMedium_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockMedium_48.png">
+      <Link>Resources\ClockMedium_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockNew_16.png">
+      <Link>Resources\ClockNew_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockNew_24.png">
+      <Link>Resources\ClockNew_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockNew_32.png">
+      <Link>Resources\ClockNew_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockNew_48.png">
+      <Link>Resources\ClockNew_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockSmall_16.png">
+      <Link>Resources\ClockSmall_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockSmall_24.png">
+      <Link>Resources\ClockSmall_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockSmall_32.png">
+      <Link>Resources\ClockSmall_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ClockSmall_48.png">
+      <Link>Resources\ClockSmall_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentAdd_16.png">
+      <Link>Resources\CommentAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentAdd_24.png">
+      <Link>Resources\CommentAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentAdd_32.png">
+      <Link>Resources\CommentAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentAdd_48.png">
+      <Link>Resources\CommentAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentPlay_16.png">
+      <Link>Resources\CommentPlay_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentPlay_24.png">
+      <Link>Resources\CommentPlay_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentPlay_32.png">
+      <Link>Resources\CommentPlay_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentPlay_48.png">
+      <Link>Resources\CommentPlay_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentRemove_16.png">
+      <Link>Resources\CommentRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentRemove_24.png">
+      <Link>Resources\CommentRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentRemove_32.png">
+      <Link>Resources\CommentRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentRemove_48.png">
+      <Link>Resources\CommentRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comments_16.png">
+      <Link>Resources\Comments_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comments_24.png">
+      <Link>Resources\Comments_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comments_32.png">
+      <Link>Resources\Comments_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comments_48.png">
+      <Link>Resources\Comments_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentUser_16.png">
+      <Link>Resources\CommentUser_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentUser_24.png">
+      <Link>Resources\CommentUser_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentUser_32.png">
+      <Link>Resources\CommentUser_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentUser_48.png">
+      <Link>Resources\CommentUser_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentVideo_16.png">
+      <Link>Resources\CommentVideo_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentVideo_24.png">
+      <Link>Resources\CommentVideo_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentVideo_32.png">
+      <Link>Resources\CommentVideo_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CommentVideo_48.png">
+      <Link>Resources\CommentVideo_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comment_16.png">
+      <Link>Resources\Comment_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comment_24.png">
+      <Link>Resources\Comment_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comment_32.png">
+      <Link>Resources\Comment_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Comment_48.png">
+      <Link>Resources\Comment_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConfigurationSettings_16.png">
+      <Link>Resources\ConfigurationSettings_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConfigurationSettings_24.png">
+      <Link>Resources\ConfigurationSettings_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConfigurationSettings_32.png">
+      <Link>Resources\ConfigurationSettings_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConfigurationSettings_48.png">
+      <Link>Resources\ConfigurationSettings_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Configuration_16.png">
+      <Link>Resources\Configuration_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Configuration_24.png">
+      <Link>Resources\Configuration_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Configuration_32.png">
+      <Link>Resources\Configuration_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Configuration_48.png">
+      <Link>Resources\Configuration_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionError_16.png">
+      <Link>Resources\ConnectionError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionError_24.png">
+      <Link>Resources\ConnectionError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionError_32.png">
+      <Link>Resources\ConnectionError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionError_48.png">
+      <Link>Resources\ConnectionError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionQuestion_16.png">
+      <Link>Resources\ConnectionQuestion_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionQuestion_24.png">
+      <Link>Resources\ConnectionQuestion_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionQuestion_32.png">
+      <Link>Resources\ConnectionQuestion_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionQuestion_48.png">
+      <Link>Resources\ConnectionQuestion_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionSuccess_16.png">
+      <Link>Resources\ConnectionSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionSuccess_24.png">
+      <Link>Resources\ConnectionSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionSuccess_32.png">
+      <Link>Resources\ConnectionSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionSuccess_48.png">
+      <Link>Resources\ConnectionSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionWarning_16.png">
+      <Link>Resources\ConnectionWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionWarning_24.png">
+      <Link>Resources\ConnectionWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionWarning_32.png">
+      <Link>Resources\ConnectionWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConnectionWarning_48.png">
+      <Link>Resources\ConnectionWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Connect_16.png">
+      <Link>Resources\Connect_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Connect_24.png">
+      <Link>Resources\Connect_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Connect_32.png">
+      <Link>Resources\Connect_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Connect_48.png">
+      <Link>Resources\Connect_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleConnect_16.png">
+      <Link>Resources\ConsoleConnect_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleConnect_24.png">
+      <Link>Resources\ConsoleConnect_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleConnect_32.png">
+      <Link>Resources\ConsoleConnect_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleConnect_48.png">
+      <Link>Resources\ConsoleConnect_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleDisconnect_16.png">
+      <Link>Resources\ConsoleDisconnect_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleDisconnect_24.png">
+      <Link>Resources\ConsoleDisconnect_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleDisconnect_32.png">
+      <Link>Resources\ConsoleDisconnect_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ConsoleDisconnect_48.png">
+      <Link>Resources\ConsoleDisconnect_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Console_16.png">
+      <Link>Resources\Console_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Console_24.png">
+      <Link>Resources\Console_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Console_32.png">
+      <Link>Resources\Console_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Console_48.png">
+      <Link>Resources\Console_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Copy_16.png">
+      <Link>Resources\Copy_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Copy_24.png">
+      <Link>Resources\Copy_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Copy_32.png">
+      <Link>Resources\Copy_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Copy_48.png">
+      <Link>Resources\Copy_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeAdd_16.png">
+      <Link>Resources\CubeAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeAdd_24.png">
+      <Link>Resources\CubeAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeAdd_32.png">
+      <Link>Resources\CubeAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeAdd_48.png">
+      <Link>Resources\CubeAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeRemove_16.png">
+      <Link>Resources\CubeRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeRemove_24.png">
+      <Link>Resources\CubeRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeRemove_32.png">
+      <Link>Resources\CubeRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\CubeRemove_48.png">
+      <Link>Resources\CubeRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cubes_16.png">
+      <Link>Resources\Cubes_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cubes_24.png">
+      <Link>Resources\Cubes_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cubes_32.png">
+      <Link>Resources\Cubes_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cubes_48.png">
+      <Link>Resources\Cubes_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cube_16.png">
+      <Link>Resources\Cube_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cube_24.png">
+      <Link>Resources\Cube_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cube_32.png">
+      <Link>Resources\Cube_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Cube_48.png">
+      <Link>Resources\Cube_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseBusy_16.png">
+      <Link>Resources\DatabaseBusy_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseBusy_24.png">
+      <Link>Resources\DatabaseBusy_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseBusy_32.png">
+      <Link>Resources\DatabaseBusy_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseBusy_48.png">
+      <Link>Resources\DatabaseBusy_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseCompare_16.png">
+      <Link>Resources\DatabaseCompare_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseCompare_24.png">
+      <Link>Resources\DatabaseCompare_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseCompare_32.png">
+      <Link>Resources\DatabaseCompare_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseCompare_48.png">
+      <Link>Resources\DatabaseCompare_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseError_16.png">
+      <Link>Resources\DatabaseError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseError_24.png">
+      <Link>Resources\DatabaseError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseError_32.png">
+      <Link>Resources\DatabaseError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseError_48.png">
+      <Link>Resources\DatabaseError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseRead_16.png">
+      <Link>Resources\DatabaseRead_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseRead_24.png">
+      <Link>Resources\DatabaseRead_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseRead_32.png">
+      <Link>Resources\DatabaseRead_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseRead_48.png">
+      <Link>Resources\DatabaseRead_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseStar_16.png">
+      <Link>Resources\DatabaseStar_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseStar_24.png">
+      <Link>Resources\DatabaseStar_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseStar_32.png">
+      <Link>Resources\DatabaseStar_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseStar_48.png">
+      <Link>Resources\DatabaseStar_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseSuccess_16.png">
+      <Link>Resources\DatabaseSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseSuccess_24.png">
+      <Link>Resources\DatabaseSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseSuccess_32.png">
+      <Link>Resources\DatabaseSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseSuccess_48.png">
+      <Link>Resources\DatabaseSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseWarning_16.png">
+      <Link>Resources\DatabaseWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseWarning_24.png">
+      <Link>Resources\DatabaseWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseWarning_32.png">
+      <Link>Resources\DatabaseWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\DatabaseWarning_48.png">
+      <Link>Resources\DatabaseWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Database_16.png">
+      <Link>Resources\Database_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Database_24.png">
+      <Link>Resources\Database_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Database_32.png">
+      <Link>Resources\Database_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Database_48.png">
+      <Link>Resources\Database_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Disconnect_16.png">
+      <Link>Resources\Disconnect_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Disconnect_24.png">
+      <Link>Resources\Disconnect_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Disconnect_32.png">
+      <Link>Resources\Disconnect_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Disconnect_48.png">
+      <Link>Resources\Disconnect_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Dislike_16.png">
+      <Link>Resources\Dislike_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Dislike_24.png">
+      <Link>Resources\Dislike_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Dislike_32.png">
+      <Link>Resources\Dislike_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Dislike_48.png">
+      <Link>Resources\Dislike_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ErrorWarning_16.png">
+      <Link>Resources\ErrorWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ErrorWarning_24.png">
+      <Link>Resources\ErrorWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ErrorWarning_32.png">
+      <Link>Resources\ErrorWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ErrorWarning_48.png">
+      <Link>Resources\ErrorWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Error_16.png">
+      <Link>Resources\Error_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Error_24.png">
+      <Link>Resources\Error_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Error_32.png">
+      <Link>Resources\Error_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Error_48.png">
+      <Link>Resources\Error_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventBrown_16.png">
+      <Link>Resources\EventBrown_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventBrown_24.png">
+      <Link>Resources\EventBrown_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventBrown_32.png">
+      <Link>Resources\EventBrown_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventBrown_48.png">
+      <Link>Resources\EventBrown_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventCanceled_16.png">
+      <Link>Resources\EventCanceled_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventCanceled_24.png">
+      <Link>Resources\EventCanceled_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventCanceled_32.png">
+      <Link>Resources\EventCanceled_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventCanceled_48.png">
+      <Link>Resources\EventCanceled_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventErrorWarning_16.png">
+      <Link>Resources\EventErrorWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventErrorWarning_24.png">
+      <Link>Resources\EventErrorWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventErrorWarning_32.png">
+      <Link>Resources\EventErrorWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventErrorWarning_48.png">
+      <Link>Resources\EventErrorWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventError_16.png">
+      <Link>Resources\EventError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventError_24.png">
+      <Link>Resources\EventError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventError_32.png">
+      <Link>Resources\EventError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventError_48.png">
+      <Link>Resources\EventError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventInformation_16.png">
+      <Link>Resources\EventInformation_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventInformation_24.png">
+      <Link>Resources\EventInformation_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventInformation_32.png">
+      <Link>Resources\EventInformation_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventInformation_48.png">
+      <Link>Resources\EventInformation_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMagenta_16.png">
+      <Link>Resources\EventMagenta_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMagenta_24.png">
+      <Link>Resources\EventMagenta_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMagenta_32.png">
+      <Link>Resources\EventMagenta_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMagenta_48.png">
+      <Link>Resources\EventMagenta_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMessage_16.png">
+      <Link>Resources\EventMessage_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMessage_24.png">
+      <Link>Resources\EventMessage_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMessage_32.png">
+      <Link>Resources\EventMessage_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventMessage_48.png">
+      <Link>Resources\EventMessage_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventStop_16.png">
+      <Link>Resources\EventStop_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventStop_24.png">
+      <Link>Resources\EventStop_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventStop_32.png">
+      <Link>Resources\EventStop_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventStop_48.png">
+      <Link>Resources\EventStop_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccessWarning_16.png">
+      <Link>Resources\EventSuccessWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccessWarning_24.png">
+      <Link>Resources\EventSuccessWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccessWarning_32.png">
+      <Link>Resources\EventSuccessWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccessWarning_48.png">
+      <Link>Resources\EventSuccessWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccess_16.png">
+      <Link>Resources\EventSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccess_24.png">
+      <Link>Resources\EventSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccess_32.png">
+      <Link>Resources\EventSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventSuccess_48.png">
+      <Link>Resources\EventSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventWarning_16.png">
+      <Link>Resources\EventWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventWarning_24.png">
+      <Link>Resources\EventWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventWarning_32.png">
+      <Link>Resources\EventWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\EventWarning_48.png">
+      <Link>Resources\EventWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Exception_16.png">
+      <Link>Resources\Exception_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Exception_24.png">
+      <Link>Resources\Exception_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Exception_32.png">
+      <Link>Resources\Exception_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Exception_48.png">
+      <Link>Resources\Exception_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Export_16.png">
+      <Link>Resources\Export_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Export_24.png">
+      <Link>Resources\Export_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Export_32.png">
+      <Link>Resources\Export_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Export_48.png">
+      <Link>Resources\Export_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldCompare_16.png">
+      <Link>Resources\FieldCompare_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldCompare_24.png">
+      <Link>Resources\FieldCompare_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldCompare_32.png">
+      <Link>Resources\FieldCompare_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldCompare_48.png">
+      <Link>Resources\FieldCompare_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldSuccess_16.png">
+      <Link>Resources\FieldSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldSuccess_24.png">
+      <Link>Resources\FieldSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldSuccess_32.png">
+      <Link>Resources\FieldSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldSuccess_48.png">
+      <Link>Resources\FieldSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldWarning_16.png">
+      <Link>Resources\FieldWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldWarning_24.png">
+      <Link>Resources\FieldWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldWarning_32.png">
+      <Link>Resources\FieldWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FieldWarning_48.png">
+      <Link>Resources\FieldWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Field_16.png">
+      <Link>Resources\Field_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Field_24.png">
+      <Link>Resources\Field_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Field_32.png">
+      <Link>Resources\Field_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Field_48.png">
+      <Link>Resources\Field_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileComment_16.png">
+      <Link>Resources\FileComment_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileComment_24.png">
+      <Link>Resources\FileComment_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileComment_32.png">
+      <Link>Resources\FileComment_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileComment_48.png">
+      <Link>Resources\FileComment_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileGraphLine_16.png">
+      <Link>Resources\FileGraphLine_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileGraphLine_24.png">
+      <Link>Resources\FileGraphLine_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileGraphLine_32.png">
+      <Link>Resources\FileGraphLine_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileGraphLine_48.png">
+      <Link>Resources\FileGraphLine_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilePlay_16.png">
+      <Link>Resources\FilePlay_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilePlay_24.png">
+      <Link>Resources\FilePlay_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilePlay_32.png">
+      <Link>Resources\FilePlay_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilePlay_48.png">
+      <Link>Resources\FilePlay_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileUser_16.png">
+      <Link>Resources\FileUser_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileUser_24.png">
+      <Link>Resources\FileUser_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileUser_32.png">
+      <Link>Resources\FileUser_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileUser_48.png">
+      <Link>Resources\FileUser_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileVideo_16.png">
+      <Link>Resources\FileVideo_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileVideo_24.png">
+      <Link>Resources\FileVideo_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileVideo_32.png">
+      <Link>Resources\FileVideo_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileVideo_48.png">
+      <Link>Resources\FileVideo_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlError_16.png">
+      <Link>Resources\FileXmlError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlError_24.png">
+      <Link>Resources\FileXmlError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlError_32.png">
+      <Link>Resources\FileXmlError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlError_48.png">
+      <Link>Resources\FileXmlError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlQuestion_16.png">
+      <Link>Resources\FileXmlQuestion_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlQuestion_24.png">
+      <Link>Resources\FileXmlQuestion_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlQuestion_32.png">
+      <Link>Resources\FileXmlQuestion_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlQuestion_48.png">
+      <Link>Resources\FileXmlQuestion_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlSuccess_16.png">
+      <Link>Resources\FileXmlSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlSuccess_24.png">
+      <Link>Resources\FileXmlSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlSuccess_32.png">
+      <Link>Resources\FileXmlSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlSuccess_48.png">
+      <Link>Resources\FileXmlSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlWarning_16.png">
+      <Link>Resources\FileXmlWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlWarning_24.png">
+      <Link>Resources\FileXmlWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlWarning_32.png">
+      <Link>Resources\FileXmlWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXmlWarning_48.png">
+      <Link>Resources\FileXmlWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXml_16.png">
+      <Link>Resources\FileXml_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXml_24.png">
+      <Link>Resources\FileXml_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXml_32.png">
+      <Link>Resources\FileXml_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FileXml_48.png">
+      <Link>Resources\FileXml_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\File_16.png">
+      <Link>Resources\File_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\File_24.png">
+      <Link>Resources\File_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\File_32.png">
+      <Link>Resources\File_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\File_48.png">
+      <Link>Resources\File_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripNarrow_16.png">
+      <Link>Resources\FilmstripNarrow_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripNarrow_24.png">
+      <Link>Resources\FilmstripNarrow_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripNarrow_32.png">
+      <Link>Resources\FilmstripNarrow_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripNarrow_48.png">
+      <Link>Resources\FilmstripNarrow_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripWide_16.png">
+      <Link>Resources\FilmstripWide_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripWide_24.png">
+      <Link>Resources\FilmstripWide_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripWide_32.png">
+      <Link>Resources\FilmstripWide_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FilmstripWide_48.png">
+      <Link>Resources\FilmstripWide_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Filter_16.png">
+      <Link>Resources\Filter_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Filter_24.png">
+      <Link>Resources\Filter_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Filter_32.png">
+      <Link>Resources\Filter_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Filter_48.png">
+      <Link>Resources\Filter_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindNext_16.png">
+      <Link>Resources\FindNext_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindNext_24.png">
+      <Link>Resources\FindNext_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindNext_32.png">
+      <Link>Resources\FindNext_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindNext_48.png">
+      <Link>Resources\FindNext_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindPrevious_16.png">
+      <Link>Resources\FindPrevious_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindPrevious_24.png">
+      <Link>Resources\FindPrevious_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindPrevious_32.png">
+      <Link>Resources\FindPrevious_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FindPrevious_48.png">
+      <Link>Resources\FindPrevious_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Find_16.png">
+      <Link>Resources\Find_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Find_24.png">
+      <Link>Resources\Find_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Find_32.png">
+      <Link>Resources\Find_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Find_48.png">
+      <Link>Resources\Find_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedClock_16.png">
+      <Link>Resources\FolderClosedClock_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedClock_24.png">
+      <Link>Resources\FolderClosedClock_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedClock_32.png">
+      <Link>Resources\FolderClosedClock_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedClock_48.png">
+      <Link>Resources\FolderClosedClock_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedComment_16.png">
+      <Link>Resources\FolderClosedComment_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedComment_24.png">
+      <Link>Resources\FolderClosedComment_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedComment_32.png">
+      <Link>Resources\FolderClosedComment_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedComment_48.png">
+      <Link>Resources\FolderClosedComment_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedGlobe_16.png">
+      <Link>Resources\FolderClosedGlobe_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedGlobe_24.png">
+      <Link>Resources\FolderClosedGlobe_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedGlobe_32.png">
+      <Link>Resources\FolderClosedGlobe_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedGlobe_48.png">
+      <Link>Resources\FolderClosedGlobe_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayBlue_16.png">
+      <Link>Resources\FolderClosedPlayBlue_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayBlue_24.png">
+      <Link>Resources\FolderClosedPlayBlue_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayBlue_32.png">
+      <Link>Resources\FolderClosedPlayBlue_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayBlue_48.png">
+      <Link>Resources\FolderClosedPlayBlue_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayGreen_16.png">
+      <Link>Resources\FolderClosedPlayGreen_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayGreen_24.png">
+      <Link>Resources\FolderClosedPlayGreen_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayGreen_32.png">
+      <Link>Resources\FolderClosedPlayGreen_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedPlayGreen_48.png">
+      <Link>Resources\FolderClosedPlayGreen_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedTask_16.png">
+      <Link>Resources\FolderClosedTask_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedTask_24.png">
+      <Link>Resources\FolderClosedTask_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedTask_32.png">
+      <Link>Resources\FolderClosedTask_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedTask_48.png">
+      <Link>Resources\FolderClosedTask_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedUser_16.png">
+      <Link>Resources\FolderClosedUser_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedUser_24.png">
+      <Link>Resources\FolderClosedUser_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedUser_32.png">
+      <Link>Resources\FolderClosedUser_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedUser_48.png">
+      <Link>Resources\FolderClosedUser_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedVideo_16.png">
+      <Link>Resources\FolderClosedVideo_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedVideo_24.png">
+      <Link>Resources\FolderClosedVideo_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedVideo_32.png">
+      <Link>Resources\FolderClosedVideo_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedVideo_48.png">
+      <Link>Resources\FolderClosedVideo_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedXml_16.png">
+      <Link>Resources\FolderClosedXml_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedXml_24.png">
+      <Link>Resources\FolderClosedXml_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedXml_32.png">
+      <Link>Resources\FolderClosedXml_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosedXml_48.png">
+      <Link>Resources\FolderClosedXml_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosed_16.png">
+      <Link>Resources\FolderClosed_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosed_24.png">
+      <Link>Resources\FolderClosed_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosed_32.png">
+      <Link>Resources\FolderClosed_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderClosed_48.png">
+      <Link>Resources\FolderClosed_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenClock_16.png">
+      <Link>Resources\FolderOpenClock_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenClock_24.png">
+      <Link>Resources\FolderOpenClock_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenClock_32.png">
+      <Link>Resources\FolderOpenClock_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenClock_48.png">
+      <Link>Resources\FolderOpenClock_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenComment_16.png">
+      <Link>Resources\FolderOpenComment_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenComment_24.png">
+      <Link>Resources\FolderOpenComment_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenComment_32.png">
+      <Link>Resources\FolderOpenComment_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenComment_48.png">
+      <Link>Resources\FolderOpenComment_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenGlobe_16.png">
+      <Link>Resources\FolderOpenGlobe_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenGlobe_24.png">
+      <Link>Resources\FolderOpenGlobe_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenGlobe_32.png">
+      <Link>Resources\FolderOpenGlobe_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenGlobe_48.png">
+      <Link>Resources\FolderOpenGlobe_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayBlue_16.png">
+      <Link>Resources\FolderOpenPlayBlue_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayBlue_24.png">
+      <Link>Resources\FolderOpenPlayBlue_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayBlue_32.png">
+      <Link>Resources\FolderOpenPlayBlue_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayBlue_48.png">
+      <Link>Resources\FolderOpenPlayBlue_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayGreen_16.png">
+      <Link>Resources\FolderOpenPlayGreen_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayGreen_24.png">
+      <Link>Resources\FolderOpenPlayGreen_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayGreen_32.png">
+      <Link>Resources\FolderOpenPlayGreen_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenPlayGreen_48.png">
+      <Link>Resources\FolderOpenPlayGreen_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenTask_16.png">
+      <Link>Resources\FolderOpenTask_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenTask_24.png">
+      <Link>Resources\FolderOpenTask_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenTask_32.png">
+      <Link>Resources\FolderOpenTask_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenTask_48.png">
+      <Link>Resources\FolderOpenTask_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenUser_16.png">
+      <Link>Resources\FolderOpenUser_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenUser_24.png">
+      <Link>Resources\FolderOpenUser_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenUser_32.png">
+      <Link>Resources\FolderOpenUser_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenUser_48.png">
+      <Link>Resources\FolderOpenUser_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenVideo_16.png">
+      <Link>Resources\FolderOpenVideo_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenVideo_24.png">
+      <Link>Resources\FolderOpenVideo_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenVideo_32.png">
+      <Link>Resources\FolderOpenVideo_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenVideo_48.png">
+      <Link>Resources\FolderOpenVideo_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenXml_16.png">
+      <Link>Resources\FolderOpenXml_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenXml_24.png">
+      <Link>Resources\FolderOpenXml_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenXml_32.png">
+      <Link>Resources\FolderOpenXml_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpenXml_48.png">
+      <Link>Resources\FolderOpenXml_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpen_16.png">
+      <Link>Resources\FolderOpen_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpen_24.png">
+      <Link>Resources\FolderOpen_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpen_32.png">
+      <Link>Resources\FolderOpen_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\FolderOpen_48.png">
+      <Link>Resources\FolderOpen_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeBrowse_16.png">
+      <Link>Resources\GlobeBrowse_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeBrowse_24.png">
+      <Link>Resources\GlobeBrowse_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeBrowse_32.png">
+      <Link>Resources\GlobeBrowse_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeBrowse_48.png">
+      <Link>Resources\GlobeBrowse_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeCanceled_16.png">
+      <Link>Resources\GlobeCanceled_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeCanceled_24.png">
+      <Link>Resources\GlobeCanceled_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeCanceled_32.png">
+      <Link>Resources\GlobeCanceled_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeCanceled_48.png">
+      <Link>Resources\GlobeCanceled_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeClock_16.png">
+      <Link>Resources\GlobeClock_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeClock_24.png">
+      <Link>Resources\GlobeClock_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeClock_32.png">
+      <Link>Resources\GlobeClock_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeClock_48.png">
+      <Link>Resources\GlobeClock_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeConsole_16.png">
+      <Link>Resources\GlobeConsole_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeConsole_24.png">
+      <Link>Resources\GlobeConsole_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeConsole_32.png">
+      <Link>Resources\GlobeConsole_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeConsole_48.png">
+      <Link>Resources\GlobeConsole_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeDownload_16.png">
+      <Link>Resources\GlobeDownload_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeDownload_24.png">
+      <Link>Resources\GlobeDownload_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeDownload_32.png">
+      <Link>Resources\GlobeDownload_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeDownload_48.png">
+      <Link>Resources\GlobeDownload_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeEnvelope_16.png">
+      <Link>Resources\GlobeEnvelope_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeEnvelope_24.png">
+      <Link>Resources\GlobeEnvelope_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeEnvelope_32.png">
+      <Link>Resources\GlobeEnvelope_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeEnvelope_48.png">
+      <Link>Resources\GlobeEnvelope_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeError_16.png">
+      <Link>Resources\GlobeError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeError_24.png">
+      <Link>Resources\GlobeError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeError_32.png">
+      <Link>Resources\GlobeError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeError_48.png">
+      <Link>Resources\GlobeError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeLab_16.png">
+      <Link>Resources\GlobeLab_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeLab_24.png">
+      <Link>Resources\GlobeLab_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeLab_32.png">
+      <Link>Resources\GlobeLab_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeLab_48.png">
+      <Link>Resources\GlobeLab_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeNode_16.png">
+      <Link>Resources\GlobeNode_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeNode_24.png">
+      <Link>Resources\GlobeNode_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeNode_32.png">
+      <Link>Resources\GlobeNode_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeNode_48.png">
+      <Link>Resources\GlobeNode_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeObject_16.png">
+      <Link>Resources\GlobeObject_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeObject_24.png">
+      <Link>Resources\GlobeObject_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeObject_32.png">
+      <Link>Resources\GlobeObject_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeObject_48.png">
+      <Link>Resources\GlobeObject_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayPause_16.png">
+      <Link>Resources\GlobePlayPause_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayPause_24.png">
+      <Link>Resources\GlobePlayPause_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayPause_32.png">
+      <Link>Resources\GlobePlayPause_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayPause_48.png">
+      <Link>Resources\GlobePlayPause_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStart_16.png">
+      <Link>Resources\GlobePlayStart_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStart_24.png">
+      <Link>Resources\GlobePlayStart_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStart_32.png">
+      <Link>Resources\GlobePlayStart_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStart_48.png">
+      <Link>Resources\GlobePlayStart_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStop_16.png">
+      <Link>Resources\GlobePlayStop_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStop_24.png">
+      <Link>Resources\GlobePlayStop_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStop_32.png">
+      <Link>Resources\GlobePlayStop_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePlayStop_48.png">
+      <Link>Resources\GlobePlayStop_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePower_16.png">
+      <Link>Resources\GlobePower_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePower_24.png">
+      <Link>Resources\GlobePower_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePower_32.png">
+      <Link>Resources\GlobePower_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobePower_48.png">
+      <Link>Resources\GlobePower_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeQuestion_16.png">
+      <Link>Resources\GlobeQuestion_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeQuestion_24.png">
+      <Link>Resources\GlobeQuestion_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeQuestion_32.png">
+      <Link>Resources\GlobeQuestion_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeQuestion_48.png">
+      <Link>Resources\GlobeQuestion_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSchema_16.png">
+      <Link>Resources\GlobeSchema_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSchema_24.png">
+      <Link>Resources\GlobeSchema_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSchema_32.png">
+      <Link>Resources\GlobeSchema_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSchema_48.png">
+      <Link>Resources\GlobeSchema_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeScript_16.png">
+      <Link>Resources\GlobeScript_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeScript_24.png">
+      <Link>Resources\GlobeScript_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeScript_32.png">
+      <Link>Resources\GlobeScript_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeScript_48.png">
+      <Link>Resources\GlobeScript_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSettings_16.png">
+      <Link>Resources\GlobeSettings_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSettings_24.png">
+      <Link>Resources\GlobeSettings_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSettings_32.png">
+      <Link>Resources\GlobeSettings_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSettings_48.png">
+      <Link>Resources\GlobeSettings_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeStar_16.png">
+      <Link>Resources\GlobeStar_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeStar_24.png">
+      <Link>Resources\GlobeStar_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeStar_32.png">
+      <Link>Resources\GlobeStar_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeStar_48.png">
+      <Link>Resources\GlobeStar_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSuccess_16.png">
+      <Link>Resources\GlobeSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSuccess_24.png">
+      <Link>Resources\GlobeSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSuccess_32.png">
+      <Link>Resources\GlobeSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeSuccess_48.png">
+      <Link>Resources\GlobeSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTag_16.png">
+      <Link>Resources\GlobeTag_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTag_24.png">
+      <Link>Resources\GlobeTag_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTag_32.png">
+      <Link>Resources\GlobeTag_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTag_48.png">
+      <Link>Resources\GlobeTag_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTask_16.png">
+      <Link>Resources\GlobeTask_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTask_24.png">
+      <Link>Resources\GlobeTask_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTask_32.png">
+      <Link>Resources\GlobeTask_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeTask_48.png">
+      <Link>Resources\GlobeTask_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUpload_16.png">
+      <Link>Resources\GlobeUpload_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUpload_24.png">
+      <Link>Resources\GlobeUpload_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUpload_32.png">
+      <Link>Resources\GlobeUpload_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUpload_48.png">
+      <Link>Resources\GlobeUpload_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUser_16.png">
+      <Link>Resources\GlobeUser_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUser_24.png">
+      <Link>Resources\GlobeUser_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUser_32.png">
+      <Link>Resources\GlobeUser_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeUser_48.png">
+      <Link>Resources\GlobeUser_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeWarning_16.png">
+      <Link>Resources\GlobeWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeWarning_24.png">
+      <Link>Resources\GlobeWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeWarning_32.png">
+      <Link>Resources\GlobeWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GlobeWarning_48.png">
+      <Link>Resources\GlobeWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Globe_16.png">
+      <Link>Resources\Globe_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Globe_24.png">
+      <Link>Resources\Globe_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Globe_32.png">
+      <Link>Resources\Globe_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Globe_48.png">
+      <Link>Resources\Globe_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_128.png">
+      <Link>Resources\GraphBarColorUpgrade_128.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_16.png">
+      <Link>Resources\GraphBarColorUpgrade_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_24.png">
+      <Link>Resources\GraphBarColorUpgrade_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_256.png">
+      <Link>Resources\GraphBarColorUpgrade_256.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_32.png">
+      <Link>Resources\GraphBarColorUpgrade_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_48.png">
+      <Link>Resources\GraphBarColorUpgrade_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_64.png">
+      <Link>Resources\GraphBarColorUpgrade_64.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColorUpgrade_96.png">
+      <Link>Resources\GraphBarColorUpgrade_96.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_128.png">
+      <Link>Resources\GraphBarColor_128.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_16.png">
+      <Link>Resources\GraphBarColor_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_24.png">
+      <Link>Resources\GraphBarColor_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_256.png">
+      <Link>Resources\GraphBarColor_256.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_32.png">
+      <Link>Resources\GraphBarColor_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_48.png">
+      <Link>Resources\GraphBarColor_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_64.png">
+      <Link>Resources\GraphBarColor_64.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBarColor_96.png">
+      <Link>Resources\GraphBarColor_96.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBar_16.png">
+      <Link>Resources\GraphBar_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBar_24.png">
+      <Link>Resources\GraphBar_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBar_32.png">
+      <Link>Resources\GraphBar_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphBar_48.png">
+      <Link>Resources\GraphBar_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphLine_16.png">
+      <Link>Resources\GraphLine_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphLine_24.png">
+      <Link>Resources\GraphLine_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphLine_32.png">
+      <Link>Resources\GraphLine_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\GraphLine_48.png">
+      <Link>Resources\GraphLine_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderAdd_16.png">
+      <Link>Resources\HeaderAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderAdd_24.png">
+      <Link>Resources\HeaderAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderAdd_32.png">
+      <Link>Resources\HeaderAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderAdd_48.png">
+      <Link>Resources\HeaderAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderRemove_16.png">
+      <Link>Resources\HeaderRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderRemove_24.png">
+      <Link>Resources\HeaderRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderRemove_32.png">
+      <Link>Resources\HeaderRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HeaderRemove_48.png">
+      <Link>Resources\HeaderRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Header_16.png">
+      <Link>Resources\Header_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Header_24.png">
+      <Link>Resources\Header_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Header_32.png">
+      <Link>Resources\Header_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Header_48.png">
+      <Link>Resources\Header_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HotSpot_16.png">
+      <Link>Resources\HotSpot_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HotSpot_24.png">
+      <Link>Resources\HotSpot_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HotSpot_32.png">
+      <Link>Resources\HotSpot_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\HotSpot_48.png">
+      <Link>Resources\HotSpot_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Import_16.png">
+      <Link>Resources\Import_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Import_24.png">
+      <Link>Resources\Import_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Import_32.png">
+      <Link>Resources\Import_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Import_48.png">
+      <Link>Resources\Import_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Information_16.png">
+      <Link>Resources\Information_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Information_24.png">
+      <Link>Resources\Information_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Information_32.png">
+      <Link>Resources\Information_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Information_48.png">
+      <Link>Resources\Information_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVerticalCube_16.png">
+      <Link>Resources\KeyVerticalCube_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVerticalCube_24.png">
+      <Link>Resources\KeyVerticalCube_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVerticalCube_32.png">
+      <Link>Resources\KeyVerticalCube_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVerticalCube_48.png">
+      <Link>Resources\KeyVerticalCube_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVertical_16.png">
+      <Link>Resources\KeyVertical_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVertical_24.png">
+      <Link>Resources\KeyVertical_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVertical_32.png">
+      <Link>Resources\KeyVertical_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\KeyVertical_48.png">
+      <Link>Resources\KeyVertical_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Like_16.png">
+      <Link>Resources\Like_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Like_24.png">
+      <Link>Resources\Like_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Like_32.png">
+      <Link>Resources\Like_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Like_48.png">
+      <Link>Resources\Like_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Link_16.png">
+      <Link>Resources\Link_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Link_24.png">
+      <Link>Resources\Link_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Link_32.png">
+      <Link>Resources\Link_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Link_48.png">
+      <Link>Resources\Link_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogClock_16.png">
+      <Link>Resources\LogClock_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogClock_24.png">
+      <Link>Resources\LogClock_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogClock_32.png">
+      <Link>Resources\LogClock_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogClock_48.png">
+      <Link>Resources\LogClock_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogError_16.png">
+      <Link>Resources\LogError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogError_24.png">
+      <Link>Resources\LogError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogError_32.png">
+      <Link>Resources\LogError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogError_48.png">
+      <Link>Resources\LogError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogSuccess_16.png">
+      <Link>Resources\LogSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogSuccess_24.png">
+      <Link>Resources\LogSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogSuccess_32.png">
+      <Link>Resources\LogSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogSuccess_48.png">
+      <Link>Resources\LogSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogWarning_16.png">
+      <Link>Resources\LogWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogWarning_24.png">
+      <Link>Resources\LogWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogWarning_32.png">
+      <Link>Resources\LogWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\LogWarning_48.png">
+      <Link>Resources\LogWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Log_16.png">
+      <Link>Resources\Log_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Log_24.png">
+      <Link>Resources\Log_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Log_32.png">
+      <Link>Resources\Log_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Log_48.png">
+      <Link>Resources\Log_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\MapExport_16.png">
+      <Link>Resources\MapExport_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\MapExport_24.png">
+      <Link>Resources\MapExport_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\MapExport_32.png">
+      <Link>Resources\MapExport_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\MapExport_48.png">
+      <Link>Resources\MapExport_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Map_16.png">
+      <Link>Resources\Map_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Map_24.png">
+      <Link>Resources\Map_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Map_32.png">
+      <Link>Resources\Map_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Map_48.png">
+      <Link>Resources\Map_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Message_16.png">
+      <Link>Resources\Message_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Message_24.png">
+      <Link>Resources\Message_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Message_32.png">
+      <Link>Resources\Message_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Message_48.png">
+      <Link>Resources\Message_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeAdd_16.png">
+      <Link>Resources\NodeAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeAdd_24.png">
+      <Link>Resources\NodeAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeAdd_32.png">
+      <Link>Resources\NodeAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeAdd_48.png">
+      <Link>Resources\NodeAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeError_16.png">
+      <Link>Resources\NodeLargeError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeError_24.png">
+      <Link>Resources\NodeLargeError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeError_32.png">
+      <Link>Resources\NodeLargeError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeError_48.png">
+      <Link>Resources\NodeLargeError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeFloppy_16.png">
+      <Link>Resources\NodeLargeFloppy_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeFloppy_24.png">
+      <Link>Resources\NodeLargeFloppy_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeFloppy_32.png">
+      <Link>Resources\NodeLargeFloppy_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeFloppy_48.png">
+      <Link>Resources\NodeLargeFloppy_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeQuestion_16.png">
+      <Link>Resources\NodeLargeQuestion_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeQuestion_24.png">
+      <Link>Resources\NodeLargeQuestion_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeQuestion_32.png">
+      <Link>Resources\NodeLargeQuestion_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeQuestion_48.png">
+      <Link>Resources\NodeLargeQuestion_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeSuccess_16.png">
+      <Link>Resources\NodeLargeSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeSuccess_24.png">
+      <Link>Resources\NodeLargeSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeSuccess_32.png">
+      <Link>Resources\NodeLargeSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeSuccess_48.png">
+      <Link>Resources\NodeLargeSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeWarning_16.png">
+      <Link>Resources\NodeLargeWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeWarning_24.png">
+      <Link>Resources\NodeLargeWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeWarning_32.png">
+      <Link>Resources\NodeLargeWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLargeWarning_48.png">
+      <Link>Resources\NodeLargeWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLarge_16.png">
+      <Link>Resources\NodeLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLarge_24.png">
+      <Link>Resources\NodeLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLarge_32.png">
+      <Link>Resources\NodeLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeLarge_48.png">
+      <Link>Resources\NodeLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeMedium_16.png">
+      <Link>Resources\NodeMedium_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeMedium_24.png">
+      <Link>Resources\NodeMedium_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeMedium_32.png">
+      <Link>Resources\NodeMedium_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeMedium_48.png">
+      <Link>Resources\NodeMedium_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeRemove_16.png">
+      <Link>Resources\NodeRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeRemove_24.png">
+      <Link>Resources\NodeRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeRemove_32.png">
+      <Link>Resources\NodeRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeRemove_48.png">
+      <Link>Resources\NodeRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeSmall_16.png">
+      <Link>Resources\NodeSmall_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeSmall_24.png">
+      <Link>Resources\NodeSmall_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeSmall_32.png">
+      <Link>Resources\NodeSmall_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NodeSmall_48.png">
+      <Link>Resources\NodeSmall_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallAdd_16.png">
+      <Link>Resources\ObjectSmallAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallAdd_24.png">
+      <Link>Resources\ObjectSmallAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallAdd_32.png">
+      <Link>Resources\ObjectSmallAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallAdd_48.png">
+      <Link>Resources\ObjectSmallAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallId_16.png">
+      <Link>Resources\ObjectSmallId_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallId_24.png">
+      <Link>Resources\ObjectSmallId_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallId_32.png">
+      <Link>Resources\ObjectSmallId_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallId_48.png">
+      <Link>Resources\ObjectSmallId_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallRemove_16.png">
+      <Link>Resources\ObjectSmallRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallRemove_24.png">
+      <Link>Resources\ObjectSmallRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallRemove_32.png">
+      <Link>Resources\ObjectSmallRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ObjectSmallRemove_48.png">
+      <Link>Resources\ObjectSmallRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Object_16.png">
+      <Link>Resources\Object_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Object_24.png">
+      <Link>Resources\Object_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Object_32.png">
+      <Link>Resources\Object_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Object_48.png">
+      <Link>Resources\Object_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Open_16.png">
+      <Link>Resources\Open_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Open_24.png">
+      <Link>Resources\Open_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Open_32.png">
+      <Link>Resources\Open_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Open_48.png">
+      <Link>Resources\Open_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterAdd_16.png">
+      <Link>Resources\ParameterAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterAdd_24.png">
+      <Link>Resources\ParameterAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterAdd_32.png">
+      <Link>Resources\ParameterAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterAdd_48.png">
+      <Link>Resources\ParameterAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterRemove_16.png">
+      <Link>Resources\ParameterRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterRemove_24.png">
+      <Link>Resources\ParameterRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterRemove_32.png">
+      <Link>Resources\ParameterRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ParameterRemove_48.png">
+      <Link>Resources\ParameterRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Parameter_16.png">
+      <Link>Resources\Parameter_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Parameter_24.png">
+      <Link>Resources\Parameter_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Parameter_32.png">
+      <Link>Resources\Parameter_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Parameter_48.png">
+      <Link>Resources\Parameter_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PasswordChange_16.png">
+      <Link>Resources\PasswordChange_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PasswordChange_24.png">
+      <Link>Resources\PasswordChange_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PasswordChange_32.png">
+      <Link>Resources\PasswordChange_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PasswordChange_48.png">
+      <Link>Resources\PasswordChange_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Password_16.png">
+      <Link>Resources\Password_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Password_24.png">
+      <Link>Resources\Password_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Password_32.png">
+      <Link>Resources\Password_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Password_48.png">
+      <Link>Resources\Password_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeLarge_16.png">
+      <Link>Resources\PickAxeLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeLarge_24.png">
+      <Link>Resources\PickAxeLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeLarge_32.png">
+      <Link>Resources\PickAxeLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeLarge_48.png">
+      <Link>Resources\PickAxeLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeSmall_16.png">
+      <Link>Resources\PickAxeSmall_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeSmall_24.png">
+      <Link>Resources\PickAxeSmall_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeSmall_32.png">
+      <Link>Resources\PickAxeSmall_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PickAxeSmall_48.png">
+      <Link>Resources\PickAxeSmall_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayPause_16.png">
+      <Link>Resources\PlayPause_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayPause_24.png">
+      <Link>Resources\PlayPause_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayPause_32.png">
+      <Link>Resources\PlayPause_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayPause_48.png">
+      <Link>Resources\PlayPause_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStart_16.png">
+      <Link>Resources\PlayStart_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStart_24.png">
+      <Link>Resources\PlayStart_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStart_32.png">
+      <Link>Resources\PlayStart_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStart_48.png">
+      <Link>Resources\PlayStart_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStop_16.png">
+      <Link>Resources\PlayStop_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStop_24.png">
+      <Link>Resources\PlayStop_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStop_32.png">
+      <Link>Resources\PlayStop_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PlayStop_48.png">
+      <Link>Resources\PlayStop_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Properties_16.png">
+      <Link>Resources\Properties_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Properties_24.png">
+      <Link>Resources\Properties_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Properties_32.png">
+      <Link>Resources\Properties_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Properties_48.png">
+      <Link>Resources\Properties_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinError_16.png">
+      <Link>Resources\PushPinError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinError_24.png">
+      <Link>Resources\PushPinError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinError_32.png">
+      <Link>Resources\PushPinError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinError_48.png">
+      <Link>Resources\PushPinError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinSuccess_16.png">
+      <Link>Resources\PushPinSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinSuccess_24.png">
+      <Link>Resources\PushPinSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinSuccess_32.png">
+      <Link>Resources\PushPinSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPinSuccess_48.png">
+      <Link>Resources\PushPinSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPin_16.png">
+      <Link>Resources\PushPin_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPin_24.png">
+      <Link>Resources\PushPin_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPin_32.png">
+      <Link>Resources\PushPin_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\PushPin_48.png">
+      <Link>Resources\PushPin_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryDatabase_16.png">
+      <Link>Resources\QueryDatabase_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryDatabase_24.png">
+      <Link>Resources\QueryDatabase_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryDatabase_32.png">
+      <Link>Resources\QueryDatabase_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryDatabase_48.png">
+      <Link>Resources\QueryDatabase_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStart_16.png">
+      <Link>Resources\QueryStart_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStart_24.png">
+      <Link>Resources\QueryStart_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStart_32.png">
+      <Link>Resources\QueryStart_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStart_48.png">
+      <Link>Resources\QueryStart_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStop_16.png">
+      <Link>Resources\QueryStop_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStop_24.png">
+      <Link>Resources\QueryStop_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStop_32.png">
+      <Link>Resources\QueryStop_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\QueryStop_48.png">
+      <Link>Resources\QueryStop_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Question_16.png">
+      <Link>Resources\Question_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Question_24.png">
+      <Link>Resources\Question_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Question_32.png">
+      <Link>Resources\Question_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Question_48.png">
+      <Link>Resources\Question_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Refresh_16.png">
+      <Link>Resources\Refresh_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Refresh_24.png">
+      <Link>Resources\Refresh_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Refresh_32.png">
+      <Link>Resources\Refresh_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Refresh_48.png">
+      <Link>Resources\Refresh_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Relationship_16.png">
+      <Link>Resources\Relationship_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Relationship_24.png">
+      <Link>Resources\Relationship_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Relationship_32.png">
+      <Link>Resources\Relationship_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Relationship_48.png">
+      <Link>Resources\Relationship_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStart_16.png">
+      <Link>Resources\RunConcurrentStart_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStart_24.png">
+      <Link>Resources\RunConcurrentStart_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStart_32.png">
+      <Link>Resources\RunConcurrentStart_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStart_48.png">
+      <Link>Resources\RunConcurrentStart_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStop_16.png">
+      <Link>Resources\RunConcurrentStop_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStop_24.png">
+      <Link>Resources\RunConcurrentStop_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStop_32.png">
+      <Link>Resources\RunConcurrentStop_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RunConcurrentStop_48.png">
+      <Link>Resources\RunConcurrentStop_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SaveAll_16.png">
+      <Link>Resources\SaveAll_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SaveAll_24.png">
+      <Link>Resources\SaveAll_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SaveAll_32.png">
+      <Link>Resources\SaveAll_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SaveAll_48.png">
+      <Link>Resources\SaveAll_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Save_16.png">
+      <Link>Resources\Save_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Save_24.png">
+      <Link>Resources\Save_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Save_32.png">
+      <Link>Resources\Save_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Save_48.png">
+      <Link>Resources\Save_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SchemaView_16.png">
+      <Link>Resources\SchemaView_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SchemaView_24.png">
+      <Link>Resources\SchemaView_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SchemaView_32.png">
+      <Link>Resources\SchemaView_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SchemaView_48.png">
+      <Link>Resources\SchemaView_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptError_16.png">
+      <Link>Resources\ScriptError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptError_24.png">
+      <Link>Resources\ScriptError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptError_32.png">
+      <Link>Resources\ScriptError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptError_48.png">
+      <Link>Resources\ScriptError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeAdd_16.png">
+      <Link>Resources\ScriptLargeAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeAdd_24.png">
+      <Link>Resources\ScriptLargeAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeAdd_32.png">
+      <Link>Resources\ScriptLargeAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeAdd_48.png">
+      <Link>Resources\ScriptLargeAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeRemove_16.png">
+      <Link>Resources\ScriptLargeRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeRemove_24.png">
+      <Link>Resources\ScriptLargeRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeRemove_32.png">
+      <Link>Resources\ScriptLargeRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLargeRemove_48.png">
+      <Link>Resources\ScriptLargeRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLarge_16.png">
+      <Link>Resources\ScriptLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLarge_24.png">
+      <Link>Resources\ScriptLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLarge_32.png">
+      <Link>Resources\ScriptLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptLarge_48.png">
+      <Link>Resources\ScriptLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptMedium_16.png">
+      <Link>Resources\ScriptMedium_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptMedium_24.png">
+      <Link>Resources\ScriptMedium_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptMedium_32.png">
+      <Link>Resources\ScriptMedium_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptMedium_48.png">
+      <Link>Resources\ScriptMedium_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSmall_16.png">
+      <Link>Resources\ScriptSmall_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSmall_24.png">
+      <Link>Resources\ScriptSmall_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSmall_32.png">
+      <Link>Resources\ScriptSmall_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSmall_48.png">
+      <Link>Resources\ScriptSmall_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSuccess_16.png">
+      <Link>Resources\ScriptSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSuccess_24.png">
+      <Link>Resources\ScriptSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSuccess_32.png">
+      <Link>Resources\ScriptSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptSuccess_48.png">
+      <Link>Resources\ScriptSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptWarning_16.png">
+      <Link>Resources\ScriptWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptWarning_24.png">
+      <Link>Resources\ScriptWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptWarning_32.png">
+      <Link>Resources\ScriptWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ScriptWarning_48.png">
+      <Link>Resources\ScriptWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SelectAll_16.png">
+      <Link>Resources\SelectAll_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SelectAll_24.png">
+      <Link>Resources\SelectAll_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SelectAll_32.png">
+      <Link>Resources\SelectAll_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SelectAll_48.png">
+      <Link>Resources\SelectAll_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerAdd_16.png">
+      <Link>Resources\ServerAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerAdd_24.png">
+      <Link>Resources\ServerAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerAdd_32.png">
+      <Link>Resources\ServerAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerAdd_48.png">
+      <Link>Resources\ServerAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBrowse_16.png">
+      <Link>Resources\ServerBrowse_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBrowse_24.png">
+      <Link>Resources\ServerBrowse_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBrowse_32.png">
+      <Link>Resources\ServerBrowse_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBrowse_48.png">
+      <Link>Resources\ServerBrowse_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBusy_16.png">
+      <Link>Resources\ServerBusy_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBusy_24.png">
+      <Link>Resources\ServerBusy_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBusy_32.png">
+      <Link>Resources\ServerBusy_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerBusy_48.png">
+      <Link>Resources\ServerBusy_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerCube_16.png">
+      <Link>Resources\ServerCube_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerCube_24.png">
+      <Link>Resources\ServerCube_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerCube_32.png">
+      <Link>Resources\ServerCube_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerCube_48.png">
+      <Link>Resources\ServerCube_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDatabase_16.png">
+      <Link>Resources\ServerDatabase_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDatabase_24.png">
+      <Link>Resources\ServerDatabase_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDatabase_32.png">
+      <Link>Resources\ServerDatabase_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDatabase_48.png">
+      <Link>Resources\ServerDatabase_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDown_16.png">
+      <Link>Resources\ServerDown_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDown_24.png">
+      <Link>Resources\ServerDown_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDown_32.png">
+      <Link>Resources\ServerDown_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerDown_48.png">
+      <Link>Resources\ServerDown_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerError_16.png">
+      <Link>Resources\ServerError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerError_24.png">
+      <Link>Resources\ServerError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerError_32.png">
+      <Link>Resources\ServerError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerError_48.png">
+      <Link>Resources\ServerError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerGlobe_16.png">
+      <Link>Resources\ServerGlobe_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerGlobe_24.png">
+      <Link>Resources\ServerGlobe_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerGlobe_32.png">
+      <Link>Resources\ServerGlobe_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerGlobe_48.png">
+      <Link>Resources\ServerGlobe_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerInformation_16.png">
+      <Link>Resources\ServerInformation_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerInformation_24.png">
+      <Link>Resources\ServerInformation_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerInformation_32.png">
+      <Link>Resources\ServerInformation_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerInformation_48.png">
+      <Link>Resources\ServerInformation_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerRemove_16.png">
+      <Link>Resources\ServerRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerRemove_24.png">
+      <Link>Resources\ServerRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerRemove_32.png">
+      <Link>Resources\ServerRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerRemove_48.png">
+      <Link>Resources\ServerRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersBrowse_16.png">
+      <Link>Resources\ServersBrowse_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersBrowse_24.png">
+      <Link>Resources\ServersBrowse_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersBrowse_32.png">
+      <Link>Resources\ServersBrowse_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersBrowse_48.png">
+      <Link>Resources\ServersBrowse_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersCube_16.png">
+      <Link>Resources\ServersCube_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersCube_24.png">
+      <Link>Resources\ServersCube_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersCube_32.png">
+      <Link>Resources\ServersCube_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersCube_48.png">
+      <Link>Resources\ServersCube_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersDatabase_16.png">
+      <Link>Resources\ServersDatabase_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersDatabase_24.png">
+      <Link>Resources\ServersDatabase_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersDatabase_32.png">
+      <Link>Resources\ServersDatabase_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersDatabase_48.png">
+      <Link>Resources\ServersDatabase_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersGlobe_16.png">
+      <Link>Resources\ServersGlobe_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersGlobe_24.png">
+      <Link>Resources\ServersGlobe_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersGlobe_32.png">
+      <Link>Resources\ServersGlobe_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersGlobe_48.png">
+      <Link>Resources\ServersGlobe_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerStar_16.png">
+      <Link>Resources\ServerStar_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerStar_24.png">
+      <Link>Resources\ServerStar_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerStar_32.png">
+      <Link>Resources\ServerStar_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerStar_48.png">
+      <Link>Resources\ServerStar_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersToolbox_16.png">
+      <Link>Resources\ServersToolbox_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersToolbox_24.png">
+      <Link>Resources\ServersToolbox_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersToolbox_32.png">
+      <Link>Resources\ServersToolbox_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersToolbox_48.png">
+      <Link>Resources\ServersToolbox_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerSuccess_16.png">
+      <Link>Resources\ServerSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerSuccess_24.png">
+      <Link>Resources\ServerSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerSuccess_32.png">
+      <Link>Resources\ServerSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerSuccess_48.png">
+      <Link>Resources\ServerSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersVideo_16.png">
+      <Link>Resources\ServersVideo_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersVideo_24.png">
+      <Link>Resources\ServersVideo_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersVideo_32.png">
+      <Link>Resources\ServersVideo_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServersVideo_48.png">
+      <Link>Resources\ServersVideo_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Servers_16.png">
+      <Link>Resources\Servers_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Servers_24.png">
+      <Link>Resources\Servers_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Servers_32.png">
+      <Link>Resources\Servers_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Servers_48.png">
+      <Link>Resources\Servers_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerTask_16.png">
+      <Link>Resources\ServerTask_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerTask_24.png">
+      <Link>Resources\ServerTask_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerTask_32.png">
+      <Link>Resources\ServerTask_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerTask_48.png">
+      <Link>Resources\ServerTask_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerToolbox_16.png">
+      <Link>Resources\ServerToolbox_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerToolbox_24.png">
+      <Link>Resources\ServerToolbox_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerToolbox_32.png">
+      <Link>Resources\ServerToolbox_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerToolbox_48.png">
+      <Link>Resources\ServerToolbox_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerUp_16.png">
+      <Link>Resources\ServerUp_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerUp_24.png">
+      <Link>Resources\ServerUp_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerUp_32.png">
+      <Link>Resources\ServerUp_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerUp_48.png">
+      <Link>Resources\ServerUp_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerVideo_16.png">
+      <Link>Resources\ServerVideo_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerVideo_24.png">
+      <Link>Resources\ServerVideo_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerVideo_32.png">
+      <Link>Resources\ServerVideo_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerVideo_48.png">
+      <Link>Resources\ServerVideo_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWarning_16.png">
+      <Link>Resources\ServerWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWarning_24.png">
+      <Link>Resources\ServerWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWarning_32.png">
+      <Link>Resources\ServerWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWarning_48.png">
+      <Link>Resources\ServerWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWeb_16.png">
+      <Link>Resources\ServerWeb_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWeb_24.png">
+      <Link>Resources\ServerWeb_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWeb_32.png">
+      <Link>Resources\ServerWeb_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ServerWeb_48.png">
+      <Link>Resources\ServerWeb_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Server_16.png">
+      <Link>Resources\Server_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Server_24.png">
+      <Link>Resources\Server_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Server_32.png">
+      <Link>Resources\Server_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Server_48.png">
+      <Link>Resources\Server_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Settings_16.png">
+      <Link>Resources\Settings_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Settings_24.png">
+      <Link>Resources\Settings_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Settings_32.png">
+      <Link>Resources\Settings_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Settings_48.png">
+      <Link>Resources\Settings_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Star_16.png">
+      <Link>Resources\Star_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Star_24.png">
+      <Link>Resources\Star_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Star_32.png">
+      <Link>Resources\Star_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Star_48.png">
+      <Link>Resources\Star_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Stop_16.png">
+      <Link>Resources\Stop_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Stop_24.png">
+      <Link>Resources\Stop_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Stop_32.png">
+      <Link>Resources\Stop_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Stop_48.png">
+      <Link>Resources\Stop_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SuccessWarning_16.png">
+      <Link>Resources\SuccessWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SuccessWarning_24.png">
+      <Link>Resources\SuccessWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SuccessWarning_32.png">
+      <Link>Resources\SuccessWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\SuccessWarning_48.png">
+      <Link>Resources\SuccessWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Success_16.png">
+      <Link>Resources\Success_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Success_24.png">
+      <Link>Resources\Success_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Success_32.png">
+      <Link>Resources\Success_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Success_48.png">
+      <Link>Resources\Success_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableAdd_16.png">
+      <Link>Resources\TableAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableAdd_24.png">
+      <Link>Resources\TableAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableAdd_32.png">
+      <Link>Resources\TableAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableAdd_48.png">
+      <Link>Resources\TableAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableExport_16.png">
+      <Link>Resources\TableExport_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableExport_24.png">
+      <Link>Resources\TableExport_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableExport_32.png">
+      <Link>Resources\TableExport_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableExport_48.png">
+      <Link>Resources\TableExport_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableImport_16.png">
+      <Link>Resources\TableImport_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableImport_24.png">
+      <Link>Resources\TableImport_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableImport_32.png">
+      <Link>Resources\TableImport_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableImport_48.png">
+      <Link>Resources\TableImport_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableRemove_16.png">
+      <Link>Resources\TableRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableRemove_24.png">
+      <Link>Resources\TableRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableRemove_32.png">
+      <Link>Resources\TableRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableRemove_48.png">
+      <Link>Resources\TableRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableSuccess_16.png">
+      <Link>Resources\TableSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableSuccess_24.png">
+      <Link>Resources\TableSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableSuccess_32.png">
+      <Link>Resources\TableSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableSuccess_48.png">
+      <Link>Resources\TableSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableWarning_16.png">
+      <Link>Resources\TableWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableWarning_24.png">
+      <Link>Resources\TableWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableWarning_32.png">
+      <Link>Resources\TableWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TableWarning_48.png">
+      <Link>Resources\TableWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Table_16.png">
+      <Link>Resources\Table_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Table_24.png">
+      <Link>Resources\Table_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Table_32.png">
+      <Link>Resources\Table_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Table_48.png">
+      <Link>Resources\Table_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskClock_16.png">
+      <Link>Resources\TaskClock_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskClock_24.png">
+      <Link>Resources\TaskClock_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskClock_32.png">
+      <Link>Resources\TaskClock_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskClock_48.png">
+      <Link>Resources\TaskClock_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskLarge_16.png">
+      <Link>Resources\TaskLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskLarge_24.png">
+      <Link>Resources\TaskLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskLarge_32.png">
+      <Link>Resources\TaskLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskLarge_48.png">
+      <Link>Resources\TaskLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskPlay_16.png">
+      <Link>Resources\TaskPlay_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskPlay_24.png">
+      <Link>Resources\TaskPlay_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskPlay_32.png">
+      <Link>Resources\TaskPlay_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskPlay_48.png">
+      <Link>Resources\TaskPlay_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskSmall_16.png">
+      <Link>Resources\TaskSmall_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskSmall_24.png">
+      <Link>Resources\TaskSmall_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskSmall_32.png">
+      <Link>Resources\TaskSmall_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TaskSmall_48.png">
+      <Link>Resources\TaskSmall_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Tasks_16.png">
+      <Link>Resources\Tasks_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Tasks_24.png">
+      <Link>Resources\Tasks_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Tasks_32.png">
+      <Link>Resources\Tasks_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Tasks_48.png">
+      <Link>Resources\Tasks_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestConnectGoto_16.png">
+      <Link>Resources\TestConnectGoto_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestConnectGoto_24.png">
+      <Link>Resources\TestConnectGoto_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestConnectGoto_32.png">
+      <Link>Resources\TestConnectGoto_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestConnectGoto_48.png">
+      <Link>Resources\TestConnectGoto_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestGlobeGoto_16.png">
+      <Link>Resources\TestGlobeGoto_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestGlobeGoto_24.png">
+      <Link>Resources\TestGlobeGoto_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestGlobeGoto_32.png">
+      <Link>Resources\TestGlobeGoto_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestGlobeGoto_48.png">
+      <Link>Resources\TestGlobeGoto_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestsLarge_16.png">
+      <Link>Resources\TestsLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestsLarge_24.png">
+      <Link>Resources\TestsLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestsLarge_32.png">
+      <Link>Resources\TestsLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TestsLarge_48.png">
+      <Link>Resources\TestsLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxAdd_16.png">
+      <Link>Resources\ToolboxAdd_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxAdd_24.png">
+      <Link>Resources\ToolboxAdd_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxAdd_32.png">
+      <Link>Resources\ToolboxAdd_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxAdd_48.png">
+      <Link>Resources\ToolboxAdd_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxLarge_16.png">
+      <Link>Resources\ToolboxLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxLarge_24.png">
+      <Link>Resources\ToolboxLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxLarge_32.png">
+      <Link>Resources\ToolboxLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxLarge_48.png">
+      <Link>Resources\ToolboxLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxMedium_16.png">
+      <Link>Resources\ToolboxMedium_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxMedium_24.png">
+      <Link>Resources\ToolboxMedium_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxMedium_32.png">
+      <Link>Resources\ToolboxMedium_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxMedium_48.png">
+      <Link>Resources\ToolboxMedium_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxPickAxe_16.png">
+      <Link>Resources\ToolboxPickAxe_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxPickAxe_24.png">
+      <Link>Resources\ToolboxPickAxe_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxPickAxe_32.png">
+      <Link>Resources\ToolboxPickAxe_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxPickAxe_48.png">
+      <Link>Resources\ToolboxPickAxe_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxRemove_16.png">
+      <Link>Resources\ToolboxRemove_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxRemove_24.png">
+      <Link>Resources\ToolboxRemove_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxRemove_32.png">
+      <Link>Resources\ToolboxRemove_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxRemove_48.png">
+      <Link>Resources\ToolboxRemove_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxSmall_16.png">
+      <Link>Resources\ToolboxSmall_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxSmall_24.png">
+      <Link>Resources\ToolboxSmall_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxSmall_32.png">
+      <Link>Resources\ToolboxSmall_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxSmall_48.png">
+      <Link>Resources\ToolboxSmall_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxStar_16.png">
+      <Link>Resources\ToolboxStar_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxStar_24.png">
+      <Link>Resources\ToolboxStar_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxStar_32.png">
+      <Link>Resources\ToolboxStar_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxStar_48.png">
+      <Link>Resources\ToolboxStar_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_128.png">
+      <Link>Resources\TopologyColor_128.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_16.png">
+      <Link>Resources\TopologyColor_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_24.png">
+      <Link>Resources\TopologyColor_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_256.png">
+      <Link>Resources\TopologyColor_256.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_32.png">
+      <Link>Resources\TopologyColor_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_48.png">
+      <Link>Resources\TopologyColor_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_64.png">
+      <Link>Resources\TopologyColor_64.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\TopologyColor_96.png">
+      <Link>Resources\TopologyColor_96.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Topology_16.png">
+      <Link>Resources\Topology_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Topology_24.png">
+      <Link>Resources\Topology_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Topology_32.png">
+      <Link>Resources\Topology_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Topology_48.png">
+      <Link>Resources\Topology_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Uncheck_16.png">
+      <Link>Resources\Uncheck_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Uncheck_24.png">
+      <Link>Resources\Uncheck_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Uncheck_32.png">
+      <Link>Resources\Uncheck_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Uncheck_48.png">
+      <Link>Resources\Uncheck_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UndoLarge_16.png">
+      <Link>Resources\UndoLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UndoLarge_24.png">
+      <Link>Resources\UndoLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UndoLarge_32.png">
+      <Link>Resources\UndoLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UndoLarge_48.png">
+      <Link>Resources\UndoLarge_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserError_16.png">
+      <Link>Resources\UserError_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserError_24.png">
+      <Link>Resources\UserError_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserError_32.png">
+      <Link>Resources\UserError_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserError_48.png">
+      <Link>Resources\UserError_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserQuestion_16.png">
+      <Link>Resources\UserQuestion_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserQuestion_24.png">
+      <Link>Resources\UserQuestion_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserQuestion_32.png">
+      <Link>Resources\UserQuestion_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserQuestion_48.png">
+      <Link>Resources\UserQuestion_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserStar_16.png">
+      <Link>Resources\UserStar_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserStar_24.png">
+      <Link>Resources\UserStar_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserStar_32.png">
+      <Link>Resources\UserStar_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserStar_48.png">
+      <Link>Resources\UserStar_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserSuccess_16.png">
+      <Link>Resources\UserSuccess_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserSuccess_24.png">
+      <Link>Resources\UserSuccess_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserSuccess_32.png">
+      <Link>Resources\UserSuccess_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserSuccess_48.png">
+      <Link>Resources\UserSuccess_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserWarning_16.png">
+      <Link>Resources\UserWarning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserWarning_24.png">
+      <Link>Resources\UserWarning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserWarning_32.png">
+      <Link>Resources\UserWarning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\UserWarning_48.png">
+      <Link>Resources\UserWarning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\User_16.png">
+      <Link>Resources\User_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\User_24.png">
+      <Link>Resources\User_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\User_32.png">
+      <Link>Resources\User_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\User_48.png">
+      <Link>Resources\User_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\View_16.png">
+      <Link>Resources\View_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\View_24.png">
+      <Link>Resources\View_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\View_32.png">
+      <Link>Resources\View_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\View_48.png">
+      <Link>Resources\View_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Warning_16.png">
+      <Link>Resources\Warning_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Warning_24.png">
+      <Link>Resources\Warning_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Warning_32.png">
+      <Link>Resources\Warning_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Warning_48.png">
+      <Link>Resources\Warning_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\XmlNamespace_16.png">
+      <Link>Resources\XmlNamespace_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\XmlNamespace_24.png">
+      <Link>Resources\XmlNamespace_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\XmlNamespace_32.png">
+      <Link>Resources\XmlNamespace_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\XmlNamespace_48.png">
+      <Link>Resources\XmlNamespace_48.png</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

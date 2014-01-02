@@ -36,7 +36,6 @@ using InetAnalytics.Controls.Tools;
 using InetAnalytics.Controls.Log;
 using InetAnalytics.Controls.Spiders;
 using InetAnalytics.Controls.PlanetLab;
-using InetAnalytics.Controls.Testing;
 using InetAnalytics.Controls.YouTube;
 using InetAnalytics.Controls.YouTube.Api2;
 using InetAnalytics.Controls.YouTube.Api3;
@@ -95,9 +94,6 @@ namespace InetAnalytics.Forms
 		private TreeNode treeNodeTasksScheduled;
 		private TreeNode treeNodeTasksRunning;
 
-		private TreeNode treeNodeTestingWebRequest;
-		private TreeNode treeNodeTestingSshRequest;
-
 		private TreeNode treeNodeSettings;
 
 		private TreeNode treeNodeComments;
@@ -141,8 +137,8 @@ namespace InetAnalytics.Forms
 		private readonly ControlWeb controlYtWeb = new ControlWeb();
 		private readonly ControlWebStatistics controlYtWebStatistics = new ControlWebStatistics();
 
-		private readonly ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
-		private readonly ControlTestingSshRequest controlTestingSshRequest = new ControlTestingSshRequest();
+		//private readonly ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
+		//private readonly ControlTestingSshRequest controlTestingSshRequest = new ControlTestingSshRequest();
 
 		private readonly ControlSettings controlSettings = new ControlSettings();
 
@@ -324,13 +320,6 @@ namespace InetAnalytics.Forms
 					this.treeNodeTasksAll
 				});
 
-			this.treeNodeTestingWebRequest = new TreeNode("Web request",
-				this.imageList.Images.IndexOfKey("TestGlobeGoto"),
-				this.imageList.Images.IndexOfKey("TestGlobeGoto"));
-			this.treeNodeTestingSshRequest = new TreeNode("Secure shell",
-				this.imageList.Images.IndexOfKey("TestConnectGoto"),
-				this.imageList.Images.IndexOfKey("TestConnectGoto"));
-
 			this.treeNodeSettings = new TreeNode("Settings",
 				this.imageList.Images.IndexOfKey("Settings"),
 				this.imageList.Images.IndexOfKey("Settings"));
@@ -380,8 +369,6 @@ namespace InetAnalytics.Forms
 			this.splitContainer.Panel2.Controls.Add(this.controlYtApi3);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtWeb);
 			this.splitContainer.Panel2.Controls.Add(this.controlYtWebStatistics);
-			this.splitContainer.Panel2.Controls.Add(this.controlTestingWebRequest);
-			this.splitContainer.Panel2.Controls.Add(this.controlTestingSshRequest);
 			this.splitContainer.Panel2.Controls.Add(this.controlSettings);
 			this.splitContainer.Panel2.Controls.Add(this.controlLog);
 			this.splitContainer.Panel2.Controls.Add(this.controlCommentsInfo);
@@ -421,9 +408,6 @@ namespace InetAnalytics.Forms
 			this.treeNodeYouTubeWeb.Tag = this.controlYtWeb;
 			this.treeNodeYouTubeWebVideos.Tag = this.controlYtWebStatistics;
 
-			this.treeNodeTestingWebRequest.Tag = this.controlTestingWebRequest;
-			this.treeNodeTestingSshRequest.Tag = this.controlTestingSshRequest;
-
 			this.treeNodeSettings.Tag = this.controlSettings;
 			this.controlSideLog.Tag = this.controlLog;
 			this.treeNodeComments.Tag = this.controlCommentsInfo;
@@ -443,11 +427,6 @@ namespace InetAnalytics.Forms
 					this.treeNodeYouTubeWeb
 				});
 			this.controlSideTasks.Nodes.Add(this.treeNodeTasksInfo);
-			this.controlSideTesting.Nodes.AddRange(
-				new TreeNode[] {
-					this.treeNodeTestingWebRequest,
-					this.treeNodeTestingSshRequest
-				});
 			this.controlSideConfiguration.Nodes.Add(this.treeNodeSettings);
 			this.controlSideComments.Nodes.Add(this.treeNodeComments);
 
@@ -530,8 +509,6 @@ namespace InetAnalytics.Forms
 			this.controlYtApi2Categories.Initialize(this.crawler);
 			this.controlYtWeb.Initialize(this.crawler);
 			this.controlYtWebStatistics.Initialize(this.crawler);
-			this.controlTestingWebRequest.Initialize(this.crawler);
-			this.controlTestingSshRequest.Initialize(this.crawler);
 			this.controlSettings.Initialize(this.crawler);
 			this.controlLog.Initialize(this.crawler.Config, this.crawler.Log);
 			this.controlCommentsVideos.Initialize(this.crawler.Comments.Videos, InetCrawler.Comments.CrawlerComment.CommentType.Video);
@@ -548,7 +525,6 @@ namespace InetAnalytics.Forms
 			this.controlSideSpiders.Initialize();
 			this.controlSideYouTube.Initialize();
 			this.controlSideTasks.Initialize();
-			this.controlSideTesting.Initialize();
 			this.controlSideLog.Initialize();
 			this.controlSideConfiguration.Initialize();
 			this.controlSideComments.Initialize();

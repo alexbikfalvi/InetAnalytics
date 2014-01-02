@@ -30,7 +30,7 @@ namespace InetTools.Tools.Mercury
 		private readonly IToolApi api;
 
 		/// <summary>
-		/// Creates a new CDN Finder configuration instance.
+		/// Creates a new Mercury client configuration instance.
 		/// </summary>
 		/// <param name="api">The tools API.</param>
 		public MercuryConfig(IToolApi api)
@@ -38,8 +38,12 @@ namespace InetTools.Tools.Mercury
 			this.api = api;
 		}
 
-
 		// Public properties.
+
+		/// <summary>
+		/// Gets the tool API.
+		/// </summary>
+		public IToolApi Api { get { return this.api; } }
 
 		/// <summary>
 		/// Gets or sets the server URL to upload a session.

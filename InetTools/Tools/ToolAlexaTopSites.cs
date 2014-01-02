@@ -20,7 +20,7 @@ using System;
 using System.Windows.Forms;
 using InetCrawler.Database;
 using InetCrawler.Tools;
-using InetTools.Controls;
+using InetTools.Controls.Alexa;
 using InetTools.Tools.Alexa;
 
 namespace InetTools.Tools

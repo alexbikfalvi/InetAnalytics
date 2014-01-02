@@ -153,14 +153,12 @@
     <Compile Include="Tasks\Triggers\CrawlerTriggerTask.cs" />
     <Compile Include="Tasks\Triggers\CrawlerTriggerTaskRestart.cs" />
     <Compile Include="Tasks\Triggers\CrawlerTriggerTaskStop.cs" />
-    <Compile Include="Testing\CrawlerTesting.cs" />
-    <Compile Include="Testing\CrawlerTestingSshRequest.cs" />
-    <Compile Include="Testing\CrawlerTestingWebRequest.cs" />
     <Compile Include="Tools\IToolApi.cs" />
     <Compile Include="Tools\IToolConfig.cs" />
     <Compile Include="Tools\Tool.cs" />
     <Compile Include="Tools\ToolApi.cs" />
     <Compile Include="Tools\Toolbox.cs" />
+    <Compile Include="Tools\ToolboxEnumerable.cs" />
     <Compile Include="Tools\ToolboxEnumerator.cs" />
     <Compile Include="Tools\ToolConfig.cs" />
     <Compile Include="Tools\ToolDependencyAttribute.cs" />
