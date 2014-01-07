@@ -101,16 +101,16 @@
     <Compile Include="Controls\Alexa\ControlAlexaTopSites.Designer.cs">
       <DependentUpon>ControlAlexaTopSites.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormMercuryClientSettings.cs">
+    <Compile Include="Forms\Mercury\FormMercuryClientSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormMercuryClientSettings.Designer.cs">
+    <Compile Include="Forms\Mercury\FormMercuryClientSettings.Designer.cs">
       <DependentUpon>FormMercuryClientSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormCdnFinderSettings.cs">
+    <Compile Include="Forms\CdnFinder\FormCdnFinderSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormCdnFinderSettings.Designer.cs">
+    <Compile Include="Forms\CdnFinder\FormCdnFinderSettings.Designer.cs">
       <DependentUpon>FormCdnFinderSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,10 +213,10 @@
     <EmbeddedResource Include="Controls\Alexa\ControlAlexaTopSites.resx">
       <DependentUpon>ControlAlexaTopSites.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormMercuryClientSettings.resx">
+    <EmbeddedResource Include="Forms\Mercury\FormMercuryClientSettings.resx">
       <DependentUpon>FormMercuryClientSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormCdnFinderSettings.resx">
+    <EmbeddedResource Include="Forms\CdnFinder\FormCdnFinderSettings.resx">
       <DependentUpon>FormCdnFinderSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -3515,7 +3515,20 @@
       <Link>Resources\XmlNamespace_48.png</Link>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="..\InetIcons\Resources\Select_16.png">
+      <Link>Resources\Select_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Select_24.png">
+      <Link>Resources\Select_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Select_32.png">
+      <Link>Resources\Select_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Select_48.png">
+      <Link>Resources\Select_48.png</Link>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

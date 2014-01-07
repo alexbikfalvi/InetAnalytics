@@ -1,6 +1,6 @@
 ﻿namespace InetAnalytics.Controls.Database
 {
-	partial class ControlServers
+	partial class ControlServersSql
 	{
 		/// <summary> 
 		/// Required designer variable.

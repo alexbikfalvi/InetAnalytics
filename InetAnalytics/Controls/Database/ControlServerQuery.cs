@@ -43,7 +43,7 @@ namespace InetAnalytics.Controls.Database
 		private delegate void ExceptionAction(Exception exception);
 
 		private Crawler crawler;
-		private DbServer server;
+		private DbServerSql server;
 
 		private readonly FormChangePassword formChangePassword = new FormChangePassword();
 
@@ -71,7 +71,7 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="crawler">The crawler instance.</param>
 		/// <param name="server">The database server.</param>
-		public void Initialize(Crawler crawler, DbServer server)
+		public void Initialize(Crawler crawler, DbServerSql server)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
@@ -99,9 +99,9 @@ namespace InetAnalytics.Controls.Database
 			this.Invoke(() =>
 				{
 					this.buttonConnect.Enabled =
-						(this.server.State == DbServer.ServerState.Disconnected) ||
-						(this.server.State == DbServer.ServerState.Failed);
-					this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
+						(this.server.State == DbServerSql.ServerState.Disconnected) ||
+						(this.server.State == DbServerSql.ServerState.Failed);
+					this.buttonDisconnect.Enabled = this.server.State == DbServerSql.ServerState.Connected;
 				});
 		}
 
@@ -322,7 +322,7 @@ namespace InetAnalytics.Controls.Database
 		private void OnPasswordChanged(SecureString oldPassword, SecureString newPassword, object state)
 		{
 			// Get the server.
-			DbServer server = state as DbServer;
+			DbServerSql server = state as DbServerSql;
 			// Show a password changing message.
 			this.ShowMessage(Resources.Connect_48, "Database", "Changing the password for the database server \'{0}\'...".FormatWith(server.Name));
 			try
@@ -418,7 +418,7 @@ namespace InetAnalytics.Controls.Database
 			this.Invoke(() =>
 				{
 					// If the database server is not connected, first connect to the database.
-					if (this.server.State != DbServer.ServerState.Connected)
+					if (this.server.State != DbServerSql.ServerState.Connected)
 					{
 						// Show a connecting message.
 						this.ShowMessage(Resources.Connect_48, "Database", "Connecting to the database server \'{0}\'...".FormatWith(this.server.Name));
@@ -462,7 +462,7 @@ namespace InetAnalytics.Controls.Database
 						// Show a connecting message.
 						this.ShowMessage(Resources.DatabaseBusy_48, "Database", "Executing query on the database server \'{0}\'...".FormatWith(this.server.Name));
 						// Create the command.
-						this.command = this.server.CreateCommand(DbQuery.Create(this.codeBox.Text));
+						this.command = this.server.CreateCommand(DbQuerySql.Create(this.codeBox.Text));
 						// Execute the command.
 						command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
 						{

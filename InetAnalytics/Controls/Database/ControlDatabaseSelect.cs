@@ -30,11 +30,11 @@ namespace InetAnalytics.Controls.Database
 	/// <summary>
 	/// A control that selects items from a database, based on a query selected by the user.
 	/// </summary>
-	public sealed partial class ControlDatabaseSelect : ControlDatabase
+	public sealed partial class ControlDatabaseSelect : ControlBaseSql
 	{
-		private DbServer server = null;
+		private DbServerSql server = null;
 		private DbCommand command = null;
-		private DbQuery query = null;
+		private DbQuerySql query = null;
 		private DbDataObject result = null;
 
 		private readonly FormObjectProperties formObject = new FormObjectProperties();
@@ -75,10 +75,10 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="table">The database table.</param>
 		/// <param name="result">The database results, if any.</param>
-		public void Select(DbServer server, ITable table, DbDataObject result)
+		public void Select(DbServerSql server, ITable table, DbDataObject result)
 		{
 			// Create a select all query for all field in the current table.
-			DbQuery query = DbQuery.CreateSelectAll(table, server.Database);
+			DbQuerySql query = DbQuerySql.CreateSelectAll(table, server.Database);
 
 			query.MessageStart = "Refreshing the data for table \'{0}\' on the database server \'{1}\'...".FormatWith(table.LocalName, server.Name);
 			query.MessageFinishSuccess = "Refreshing the data for table \'{0}\' on the database server \'{1}\' completed successfully.".FormatWith(table.LocalName, server.Name);
@@ -94,7 +94,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database table.</param>
 		/// <param name="result">The database results, if any.</param>
-		public void Select(DbServer server, DbQuery query, DbDataObject result)
+		public void Select(DbServerSql server, DbQuerySql query, DbDataObject result)
 		{
 			// Check the database table is configured.
 			if (!query.Table.IsConfigured) throw new DbException("Cannot select the list of database objects for table \'{0}\', because the table is not configured.".FormatWith(query.Table.LocalName));
@@ -193,7 +193,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="command">The database command.</param>
-		protected override void OnQueryStarted(DbServer server, DbQuery query, DbCommand command)
+		protected override void OnQueryStarted(DbServerSql server, DbQuerySql query, DbCommand command)
 		{
 			// Save the current command.
 			this.command = command;
@@ -213,7 +213,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The database result.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected override void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
+		protected override void OnQuerySucceeded(DbServerSql server, DbQuerySql query, DbDataObject result, int recordsAffected)
 		{
 			// Set the current result.
 			this.result = result;
@@ -252,7 +252,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		protected override void OnQueryFailed(DbServer server, DbQuery query, Exception exception)
+		protected override void OnQueryFailed(DbServerSql server, DbQuerySql query, Exception exception)
 		{
 			// Enable the buttons.
 			this.buttonRefresh.Enabled = true;
@@ -273,7 +273,7 @@ namespace InetAnalytics.Controls.Database
 		/// A method called when the user cancels a current database query.
 		/// </summary>
 		/// <param name="query">The database query.</param>
-		protected override void OnQueryCanceling(DbQuery query)
+		protected override void OnQueryCanceling(DbQuerySql query)
 		{
 			// Disable the cancel button.
 			this.buttonCancel.Enabled = false;

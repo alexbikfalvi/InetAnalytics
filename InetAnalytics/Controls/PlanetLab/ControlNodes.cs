@@ -570,7 +570,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnFilterClear(object sender, EventArgs e)
 		{
-			this.textBoxFilter.Text = string.Empty;
+			this.textBoxFilter.Clear();
 		}
 
 		/// <summary>

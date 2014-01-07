@@ -26,7 +26,7 @@ using InetAnalytics;
 using InetCrawler.Log;
 using InetCrawler.Tools;
 using InetCrawler.Status;
-using InetTools.Forms;
+using InetTools.Forms.Mercury;
 using InetTools.Tools.Mercury;
 
 namespace InetTools.Controls.Mercury

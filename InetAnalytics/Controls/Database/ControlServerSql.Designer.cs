@@ -1,6 +1,6 @@
 ﻿namespace InetAnalytics.Controls.Database
 {
-	partial class ControlServer
+	partial class ControlServerSql
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -30,7 +30,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlServer));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlServerSql));
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
 			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
@@ -76,9 +76,9 @@
 			this.columnHeaderRightField = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.labelRelationships = new System.Windows.Forms.Label();
 			this.pictureBoxRelationships = new System.Windows.Forms.PictureBox();
-			this.labelPrimary = new System.Windows.Forms.Label();
-			this.labelName = new System.Windows.Forms.Label();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.labelName = new System.Windows.Forms.Label();
+			this.labelPrimary = new System.Windows.Forms.Label();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -107,7 +107,7 @@
             this.buttonChangePassword,
             this.toolStripSeparator3,
             this.buttonProperties});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(798, 25);
 			this.toolStrip.TabIndex = 0;
@@ -207,7 +207,7 @@
 			this.panelServer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelServer.Location = new System.Drawing.Point(0, 0);
 			this.panelServer.Name = "panelServer";
-			this.panelServer.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelServer.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelServer.ShowBorder = true;
 			this.panelServer.ShowTitle = true;
 			this.panelServer.Size = new System.Drawing.Size(800, 425);
@@ -364,7 +364,7 @@
 			// 
 			this.labelDatabaseTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labelDatabaseTitle.Location = new System.Drawing.Point(59, 20);
+			this.labelDatabaseTitle.Location = new System.Drawing.Point(58, 20);
 			this.labelDatabaseTitle.Name = "labelDatabaseTitle";
 			this.labelDatabaseTitle.Size = new System.Drawing.Size(707, 32);
 			this.labelDatabaseTitle.TabIndex = 0;
@@ -587,16 +587,14 @@
 			this.pictureBoxRelationships.TabIndex = 5;
 			this.pictureBoxRelationships.TabStop = false;
 			// 
-			// labelPrimary
+			// pictureBox
 			// 
-			this.labelPrimary.AutoSize = true;
-			this.labelPrimary.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.labelPrimary.Location = new System.Drawing.Point(64, 86);
-			this.labelPrimary.Name = "labelPrimary";
-			this.labelPrimary.Size = new System.Drawing.Size(73, 13);
-			this.labelPrimary.TabIndex = 1;
-			this.labelPrimary.Text = "Primary server";
-			this.labelPrimary.UseMnemonic = false;
+			this.pictureBox.Image = global::InetAnalytics.Resources.ServerDown_48;
+			this.pictureBox.Location = new System.Drawing.Point(10, 58);
+			this.pictureBox.Name = "pictureBox";
+			this.pictureBox.Size = new System.Drawing.Size(48, 48);
+			this.pictureBox.TabIndex = 0;
+			this.pictureBox.TabStop = false;
 			// 
 			// labelName
 			// 
@@ -609,33 +607,35 @@
 			this.labelName.Text = "Server name";
 			this.labelName.UseMnemonic = false;
 			// 
-			// pictureBox
+			// labelPrimary
 			// 
-			this.pictureBox.Image = global::InetAnalytics.Resources.ServerDown_48;
-			this.pictureBox.Location = new System.Drawing.Point(10, 58);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(48, 48);
-			this.pictureBox.TabIndex = 0;
-			this.pictureBox.TabStop = false;
+			this.labelPrimary.AutoSize = true;
+			this.labelPrimary.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.labelPrimary.Location = new System.Drawing.Point(64, 86);
+			this.labelPrimary.Name = "labelPrimary";
+			this.labelPrimary.Size = new System.Drawing.Size(73, 13);
+			this.labelPrimary.TabIndex = 1;
+			this.labelPrimary.Text = "Primary server";
+			this.labelPrimary.UseMnemonic = false;
 			// 
 			// log
 			// 
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.log.ShowBorder = true;
 			this.log.ShowTitle = true;
 			this.log.Size = new System.Drawing.Size(800, 170);
 			this.log.TabIndex = 0;
 			this.log.Title = "Log";
 			// 
-			// ControlServer
+			// ControlServerSql
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
-			this.Name = "ControlServer";
+			this.Name = "ControlServerSql";
 			this.Size = new System.Drawing.Size(800, 600);
 			this.Controls.SetChildIndex(this.splitContainer, 0);
 			this.toolStrip.ResumeLayout(false);

@@ -30,7 +30,7 @@ using InetAnalytics;
 using InetCrawler.Log;
 using InetCrawler.Tools;
 using InetCrawler.Status;
-using InetTools.Forms;
+using InetTools.Forms.CdnFinder;
 using InetTools.Tools.Alexa;
 using InetTools.Tools.CdnFinder;
 

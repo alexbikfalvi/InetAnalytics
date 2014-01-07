@@ -32,7 +32,7 @@ namespace InetAnalytics.Controls.Spiders
 	/// <summary>
 	/// A control class for a YouTube API version 2 standard feed.
 	/// </summary>
-	public partial class ControlSpiderStandardFeeds : ControlDatabase
+	public partial class ControlSpiderStandardFeeds : ControlBaseSql
 	{
 		//private string logSource = @"Spider\Standard Feeds";
 

@@ -74,10 +74,10 @@ namespace InetAnalytics.Controls.YouTube
 			if (null == newComment)
 			{
 				this.labelTitle.Text = "No comment selected";
-				this.textBoxPublished.Text = string.Empty;
-				this.textBoxUpdated.Text = string.Empty;
-				this.textBoxAuthor.Text = string.Empty;
-				this.textBoxComment.Text = string.Empty;
+				this.textBoxPublished.Clear();
+				this.textBoxUpdated.Clear();
+				this.textBoxAuthor.Clear();
+				this.textBoxComment.Clear();
 				this.checkBoxSpam.Checked = false;
 			}
 			else
@@ -88,7 +88,6 @@ namespace InetAnalytics.Controls.YouTube
 				this.textBoxAuthor.Text = newComment.Author != null ? newComment.Author.UserId : string.Empty;
 				this.textBoxComment.Text = newComment.Content != null ? newComment.Content : string.Empty;
 				this.checkBoxSpam.Checked = newComment.Spam;
-
 			}
 
 			if (this.Focused)

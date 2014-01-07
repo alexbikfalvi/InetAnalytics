@@ -107,5 +107,14 @@ namespace InetTools.Tools.Net
 			get { return this.api.Key.GetBoolean("StopTracerouteOnFail", false); }       
 			set { this.api.Key.SetBoolean("StopTracerouteOnFail", value); }
 		}
+
+		/// <summary>
+		/// Gets the local network interface.
+		/// </summary>
+		public string NetworkInterface
+		{
+			get { return this.api.Key.GetString("NetworkInterface", string.Empty); }
+			set { this.api.Key.SetString("NetworkInterface", value); }
+		}
 	}
 }

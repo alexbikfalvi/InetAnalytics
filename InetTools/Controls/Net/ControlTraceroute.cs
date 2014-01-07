@@ -17,10 +17,14 @@
  */
 
 using System;
+using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
+using InetAnalytics.Forms.Net;
 using InetApi.Net.Core;
 using InetCrawler;
 using InetCrawler.Log;
@@ -41,6 +45,8 @@ namespace InetTools.Controls.Net
 
 		private readonly TracerouteSettings settings;
 		private readonly Traceroute traceroute;
+
+		private readonly FormIpSelectAddress formSelectAddress = new FormIpSelectAddress();
 
 		private bool configurationChanged = false;
 
@@ -79,9 +85,27 @@ namespace InetTools.Controls.Net
 			// Load the configuration.
 			this.textBoxDestination.Text = this.config.Destination;
 
-
+			this.numericUpDownMaximumHops.Value = this.config.MaximumHops;
+			this.numericUpDownMaximumAttempts.Value = this.config.MaximumAttempts;
+			this.numericUpDownMaximumFailedHops.Value = this.config.MaximumFailedHops;
 
 			this.checkBoxAutomaticNameResolution.Checked = this.config.AutomaticNameResolution;
+			this.checkBoxStopHopOnSuccess.Checked = this.config.StopHopOnSuccess;
+			this.checkBoxStopOnFail.Checked = this.config.StopTracerouteOnFail;
+
+			this.comboBoxNetworkInterface.Items.Clear();
+			this.comboBoxNetworkInterface.Items.Add("Any");
+			foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
+			{
+				if (iface.GetIPProperties() != null)
+				{
+					if (iface.GetIPProperties().UnicastAddresses.Count > 0)
+					{
+						this.comboBoxNetworkInterface.Items.Add(new NetworkInterfaceEx(iface));
+					}
+				}
+			}
+			this.comboBoxNetworkInterface.SelectedIndex = this.GetNetworkInterfaceIndex(this.config.NetworkInterface);
 
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
@@ -95,6 +119,16 @@ namespace InetTools.Controls.Net
 		{
 			// Save the configuration.
 			this.config.Destination = this.textBoxDestination.Text;
+
+			this.config.MaximumHops = (byte)this.numericUpDownMaximumHops.Value;
+			this.config.MaximumAttempts = (byte)this.numericUpDownMaximumAttempts.Value;
+			this.config.MaximumFailedHops = (byte)this.numericUpDownMaximumFailedHops.Value;
+
+			this.config.AutomaticNameResolution = this.checkBoxAutomaticNameResolution.Checked;
+			this.config.StopHopOnSuccess = this.checkBoxStopHopOnSuccess.Checked;
+			this.checkBoxStopOnFail.Checked = this.config.StopTracerouteOnFail;
+
+			this.config.NetworkInterface = this.comboBoxNetworkInterface.SelectedIndex == 0 ? null : (this.comboBoxNetworkInterface.SelectedItem as NetworkInterfaceEx).Id;
 
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
@@ -181,9 +215,77 @@ namespace InetTools.Controls.Net
 
 			try
 			{
+				// Get the IP addresses of the specified destination.
+				IAsyncResult asyncResult = Dns.BeginGetHostAddresses(destination, (IAsyncResult result) =>
+					{
+						try
+						{
+							// Get the list of IP addresses.
+							IPAddress[] addresses = Dns.EndGetHostAddresses(result);
 
+							this.Invoke(() =>
+								{
+									// Select the IP address.
+									if (this.formSelectAddress.ShowDialog(this, addresses) == DialogResult.OK)
+									{
+										// Get the IP address.
+										IPAddress address = this.formSelectAddress.Address;
 
-				// Begin a traceroute to the specified destination.
+										// Run the traceroute.
+										//this.OnRun(destination, address);
+									}
+									else
+									{
+										// Update the status label.
+										this.status.Send(CrawlerStatus.StatusType.Normal, "Internet traceroute to \'{0}\' canceled".FormatWith(destination), Resources.Canceled_16);
+										// Show a message.
+										this.ShowMessage(
+											Resources.GlobeCanceled_48,
+											"Internet Traceroute",
+											"Internet traceroute to \'{0}\' was canceled.".FormatWith(destination),
+											false,
+											(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+										// Log the result.
+										this.log.Add(this.config.Api.Log(
+											LogEventLevel.Verbose,
+											LogEventType.Canceled,
+											"Internet traceroute to \'{0}\' was canceled.",
+											new object[] { destination }));
+										// Change the controls state.
+										this.OnEnableControls();
+										// Change the buttons state.
+										this.buttonStart.Enabled = true;
+										this.buttonStop.Enabled = false;
+									}
+								});
+						}
+						catch (Exception exception)
+						{
+							// Update the status label.
+							this.status.Send(CrawlerStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed".FormatWith(destination), Resources.Error_16);
+							// Show a message.
+							this.ShowMessage(
+								Resources.GlobeError_48,
+								"Internet Traceroute",
+								"Running Internet traceroute to \'{0}\' failed. {1}".FormatWith(destination, exception.Message),
+								false,
+								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds, (object[] parameters) =>
+								{
+									// Change the controls state.
+									this.OnEnableControls();
+									// Change the buttons state.
+									this.buttonStart.Enabled = true;
+									this.buttonStop.Enabled = false;
+								});
+							// Log the result.
+							this.log.Add(this.config.Api.Log(
+								LogEventLevel.Important,
+								LogEventType.Error,
+								"Running Internet traceroute to \'{0}\' failed. {1}",
+								new object[] { destination, exception.Message },
+								exception));
+						}
+					}, null);
 			}
 			catch (Exception exception)
 			{
@@ -242,6 +344,40 @@ namespace InetTools.Controls.Net
 		{
 			// Load the configuration.
 			this.OnLoadConfiguration();
+		}
+
+		/// <summary>
+		/// Runs the traceroute for the specified destination and IP address.
+		/// </summary>
+		/// <param name="destination">The destination string.</param>
+		/// <param name="sourceAddress">The source IP address.</param>
+		/// <param name="destinationAddress">The destination IP address.</param>
+		private void OnRun(string destination, IPAddress sourceAddress, IPAddress destinationAddress)
+		{
+			// Set the status.
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Running Internet traceroute to \'{0}\' ({1})...".FormatWith(destination, destinationAddress), Resources.Busy_16);
+			// Show a message.
+			this.ShowMessage(
+				Resources.GlobeClock_48,
+				"Internet Traceroute",
+				"Running Internet traceroute to \'{0}\' ({1}) with a maximum of {2} hop{3} and up to {4} attempt{5} per hop.".FormatWith(destination, destinationAddress, this.settings.MaximumHops, this.settings.MaximumHops.PluralSuffix(), this.settings.MaximumAttempts, this.settings.MaximumAttempts.PluralSuffix())
+				);
+
+			// Begin the traceroute.
+			//this.traceroute.
+		}
+
+		/// <summary>
+		/// Returns the network interface with the specified index.
+		/// </summary>
+		/// <param name="id">The network interface identifier.</param>
+		/// <returns>The network interface index.</returns>
+		private int GetNetworkInterfaceIndex(string id)
+		{
+			for (int index = 1; index < this.comboBoxNetworkInterface.Items.Count; index++)
+				if ((this.comboBoxNetworkInterface.Items[index] as NetworkInterfaceEx).Id == id)
+					return index;
+			return 0;
 		}
 	}
 }

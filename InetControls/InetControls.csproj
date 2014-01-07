@@ -53,6 +53,12 @@
     <Compile Include="Controls\ControlExceptionProperties.Designer.cs">
       <DependentUpon>ControlExceptionProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Database\ControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Database\ControlBaseSql.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlChangePassword.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,9 +104,6 @@
     <Compile Include="Controls\Tools\ControlAddMethod.Designer.cs">
       <DependentUpon>ControlAddMethod.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Tools\ControlBase.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Events\PasswordChangedEventArgs.cs" />
     <Compile Include="Forms\Database\FormChangePassword.cs">
       <SubType>Form</SubType>
@@ -119,6 +122,12 @@
     </Compile>
     <Compile Include="Forms\Log\FormEventProperties.Designer.cs">
       <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Net\FormIpSelectAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Net\FormIpSelectAddress.Designer.cs">
+      <DependentUpon>FormIpSelectAddress.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Net\FormHttpAddRequestHeader.cs">
       <SubType>Form</SubType>
@@ -181,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Log\FormEventProperties.resx">
       <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Net\FormIpSelectAddress.resx">
+      <DependentUpon>FormIpSelectAddress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Net\FormHttpAddRequestHeader.resx">
       <DependentUpon>FormHttpAddRequestHeader.cs</DependentUpon>
@@ -3503,6 +3515,20 @@
     </None>
     <None Include="..\InetIcons\Resources\XmlNamespace_48.png">
       <Link>Resources\XmlNamespace_48.png</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\InetIcons\Resources\Select_16.png">
+      <Link>Resources\Select_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Select_24.png">
+      <Link>Resources\Select_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Select_32.png">
+      <Link>Resources\Select_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\Select_48.png">
+      <Link>Resources\Select_48.png</Link>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

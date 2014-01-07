@@ -106,7 +106,7 @@ namespace InetCrawler.Tools
 		/// <param name="table">The database table template.</param>
 		public void DatabaseAddTable(DbTableTemplate table)
 		{
-			this.api.Database.Tables.Add(table);
+			this.api.Database.Sql.Tables.Add(table);
 		}
 
 		/// <summary>
@@ -115,7 +115,7 @@ namespace InetCrawler.Tools
 		/// <param name="table">The database table template.</param>
 		public void DatabaseRemoveTable(DbTableTemplate table)
 		{
-			this.api.Database.Tables.Remove(table);
+			this.api.Database.Sql.Tables.Remove(table);
 		}
 
 		/// <summary>
@@ -128,7 +128,7 @@ namespace InetCrawler.Tools
 		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
 		public void DatabaseAddRelationship(DbTableTemplate leftTable, DbTableTemplate rightTable, string leftField, string rightField, bool readOnly)
 		{
-			this.api.Database.Relationships.Add(new DbRelationshipTemplate(leftTable, rightTable, leftField, rightField, readOnly));
+			this.api.Database.Sql.Relationships.Add(new DbRelationshipTemplate(leftTable, rightTable, leftField, rightField, readOnly));
 		}
 	}
 }

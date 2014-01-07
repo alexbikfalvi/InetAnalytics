@@ -41,13 +41,13 @@ namespace InetCrawler.Database
 	/// </summary>
 	public abstract class DbCommand : IDisposable
 	{
-		private DbQuery query;
+		private DbQuerySql query;
 
 		/// <summary>
 		/// Creates a new database command with the specified query.
 		/// </summary>
 		/// <param name="query">The command query.</param>
-		public DbCommand(DbQuery query)
+		public DbCommand(DbQuerySql query)
 		{
 			this.query = query;
 		}
@@ -57,7 +57,7 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Gets or sets the command query.
 		/// </summary>
-		public DbQuery Query { get { return this.query; } }
+		public DbQuerySql Query { get { return this.query; } }
 
 		// Public methods.
 

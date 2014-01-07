@@ -44,10 +44,10 @@ namespace InetTools.Controls.Mercury
 		public void Clear()
 		{
 			this.labelTitle.Text = "No traceroute";
-			this.textBoxSource.Text = string.Empty;
-			this.textBoxDestination.Text = string.Empty;
-			this.textBoxMaxHops.Text = string.Empty;
-			this.textBoxPacketSize.Text = string.Empty;
+			this.textBoxSource.Clear();
+			this.textBoxDestination.Clear();
+			this.textBoxMaxHops.Clear();
+			this.textBoxPacketSize.Clear();
 			this.listViewHops.Items.Clear();
 		}
 

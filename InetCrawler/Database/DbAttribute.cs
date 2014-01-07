@@ -6,6 +6,7 @@ namespace InetCrawler.Database
 	/// <summary>
 	/// A class representing a database name attribute.
 	/// </summary>
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 	public class DbAttribute : Attribute
 	{
 		private DbType type;

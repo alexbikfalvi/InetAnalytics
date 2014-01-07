@@ -111,7 +111,7 @@ namespace InetAnalytics.Forms
 		private readonly ControlNodes controlPlanetLabNodes = new ControlNodes();
 		private readonly ControlSlices controlPlanetLabSlices = new ControlSlices();
 
-		private readonly ControlServers controlDatabaseServers = new ControlServers();
+		private readonly ControlServersSql controlDatabaseServers = new ControlServersSql();
 
 		private readonly ControlToolboxInfo controlToolboxInfo = new ControlToolboxInfo();
 

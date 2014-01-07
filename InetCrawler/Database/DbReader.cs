@@ -114,7 +114,7 @@ namespace InetCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		public abstract IAsyncResult Read(DbQuery query, int? count, DbReaderCallback callback, object userState = null);
+		public abstract IAsyncResult Read(DbQuerySql query, int? count, DbReaderCallback callback, object userState = null);
 		/// <summary>
 		/// Reads asynchronusly the specified number of records.
 		/// </summary>

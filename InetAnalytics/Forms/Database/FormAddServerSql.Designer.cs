@@ -1,6 +1,6 @@
 ﻿namespace InetAnalytics.Forms.Database
 {
-	partial class FormAddServer
+	partial class FormAddServerSql
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonAdd = new System.Windows.Forms.Button();
-			this.control = new InetAnalytics.Controls.Database.ControlAddServer();
+			this.control = new InetAnalytics.Controls.Database.ControlAddServerSql();
 			this.SuspendLayout();
 			// 
 			// buttonCancel
@@ -94,7 +94,7 @@
 
 		private System.Windows.Forms.Button buttonCancel;
 		private System.Windows.Forms.Button buttonAdd;
-		private Controls.Database.ControlAddServer control;
+		private Controls.Database.ControlAddServerSql control;
 
 	}
 }

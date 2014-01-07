@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2013 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,19 @@
  */
 
 using System;
-using System.Drawing;
-using System.Security;
-using System.Threading;
 using System.Windows.Forms;
-using InetAnalytics.Events;
-using InetAnalytics.Forms.Database;
-using InetCrawler;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
-using InetCrawler.Log;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
+using InetAnalytics.Events;
+using InetAnalytics.Forms.Database;
+using InetCrawler.Database;
 
 namespace InetAnalytics.Controls.Database
 {
 	/// <summary>
 	/// A generic control that allows a background database operation.
 	/// </summary>
-	public class ControlBase : NotificationControl
+	public abstract class ControlBase : NotificationControl
 	{
 		private readonly FormChangePassword formChangePassword = new FormChangePassword();
 
@@ -80,40 +74,6 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		protected virtual void OnDisconnectFailed(DbServer server) { }
-		/// <summary>
-		/// A method called when the execution of the database query starts.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		/// <param name="command">The database command.</param>
-		protected virtual void OnQueryStarted(DbServer server, DbQuery query, DbCommand command) { }
-		/// <summary>
-		/// A method called when the execution of the database query succeeded and the data is raw.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="result">The result data.</param>
-		/// <param name="recordsAffected">The number of records affected.</param>
-		protected virtual void OnQuerySucceeded(DbServer server, DbQuery query, DbDataRaw result, int recordsAffected) { }
-		/// <summary>
-		/// A method called when the execution of the database query succeeded and the data is object.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		/// <param name="result">The result data.</param>
-		/// <param name="recordsAffected">The number of records affected.</param>
-		protected virtual void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected) { }
-		/// <summary>
-		/// A method called when the executiopn of the database query has failed.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		/// <param name="exception">The exception.</param>
-		protected virtual void OnQueryFailed(DbServer server, DbQuery query, Exception exception) { }
-		/// <summary>
-		/// A method called when the user cancels a current database query.
-		/// </summary>
-		/// <param name="query">The database query.</param>
-		protected virtual void OnQueryCanceling(DbQuery query) { }
 
 		/// <summary>
 		/// Connects to the current database.
@@ -181,166 +141,6 @@ namespace InetAnalytics.Controls.Database
 		}
 
 		/// <summary>
-		/// Executes a database query.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		protected void DatabaseQuery(DbServer server, DbQuery query)
-		{
-			// If the database server is not connected.
-			if (server.State != DbServer.ServerState.Connected)
-			{
-				// Connect to the database and pass the query as the user state.
-				this.DatabaseConnect(server, query);
-				// Return.
-				return;
-			}
-
-			// Else, create a database command that selects all items for the specified table.
-
-			// Show a connecting message.
-			this.ShowMessage(Resources.DatabaseBusy_48, "Database", query.MessageStart);
-			// Create a new database command.
-			DbCommand command = server.CreateCommand(query);
-			// Call the query start method.
-			this.OnQueryStarted(server, query, command);
-			try
-			{
-				// Execute the command asynchronously.
-				command.ExecuteReader((DbAsyncResult commandResult, DbReader reader) =>
-				{
-					try
-					{
-						// If the result has an exception, throw the exception.
-						if (commandResult.Exception != null) throw commandResult.Exception;
-						// Read the data asynchronously for the specified query.
-						reader.Read(query, null, (DbAsyncResult readerResult, DbData result) =>
-						{
-							try
-							{
-								// Throw a reader exception, if any.
-								if (readerResult.Exception != null)
-								{
-									reader.Close();
-									throw readerResult.Exception;
-								}
-								// Get the number of records read.
-								int recordsAffected = reader.RecordsAffected;
-								// Close the reader.
-								reader.Close();
-								// Dispose and reset the command.
-								command.Dispose();
-								// Show a success message.
-								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", query.MessageFinishSuccess, false);
-								// Wait.
-								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
-								// Hide the message.
-								this.HideMessage();
-								// Call the completion method, depending on the type of data.
-								if (query.Table != null)
-									this.DatabaseQuerySuccess(server, query, result as DbDataObject, recordsAffected);
-								else
-									this.DatabaseQuerySuccess(server, query, result as DbDataRaw, recordsAffected);
-							}
-							catch (Exception exception)
-							{
-								// Dispose the command.
-								command.Dispose();
-								// Show an error message.
-								this.ShowMessage(Resources.DatabaseError_48, "Database", query.MessageFinishFail, false);
-								// Log the event.
-								server.LogEvent(
-									LogEventLevel.Important,
-									LogEventType.Error,
-									"Executing query on the database server \'{0}\' failed. {1}",
-									new object[] { server.Name, exception.Message },
-									exception);
-								// Wait.
-								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
-								// Hide the message.
-								this.HideMessage();
-								// Call the completion method.
-								this.DatabaseQueryFail(server, query, exception);
-							}
-						}, null);
-					}
-					catch (DbException exception)
-					{
-						// Dispose the command.
-						command.Dispose();
-						// Show an error message.
-						this.ShowMessage(Resources.DatabaseError_48, "Database", "{0} {1}".FormatWith(query.MessageFinishFail, exception.InnerException.Message), false);
-						// Log the event.
-						server.LogEvent(
-							LogEventLevel.Important,
-							LogEventType.Error,
-							"Executing query on the database server \'{0}\' failed. {1}",
-							new object[] { server.Name, exception.Message },
-							exception);
-						// Wait.
-						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
-						// Hide the message.
-						this.HideMessage();
-						// Call the completion method.
-						this.DatabaseQueryFail(server, query, exception);
-					}
-					catch (Exception exception)
-					{
-						// Dispose the command.
-						command.Dispose();
-						// Show an error message.
-						this.ShowMessage(Resources.DatabaseError_48, "Database", query.MessageFinishFail, false);
-						// Log the event.
-						server.LogEvent(
-							LogEventLevel.Important,
-							LogEventType.Error,
-							"Executing query on the database server \'{0}\' failed. {1}",
-							new object[] { server.Name, exception.Message },
-							exception);
-						// Wait.
-						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
-						// Hide the message.
-						this.HideMessage();
-						// Call the completion method.
-						this.DatabaseQueryFail(server, query, exception);
-					}
-				});
-			}
-			catch (Exception exception)
-			{
-				// Dispose the command.
-				command.Dispose();
-				// Show an error message.
-				this.ShowMessage(Resources.DatabaseError_48, "Database", query.MessageFinishFail, false);
-				// Log the event.
-				server.LogEvent(
-					LogEventLevel.Important,
-					LogEventType.Error,
-					"Executing query on the database server \'{0}\' failed. {1}",
-					new object[] { server.Name, exception.Message },
-					exception);
-				// Wait.
-				Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
-				// Hide the message.
-				this.HideMessage();
-				// Call the completion method.
-				this.DatabaseQueryFail(server, query, exception);
-			}
-		}
-
-		/// <summary>
-		/// Cancels the specified command.
-		/// </summary>
-		/// <param name="command">The database command to cancel.</param>
-		protected void DatabaseQueryCancel(DbCommand command)
-		{
-			// Cancel the command.
-			command.Cancel();
-			// Call the event handler.
-			this.OnQueryCanceling(command.Query);
-		}
-
-		/// <summary>
 		/// Changes the password of the specified database server.
 		/// </summary>
 		/// <param name="server">The database server.</param>
@@ -349,6 +149,13 @@ namespace InetAnalytics.Controls.Database
 			// Change the password for the selected server.
 			this.formChangePassword.ShowDialog(this, server.Password, server);
 		}
+
+		/// <summary>
+		/// Executes a database query.
+		/// </summary>
+		/// <param name="server">The database server.</param>
+		/// <param name="query">The database query.</param>
+		protected abstract void DatabaseQuery(DbServer server, DbQuery query);
 
 		// Private methods.
 
@@ -435,7 +242,7 @@ namespace InetAnalytics.Controls.Database
 					if (asyncState.AsyncState != null)
 					{
 						// If the user state is a database query.
-						if (asyncState.AsyncState is DbQuery)
+						if (asyncState.AsyncState is DbQuerySql)
 						{
 							// Execute the database query.
 							this.DatabaseQuery(asyncState.Server, asyncState.AsyncState as DbQuery);
@@ -490,55 +297,6 @@ namespace InetAnalytics.Controls.Database
 					// Call the event handler.
 					this.OnDisconnectSucceeded(asyncState.Server);
 				}
-			});
-		}
-
-		/// <summary>
-		/// An event handler called when the database query completed successfully and the resulting data is raw
-		/// data.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		/// <param name="result">The database result.</param>
-		/// <param name="recordsAffected">The number of records read.</param>
-		private void DatabaseQuerySuccess(DbServer server, DbQuery query, DbDataRaw result, int recordsAffected)
-		{
-			// Execute the code on the UI thread.
-			this.Invoke(() =>
-			{
-				this.OnQuerySucceeded(server, query, result, recordsAffected);
-			});
-		}
-
-		/// <summary>
-		/// An event handler called when the database query completed successfully and the resulting data is object
-		/// data.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		/// <param name="result">The database result.</param>
-		/// <param name="recordsAffected">The number of records affected.</param>
-		private void DatabaseQuerySuccess(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
-		{
-			// Execute the code on the UI thread.
-			this.Invoke(() =>
-			{
-				this.OnQuerySucceeded(server, query, result, recordsAffected);
-			});
-		}
-
-		/// <summary>
-		/// An event handler called when the refresh operation failed.
-		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="query">The database query.</param>
-		/// <param name="exception">The exception.</param>
-		private void DatabaseQueryFail(DbServer server, DbQuery query, Exception exception)
-		{
-			// Execute the code on the UI thread.
-			this.Invoke(() =>
-			{
-				this.OnQueryFailed(server, query, exception);
 			});
 		}
 

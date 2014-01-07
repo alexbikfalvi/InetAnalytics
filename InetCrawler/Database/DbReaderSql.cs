@@ -98,7 +98,7 @@ namespace InetCrawler.Database
 		/// <param name="callback">The callback method.</param>
 		/// <param name="userState">The user state.</param>
 		/// <returns>The result of the asynchronous operation.</returns>
-		public override IAsyncResult Read(DbQuery query, int? count, DbReaderCallback callback, object userState = null)
+		public override IAsyncResult Read(DbQuerySql query, int? count, DbReaderCallback callback, object userState = null)
 		{
 			// If the query has a database table.
 			if (query.Table != null)

@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using DotNetApi.Windows.Forms;
 using InetTools.Tools.Mercury;
 
-namespace InetTools.Forms
+namespace InetTools.Forms.Mercury
 {
 	/// <summary>
 	/// A form displaying the settings for the Mercury client tool.

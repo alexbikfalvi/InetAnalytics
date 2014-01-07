@@ -17,35 +17,42 @@
  */
 
 using System;
+using System.Net.NetworkInformation;
 
-namespace InetCrawler.Database
+namespace InetApi.Net.Core
 {
 	/// <summary>
-	/// A delegate representing the event handler for a database relationship.
+	/// A class representing a network interface extension.
 	/// </summary>
-	/// <param name="server">The sender object.</param>
-	/// <param name="e">The event arguments.</param>
-	public delegate void DbServerRelationshipEventHandler(object sender, DbServerRelationshipEventArgs e);
-
-	/// <summary>
-	/// A class representing the event arguments for a database relationship.
-	/// </summary>
-	public class DbServerRelationshipEventArgs : DbServerEventArgs
+	public class NetworkInterfaceEx
 	{
+		private readonly NetworkInterface iface;
+
 		/// <summary>
-		/// Creates a new event arguments instance.
+		/// Creates a new extended network interface instance.
 		/// </summary>
-		/// <param name="server">The database server.</param>
-		/// <param name="relationship">The database relationship.</param>
-		public DbServerRelationshipEventArgs(DbServerSql server, IRelationship relationship)
-			: base(server)
+		/// <param name="iface">The network interface.</param>
+		public NetworkInterfaceEx(NetworkInterface iface)
 		{
-			this.Relationship = relationship;
+			this.iface = iface;
 		}
 
+		// Public properties.
+
 		/// <summary>
-		/// Gets the old state.
+		/// Gets the network interface identifier.
 		/// </summary>
-		public IRelationship Relationship { get; private set; }
+		public string Id { get { return this.iface.Id; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Converts to extended network interface to a string.
+		/// </summary>
+		/// <returns>The string.</returns>
+		public override string ToString()
+		{
+			return this.iface.Name;
+		}
 	}
 }

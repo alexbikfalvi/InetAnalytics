@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using DotNetApi.Windows.Forms;
 using InetTools.Tools.CdnFinder;
 
-namespace InetTools.Forms
+namespace InetTools.Forms.CdnFinder
 {
 	/// <summary>
 	/// A form displaying a settings for the CDN Finder tool.

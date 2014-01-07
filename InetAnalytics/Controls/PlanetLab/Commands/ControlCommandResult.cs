@@ -86,14 +86,14 @@ namespace InetAnalytics.Controls.PlanetLab.Commands
 			else
 			{
 				this.pictureBox.Image = Resources.Question_48;
-				this.textBoxCommand.Text = string.Empty;
-				this.textBoxDuration.Text = string.Empty;
-				this.textBoxExitStatus.Text = string.Empty;
-				this.textBoxException.Text = string.Empty;
-				this.textBoxError.Text = string.Empty;
-				this.textBoxResult.Text = string.Empty;
-				this.textBoxRetries.Text = string.Empty;
-				this.textBoxTimeout.Text = string.Empty;
+				this.textBoxCommand.Clear();
+				this.textBoxDuration.Clear();
+				this.textBoxExitStatus.Clear();
+				this.textBoxException.Clear();
+				this.textBoxError.Clear();
+				this.textBoxResult.Clear();
+				this.textBoxRetries.Clear();
+				this.textBoxTimeout.Clear();
 			}
 		}
 	}

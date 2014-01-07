@@ -402,7 +402,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			}
 			else
 			{
-				this.textBoxExpires.Text = string.Empty;
+				this.textBoxExpires.Clear();
 				this.comboBoxRenew.Enabled = false;
 			}
 		}

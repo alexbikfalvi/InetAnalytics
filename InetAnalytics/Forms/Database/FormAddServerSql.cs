@@ -17,23 +17,25 @@
  */
 
 using System;
+using System.Security;
 using System.Windows.Forms;
+using InetAnalytics.Controls;
 using InetCrawler.Database;
-using DotNetApi;
+using DotNetApi.Security;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
 namespace InetAnalytics.Forms.Database
 {
 	/// <summary>
-	/// A form dialog displaying a log event.
+	/// A form dialog displaying an exception.
 	/// </summary>
-	public partial class FormRelationshipProperties : ThreadSafeForm
+	public partial class FormAddServerSql : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormRelationshipProperties()
+		public FormAddServerSql()
 		{
 			// Initialize the component.
 			this.InitializeComponent();
@@ -42,24 +44,57 @@ namespace InetAnalytics.Forms.Database
 			Window.SetFont(this);
 		}
 
+		// Public properties.
+
 		/// <summary>
-		/// Shows the form as a dialog with the specified database table.
+		/// Gets the database server type.
+		/// </summary>
+		public DbServerSql.DbType Type { get { return this.control.Type; } }
+
+		/// <summary>
+		/// Gets the database server name.
+		/// </summary>
+		public string ServerName { get { return this.control.ServerName; } }
+
+		/// <summary>
+		/// Gets the database data source.
+		/// </summary>
+		public string DataSource { get { return this.control.DataSource; } }
+
+		/// <summary>
+		/// Gets the user name.
+		/// </summary>
+		public string Username { get { return this.control.Username; } }
+
+		/// <summary>
+		/// Gets the password.
+		/// </summary>
+		public SecureString Password { get { return this.control.Password; } }
+
+		/// <summary>
+		/// Indicates whether this server should be primary.
+		/// </summary>
+		public bool IsPrimary { get { return this.control.MakePrimary; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Shows the add server dialog.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="server">The database server.</param>
-		/// <param name="table">The database relationship.</param>
+		/// <param name="primary">The state of the primary check box.</param>
+		/// <param name="primaryEnabled">The enabled state of the primary check box.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServerSql server, IRelationship relationship)
+		public DialogResult ShowDialog(IWin32Window owner, bool primary, bool primaryEnabled)
 		{
-			// If the table is null, do nothing.
-			if (null == relationship) return DialogResult.Abort;
-			// Set the control relationsip.
-			this.control.Relationship = relationship;
-			// Set the form title.
-			this.Text = "{0} Relationship Properties".FormatWith(this.control.Title);
-			// Disable the apply button.
-			this.buttonApply.Enabled = false;
-			// Open the dialog.
+			// Clear the control settings.
+			this.control.Clear();
+			// Set the primary check box.
+			this.control.MakePrimary = primary;
+			this.control.MakePrimaryEnabled = primaryEnabled;
+			// Select the control.
+			this.control.Select();
+			// Show the dialog.
 			return base.ShowDialog(owner);
 		}
 
@@ -102,35 +137,17 @@ namespace InetAnalytics.Forms.Database
 		}
 
 		/// <summary>
-		/// An event handler called when the configuration has changed.
+		/// An event handler called when the user input has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnConfigurationChanged(object sender, EventArgs e)
+		private void OnInputChanged(object sender, EventArgs e)
 		{
-			this.buttonApply.Enabled = true;
-		}
-
-		/// <summary>
-		/// An event handler called when the user clicks on the OK button.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnOk(object sender, EventArgs e)
-		{
-			// Save the configuration and exit.
-			this.OnApply(sender, e);
-		}
-
-		/// <summary>
-		/// An event handler called when the user clicks on the Apply button.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnApply(object sender, EventArgs e)
-		{
-			// Save the configuration and disable the button.
-			this.buttonApply.Enabled = false;
+			this.buttonAdd.Enabled =
+				!string.IsNullOrWhiteSpace(this.control.ServerName) &&
+				!string.IsNullOrWhiteSpace(this.control.DataSource) &&
+				!string.IsNullOrWhiteSpace(this.control.Username) &&
+				!this.control.Password.IsEmpty();
 		}
 	}
 }

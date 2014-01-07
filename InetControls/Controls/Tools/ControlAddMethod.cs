@@ -163,7 +163,7 @@ namespace InetAnalytics.Controls.Tools
 				this.Method = null;
 
 				// Set the method description.
-				this.textBoxDescription.Text = string.Empty;
+				this.textBoxDescription.Clear();
 			}
 
 			// Raise the input changed event.

@@ -242,7 +242,7 @@ namespace InetAnalytics.Controls.Tools
 			else
 			{
 				// Set the method description.
-				this.textBoxDescription.Text = string.Empty;
+				this.textBoxDescription.Clear();
 				// Set the remove button enabled state.
 				this.buttonRemove.Enabled = false;
 			}

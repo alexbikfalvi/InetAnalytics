@@ -61,8 +61,11 @@ namespace InetApi.Net.Core
 
 		//}
 
-		//public IAsyncResult BeginSendIcmp(str)
-
+		//public IAsyncResult BeginIcmp(IPAddress destination, byte ttl, AsyncCallback callback, object state)
+		//{
+		//	// Create a new traceroute state.
+		//	//TracerouteState asyncState = new TracerouteState();
+		//}
 
 		// Protected methods.
 

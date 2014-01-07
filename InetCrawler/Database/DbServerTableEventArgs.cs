@@ -37,7 +37,7 @@ namespace InetCrawler.Database
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="table">The database table.</param>
-		public DbServerTableEventArgs(DbServer server, ITable table)
+		public DbServerTableEventArgs(DbServerSql server, ITable table)
 			: base(server)
 		{
 			this.Table = table;

@@ -1,6 +1,6 @@
 ﻿namespace InetAnalytics.Controls.Database
 {
-	partial class ControlAddServer
+	partial class ControlAddServerSql
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -171,7 +171,7 @@
 			this.textBoxPassword.Size = new System.Drawing.Size(270, 20);
 			this.textBoxPassword.TabIndex = 12;
 			this.textBoxPassword.UseSystemPasswordChar = true;
-			this.textBoxPassword.Validated += new System.EventHandler(this.OnInputChanged);
+			this.textBoxPassword.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// ControlAddServer
 			// 

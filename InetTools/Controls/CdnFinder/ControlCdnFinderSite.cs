@@ -45,10 +45,10 @@ namespace InetTools.Controls.CdnFinder
 		{
 			this.pictureBox.Image = Resources.GlobeQuestion_48;
 			this.labelTitle.Text = "Site information not available";
-			this.textBoxSite.Text = string.Empty;
-			this.textBoxUrl.Text = string.Empty;
-			this.textBoxAssetCdn.Text = string.Empty;
-			this.textBoxBaseCdn.Text = string.Empty;
+			this.textBoxSite.Clear();
+			this.textBoxUrl.Clear();
+			this.textBoxAssetCdn.Clear();
+			this.textBoxBaseCdn.Clear();
 			this.listViewResources.Items.Clear();
 		}
 
@@ -65,10 +65,10 @@ namespace InetTools.Controls.CdnFinder
 			{
 				this.pictureBox.Image = Resources.GlobeError_48;
 				this.labelTitle.Text = "Site not found";
-				this.textBoxSite.Text = string.Empty;
-				this.textBoxUrl.Text = string.Empty;
-				this.textBoxAssetCdn.Text = string.Empty;
-				this.textBoxBaseCdn.Text = string.Empty;
+				this.textBoxSite.Clear();
+				this.textBoxUrl.Clear();
+				this.textBoxAssetCdn.Clear();
+				this.textBoxBaseCdn.Clear();
 			}
 			else if (site.Success)
 			{
@@ -95,10 +95,10 @@ namespace InetTools.Controls.CdnFinder
 			{
 				this.pictureBox.Image = Resources.GlobeWarning_48;
 				this.labelTitle.Text = "No site information";
-				this.textBoxSite.Text = string.Empty;
-				this.textBoxUrl.Text = string.Empty;
-				this.textBoxAssetCdn.Text = string.Empty;
-				this.textBoxBaseCdn.Text = string.Empty;
+				this.textBoxSite.Clear();
+				this.textBoxUrl.Clear();
+				this.textBoxAssetCdn.Clear();
+				this.textBoxBaseCdn.Clear();
 			}
 		}
 	}

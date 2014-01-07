@@ -1,4 +1,4 @@
-﻿namespace InetTools.Forms
+﻿namespace InetTools.Forms.CdnFinder
 {
 	partial class FormCdnFinderSettings
 	{

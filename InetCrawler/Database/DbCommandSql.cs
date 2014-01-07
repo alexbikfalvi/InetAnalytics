@@ -37,7 +37,7 @@ namespace InetCrawler.Database
 		/// <param name="connection">The database server connection.</param>
 		/// <param name="query">The command query.</param>
 		/// <param name="transaction">The database transaction, or <b>null</b> if no transaction is used.</param>
-		public DbCommandSql(SqlConnection connection, DbQuery query, DbTransactionSql transaction = null)
+		public DbCommandSql(SqlConnection connection, DbQuerySql query, DbTransactionSql transaction = null)
 			: base(query)
 		{
 			// Create a modified query for this server, replacing the query parameters.

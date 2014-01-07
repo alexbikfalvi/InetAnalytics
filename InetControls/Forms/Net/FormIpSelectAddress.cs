@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2012-2013 Alex Bikfalvi
+ * Copyright (C) 2013-2014 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,22 @@
  */
 
 using System;
-using System.Security;
+using System.Net;
 using System.Windows.Forms;
-using InetAnalytics.Controls;
-using InetCrawler.Database;
-using DotNetApi.Security;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetAnalytics.Forms.Database
+namespace InetAnalytics.Forms.Net
 {
 	/// <summary>
-	/// A form dialog displaying an exception.
+	/// A form dialog that allows the selection of one IP address.
 	/// </summary>
-	public partial class FormAddServer : ThreadSafeForm
+	public partial class FormIpSelectAddress : ThreadSafeForm
 	{
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormAddServer()
+		public FormIpSelectAddress()
 		{
 			// Initialize the component.
 			this.InitializeComponent();
@@ -47,54 +44,34 @@ namespace InetAnalytics.Forms.Database
 		// Public properties.
 
 		/// <summary>
-		/// Gets the database server type.
+		/// Gets the selected IP address.
 		/// </summary>
-		public DbConfig.DbServerType Type { get { return this.control.Type; } }
-
-		/// <summary>
-		/// Gets the database server name.
-		/// </summary>
-		public string ServerName { get { return this.control.ServerName; } }
-
-		/// <summary>
-		/// Gets the database data source.
-		/// </summary>
-		public string DataSource { get { return this.control.DataSource; } }
-
-		/// <summary>
-		/// Gets the user name.
-		/// </summary>
-		public string Username { get { return this.control.Username; } }
-
-		/// <summary>
-		/// Gets the password.
-		/// </summary>
-		public SecureString Password { get { return this.control.Password; } }
-
-		/// <summary>
-		/// Indicates whether this server should be primary.
-		/// </summary>
-		public bool IsPrimary { get { return this.control.MakePrimary; } }
+		public IPAddress Address { get; private set; }
 
 		// Public methods.
 
 		/// <summary>
-		/// Shows the add server dialog.
+		/// Shows the form as a dialog to allow the selection of one IP address.
 		/// </summary>
 		/// <param name="owner">The owner window.</param>
-		/// <param name="primary">The state of the primary check box.</param>
-		/// <param name="primaryEnabled">The enabled state of the primary check box.</param>
+		/// <param name="addresses">The map control to export.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, bool primary, bool primaryEnabled)
+		public DialogResult ShowDialog(IWin32Window owner, IPAddress[] addresses)
 		{
-			// Clear the control settings.
-			this.control.Clear();
-			// Set the primary check box.
-			this.control.MakePrimary = primary;
-			this.control.MakePrimaryEnabled = primaryEnabled;
-			// Select the control.
-			this.control.Select();
-			// Show the dialog.
+			// Reset the control.
+			this.listViewAddress.Items.Clear();
+
+			// Set the IP addresses.
+			foreach (IPAddress address in addresses)
+			{
+				ListViewItem item = new ListViewItem(new string[] { address.ToString(), address.AddressFamily.ToString() });
+				item.Tag = address;
+				this.listViewAddress.Items.Add(item);
+			}
+
+			// Call the selection changed event handler.
+			this.OnSelectionChanged(this, EventArgs.Empty);
+
 			return base.ShowDialog(owner);
 		}
 
@@ -137,17 +114,22 @@ namespace InetAnalytics.Forms.Database
 		}
 
 		/// <summary>
-		/// An event handler called when the user input has changed.
+		/// An event handler called when the address selection has changed.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnInputChanged(object sender, EventArgs e)
+		private void OnSelectionChanged(object sender, EventArgs e)
 		{
-			this.buttonAdd.Enabled =
-				!string.IsNullOrWhiteSpace(this.control.ServerName) &&
-				!string.IsNullOrWhiteSpace(this.control.DataSource) &&
-				!string.IsNullOrWhiteSpace(this.control.Username) &&
-				!this.control.Password.IsEmpty();
+			if (this.listViewAddress.SelectedItems.Count > 0)
+			{
+				this.buttonSelect.Enabled = true;
+				this.Address = this.listViewAddress.SelectedItems[0].Tag as IPAddress;
+			}
+			else
+			{
+				this.buttonSelect.Enabled = false;
+				this.Address = null;
+			}
 		}
 	}
 }

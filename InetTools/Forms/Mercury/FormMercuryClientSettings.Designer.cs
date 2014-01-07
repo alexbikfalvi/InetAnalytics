@@ -1,4 +1,4 @@
-﻿namespace InetTools.Forms
+﻿namespace InetTools.Forms.Mercury
 {
 	partial class FormMercuryClientSettings
 	{

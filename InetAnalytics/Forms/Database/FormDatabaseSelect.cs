@@ -66,7 +66,7 @@ namespace InetAnalytics.Forms.Database
 		/// <param name="table">The database table.</param>
 		/// <param name="result">The result to display when the dialog opens.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServer server, ITable table, DbDataObject result)
+		public DialogResult ShowDialog(IWin32Window owner, DbServerSql server, ITable table, DbDataObject result)
 		{
 			// Reset the result.
 			this.SelectedResult = null;
@@ -86,7 +86,7 @@ namespace InetAnalytics.Forms.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The result to display when the dialog opens.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServer server, DbQuery query, DbDataObject result)
+		public DialogResult ShowDialog(IWin32Window owner, DbServerSql server, DbQuerySql query, DbDataObject result)
 		{
 			// Reset the result.
 			this.SelectedResult = null;

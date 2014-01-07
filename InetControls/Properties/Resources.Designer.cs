@@ -343,6 +343,16 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Select_48 {
+            get {
+                object obj = ResourceManager.GetObject("Select_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ServerBusy_32 {
             get {
                 object obj = ResourceManager.GetObject("ServerBusy_32", resourceCulture);

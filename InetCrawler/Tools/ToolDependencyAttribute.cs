@@ -23,6 +23,7 @@ namespace InetCrawler.Tools
 	/// <summary>
 	/// A class representing a tool dependency attribute.
 	/// </summary>
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class ToolDependencyAttribute : Attribute
 	{
 		/// <summary>

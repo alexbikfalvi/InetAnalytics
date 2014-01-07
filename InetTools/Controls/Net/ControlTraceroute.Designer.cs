@@ -48,6 +48,17 @@
 			this.columnHeaderTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.tabPageSettings = new System.Windows.Forms.TabPage();
+			this.labelNetworkInterface = new System.Windows.Forms.Label();
+			this.comboBoxNetworkInterface = new System.Windows.Forms.ComboBox();
+			this.numericUpDownMaximumFailedHops = new System.Windows.Forms.NumericUpDown();
+			this.labelMaximumFailedHops = new System.Windows.Forms.Label();
+			this.checkBoxStopOnFail = new System.Windows.Forms.CheckBox();
+			this.checkBoxStopHopOnSuccess = new System.Windows.Forms.CheckBox();
+			this.labelMaximumAttempts = new System.Windows.Forms.Label();
+			this.checkBoxAutomaticNameResolution = new System.Windows.Forms.CheckBox();
+			this.numericUpDownMaximumHops = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownMaximumAttempts = new System.Windows.Forms.NumericUpDown();
+			this.labelMaximumHops = new System.Windows.Forms.Label();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelDestination = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxDestination = new System.Windows.Forms.ToolStripTextBox();
@@ -57,15 +68,6 @@
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.labelMaximumHops = new System.Windows.Forms.Label();
-			this.numericUpDownMaximumAttempts = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDownMaximumHops = new System.Windows.Forms.NumericUpDown();
-			this.checkBoxAutomaticNameResolution = new System.Windows.Forms.CheckBox();
-			this.labelMaximumAttempts = new System.Windows.Forms.Label();
-			this.checkBoxStopHopOnSuccess = new System.Windows.Forms.CheckBox();
-			this.checkBoxStopOnFail = new System.Windows.Forms.CheckBox();
-			this.labelMaximumFailedHops = new System.Windows.Forms.Label();
-			this.numericUpDownMaximumFailedHops = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -74,10 +76,10 @@
 			this.tabControl.SuspendLayout();
 			this.tabPageRoute.SuspendLayout();
 			this.tabPageSettings.SuspendLayout();
-			this.toolStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAttempts)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHops)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumFailedHops)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHops)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAttempts)).BeginInit();
+			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer
@@ -201,6 +203,8 @@
 			// 
 			// tabPageSettings
 			// 
+			this.tabPageSettings.Controls.Add(this.labelNetworkInterface);
+			this.tabPageSettings.Controls.Add(this.comboBoxNetworkInterface);
 			this.tabPageSettings.Controls.Add(this.numericUpDownMaximumFailedHops);
 			this.tabPageSettings.Controls.Add(this.labelMaximumFailedHops);
 			this.tabPageSettings.Controls.Add(this.checkBoxStopOnFail);
@@ -217,6 +221,149 @@
 			this.tabPageSettings.TabIndex = 1;
 			this.tabPageSettings.Text = "Settings";
 			this.tabPageSettings.UseVisualStyleBackColor = true;
+			// 
+			// labelNetworkInterface
+			// 
+			this.labelNetworkInterface.AutoSize = true;
+			this.labelNetworkInterface.Location = new System.Drawing.Point(7, 160);
+			this.labelNetworkInterface.Name = "labelNetworkInterface";
+			this.labelNetworkInterface.Size = new System.Drawing.Size(94, 13);
+			this.labelNetworkInterface.TabIndex = 10;
+			this.labelNetworkInterface.Text = "Network &interface:";
+			// 
+			// comboBoxNetworkInterface
+			// 
+			this.comboBoxNetworkInterface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxNetworkInterface.FormattingEnabled = true;
+			this.comboBoxNetworkInterface.Location = new System.Drawing.Point(187, 157);
+			this.comboBoxNetworkInterface.Name = "comboBoxNetworkInterface";
+			this.comboBoxNetworkInterface.Size = new System.Drawing.Size(300, 21);
+			this.comboBoxNetworkInterface.TabIndex = 9;
+			this.comboBoxNetworkInterface.SelectedIndexChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// numericUpDownMaximumFailedHops
+			// 
+			this.numericUpDownMaximumFailedHops.Location = new System.Drawing.Point(187, 131);
+			this.numericUpDownMaximumFailedHops.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumFailedHops.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumFailedHops.Name = "numericUpDownMaximumFailedHops";
+			this.numericUpDownMaximumFailedHops.Size = new System.Drawing.Size(120, 20);
+			this.numericUpDownMaximumFailedHops.TabIndex = 8;
+			this.numericUpDownMaximumFailedHops.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumFailedHops.ValueChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// labelMaximumFailedHops
+			// 
+			this.labelMaximumFailedHops.AutoSize = true;
+			this.labelMaximumFailedHops.Location = new System.Drawing.Point(7, 133);
+			this.labelMaximumFailedHops.Name = "labelMaximumFailedHops";
+			this.labelMaximumFailedHops.Size = new System.Drawing.Size(158, 13);
+			this.labelMaximumFailedHops.TabIndex = 7;
+			this.labelMaximumFailedHops.Text = "Maximum number of &failed hops:";
+			// 
+			// checkBoxStopOnFail
+			// 
+			this.checkBoxStopOnFail.AutoSize = true;
+			this.checkBoxStopOnFail.Location = new System.Drawing.Point(10, 108);
+			this.checkBoxStopOnFail.Name = "checkBoxStopOnFail";
+			this.checkBoxStopOnFail.Size = new System.Drawing.Size(297, 17);
+			this.checkBoxStopOnFail.TabIndex = 6;
+			this.checkBoxStopOnFail.Text = "&Stop traceroute after a number of consecutive failed hops";
+			this.checkBoxStopOnFail.UseVisualStyleBackColor = true;
+			this.checkBoxStopOnFail.CheckedChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// checkBoxStopHopOnSuccess
+			// 
+			this.checkBoxStopHopOnSuccess.AutoSize = true;
+			this.checkBoxStopHopOnSuccess.Location = new System.Drawing.Point(10, 85);
+			this.checkBoxStopHopOnSuccess.Name = "checkBoxStopHopOnSuccess";
+			this.checkBoxStopHopOnSuccess.Size = new System.Drawing.Size(220, 17);
+			this.checkBoxStopHopOnSuccess.TabIndex = 5;
+			this.checkBoxStopHopOnSuccess.Text = "Stop traceroute &hop attempts on success";
+			this.checkBoxStopHopOnSuccess.UseVisualStyleBackColor = true;
+			this.checkBoxStopHopOnSuccess.CheckedChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// labelMaximumAttempts
+			// 
+			this.labelMaximumAttempts.AutoSize = true;
+			this.labelMaximumAttempts.Location = new System.Drawing.Point(7, 61);
+			this.labelMaximumAttempts.Name = "labelMaximumAttempts";
+			this.labelMaximumAttempts.Size = new System.Drawing.Size(136, 13);
+			this.labelMaximumAttempts.TabIndex = 3;
+			this.labelMaximumAttempts.Text = "Maximum &attempts per hop:";
+			// 
+			// checkBoxAutomaticNameResolution
+			// 
+			this.checkBoxAutomaticNameResolution.AutoSize = true;
+			this.checkBoxAutomaticNameResolution.Location = new System.Drawing.Point(10, 10);
+			this.checkBoxAutomaticNameResolution.Name = "checkBoxAutomaticNameResolution";
+			this.checkBoxAutomaticNameResolution.Size = new System.Drawing.Size(183, 17);
+			this.checkBoxAutomaticNameResolution.TabIndex = 0;
+			this.checkBoxAutomaticNameResolution.Text = "&Resolve hostnames automatically";
+			this.checkBoxAutomaticNameResolution.UseVisualStyleBackColor = true;
+			this.checkBoxAutomaticNameResolution.CheckedChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// numericUpDownMaximumHops
+			// 
+			this.numericUpDownMaximumHops.Location = new System.Drawing.Point(187, 33);
+			this.numericUpDownMaximumHops.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumHops.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumHops.Name = "numericUpDownMaximumHops";
+			this.numericUpDownMaximumHops.Size = new System.Drawing.Size(120, 20);
+			this.numericUpDownMaximumHops.TabIndex = 2;
+			this.numericUpDownMaximumHops.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumHops.ValueChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// numericUpDownMaximumAttempts
+			// 
+			this.numericUpDownMaximumAttempts.Location = new System.Drawing.Point(187, 59);
+			this.numericUpDownMaximumAttempts.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumAttempts.Name = "numericUpDownMaximumAttempts";
+			this.numericUpDownMaximumAttempts.Size = new System.Drawing.Size(120, 20);
+			this.numericUpDownMaximumAttempts.TabIndex = 4;
+			this.numericUpDownMaximumAttempts.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownMaximumAttempts.ValueChanged += new System.EventHandler(this.OnInputChanged);
+			// 
+			// labelMaximumHops
+			// 
+			this.labelMaximumHops.AutoSize = true;
+			this.labelMaximumHops.Location = new System.Drawing.Point(7, 35);
+			this.labelMaximumHops.Name = "labelMaximumHops";
+			this.labelMaximumHops.Size = new System.Drawing.Size(80, 13);
+			this.labelMaximumHops.TabIndex = 1;
+			this.labelMaximumHops.Text = "Ma&ximum hops:";
 			// 
 			// toolStrip
 			// 
@@ -303,85 +450,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Event Log";
 			// 
-			// labelMaximumHops
-			// 
-			this.labelMaximumHops.AutoSize = true;
-			this.labelMaximumHops.Location = new System.Drawing.Point(7, 35);
-			this.labelMaximumHops.Name = "labelMaximumHops";
-			this.labelMaximumHops.Size = new System.Drawing.Size(80, 13);
-			this.labelMaximumHops.TabIndex = 1;
-			this.labelMaximumHops.Text = "Ma&ximum hops:";
-			// 
-			// numericUpDownMaximumAttempts
-			// 
-			this.numericUpDownMaximumAttempts.Location = new System.Drawing.Point(171, 59);
-			this.numericUpDownMaximumAttempts.Name = "numericUpDownMaximumAttempts";
-			this.numericUpDownMaximumAttempts.Size = new System.Drawing.Size(120, 20);
-			this.numericUpDownMaximumAttempts.TabIndex = 4;
-			// 
-			// numericUpDownMaximumHops
-			// 
-			this.numericUpDownMaximumHops.Location = new System.Drawing.Point(171, 33);
-			this.numericUpDownMaximumHops.Name = "numericUpDownMaximumHops";
-			this.numericUpDownMaximumHops.Size = new System.Drawing.Size(120, 20);
-			this.numericUpDownMaximumHops.TabIndex = 2;
-			// 
-			// checkBoxAutomaticNameResolution
-			// 
-			this.checkBoxAutomaticNameResolution.AutoSize = true;
-			this.checkBoxAutomaticNameResolution.Location = new System.Drawing.Point(10, 10);
-			this.checkBoxAutomaticNameResolution.Name = "checkBoxAutomaticNameResolution";
-			this.checkBoxAutomaticNameResolution.Size = new System.Drawing.Size(183, 17);
-			this.checkBoxAutomaticNameResolution.TabIndex = 0;
-			this.checkBoxAutomaticNameResolution.Text = "&Resolve hostnames automatically";
-			this.checkBoxAutomaticNameResolution.UseVisualStyleBackColor = true;
-			// 
-			// labelMaximumAttempts
-			// 
-			this.labelMaximumAttempts.AutoSize = true;
-			this.labelMaximumAttempts.Location = new System.Drawing.Point(7, 61);
-			this.labelMaximumAttempts.Name = "labelMaximumAttempts";
-			this.labelMaximumAttempts.Size = new System.Drawing.Size(136, 13);
-			this.labelMaximumAttempts.TabIndex = 3;
-			this.labelMaximumAttempts.Text = "Maximum &attempts per hop:";
-			// 
-			// checkBoxStopHopOnSuccess
-			// 
-			this.checkBoxStopHopOnSuccess.AutoSize = true;
-			this.checkBoxStopHopOnSuccess.Location = new System.Drawing.Point(10, 85);
-			this.checkBoxStopHopOnSuccess.Name = "checkBoxStopHopOnSuccess";
-			this.checkBoxStopHopOnSuccess.Size = new System.Drawing.Size(220, 17);
-			this.checkBoxStopHopOnSuccess.TabIndex = 5;
-			this.checkBoxStopHopOnSuccess.Text = "Stop traceroute &hop attempts on success";
-			this.checkBoxStopHopOnSuccess.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxStopOnFail
-			// 
-			this.checkBoxStopOnFail.AutoSize = true;
-			this.checkBoxStopOnFail.Location = new System.Drawing.Point(10, 108);
-			this.checkBoxStopOnFail.Name = "checkBoxStopOnFail";
-			this.checkBoxStopOnFail.Size = new System.Drawing.Size(297, 17);
-			this.checkBoxStopOnFail.TabIndex = 6;
-			this.checkBoxStopOnFail.Text = "&Stop traceroute after a number of consecutive failed hops";
-			this.checkBoxStopOnFail.UseVisualStyleBackColor = true;
-			this.checkBoxStopOnFail.CheckedChanged += new System.EventHandler(this.OnInputChanged);
-			// 
-			// labelMaximumFailedHops
-			// 
-			this.labelMaximumFailedHops.AutoSize = true;
-			this.labelMaximumFailedHops.Location = new System.Drawing.Point(7, 133);
-			this.labelMaximumFailedHops.Name = "labelMaximumFailedHops";
-			this.labelMaximumFailedHops.Size = new System.Drawing.Size(158, 13);
-			this.labelMaximumFailedHops.TabIndex = 7;
-			this.labelMaximumFailedHops.Text = "Maximum number of &failed hops:";
-			// 
-			// numericUpDownMaximumFailedHops
-			// 
-			this.numericUpDownMaximumFailedHops.Location = new System.Drawing.Point(171, 131);
-			this.numericUpDownMaximumFailedHops.Name = "numericUpDownMaximumFailedHops";
-			this.numericUpDownMaximumFailedHops.Size = new System.Drawing.Size(120, 20);
-			this.numericUpDownMaximumFailedHops.TabIndex = 8;
-			// 
 			// ControlTraceroute
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -400,11 +468,11 @@
 			this.tabPageRoute.ResumeLayout(false);
 			this.tabPageSettings.ResumeLayout(false);
 			this.tabPageSettings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumFailedHops)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHops)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAttempts)).EndInit();
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAttempts)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHops)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumFailedHops)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -442,5 +510,7 @@
 		private System.Windows.Forms.CheckBox checkBoxStopOnFail;
 		private System.Windows.Forms.NumericUpDown numericUpDownMaximumFailedHops;
 		private System.Windows.Forms.Label labelMaximumFailedHops;
+		private System.Windows.Forms.Label labelNetworkInterface;
+		private System.Windows.Forms.ComboBox comboBoxNetworkInterface;
 	}
 }

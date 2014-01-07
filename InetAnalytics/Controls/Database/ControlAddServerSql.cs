@@ -17,8 +17,10 @@
  */
 
 using System;
+using System.Linq;
 using System.Security;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Security;
 using DotNetApi.Windows.Controls;
 using InetCrawler.Database;
@@ -28,17 +30,22 @@ namespace InetAnalytics.Controls.Database
 	/// <summary>
 	/// A control that receives user input data to add a database server.
 	/// </summary>
-	public partial class ControlAddServer : ThreadSafeControl
+	public partial class ControlAddServerSql : ThreadSafeControl
 	{
+		private static readonly Array types = Enum.GetValues(typeof(DbServerSql.DbType));
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlAddServer()
+		public ControlAddServerSql()
 		{
 			InitializeComponent();
 
 			// Populate the server types.
-			this.comboBoxType.Items.AddRange(DbConfig.ServerTypeNames);
+			foreach (Enum type in ControlAddServerSql.types)
+			{
+				this.comboBoxType.Items.Add(type.GetDescription());
+			}
 			this.comboBoxType.SelectedIndex = 0;
 		}
 
@@ -50,7 +57,7 @@ namespace InetAnalytics.Controls.Database
 		/// <summary>
 		/// Returns the database server type.
 		/// </summary>
-		public DbConfig.DbServerType Type { get { return (DbConfig.DbServerType)this.comboBoxType.SelectedIndex; } }
+		public DbServerSql.DbType Type { get { return (DbServerSql.DbType)ControlAddServerSql.types.GetValue(this.comboBoxType.SelectedIndex); } }
 
 		/// <summary>
 		/// Gets the server name.
@@ -96,10 +103,10 @@ namespace InetAnalytics.Controls.Database
 		public void Clear()
 		{
 			this.comboBoxType.SelectedIndex = 0;
-			this.textBoxName.Text = string.Empty;
-			this.textBoxDataSource.Text = string.Empty;
-			this.textBoxUsername.Text = string.Empty;
-			this.textBoxPassword.SecureText.Clear();
+			this.textBoxName.Clear();
+			this.textBoxDataSource.Clear();
+			this.textBoxUsername.Clear();
+			this.textBoxPassword.Clear();
 			this.checkBoxPrimary.Checked = false;
 			this.checkBoxPrimary.Enabled = true;
 		}

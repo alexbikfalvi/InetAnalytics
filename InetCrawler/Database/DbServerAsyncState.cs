@@ -32,14 +32,14 @@ namespace InetCrawler.Database
 	/// </summary>
 	public sealed class DbServerAsyncState : DbAsyncResult
 	{
-		private DbServer server;
+		private DbServerSql server;
 
 		/// <summary>
 		/// Creates a new instance of the asynchronous state.
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="state">The user state.</param>
-		public DbServerAsyncState(DbServer server, object state)
+		public DbServerAsyncState(DbServerSql server, object state)
 			: base(state)
 		{
 			// Save the database server.
@@ -51,6 +51,6 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Returns the database server that generated the exception.
 		/// </summary>
-		public DbServer Server { get { return this.server; } }
+		public DbServerSql Server { get { return this.server; } }
 	}
 }

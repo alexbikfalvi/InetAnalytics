@@ -48,8 +48,6 @@ namespace InetApi.Net.Core
 			this.socketRecv.Bind(new IPEndPoint(localAddress, 0));
 		}
 
-		// Internal properties.
-
 		// Protected methods.
 
 		/// <summary>

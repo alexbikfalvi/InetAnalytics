@@ -68,9 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Database\ControlDatabase.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Controls\Database\ControlServerProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -506,23 +503,19 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServers.cs">
+    <Compile Include="Controls\Database\ControlServersSql.cs" />
+    <Compile Include="Controls\Database\ControlServersSql.Designer.cs">
+      <DependentUpon>ControlServersSql.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Database\ControlAddServerSql.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Database\ControlServers.Designer.cs">
-      <DependentUpon>ControlServers.cs</DependentUpon>
+    <Compile Include="Controls\Database\ControlAddServerSql.Designer.cs">
+      <DependentUpon>ControlAddServerSql.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlAddServer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Database\ControlAddServer.Designer.cs">
-      <DependentUpon>ControlAddServer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Database\ControlServer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Database\ControlServer.Designer.cs">
-      <DependentUpon>ControlServer.cs</DependentUpon>
+    <Compile Include="Controls\Database\ControlServerSql.cs" />
+    <Compile Include="Controls\Database\ControlServerSql.Designer.cs">
+      <DependentUpon>ControlServerSql.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Database\ControlDatabaseProperties.cs">
       <SubType>UserControl</SubType>
@@ -554,9 +547,7 @@
     <Compile Include="Controls\Database\ControlTableProperties.Designer.cs">
       <DependentUpon>ControlTableProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\Database\ControlDatabaseSelect.cs" />
     <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </Compile>
@@ -731,11 +722,11 @@
     <Compile Include="Forms\Database\FormServerProperties.Designer.cs">
       <DependentUpon>FormServerProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Database\FormAddServer.cs">
+    <Compile Include="Forms\Database\FormAddServerSql.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Database\FormAddServer.Designer.cs">
-      <DependentUpon>FormAddServer.cs</DependentUpon>
+    <Compile Include="Forms\Database\FormAddServerSql.Designer.cs">
+      <DependentUpon>FormAddServerSql.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Tools\ControlToolInfoProperties.cs">
       <SubType>UserControl</SubType>
@@ -1035,14 +1026,14 @@
     <EmbeddedResource Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.resx">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Database\ControlServers.resx">
-      <DependentUpon>ControlServers.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Database\ControlServersSql.resx">
+      <DependentUpon>ControlServersSql.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Database\ControlAddServer.resx">
-      <DependentUpon>ControlAddServer.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Database\ControlAddServerSql.resx">
+      <DependentUpon>ControlAddServerSql.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Database\ControlServer.resx">
-      <DependentUpon>ControlServer.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Database\ControlServerSql.resx">
+      <DependentUpon>ControlServerSql.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Database\ControlDatabaseProperties.resx">
       <DependentUpon>ControlDatabaseProperties.cs</DependentUpon>
@@ -1147,8 +1138,8 @@
     <EmbeddedResource Include="Forms\Database\FormServerProperties.resx">
       <DependentUpon>FormServerProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Database\FormAddServer.resx">
-      <DependentUpon>FormAddServer.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\FormAddServerSql.resx">
+      <DependentUpon>FormAddServerSql.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Tools\ControlToolInfoProperties.resx">
       <DependentUpon>ControlToolInfoProperties.cs</DependentUpon>

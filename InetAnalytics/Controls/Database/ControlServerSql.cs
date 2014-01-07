@@ -35,12 +35,12 @@ namespace InetAnalytics.Controls.Database
 	/// <summary>
 	/// A class representing a database server control.
 	/// </summary>
-	public partial class ControlServer : ControlDatabase
+	public partial class ControlServerSql : ControlBaseSql
 	{
 		private static readonly string logSource = "Database";
 
 		private Crawler crawler;
-		private DbServer server;
+		private DbServerSql server;
 
 		private readonly FormServerProperties formProperties = new FormServerProperties();
 		private readonly FormDatabaseProperties formDatabaseProperties = new FormDatabaseProperties();
@@ -61,7 +61,7 @@ namespace InetAnalytics.Controls.Database
 		/// <summary>
 		/// Creates a new instance of the control.
 		/// </summary>
-		public ControlServer()
+		public ControlServerSql()
 		{
 			// Initialize component.
 			InitializeComponent();
@@ -80,7 +80,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="crawler">The crawler instance.</param>
 		/// <param name="server">The database server.</param>
 		/// <param name="treeNode">The tree node corresponding to this server.</param>
-		public void Initialize(Crawler crawler, DbServer server, TreeNode treeNode)
+		public void Initialize(Crawler crawler, DbServerSql server, TreeNode treeNode)
 		{
 			// Set the crawler.
 			this.crawler = crawler;
@@ -102,7 +102,7 @@ namespace InetAnalytics.Controls.Database
 			this.server.RelationshipAdded += this.OnRelationshipAdded;
 			this.server.RelationshipRemoved += this.OnRelationshipRemoved;
 			this.server.EventLogged += this.OnEventLogged;
-			this.crawler.Database.PrimaryServerChanged += this.OnPrimaryServerChanged;
+			this.crawler.Database.Sql.PrimaryServerChanged += this.OnPrimaryServerChanged;
 
 			// Initialize the contols.
 			this.OnServerChanged(this, new DbServerEventArgs(this.server));
@@ -147,7 +147,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The result data.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected override void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
+		protected override void OnQuerySucceeded(DbServerSql server, DbQuerySql query, DbDataObject result, int recordsAffected)
 		{
 			// Add the databases to the list.
 			for (int row = 0; row < result.RowCount; row++)
@@ -174,7 +174,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		protected override void OnQueryFailed(DbServer server, DbQuery query, Exception exception)
+		protected override void OnQueryFailed(DbServerSql server, DbQuerySql query, Exception exception)
 		{
 			// Enable the refresh button.
 			this.buttonDatabaseRefresh.Enabled = true;
@@ -191,7 +191,7 @@ namespace InetAnalytics.Controls.Database
 		{
 			// Update the server properties.
 			this.labelName.Text = e.Server.Name;
-			this.labelPrimary.Text = this.crawler.Database.IsPrimary(e.Server) ? "Primary database server" : "Backup database server";
+			this.labelPrimary.Text = this.crawler.Database.Sql.IsPrimary(e.Server) ? "Primary database server" : "Backup database server";
 		}
 
 		/// <summary>
@@ -205,16 +205,16 @@ namespace InetAnalytics.Controls.Database
 			this.Invoke(() =>
 				{
 					this.buttonConnect.Enabled =
-						(this.server.State == DbServer.ServerState.Disconnected) ||
-						(this.server.State == DbServer.ServerState.Failed);
-					this.buttonDisconnect.Enabled = this.server.State == DbServer.ServerState.Connected;
+						(this.server.State == DbServerSql.ServerState.Disconnected) ||
+						(this.server.State == DbServerSql.ServerState.Failed);
+					this.buttonDisconnect.Enabled = this.server.State == DbServerSql.ServerState.Connected;
 					this.buttonChangePassword.Enabled =
-						(this.server.State == DbServer.ServerState.Disconnected) ||
-						(this.server.State == DbServer.ServerState.Failed);
-					this.pictureBox.Image = ControlServer.images[(int)this.server.State];
+						(this.server.State == DbServerSql.ServerState.Disconnected) ||
+						(this.server.State == DbServerSql.ServerState.Failed);
+					this.pictureBox.Image = ControlServerSql.images[(int)this.server.State];
 					this.tabControl.Enabled =
-						(this.server.State != DbServer.ServerState.Connecting) &&
-						(this.server.State != DbServer.ServerState.Disconnecting);
+						(this.server.State != DbServerSql.ServerState.Connecting) &&
+						(this.server.State != DbServerSql.ServerState.Disconnecting);
 				});
 		}
 
@@ -408,13 +408,14 @@ namespace InetAnalytics.Controls.Database
 			// Execute the code on the UI thread.
 			this.Invoke(() =>
 				{
-					this.buttonPrimary.Enabled = !this.crawler.Database.IsPrimary(this.server);
+					// Update the primary server button enabled state.
+					this.buttonPrimary.Enabled = !this.crawler.Database.Sql.IsPrimary(this.server);
 
 					// Log the change.
 					this.log.Add(this.crawler.Log.Add(
 						LogEventLevel.Verbose,
 						LogEventType.Information,
-						ControlServer.logSource,
+						ControlServerSql.logSource,
 						"Primary database server has changed from \'{0}\' to \'{1}\'.",
 						new object[] {
 							e.OldPrimary != null ? e.OldPrimary.Id.ToString() : string.Empty,
@@ -440,7 +441,7 @@ namespace InetAnalytics.Controls.Database
 				MessageBoxDefaultButton.Button2))
 			{
 				// Change the primary server.
-				this.crawler.Database.SetPrimary(this.server);
+				this.crawler.Database.Sql.SetPrimary(this.server);
 			}
 		}
 
@@ -472,7 +473,7 @@ namespace InetAnalytics.Controls.Database
 		private void OnProperties(object sender, EventArgs e)
 		{
 			// Show the properties dialog.
-			this.formProperties.ShowDialog(this, this.server, this.crawler.Database.IsPrimary(this.server));
+			this.formProperties.ShowDialog(this, this.server, this.crawler.Database.Sql.IsPrimary(this.server));
 		}
 
 		/// <summary>
@@ -526,7 +527,7 @@ namespace InetAnalytics.Controls.Database
 			// Disable the refresh button.
 			this.buttonDatabaseRefresh.Enabled = false;
 			// Create a select all query for fields in the database table.
-			DbQuery query = DbQuery.CreateSelectAll(this.server.TableDatabase, null);
+			DbQuerySql query = DbQuerySql.CreateSelectAll(this.server.TableDatabase, null);
 			
 			query.MessageStart = "Refreshing the list of databases for the database server \'{0}\'...".FormatWith(this.server.Name);
 			query.MessageFinishSuccess = "Refreshing the list of databases for the database server \'{0}\' completed successfully.".FormatWith(this.server.Name);

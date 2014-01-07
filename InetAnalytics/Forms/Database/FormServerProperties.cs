@@ -49,7 +49,7 @@ namespace InetAnalytics.Forms.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="isPrimary">Indicates if the database server is primary.</param>
 		/// <returns>The dialog result.</returns>
-		public DialogResult ShowDialog(IWin32Window owner, DbServer server, bool isPrimary)
+		public DialogResult ShowDialog(IWin32Window owner, DbServerSql server, bool isPrimary)
 		{
 			// If the server is null, do nothing.
 			if (null == server) return DialogResult.Abort;

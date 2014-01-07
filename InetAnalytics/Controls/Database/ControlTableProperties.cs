@@ -29,11 +29,11 @@ namespace InetAnalytics.Controls.Database
 	/// <summary>
 	/// Displays the information of a database table.
 	/// </summary>
-	public partial class ControlTableProperties : ControlDatabase
+	public partial class ControlTableProperties : ControlBaseSql
 	{
 		private delegate void QuerySuccessAction(DbDataObject result, int recordsAffected);
 
-		private DbServer server;
+		private DbServerSql server;
 		private ITable table;
 		
 		private readonly FormDatabaseSelect formDatabaseSelect = new FormDatabaseSelect();
@@ -76,7 +76,7 @@ namespace InetAnalytics.Controls.Database
 		/// <summary>
 		/// Gets the current database server.
 		/// </summary>
-		public DbServer Server { get { return this.server; } }
+		public DbServerSql Server { get { return this.server; } }
 		/// <summary>
 		/// Gets the new database table name.
 		/// </summary>
@@ -112,7 +112,7 @@ namespace InetAnalytics.Controls.Database
 		/// </summary>
 		/// <param name="server">The database server.</param>
 		/// <param name="table">The table.</param>
-		public void Select(DbServer server, ITable table)
+		public void Select(DbServerSql server, ITable table)
 		{
 			// Set the parameters.
 			this.server = server;
@@ -251,7 +251,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="command">The database command.</param>
-		protected override void OnQueryStarted(DbServer server, DbQuery query, DbCommand command)
+		protected override void OnQueryStarted(DbServerSql server, DbQuerySql query, DbCommand command)
 		{
 			// Disable the control.
 			this.tabControl.Enabled = false;
@@ -266,7 +266,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="query">The database query.</param>
 		/// <param name="result">The database result.</param>
 		/// <param name="recordsAffected">The number of records affected.</param>
-		protected override void OnQuerySucceeded(DbServer server, DbQuery query, DbDataObject result, int recordsAffected)
+		protected override void OnQuerySucceeded(DbServerSql server, DbQuerySql query, DbDataObject result, int recordsAffected)
 		{
 			// Enable the control.
 			this.tabControl.Enabled = true;
@@ -291,7 +291,7 @@ namespace InetAnalytics.Controls.Database
 		/// <param name="server">The database server.</param>
 		/// <param name="query">The database query.</param>
 		/// <param name="exception">The exception.</param>
-		protected override void OnQueryFailed(DbServer server, DbQuery query, Exception exception)
+		protected override void OnQueryFailed(DbServerSql server, DbQuerySql query, Exception exception)
 		{
 			// Enable the control.
 			this.tabControl.Enabled = true;
@@ -338,7 +338,7 @@ namespace InetAnalytics.Controls.Database
 					// Set the changes to false.
 					this.changes = true;
 					// Create a new query to obtain the schema of the selected table.
-					DbQuery query = DbQuery.CreateSelectAllOn(this.server.TableSchema, this.server.TableTables, "Name", this.resultTable.Name, this.server.Database, this.delegateQueryTableSchema);
+					DbQuerySql query = DbQuerySql.CreateSelectAllOn(this.server.TableSchema, this.server.TableTables, "Name", this.resultTable.Name, this.server.Database, this.delegateQueryTableSchema);
 					query.MessageStart = "Updating the database schema for the table \'{0}\'.".FormatWith(this.resultTable.Name);
 					query.MessageFinishSuccess = "Updating the database schema for the table \'{0}\' completed successfully.".FormatWith(this.resultTable.Name);
 					query.MessageFinishFail = "Updating the database schema for the table \'{0}\' failed".FormatWith(this.resultTable.Name);
@@ -442,7 +442,7 @@ namespace InetAnalytics.Controls.Database
 			try
 			{
 				// Create a new query to obtain the columns of the selected table.
-				DbQuery queryColumn = DbQuery.CreateSelectAllOn(this.server.TableColumns, this.server.TableTables, "Name", this.table.DatabaseName, this.server.Database);
+				DbQuerySql queryColumn = DbQuerySql.CreateSelectAllOn(this.server.TableColumns, this.server.TableTables, "Name", this.table.DatabaseName, this.server.Database);
 				queryColumn.MessageStart = "Updating the fields list for the table \'{0}\'.".FormatWith(this.table.DatabaseName);
 				queryColumn.MessageFinishSuccess = "Updating the fields list for the table \'{0}\' completed successfully.".FormatWith(this.table.DatabaseName);
 				queryColumn.MessageFinishFail = "Updating the fields list for the table \'{0}\' failed".FormatWith(this.table.DatabaseName);
@@ -455,7 +455,7 @@ namespace InetAnalytics.Controls.Database
 					this.resultColumns = this.formDatabaseSelect.AllResults;
 					
 					// Create a new query to obtain the type of the selected column.
-					DbQuery queryType = DbQuery.CreateSelectAllOn(this.server.TableTypes, this.server.TableColumns, new string[] {"ObjectId", "ColumnId"}, new object[] {this.resultColumn.ObjectId, this.resultColumn.ColumnId}, this.server.Database, this.delegateQueryColumnType);
+					DbQuerySql queryType = DbQuerySql.CreateSelectAllOn(this.server.TableTypes, this.server.TableColumns, new string[] {"ObjectId", "ColumnId"}, new object[] {this.resultColumn.ObjectId, this.resultColumn.ColumnId}, this.server.Database, this.delegateQueryColumnType);
 					queryType.MessageStart = "Updating the type for the table field \'{0}\'.".FormatWith(this.resultColumn.Name);
 					queryType.MessageFinishSuccess = "Updating the type for the table field \'{0}\' completed successfully.".FormatWith(this.resultColumn.Name);
 					queryType.MessageFinishFail = "Updating the type for the table field \'{0}\' failed".FormatWith(this.resultColumn.Name);
@@ -500,7 +500,7 @@ namespace InetAnalytics.Controls.Database
 				try
 				{
 					// Create a new query to obtain the schema of the selected table.
-					DbQuery query = DbQuery.CreateSelectAllOn(this.server.TableSchema, this.server.TableTables, "Name", this.resultTable.Name, this.server.Database, this.delegateQueryTableSchema);
+					DbQuerySql query = DbQuerySql.CreateSelectAllOn(this.server.TableSchema, this.server.TableTables, "Name", this.resultTable.Name, this.server.Database, this.delegateQueryTableSchema);
 
 					query.MessageStart = "Updating the database schema for the table \'{0}\'.".FormatWith(this.resultTable.Name);
 					query.MessageFinishSuccess = "Updating the database schema for the table \'{0}\' completed successfully.".FormatWith(this.resultTable.Name);

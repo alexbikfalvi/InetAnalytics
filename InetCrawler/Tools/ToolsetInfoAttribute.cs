@@ -23,6 +23,7 @@ namespace InetCrawler.Tools
 	/// <summary>
 	/// A class representing the toolset information attribute.
 	/// </summary>
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class ToolsetInfoAttribute : Attribute
 	{
 		/// <summary>
