@@ -68,6 +68,8 @@
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.buttonInterfaceProperties = new System.Windows.Forms.Button();
+			this.buttonRefreshInterfaces = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -203,6 +205,8 @@
 			// 
 			// tabPageSettings
 			// 
+			this.tabPageSettings.Controls.Add(this.buttonRefreshInterfaces);
+			this.tabPageSettings.Controls.Add(this.buttonInterfaceProperties);
 			this.tabPageSettings.Controls.Add(this.labelNetworkInterface);
 			this.tabPageSettings.Controls.Add(this.comboBoxNetworkInterface);
 			this.tabPageSettings.Controls.Add(this.numericUpDownMaximumFailedHops);
@@ -239,7 +243,7 @@
 			this.comboBoxNetworkInterface.Name = "comboBoxNetworkInterface";
 			this.comboBoxNetworkInterface.Size = new System.Drawing.Size(300, 21);
 			this.comboBoxNetworkInterface.TabIndex = 9;
-			this.comboBoxNetworkInterface.SelectedIndexChanged += new System.EventHandler(this.OnInputChanged);
+			this.comboBoxNetworkInterface.SelectedIndexChanged += new System.EventHandler(this.OnNetworkInterfaceChanged);
 			// 
 			// numericUpDownMaximumFailedHops
 			// 
@@ -450,6 +454,26 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Event Log";
 			// 
+			// buttonInterfaceProperties
+			// 
+			this.buttonInterfaceProperties.Enabled = false;
+			this.buttonInterfaceProperties.Location = new System.Drawing.Point(493, 156);
+			this.buttonInterfaceProperties.Name = "buttonInterfaceProperties";
+			this.buttonInterfaceProperties.Size = new System.Drawing.Size(75, 23);
+			this.buttonInterfaceProperties.TabIndex = 11;
+			this.buttonInterfaceProperties.Text = "&Properties";
+			this.buttonInterfaceProperties.UseVisualStyleBackColor = true;
+			// 
+			// buttonRefreshInterfaces
+			// 
+			this.buttonRefreshInterfaces.Location = new System.Drawing.Point(574, 156);
+			this.buttonRefreshInterfaces.Name = "buttonRefreshInterfaces";
+			this.buttonRefreshInterfaces.Size = new System.Drawing.Size(75, 23);
+			this.buttonRefreshInterfaces.TabIndex = 12;
+			this.buttonRefreshInterfaces.Text = "R&efresh";
+			this.buttonRefreshInterfaces.UseVisualStyleBackColor = true;
+			this.buttonRefreshInterfaces.Click += new System.EventHandler(this.OnLoadInterfaces);
+			// 
 			// ControlTraceroute
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -512,5 +536,7 @@
 		private System.Windows.Forms.Label labelMaximumFailedHops;
 		private System.Windows.Forms.Label labelNetworkInterface;
 		private System.Windows.Forms.ComboBox comboBoxNetworkInterface;
+		private System.Windows.Forms.Button buttonInterfaceProperties;
+		private System.Windows.Forms.Button buttonRefreshInterfaces;
 	}
 }

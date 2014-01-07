@@ -93,19 +93,8 @@ namespace InetTools.Controls.Net
 			this.checkBoxStopHopOnSuccess.Checked = this.config.StopHopOnSuccess;
 			this.checkBoxStopOnFail.Checked = this.config.StopTracerouteOnFail;
 
-			this.comboBoxNetworkInterface.Items.Clear();
-			this.comboBoxNetworkInterface.Items.Add("Any");
-			foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
-			{
-				if (iface.GetIPProperties() != null)
-				{
-					if (iface.GetIPProperties().UnicastAddresses.Count > 0)
-					{
-						this.comboBoxNetworkInterface.Items.Add(new NetworkInterfaceEx(iface));
-					}
-				}
-			}
-			this.comboBoxNetworkInterface.SelectedIndex = this.GetNetworkInterfaceIndex(this.config.NetworkInterface);
+			// Call the load interfaces event handler.
+			this.OnLoadInterfaces(this, EventArgs.Empty);
 
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
@@ -128,7 +117,7 @@ namespace InetTools.Controls.Net
 			this.config.StopHopOnSuccess = this.checkBoxStopHopOnSuccess.Checked;
 			this.checkBoxStopOnFail.Checked = this.config.StopTracerouteOnFail;
 
-			this.config.NetworkInterface = this.comboBoxNetworkInterface.SelectedIndex == 0 ? null : (this.comboBoxNetworkInterface.SelectedItem as NetworkInterfaceEx).Id;
+			this.config.NetworkInterface = this.comboBoxNetworkInterface.SelectedIndex == 0 ? string.Empty : (this.comboBoxNetworkInterface.SelectedItem as NetworkInterfaceEx).Id;
 
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
@@ -378,6 +367,48 @@ namespace InetTools.Controls.Net
 				if ((this.comboBoxNetworkInterface.Items[index] as NetworkInterfaceEx).Id == id)
 					return index;
 			return 0;
+		}
+
+		/// <summary>
+		/// An event handler called when the selected network interface has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnNetworkInterfaceChanged(object sender, EventArgs e)
+		{
+			// Set the properties button enabled state.
+			this.buttonInterfaceProperties.Enabled = this.comboBoxNetworkInterface.SelectedIndex > 0;
+
+			// Call the input changed event handler.
+			this.OnInputChanged(sender, e);
+		}
+
+		/// <summary>
+		/// An event handler called when loading the network interfaces.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnLoadInterfaces(object sender, EventArgs e)
+		{
+			// Set the interfaces.
+			this.comboBoxNetworkInterface.Items.Clear();
+			this.comboBoxNetworkInterface.Items.Add("Any");
+			foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
+			{
+				if (iface.GetIPProperties() != null)
+				{
+					if (iface.GetIPProperties().UnicastAddresses.Count > 0)
+					{
+						this.comboBoxNetworkInterface.Items.Add(new NetworkInterfaceEx(iface));
+					}
+				}
+			}
+
+			// Select the current interface.
+			this.comboBoxNetworkInterface.SelectedIndex = this.GetNetworkInterfaceIndex(this.config.NetworkInterface);
+
+			// Call the selected index changed event handler.
+			this.OnNetworkInterfaceChanged(sender, e);
 		}
 	}
 }
