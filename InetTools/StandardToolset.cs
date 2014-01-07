@@ -42,6 +42,7 @@ namespace InetTools
 			typeof(ToolCdnFinder),
 			typeof(ToolMercuryClient),
 			typeof(ToolMercuryAnalytics),
+			typeof(ToolTraceroute),
 			typeof(ToolSshClient),
 			typeof(ToolWebClient)
 		};

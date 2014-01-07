@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Net\Core\Traceroute.cs" />
+    <Compile Include="Net\Core\TracerouteSettings.cs" />
+    <Compile Include="Net\Core\TracerouteState.cs" />
     <Compile Include="YouTube\Ajax\AjaxException.cs" />
     <Compile Include="YouTube\Ajax\AjaxHistory.cs" />
     <Compile Include="YouTube\Ajax\AjaxParsingException.cs" />

@@ -28,7 +28,7 @@ using DotNetApi.Web;
 using InetAnalytics;
 using InetCrawler.Tools;
 
-namespace InetTools.Controls.Web
+namespace InetTools.Controls.Net.Web
 {
 	/// <summary>
 	/// A class representing the control for the web crawler tool.

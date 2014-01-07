@@ -21,16 +21,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security;
 using System.Text;
 using System.Xml.Linq;
 using DotNetApi;
 using DotNetApi.IO;
-using DotNetApi.Security;
 using DotNetApi.Windows;
 using InetCrawler.Tools;
 
-namespace InetTools.Tools.Web
+namespace InetTools.Tools.Net.Web
 {
 	/// <summary>
 	/// A class representing the configuration for the web client tool.
@@ -41,9 +39,6 @@ namespace InetTools.Tools.Web
 
 		private readonly Dictionary<string, string> headers = new Dictionary<string, string>();
 		private static readonly char[] headerSeparator = { ':' };
-
-		private static readonly byte[] cryptoKey = { 0xE8, 0xE2, 0x3A, 0x45, 0x7D, 0x70, 0xB3, 0x82, 0x8C, 0x71, 0x57, 0xFE, 0x88, 0x84, 0xE9, 0x8D, 0xE0, 0xF3, 0x7F, 0x2A, 0x78, 0x8D, 0xE2, 0x4E, 0x82, 0xC0, 0x4D, 0x89, 0xC6, 0x76, 0x33, 0xDF };
-		private static readonly byte[] cryptoIV = { 0xC7, 0x2B, 0xBA, 0x24, 0x1A, 0x83, 0xC8, 0xF6, 0x3B, 0x1B, 0x71, 0x37, 0x4C, 0x8A, 0x8F, 0x2B };
 
 		/// <summary>
 		/// Creates a new web client configuration instance.

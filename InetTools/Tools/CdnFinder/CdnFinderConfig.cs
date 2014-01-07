@@ -41,6 +41,11 @@ namespace InetTools.Tools.CdnFinder
 		// Public properties.
 
 		/// <summary>
+		/// Gets the tools API.
+		/// </summary>
+		public IToolApi Api { get { return this.api; } }
+
+		/// <summary>
 		/// Gets or sets the server URL.
 		/// </summary>
 		public string ServerUrl

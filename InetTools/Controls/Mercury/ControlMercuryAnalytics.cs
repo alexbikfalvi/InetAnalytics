@@ -32,7 +32,6 @@ namespace InetTools.Controls.Mercury
 	/// </summary>
 	public partial class ControlMercuryAnalytics : NotificationControl
 	{
-		private readonly IToolApi api;
 		private readonly MercuryConfig config;
 
 		private readonly CrawlerStatusHandler status = null;
@@ -42,16 +41,12 @@ namespace InetTools.Controls.Mercury
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		/// <param name="api">The tools API.</param>
-		/// <param name="config">The configuration.</param>
-		public ControlMercuryAnalytics(IToolApi api, MercuryConfig config)
+		/// <param name="config">The tool configuration.</param>
+		public ControlMercuryAnalytics(MercuryConfig config)
 		{
 			// Initialize the component.
 			this.InitializeComponent();
 			
-			// Set the API.
-			this.api = api;
-
 			// Set the configuration.
 			this.config = config;
 
@@ -59,7 +54,7 @@ namespace InetTools.Controls.Mercury
 			this.OnLoadConfiguration();
 
 			// Set the status.
-			this.status = this.api.Status.GetHandler(this);
+			this.status = this.config.Api.Status.GetHandler(this);
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 		}
 

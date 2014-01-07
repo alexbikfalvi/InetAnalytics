@@ -82,7 +82,6 @@ namespace InetTools.Controls.CdnFinder
 			}
 		}
 
-		private readonly IToolApi api;
 		private readonly CdnFinderConfig config;
 
 		private readonly CrawlerStatusHandler status = null;
@@ -100,21 +99,17 @@ namespace InetTools.Controls.CdnFinder
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		/// <param name="api">The tools API.</param>
-		/// <param name="config">The configuration.</param>
-		public ControlCdnFinder(IToolApi api, CdnFinderConfig config)
+		/// <param name="config">The tool configuration.</param>
+		public ControlCdnFinder(CdnFinderConfig config)
 		{
 			// Initialize the component.
 			this.InitializeComponent();
 			
-			// Set the API.
-			this.api = api;
-
 			// Set the configuration.
 			this.config = config;
 
 			// Set the status.
-			this.status = this.api.Status.GetHandler(this);
+			this.status = this.config.Api.Status.GetHandler(this);
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 
 			// Create the request.
@@ -173,7 +168,7 @@ namespace InetTools.Controls.CdnFinder
 				"CDN Finder Request",
 				"Requesting the CDN Finder data...");
 			// Log the events.
-			this.controlLog.Add(this.api.Log(
+			this.controlLog.Add(this.config.Api.Log(
 				LogEventLevel.Verbose,
 				LogEventType.Information,
 				"Started a request for the CDN Finder data."
@@ -224,14 +219,14 @@ namespace InetTools.Controls.CdnFinder
 								"CDN Finder Request",
 								"Requesting the CDN Finder data was canceled.",
 								false,
-								(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+								(int)this.config.Api.Config.MessageCloseDelay.TotalMilliseconds,
 								(object[] parameters) =>
 								{
 									// Call the request finished event handler.
 									this.OnRequestFinished();
 								});
 							// Log the events.
-							this.controlLog.Add(this.api.Log(
+							this.controlLog.Add(this.config.Api.Log(
 								LogEventLevel.Normal,
 								LogEventType.Canceled,
 								"Requesting the CDN Finder data was canceled."
@@ -326,14 +321,14 @@ namespace InetTools.Controls.CdnFinder
 							"CDN Finder Request",
 							"Requesting the CDN Finder data failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 							false,
-							(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+							(int)this.config.Api.Config.MessageCloseDelay.TotalMilliseconds,
 							(object[] parameters) =>
 							{
 								// Call the request finished event handler.
 								this.OnRequestFinished();
 							});
 						// Log the events.
-						this.controlLog.Add(this.api.Log(
+						this.controlLog.Add(this.config.Api.Log(
 							LogEventLevel.Important,
 							LogEventType.Error,
 							"Requesting the CDN Finder data failed. {0}",
@@ -373,7 +368,7 @@ namespace InetTools.Controls.CdnFinder
 					"CDN Finder Request",
 					"Requesting the CDN Finder data completed successfully.",
 					false,
-					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+					(int)this.config.Api.Config.MessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the request finished event handler.
@@ -382,7 +377,7 @@ namespace InetTools.Controls.CdnFinder
 						this.OnUpdateDomains(sites);
 					});
 				// Log the events.
-				this.controlLog.Add(this.api.Log(
+				this.controlLog.Add(this.config.Api.Log(
 					LogEventLevel.Verbose,
 					LogEventType.Success,
 					"Requesting the CDN Finder data completed successfully."
@@ -400,14 +395,14 @@ namespace InetTools.Controls.CdnFinder
 						"CDN Finder Request",
 						"Requesting the CDN Finder data was canceled.",
 						false,
-						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+						(int)this.config.Api.Config.MessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 						{
 							// Call the request finished event handler.
 							this.OnRequestFinished();
 						});
 					// Log the events.
-					this.controlLog.Add(this.api.Log(
+					this.controlLog.Add(this.config.Api.Log(
 						LogEventLevel.Normal,
 						LogEventType.Canceled,
 						"Requesting the CDN Finder data was canceled."
@@ -423,14 +418,14 @@ namespace InetTools.Controls.CdnFinder
 						"CDN Finder Request",
 						"Requesting the CDN Finder data failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 						false,
-						(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+						(int)this.config.Api.Config.MessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 						{
 							// Call the request finished event handler.
 							this.OnRequestFinished();
 						});
 					// Log the events.
-					this.controlLog.Add(this.api.Log(
+					this.controlLog.Add(this.config.Api.Log(
 						LogEventLevel.Important,
 						LogEventType.Error,
 						"Requesting the CDN Finder data failed. {0}",
@@ -449,14 +444,14 @@ namespace InetTools.Controls.CdnFinder
 					"CDN Finder Request",
 					"Requesting the CDN Finder data failed.{0}{1}".FormatWith(Environment.NewLine, exception.Message),
 					false,
-					(int)this.api.Config.MessageCloseDelay.TotalMilliseconds,
+					(int)this.config.Api.Config.MessageCloseDelay.TotalMilliseconds,
 					(object[] parameters) =>
 					{
 						// Call the request finished event handler.
 						this.OnRequestFinished();
 					});
 				// Log the events.
-				this.controlLog.Add(this.api.Log(
+				this.controlLog.Add(this.config.Api.Log(
 					LogEventLevel.Important,
 					LogEventType.Error,
 					"Requesting the CDN Finder data failed. {0}",

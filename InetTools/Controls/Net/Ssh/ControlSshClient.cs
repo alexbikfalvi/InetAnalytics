@@ -30,11 +30,11 @@ using InetAnalytics.Controls.Net.Ssh;
 using InetCrawler.Log;
 using InetCrawler.Status;
 using InetCrawler.Tools;
-using InetTools.Tools.Ssh;
+using InetTools.Tools.Net.Ssh;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 
-namespace InetTools.Controls.Ssh
+namespace InetTools.Controls.Net.Ssh
 {
 	/// <summary>
 	/// A control class for the secure shell client tool.
@@ -43,8 +43,8 @@ namespace InetTools.Controls.Ssh
 	{
 		// Private variables.
 
-		private SshClientConfig config = null;
-		private CrawlerStatusHandler status = null;
+		private readonly SshClientConfig config;
+		private readonly CrawlerStatusHandler status;
 
 		private byte[] sshKey = null;
 		
@@ -55,33 +55,18 @@ namespace InetTools.Controls.Ssh
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlSshClient()
+		/// <param name="config">The tool configuration.</param>
+		public ControlSshClient(SshClientConfig config)
 		{
 			// Initialize component.
-			InitializeComponent();
+			this.InitializeComponent();
 
-			// Set the default control properties.
-			this.Visible = false;
-			this.Dock = DockStyle.Fill;
-		}
-
-		// Public methods.
-
-		/// <summary>
-		/// Initialized the control with the specified crawler.
-		/// </summary>
-		/// <param name="api">The tool API.</param>
-		public void Initialize(SshClientConfig config)
-		{
 			// Set the tool configuration.
 			this.config = config;
 
 			// Get the crawler status.
 			this.status = this.config.Api.Status.GetHandler(this);
 			this.status.Send(CrawlerStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
-
-			// Enable the control.
-			this.Enabled = true;
 
 			// Load the settings.
 			this.OnLoad();

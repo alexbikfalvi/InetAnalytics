@@ -22,7 +22,7 @@ using DotNetApi.Security;
 using DotNetApi.Windows;
 using InetCrawler.Tools;
 
-namespace InetTools.Tools.Ssh
+namespace InetTools.Tools.Net.Ssh
 {
 	/// <summary>
 	/// A class representing the configuration for the SSH client tool.

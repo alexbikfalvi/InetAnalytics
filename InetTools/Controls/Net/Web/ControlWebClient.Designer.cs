@@ -1,4 +1,4 @@
-﻿namespace InetTools.Controls.Web
+﻿namespace InetTools.Controls.Net.Web
 {
 	partial class ControlWebClient
 	{
@@ -129,7 +129,7 @@
 			this.panelTesting.ShowTitle = true;
 			this.panelTesting.Size = new System.Drawing.Size(600, 225);
 			this.panelTesting.TabIndex = 0;
-			this.panelTesting.Title = "Web Request Testing";
+			this.panelTesting.Title = "Web Client";
 			// 
 			// tabControl
 			// 
@@ -196,7 +196,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxUserAgent.Location = new System.Drawing.Point(110, 167);
 			this.textBoxUserAgent.Name = "textBoxUserAgent";
-			this.textBoxUserAgent.Size = new System.Drawing.Size(274, 20);
+			this.textBoxUserAgent.Size = new System.Drawing.Size(240, 20);
 			this.textBoxUserAgent.TabIndex = 13;
 			this.textBoxUserAgent.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -217,7 +217,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxReferer.Location = new System.Drawing.Point(110, 141);
 			this.textBoxReferer.Name = "textBoxReferer";
-			this.textBoxReferer.Size = new System.Drawing.Size(274, 20);
+			this.textBoxReferer.Size = new System.Drawing.Size(240, 20);
 			this.textBoxReferer.TabIndex = 11;
 			this.textBoxReferer.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -249,7 +249,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxExpect.Location = new System.Drawing.Point(110, 115);
 			this.textBoxExpect.Name = "textBoxExpect";
-			this.textBoxExpect.Size = new System.Drawing.Size(274, 20);
+			this.textBoxExpect.Size = new System.Drawing.Size(240, 20);
 			this.textBoxExpect.TabIndex = 9;
 			this.textBoxExpect.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -259,7 +259,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxContentType.Location = new System.Drawing.Point(110, 63);
 			this.textBoxContentType.Name = "textBoxContentType";
-			this.textBoxContentType.Size = new System.Drawing.Size(274, 20);
+			this.textBoxContentType.Size = new System.Drawing.Size(240, 20);
 			this.textBoxContentType.TabIndex = 5;
 			this.textBoxContentType.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -280,7 +280,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAccept.Location = new System.Drawing.Point(110, 37);
 			this.textBoxAccept.Name = "textBoxAccept";
-			this.textBoxAccept.Size = new System.Drawing.Size(274, 20);
+			this.textBoxAccept.Size = new System.Drawing.Size(240, 20);
 			this.textBoxAccept.TabIndex = 3;
 			this.textBoxAccept.TextChanged += new System.EventHandler(this.OnInputChanged);
 			// 
@@ -667,7 +667,6 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
-			this.Enabled = false;
 			this.Name = "ControlWebClient";
 			this.Size = new System.Drawing.Size(600, 400);
 			this.Controls.SetChildIndex(this.splitContainer, 0);

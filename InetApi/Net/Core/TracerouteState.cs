@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2013-2014 Alex Bikfalvi
+ * Copyright (C) 2014 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,48 +17,38 @@
  */
 
 using System;
-using System.Windows.Forms;
-using InetCrawler.Tools;
-using InetTools.Controls.Net.Web;
-using InetTools.Tools.Net.Web;
+using System.Net;
+using System.Net.Sockets;
+using System.Net.NetworkInformation;
+using DotNetApi.Async;
 
-namespace InetTools.Tools
+namespace InetApi.Net.Core
 {
 	/// <summary>
-	/// Creates a new web client tool.
+	/// A class representing a traceroute asynchronous state.
 	/// </summary>
-	[ToolInfo(
-		"00B9789D-E499-4260-A285-B7882F96F3DB",
-		1, 0, 0, 0,
-		"Web Client",
-		"A client for a web (HTTP/HTTPS) server."
-		)]
-	public sealed class ToolWebClient : Tool
+	public class TracerouteState : AsyncState
 	{
-		private readonly ControlWebClient control;
-		private readonly WebClientConfig config;
+		private readonly Socket socketSend;
+		private readonly Socket socketRecv;
 
 		/// <summary>
-		/// Creates a new tool instance.
+		/// Creates a new traceroute asynchronous state, bound to the specified local address.
 		/// </summary>
-		/// <param name="api">The tool API.</param>
-		/// <param name="toolset">The toolset information.</param>
-		public ToolWebClient(IToolApi api, ToolsetInfoAttribute toolset)
-			: base(api, toolset)
+		/// <param name="localAddress">The local address.</param>
+		public TracerouteState(IPAddress localAddress, object state)
+			: base(state)
 		{
-			// Create the configuration.
-			this.config = new WebClientConfig(api);
+			// Create the sending socket.
+			this.socketSend = new Socket(localAddress.AddressFamily, SocketType.Raw, ProtocolType.Icmp);
+			this.socketSend.Bind(new IPEndPoint(localAddress, 0));
 
-			// Initialize the control.
-			this.control = new ControlWebClient(this.config);
+			// Create the receiving socket.
+			this.socketRecv = new Socket(localAddress.AddressFamily, SocketType.Raw, ProtocolType.Icmp);
+			this.socketRecv.Bind(new IPEndPoint(localAddress, 0));
 		}
 
-		// Public properties.
-
-		/// <summary>
-		/// Gets the user interface control for this tool.
-		/// </summary>
-		public override Control Control { get { return this.control; } }
+		// Internal properties.
 
 		// Protected methods.
 
@@ -68,10 +58,11 @@ namespace InetTools.Tools
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
 		protected override void Dispose(bool disposing)
 		{
+			// Dispose the sockets.
 			if (disposing)
 			{
-				// Dispose the control.
-				this.control.Dispose();
+				this.socketSend.Dispose();
+				this.socketRecv.Dispose();
 			}
 
 			// Call the base class method.

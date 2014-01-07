@@ -1,4 +1,4 @@
-﻿namespace InetTools.Controls.Ssh
+﻿namespace InetTools.Controls.Net.Ssh
 {
 	partial class ControlSshClient
 	{
@@ -34,7 +34,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Security.SecureString secureString2 = new System.Security.SecureString();
+			System.Security.SecureString secureString1 = new System.Security.SecureString();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSshClient));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panelTesting = new DotNetApi.Windows.Controls.ThemeControl();
@@ -51,10 +51,6 @@
 			this.radioPasswordAuthentication = new System.Windows.Forms.RadioButton();
 			this.tabPageConsole = new System.Windows.Forms.TabPage();
 			this.console = new InetAnalytics.Controls.ControlConsole();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelServer = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxServer = new System.Windows.Forms.ToolStripTextBox();
@@ -63,6 +59,10 @@
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
+			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -103,23 +103,23 @@
 			this.panelTesting.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelTesting.Location = new System.Drawing.Point(0, 0);
 			this.panelTesting.Name = "panelTesting";
-			this.panelTesting.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelTesting.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelTesting.ShowBorder = true;
 			this.panelTesting.ShowTitle = true;
 			this.panelTesting.Size = new System.Drawing.Size(600, 225);
 			this.panelTesting.TabIndex = 0;
-			this.panelTesting.Title = "Secure Shell Testing";
+			this.panelTesting.Title = "Secure Shell Client";
 			// 
 			// tabControl
 			// 
 			this.tabControl.Controls.Add(this.tabPageAuthentication);
 			this.tabControl.Controls.Add(this.tabPageConsole);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl.Location = new System.Drawing.Point(1, 47);
+			this.tabControl.Location = new System.Drawing.Point(1, 48);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.Padding = new System.Drawing.Point(0, 0);
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(598, 177);
+			this.tabControl.Size = new System.Drawing.Size(598, 176);
 			this.tabControl.TabIndex = 4;
 			// 
 			// tabPageAuthentication
@@ -137,7 +137,7 @@
 			this.tabPageAuthentication.Location = new System.Drawing.Point(2, 23);
 			this.tabPageAuthentication.Name = "tabPageAuthentication";
 			this.tabPageAuthentication.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageAuthentication.Size = new System.Drawing.Size(594, 152);
+			this.tabPageAuthentication.Size = new System.Drawing.Size(594, 151);
 			this.tabPageAuthentication.TabIndex = 0;
 			this.tabPageAuthentication.Text = "Authentication";
 			this.tabPageAuthentication.UseVisualStyleBackColor = true;
@@ -158,7 +158,7 @@
 			// 
 			this.secureTextBoxPassword.Location = new System.Drawing.Point(110, 59);
 			this.secureTextBoxPassword.Name = "secureTextBoxPassword";
-			this.secureTextBoxPassword.SecureText = secureString2;
+			this.secureTextBoxPassword.SecureText = secureString1;
 			this.secureTextBoxPassword.Size = new System.Drawing.Size(214, 20);
 			this.secureTextBoxPassword.TabIndex = 4;
 			this.secureTextBoxPassword.TextChanged += new System.EventHandler(this.OnChanged);
@@ -174,7 +174,7 @@
 			this.textBoxKey.Name = "textBoxKey";
 			this.textBoxKey.ReadOnly = true;
 			this.textBoxKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxKey.Size = new System.Drawing.Size(397, 38);
+			this.textBoxKey.Size = new System.Drawing.Size(397, 37);
 			this.textBoxKey.TabIndex = 7;
 			this.textBoxKey.WordWrap = false;
 			this.textBoxKey.TextChanged += new System.EventHandler(this.OnChanged);
@@ -244,7 +244,7 @@
 			this.tabPageConsole.Controls.Add(this.console);
 			this.tabPageConsole.Location = new System.Drawing.Point(2, 23);
 			this.tabPageConsole.Name = "tabPageConsole";
-			this.tabPageConsole.Size = new System.Drawing.Size(504, 144);
+			this.tabPageConsole.Size = new System.Drawing.Size(594, 151);
 			this.tabPageConsole.TabIndex = 1;
 			this.tabPageConsole.Text = "Console";
 			this.tabPageConsole.UseVisualStyleBackColor = true;
@@ -255,37 +255,10 @@
 			this.console.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.console.Location = new System.Drawing.Point(0, 0);
 			this.console.Name = "console";
-			this.console.Size = new System.Drawing.Size(504, 144);
+			this.console.Size = new System.Drawing.Size(594, 151);
 			this.console.TabIndex = 0;
 			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
 			this.console.Cancel += new System.EventHandler(this.OnCancelCommand);
-			// 
-			// log
-			// 
-			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.log.Location = new System.Drawing.Point(0, 0);
-			this.log.Name = "log";
-			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-			this.log.ShowBorder = true;
-			this.log.ShowTitle = true;
-			this.log.Size = new System.Drawing.Size(600, 170);
-			this.log.TabIndex = 0;
-			this.log.Title = "Log";
-			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "Header_16.png");
-			// 
-			// saveFileDialog
-			// 
-			this.saveFileDialog.Title = "Export Settings";
-			// 
-			// openFileDialog
-			// 
-			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
-			this.openFileDialog.Title = "Import Settings";
 			// 
 			// toolStrip
 			// 
@@ -297,7 +270,7 @@
             this.separator1,
             this.buttonSave,
             this.buttonUndo});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 10;
@@ -360,12 +333,38 @@
 			this.buttonUndo.Text = "&Undo";
 			this.buttonUndo.Click += new System.EventHandler(this.OnUndo);
 			// 
+			// log
+			// 
+			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.log.Location = new System.Drawing.Point(0, 0);
+			this.log.Name = "log";
+			this.log.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
+			this.log.ShowBorder = true;
+			this.log.ShowTitle = true;
+			this.log.Size = new System.Drawing.Size(600, 170);
+			this.log.TabIndex = 0;
+			this.log.Title = "Log";
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "Header_16.png");
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.Title = "Export Settings";
+			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
+			this.openFileDialog.Title = "Import Settings";
+			// 
 			// ControlSshClient
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
-			this.Enabled = false;
 			this.Name = "ControlSshClient";
 			this.Size = new System.Drawing.Size(600, 400);
 			this.Controls.SetChildIndex(this.splitContainer, 0);

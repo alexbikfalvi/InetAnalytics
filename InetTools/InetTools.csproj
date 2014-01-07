@@ -71,22 +71,28 @@
     <Compile Include="Controls\CdnFinder\ControlCdnFinderSite.Designer.cs">
       <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Ssh\ControlSshClient.cs">
+    <Compile Include="Controls\Net\Ssh\ControlSshClient.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Ssh\ControlSshClient.Designer.cs">
+    <Compile Include="Controls\Net\Ssh\ControlSshClient.Designer.cs">
       <DependentUpon>ControlSshClient.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Web\ControlWebClient.cs">
+    <Compile Include="Controls\Net\ControlTraceroute.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Web\ControlWebClient.Designer.cs">
+    <Compile Include="Controls\Net\ControlTraceroute.Designer.cs">
+      <DependentUpon>ControlTraceroute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Net\Web\ControlWebClient.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Net\Web\ControlWebClient.Designer.cs">
       <DependentUpon>ControlWebClient.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Web\ControlWebCrawler.cs">
+    <Compile Include="Controls\Net\Web\ControlWebCrawler.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Web\ControlWebCrawler.Designer.cs">
+    <Compile Include="Controls\Net\Web\ControlWebCrawler.Designer.cs">
       <DependentUpon>ControlWebCrawler.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Alexa\ControlAlexaTopSites.cs">
@@ -134,15 +140,17 @@
     <Compile Include="Tools\Mercury\MercuryRequest.cs" />
     <Compile Include="Tools\Mercury\MercuryTraceroute.cs" />
     <Compile Include="Tools\Mercury\MercuryTracerouteHop.cs" />
-    <Compile Include="Tools\Ssh\SshClientConfig.cs" />
+    <Compile Include="Tools\Net\Ssh\SshClientConfig.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
     <Compile Include="Tools\ToolCdnFinder.cs" />
     <Compile Include="Tools\ToolMercuryAnalytics.cs" />
     <Compile Include="Tools\ToolMercuryClient.cs" />
     <Compile Include="Tools\ToolSshClient.cs" />
+    <Compile Include="Tools\ToolTraceroute.cs" />
     <Compile Include="Tools\ToolWebClient.cs" />
     <Compile Include="Tools\ToolWebCrawler.cs" />
-    <Compile Include="Tools\Web\WebClientConfig.cs" />
+    <Compile Include="Tools\Net\TracerouteConfig.cs" />
+    <Compile Include="Tools\Net\Web\WebClientConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
@@ -190,13 +198,16 @@
     <EmbeddedResource Include="Controls\CdnFinder\ControlCdnFinderSite.resx">
       <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Ssh\ControlSshClient.resx">
+    <EmbeddedResource Include="Controls\Net\Ssh\ControlSshClient.resx">
       <DependentUpon>ControlSshClient.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Web\ControlWebClient.resx">
+    <EmbeddedResource Include="Controls\Net\ControlTraceroute.resx">
+      <DependentUpon>ControlTraceroute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Net\Web\ControlWebClient.resx">
       <DependentUpon>ControlWebClient.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Web\ControlWebCrawler.resx">
+    <EmbeddedResource Include="Controls\Net\Web\ControlWebCrawler.resx">
       <DependentUpon>ControlWebCrawler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Alexa\ControlAlexaTopSites.resx">
@@ -3504,6 +3515,7 @@
       <Link>Resources\XmlNamespace_48.png</Link>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

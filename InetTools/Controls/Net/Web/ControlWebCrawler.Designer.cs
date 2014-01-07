@@ -1,4 +1,4 @@
-﻿namespace InetTools.Controls.Web
+﻿namespace InetTools.Controls.Net.Web
 {
 	partial class ControlWebCrawler
 	{

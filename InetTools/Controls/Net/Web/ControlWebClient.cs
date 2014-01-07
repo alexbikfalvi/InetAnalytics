@@ -29,9 +29,9 @@ using InetAnalytics.Forms.Net;
 using InetCrawler;
 using InetCrawler.Log;
 using InetCrawler.Status;
-using InetTools.Tools.Web;
+using InetTools.Tools.Net.Web;
 
-namespace InetTools.Controls.Web
+namespace InetTools.Controls.Net.Web
 {
 	/// <summary>
 	/// A control class for web client tool.
@@ -40,8 +40,8 @@ namespace InetTools.Controls.Web
 	{
 		// Private variables.
 
-		private WebClientConfig config = null;
-		private CrawlerStatusHandler status = null;
+		private readonly WebClientConfig config = null;
+		private readonly CrawlerStatusHandler status = null;
 
 		private Uri uri = null;
 		private AsyncWebRequest request = new AsyncWebRequest();
@@ -60,14 +60,18 @@ namespace InetTools.Controls.Web
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
-		public ControlWebClient()
+		/// <param name="config">The configuration.</param>
+		public ControlWebClient(WebClientConfig config)
 		{
 			// Initialize component.
-			InitializeComponent();
+			this.InitializeComponent();
 
-			// Set the default control properties.
-			this.Visible = false;
-			this.Dock = DockStyle.Fill;
+			// Set the configuration.
+			this.config = config;
+
+			// Get the crawler status.
+			this.status = this.config.Api.Status.GetHandler(this);
+			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 
 			// Populate the encoding combo box.
 			this.encodings = Encoding.GetEncodings();
@@ -76,30 +80,11 @@ namespace InetTools.Controls.Web
 				this.comboBoxEncoding.Items.Add("({0}) {1}".FormatWith(this.encodings[index].CodePage, this.encodings[index].DisplayName));
 				this.encodingPages.Add(this.encodings[index].CodePage, index);
 			}
-		}
-		
-		// Public methods.
-
-		/// <summary>
-		/// Initialized the control with the specified configuration.
-		/// </summary>
-		/// <param name="config">The configuration.</param>
-		public void Initialize(WebClientConfig config)
-		{
-			// Set the configuration.
-			this.config = config;
-
-			// Get the crawler status.
-			this.status = this.config.Api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
-
-			// Enable the control.
-			this.Enabled = true;
 
 			// Load the settings.
 			this.OnLoad();
 		}
-
+		
 		// Private methods.
 
 		/// <summary>

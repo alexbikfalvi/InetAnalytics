@@ -19,8 +19,8 @@
 using System;
 using System.Windows.Forms;
 using InetCrawler.Tools;
-using InetTools.Controls.Ssh;
-using InetTools.Tools.Ssh;
+using InetTools.Controls.Net.Ssh;
+using InetTools.Tools.Net.Ssh;
 
 namespace InetTools.Tools
 {
@@ -35,7 +35,7 @@ namespace InetTools.Tools
 		)]
 	public sealed class ToolSshClient : Tool
 	{
-		private readonly ControlSshClient control = new ControlSshClient();
+		private readonly ControlSshClient control;
 		private readonly SshClientConfig config;
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace InetTools.Tools
 			this.config = new SshClientConfig(api);
 
 			// Initialize the control.
-			this.control.Initialize(this.config);
+			this.control = new ControlSshClient(this.config);
 		}
 
 		// Public properties.

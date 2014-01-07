@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2013 Alex Bikfalvi
+ * Copyright (C) 2013-2014 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,40 +19,41 @@
 using System;
 using System.Windows.Forms;
 using InetCrawler.Tools;
-using InetTools.Controls.CdnFinder;
-using InetTools.Tools.CdnFinder;
+using InetTools.Controls.Net;
+using InetTools.Tools.Net;
 
 namespace InetTools.Tools
 {
 	/// <summary>
-	/// Creates a CDN finder tool, which collects information about the content of a web site from a CDN Finder server.
+	/// Creates a new web client tool.
 	/// </summary>
 	[ToolInfo(
-		"9D988BAC-87A5-470A-81B3-BAE3FA30E92D",
+		"BA934943-DF09-476F-AF41-A1DF17A7EEC5",
 		1, 0, 0, 0,
-		"CDN Finder Client",
-		"A tool that collects information on the web sites content origin from a CDN Finder server."
+		"Internet Traceroute",
+		"An Internet traceroute tool."
 		)]
-	public sealed class ToolCdnFinder : Tool
+	public sealed class ToolTraceroute : Tool
 	{
-		private readonly CdnFinderConfig config;
-		private readonly ControlCdnFinder control;
+		private readonly ControlTraceroute control;
+		private readonly TracerouteConfig config;
 
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
 		/// <param name="api">The tool API.</param>
 		/// <param name="toolset">The toolset information.</param>
-		public ToolCdnFinder(IToolApi api, ToolsetInfoAttribute toolset)
+		public ToolTraceroute(IToolApi api, ToolsetInfoAttribute toolset)
 			: base(api, toolset)
 		{
 			// Create the configuration.
-			this.config = new CdnFinderConfig(api);
-			// Create the control.
-			this.control = new ControlCdnFinder(this.config);
+			this.config = new TracerouteConfig(api);
+
+			// Initialize the control.
+			this.control = new ControlTraceroute(this.config);
 		}
 
-		// Protected methods.
+		// Public properties.
 
 		/// <summary>
 		/// Gets the user interface control for this tool.
@@ -72,7 +73,8 @@ namespace InetTools.Tools
 				// Dispose the control.
 				this.control.Dispose();
 			}
-			// Call the base clas method.
+
+			// Call the base class method.
 			base.Dispose(disposing);
 		}
 	}

@@ -51,7 +51,7 @@ namespace InetTools.Tools
 			this.config = new MercuryConfig(api);
 
 			// Create the control.
-			this.control = new ControlMercuryAnalytics(api, this.config);
+			this.control = new ControlMercuryAnalytics(this.config);
 		}
 
 		// Public properties.
