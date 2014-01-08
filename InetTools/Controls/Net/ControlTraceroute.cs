@@ -93,9 +93,6 @@ namespace InetTools.Controls.Net
 			this.checkBoxStopHopOnSuccess.Checked = this.config.StopHopOnSuccess;
 			this.checkBoxStopOnFail.Checked = this.config.StopTracerouteOnFail;
 
-			// Call the load interfaces event handler.
-			this.OnLoadInterfaces(this, EventArgs.Empty);
-
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
 			this.buttonUndo.Enabled = false;
@@ -115,9 +112,18 @@ namespace InetTools.Controls.Net
 
 			this.config.AutomaticNameResolution = this.checkBoxAutomaticNameResolution.Checked;
 			this.config.StopHopOnSuccess = this.checkBoxStopHopOnSuccess.Checked;
-			this.checkBoxStopOnFail.Checked = this.config.StopTracerouteOnFail;
+			this.config.StopTracerouteOnFail = this.checkBoxStopOnFail.Checked;
 
-			this.config.NetworkInterface = this.comboBoxNetworkInterface.SelectedIndex == 0 ? string.Empty : (this.comboBoxNetworkInterface.SelectedItem as NetworkInterfaceEx).Id;
+			// Set the traceroute settings.
+			lock (this.settings.Sync)
+			{
+				this.settings.MaximumHops = this.config.MaximumHops;
+				this.settings.MaximumAttempts = this.config.MaximumAttempts;
+				this.settings.MaximumFailedHops = this.config.MaximumFailedHops;
+
+				this.settings.StopHopOnSuccess = this.config.StopHopOnSuccess;
+				this.settings.StopTracerouteOnFail = this.config.StopTracerouteOnFail;
+			}
 
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
@@ -221,7 +227,7 @@ namespace InetTools.Controls.Net
 										IPAddress address = this.formSelectAddress.Address;
 
 										// Run the traceroute.
-										//this.OnRun(destination, address);
+										this.OnRun(destination, address);
 									}
 									else
 									{
@@ -339,76 +345,49 @@ namespace InetTools.Controls.Net
 		/// Runs the traceroute for the specified destination and IP address.
 		/// </summary>
 		/// <param name="destination">The destination string.</param>
-		/// <param name="sourceAddress">The source IP address.</param>
-		/// <param name="destinationAddress">The destination IP address.</param>
-		private void OnRun(string destination, IPAddress sourceAddress, IPAddress destinationAddress)
+		/// <param name="address">The destination IP address.</param>
+		private void OnRun(string destination, IPAddress address)
 		{
 			// Set the status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Running Internet traceroute to \'{0}\' ({1})...".FormatWith(destination, destinationAddress), Resources.Busy_16);
+			this.status.Send(CrawlerStatus.StatusType.Busy, "Running Internet traceroute to \'{0}\' ({1})...".FormatWith(destination, address), Resources.Busy_16);
 			// Show a message.
 			this.ShowMessage(
 				Resources.GlobeClock_48,
 				"Internet Traceroute",
-				"Running Internet traceroute to \'{0}\' ({1}) with a maximum of {2} hop{3} and up to {4} attempt{5} per hop.".FormatWith(destination, destinationAddress, this.settings.MaximumHops, this.settings.MaximumHops.PluralSuffix(), this.settings.MaximumAttempts, this.settings.MaximumAttempts.PluralSuffix())
+				"Running Internet traceroute to \'{0}\' ({1}) with a maximum of {2} hop{3} and up to {4} attempt{5} per hop.".FormatWith(destination, address, this.settings.MaximumHops, this.settings.MaximumHops.PluralSuffix(), this.settings.MaximumAttempts, this.settings.MaximumAttempts.PluralSuffix())
 				);
 
-			// Begin the traceroute.
-			//this.traceroute.
-		}
-
-		/// <summary>
-		/// Returns the network interface with the specified index.
-		/// </summary>
-		/// <param name="id">The network interface identifier.</param>
-		/// <returns>The network interface index.</returns>
-		private int GetNetworkInterfaceIndex(string id)
-		{
-			for (int index = 1; index < this.comboBoxNetworkInterface.Items.Count; index++)
-				if ((this.comboBoxNetworkInterface.Items[index] as NetworkInterfaceEx).Id == id)
-					return index;
-			return 0;
-		}
-
-		/// <summary>
-		/// An event handler called when the selected network interface has changed.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnNetworkInterfaceChanged(object sender, EventArgs e)
-		{
-			// Set the properties button enabled state.
-			this.buttonInterfaceProperties.Enabled = this.comboBoxNetworkInterface.SelectedIndex > 0;
-
-			// Call the input changed event handler.
-			this.OnInputChanged(sender, e);
-		}
-
-		/// <summary>
-		/// An event handler called when loading the network interfaces.
-		/// </summary>
-		/// <param name="sender">The sender object.</param>
-		/// <param name="e">The event arguments.</param>
-		private void OnLoadInterfaces(object sender, EventArgs e)
-		{
-			// Set the interfaces.
-			this.comboBoxNetworkInterface.Items.Clear();
-			this.comboBoxNetworkInterface.Items.Add("Any");
-			foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
+			try
 			{
-				if (iface.GetIPProperties() != null)
-				{
-					if (iface.GetIPProperties().UnicastAddresses.Count > 0)
+				// Begin the traceroute.
+				IAsyncResult asyncResult = this.traceroute.Begin(address, (IAsyncResult result) =>
 					{
-						this.comboBoxNetworkInterface.Items.Add(new NetworkInterfaceEx(iface));
-					}
-				}
+					}, null);
 			}
-
-			// Select the current interface.
-			this.comboBoxNetworkInterface.SelectedIndex = this.GetNetworkInterfaceIndex(this.config.NetworkInterface);
-
-			// Call the selected index changed event handler.
-			this.OnNetworkInterfaceChanged(sender, e);
+			catch (Exception exception)
+			{
+				// Update the status label.
+				this.status.Send(CrawlerStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed.".FormatWith(destination), Resources.Error_16);
+				// Show a message.
+				this.ShowMessage(
+					Resources.GlobeError_48,
+					"Internet Traceroute",
+					"Running Internet traceroute to \'{0}\' failed. {1}".FormatWith(destination, exception.Message),
+					false,
+					(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+				// Log the result.
+				this.log.Add(this.config.Api.Log(
+					LogEventLevel.Important,
+					LogEventType.Error,
+					"Running Internet traceroute to \'{0}\' failed. {1}",
+					new object[] { destination, exception.Message },
+					exception));
+				// Change the controls state.
+				this.OnEnableControls();
+				// Change the buttons state.
+				this.buttonStart.Enabled = true;
+				this.buttonStop.Enabled = false;
+			}
 		}
 	}
 }

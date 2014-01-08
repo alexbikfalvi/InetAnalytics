@@ -203,7 +203,7 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Loads the server configuration.
 		/// </summary>
-		public virtual void LoadConfiguration()
+		public override void LoadConfiguration()
 		{
 			// Load the base configuration.
 			base.LoadConfiguration();
@@ -214,7 +214,7 @@ namespace InetCrawler.Database
 		/// <summary>
 		/// Saves the server configuration.
 		/// </summary>
-		public virtual void SaveConfiguration()
+		public override void SaveConfiguration()
 		{
 			// Save the base configuration.
 			base.SaveConfiguration();
@@ -365,7 +365,7 @@ namespace InetCrawler.Database
 		/// Disposes the current object.
 		/// </summary>
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
-		protected virtual void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{

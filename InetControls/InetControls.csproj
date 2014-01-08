@@ -77,6 +77,12 @@
     <Compile Include="Controls\Log\ControlLogList.Designer.cs">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Net\ControlNetworkInterfaceProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Net\ControlNetworkInterfaceProperties.Designer.cs">
+      <DependentUpon>ControlNetworkInterfaceProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Net\ControlHttpAddRequestHeader.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -122,6 +128,12 @@
     </Compile>
     <Compile Include="Forms\Log\FormEventProperties.Designer.cs">
       <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Net\FormNetworkInterfaceProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Net\FormNetworkInterfaceProperties.Designer.cs">
+      <DependentUpon>FormNetworkInterfaceProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Net\FormIpSelectAddress.cs">
       <SubType>Form</SubType>
@@ -170,6 +182,9 @@
     <EmbeddedResource Include="Controls\Log\ControlLogList.resx">
       <DependentUpon>ControlLogList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Net\ControlNetworkInterfaceProperties.resx">
+      <DependentUpon>ControlNetworkInterfaceProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Net\ControlHttpAddRequestHeader.resx">
       <DependentUpon>ControlHttpAddRequestHeader.cs</DependentUpon>
     </EmbeddedResource>
@@ -190,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Log\FormEventProperties.resx">
       <DependentUpon>FormEventProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Net\FormNetworkInterfaceProperties.resx">
+      <DependentUpon>FormNetworkInterfaceProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Net\FormIpSelectAddress.resx">
       <DependentUpon>FormIpSelectAddress.cs</DependentUpon>
@@ -3529,6 +3547,20 @@
     </None>
     <None Include="..\InetIcons\Resources\Select_48.png">
       <Link>Resources\Select_48.png</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\InetIcons\Resources\NetworkInterface_16.png">
+      <Link>Resources\NetworkInterface_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NetworkInterface_24.png">
+      <Link>Resources\NetworkInterface_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NetworkInterface_32.png">
+      <Link>Resources\NetworkInterface_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\NetworkInterface_48.png">
+      <Link>Resources\NetworkInterface_48.png</Link>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

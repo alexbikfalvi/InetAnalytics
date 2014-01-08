@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2013 Alex Bikfalvi
+ * Copyright (C) 2014 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,45 +18,34 @@
 
 using System;
 using System.Net.NetworkInformation;
+using DotNetApi.Async;
 
 namespace InetApi.Net.Core
 {
 	/// <summary>
-	/// A class representing a network interface extension.
+	/// A class representing the ping state.
 	/// </summary>
-	public class NetworkInterfaceEx
+	public sealed class PingState : AsyncResult
 	{
-		private readonly NetworkInterface iface;
-
 		/// <summary>
-		/// Creates a new extended network interface instance.
+		/// Creates a new ping state instance.
 		/// </summary>
-		/// <param name="iface">The network interface.</param>
-		public NetworkInterfaceEx(NetworkInterface iface)
+		/// <param name="state">The user state.</param>
+		public PingState(object state)
+			: base(state)
 		{
-			this.iface = iface;
+
 		}
 
-		// Public properties.
+		// Internal properties.
 
 		/// <summary>
-		/// Gets the network interface identifier.
+		/// Gets or sets the ping reply.
 		/// </summary>
-		public string Id { get { return this.iface.Id; } }
+		internal PingReply Result { get; set; }
 		/// <summary>
-		/// Gets the network interface.
+		/// Gets or sets the ping exception.
 		/// </summary>
-		public NetworkInterface Interface { get { return this.iface; } }
-
-		// Public methods.
-
-		/// <summary>
-		/// Converts to extended network interface to a string.
-		/// </summary>
-		/// <returns>The string.</returns>
-		public override string ToString()
-		{
-			return this.iface.Name;
-		}
+		internal Exception Exception { get; set; }
 	}
 }

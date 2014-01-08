@@ -18,6 +18,7 @@
 
 using System;
 using System.Net;
+using System.Net.NetworkInformation;
 
 namespace InetApi.Net.Core
 {
@@ -26,6 +27,8 @@ namespace InetApi.Net.Core
 	/// </summary>
 	public sealed class TracerouteSettings
 	{
+		private readonly object sync = new object();
+
 		/// <summary>
 		/// Creates a traceroute settings instance with the default values.
 		/// </summary>
@@ -40,6 +43,10 @@ namespace InetApi.Net.Core
 
 		// Public properties.
 
+		/// <summary>
+		/// Gets the synchronization object.
+		/// </summary>
+		public object Sync { get { return this.sync; } }
 		/// <summary>
 		/// Gets or sets the maximum number of hops for the traceroute.
 		/// </summary>

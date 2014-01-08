@@ -17,7 +17,10 @@
  */
 
 using System;
+using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 namespace InetApi.Net.Core
 {
@@ -67,6 +70,49 @@ namespace InetApi.Net.Core
 		//	//TracerouteState asyncState = new TracerouteState();
 		//}
 
+		/// <summary>
+		/// Begins an asychronous traceroute to the specified destination.
+		/// </summary>
+		/// <param name="destination">The destination IP address.</param>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="state">The user state.</param>
+		/// <returns>The result of the asynchronous operation.</returns>
+		public IAsyncResult Begin(IPAddress destination, AsyncCallback callback, object state)
+		{
+			// Create a new traceroute state.
+			TracerouteState asyncState = new TracerouteState(destination, callback, state);
+
+			// Send a traceroute.
+			this.Send(asyncState);
+
+			// Return the asynchronous state.
+			return asyncState;
+		}
+
+		/// <summary>
+		/// Ends an asycnhronous traceroute operation.
+		/// </summary>
+		/// <param name="result">The result of the asynchronous traceroute operation.</param>
+		/// <returns>The result of the traceroute operation.</returns>
+		public TracerouteResult End(IAsyncResult result)
+		{
+			// Get the traceroute state.
+			TracerouteState asyncState = result as TracerouteState;
+
+			try
+			{
+				// Send a
+
+				// Return the asynchronous state.
+				return null;
+			}
+			finally
+			{
+				// Dispose the asynchronous state.
+				asyncState.Dispose();
+			}
+		}
+
 		// Protected methods.
 
 		/// <summary>
@@ -78,6 +124,35 @@ namespace InetApi.Net.Core
 			if (disposing)
 			{
 			}
+		}
+
+		// Private methods.
+
+		/// <summary>
+		/// Send a traceroute message using the specified traceroute state.
+		/// </summary>
+		/// <param name="asyncState">The traceroute state.</param>
+		private void Send(TracerouteState asyncState)
+		{
+			// Begin sending a traceroute message using the state.
+			IAsyncResult result = asyncState.Begin((IAsyncResult asyncResult) =>
+				{
+					try
+					{
+						// Finish sending a traceroute message using the state.
+						PingReply reply = asyncState.End(asyncResult);
+
+						// Call the callback method using the result.
+					}
+					catch (Exception exception)
+					{
+						// Call the callback method using the exception.
+					}
+					finally
+					{
+						// Increment the TTL and send a new message.
+					}
+				});
 		}
 	}
 }

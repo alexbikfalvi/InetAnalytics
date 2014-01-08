@@ -48,8 +48,6 @@
 			this.columnHeaderTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.tabPageSettings = new System.Windows.Forms.TabPage();
-			this.labelNetworkInterface = new System.Windows.Forms.Label();
-			this.comboBoxNetworkInterface = new System.Windows.Forms.ComboBox();
 			this.numericUpDownMaximumFailedHops = new System.Windows.Forms.NumericUpDown();
 			this.labelMaximumFailedHops = new System.Windows.Forms.Label();
 			this.checkBoxStopOnFail = new System.Windows.Forms.CheckBox();
@@ -68,8 +66,6 @@
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
 			this.log = new InetAnalytics.Controls.Log.ControlLogList();
-			this.buttonInterfaceProperties = new System.Windows.Forms.Button();
-			this.buttonRefreshInterfaces = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -205,10 +201,6 @@
 			// 
 			// tabPageSettings
 			// 
-			this.tabPageSettings.Controls.Add(this.buttonRefreshInterfaces);
-			this.tabPageSettings.Controls.Add(this.buttonInterfaceProperties);
-			this.tabPageSettings.Controls.Add(this.labelNetworkInterface);
-			this.tabPageSettings.Controls.Add(this.comboBoxNetworkInterface);
 			this.tabPageSettings.Controls.Add(this.numericUpDownMaximumFailedHops);
 			this.tabPageSettings.Controls.Add(this.labelMaximumFailedHops);
 			this.tabPageSettings.Controls.Add(this.checkBoxStopOnFail);
@@ -225,25 +217,6 @@
 			this.tabPageSettings.TabIndex = 1;
 			this.tabPageSettings.Text = "Settings";
 			this.tabPageSettings.UseVisualStyleBackColor = true;
-			// 
-			// labelNetworkInterface
-			// 
-			this.labelNetworkInterface.AutoSize = true;
-			this.labelNetworkInterface.Location = new System.Drawing.Point(7, 160);
-			this.labelNetworkInterface.Name = "labelNetworkInterface";
-			this.labelNetworkInterface.Size = new System.Drawing.Size(94, 13);
-			this.labelNetworkInterface.TabIndex = 10;
-			this.labelNetworkInterface.Text = "Network &interface:";
-			// 
-			// comboBoxNetworkInterface
-			// 
-			this.comboBoxNetworkInterface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxNetworkInterface.FormattingEnabled = true;
-			this.comboBoxNetworkInterface.Location = new System.Drawing.Point(187, 157);
-			this.comboBoxNetworkInterface.Name = "comboBoxNetworkInterface";
-			this.comboBoxNetworkInterface.Size = new System.Drawing.Size(300, 21);
-			this.comboBoxNetworkInterface.TabIndex = 9;
-			this.comboBoxNetworkInterface.SelectedIndexChanged += new System.EventHandler(this.OnNetworkInterfaceChanged);
 			// 
 			// numericUpDownMaximumFailedHops
 			// 
@@ -454,26 +427,6 @@
 			this.log.TabIndex = 0;
 			this.log.Title = "Event Log";
 			// 
-			// buttonInterfaceProperties
-			// 
-			this.buttonInterfaceProperties.Enabled = false;
-			this.buttonInterfaceProperties.Location = new System.Drawing.Point(493, 156);
-			this.buttonInterfaceProperties.Name = "buttonInterfaceProperties";
-			this.buttonInterfaceProperties.Size = new System.Drawing.Size(75, 23);
-			this.buttonInterfaceProperties.TabIndex = 11;
-			this.buttonInterfaceProperties.Text = "&Properties";
-			this.buttonInterfaceProperties.UseVisualStyleBackColor = true;
-			// 
-			// buttonRefreshInterfaces
-			// 
-			this.buttonRefreshInterfaces.Location = new System.Drawing.Point(574, 156);
-			this.buttonRefreshInterfaces.Name = "buttonRefreshInterfaces";
-			this.buttonRefreshInterfaces.Size = new System.Drawing.Size(75, 23);
-			this.buttonRefreshInterfaces.TabIndex = 12;
-			this.buttonRefreshInterfaces.Text = "R&efresh";
-			this.buttonRefreshInterfaces.UseVisualStyleBackColor = true;
-			this.buttonRefreshInterfaces.Click += new System.EventHandler(this.OnLoadInterfaces);
-			// 
 			// ControlTraceroute
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -534,9 +487,5 @@
 		private System.Windows.Forms.CheckBox checkBoxStopOnFail;
 		private System.Windows.Forms.NumericUpDown numericUpDownMaximumFailedHops;
 		private System.Windows.Forms.Label labelMaximumFailedHops;
-		private System.Windows.Forms.Label labelNetworkInterface;
-		private System.Windows.Forms.ComboBox comboBoxNetworkInterface;
-		private System.Windows.Forms.Button buttonInterfaceProperties;
-		private System.Windows.Forms.Button buttonRefreshInterfaces;
 	}
 }
