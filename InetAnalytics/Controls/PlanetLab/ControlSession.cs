@@ -141,7 +141,10 @@ namespace InetAnalytics.Controls.PlanetLab
 			// If the private key is null, show a message and return.
 			if (null == this.config.Key)
 			{
+				// Show a message.
 				MessageBox.Show("The private key for the selected PlanetLab slice is not set.", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				// Raise the connect failed event.
+				if (this.ConnectFailed != null) this.ConnectFailed(this, new PlExceptionEventArgs<PlNode>(this.node, new Exception("The private key for the selected PlanetLab slice is not set.")));
 				return;
 			}
 
