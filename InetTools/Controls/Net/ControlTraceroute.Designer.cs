@@ -19,8 +19,10 @@
 				// Dispose the components.
 				if (this.components != null)
 				{
-					components.Dispose();
+					this.components.Dispose();
 				}
+				// Dispose the traceroute.
+				this.traceroute.Dispose();
 			}
 			base.Dispose(disposing);
 		}
@@ -48,6 +50,8 @@
 			this.columnHeaderTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.tabPageSettings = new System.Windows.Forms.TabPage();
+			this.labelDataLength = new System.Windows.Forms.Label();
+			this.numericUpDownDataLength = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownMaximumFailedHops = new System.Windows.Forms.NumericUpDown();
 			this.labelMaximumFailedHops = new System.Windows.Forms.Label();
 			this.checkBoxStopOnFail = new System.Windows.Forms.CheckBox();
@@ -74,6 +78,7 @@
 			this.tabControl.SuspendLayout();
 			this.tabPageRoute.SuspendLayout();
 			this.tabPageSettings.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataLength)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumFailedHops)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHops)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAttempts)).BeginInit();
@@ -175,7 +180,7 @@
 			// columnHeaderRtt
 			// 
 			this.columnHeaderRtt.Text = "Round-trip time";
-			this.columnHeaderRtt.Width = 120;
+			this.columnHeaderRtt.Width = 200;
 			// 
 			// columnHeaderSuccess
 			// 
@@ -201,6 +206,8 @@
 			// 
 			// tabPageSettings
 			// 
+			this.tabPageSettings.Controls.Add(this.labelDataLength);
+			this.tabPageSettings.Controls.Add(this.numericUpDownDataLength);
 			this.tabPageSettings.Controls.Add(this.numericUpDownMaximumFailedHops);
 			this.tabPageSettings.Controls.Add(this.labelMaximumFailedHops);
 			this.tabPageSettings.Controls.Add(this.checkBoxStopOnFail);
@@ -217,6 +224,38 @@
 			this.tabPageSettings.TabIndex = 1;
 			this.tabPageSettings.Text = "Settings";
 			this.tabPageSettings.UseVisualStyleBackColor = true;
+			// 
+			// labelDataLength
+			// 
+			this.labelDataLength.AutoSize = true;
+			this.labelDataLength.Location = new System.Drawing.Point(7, 159);
+			this.labelDataLength.Name = "labelDataLength";
+			this.labelDataLength.Size = new System.Drawing.Size(88, 13);
+			this.labelDataLength.TabIndex = 10;
+			this.labelDataLength.Text = "Data size (bytes):";
+			// 
+			// numericUpDownDataLength
+			// 
+			this.numericUpDownDataLength.Location = new System.Drawing.Point(187, 157);
+			this.numericUpDownDataLength.Maximum = new decimal(new int[] {
+            65500,
+            0,
+            0,
+            0});
+			this.numericUpDownDataLength.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownDataLength.Name = "numericUpDownDataLength";
+			this.numericUpDownDataLength.Size = new System.Drawing.Size(120, 20);
+			this.numericUpDownDataLength.TabIndex = 9;
+			this.numericUpDownDataLength.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownDataLength.ValueChanged += new System.EventHandler(this.OnInputChanged);
 			// 
 			// numericUpDownMaximumFailedHops
 			// 
@@ -445,6 +484,7 @@
 			this.tabPageRoute.ResumeLayout(false);
 			this.tabPageSettings.ResumeLayout(false);
 			this.tabPageSettings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataLength)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumFailedHops)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHops)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumAttempts)).EndInit();
@@ -487,5 +527,7 @@
 		private System.Windows.Forms.CheckBox checkBoxStopOnFail;
 		private System.Windows.Forms.NumericUpDown numericUpDownMaximumFailedHops;
 		private System.Windows.Forms.Label labelMaximumFailedHops;
+		private System.Windows.Forms.Label labelDataLength;
+		private System.Windows.Forms.NumericUpDown numericUpDownDataLength;
 	}
 }

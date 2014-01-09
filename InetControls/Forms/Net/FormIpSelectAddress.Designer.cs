@@ -103,6 +103,7 @@
 			this.listViewAddress.TabIndex = 10;
 			this.listViewAddress.UseCompatibleStateImageBehavior = false;
 			this.listViewAddress.View = System.Windows.Forms.View.Details;
+			this.listViewAddress.ItemActivate += new System.EventHandler(this.OnSelect);
 			this.listViewAddress.SelectedIndexChanged += new System.EventHandler(this.OnSelectionChanged);
 			// 
 			// columnHeaderAddress

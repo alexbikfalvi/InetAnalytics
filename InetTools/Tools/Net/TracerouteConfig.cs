@@ -104,8 +104,17 @@ namespace InetTools.Tools.Net
 		/// </summary>
 		public bool StopTracerouteOnFail
 		{
-			get { return this.api.Key.GetBoolean("StopTracerouteOnFail", false); }       
+			get { return this.api.Key.GetBoolean("StopTracerouteOnFail", false); }
 			set { this.api.Key.SetBoolean("StopTracerouteOnFail", value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the number of data bytes send within a traceroute packet.
+		/// </summary>
+		public int DataLength
+		{
+			get { return this.api.Key.GetInteger("DataLength", 32); }
+			set { this.api.Key.SetInteger("DataLength", value); }
 		}
 	}
 }

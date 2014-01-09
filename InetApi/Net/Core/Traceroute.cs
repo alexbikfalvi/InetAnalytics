@@ -55,22 +55,6 @@ namespace InetApi.Net.Core
 		}
 
 		/// <summary>
-		/// Creates a traceroute asynchronous state.
-		/// </summary>
-		/// <param name="localAddress"></param>
-		/// <returns></returns>
-		//public static TracerouteState Create(IPAddress localAddress)
-		//{
-
-		//}
-
-		//public IAsyncResult BeginIcmp(IPAddress destination, byte ttl, AsyncCallback callback, object state)
-		//{
-		//	// Create a new traceroute state.
-		//	//TracerouteState asyncState = new TracerouteState();
-		//}
-
-		/// <summary>
 		/// Begins an asychronous traceroute to the specified destination.
 		/// </summary>
 		/// <param name="destination">The destination IP address.</param>
@@ -79,14 +63,17 @@ namespace InetApi.Net.Core
 		/// <returns>The result of the asynchronous operation.</returns>
 		public IAsyncResult Begin(IPAddress destination, AsyncCallback callback, object state)
 		{
-			// Create a new traceroute state.
-			TracerouteState asyncState = new TracerouteState(destination, callback, state);
+			lock (this.settings)
+			{
+				// Create a new traceroute state.
+				TracerouteState asyncState = new TracerouteState(destination, this.settings.DataLength, callback, state);
 
-			// Send a traceroute.
-			this.Send(asyncState);
+				// Send a traceroute.
+				this.Send(asyncState);
 
-			// Return the asynchronous state.
-			return asyncState;
+				// Return the asynchronous state.
+				return asyncState;
+			}
 		}
 
 		/// <summary>
@@ -99,18 +86,24 @@ namespace InetApi.Net.Core
 			// Get the traceroute state.
 			TracerouteState asyncState = result as TracerouteState;
 
-			try
-			{
-				// Send a
+			// If there is an exception, throw the exception.
+			if (asyncState.LastException != null) throw asyncState.LastException;
 
-				// Return the asynchronous state.
-				return null;
-			}
-			finally
-			{
-				// Dispose the asynchronous state.
-				asyncState.Dispose();
-			}
+			// Else, return the result.
+			return asyncState;
+		}
+
+		/// <summary>
+		/// Cancels the traceroute.
+		/// </summary>
+		/// <param name="result">The result of the asynchronous operation.</param>
+		public void Cancel(IAsyncResult result)
+		{
+			// Get the traceroute state.
+			TracerouteState asyncState = result as TracerouteState;
+
+			// Cancel the operation.
+			asyncState.Cancel();
 		}
 
 		// Protected methods.
@@ -137,20 +130,51 @@ namespace InetApi.Net.Core
 			// Begin sending a traceroute message using the state.
 			IAsyncResult result = asyncState.Begin((IAsyncResult asyncResult) =>
 				{
-					try
-					{
-						// Finish sending a traceroute message using the state.
-						PingReply reply = asyncState.End(asyncResult);
+					// Finish sending a traceroute message using the state.
+					asyncState.End(asyncResult);
 
-						// Call the callback method using the result.
-					}
-					catch (Exception exception)
+					// A flag indicated whether the traceroute has completed.
+					bool completed = false;
+
+					lock (this.settings.Sync)
 					{
-						// Call the callback method using the exception.
+						// Check whether the traceroute reached the destination.
+						completed = completed || (asyncState.LastReply != null ? asyncState.Destination.Equals(asyncState.LastReply.Address) &&
+							(this.settings.StopHopOnSuccess ? asyncState.TtlSuccess : asyncState.CurrentAttempt >= this.settings.MaximumAttempts) : false);
+						// Check whether the maximum number of hops was reached.
+						completed = completed || (asyncState.CurrentTtl > this.settings.MaximumHops);
+						// Check whether the maximum number of failed hops was reached.
+						completed = completed || (this.settings.StopTracerouteOnFail && (asyncState.LastFailedTtlCount >= this.settings.MaximumFailedHops));
+						// Check whether the operation was canceled.
+						completed = completed || asyncState.CancellationToken.IsCancellationRequested;
 					}
-					finally
+
+					// If the traceroute is completed, complete the asynchronous operation.
+					if (completed) asyncState.Complete();
+
+					// Call the callback method.
+					if (null != asyncState.Callback) asyncState.Callback(asyncState);
+
+					// If the operation is not completed.
+					if (!completed)
 					{
-						// Increment the TTL and send a new message.
+						lock (this.settings.Sync)
+						{
+							// If the hop was successful, and the traceroute stops on success; or if the maximum number of attempts was reached.
+							if ((this.settings.StopHopOnSuccess && asyncState.TtlSuccess)
+								|| (asyncState.CurrentAttempt >= this.settings.MaximumAttempts))
+							{
+								// Increment the TTL.
+								asyncState.Next();
+							}
+						}
+						// Send a new message.
+						this.Send(asyncState);
+					}
+					else
+					{
+						// Dispose the asynchronous state.
+						asyncState.Dispose();
 					}
 				});
 		}

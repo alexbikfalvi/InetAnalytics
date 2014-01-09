@@ -67,5 +67,9 @@ namespace InetApi.Net.Core
 		/// Gets or sets whether the traceroute stops after the maximum number of consecututive failed hops was reached.
 		/// </summary>
 		public bool StopTracerouteOnFail { get; set; }
+		/// <summary>
+		/// Gets or sets the traceroute message data length.
+		/// </summary>
+		public int DataLength { get; set; }
 	}
 }

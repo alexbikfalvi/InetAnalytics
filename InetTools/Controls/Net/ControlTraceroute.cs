@@ -48,6 +48,9 @@ namespace InetTools.Controls.Net
 
 		private readonly FormIpSelectAddress formSelectAddress = new FormIpSelectAddress();
 
+		private readonly object sync = new object();
+		private IAsyncResult result = null;
+
 		private bool configurationChanged = false;
 
 		/// <summary>
@@ -88,6 +91,7 @@ namespace InetTools.Controls.Net
 			this.numericUpDownMaximumHops.Value = this.config.MaximumHops;
 			this.numericUpDownMaximumAttempts.Value = this.config.MaximumAttempts;
 			this.numericUpDownMaximumFailedHops.Value = this.config.MaximumFailedHops;
+			this.numericUpDownDataLength.Value = this.config.DataLength;
 
 			this.checkBoxAutomaticNameResolution.Checked = this.config.AutomaticNameResolution;
 			this.checkBoxStopHopOnSuccess.Checked = this.config.StopHopOnSuccess;
@@ -109,21 +113,11 @@ namespace InetTools.Controls.Net
 			this.config.MaximumHops = (byte)this.numericUpDownMaximumHops.Value;
 			this.config.MaximumAttempts = (byte)this.numericUpDownMaximumAttempts.Value;
 			this.config.MaximumFailedHops = (byte)this.numericUpDownMaximumFailedHops.Value;
+			this.config.DataLength = (int)this.numericUpDownDataLength.Value;
 
 			this.config.AutomaticNameResolution = this.checkBoxAutomaticNameResolution.Checked;
 			this.config.StopHopOnSuccess = this.checkBoxStopHopOnSuccess.Checked;
 			this.config.StopTracerouteOnFail = this.checkBoxStopOnFail.Checked;
-
-			// Set the traceroute settings.
-			lock (this.settings.Sync)
-			{
-				this.settings.MaximumHops = this.config.MaximumHops;
-				this.settings.MaximumAttempts = this.config.MaximumAttempts;
-				this.settings.MaximumFailedHops = this.config.MaximumFailedHops;
-
-				this.settings.StopHopOnSuccess = this.config.StopHopOnSuccess;
-				this.settings.StopTracerouteOnFail = this.config.StopTracerouteOnFail;
-			}
 
 			// Disable the save and undo buttons.
 			this.buttonSave.Enabled = false;
@@ -181,11 +175,26 @@ namespace InetTools.Controls.Net
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
+			// Set the traceroute settings.
+			lock (this.settings.Sync)
+			{
+				this.settings.MaximumHops = this.config.MaximumHops;
+				this.settings.MaximumAttempts = this.config.MaximumAttempts;
+				this.settings.MaximumFailedHops = this.config.MaximumFailedHops;
+				this.settings.DataLength = this.config.DataLength;
+
+				this.settings.StopHopOnSuccess = this.config.StopHopOnSuccess;
+				this.settings.StopTracerouteOnFail = this.config.StopTracerouteOnFail;
+			}
+
 			// Change the controls state.
 			this.OnDisableControls();
 			// Change the buttons state.
 			this.buttonStart.Enabled = false;
 			this.buttonStop.Enabled = true;
+
+			// Switch to the traceroute tab page.
+			this.tabControl.SelectedTab = this.tabPageRoute;
 
 			// Clear the response headers.
 			this.listViewRoute.Items.Clear();
@@ -317,6 +326,16 @@ namespace InetTools.Controls.Net
 		{
 			// Disable the stop button.
 			this.buttonStop.Enabled = false;
+
+			lock (this.sync)
+			{
+				if (null != this.result)
+				{
+					// Cancel the traceroute.
+					this.traceroute.Cancel(this.result);
+					this.result = null;
+				}
+			}
 		}
 
 		/// <summary>
@@ -359,10 +378,130 @@ namespace InetTools.Controls.Net
 
 			try
 			{
-				// Begin the traceroute.
-				IAsyncResult asyncResult = this.traceroute.Begin(address, (IAsyncResult result) =>
-					{
-					}, null);
+				lock (this.sync)
+				{
+					// Begin the traceroute.
+					this.result = this.traceroute.Begin(address, (IAsyncResult result) =>
+						{
+							bool isCanceled = false;
+							try
+							{
+								// End the traceroute.
+								TracerouteResult tracerouteResult = this.traceroute.End(result);
+
+								// Set whether the operation was canceled.
+								isCanceled = tracerouteResult.IsCanceled;
+
+								this.Invoke(() =>
+									{
+										// If there is an item for the current hop.
+										if (this.listViewRoute.Items.Count > tracerouteResult.CurrentTtl - 1)
+										{
+											// Update the list view item.
+											ListViewItem item = this.listViewRoute.Items[tracerouteResult.CurrentTtl - 1];
+
+											// Set the item subitems.
+											if (tracerouteResult.IsSuccess)
+											{
+												item.SubItems[1].Text = tracerouteResult.LastReply.Address.ToString();
+											}
+											item.SubItems[2].Text = tracerouteResult.RoundtripTimeCount > 0 ? "{0:G3} ms (avg) {1:G3} ms (min) {2:G3} ms (max)".FormatWith(tracerouteResult.RoundtripTimeAverage, tracerouteResult.RoundtripTimeMinimum, tracerouteResult.RoundtripTimeMaximum) : string.Empty;
+											item.SubItems[3].Text = tracerouteResult.SuccessCount.ToString();
+											item.SubItems[4].Text = tracerouteResult.ErrorCount.ToString();
+											item.SubItems[5].Text = (tracerouteResult.SuccessCount + tracerouteResult.ErrorCount).ToString();
+
+											// Set the item image.
+											item.ImageKey = ControlTraceroute.GetItemImageKey(tracerouteResult);
+										}
+										else
+										{
+											// Add a list view item.
+											ListViewItem item = new ListViewItem(new string[] {
+											tracerouteResult.CurrentTtl.ToString(),
+											tracerouteResult.IsSuccess ? tracerouteResult.LastReply.Address.ToString() : "*",
+											tracerouteResult.RoundtripTimeCount > 0 ? "{0:G3} ms (avg) {1:G3} ms (min) {2:G3} ms (max)".FormatWith(tracerouteResult.RoundtripTimeAverage, tracerouteResult.RoundtripTimeMinimum, tracerouteResult.RoundtripTimeMaximum) : string.Empty,
+											tracerouteResult.SuccessCount.ToString(),
+											tracerouteResult.ErrorCount.ToString(),
+											(tracerouteResult.SuccessCount + tracerouteResult.ErrorCount).ToString()
+										});
+											// Set the item image.
+											item.ImageKey = ControlTraceroute.GetItemImageKey(tracerouteResult);
+											// Add the list view item.
+											this.listViewRoute.Items.Add(item);
+										}
+									});
+							}
+							catch (Exception exception)
+							{
+								// Log the result.
+								this.log.Add(this.config.Api.Log(
+									LogEventLevel.Important,
+									LogEventType.Error,
+									"An error ocurred during an Internet traceroute to \'{0}\'. {1}",
+									new object[] { destination, exception.Message },
+									exception));
+							}
+							finally
+							{
+								// If the traceroute has completed.
+								if (result.IsCompleted)
+								{
+									if (isCanceled)
+									{
+										// Update the status label.
+										this.status.Send(CrawlerStatus.StatusType.Normal, "Internet traceroute to \'{0}\' was canceled.".FormatWith(destination), Resources.Success_16);
+										// Show a message.
+										this.ShowMessage(
+											Resources.GlobeCanceled_48,
+											"Internet Traceroute",
+											"Internet traceroute to \'{0}\' was canceled.".FormatWith(destination),
+											false,
+											(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+											(object[] parameters) =>
+											{
+												// Change the controls state.
+												this.OnEnableControls();
+												// Change the buttons state.
+												this.buttonStart.Enabled = true;
+												this.buttonStop.Enabled = false;
+											});
+										// Log the result.
+										this.log.Add(this.config.Api.Log(
+											LogEventLevel.Verbose,
+											LogEventType.Canceled,
+											"Internet traceroute to \'{0}\' was canceled.",
+											new object[] { destination }));
+									}
+									else
+									{
+										// Update the status label.
+										this.status.Send(CrawlerStatus.StatusType.Normal, "Internet traceroute to \'{0}\' completed successfully.".FormatWith(destination), Resources.Success_16);
+										// Show a message.
+										this.ShowMessage(
+											Resources.GlobeSuccess_48,
+											"Internet Traceroute",
+											"Internet traceroute to \'{0}\' completed successfully.".FormatWith(destination),
+											false,
+											(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+											(object[] parameters) =>
+											{
+												// Change the controls state.
+												this.OnEnableControls();
+												// Change the buttons state.
+												this.buttonStart.Enabled = true;
+												this.buttonStop.Enabled = false;
+											});
+										// Log the result.
+										this.log.Add(this.config.Api.Log(
+											LogEventLevel.Verbose,
+											LogEventType.Success,
+											"Internet traceroute to \'{0}\' completed successfully.",
+											new object[] { destination }));
+									}
+								}
+							}
+						}, null);
+				}
 			}
 			catch (Exception exception)
 			{
@@ -388,6 +527,21 @@ namespace InetTools.Controls.Net
 				this.buttonStart.Enabled = true;
 				this.buttonStop.Enabled = false;
 			}
+		}
+
+		/// <summary>
+		/// Returns the item image key for the specified traceroute result.
+		/// </summary>
+		/// <param name="result">The traceroute result.</param>
+		/// <returns>The image key.</returns>
+		private static string GetItemImageKey(TracerouteResult result)
+		{
+			if (result.SuccessCount > 0)
+			{
+				if (result.ErrorCount > 0) return "SuccessWarning";
+				else return "Success";
+			}
+			else return "Error";
 		}
 	}
 }

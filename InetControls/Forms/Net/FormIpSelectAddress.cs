@@ -131,5 +131,15 @@ namespace InetAnalytics.Forms.Net
 				this.Address = null;
 			}
 		}
+
+		/// <summary>
+		/// Selects the specified option.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnSelect(object sender, EventArgs e)
+		{
+			this.DialogResult = DialogResult.OK;
+		}
 	}
 }
