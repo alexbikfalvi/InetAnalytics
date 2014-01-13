@@ -219,7 +219,7 @@ namespace InetTools.Controls.Net.Web
 						AsyncWebResult asyncResult = this.request.End(result);
 
 						// Get the encoding for the received response.
-						Encoding encoding = Encoding.GetEncoding(asyncResult.Response.CharacterSet);
+						Encoding encoding = string.IsNullOrWhiteSpace(asyncResult.Response.CharacterSet) ? Encoding.UTF8 : Encoding.GetEncoding(asyncResult.Response.CharacterSet);
 
 						// Display the response data.
 						this.textBoxResponseData.Text = (null != asyncResult.ReceiveData.Data) ? encoding.GetString(asyncResult.ReceiveData.Data) : string.Empty;
