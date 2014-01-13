@@ -93,7 +93,9 @@ namespace InetCrawler.Tools
 		/// <returns><b>True</b> if the two headers are equal, or <b>false</b> otherwise.</returns>
 		public static bool operator ==(ToolMethodInfo left, ToolMethodInfo right)
 		{
-			return left.Equals(right);
+			if (object.ReferenceEquals(left, right)) return true;
+			if (((object)left == null) || ((object)left == null)) return false;
+			return (left.Trigger.Id == right.Trigger.Id) && (left.Method.Id == right.Method.Id);
 		}
 
 		/// <summary>
@@ -104,7 +106,7 @@ namespace InetCrawler.Tools
 		/// <returns><b>True</b> if the two headers are equal, or <b>false</b> otherwise.</returns>
 		public static bool operator !=(ToolMethodInfo left, ToolMethodInfo right)
 		{
-			return !left.Equals(right);
+			return !(left == right);
 		}
 
 		/// <summary>
