@@ -144,7 +144,7 @@ namespace InetApi.Net.Core
 						// Check whether the maximum number of hops was reached.
 						completed = completed || (asyncState.CurrentTtl > this.settings.MaximumHops);
 						// Check whether the maximum number of failed hops was reached.
-						completed = completed || (this.settings.StopTracerouteOnFail && (asyncState.LastFailedTtlCount >= this.settings.MaximumFailedHops));
+						completed = completed || (this.settings.StopTracerouteOnFail && (asyncState.LastFailedTtlCount + 1 >= this.settings.MaximumFailedHops) && (asyncState.CurrentAttempt >= this.settings.MaximumAttempts));
 						// Check whether the operation was canceled.
 						completed = completed || asyncState.CancellationToken.IsCancellationRequested;
 					}
@@ -161,8 +161,7 @@ namespace InetApi.Net.Core
 						lock (this.settings.Sync)
 						{
 							// If the hop was successful, and the traceroute stops on success; or if the maximum number of attempts was reached.
-							if ((this.settings.StopHopOnSuccess && asyncState.TtlSuccess)
-								|| (asyncState.CurrentAttempt >= this.settings.MaximumAttempts))
+							if ((this.settings.StopHopOnSuccess && asyncState.TtlSuccess) || (asyncState.CurrentAttempt >= this.settings.MaximumAttempts))
 							{
 								// Increment the TTL.
 								asyncState.Next();

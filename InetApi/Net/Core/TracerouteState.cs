@@ -150,13 +150,13 @@ namespace InetApi.Net.Core
 			{
 				this.LastReply = asyncState.Result;
 				this.LastException = null;
-				this.LastFailedTtlCount = 0;
 				if ((asyncState.Result != null) && ((asyncState.Result.Status == IPStatus.Success) || (asyncState.Result.Status == IPStatus.TtlExpired)))
 				{
 					this.IsSuccess = true;
 					this.TtlSuccess = true;
 					this.SuccessCount++;
 					this.AddRoundtripTime(asyncState.Result.RoundtripTime);
+					this.LastFailedTtlCount = 0;
 				}
 				else
 				{
