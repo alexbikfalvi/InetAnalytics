@@ -53,7 +53,7 @@ namespace InetAnalytics.Controls.PlanetLab
 														  Resources.UserWarning_48
 													  };
 		private static readonly string[] personMessage = {
-															 "There is no current PlanelLab account.",
+															 "There is no current PlanetLab account.",
 															 "The PlanetLab credentials correspond to the following account.",
 															 "There is no PlanetLab account for the specified credentials.",
 															 "There are multiple accounts corresponding to the specified credentials."

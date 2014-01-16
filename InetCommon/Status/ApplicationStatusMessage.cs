@@ -19,19 +19,19 @@
 using System;
 using System.Drawing;
 
-namespace InetCrawler.Status
+namespace InetCommon.Status
 {
 	/// <summary>
 	/// A structure representing a status message.
 	/// </summary>
-	public struct CrawlerStatusMessage
+	public struct ApplicationStatusMessage
 	{
 		/// <summary>
 		/// Creates a new message structure.
 		/// </summary>
 		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
-		public CrawlerStatusMessage(CrawlerStatus.StatusType type, string text)
+		public ApplicationStatusMessage(ApplicationStatus.StatusType type, string text)
 			: this()
 		{
 			this.Type = type;
@@ -44,7 +44,7 @@ namespace InetCrawler.Status
 		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
 		/// <param name="image">The left image.</param>
-		public CrawlerStatusMessage(CrawlerStatus.StatusType type, string text, Image image)
+		public ApplicationStatusMessage(ApplicationStatus.StatusType type, string text, Image image)
 			: this()
 		{
 			this.Type = type;
@@ -60,7 +60,7 @@ namespace InetCrawler.Status
 		/// <param name="rightText">The right text.</param>
 		/// <param name="leftImage">The left image.</param>
 		/// <param name="rightImage">The right image.</param>
-		public CrawlerStatusMessage(CrawlerStatus.StatusType type, string leftText, string rightText, Image leftImage, Image rightImage)
+		public ApplicationStatusMessage(ApplicationStatus.StatusType type, string leftText, string rightText, Image leftImage, Image rightImage)
 			: this()
 		{
 			this.Type = type;
@@ -75,7 +75,7 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Gets the status type.
 		/// </summary>
-		public CrawlerStatus.StatusType Type { get; private set; }
+		public ApplicationStatus.StatusType Type { get; private set; }
 		/// <summary>
 		/// Gets the left image.
 		/// </summary>

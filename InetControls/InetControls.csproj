@@ -95,6 +95,9 @@
     <Compile Include="Controls\Net\ControlHttpHeaderProperties.Designer.cs">
       <DependentUpon>ControlHttpHeaderProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Net\NetworkStatusToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Net\Ssh\ControlSsh.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -239,6 +242,10 @@
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>InetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetCommon\InetCommon.csproj">
+      <Project>{4e3c3a80-85d6-4932-b1d2-e0467b1abf46}</Project>
+      <Name>InetCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\InetCrawler\InetCrawler.csproj">
       <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>

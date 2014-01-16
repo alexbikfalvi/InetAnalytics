@@ -23,9 +23,9 @@ using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
+using InetCommon.Status;
 using InetCrawler.Log;
 using InetCrawler.Tools;
-using InetCrawler.Status;
 using InetTools.Forms.Mercury;
 using InetTools.Tools.Mercury;
 
@@ -38,7 +38,7 @@ namespace InetTools.Controls.Mercury
 	{
 		private readonly MercuryConfig config;
 
-		private readonly CrawlerStatusHandler status = null;
+		private readonly ApplicationStatusHandler status = null;
 
 		private readonly MercuryRequest request = new MercuryRequest();
 		private IAsyncResult result = null;
@@ -64,7 +64,7 @@ namespace InetTools.Controls.Mercury
 
 			// Set the status.
 			this.status = this.config.Api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 		}
 
 		// Private methods.
@@ -154,7 +154,7 @@ namespace InetTools.Controls.Mercury
 			this.OnRequestStarted();
 
 			// Set the status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Uploading the traceroute to the Mercury server...", Resources.Busy_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Uploading the traceroute to the Mercury server...", Resources.Busy_16);
 			// Show a message.
 			this.ShowMessage(
 				Resources.GlobeClock_48,
@@ -182,7 +182,7 @@ namespace InetTools.Controls.Mercury
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,
@@ -224,7 +224,7 @@ namespace InetTools.Controls.Mercury
 				this.request.End(result);
 				// Update the status label.
 				this.status.Send(
-					CrawlerStatus.StatusType.Normal,
+					ApplicationStatus.StatusType.Normal,
 					"Uploading the traceroute to the Mercury server completed successfully.",
 					Resources.Success_16);
 				// Show a message.
@@ -252,7 +252,7 @@ namespace InetTools.Controls.Mercury
 				if (exception.Status == WebExceptionStatus.RequestCanceled)
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server was canceled.", Resources.Canceled_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server was canceled.", Resources.Canceled_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeCanceled_48,
@@ -276,7 +276,7 @@ namespace InetTools.Controls.Mercury
 				else
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeError_48,
@@ -302,7 +302,7 @@ namespace InetTools.Controls.Mercury
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Uploading the traceroute to the Mercury server failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,

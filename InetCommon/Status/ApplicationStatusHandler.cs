@@ -19,18 +19,18 @@
 using System;
 using System.Drawing;
 
-namespace InetCrawler.Status
+namespace InetCommon.Status
 {
 	/// <summary>
 	/// A delegate used when performing an action on the status handler.
 	/// </summary>
 	/// <param name="handle">The status handler.</param>
-	internal delegate void CrawlerStatusHandlerAction(CrawlerStatusHandler handler);
+	internal delegate void CrawlerStatusHandlerAction(ApplicationStatusHandler handler);
 
 	/// <summary>
 	/// A class allowing a single control to send status messages.
 	/// </summary>
-	public sealed class CrawlerStatusHandler
+	public sealed class ApplicationStatusHandler
 	{
 		private readonly object owner;
 		private readonly CrawlerStatusHandlerAction actionSend;
@@ -38,7 +38,7 @@ namespace InetCrawler.Status
 
 		private readonly object sync = new object();
 
-		private CrawlerStatusMessage message;
+		private ApplicationStatusMessage message;
 		private volatile bool locked = false;
 
 		/// <summary>
@@ -47,7 +47,7 @@ namespace InetCrawler.Status
 		/// <param name="owner">The owner object.</param>
 		/// <param name="actionSend">The action handler for sending a status message.</param>
 		/// <param name="actionLock">The action handler for changing the status lock.</param>
-		internal CrawlerStatusHandler(object owner, CrawlerStatusHandlerAction actionSend, CrawlerStatusHandlerAction actionLock)
+		internal ApplicationStatusHandler(object owner, CrawlerStatusHandlerAction actionSend, CrawlerStatusHandlerAction actionLock)
 		{
 			// Set the owner.
 			this.owner = owner;
@@ -65,7 +65,7 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Gets the current status message for this handler.
 		/// </summary>
-		public CrawlerStatusMessage Message { get { return this.message; } }
+		public ApplicationStatusMessage Message { get { return this.message; } }
 		/// <summary>
 		/// Gets whether the status locks the application.
 		/// </summary>
@@ -78,12 +78,12 @@ namespace InetCrawler.Status
 		/// </summary>
 		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
-		public void Send(CrawlerStatus.StatusType type, string text)
+		public void Send(ApplicationStatus.StatusType type, string text)
 		{
 			lock (this.sync)
 			{
 				// Set the message.
-				this.message = new CrawlerStatusMessage(type, text);
+				this.message = new ApplicationStatusMessage(type, text);
 				// Call the delegate.
 				this.actionSend(this);
 			}
@@ -95,12 +95,12 @@ namespace InetCrawler.Status
 		/// <param name="type">The status type.</param>
 		/// <param name="text">The left text.</param>
 		/// <param name="image">The left image.</param>
-		public void Send(CrawlerStatus.StatusType type, string text, Image image)
+		public void Send(ApplicationStatus.StatusType type, string text, Image image)
 		{
 			lock (this.sync)
 			{
 				// Set the message.
-				this.message = new CrawlerStatusMessage(type, text, image);
+				this.message = new ApplicationStatusMessage(type, text, image);
 				// Call the delegate.
 				this.actionSend(this);
 			}
@@ -114,12 +114,12 @@ namespace InetCrawler.Status
 		/// <param name="rightText">The right text.</param>
 		/// <param name="leftImage">The left image.</param>
 		/// <param name="rightImage">The right image.</param>
-		public void Send(CrawlerStatus.StatusType type, string leftText, string rightText, Image leftImage = null, Image rightImage = null)
+		public void Send(ApplicationStatus.StatusType type, string leftText, string rightText, Image leftImage = null, Image rightImage = null)
 		{
 			lock (this.sync)
 			{
 				// Set the message.
-				this.message = new CrawlerStatusMessage(type, leftText, rightText, leftImage, rightImage);
+				this.message = new ApplicationStatusMessage(type, leftText, rightText, leftImage, rightImage);
 				// Call the delegate.
 				this.actionSend(this);
 			}

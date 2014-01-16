@@ -18,25 +18,25 @@
 
 using System;
 
-namespace InetCrawler.Status
+namespace InetCommon.Status
 {
 	/// <summary>
 	/// A delegate representing a status message event handler.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void StatusMessageEventHandler(object sender, CrawlerStatusMessageEventArgs e);
+	public delegate void StatusMessageEventHandler(object sender, ApplicationStatusMessageEventArgs e);
 
 	/// <summary>
 	/// A class representing a status message event arguments.
 	/// </summary>
-	public class CrawlerStatusMessageEventArgs : EventArgs
+	public class ApplicationStatusMessageEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Creates a new event arguments instance.
 		/// </summary>
 		/// <param name="message">The status message.</param>
-		public CrawlerStatusMessageEventArgs(CrawlerStatusMessage? message)
+		public ApplicationStatusMessageEventArgs(ApplicationStatusMessage? message)
 		{
 			this.Message = message;
 		}
@@ -46,6 +46,6 @@ namespace InetCrawler.Status
 		/// <summary>
 		/// Gets the status message.
 		/// </summary>
-		public CrawlerStatusMessage? Message { get; private set; }
+		public ApplicationStatusMessage? Message { get; private set; }
 	}
 }

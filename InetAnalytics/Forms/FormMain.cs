@@ -42,9 +42,11 @@ using InetAnalytics.Controls.YouTube.Api3;
 using InetAnalytics.Controls.YouTube.Web;
 using InetApi.YouTube.Api.V2;
 using InetApi.YouTube.Api.V2.Data;
+using InetCommon.Net;
+using InetCommon.Events;
+using InetCommon.Status;
 using InetCrawler;
 using InetCrawler.Events;
-using InetCrawler.Status;
 
 namespace InetAnalytics.Forms
 {
@@ -137,9 +139,6 @@ namespace InetAnalytics.Forms
 		private readonly ControlWeb controlYtWeb = new ControlWeb();
 		private readonly ControlWebStatistics controlYtWebStatistics = new ControlWebStatistics();
 
-		//private readonly ControlTestingWebRequest controlTestingWebRequest = new ControlTestingWebRequest();
-		//private readonly ControlTestingSshRequest controlTestingSshRequest = new ControlTestingSshRequest();
-
 		private readonly ControlSettings controlSettings = new ControlSettings();
 
 		private readonly ControlLog controlLog = new ControlLog();
@@ -158,7 +157,7 @@ namespace InetAnalytics.Forms
 
 		// Status.
 
-		private CrawlerStatus.StatusType status = CrawlerStatus.StatusType.Unknown;
+		private ApplicationStatus.StatusType status = ApplicationStatus.StatusType.Unknown;
 
 		/// <summary>
 		/// Constructor for main form window.
@@ -432,7 +431,7 @@ namespace InetAnalytics.Forms
 
 			// Set the status event handler.
 			this.crawler.Status.MessageChanged += this.OnStatusMessageChanged;
-			this.crawler.Status.LockChanged += OnStatusLockChanged;
+			this.crawler.Status.LockChanged += this.OnStatusLockChanged;
 
 			// Set the crawler event handlers.
 
@@ -637,7 +636,7 @@ namespace InetAnalytics.Forms
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnStatusMessageChanged(object sender, CrawlerStatusMessageEventArgs e)
+		private void OnStatusMessageChanged(object sender, ApplicationStatusMessageEventArgs e)
 		{
 			// Call the code on the UI thread.
 			this.Invoke(() =>
@@ -650,21 +649,21 @@ namespace InetAnalytics.Forms
 							// Update the status.
 							switch (e.Message.Value.Type)
 							{
-								case CrawlerStatus.StatusType.Ready:
+								case ApplicationStatus.StatusType.Ready:
 									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
 									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 									this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 									break;
-								case CrawlerStatus.StatusType.Normal:
+								case ApplicationStatus.StatusType.Normal:
 									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
 									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 									this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 									this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 									break;
-								case CrawlerStatus.StatusType.Busy:
+								case ApplicationStatus.StatusType.Busy:
 									this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripBusyBackground;
 									this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
 									this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
@@ -691,7 +690,7 @@ namespace InetAnalytics.Forms
 						this.statusLabelLeft.Text = "Ready.";
 						this.statusLabelRight.Image = null;
 						this.statusLabelRight.Text = null;
-						this.status = CrawlerStatus.StatusType.Ready;
+						this.status = ApplicationStatus.StatusType.Ready;
 					}
 				});
 		}
@@ -728,7 +727,10 @@ namespace InetAnalytics.Forms
 		/// <param name="e">The event arguments.</param>
 		private void OnPageSelected(object sender, PageSelectionEventArgs e)
 		{
-			e.Node.TreeView.SelectedNode = e.Node;
+			if (e.Node.TreeView != null)
+			{
+				e.Node.TreeView.SelectedNode = e.Node;
+			}
 		}
 
 		/// <summary>
@@ -1187,19 +1189,19 @@ namespace InetAnalytics.Forms
 				// Update the connecton status label.
 				switch (Crawler.Network.IsInternetAvailable)
 				{
-					case CrawlerNetwork.AvailabilityStatus.Unknown:
+					case NetworkStatus.AvailabilityStatus.Unknown:
 						this.statusLabelConnection.Image = Resources.ConnectionQuestion_16;
 						this.statusLabelConnection.Text = "Connectivity unknown";
 						break;
-					case CrawlerNetwork.AvailabilityStatus.Success:
+					case NetworkStatus.AvailabilityStatus.Success:
 						this.statusLabelConnection.Image = Resources.ConnectionSuccess_16;
 						this.statusLabelConnection.Text = "Connected to Internet";
 						break;
-					case CrawlerNetwork.AvailabilityStatus.Warning:
+					case NetworkStatus.AvailabilityStatus.Warning:
 						this.statusLabelConnection.Image = Resources.ConnectionWarning_16;
 						this.statusLabelConnection.Text = "Connected to local network";
 						break;
-					case CrawlerNetwork.AvailabilityStatus.Fail:
+					case NetworkStatus.AvailabilityStatus.Fail:
 						this.statusLabelConnection.Image = Resources.ConnectionError_16;
 						this.statusLabelConnection.Text = "Not connected";
 						break;

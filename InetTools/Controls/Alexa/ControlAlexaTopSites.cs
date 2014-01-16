@@ -22,9 +22,9 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
+using InetCommon.Status;
 using InetCrawler.Log;
 using InetCrawler.Tools;
-using InetCrawler.Status;
 using InetTools.Tools.Alexa;
 
 namespace InetTools.Controls.Alexa
@@ -35,7 +35,7 @@ namespace InetTools.Controls.Alexa
 	public partial class ControlAlexaTopSites : NotificationControl
 	{
 		private readonly IToolApi api;
-		private readonly CrawlerStatusHandler status = null;
+		private readonly ApplicationStatusHandler status = null;
 		
 		private readonly object sync = new object();
 
@@ -59,7 +59,7 @@ namespace InetTools.Controls.Alexa
 
 			// Set the status.
 			this.status = this.api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 
 			// Initialize the number of pages.
 			this.comboBoxPages.SelectedIndex = 0;
@@ -147,7 +147,7 @@ namespace InetTools.Controls.Alexa
 				}
 
 				// Set the status.
-				this.status.Send(CrawlerStatus.StatusType.Busy, "Updating the Alexa ranking...", Resources.Busy_16);
+				this.status.Send(ApplicationStatus.StatusType.Busy, "Updating the Alexa ranking...", Resources.Busy_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeClock_48,
@@ -165,7 +165,7 @@ namespace InetTools.Controls.Alexa
 				// Call the request finished event handler.
 				this.OnRequestFinished();
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,
@@ -202,7 +202,7 @@ namespace InetTools.Controls.Alexa
 				this.request.EndGetRanking(result);
 				// Update the status label.
 				this.status.Send(
-					CrawlerStatus.StatusType.Normal,
+					ApplicationStatus.StatusType.Normal,
 					"Updating the Alexa ranking completed successfully.",
 					"{0} web sites received.".FormatWith(this.ranking.Count),
 					Resources.Success_16);
@@ -232,7 +232,7 @@ namespace InetTools.Controls.Alexa
 				if (exception.Status == WebExceptionStatus.RequestCanceled)
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking was canceled.".FormatWith(exception.Message), Resources.Canceled_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Updating the Alexa ranking was canceled.".FormatWith(exception.Message), Resources.Canceled_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeCanceled_48,
@@ -255,7 +255,7 @@ namespace InetTools.Controls.Alexa
 				else
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeError_48,
@@ -281,7 +281,7 @@ namespace InetTools.Controls.Alexa
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Updating the Alexa ranking failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,
@@ -344,7 +344,7 @@ namespace InetTools.Controls.Alexa
 				this.comboBoxCountries.Items.Clear();
 
 				// Set the status.
-				this.status.Send(CrawlerStatus.StatusType.Busy, "Updating the list of Alexa ranking countries...", Resources.Busy_16);
+				this.status.Send(ApplicationStatus.StatusType.Busy, "Updating the list of Alexa ranking countries...", Resources.Busy_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeClock_48,
@@ -368,7 +368,7 @@ namespace InetTools.Controls.Alexa
 				// Call the request finished event handler.
 				this.OnRequestFinished();
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the list of Alexa ranking countries failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Updating the list of Alexa ranking countries failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,
@@ -406,7 +406,7 @@ namespace InetTools.Controls.Alexa
 
 				// Update the status label.
 				this.status.Send(
-					CrawlerStatus.StatusType.Normal,
+					ApplicationStatus.StatusType.Normal,
 					"Updating the list of Alexa ranking countries completed successfully.",
 					"{0} countries received.".FormatWith(this.countries.Count),
 					Resources.Success_16);
@@ -436,7 +436,7 @@ namespace InetTools.Controls.Alexa
 				if (exception.Status == WebExceptionStatus.RequestCanceled)
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the list of Alexa ranking countries was canceled.".FormatWith(exception.Message), Resources.Canceled_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Updating the list of Alexa ranking countries was canceled.".FormatWith(exception.Message), Resources.Canceled_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeCanceled_48,
@@ -459,7 +459,7 @@ namespace InetTools.Controls.Alexa
 				else
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Updating the list of Alexa ranking countries failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Updating the list of Alexa ranking countries failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeError_48,

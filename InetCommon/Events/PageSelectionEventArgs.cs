@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace InetCrawler.Events
+namespace InetCommon.Events
 {
 	/// <summary>
 	/// A delegate representing a page selection event handler.

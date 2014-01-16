@@ -59,7 +59,6 @@
     <Compile Include="Database\DbTableTemplates.cs" />
     <Compile Include="Events\CrawlerEvents.cs" />
     <Compile Include="CrawlerException.cs" />
-    <Compile Include="CrawlerNetwork.cs" />
     <Compile Include="Database\DbIdEventArgs.cs" />
     <Compile Include="Database\DbPrimaryServerChangedEventArgs.cs" />
     <Compile Include="Database\DbServerDatabaseChangedEventArgs.cs" />
@@ -67,7 +66,6 @@
     <Compile Include="Database\DbServerTableEventArgs.cs" />
     <Compile Include="Database\DbTableEventArgs.cs" />
     <Compile Include="Events\ControlEventArgs.cs" />
-    <Compile Include="Events\PageSelectionEventArgs.cs" />
     <Compile Include="Events\ProfileEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Events\VideoEventArgs.cs" />
@@ -92,7 +90,6 @@
     <Compile Include="PlanetLab\PlManagerHistoryRun.cs" />
     <Compile Include="Spider\SpiderInfoEventArgs.cs" />
     <Compile Include="Spider\SpiderEventArgs.cs" />
-    <Compile Include="Status\CrawlerStatus.cs" />
     <Compile Include="Database\Data\DbObject.cs" />
     <Compile Include="Database\Data\DbObjectColumn.cs" />
     <Compile Include="Database\Data\DbObjectDatabase.cs" />
@@ -141,9 +138,6 @@
     <Compile Include="Spider\SpiderException.cs" />
     <Compile Include="Spider\Spiders.cs" />
     <Compile Include="Spider\SpiderStandardFeeds.cs" />
-    <Compile Include="Status\CrawlerStatusMessageEventArgs.cs" />
-    <Compile Include="Status\CrawlerStatusHandler.cs" />
-    <Compile Include="Status\CrawlerStatusMessage.cs" />
     <Compile Include="Tasks\CrawlerScheduleEventArgs.cs" />
     <Compile Include="Tasks\CrawlerTask.cs" />
     <Compile Include="Tasks\CrawlerTaskEventArgs.cs" />
@@ -195,6 +189,10 @@
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>InetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetCommon\InetCommon.csproj">
+      <Project>{4e3c3a80-85d6-4932-b1d2-e0467b1abf46}</Project>
+      <Name>InetCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

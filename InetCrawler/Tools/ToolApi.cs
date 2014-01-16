@@ -21,7 +21,7 @@ using Microsoft.Win32;
 using DotNetApi;
 using InetCrawler.Database;
 using InetCrawler.Log;
-using InetCrawler.Status;
+using InetCommon.Status;
 
 namespace InetCrawler.Tools
 {
@@ -70,7 +70,7 @@ namespace InetCrawler.Tools
 		/// <summary>
 		/// Gets the crawler status.
 		/// </summary>
-		public CrawlerStatus Status { get { return this.api.Status; } }
+		public ApplicationStatus Status { get { return this.api.Status; } }
 		/// <summary>
 		/// Gets the notification message close delay.
 		/// </summary>

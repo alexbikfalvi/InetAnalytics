@@ -20,7 +20,7 @@ using System;
 using Microsoft.Win32;
 using InetCrawler.Database;
 using InetCrawler.Log;
-using InetCrawler.Status;
+using InetCommon.Status;
 
 namespace InetCrawler.Tools
 {
@@ -83,6 +83,6 @@ namespace InetCrawler.Tools
 		/// <summary>
 		/// Gets the crawler status.
 		/// </summary>
-		CrawlerStatus Status { get; }
+		ApplicationStatus Status { get; }
 	}
 }

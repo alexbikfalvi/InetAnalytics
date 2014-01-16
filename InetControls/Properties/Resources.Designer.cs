@@ -73,6 +73,46 @@ namespace InetAnalytics {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ConnectionError_32 {
+            get {
+                object obj = ResourceManager.GetObject("ConnectionError_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ConnectionQuestion_32 {
+            get {
+                object obj = ResourceManager.GetObject("ConnectionQuestion_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ConnectionSuccess_32 {
+            get {
+                object obj = ResourceManager.GetObject("ConnectionSuccess_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ConnectionWarning_32 {
+            get {
+                object obj = ResourceManager.GetObject("ConnectionWarning_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Copy_16 {
             get {
                 object obj = ResourceManager.GetObject("Copy_16", resourceCulture);

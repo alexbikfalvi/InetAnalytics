@@ -26,10 +26,10 @@ using DotNetApi.Windows.Controls;
 using InetAnalytics;
 using InetAnalytics.Forms.Net;
 using InetApi.Net.Core;
+using InetCommon.Status;
 using InetCrawler;
 using InetCrawler.Log;
 using InetCrawler.Tools;
-using InetCrawler.Status;
 using InetTools.Tools.Net;
 
 namespace InetTools.Controls.Net
@@ -41,7 +41,7 @@ namespace InetTools.Controls.Net
 	{
 		private readonly TracerouteConfig config;
 
-		private readonly CrawlerStatusHandler status = null;
+		private readonly ApplicationStatusHandler status = null;
 
 		private readonly TracerouteSettings settings;
 		private readonly Traceroute traceroute;
@@ -75,7 +75,7 @@ namespace InetTools.Controls.Net
 
 			// Set the status.
 			this.status = this.config.Api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 		}
 
 		// Private methods.
@@ -203,7 +203,7 @@ namespace InetTools.Controls.Net
 			string destination = this.textBoxDestination.Text;
 
 			// Set the status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Running Internet traceroute to \'{0}\'...".FormatWith(destination), Resources.Busy_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Running Internet traceroute to \'{0}\'...".FormatWith(destination), Resources.Busy_16);
 			// Show a message.
 			this.ShowMessage(
 				Resources.GlobeClock_48,
@@ -241,7 +241,7 @@ namespace InetTools.Controls.Net
 									else
 									{
 										// Update the status label.
-										this.status.Send(CrawlerStatus.StatusType.Normal, "Internet traceroute to \'{0}\' canceled".FormatWith(destination), Resources.Canceled_16);
+										this.status.Send(ApplicationStatus.StatusType.Normal, "Internet traceroute to \'{0}\' canceled".FormatWith(destination), Resources.Canceled_16);
 										// Show a message.
 										this.ShowMessage(
 											Resources.GlobeCanceled_48,
@@ -266,7 +266,7 @@ namespace InetTools.Controls.Net
 						catch (Exception exception)
 						{
 							// Update the status label.
-							this.status.Send(CrawlerStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed".FormatWith(destination), Resources.Error_16);
+							this.status.Send(ApplicationStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed".FormatWith(destination), Resources.Error_16);
 							// Show a message.
 							this.ShowMessage(
 								Resources.GlobeError_48,
@@ -294,7 +294,7 @@ namespace InetTools.Controls.Net
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed.".FormatWith(destination), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed.".FormatWith(destination), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,
@@ -368,7 +368,7 @@ namespace InetTools.Controls.Net
 		private void OnRun(string destination, IPAddress address)
 		{
 			// Set the status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Running Internet traceroute to \'{0}\' ({1})...".FormatWith(destination, address), Resources.Busy_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Running Internet traceroute to \'{0}\' ({1})...".FormatWith(destination, address), Resources.Busy_16);
 			// Show a message.
 			this.ShowMessage(
 				Resources.GlobeClock_48,
@@ -449,7 +449,7 @@ namespace InetTools.Controls.Net
 									if (isCanceled)
 									{
 										// Update the status label.
-										this.status.Send(CrawlerStatus.StatusType.Normal, "Internet traceroute to \'{0}\' was canceled.".FormatWith(destination), Resources.Success_16);
+										this.status.Send(ApplicationStatus.StatusType.Normal, "Internet traceroute to \'{0}\' was canceled.".FormatWith(destination), Resources.Success_16);
 										// Show a message.
 										this.ShowMessage(
 											Resources.GlobeCanceled_48,
@@ -475,7 +475,7 @@ namespace InetTools.Controls.Net
 									else
 									{
 										// Update the status label.
-										this.status.Send(CrawlerStatus.StatusType.Normal, "Internet traceroute to \'{0}\' completed successfully.".FormatWith(destination), Resources.Success_16);
+										this.status.Send(ApplicationStatus.StatusType.Normal, "Internet traceroute to \'{0}\' completed successfully.".FormatWith(destination), Resources.Success_16);
 										// Show a message.
 										this.ShowMessage(
 											Resources.GlobeSuccess_48,
@@ -506,7 +506,7 @@ namespace InetTools.Controls.Net
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed.".FormatWith(destination), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Running Internet traceroute to \'{0}\' failed.".FormatWith(destination), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,

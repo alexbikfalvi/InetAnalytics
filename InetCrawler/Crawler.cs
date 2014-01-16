@@ -18,13 +18,14 @@
 
 using System;
 using Microsoft.Win32;
+using InetCommon.Net;
+using InetCommon.Status;
 using InetCrawler.Comments;
 using InetCrawler.Database;
 using InetCrawler.Events;
 using InetCrawler.Log;
 using InetCrawler.PlanetLab;
 using InetCrawler.Spider;
-using InetCrawler.Status;
 using InetCrawler.Tools;
 using InetCrawler.YouTube;
 
@@ -44,10 +45,10 @@ namespace InetCrawler
 		private readonly PlConfig plConfig;
 		private readonly YtConfig ytConfig;
 		private readonly Spiders spiders;
-		private readonly CrawlerStatus status;
+		private readonly ApplicationStatus status;
 		private readonly CrawlerComments comments;
 		
-		private readonly static CrawlerNetwork network = new CrawlerNetwork();
+		private readonly static NetworkStatus network = new NetworkStatus();
 
 		/// <summary>
 		/// Creates a new crawer global object, based on a configuration from the specified root registry key.
@@ -75,7 +76,7 @@ namespace InetCrawler
 			this.ytConfig = new YtConfig(this.config);
 
 			// Create the status.
-			this.status = new CrawlerStatus();
+			this.status = new ApplicationStatus();
 
 			// Create the comments.
 			this.comments = new CrawlerComments(this.config);
@@ -127,7 +128,7 @@ namespace InetCrawler
 		/// <summary>
 		/// Returns the crawler status.
 		/// </summary>
-		public CrawlerStatus Status { get { return this.status; } }
+		public ApplicationStatus Status { get { return this.status; } }
 		/// <summary>
 		/// Returns the crawler comments.
 		/// </summary>
@@ -135,7 +136,7 @@ namespace InetCrawler
 		/// <summary>
 		/// Gets the network information.
 		/// </summary>
-		public static CrawlerNetwork Network { get { return Crawler.network; } }
+		public static NetworkStatus Network { get { return Crawler.network; } }
 
 		// Public methods.
 

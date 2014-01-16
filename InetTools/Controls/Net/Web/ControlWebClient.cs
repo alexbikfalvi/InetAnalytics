@@ -26,9 +26,9 @@ using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
 using InetAnalytics.Forms.Net;
+using InetCommon.Status;
 using InetCrawler;
 using InetCrawler.Log;
-using InetCrawler.Status;
 using InetTools.Tools.Net.Web;
 
 namespace InetTools.Controls.Net.Web
@@ -41,7 +41,7 @@ namespace InetTools.Controls.Net.Web
 		// Private variables.
 
 		private readonly WebClientConfig config = null;
-		private readonly CrawlerStatusHandler status = null;
+		private readonly ApplicationStatusHandler status = null;
 
 		private Uri uri = null;
 		private AsyncWebRequest request = new AsyncWebRequest();
@@ -71,7 +71,7 @@ namespace InetTools.Controls.Net.Web
 
 			// Get the crawler status.
 			this.status = this.config.Api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 
 			// Populate the encoding combo box.
 			this.encodings = Encoding.GetEncodings();
@@ -106,7 +106,7 @@ namespace InetTools.Controls.Net.Web
 			this.textBoxResponseData.Text = string.Empty;
 
 			// Set the status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Executing the HTTP request...", Resources.Busy_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Executing the HTTP request...", Resources.Busy_16);
 			// Show a message.
 			this.ShowMessage(
 				Resources.GlobeClock_48,
@@ -168,7 +168,7 @@ namespace InetTools.Controls.Net.Web
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "The HTTP request for web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,
@@ -234,7 +234,7 @@ namespace InetTools.Controls.Net.Web
 
 						// Update the status label.
 						this.status.Send(
-							CrawlerStatus.StatusType.Normal,
+							ApplicationStatus.StatusType.Normal,
 							"The HTTP request for the web URL completed successfully.",
 							"{0} bytes of data received.".FormatWith(asyncResult.ReceiveData.Data != null ? asyncResult.ReceiveData.Data.LongLength : 0),
 							Resources.Success_16);
@@ -264,7 +264,7 @@ namespace InetTools.Controls.Net.Web
 								false,
 								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 							// Update the status label.
-							this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
+							this.status.Send(ApplicationStatus.StatusType.Normal, "The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
 							// Log the result.
 							this.log.Add(this.config.Api.Log(
 								LogEventLevel.Verbose,
@@ -282,7 +282,7 @@ namespace InetTools.Controls.Net.Web
 								false,
 								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 							// Update the status label.
-							this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+							this.status.Send(ApplicationStatus.StatusType.Normal, "The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 							// Log the result.
 							this.log.Add(this.config.Api.Log(
 								LogEventLevel.Important,
@@ -302,7 +302,7 @@ namespace InetTools.Controls.Net.Web
 							false,
 							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
 						// Update the status label.
-						this.status.Send(CrawlerStatus.StatusType.Normal, "The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
+						this.status.Send(ApplicationStatus.StatusType.Normal, "The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
 						// Log the result.
 						this.log.Add(this.config.Api.Log(
 							LogEventLevel.Important,

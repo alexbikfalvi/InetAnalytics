@@ -27,8 +27,8 @@ using DotNetApi.IO;
 using DotNetApi.Security;
 using InetAnalytics;
 using InetAnalytics.Controls.Net.Ssh;
+using InetCommon.Status;
 using InetCrawler.Log;
-using InetCrawler.Status;
 using InetCrawler.Tools;
 using InetTools.Tools.Net.Ssh;
 using Renci.SshNet;
@@ -44,7 +44,7 @@ namespace InetTools.Controls.Net.Ssh
 		// Private variables.
 
 		private readonly SshClientConfig config;
-		private readonly CrawlerStatusHandler status;
+		private readonly ApplicationStatusHandler status;
 
 		private byte[] sshKey = null;
 		
@@ -66,7 +66,7 @@ namespace InetTools.Controls.Net.Ssh
 
 			// Get the crawler status.
 			this.status = this.config.Api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
 
 			// Load the settings.
 			this.OnLoad();
@@ -85,7 +85,7 @@ namespace InetTools.Controls.Net.Ssh
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\'...".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\'...".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.config.Api.Log(
 				LogEventLevel.Verbose,
@@ -103,7 +103,7 @@ namespace InetTools.Controls.Net.Ssh
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Connected to the SSH server \'{0}\'.".FormatWith(info.Host), Resources.ServerSuccess_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Connected to the SSH server \'{0}\'.".FormatWith(info.Host), Resources.ServerSuccess_16);
 			// Enable the console.
 			this.OnEnableConsole();
 			// Log
@@ -126,7 +126,7 @@ namespace InetTools.Controls.Net.Ssh
 			// Change the buttons enabled state.
 			this.buttonConnect.Enabled = true;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\' failed.".FormatWith(info.Host), Resources.ServerError_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Connecting to the SSH server \'{0}\' failed.".FormatWith(info.Host), Resources.ServerError_16);
 			// Log
 			this.log.Add(this.config.Api.Log(
 				LogEventLevel.Verbose,
@@ -144,7 +144,7 @@ namespace InetTools.Controls.Net.Ssh
 			// Change the buttons enabled state.
 			this.buttonDisconnect.Enabled = false;
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Disconnecting from the SSH server \'{0}\'...".FormatWith(info.Host), Resources.ServerBusy_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Disconnecting from the SSH server \'{0}\'...".FormatWith(info.Host), Resources.ServerBusy_16);
 			// Log
 			this.log.Add(this.config.Api.Log(
 				LogEventLevel.Verbose,
@@ -160,7 +160,7 @@ namespace InetTools.Controls.Net.Ssh
 		protected override void OnDisconnected(ConnectionInfo info)
 		{
 			// Update the status bar.
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Disconnected.", Resources.Server_16);
 			// Log
 			this.log.Add(this.config.Api.Log(
 				LogEventLevel.Verbose,

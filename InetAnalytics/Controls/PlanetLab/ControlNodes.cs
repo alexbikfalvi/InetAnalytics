@@ -30,9 +30,9 @@ using PlanetLab.Api;
 using PlanetLab.Database;
 using PlanetLab.Requests;
 using InetAnalytics.Forms.PlanetLab;
+using InetCommon.Status;
 using InetCrawler;
 using InetCrawler.Log;
-using InetCrawler.Status;
 
 namespace InetAnalytics.Controls.PlanetLab
 {
@@ -51,7 +51,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		// Private variables.
 
 		private Crawler crawler = null;
-		private CrawlerStatusHandler status = null;
+		private ApplicationStatusHandler status = null;
 
 		private readonly PlRequest request = new PlRequest(PlRequest.RequestMethod.GetNodes);
 		
@@ -158,7 +158,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			else
 			{
 				// Update the status.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab nodes failed.", Resources.GlobeError_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Refreshing the list of PlanetLab nodes failed.", Resources.GlobeError_16);
 				if (null == response.Fault)
 				{
 					// Log
@@ -190,7 +190,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			// Set the button enabled state.
 			this.buttonCancel.Enabled = false;
 			// Update the status.
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab nodes was canceled.", Resources.GlobeCanceled_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Refreshing the list of PlanetLab nodes was canceled.", Resources.GlobeCanceled_16);
 			// Log
 			this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -207,7 +207,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		protected override void OnRequestException(Exception exception, RequestState state)
 		{
 			// Update the status.
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the list of PlanetLab nodes failed.", Resources.GlobeError_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Refreshing the list of PlanetLab nodes failed.", Resources.GlobeError_16);
 			// Log
 			this.crawler.Log.Add(
 				LogEventLevel.Important,
@@ -285,7 +285,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.listViewNodes.Items.Clear();
 
 			// Update the label.
-			this.status.Send(CrawlerStatus.StatusType.Normal,
+			this.status.Send(ApplicationStatus.StatusType.Normal,
 				"Showing {0} of {1} PlanetLab node{2}.".FormatWith(
 				this.listViewNodes.Items.Count,
 				this.crawler.PlanetLab.Nodes.Count,
@@ -331,7 +331,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Update the label.
 			this.status.Send(
-				CrawlerStatus.StatusType.Normal,
+				ApplicationStatus.StatusType.Normal,
 				"Showing {0} of {1} PlanetLab node{2}.".FormatWith(
 				this.listViewNodes.Items.Count,
 				this.crawler.PlanetLab.Nodes.Count,
@@ -368,7 +368,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 			// Update the label.
 			this.status.Send(
-				CrawlerStatus.StatusType.Normal,
+				ApplicationStatus.StatusType.Normal,
 				"Showing {0} of {1} PlanetLab node{2}.".FormatWith(
 				this.listViewNodes.Items.Count,
 				this.crawler.PlanetLab.Nodes.Count,
@@ -453,7 +453,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.crawler.PlanetLab.Nodes.Clear();
 
 			// Update the status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Refreshing the list of PlanetLab nodes...", Resources.GlobeClock_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Refreshing the list of PlanetLab nodes...", Resources.GlobeClock_16);
 			// Log
 			this.crawler.Log.Add(
 				LogEventLevel.Verbose,

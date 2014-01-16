@@ -28,10 +28,10 @@ using PlanetLab;
 using PlanetLab.Api;
 using InetAnalytics.Controls.PlanetLab.Commands;
 using InetAnalytics.Forms.PlanetLab;
+using InetCommon.Status;
 using InetCrawler;
 using InetCrawler.Log;
 using InetCrawler.PlanetLab;
-using InetCrawler.Status;
 using InetCrawler.Tools;
 
 namespace InetAnalytics.Controls.PlanetLab
@@ -91,7 +91,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		private static readonly string logSource = @"PlanetLab\Slice({0})";
 
 		private Crawler crawler = null;
-		private CrawlerStatusHandler status = null;
+		private ApplicationStatusHandler status = null;
 
 		private PlSlice slice = null;
 		private PlConfigSlice config = null;
@@ -290,7 +290,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.OnUpdateNodes();
 
 			// Update the label.
-			this.status.Send(CrawlerStatus.StatusType.Normal, @"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()), Resources.GlobeLab_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, @"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()), Resources.GlobeLab_16);
 		}
 
 		/// <summary>
@@ -590,7 +590,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//private void OnRefreshSlice()
 		//{
 		//	// Update the status.
-		//	this.status.Send(CrawlerStatus.StatusType.Busy, "Refreshing the slice information...", Resources.GlobeClock_16);
+		//	this.status.Send(ApplicationStatus.StatusType.Busy, "Refreshing the slice information...", Resources.GlobeClock_16);
 
 		//	// Begin an asynchronous PlanetLab request.
 		//	this.BeginRequest(
@@ -641,7 +641,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//		}
 		//	}
 		//	// Update the status.
-		//	this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information failed.", Resources.GlobeError_16);
+		//	this.status.Send(ApplicationStatus.StatusType.Normal, "Refreshing the slice information failed.", Resources.GlobeError_16);
 		//}
 
 		/// <summary>
@@ -651,7 +651,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//private void OnRefreshSliceRequestCanceled(RequestState state)
 		//{
 		//	// Update the status.
-		//	this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information was canceled.", Resources.GlobeCanceled_16);
+		//	this.status.Send(ApplicationStatus.StatusType.Normal, "Refreshing the slice information was canceled.", Resources.GlobeCanceled_16);
 		//}
 
 		/// <summary>
@@ -662,7 +662,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//private void OnRefreshSliceRequestException(Exception exception, RequestState state)
 		//{
 		//	// Update the status.
-		//	this.status.Send(CrawlerStatus.StatusType.Normal, "Refreshing the slice information failed.", Resources.GlobeError_16);
+		//	this.status.Send(ApplicationStatus.StatusType.Normal, "Refreshing the slice information failed.", Resources.GlobeError_16);
 		//}
 
 		/// <summary>
@@ -677,7 +677,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		//		// Update the status.
 		//		this.status.Send(
-		//			CrawlerStatus.StatusType.Busy,
+		//			ApplicationStatus.StatusType.Busy,
 		//			@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//			"Refreshing the nodes information...",
 		//			Resources.GlobeLab_16,
@@ -725,7 +725,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//		{
 		//			// Update the status.
 		//			this.status.Send(
-		//				CrawlerStatus.StatusType.Normal,
+		//				ApplicationStatus.StatusType.Normal,
 		//				@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//				"Refreshing the nodes information failed.",
 		//				Resources.GlobeLab_16,
@@ -816,7 +816,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		//		// Update the status.
 		//		this.status.Send(
-		//			CrawlerStatus.StatusType.Normal,
+		//			ApplicationStatus.StatusType.Normal,
 		//			@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//			"Refreshing the nodes information completed successfully.",
 		//			Resources.GlobeLab_16,
@@ -826,7 +826,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//	{
 		//		// Update the status.
 		//		this.status.Send(
-		//			CrawlerStatus.StatusType.Normal,
+		//			ApplicationStatus.StatusType.Normal,
 		//			@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//			"Refreshing the nodes information failed.",
 		//			Resources.GlobeLab_16,
@@ -842,7 +842,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//{
 		//	// Update the status.
 		//	this.status.Send(
-		//		CrawlerStatus.StatusType.Normal,
+		//		ApplicationStatus.StatusType.Normal,
 		//		@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//		"Refreshing the nodes information was canceled.",
 		//		Resources.GlobeLab_16,
@@ -858,7 +858,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//{
 		//	// Update the status.
 		//	this.status.Send(
-		//		CrawlerStatus.StatusType.Normal,
+		//		ApplicationStatus.StatusType.Normal,
 		//		@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//		"Refreshing the nodes information failed.",
 		//		Resources.GlobeLab_16,
@@ -893,7 +893,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		//		// Update the status.
 		//		this.status.Send(
-		//			CrawlerStatus.StatusType.Busy,
+		//			ApplicationStatus.StatusType.Busy,
 		//			@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//			"Refreshing the sites information...",
 		//			Resources.GlobeLab_16,
@@ -941,7 +941,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//		{
 		//			// Update the status.
 		//			this.status.Send(
-		//				CrawlerStatus.StatusType.Normal,
+		//				ApplicationStatus.StatusType.Normal,
 		//				@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//				"Refreshing the sites information failed.",
 		//				Resources.GlobeLab_16,
@@ -1002,7 +1002,7 @@ namespace InetAnalytics.Controls.PlanetLab
 
 		//		// Update the status.
 		//		this.status.Send(
-		//			CrawlerStatus.StatusType.Normal,
+		//			ApplicationStatus.StatusType.Normal,
 		//			@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//			"Refreshing the sites information completed successfully.",
 		//			Resources.GlobeLab_16,
@@ -1012,7 +1012,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//	{
 		//		// Update the status.
 		//		this.status.Send(
-		//			CrawlerStatus.StatusType.Normal,
+		//			ApplicationStatus.StatusType.Normal,
 		//			@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//			"Refreshing the sites information failed.",
 		//			Resources.GlobeLab_16,
@@ -1028,7 +1028,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//{
 		//	// Update the status.
 		//	this.status.Send(
-		//		CrawlerStatus.StatusType.Normal,
+		//		ApplicationStatus.StatusType.Normal,
 		//		@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//		"Refreshing the sites information was canceled.",
 		//		Resources.GlobeLab_16,
@@ -1044,7 +1044,7 @@ namespace InetAnalytics.Controls.PlanetLab
 		//{
 		//	// Update the status.
 		//	this.status.Send(
-		//		CrawlerStatus.StatusType.Normal,
+		//		ApplicationStatus.StatusType.Normal,
 		//		@"Slice '{0}' has {1} node{2}.".FormatWith(this.slice.Name, this.slice.NodeIds.Length, this.slice.NodeIds.Length.PluralSuffix()),
 		//		"Refreshing the sites information failed.",
 		//		Resources.GlobeLab_16,
@@ -1612,7 +1612,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				ControlSliceRun.logSource.FormatWith(this.slice.Id),
 				"Starting the PlanetLab commands."));
 			// Status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Starting the PlanetLab commands...", Resources.GlobeClock_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Starting the PlanetLab commands...", Resources.GlobeClock_16);
 		}
 
 		/// <summary>
@@ -1637,7 +1637,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"The PlanetLab commands started sucessfully."));
 					// Status.
-					this.status.Send(CrawlerStatus.StatusType.Busy, "Running the PlanetLab commands.", Resources.GlobePlayStart_16);
+					this.status.Send(ApplicationStatus.StatusType.Busy, "Running the PlanetLab commands.", Resources.GlobePlayStart_16);
 
 					// Send the session information to the connected tools.
 					this.OnSendSessionTools();
@@ -1664,7 +1664,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"Pausing the PlanetLab commands."));
 					// Status.
-					this.status.Send(CrawlerStatus.StatusType.Busy, "Pausing the PlanetLab commands...", Resources.GlobeClock_16);
+					this.status.Send(ApplicationStatus.StatusType.Busy, "Pausing the PlanetLab commands...", Resources.GlobeClock_16);
 				});
 		}
 
@@ -1689,7 +1689,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"The PlanetLab commands paused sucessfully."));
 					// Status.
-					this.status.Send(CrawlerStatus.StatusType.Busy, "The PlanetLab commands paused.", Resources.GlobePlayPause_16);
+					this.status.Send(ApplicationStatus.StatusType.Busy, "The PlanetLab commands paused.", Resources.GlobePlayPause_16);
 				});
 		}
 
@@ -1714,7 +1714,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"Resuming the PlanetLab commands."));
 					// Status.
-					this.status.Send(CrawlerStatus.StatusType.Busy, "Resuming the PlanetLab commands...", Resources.GlobeClock_16);
+					this.status.Send(ApplicationStatus.StatusType.Busy, "Resuming the PlanetLab commands...", Resources.GlobeClock_16);
 				});
 		}
 
@@ -1739,7 +1739,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"The PlanetLab commands resumed sucessfully."));
 					// Status.
-					this.status.Send(CrawlerStatus.StatusType.Busy, "The PlanetLab commands running.", Resources.GlobePlayStart_16);
+					this.status.Send(ApplicationStatus.StatusType.Busy, "The PlanetLab commands running.", Resources.GlobePlayStart_16);
 				});
 		}
 
@@ -1775,7 +1775,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						ControlSliceRun.logSource.FormatWith(this.slice.Id),
 						"Stopping the PlanetLab commands."));
 					// Status.
-					this.status.Send(CrawlerStatus.StatusType.Busy, "Stopping the PlanetLab commands...", Resources.GlobeClock_16);
+					this.status.Send(ApplicationStatus.StatusType.Busy, "Stopping the PlanetLab commands...", Resources.GlobeClock_16);
 				});
 		}
 
@@ -1809,7 +1809,7 @@ namespace InetAnalytics.Controls.PlanetLab
 					ControlSliceRun.logSource.FormatWith(this.slice.Id),
 					"The PlanetLab commands stopped successfully."));
 				// Status.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "The PlanetLab commands stopped.", Resources.GlobePlayStop_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "The PlanetLab commands stopped.", Resources.GlobePlayStop_16);
 
 				// Clear the state information.
 				lock (this.managerSync)

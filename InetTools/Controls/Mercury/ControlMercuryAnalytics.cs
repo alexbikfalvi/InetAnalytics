@@ -20,8 +20,8 @@ using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
+using InetCommon.Status;
 using InetCrawler.Tools;
-using InetCrawler.Status;
 using InetTools.Tools.Mercury;
 using Renci.SshNet;
 
@@ -34,7 +34,7 @@ namespace InetTools.Controls.Mercury
 	{
 		private readonly MercuryConfig config;
 
-		private readonly CrawlerStatusHandler status = null;
+		private readonly ApplicationStatusHandler status = null;
 
 		private readonly object sync = new object();
 
@@ -55,7 +55,7 @@ namespace InetTools.Controls.Mercury
 
 			// Set the status.
 			this.status = this.config.Api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 		}
 
 		// Private methods.

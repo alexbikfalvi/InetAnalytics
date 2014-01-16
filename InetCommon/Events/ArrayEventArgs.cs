@@ -18,7 +18,7 @@
 
 using System;
 
-namespace InetAnalytics.Events
+namespace InetCommon.Events
 {
 	/// <summary>
 	/// A delegate representing an array event handler.

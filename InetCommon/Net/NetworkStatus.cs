@@ -22,12 +22,12 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 
-namespace InetCrawler
+namespace InetCommon.Net
 {
 	/// <summary>
 	/// A class used to collect network information.
 	/// </summary>
-	public sealed class CrawlerNetwork : IDisposable
+	public sealed class NetworkStatus : IDisposable
 	{
 		/// <summary>
 		/// An enumeration representing the availability status.
@@ -62,7 +62,7 @@ namespace InetCrawler
 		/// <summary>
 		/// Creates a new crawler network instance.
 		/// </summary>
-		public CrawlerNetwork()
+		public NetworkStatus()
 		{
 			// Set the network change event handlers.
 			NetworkChange.NetworkAddressChanged += this.OnNetworkAddressChanged;
@@ -72,7 +72,7 @@ namespace InetCrawler
 			this.timer = new Timer((object state) =>
 				{
 					// Synchronize the timer.
-					lock (CrawlerNetwork.sync)
+					lock (NetworkStatus.sync)
 					{
 						// Check the network availability.
 						this.OnUpdateInternetAvialability();

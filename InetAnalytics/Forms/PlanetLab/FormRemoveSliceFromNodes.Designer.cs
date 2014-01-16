@@ -44,7 +44,7 @@ namespace InetAnalytics.Forms.PlanetLab
 			this.control.TabIndex = 0;
 			this.control.RequestStarted += new System.EventHandler(this.OnRequestStarted);
 			this.control.RequestFinished += new System.EventHandler(this.OnRequestFinished);
-			this.control.Selected += new InetAnalytics.Events.ArrayEventHandler<int>(this.OnSelected);
+			this.control.Selected += new InetCommon.Events.ArrayEventHandler<int>(this.OnSelected);
 			this.control.Closed += new System.EventHandler(this.OnClosed);
 			// 
 			// FormRemoveSliceFromNode

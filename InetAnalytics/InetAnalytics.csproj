@@ -74,9 +74,6 @@
     <Compile Include="Controls\Database\ControlServerProperties.Designer.cs">
       <DependentUpon>ControlServerProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Net\NetworkStatusToolTip.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\PlanetLab\Commands\CommandListBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -503,7 +500,9 @@
     <Compile Include="Controls\YouTube\Api2\ControlYtApi2UserFeedsInfo.Designer.cs">
       <DependentUpon>ControlYtApi2UserFeedsInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServersSql.cs" />
+    <Compile Include="Controls\Database\ControlServersSql.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlServersSql.Designer.cs">
       <DependentUpon>ControlServersSql.cs</DependentUpon>
     </Compile>
@@ -513,7 +512,9 @@
     <Compile Include="Controls\Database\ControlAddServerSql.Designer.cs">
       <DependentUpon>ControlAddServerSql.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlServerSql.cs" />
+    <Compile Include="Controls\Database\ControlServerSql.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlServerSql.Designer.cs">
       <DependentUpon>ControlServerSql.cs</DependentUpon>
     </Compile>
@@ -547,7 +548,9 @@
     <Compile Include="Controls\Database\ControlTableProperties.Designer.cs">
       <DependentUpon>ControlTableProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Database\ControlDatabaseSelect.cs" />
+    <Compile Include="Controls\Database\ControlDatabaseSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Database\ControlDatabaseSelect.Designer.cs">
       <DependentUpon>ControlDatabaseSelect.cs</DependentUpon>
     </Compile>
@@ -581,7 +584,6 @@
     <Compile Include="Controls\Spiders\ControlSpiderStandardFeeds.Designer.cs">
       <DependentUpon>ControlSpiderStandardFeeds.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\CommentEventArgs.cs" />
     <Compile Include="Events\DatabaseObjectSelectedEventArgs.cs" />
     <Compile Include="Forms\FormText.cs">
@@ -4515,6 +4517,10 @@
     <ProjectReference Include="..\InetApi\InetApi.csproj">
       <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
       <Name>InetApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetCommon\InetCommon.csproj">
+      <Project>{4e3c3a80-85d6-4932-b1d2-e0467b1abf46}</Project>
+      <Name>InetCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\InetControls\InetControls.csproj">
       <Project>{fe702303-5acc-498f-bab4-7479957193cd}</Project>

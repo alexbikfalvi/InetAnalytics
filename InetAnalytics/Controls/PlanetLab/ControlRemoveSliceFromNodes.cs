@@ -19,8 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using InetAnalytics.Events;
 using InetAnalytics.Forms.PlanetLab;
+using InetCommon.Events;
 using InetCrawler;
 using PlanetLab;
 using PlanetLab.Api;

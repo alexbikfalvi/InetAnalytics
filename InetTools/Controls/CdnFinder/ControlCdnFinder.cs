@@ -27,9 +27,9 @@ using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
+using InetCommon.Status;
 using InetCrawler.Log;
 using InetCrawler.Tools;
-using InetCrawler.Status;
 using InetTools.Forms.CdnFinder;
 using InetTools.Tools.Alexa;
 using InetTools.Tools.CdnFinder;
@@ -84,7 +84,7 @@ namespace InetTools.Controls.CdnFinder
 
 		private readonly CdnFinderConfig config;
 
-		private readonly CrawlerStatusHandler status = null;
+		private readonly ApplicationStatusHandler status = null;
 		
 		private readonly object sync = new object();
 
@@ -110,7 +110,7 @@ namespace InetTools.Controls.CdnFinder
 
 			// Set the status.
 			this.status = this.config.Api.Status.GetHandler(this);
-			this.status.Send(CrawlerStatus.StatusType.Normal, "Ready.", Resources.Information_16);
+			this.status.Send(ApplicationStatus.StatusType.Normal, "Ready.", Resources.Information_16);
 
 			// Create the request.
 			this.request = new CdnFinderRequest(this.config);
@@ -161,7 +161,7 @@ namespace InetTools.Controls.CdnFinder
 			this.config.ServerUrl = this.textBoxUrl.Text;
 
 			// Set the status.
-			this.status.Send(CrawlerStatus.StatusType.Busy, "Requesting the CDN Finder data...", Resources.Busy_16);
+			this.status.Send(ApplicationStatus.StatusType.Busy, "Requesting the CDN Finder data...", Resources.Busy_16);
 			// Show a message.
 			this.ShowMessage(
 				Resources.GlobeClock_48,
@@ -212,7 +212,7 @@ namespace InetTools.Controls.CdnFinder
 								this.asyncCancel = null;
 							}
 							// Update the status label.
-							this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data was canceled.", Resources.Canceled_16);
+							this.status.Send(ApplicationStatus.StatusType.Normal, "Requesting the CDN Finder data was canceled.", Resources.Canceled_16);
 							// Show a message.
 							this.ShowMessage(
 								Resources.GlobeCanceled_48,
@@ -314,7 +314,7 @@ namespace InetTools.Controls.CdnFinder
 					catch (Exception exception)
 					{
 						// Update the status label.
-						this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+						this.status.Send(ApplicationStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 						// Show a message.
 						this.ShowMessage(
 							Resources.GlobeError_48,
@@ -358,7 +358,7 @@ namespace InetTools.Controls.CdnFinder
 				CdnFinderSites sites = this.request.End(result);
 				// Update the status label.
 				this.status.Send(
-					CrawlerStatus.StatusType.Normal,
+					ApplicationStatus.StatusType.Normal,
 					"Requesting the CDN Finder data completed successfully.",
 					"{0} web sites received.".FormatWith(sites.Count),
 					Resources.Success_16);
@@ -388,7 +388,7 @@ namespace InetTools.Controls.CdnFinder
 				if (exception.Status == WebExceptionStatus.RequestCanceled)
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data was canceled.", Resources.Canceled_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Requesting the CDN Finder data was canceled.", Resources.Canceled_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeCanceled_48,
@@ -411,7 +411,7 @@ namespace InetTools.Controls.CdnFinder
 				else
 				{
 					// Update the status label.
-					this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 					// Show a message.
 					this.ShowMessage(
 						Resources.GlobeError_48,
@@ -437,7 +437,7 @@ namespace InetTools.Controls.CdnFinder
 			catch (Exception exception)
 			{
 				// Update the status label.
-				this.status.Send(CrawlerStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Resources.Error_16);
+				this.status.Send(ApplicationStatus.StatusType.Normal, "Requesting the CDN Finder data failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 				// Show a message.
 				this.ShowMessage(
 					Resources.GlobeError_48,

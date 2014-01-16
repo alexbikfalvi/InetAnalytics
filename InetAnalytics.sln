@@ -57,6 +57,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InetAgent", "InetAgent\Inet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json.Net40", "..\Newtonsoft.JsonNet\Newtonsoft.Json\Newtonsoft.Json.Net40.csproj", "{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InetCommon", "InetCommon\InetCommon.csproj", "{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -301,6 +303,18 @@ Global
 		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Release|Win32.ActiveCfg = Release|Any CPU
 		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Release|x86.ActiveCfg = Release|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Release|Win32.ActiveCfg = Release|Any CPU
+		{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

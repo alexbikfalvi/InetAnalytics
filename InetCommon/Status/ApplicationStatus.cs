@@ -21,12 +21,12 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace InetCrawler.Status
+namespace InetCommon.Status
 {
 	/// <summary>
 	/// A class allowing controls to send status messages.
 	/// </summary>
-	public sealed class CrawlerStatus : IDisposable
+	public sealed class ApplicationStatus : IDisposable
 	{
 		/// <summary>
 		/// An enumeration representing the status type.
@@ -41,16 +41,16 @@ namespace InetCrawler.Status
 
 		private readonly object sync = new object();
 
-		private readonly Dictionary<object, CrawlerStatusHandler> handlers = new Dictionary<object, CrawlerStatusHandler>();
+		private readonly Dictionary<object, ApplicationStatusHandler> handlers = new Dictionary<object, ApplicationStatusHandler>();
 		private readonly HashSet<object> locks = new HashSet<object>();
 
-		private CrawlerStatusHandler handler = null;
+		private ApplicationStatusHandler handler = null;
 		private bool disposed = false;
 
 		/// <summary>
 		/// Creates a new crawler notification instance.
 		/// </summary>
-		public CrawlerStatus()
+		public ApplicationStatus()
 		{
 		}
 
@@ -91,14 +91,14 @@ namespace InetCrawler.Status
 		/// </summary>
 		/// <param name="owner">The object.</param>
 		/// <returns>The notification handler.</returns>
-		public CrawlerStatusHandler GetHandler(object owner)
+		public ApplicationStatusHandler GetHandler(object owner)
 		{
-			CrawlerStatusHandler handler;
+			ApplicationStatusHandler handler;
 			// Try get the handler from the current collection.
 			if (!this.handlers.TryGetValue(owner, out handler))
 			{
 				// If the handler is not found, create a new handler for the given owner.
-				handler = new CrawlerStatusHandler(owner, this.OnMessageChanged, this.OnLockChanged);
+				handler = new ApplicationStatusHandler(owner, this.OnMessageChanged, this.OnLockChanged);
 				// Add the handler to the collection.
 				this.handlers.Add(owner, handler);
 			}
@@ -114,7 +114,7 @@ namespace InetCrawler.Status
 		{
 			lock (this.sync)
 			{
-				CrawlerStatusHandler handler;
+				ApplicationStatusHandler handler;
 				// Try and get the handler for the specified owner.
 				if (this.handlers.TryGetValue(owner, out handler))
 				{
@@ -158,7 +158,7 @@ namespace InetCrawler.Status
 		/// An event handler called when receiving a status message from a handler.
 		/// </summary>
 		/// <param name="handler">The handler that changed the message.</param>
-		private void OnMessageChanged(CrawlerStatusHandler handler)
+		private void OnMessageChanged(ApplicationStatusHandler handler)
 		{
 			// If the object is disposed, do nothing.
 			if (this.disposed) return;
@@ -182,8 +182,8 @@ namespace InetCrawler.Status
 			if (null != this.MessageChanged)
 			{
 				// If the handler is not null.
-				if (null != this.handler) this.MessageChanged(this, new CrawlerStatusMessageEventArgs(this.handler.Message));
-				else this.MessageChanged(this, new CrawlerStatusMessageEventArgs(null));
+				if (null != this.handler) this.MessageChanged(this, new ApplicationStatusMessageEventArgs(this.handler.Message));
+				else this.MessageChanged(this, new ApplicationStatusMessageEventArgs(null));
 			}
 		}
 
@@ -191,7 +191,7 @@ namespace InetCrawler.Status
 		/// An event handler called when a status handler changes the lock state.
 		/// </summary>
 		/// <param name="handler">The handler that changed the lock.</param>
-		private void OnLockChanged(CrawlerStatusHandler handler)
+		private void OnLockChanged(ApplicationStatusHandler handler)
 		{
 			lock (this.sync)
 			{

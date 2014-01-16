@@ -18,7 +18,7 @@
 
 using System;
 using System.Windows.Forms;
-using InetAnalytics.Events;
+using InetCommon.Events;
 using InetCrawler;
 using PlanetLab.Api;
 using DotNetApi.Windows;
