@@ -37,7 +37,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Security.SecureString secureString1 = new System.Security.SecureString();
+			System.Security.SecureString secureString2 = new System.Security.SecureString();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPlanetLabSettings));
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
 			this.labelUsername = new System.Windows.Forms.Label();
@@ -96,8 +96,7 @@
 			// 
 			// buttonSave
 			// 
-			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonSave.Location = new System.Drawing.Point(312, 3);
+			this.buttonSave.Location = new System.Drawing.Point(297, 3);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(85, 23);
 			this.buttonSave.TabIndex = 4;
@@ -109,7 +108,7 @@
 			// 
 			this.textBoxPassword.Location = new System.Drawing.Point(91, 31);
 			this.textBoxPassword.Name = "textBoxPassword";
-			this.textBoxPassword.SecureText = secureString1;
+			this.textBoxPassword.SecureText = secureString2;
 			this.textBoxPassword.Size = new System.Drawing.Size(200, 20);
 			this.textBoxPassword.TabIndex = 3;
 			this.textBoxPassword.UseSystemPasswordChar = true;
@@ -128,16 +127,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelPerson.Location = new System.Drawing.Point(60, 57);
 			this.labelPerson.Name = "labelPerson";
-			this.labelPerson.Size = new System.Drawing.Size(337, 48);
+			this.labelPerson.Size = new System.Drawing.Size(437, 48);
 			this.labelPerson.TabIndex = 5;
 			this.labelPerson.Text = "There is no current PlanelLab account.";
 			// 
 			// buttonProperties
 			// 
-			this.buttonProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.buttonProperties.Enabled = false;
 			this.buttonProperties.Image = ((System.Drawing.Image)(resources.GetObject("buttonProperties.Image")));
-			this.buttonProperties.Location = new System.Drawing.Point(6, 274);
+			this.buttonProperties.Location = new System.Drawing.Point(388, 3);
 			this.buttonProperties.Name = "buttonProperties";
 			this.buttonProperties.Size = new System.Drawing.Size(85, 23);
 			this.buttonProperties.TabIndex = 8;
@@ -192,7 +190,7 @@
 			this.panelPerson.Controls.Add(this.textBoxFirstName);
 			this.panelPerson.Location = new System.Drawing.Point(0, 108);
 			this.panelPerson.Name = "panelPerson";
-			this.panelPerson.Size = new System.Drawing.Size(397, 160);
+			this.panelPerson.Size = new System.Drawing.Size(497, 289);
 			this.panelPerson.TabIndex = 10;
 			this.panelPerson.Visible = false;
 			// 
@@ -313,7 +311,7 @@
 			this.Controls.Add(this.labelUsername);
 			this.Controls.Add(this.textBoxUsername);
 			this.Name = "ControlPlanetLabSettings";
-			this.Size = new System.Drawing.Size(400, 300);
+			this.Size = new System.Drawing.Size(500, 400);
 			this.Controls.SetChildIndex(this.textBoxUsername, 0);
 			this.Controls.SetChildIndex(this.labelUsername, 0);
 			this.Controls.SetChildIndex(this.labelPassword, 0);

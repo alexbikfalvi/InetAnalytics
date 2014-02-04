@@ -17,6 +17,8 @@
  */
 
 using System;
+using System.ComponentModel;
+using System.Net;
 using System.Windows.Forms;
 using DotNetApi.Windows.Forms;
 using InetTools.Tools.Mercury;
@@ -54,6 +56,7 @@ namespace InetTools.Forms.Mercury
 			// Set the properties.
 			this.textBoxSessionUrl.Text = this.config.UploadSessionUrl;
 			this.textBoxTracerouteUrl.Text = this.config.UploadTracerouteUrl;
+			this.textBoxLocalAddress.Text = this.config.LocalAddress;
 
 			// Reset the buttons.
 			this.buttonApply.Enabled = false;
@@ -98,9 +101,28 @@ namespace InetTools.Forms.Mercury
 			// Save the changes.
 			this.config.UploadSessionUrl = this.textBoxSessionUrl.Text;
 			this.config.UploadTracerouteUrl = this.textBoxTracerouteUrl.Text;
+			this.config.LocalAddress = this.textBoxLocalAddress.Text;
 
 			// Disable the apply button.
 			this.buttonApply.Enabled = false;
+		}
+
+		/// <summary>
+		/// An event handler called when validating the local address.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnValidateLocalAddress(object sender, CancelEventArgs e)
+		{
+			// Validate the local IP address.
+			IPAddress address;
+			if (!IPAddress.TryParse(this.textBoxLocalAddress.Text, out address))
+			{
+				// If the IP address is not valid, show an error message.
+				MessageBox.Show(this, "The local address is not a valid Internet Protocol address.", "Invalid Address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				// Cancel the change.
+				e.Cancel = true;
+			}
 		}
 	}
 }

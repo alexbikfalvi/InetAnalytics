@@ -266,6 +266,7 @@ namespace InetAnalytics.Controls.PlanetLab
 			this.buttonConnect.Enabled = true;
 			// Update the status bar.
 			this.status.Send(ApplicationStatus.StatusType.Normal, "Connecting to the PlanetLab node \'{0}\' failed.".FormatWith(info.Host), Resources.ServerError_16);
+			this.status.Unlock();
 			// Log
 			this.log.Add(this.crawler.Log.Add(
 				LogEventLevel.Verbose,
@@ -507,22 +508,56 @@ namespace InetAnalytics.Controls.PlanetLab
 		/// <param name="e">The event arguments.</param>
 		private void OnCancelCommand(object sender, EventArgs e)
 		{
-			// Lock the list of commands.
-			this.Commands.Lock();
-			try
+			// Show the command is being canceled.
+			this.ShowMessage(Resources.ServerBusy_32, "Cancel Command", "Canceling the current SSH command...");
+
+			// Cancel the command on the thread pool.
+			ThreadPool.QueueUserWorkItem((object state) =>
 			{
-				// If the number of executing commands is greater than zero.
-				if (this.Commands.Count > 0)
+				// Lock the list of commands.
+				this.Commands.Lock();
+				try
 				{
-					// Cancel the first command.
-					this.Commands.First().CancelAsync();
+					// If the number of executing commands is greater than zero.
+					if (this.Commands.Count > 0)
+					{
+						// Cancel the first command.
+						this.Commands.First().CancelAsync();
+					}
+
+					// Hide the message.
+					this.HideMessage();
 				}
-			}
-			catch { }
-			finally
-			{
-				this.Commands.Unlock();
-			}
+				catch (Exception exception)
+				{
+					// Show the error message.
+					this.ShowMessage(Resources.ServerError_32, "Cancel Command", "Canceling the last PlanetLab command failed. {0}".FormatWith(exception.Message), false, (int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+				}
+				finally
+				{
+					this.Commands.Unlock();
+				}
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when the user copies the console output.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnCopy(object sender, EventArgs e)
+		{
+			this.console.Copy();
+		}
+
+		/// <summary>
+		/// An event handler called when the user clears the console output.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnClear(object sender, EventArgs e)
+		{
+			this.console.Clear();
 		}
 	}
 }

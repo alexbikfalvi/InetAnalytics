@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis", "..\GoogleApi\Src\GoogleApis\GoogleApis.csproj", "{CBB5E638-F8D5-48DB-93BE-5A7CDD7ED107}"
 EndProject
@@ -52,8 +52,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InetTools", "InetTools\InetTools.csproj", "{8ADA1B9F-2285-4B7E-AB30-828F58DEDE7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InetControls", "InetControls\InetControls.csproj", "{FE702303-5ACC-498F-BAB4-7479957193CD}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InetAgent", "InetAgent\InetAgent.vcxproj", "{696ACC17-A3FB-4502-8210-EB1C244A4AA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json.Net40", "..\Newtonsoft.JsonNet\Newtonsoft.Json\Newtonsoft.Json.Net40.csproj", "{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}"
 EndProject
@@ -277,20 +275,6 @@ Global
 		{FE702303-5ACC-498F-BAB4-7479957193CD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FE702303-5ACC-498F-BAB4-7479957193CD}.Release|Win32.ActiveCfg = Release|Any CPU
 		{FE702303-5ACC-498F-BAB4-7479957193CD}.Release|x86.ActiveCfg = Release|Any CPU
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Debug|Win32.ActiveCfg = Debug|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Debug|Win32.Build.0 = Debug|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Debug|x86.ActiveCfg = Debug|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Debug|x86.Build.0 = Debug|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Release|Any CPU.ActiveCfg = Release|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Release|Win32.ActiveCfg = Release|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Release|Win32.Build.0 = Release|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Release|x86.ActiveCfg = Release|Win32
-		{696ACC17-A3FB-4502-8210-EB1C244A4AA5}.Release|x86.Build.0 = Release|Win32
 		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

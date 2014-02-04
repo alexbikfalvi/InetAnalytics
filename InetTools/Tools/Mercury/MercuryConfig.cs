@@ -62,5 +62,14 @@ namespace InetTools.Tools.Mercury
 			get { return this.api.Key.GetString("UploadTracerouteUrl", "http://mercury.upf.edu/mercury/api/traceroute/uploadTrace"); }
 			set { this.api.Key.SetString("UploadTracerouteUrl", value); }
 		}
+
+		/// <summary>
+		/// Gets or sets the local IP address.
+		/// </summary>
+		public string LocalAddress
+		{
+			get { return this.api.Key.GetString("LocalAddress", "0.0.0.0"); }
+			set { this.api.Key.SetString("LocalAddress", value); }
+		}
 	}
 }

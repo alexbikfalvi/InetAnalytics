@@ -35,6 +35,8 @@
 			this.textBoxSessionUrl = new System.Windows.Forms.TextBox();
 			this.labelTracerouteUrl = new System.Windows.Forms.Label();
 			this.textBoxTracerouteUrl = new System.Windows.Forms.TextBox();
+			this.labelLocalAddress = new System.Windows.Forms.Label();
+			this.textBoxLocalAddress = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// labelSessionUrl
@@ -53,7 +55,7 @@
 			this.buttonApply.Location = new System.Drawing.Point(347, 277);
 			this.buttonApply.Name = "buttonApply";
 			this.buttonApply.Size = new System.Drawing.Size(75, 23);
-			this.buttonApply.TabIndex = 6;
+			this.buttonApply.TabIndex = 8;
 			this.buttonApply.Text = "&Apply";
 			this.buttonApply.UseVisualStyleBackColor = true;
 			this.buttonApply.Click += new System.EventHandler(this.OnApplyClick);
@@ -65,7 +67,7 @@
 			this.buttonCancel.Location = new System.Drawing.Point(266, 277);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-			this.buttonCancel.TabIndex = 5;
+			this.buttonCancel.TabIndex = 7;
 			this.buttonCancel.Text = "&Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			// 
@@ -76,7 +78,7 @@
 			this.buttonOk.Location = new System.Drawing.Point(185, 277);
 			this.buttonOk.Name = "buttonOk";
 			this.buttonOk.Size = new System.Drawing.Size(75, 23);
-			this.buttonOk.TabIndex = 4;
+			this.buttonOk.TabIndex = 6;
 			this.buttonOk.Text = "&OK";
 			this.buttonOk.UseVisualStyleBackColor = true;
 			this.buttonOk.Click += new System.EventHandler(this.OnOkClick);
@@ -110,6 +112,24 @@
 			this.textBoxTracerouteUrl.TabIndex = 3;
 			this.textBoxTracerouteUrl.TextChanged += new System.EventHandler(this.OnSettingsChanged);
 			// 
+			// labelLocalAddress
+			// 
+			this.labelLocalAddress.AutoSize = true;
+			this.labelLocalAddress.Location = new System.Drawing.Point(12, 92);
+			this.labelLocalAddress.Name = "labelLocalAddress";
+			this.labelLocalAddress.Size = new System.Drawing.Size(89, 13);
+			this.labelLocalAddress.TabIndex = 4;
+			this.labelLocalAddress.Text = "Local IP &address:";
+			// 
+			// textBoxLocalAddress
+			// 
+			this.textBoxLocalAddress.Location = new System.Drawing.Point(12, 108);
+			this.textBoxLocalAddress.Name = "textBoxLocalAddress";
+			this.textBoxLocalAddress.Size = new System.Drawing.Size(150, 20);
+			this.textBoxLocalAddress.TabIndex = 5;
+			this.textBoxLocalAddress.TextChanged += new System.EventHandler(this.OnSettingsChanged);
+			this.textBoxLocalAddress.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidateLocalAddress);
+			// 
 			// FormMercuryClientSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -117,6 +137,8 @@
 			this.AutoScroll = true;
 			this.CancelButton = this.buttonCancel;
 			this.ClientSize = new System.Drawing.Size(434, 312);
+			this.Controls.Add(this.textBoxLocalAddress);
+			this.Controls.Add(this.labelLocalAddress);
 			this.Controls.Add(this.textBoxTracerouteUrl);
 			this.Controls.Add(this.labelTracerouteUrl);
 			this.Controls.Add(this.textBoxSessionUrl);
@@ -143,6 +165,8 @@
 		private System.Windows.Forms.TextBox textBoxSessionUrl;
 		private System.Windows.Forms.Label labelTracerouteUrl;
 		private System.Windows.Forms.TextBox textBoxTracerouteUrl;
+		private System.Windows.Forms.Label labelLocalAddress;
+		private System.Windows.Forms.TextBox textBoxLocalAddress;
 
 	}
 }

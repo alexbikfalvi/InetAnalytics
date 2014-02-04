@@ -54,6 +54,9 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.buttonCopy = new System.Windows.Forms.ToolStripButton();
+			this.buttonClear = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -91,7 +94,7 @@
 			this.panelConsole.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelConsole.Location = new System.Drawing.Point(0, 0);
 			this.panelConsole.Name = "panelConsole";
-			this.panelConsole.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelConsole.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelConsole.ShowBorder = true;
 			this.panelConsole.ShowTitle = true;
 			this.panelConsole.Size = new System.Drawing.Size(600, 225);
@@ -102,9 +105,9 @@
 			// 
 			this.console.ButtonImage = ((System.Drawing.Image)(resources.GetObject("console.ButtonImage")));
 			this.console.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.console.Location = new System.Drawing.Point(1, 47);
+			this.console.Location = new System.Drawing.Point(1, 48);
 			this.console.Name = "console";
-			this.console.Size = new System.Drawing.Size(598, 177);
+			this.console.Size = new System.Drawing.Size(598, 176);
 			this.console.TabIndex = 1;
 			this.console.Execute += new System.EventHandler(this.OnExecuteCommand);
 			this.console.Cancel += new System.EventHandler(this.OnCancelCommand);
@@ -115,8 +118,11 @@
             this.labelHostname,
             this.separator1,
             this.buttonConnect,
-            this.buttonDisconnect});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+            this.buttonDisconnect,
+            this.separator2,
+            this.buttonCopy,
+            this.buttonClear});
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 0;
@@ -157,7 +163,7 @@
 			this.log.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.log.Location = new System.Drawing.Point(0, 0);
 			this.log.Name = "log";
-			this.log.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.log.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.log.ShowBorder = true;
 			this.log.ShowTitle = true;
 			this.log.Size = new System.Drawing.Size(600, 170);
@@ -178,6 +184,28 @@
 			// 
 			this.openFileDialog.Filter = "XML files (*.xml)|*.xml";
 			this.openFileDialog.Title = "Import Settings";
+			// 
+			// separator2
+			// 
+			this.separator2.Name = "separator2";
+			this.separator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonCopy
+			// 
+			this.buttonCopy.Image = global::InetAnalytics.Resources.Copy_16;
+			this.buttonCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonCopy.Name = "buttonCopy";
+			this.buttonCopy.Size = new System.Drawing.Size(55, 22);
+			this.buttonCopy.Text = "C&opy";
+			this.buttonCopy.Click += new System.EventHandler(this.OnCopy);
+			// 
+			// buttonClear
+			// 
+			this.buttonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonClear.Name = "buttonClear";
+			this.buttonClear.Size = new System.Drawing.Size(38, 22);
+			this.buttonClear.Text = "Cl&ear";
+			this.buttonClear.Click += new System.EventHandler(this.OnClear);
 			// 
 			// ControlSession
 			// 
@@ -214,6 +242,9 @@
 		private System.Windows.Forms.ToolStripLabel labelHostname;
 		private System.Windows.Forms.ToolStripSeparator separator1;
 		private DotNetApi.Windows.Controls.ThemeControl panelConsole;
+		private System.Windows.Forms.ToolStripSeparator separator2;
+		private System.Windows.Forms.ToolStripButton buttonCopy;
+		private System.Windows.Forms.ToolStripButton buttonClear;
 
 	}
 }

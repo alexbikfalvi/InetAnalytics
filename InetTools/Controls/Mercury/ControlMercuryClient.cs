@@ -116,6 +116,16 @@ namespace InetTools.Controls.Mercury
 		/// <param name="e">The event arguments.</param>
 		private void OnStart(object sender, EventArgs e)
 		{
+			// Parse the IP address.
+			IPAddress localAddress;
+			if (!IPAddress.TryParse(this.config.LocalAddress, out localAddress))
+			{
+				// Show an error message.
+				MessageBox.Show(this, "The local IP address is not valid. Correct the tool settings and try again.", "Invalid Configuration", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				// Return.
+				return;
+			}
+
 			// Check there is no pending request.
 			lock (this.sync)
 			{
@@ -134,7 +144,7 @@ namespace InetTools.Controls.Mercury
 			try
 			{
 				// Try and parse the traceroute.
-				traceroute = new MercuryTraceroute(Guid.Empty, null, IPAddress.Parse("0.0.0.0"), this.codeTextBox.Text);
+				traceroute = new MercuryTraceroute(Guid.Empty, null, localAddress, this.codeTextBox.Text);
 
 				// Set the traceroute.
 				this.controlTraceroute.Set(traceroute);

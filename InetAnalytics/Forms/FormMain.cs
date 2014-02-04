@@ -1217,18 +1217,17 @@ namespace InetAnalytics.Forms
 		private void OnNetworkStatusChecked(object sender, EventArgs e)
 		{
 			// Call the method on the UI thread.
-			if (this.InvokeRequired) this.Invoke(this.actionNetworkStatusChecked, new object[] { sender, e });
-			else
-			{
-				// If the tooltip is visible.
-				if (this.toolTipNetworkStatus.Visible)
+			this.Invoke(() =>
 				{
-					// Hide the tooltip.
-					this.OnNetworkStatusLeave(sender, e);
-					// Show the tooltip.
-					this.OnNetworkStatusEnter(sender, e);
-				}
-			}
+					// If the tooltip is visible.
+					if (this.toolTipNetworkStatus.Visible)
+					{
+						// Hide the tooltip.
+						this.OnNetworkStatusLeave(sender, e);
+						// Show the tooltip.
+						this.OnNetworkStatusEnter(sender, e);
+					}
+				});
 		}
 
 		/// <summary>

@@ -68,6 +68,22 @@ namespace InetAnalytics.Controls
 		// Public methods.
 
 		/// <summary>
+		/// Clears the current console output.
+		/// </summary>
+		public void Clear()
+		{
+			this.textArea.Clear();
+		}
+
+		/// <summary>
+		/// Copies the current console text to clipboard.
+		/// </summary>
+		public void Copy()
+		{
+			Clipboard.SetText(this.textArea.Text);
+		}
+
+		/// <summary>
 		/// Appends the specified text to the console text area using the default color.
 		/// </summary>
 		/// <param name="text">The text.</param>
@@ -170,6 +186,8 @@ namespace InetAnalytics.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnClick(object sender, EventArgs e)
 		{
+			// Disable the button.
+			this.button.Enabled = false;
 			// If the console processes a command.
 			if (this.command)
 			{
@@ -223,6 +241,8 @@ namespace InetAnalytics.Controls
 			// If the Control+C keys were pressed.
 			if (e.Control && (e.KeyCode == Keys.C) && this.command)
 			{
+				// Disable the button.
+				this.button.Enabled = false;
 				// Raise the cancel event.
 				if (null != this.Cancel) this.Cancel(sender, e);
 			}
