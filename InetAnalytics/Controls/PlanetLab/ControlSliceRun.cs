@@ -963,17 +963,14 @@ namespace InetAnalytics.Controls.PlanetLab
 		//			// If the object is null, continue.
 		//			if (null == site) continue;
 
-		//			// Find the list item corresponding to the node.
-		//			ListViewItem item = this.listViewNodes.Items.FirstOrDefault((ListViewItem it) =>
-		//			{
-		//				// Get the node info.
-		//				NodeInfo info = it.Tag as NodeInfo;
-		//				// Check the site ID.
-		//				return info.SiteId == site.Id;
-		//			});
-
-		//			// If the item is not null.
-		//			if (null != item)
+					//// Find the list items corresponding to the site.
+					//foreach (ListViewItem item in this.listViewNodes.Items.Where((ListViewItem it) =>
+					//	{
+					//		// Get the node info.
+					//		NodeInfo info = it.Tag as NodeInfo;
+					//		// Check the site ID.
+					//		return info.SiteId == site.Id;
+					//	}))
 		//			{
 		//				// Get the node info.
 		//				NodeInfo info = item.Tag as NodeInfo;

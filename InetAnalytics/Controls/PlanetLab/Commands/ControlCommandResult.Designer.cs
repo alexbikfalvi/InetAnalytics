@@ -211,6 +211,8 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScroll = true;
+			this.AutoScrollMinSize = new System.Drawing.Size(0, 250);
 			this.Controls.Add(this.labelRetries);
 			this.Controls.Add(this.textBoxRetries);
 			this.Controls.Add(this.labelTimeout);
