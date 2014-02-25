@@ -780,6 +780,19 @@ namespace InetAnalytics.Controls.Net.Ssh
 
 				if (command.ExitStatus == 0)
 				{
+					// Append the command error, if any.
+					if (!string.IsNullOrWhiteSpace(command.Error))
+					{
+						if (string.IsNullOrWhiteSpace(result))
+						{
+							result = command.Error;
+						}
+						else
+						{
+							result = "{0}{1}{2}".FormatWith(result, Environment.NewLine, command.Error);
+						}
+					}
+
 					// Call the event handler.
 					this.OnCommandSucceededInternal(command, result);
 				}
