@@ -40,8 +40,7 @@ namespace InetTools
 		private static Type[] tools = new Type[] {
 			typeof(ToolAlexaTopSites),
 			typeof(ToolCdnFinder),
-			typeof(ToolMercuryClient),
-			typeof(ToolMercuryAnalytics),
+			typeof(ToolMercury),
 			typeof(ToolTraceroute),
 			typeof(ToolSshClient),
 			typeof(ToolWebClient)

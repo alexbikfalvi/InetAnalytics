@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2013 Alex Bikfalvi
+ * Copyright (C) 2014 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,26 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Tools;
-using InetTools.Controls.Mercury;
-using InetTools.Tools.Mercury;
 
-namespace InetTools.Tools
+namespace InetCrawler.Tools
 {
 	/// <summary>
-	/// A Mercury tool item that analyzes data from the Mercury web service.
+	/// A class representing a tool item.
 	/// </summary>
-	public sealed class ToolMercuryAnalytics : ToolItem
+	public abstract class ToolItem : IDisposable
 	{
-		private readonly MercuryConfig config;
-		private readonly ControlMercuryAnalytics control;
-		private readonly MercuryRequest request = new MercuryRequest();
+		private readonly Tool tool;
+		private readonly IToolApi api;
 
 		/// <summary>
-		/// Creates a new tool instance.
+		/// Creates a new tool item instance.
 		/// </summary>
-		/// <param name="tool">The tool for this tool item.</param>
+		/// <param name="tool">The tool.</param>
 		/// <param name="api">The tool API.</param>
-		public ToolMercuryAnalytics(Tool tool, IToolApi api)
-			: base(tool, api)
+		public ToolItem(Tool tool, IToolApi api)
 		{
-			// Create the configuration.
-			this.config = new MercuryConfig(api);
-
-			// Create the control.
-			this.control = new ControlMercuryAnalytics(this.config);
+			this.tool = tool;
+			this.api = api;
 		}
 
 		// Public properties.
@@ -53,7 +45,31 @@ namespace InetTools.Tools
 		/// <summary>
 		/// Gets the user interface control for this tool.
 		/// </summary>
-		public override Control Control { get { return this.control; } }
+		public abstract Control Control { get; }
+
+		// Protected properties.
+
+		/// <summary>
+		/// Gets the tool for this tool item.
+		/// </summary>
+		protected Tool Tool { get { return this.tool; } }
+		/// <summary>
+		/// Gets the tool API.
+		/// </summary>
+		protected IToolApi Api { get { return this.api; } }
+
+		// Public methods.
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			// Call the dispose method.
+			this.Dispose(true);
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
+		}
 
 		// Protected methods.
 
@@ -61,15 +77,8 @@ namespace InetTools.Tools
 		/// Disposes the current object.
 		/// </summary>
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
-		protected override void Dispose(bool disposing)
+		protected virtual void Dispose(bool disposing)
 		{
-			if (disposing)
-			{
-				// Dispose the control.
-				this.control.Dispose();
-			}
-			// Call the base clas method.
-			base.Dispose(disposing);
 		}
 	}
 }

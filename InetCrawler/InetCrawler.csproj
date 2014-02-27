@@ -163,6 +163,7 @@
     <Compile Include="Tools\ToolException.cs" />
     <Compile Include="Tools\ToolId.cs" />
     <Compile Include="Tools\ToolInfoAttribute.cs" />
+    <Compile Include="Tools\ToolItem.cs" />
     <Compile Include="Tools\ToolMethod.cs" />
     <Compile Include="Tools\ToolMethodInfo.cs" />
     <Compile Include="Tools\ToolMethodTrigger.cs" />

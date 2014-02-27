@@ -64,7 +64,7 @@ namespace InetAnalytics.Controls.Tools
 		}
 
 		private Crawler crawler;
-
+		private ImageList imageList;
 		private TreeNode treeNode;
 		private Control.ControlCollection controls;
 
@@ -87,15 +87,19 @@ namespace InetAnalytics.Controls.Tools
 		/// <param name="crawler">The crawler.</param>
 		/// <param name="treeNode">The root tree node.</param>
 		/// <param name="controls">The controls collection.</param>
-		public void Initialize(Crawler crawler, TreeNode treeNode, Control.ControlCollection controls)
+		public void Initialize(Crawler crawler, ImageList imageList, TreeNode treeNode, Control.ControlCollection controls)
 		{
 			// Set the parameters.
 			this.crawler = crawler;
+			this.imageList = imageList;
 			this.treeNode = treeNode;
 			this.controls = controls;
 
 			// Enable the control.
 			this.Enabled = true;
+
+			// Set the image list.
+			this.listView.SmallImageList = this.imageList;
 
 			// Set the toolbox event handlers.
 			this.crawler.Toolbox.ToolAdded += this.OnToolAdded;
@@ -231,10 +235,17 @@ namespace InetAnalytics.Controls.Tools
 		/// <param name="tool">The tool.</param>
 		private void OnAddTool(Tool tool)
 		{
+			// If the tool has a custom icon.
+			if (tool.Icon != null)
+			{
+				// Add the custom icon to the image list.
+				this.imageList.Images.Add(tool.Info.Id.ToString(), tool.Icon);
+			}
+
 			// Create a new tree node.
 			TreeNode node = new TreeNode(tool.Info.Name);
-			node.ImageKey = "ToolboxPickAxe";
-			node.SelectedImageKey = "ToolboxPickAxe";
+			node.ImageKey = tool.Icon != null ? tool.Info.Id.ToString() : "ToolboxPickAxe";
+			node.SelectedImageKey = tool.Icon != null ? tool.Info.Id.ToString() : "ToolboxPickAxe";
 			// Add the node to the nodes list.
 			this.treeNode.Nodes.Add(node);
 			// Expand the tree nodes.
@@ -252,7 +263,7 @@ namespace InetAnalytics.Controls.Tools
 				tool.Toolset.Id.Version.ToString(),
 				tool.Info.Id.Version.ToString()
 			});
-			item.ImageIndex = 0;
+			item.ImageKey = tool.Icon != null ? tool.Info.Id.ToString() : "ToolboxPickAxe";
 			item.Tag = info;
 			// Add the item to the list.
 			this.listView.Items.Add(item);

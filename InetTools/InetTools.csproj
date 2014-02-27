@@ -71,6 +71,12 @@
     <Compile Include="Controls\CdnFinder\ControlCdnFinderSite.Designer.cs">
       <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Mercury\ControlMercury.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Mercury\ControlMercury.Designer.cs">
+      <DependentUpon>ControlMercury.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Net\Ssh\ControlSshClient.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -143,6 +149,7 @@
     <Compile Include="Tools\Net\Ssh\SshClientConfig.cs" />
     <Compile Include="Tools\ToolAlexaTopSites.cs" />
     <Compile Include="Tools\ToolCdnFinder.cs" />
+    <Compile Include="Tools\ToolMercury.cs" />
     <Compile Include="Tools\ToolMercuryAnalytics.cs" />
     <Compile Include="Tools\ToolMercuryClient.cs" />
     <Compile Include="Tools\ToolSshClient.cs" />
@@ -201,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CdnFinder\ControlCdnFinderSite.resx">
       <DependentUpon>ControlCdnFinderSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Mercury\ControlMercury.resx">
+      <DependentUpon>ControlMercury.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Net\Ssh\ControlSshClient.resx">
       <DependentUpon>ControlSshClient.cs</DependentUpon>
@@ -3531,6 +3541,20 @@
     </None>
     <None Include="..\InetIcons\Resources\Select_48.png">
       <Link>Resources\Select_48.png</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\InetIcons\Resources\ToolboxGraph_16.png">
+      <Link>Resources\ToolboxGraph_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxGraph_24.png">
+      <Link>Resources\ToolboxGraph_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxGraph_32.png">
+      <Link>Resources\ToolboxGraph_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\ToolboxGraph_48.png">
+      <Link>Resources\ToolboxGraph_48.png</Link>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

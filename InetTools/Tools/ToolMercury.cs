@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using InetCrawler.Tools;
 using InetTools.Controls.Mercury;
@@ -25,27 +26,33 @@ using InetTools.Tools.Mercury;
 namespace InetTools.Tools
 {
 	/// <summary>
-	/// A Mercury tool item that analyzes data from the Mercury web service.
+	/// A tool for the Mercury project.
 	/// </summary>
-	public sealed class ToolMercuryAnalytics : ToolItem
+	[ToolInfo(
+		"EF0D8AA8-3DB8-4467-B6A6-7EABC12A9A53",
+		1, 0, 0, 0,
+		"Mercury",
+		"A tool for the Mercury project."
+		)]
+	public sealed class ToolMercury : Tool
 	{
 		private readonly MercuryConfig config;
-		private readonly ControlMercuryAnalytics control;
+		private readonly ControlMercury control;
 		private readonly MercuryRequest request = new MercuryRequest();
 
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
-		/// <param name="tool">The tool for this tool item.</param>
 		/// <param name="api">The tool API.</param>
-		public ToolMercuryAnalytics(Tool tool, IToolApi api)
-			: base(tool, api)
+		/// <param name="toolset">The toolset information.</param>
+		public ToolMercury(IToolApi api, ToolsetInfoAttribute toolset)
+			: base(api, toolset)
 		{
 			// Create the configuration.
 			this.config = new MercuryConfig(api);
 
 			// Create the control.
-			this.control = new ControlMercuryAnalytics(this.config);
+			this.control = new ControlMercury(this.config);
 		}
 
 		// Public properties.
@@ -54,6 +61,10 @@ namespace InetTools.Tools
 		/// Gets the user interface control for this tool.
 		/// </summary>
 		public override Control Control { get { return this.control; } }
+		/// <summary>
+		/// Gets the user interface icon for this tool.
+		/// </summary>
+		public override Image Icon { get { return InetAnalytics.Resources.ToolboxGraph_16; } }
 
 		// Protected methods.
 

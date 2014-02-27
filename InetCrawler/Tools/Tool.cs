@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using DotNetApi;
 
@@ -61,6 +62,10 @@ namespace InetCrawler.Tools
 		/// Gets the user interface control for this tool.
 		/// </summary>
 		public abstract Control Control { get; }
+		/// <summary>
+		/// Gets the tree view icon for this tool.
+		/// </summary>
+		public virtual Image Icon { get { return null; } }
 		/// <summary>
 		/// Gets the tool information.
 		/// </summary>
@@ -140,6 +145,18 @@ namespace InetCrawler.Tools
 		}
 
 		/// <summary>
+		/// Adds a method to the current tool.
+		/// </summary>
+		/// <param name="id">The method identifier.</param>
+		/// <param name="name">The method name.</param>
+		/// <param name="description">The method description.</param>
+		/// <param name="action">The method action.</param>
+		public void AddMethod(Guid id, string name, string description, ToolMethodAction action)
+		{
+			this.methods.Add(id, new ToolMethod(this, id, name, description, action));
+		}
+
+		/// <summary>
 		/// Finds the tool method with the specified identifier.
 		/// </summary>
 		/// <param name="guid">The method identifier.</param>
@@ -166,18 +183,6 @@ namespace InetCrawler.Tools
 		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
 		protected virtual void Dispose(bool disposing)
 		{
-		}
-
-		/// <summary>
-		/// Adds a method to the current tool.
-		/// </summary>
-		/// <param name="id">The method identifier.</param>
-		/// <param name="name">The method name.</param>
-		/// <param name="description">The method description.</param>
-		/// <param name="action">The method action.</param>
-		protected void AddMethod(Guid id, string name, string description, ToolMethodAction action)
-		{
-			this.methods.Add(id, new ToolMethod(this, id, name, description, action));
 		}
 	}
 }

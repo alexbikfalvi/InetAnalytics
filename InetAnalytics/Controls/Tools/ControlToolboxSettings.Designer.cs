@@ -36,7 +36,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlToolboxSettings));
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonAdd = new System.Windows.Forms.ToolStripButton();
 			this.buttonRemove = new System.Windows.Forms.ToolStripButton();
@@ -49,7 +48,6 @@
 			this.columnHeaderProduct = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderToolsetVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderToolVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,7 +123,6 @@
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
 			this.listView.Size = new System.Drawing.Size(598, 373);
-			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
@@ -163,12 +160,6 @@
 			this.columnHeaderToolVersion.Text = "Tool version";
 			this.columnHeaderToolVersion.Width = 120;
 			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "ToolboxPickAxe");
-			// 
 			// openFileDialog
 			// 
 			this.openFileDialog.Filter = "Toolbox library files (*.dll)|*.dll";
@@ -187,20 +178,20 @@
 			// 
 			this.menuItemRemove.Image = global::InetAnalytics.Resources.ToolboxRemove_16;
 			this.menuItemRemove.Name = "menuItemRemove";
-			this.menuItemRemove.Size = new System.Drawing.Size(152, 22);
+			this.menuItemRemove.Size = new System.Drawing.Size(141, 22);
 			this.menuItemRemove.Text = "Remove tool";
 			this.menuItemRemove.Click += new System.EventHandler(this.OnRemove);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(138, 6);
 			// 
 			// menuItemProperties
 			// 
 			this.menuItemProperties.Image = global::InetAnalytics.Resources.Properties_16;
 			this.menuItemProperties.Name = "menuItemProperties";
-			this.menuItemProperties.Size = new System.Drawing.Size(152, 22);
+			this.menuItemProperties.Size = new System.Drawing.Size(141, 22);
 			this.menuItemProperties.Text = "Properties";
 			this.menuItemProperties.Click += new System.EventHandler(this.OnProperties);
 			// 
@@ -230,7 +221,6 @@
 		private System.Windows.Forms.ToolStripSeparator separator;
 		private System.Windows.Forms.ToolStripButton buttonProperties;
 		private System.Windows.Forms.ListView listView;
-		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ColumnHeader columnHeaderName;
 		private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
 		private System.Windows.Forms.ColumnHeader columnHeaderProduct;

@@ -29,15 +29,9 @@ using InetTools.Tools.Mercury;
 namespace InetTools.Tools
 {
 	/// <summary>
-	/// A tool that uploads topology data to the Mercury web service.
+	/// A Mercury tool item that uploads topology data to the Mercury web service.
 	/// </summary>
-	[ToolInfo(
-		"704886CD-9F15-444B-A0DF-A5068FE8E775",
-		1, 0, 0, 0,
-		"Mercury Client",
-		"A tool that uploads topology data to the Mercury web service."
-		)]
-	public sealed class ToolMercuryClient : Tool
+	public sealed class ToolMercuryClient : ToolItem
 	{
 		private readonly MercuryConfig config;
 		private readonly ControlMercuryClient control;
@@ -46,10 +40,10 @@ namespace InetTools.Tools
 		/// <summary>
 		/// Creates a new tool instance.
 		/// </summary>
+		/// <param name="tool">The tool for this tool item.</param>
 		/// <param name="api">The tool API.</param>
-		/// <param name="toolset">The toolset information.</param>
-		public ToolMercuryClient(IToolApi api, ToolsetInfoAttribute toolset)
-			: base(api, toolset)
+		public ToolMercuryClient(Tool tool, IToolApi api)
+			: base(tool, api)
 		{
 			// Create the configuration.
 			this.config = new MercuryConfig(api);
@@ -58,12 +52,12 @@ namespace InetTools.Tools
 			this.control = new ControlMercuryClient(this.config);
 
 			// Create the tool methods.
-			this.AddMethod(
+			this.Tool.AddMethod(
 				new Guid("24FDC1EC-FA12-4A42-B410-3A868B9576D9"),
 				Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabName,
 				Resources.ToolMercuryClientMethodUploadSessionFromPlanetLabDescription,
 				this.UploadSessionFromPlanetLab);
-			this.AddMethod(
+			this.Tool.AddMethod(
 				new Guid("5AD386C4-EA86-4C31-A0A1-DCD6CF1107B2"),
 				Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabName,
 				Resources.ToolMercuryClientMethodUploadTracerouteFromPlanetLabDescription,
