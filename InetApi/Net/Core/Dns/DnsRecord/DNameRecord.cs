@@ -30,11 +30,11 @@ namespace ARSoft.Tools.Net.Dns
 		internal DNameRecord() { }
 
 		/// <summary>
-		///   Creates a new instance of the DNameRecord class
+		/// Creates a new instance of the DNameRecord class.
 		/// </summary>
-		/// <param name="name"> Name of the record </param>
-		/// <param name="timeToLive"> Seconds the record should be cached at most </param>
-		/// <param name="target"> Target of the redirection </param>
+		/// <param name="name">Name of the record.</param>
+		/// <param name="timeToLive">Seconds the record should be cached at most.</param>
+		/// <param name="target">Target of the redirection.</param>
 		public DNameRecord(string name, int timeToLive, string target)
 			: base(name, RecordType.DName, RecordClass.INet, timeToLive)
 		{

@@ -24,14 +24,24 @@ namespace ARSoft.Tools.Net.Dns
 	/// </summary>
 	public abstract class DnsRecordBase : DnsMessageEntryBase
 	{
-		protected DnsRecordBase() {}
+		/// <summary>
+		/// Protected constructor.
+		/// </summary>
+		protected DnsRecordBase() { }
 
+		/// <summary>
+		/// Creates a new DNS record instance.
+		/// </summary>
+		/// <param name="name">The record name.</param>
+		/// <param name="recordType">The record type.</param>
+		/// <param name="recordClass">The record class.</param>
+		/// <param name="timeToLive">The record time-to-live.</param>
 		protected DnsRecordBase(string name, RecordType recordType, RecordClass recordClass, int timeToLive)
 		{
-			Name = name ?? String.Empty;
-			RecordType = recordType;
-			RecordClass = recordClass;
-			TimeToLive = timeToLive;
+			this.Name = name ?? String.Empty;
+			this.RecordType = recordType;
+			this.RecordClass = recordClass;
+			this.TimeToLive = timeToLive;
 		}
 
 		// Public properties.
@@ -52,7 +62,15 @@ namespace ARSoft.Tools.Net.Dns
 		/// </summary>
 		internal ushort RecordDataLength { get; set; }
 
+		// Internal methods.
 
+		/// <summary>
+		/// Creates a new DNS record instance.
+		/// </summary>
+		/// <param name="type">The record type.</param>
+		/// <param name="resultData">The DNS record data.</param>
+		/// <param name="recordDataPosition">The position in the DNS record data.</param>
+		/// <returns>The DNS record.</returns>
 		internal static DnsRecordBase Create(RecordType type, byte[] resultData, int recordDataPosition)
 		{
 			switch (type)

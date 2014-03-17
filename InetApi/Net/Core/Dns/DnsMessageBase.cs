@@ -1,18 +1,18 @@
-#region Copyright and License
-// Copyright 2010..2012 Alexander Reinert
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//   http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-#endregion
+/* 
+ * Copyright (C) 2010-2012 Alexander Reinert
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 using System;
 using System.Collections.Generic;
@@ -28,48 +28,64 @@ namespace ARSoft.Tools.Net.Dns
 	/// </summary>
 	public abstract class DnsMessageBase
 	{
+		// Private fields.
+
+		private List<DnsRecordBase> additionalRecords = new List<DnsRecordBase>();
+
+		// Protected fields.
+
 		protected ushort Flags;
 
 		protected internal List<DnsQuestion> Questions = new List<DnsQuestion>();
 		protected internal List<DnsRecordBase> AnswerRecords = new List<DnsRecordBase>();
 		protected internal List<DnsRecordBase> AuthorityRecords = new List<DnsRecordBase>();
 
-		private List<DnsRecordBase> _additionalRecords = new List<DnsRecordBase>();
-
 		/// <summary>
 		///   Gets or sets the entries in the additional records section
 		/// </summary>
 		public List<DnsRecordBase> AdditionalRecords
 		{
-			get { return _additionalRecords; }
-			set { _additionalRecords = (value ?? new List<DnsRecordBase>()); }
+			get { return this.additionalRecords; }
+			set { this.additionalRecords = (value ?? new List<DnsRecordBase>()); }
 		}
 
+		// Internal properties.
+
+		/// <summary>
+		/// Gets whether TCP using is requested.
+		/// </summary>
 		internal abstract bool IsTcpUsingRequested { get; }
+		/// <summary>
+		/// Gets whether TCP resending is requested.
+		/// </summary>
 		internal abstract bool IsTcpResendingRequested { get; }
+		/// <summary>
+		/// Gets whether TCP next message is waiting.
+		/// </summary>
 		internal abstract bool IsTcpNextMessageWaiting { get; }
 
 		#region Header
+
 		/// <summary>
-		///   Gets or sets the transaction identifier (ID) of the message
+		/// Gets or sets the transaction identifier (ID) of the message.
 		/// </summary>
 		public ushort TransactionID { get; set; }
 
 		/// <summary>
-		///   Gets or sets the query (QR) flag
+		/// Gets or sets the query (QR) flag.
 		/// </summary>
 		public bool IsQuery
 		{
-			get { return (Flags & 0x8000) == 0; }
+			get { return (this.Flags & 0x8000) == 0; }
 			set
 			{
 				if (value)
 				{
-					Flags &= 0x7fff;
+					this.Flags &= 0x7fff;
 				}
 				else
 				{
-					Flags |= 0x8000;
+					this.Flags |= 0x8000;
 				}
 			}
 		}
@@ -79,11 +95,11 @@ namespace ARSoft.Tools.Net.Dns
 		/// </summary>
 		public OperationCode OperationCode
 		{
-			get { return (OperationCode) ((Flags & 0x7800) >> 11); }
+			get { return (OperationCode) ((this.Flags & 0x7800) >> 11); }
 			set
 			{
-				ushort clearedOp = (ushort) (Flags & 0x8700);
-				Flags = (ushort) (clearedOp | (ushort) value << 11);
+				ushort clearedOp = (ushort) (this.Flags & 0x8700);
+				this.Flags = (ushort) (clearedOp | (ushort) value << 11);
 			}
 		}
 
@@ -96,7 +112,7 @@ namespace ARSoft.Tools.Net.Dns
 			{
 				ReturnCode rcode = (ReturnCode) (Flags & 0x000f);
 
-				OptRecord ednsOptions = EDnsOptions;
+				OptRecord ednsOptions = this.EDnsOptions;
 				if (ednsOptions == null)
 				{
 					return rcode;
@@ -108,7 +124,7 @@ namespace ARSoft.Tools.Net.Dns
 			}
 			set
 			{
-				OptRecord ednsOptions = EDnsOptions;
+				OptRecord ednsOptions = this.EDnsOptions;
 
 				if ((ushort) value > 15)
 				{
@@ -130,12 +146,14 @@ namespace ARSoft.Tools.Net.Dns
 				}
 
 				ushort clearedOp = (ushort) (Flags & 0xfff0);
-				Flags = (ushort) (clearedOp | ((ushort) value & 0x0f));
+				this.Flags = (ushort) (clearedOp | ((ushort) value & 0x0f));
 			}
 		}
+
 		#endregion
 
 		#region EDNS
+
 		/// <summary>
 		///   Enables or disables EDNS
 		/// </summary>
@@ -143,9 +161,9 @@ namespace ARSoft.Tools.Net.Dns
 		{
 			get
 			{
-				if (_additionalRecords != null)
+				if (this.additionalRecords != null)
 				{
-					return _additionalRecords.Any(record => (record.RecordType == RecordType.Opt));
+					return this.additionalRecords.Any(record => (record.RecordType == RecordType.Opt));
 				}
 				else
 				{
@@ -154,17 +172,17 @@ namespace ARSoft.Tools.Net.Dns
 			}
 			set
 			{
-				if (value && !IsEDnsEnabled)
+				if (value && !this.IsEDnsEnabled)
 				{
-					if (_additionalRecords == null)
+					if (this.additionalRecords == null)
 					{
-						_additionalRecords = new List<DnsRecordBase>();
+						this.additionalRecords = new List<DnsRecordBase>();
 					}
-					_additionalRecords.Add(new OptRecord());
+					this.additionalRecords.Add(new OptRecord());
 				}
-				else if (!value && IsEDnsEnabled)
+				else if (!value && this.IsEDnsEnabled)
 				{
-					_additionalRecords.RemoveAll(record => (record.RecordType == RecordType.Opt));
+					this.additionalRecords.RemoveAll(record => (record.RecordType == RecordType.Opt));
 				}
 			}
 		}
@@ -176,9 +194,9 @@ namespace ARSoft.Tools.Net.Dns
 		{
 			get
 			{
-				if (_additionalRecords != null)
+				if (this.additionalRecords != null)
 				{
-					return (OptRecord) _additionalRecords.Find(record => (record.RecordType == RecordType.Opt));
+					return (OptRecord)this.additionalRecords.Find(record => (record.RecordType == RecordType.Opt));
 				}
 				else
 				{
@@ -189,41 +207,38 @@ namespace ARSoft.Tools.Net.Dns
 			{
 				if (value == null)
 				{
-					IsEDnsEnabled = false;
+					this.IsEDnsEnabled = false;
 				}
-				else if (IsEDnsEnabled)
+				else if (this.IsEDnsEnabled)
 				{
-					int pos = _additionalRecords.FindIndex(record => (record.RecordType == RecordType.Opt));
-					_additionalRecords[pos] = value;
+					int pos = this.additionalRecords.FindIndex(record => (record.RecordType == RecordType.Opt));
+					this.additionalRecords[pos] = value;
 				}
 				else
 				{
-					if (_additionalRecords == null)
+					if (this.additionalRecords == null)
 					{
-						_additionalRecords = new List<DnsRecordBase>();
+						this.additionalRecords = new List<DnsRecordBase>();
 					}
-					_additionalRecords.Add(value);
+					this.additionalRecords.Add(value);
 				}
 			}
 		}
 
 		/// <summary>
-		///   <para>Gets or sets the DNSSEC answer OK (DO) flag</para> <para>Defined in
-		///                                                              <see cref="!:http://tools.ietf.org/html/rfc4035">RFC 4035</see>
-		///                                                              and
-		///                                                              <see cref="!:http://tools.ietf.org/html/rfc3225">RFC 3225</see>
-		///                                                            </para>
+		/// <para>Gets or sets the DNSSEC answer OK (DO) flag.</para>
+		/// <para>Defined in <see cref="http://tools.ietf.org/html/rfc4035">RFC 4035</see> and <see cref="http://tools.ietf.org/html/rfc3225">RFC 3225</see>.</para>
 		/// </summary>
 		public bool IsDnsSecOk
 		{
 			get
 			{
-				OptRecord ednsOptions = EDnsOptions;
+				OptRecord ednsOptions = this.EDnsOptions;
 				return (ednsOptions != null) && ednsOptions.IsDnsSecOk;
 			}
 			set
 			{
-				OptRecord ednsOptions = EDnsOptions;
+				OptRecord ednsOptions = this.EDnsOptions;
 				if (ednsOptions == null)
 				{
 					if (value)
@@ -237,18 +252,28 @@ namespace ARSoft.Tools.Net.Dns
 				}
 			}
 		}
+
 		#endregion
 
 		#region TSig
+
 		/// <summary>
-		///   Gets or set the TSigRecord for the tsig signed messages
+		/// Gets or set the TSigRecord for the tsig signed messages.
 		/// </summary>
 		public TSigRecord TSigOptions { get; set; }
 
+		/// <summary>
+		/// Creates a DNS message.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="isRequest">If <b>true</b> the message is a request.</param>
+		/// <param name="tsigKeySelector">The transaction signature key selector.</param>
+		/// <param name="originalMac">The original MAC.</param>
+		/// <returns>The DNS message.</returns>
 		internal static DnsMessageBase Create(byte[] resultData, bool isRequest, DnsServer.SelectTsigKey tsigKeySelector, byte[] originalMac)
 		{
 			int flagPosition = 2;
-			ushort flags = ParseUShort(resultData, ref flagPosition);
+			ushort flags = DnsMessageBase.ParseUShort(resultData, ref flagPosition);
 
 			DnsMessageBase res;
 
@@ -268,61 +293,75 @@ namespace ARSoft.Tools.Net.Dns
 			return res;
 		}
 
+		/// <summary>
+		/// Parses byte array data into a DNS message.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="isRequest">If <b>true</b> the message is a request.</param>
+		/// <param name="tsigKeySelector">The transaction signature key selector.</param>
+		/// <param name="originalMac">The original MAC.</param>
 		internal void Parse(byte[] resultData, bool isRequest, DnsServer.SelectTsigKey tsigKeySelector, byte[] originalMac)
 		{
 			int currentPosition = 0;
 
-			TransactionID = ParseUShort(resultData, ref currentPosition);
-			Flags = ParseUShort(resultData, ref currentPosition);
+			this.TransactionID = DnsMessageBase.ParseUShort(resultData, ref currentPosition);
+			this.Flags = DnsMessageBase.ParseUShort(resultData, ref currentPosition);
 
-			int questionCount = ParseUShort(resultData, ref currentPosition);
-			int answerRecordCount = ParseUShort(resultData, ref currentPosition);
-			int authorityRecordCount = ParseUShort(resultData, ref currentPosition);
-			int additionalRecordCount = ParseUShort(resultData, ref currentPosition);
+			int questionCount = DnsMessageBase.ParseUShort(resultData, ref currentPosition);
+			int answerRecordCount = DnsMessageBase.ParseUShort(resultData, ref currentPosition);
+			int authorityRecordCount = DnsMessageBase.ParseUShort(resultData, ref currentPosition);
+			int additionalRecordCount = DnsMessageBase.ParseUShort(resultData, ref currentPosition);
 
-			ParseQuestions(resultData, ref currentPosition, questionCount);
-			ParseSection(resultData, ref currentPosition, AnswerRecords, answerRecordCount);
-			ParseSection(resultData, ref currentPosition, AuthorityRecords, authorityRecordCount);
-			ParseSection(resultData, ref currentPosition, _additionalRecords, additionalRecordCount);
+			this.ParseQuestions(resultData, ref currentPosition, questionCount);
+			DnsMessageBase.ParseSection(resultData, ref currentPosition, AnswerRecords, answerRecordCount);
+			DnsMessageBase.ParseSection(resultData, ref currentPosition, AuthorityRecords, authorityRecordCount);
+			DnsMessageBase.ParseSection(resultData, ref currentPosition, this.additionalRecords, additionalRecordCount);
 
-			if (_additionalRecords.Count > 0)
+			if (this.additionalRecords.Count > 0)
 			{
-				int tSigPos = _additionalRecords.FindIndex(record => (record.RecordType == RecordType.TSig));
-				if (tSigPos == (_additionalRecords.Count - 1))
+				int tSigPos = this.additionalRecords.FindIndex(record => (record.RecordType == RecordType.TSig));
+				if (tSigPos == (this.additionalRecords.Count - 1))
 				{
-					TSigOptions = (TSigRecord) _additionalRecords[tSigPos];
+					this.TSigOptions = (TSigRecord)this.additionalRecords[tSigPos];
 
-					_additionalRecords.RemoveAt(tSigPos);
+					this.additionalRecords.RemoveAt(tSigPos);
 
-					TSigOptions.ValidationResult = ValidateTSig(resultData, tsigKeySelector, originalMac);
+					this.TSigOptions.ValidationResult = this.ValidateTSig(resultData, tsigKeySelector, originalMac);
 				}
 			}
 
-			FinishParsing();
+			this.FinishParsing();
 		}
 
+		/// <summary>
+		/// Validates the transaction signature.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="tsigKeySelector">The transaction signature key selector.</param>
+		/// <param name="originalMac"></param>
+		/// <returns>The original MAC.</returns>
 		private ReturnCode ValidateTSig(byte[] resultData, DnsServer.SelectTsigKey tsigKeySelector, byte[] originalMac)
 		{
 			byte[] keyData;
-			if ((TSigOptions.Algorithm == TSigAlgorithm.Unknown) || (tsigKeySelector == null) || ((keyData = tsigKeySelector(TSigOptions.Algorithm, TSigOptions.Name)) == null))
+			if ((this.TSigOptions.Algorithm == TSigAlgorithm.Unknown) || (tsigKeySelector == null) || ((keyData = tsigKeySelector(this.TSigOptions.Algorithm, this.TSigOptions.Name)) == null))
 			{
 				return ReturnCode.BadKey;
 			}
-			else if (((TSigOptions.TimeSigned - TSigOptions.Fudge) > DateTime.Now) || ((TSigOptions.TimeSigned + TSigOptions.Fudge) < DateTime.Now))
+			else if (((this.TSigOptions.TimeSigned - this.TSigOptions.Fudge) > DateTime.Now) || ((this.TSigOptions.TimeSigned + this.TSigOptions.Fudge) < DateTime.Now))
 			{
 				return ReturnCode.BadTime;
 			}
-			else if ((TSigOptions.Mac == null) || (TSigOptions.Mac.Length == 0))
+			else if ((this.TSigOptions.Mac == null) || (this.TSigOptions.Mac.Length == 0))
 			{
 				return ReturnCode.BadSig;
 			}
 			else
 			{
-				TSigOptions.KeyData = keyData;
+				this.TSigOptions.KeyData = keyData;
 
 				// maxLength for the buffer to validate: Original (unsigned) dns message and encoded TSigOptions
 				// because of compression of keyname, the size of the signed message can not be used
-				int maxLength = TSigOptions.StartPosition + TSigOptions.MaximumLength;
+				int maxLength = this.TSigOptions.StartPosition + this.TSigOptions.MaximumLength;
 				if (originalMac != null)
 				{
 					// add length of mac on responses. MacSize not neccessary, this field is allready included in the size of the tsig options
@@ -341,57 +380,76 @@ namespace ARSoft.Tools.Net.Dns
 				}
 
 				// original unsiged buffer
-				Buffer.BlockCopy(resultData, 0, validationBuffer, currentPosition, TSigOptions.StartPosition);
+				Buffer.BlockCopy(resultData, 0, validationBuffer, currentPosition, this.TSigOptions.StartPosition);
 
 				// update original transaction id and ar count in message
-				EncodeUShort(validationBuffer, currentPosition, TSigOptions.OriginalID);
-				EncodeUShort(validationBuffer, currentPosition + 10, (ushort) _additionalRecords.Count);
-				currentPosition += TSigOptions.StartPosition;
+				DnsMessageBase.EncodeUShort(validationBuffer, currentPosition, this.TSigOptions.OriginalID);
+				DnsMessageBase.EncodeUShort(validationBuffer, currentPosition + 10, (ushort)this.additionalRecords.Count);
+				currentPosition += this.TSigOptions.StartPosition;
 
 				// TSig Variables
-				EncodeDomainName(validationBuffer, 0, ref currentPosition, TSigOptions.Name, false, null);
-				EncodeUShort(validationBuffer, ref currentPosition, (ushort) TSigOptions.RecordClass);
-				EncodeInt(validationBuffer, ref currentPosition, (ushort) TSigOptions.TimeToLive);
-				EncodeDomainName(validationBuffer, 0, ref currentPosition, TSigAlgorithmHelper.GetDomainName(TSigOptions.Algorithm), false, null);
-				TSigRecord.EncodeDateTime(validationBuffer, ref currentPosition, TSigOptions.TimeSigned);
-				EncodeUShort(validationBuffer, ref currentPosition, (ushort) TSigOptions.Fudge.TotalSeconds);
-				EncodeUShort(validationBuffer, ref currentPosition, (ushort) TSigOptions.Error);
-				EncodeUShort(validationBuffer, ref currentPosition, (ushort) TSigOptions.OtherData.Length);
-				EncodeByteArray(validationBuffer, ref currentPosition, TSigOptions.OtherData);
+				DnsMessageBase.EncodeDomainName(validationBuffer, 0, ref currentPosition, this.TSigOptions.Name, false, null);
+				DnsMessageBase.EncodeUShort(validationBuffer, ref currentPosition, (ushort)this.TSigOptions.RecordClass);
+				DnsMessageBase.EncodeInt(validationBuffer, ref currentPosition, (ushort)this.TSigOptions.TimeToLive);
+				DnsMessageBase.EncodeDomainName(validationBuffer, 0, ref currentPosition, TSigAlgorithmHelper.GetDomainName(this.TSigOptions.Algorithm), false, null);
+				TSigRecord.EncodeDateTime(validationBuffer, ref currentPosition, this.TSigOptions.TimeSigned);
+				DnsMessageBase.EncodeUShort(validationBuffer, ref currentPosition, (ushort)this.TSigOptions.Fudge.TotalSeconds);
+				DnsMessageBase.EncodeUShort(validationBuffer, ref currentPosition, (ushort)this.TSigOptions.Error);
+				DnsMessageBase.EncodeUShort(validationBuffer, ref currentPosition, (ushort)this.TSigOptions.OtherData.Length);
+				DnsMessageBase.EncodeByteArray(validationBuffer, ref currentPosition, this.TSigOptions.OtherData);
 
 				// Validate MAC
-				KeyedHashAlgorithm hashAlgorithm = TSigAlgorithmHelper.GetHashAlgorithm(TSigOptions.Algorithm);
+				KeyedHashAlgorithm hashAlgorithm = TSigAlgorithmHelper.GetHashAlgorithm(this.TSigOptions.Algorithm);
 				hashAlgorithm.Key = keyData;
-				return (hashAlgorithm.ComputeHash(validationBuffer, 0, currentPosition).SequenceEqual(TSigOptions.Mac)) ? ReturnCode.NoError : ReturnCode.BadSig;
+				return (hashAlgorithm.ComputeHash(validationBuffer, 0, currentPosition).SequenceEqual(this.TSigOptions.Mac)) ? ReturnCode.NoError : ReturnCode.BadSig;
 			}
 		}
+
 		#endregion
 
 		#region Parsing
+
+		/// <summary>
+		/// A method called when the parsing of a message has finished.
+		/// </summary>
 		protected virtual void FinishParsing() {}
 
 		#region Methods for parsing answer
+
+		/// <summary>
+		/// Parses an answer message section.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="sectionList">The section list.</param>
+		/// <param name="recordCount">The record count.</param>
 		private static void ParseSection(byte[] resultData, ref int currentPosition, List<DnsRecordBase> sectionList, int recordCount)
 		{
 			for (int i = 0; i < recordCount; i++)
 			{
-				sectionList.Add(ParseRecord(resultData, ref currentPosition));
+				sectionList.Add(DnsMessageBase.ParseRecord(resultData, ref currentPosition));
 			}
 		}
 
+		/// <summary>
+		/// Parses a message record.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <returns>The record.</returns>
 		private static DnsRecordBase ParseRecord(byte[] resultData, ref int currentPosition)
 		{
 			int startPosition = currentPosition;
 
-			string name = ParseDomainName(resultData, ref currentPosition);
-			RecordType recordType = (RecordType) ParseUShort(resultData, ref currentPosition);
+			string name = DnsMessageBase.ParseDomainName(resultData, ref currentPosition);
+			RecordType recordType = (RecordType)DnsMessageBase.ParseUShort(resultData, ref currentPosition);
 			DnsRecordBase record = DnsRecordBase.Create(recordType, resultData, currentPosition + 6);
 			record.StartPosition = startPosition;
 			record.Name = name;
 			record.RecordType = recordType;
-			record.RecordClass = (RecordClass) ParseUShort(resultData, ref currentPosition);
-			record.TimeToLive = ParseInt(resultData, ref currentPosition);
-			record.RecordDataLength = ParseUShort(resultData, ref currentPosition);
+			record.RecordClass = (RecordClass)DnsMessageBase.ParseUShort(resultData, ref currentPosition);
+			record.TimeToLive = DnsMessageBase.ParseInt(resultData, ref currentPosition);
+			record.RecordDataLength = DnsMessageBase.ParseUShort(resultData, ref currentPosition);
 
 			if (record.RecordDataLength > 0)
 			{
@@ -402,6 +460,12 @@ namespace ARSoft.Tools.Net.Dns
 			return record;
 		}
 
+		/// <summary>
+		/// Parses a message questions.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="recordCount">The record count.</param>
 		private void ParseQuestions(byte[] resultData, ref int currentPosition, int recordCount)
 		{
 			for (int i = 0; i < recordCount; i++)
@@ -411,9 +475,17 @@ namespace ARSoft.Tools.Net.Dns
 				Questions.Add(question);
 			}
 		}
+
 		#endregion
 
 		#region Helper methods for parsing records
+
+		/// <summary>
+		/// Parses a text record.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <returns>The text value.</returns>
 		internal static string ParseText(byte[] resultData, ref int currentPosition)
 		{
 			int length = resultData[currentPosition++];
@@ -424,15 +496,27 @@ namespace ARSoft.Tools.Net.Dns
 			return res;
 		}
 
+		/// <summary>
+		/// Parses a domain name record.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <returns>The domain name value.</returns>
 		internal static string ParseDomainName(byte[] resultData, ref int currentPosition)
 		{
 			StringBuilder sb = new StringBuilder();
 
-			ParseDomainName(resultData, ref currentPosition, sb);
+			DnsMessageBase.ParseDomainName(resultData, ref currentPosition, sb);
 
 			return (sb.Length == 0) ? String.Empty : sb.ToString(0, sb.Length - 1);
 		}
 
+		/// <summary>
+		/// Parses an unsigned short value.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <returns>The unsigned short value.</returns>
 		internal static ushort ParseUShort(byte[] resultData, ref int currentPosition)
 		{
 			ushort res;
@@ -449,6 +533,12 @@ namespace ARSoft.Tools.Net.Dns
 			return res;
 		}
 
+		/// <summary>
+		/// Parses an integer value.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <returns>The integer value.</returns>
 		internal static int ParseInt(byte[] resultData, ref int currentPosition)
 		{
 			int res;
@@ -465,6 +555,12 @@ namespace ARSoft.Tools.Net.Dns
 			return res;
 		}
 
+		/// <summary>
+		/// Parses an unsigned integer value.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <returns>The unsigned integer value.</returns>
 		internal static uint ParseUInt(byte[] resultData, ref int currentPosition)
 		{
 			uint res;
@@ -481,6 +577,12 @@ namespace ARSoft.Tools.Net.Dns
 			return res;
 		}
 
+		/// <summary>
+		/// Parses an unsigned long record.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <returns>The unsigned long value.</returns>
 		internal static ulong ParseULong(byte[] resultData, ref int currentPosition)
 		{
 			ulong res;
@@ -497,6 +599,12 @@ namespace ARSoft.Tools.Net.Dns
 			return res;
 		}
 
+		/// <summary>
+		/// Parses a domain name record using the given string builder.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="sb">The string builder.</param>
 		private static void ParseDomainName(byte[] resultData, ref int currentPosition, StringBuilder sb)
 		{
 			while (true)
@@ -552,7 +660,7 @@ namespace ARSoft.Tools.Net.Dns
 				else if (currentByte >= 64)
 				{
 					// extended dns label RFC 2671
-					throw new NotSupportedException("Unsupported extended dns label");
+					throw new NotSupportedException("Unsupported extended DNS label");
 				}
 				else
 				{
@@ -564,6 +672,13 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
+		/// <summary>
+		/// Parses a byte data record.
+		/// </summary>
+		/// <param name="resultData">The result data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="length">The byte data length.</param>
+		/// <returns>The byte data value.</returns>
 		internal static byte[] ParseByteData(byte[] resultData, ref int currentPosition, int length)
 		{
 			if (length == 0)
@@ -578,13 +693,24 @@ namespace ARSoft.Tools.Net.Dns
 				return res;
 			}
 		}
+
 		#endregion
 
 		#endregion
 
 		#region Serializing
+
+		/// <summary>
+		/// A method called when preparing the encoding.
+		/// </summary>
 		protected virtual void PrepareEncoding() {}
 
+		/// <summary>
+		/// Encodes the current message to a message data.
+		/// </summary>
+		/// <param name="addLengthPrefix">If <b>true</b> the message adds the length prefix.</param>
+		/// <param name="messageData">The message data.</param>
+		/// <returns>The current position.</returns>
 		internal int Encode(bool addLengthPrefix, out byte[] messageData)
 		{
 			byte[] newTSigMac;
@@ -592,6 +718,13 @@ namespace ARSoft.Tools.Net.Dns
 			return Encode(addLengthPrefix, null, false, out messageData, out newTSigMac);
 		}
 
+		/// <summary>
+		/// Encodes the current message to a message data.
+		/// </summary>
+		/// <param name="addLengthPrefix">If <b>true</b> the message adds the length prefix.</param>
+		/// <param name="originalTsigMac">The original transaction signature MAC.</param>
+		/// <param name="messageData">The message data.</param>
+		/// <returns>The current position.</returns>
 		internal int Encode(bool addLengthPrefix, byte[] originalTsigMac, out byte[] messageData)
 		{
 			byte[] newTSigMac;
@@ -599,9 +732,18 @@ namespace ARSoft.Tools.Net.Dns
 			return Encode(addLengthPrefix, originalTsigMac, false, out messageData, out newTSigMac);
 		}
 
+		/// <summary>
+		/// Encodes the current message to a message data.
+		/// </summary>
+		/// <param name="addLengthPrefix">If <b>true</b> the message adds the length prefix.</param>
+		/// <param name="originalTsigMac">The original transaction signature MAC.</param>
+		/// <param name="isSubSequentResponse">Indicates whether there exists a subsequent response.</param>
+		/// <param name="messageData">The message data.</param>
+		/// <param name="newTSigMac">The new transaction signature MAC.</param>
+		/// <returns>The current position.</returns>
 		internal int Encode(bool addLengthPrefix, byte[] originalTsigMac, bool isSubSequentResponse, out byte[] messageData, out byte[] newTSigMac)
 		{
-			PrepareEncoding();
+			this.PrepareEncoding();
 
 			int offset = 0;
 			int messageOffset = offset;
@@ -609,7 +751,7 @@ namespace ARSoft.Tools.Net.Dns
 
 			originalTsigMac = originalTsigMac ?? new byte[] { };
 
-			if (TSigOptions != null)
+			if (this.TSigOptions != null)
 			{
 				if (!IsQuery)
 				{
@@ -617,15 +759,15 @@ namespace ARSoft.Tools.Net.Dns
 					maxLength += 2 + originalTsigMac.Length;
 				}
 
-				maxLength += TSigOptions.MaximumLength;
+				maxLength += this.TSigOptions.MaximumLength;
 			}
 
 			#region Get Message Length
 			maxLength += 12;
-			maxLength += Questions.Sum(question => question.MaximumLength);
-			maxLength += AnswerRecords.Sum(record => record.MaximumLength);
-			maxLength += AuthorityRecords.Sum(record => record.MaximumLength);
-			maxLength += _additionalRecords.Sum(record => record.MaximumLength);
+			maxLength += this.Questions.Sum(question => question.MaximumLength);
+			maxLength += this.AnswerRecords.Sum(record => record.MaximumLength);
+			maxLength += this.AuthorityRecords.Sum(record => record.MaximumLength);
+			maxLength += this.additionalRecords.Sum(record => record.MaximumLength);
 			#endregion
 
 			messageData = new byte[maxLength];
@@ -633,12 +775,12 @@ namespace ARSoft.Tools.Net.Dns
 
 			Dictionary<string, ushort> domainNames = new Dictionary<string, ushort>();
 
-			EncodeUShort(messageData, ref currentPosition, TransactionID);
-			EncodeUShort(messageData, ref currentPosition, Flags);
-			EncodeUShort(messageData, ref currentPosition, (ushort) Questions.Count);
-			EncodeUShort(messageData, ref currentPosition, (ushort) AnswerRecords.Count);
-			EncodeUShort(messageData, ref currentPosition, (ushort) AuthorityRecords.Count);
-			EncodeUShort(messageData, ref currentPosition, (ushort) _additionalRecords.Count);
+			DnsMessageBase.EncodeUShort(messageData, ref currentPosition, TransactionID);
+			DnsMessageBase.EncodeUShort(messageData, ref currentPosition, Flags);
+			DnsMessageBase.EncodeUShort(messageData, ref currentPosition, (ushort)Questions.Count);
+			DnsMessageBase.EncodeUShort(messageData, ref currentPosition, (ushort)AnswerRecords.Count);
+			DnsMessageBase.EncodeUShort(messageData, ref currentPosition, (ushort)AuthorityRecords.Count);
+			DnsMessageBase.EncodeUShort(messageData, ref currentPosition, (ushort)this.additionalRecords.Count);
 
 			foreach (DnsQuestion question in Questions)
 			{
@@ -652,12 +794,12 @@ namespace ARSoft.Tools.Net.Dns
 			{
 				record.Encode(messageData, offset, ref currentPosition, domainNames);
 			}
-			foreach (DnsRecordBase record in _additionalRecords)
+			foreach (DnsRecordBase record in this.additionalRecords)
 			{
 				record.Encode(messageData, offset, ref currentPosition, domainNames);
 			}
 
-			if (TSigOptions == null)
+			if (this.TSigOptions == null)
 			{
 				newTSigMac = null;
 			}
@@ -665,37 +807,37 @@ namespace ARSoft.Tools.Net.Dns
 			{
 				if (!IsQuery)
 				{
-					EncodeUShort(messageData, messageOffset, (ushort) originalTsigMac.Length);
+					DnsMessageBase.EncodeUShort(messageData, messageOffset, (ushort)originalTsigMac.Length);
 					Buffer.BlockCopy(originalTsigMac, 0, messageData, messageOffset + 2, originalTsigMac.Length);
 				}
 
-				EncodeUShort(messageData, offset, TSigOptions.OriginalID);
+				DnsMessageBase.EncodeUShort(messageData, offset, this.TSigOptions.OriginalID);
 
 				int tsigVariablesPosition = currentPosition;
 
 				if (isSubSequentResponse)
 				{
-					TSigRecord.EncodeDateTime(messageData, ref tsigVariablesPosition, TSigOptions.TimeSigned);
-					EncodeUShort(messageData, ref tsigVariablesPosition, (ushort) TSigOptions.Fudge.TotalSeconds);
+					TSigRecord.EncodeDateTime(messageData, ref tsigVariablesPosition, this.TSigOptions.TimeSigned);
+					DnsMessageBase.EncodeUShort(messageData, ref tsigVariablesPosition, (ushort)this.TSigOptions.Fudge.TotalSeconds);
 				}
 				else
 				{
-					EncodeDomainName(messageData, offset, ref tsigVariablesPosition, TSigOptions.Name, false, null);
-					EncodeUShort(messageData, ref tsigVariablesPosition, (ushort) TSigOptions.RecordClass);
-					EncodeInt(messageData, ref tsigVariablesPosition, (ushort) TSigOptions.TimeToLive);
-					EncodeDomainName(messageData, offset, ref tsigVariablesPosition, TSigAlgorithmHelper.GetDomainName(TSigOptions.Algorithm), false, null);
-					TSigRecord.EncodeDateTime(messageData, ref tsigVariablesPosition, TSigOptions.TimeSigned);
-					EncodeUShort(messageData, ref tsigVariablesPosition, (ushort) TSigOptions.Fudge.TotalSeconds);
-					EncodeUShort(messageData, ref tsigVariablesPosition, (ushort) TSigOptions.Error);
-					EncodeUShort(messageData, ref tsigVariablesPosition, (ushort) TSigOptions.OtherData.Length);
-					EncodeByteArray(messageData, ref tsigVariablesPosition, TSigOptions.OtherData);
+					DnsMessageBase.EncodeDomainName(messageData, offset, ref tsigVariablesPosition, this.TSigOptions.Name, false, null);
+					DnsMessageBase.EncodeUShort(messageData, ref tsigVariablesPosition, (ushort)this.TSigOptions.RecordClass);
+					DnsMessageBase.EncodeInt(messageData, ref tsigVariablesPosition, (ushort)this.TSigOptions.TimeToLive);
+					DnsMessageBase.EncodeDomainName(messageData, offset, ref tsigVariablesPosition, TSigAlgorithmHelper.GetDomainName(this.TSigOptions.Algorithm), false, null);
+					TSigRecord.EncodeDateTime(messageData, ref tsigVariablesPosition, this.TSigOptions.TimeSigned);
+					DnsMessageBase.EncodeUShort(messageData, ref tsigVariablesPosition, (ushort)this.TSigOptions.Fudge.TotalSeconds);
+					DnsMessageBase.EncodeUShort(messageData, ref tsigVariablesPosition, (ushort)this.TSigOptions.Error);
+					DnsMessageBase.EncodeUShort(messageData, ref tsigVariablesPosition, (ushort)this.TSigOptions.OtherData.Length);
+					DnsMessageBase.EncodeByteArray(messageData, ref tsigVariablesPosition, this.TSigOptions.OtherData);
 				}
 
-				KeyedHashAlgorithm hashAlgorithm = TSigAlgorithmHelper.GetHashAlgorithm(TSigOptions.Algorithm);
+				KeyedHashAlgorithm hashAlgorithm = TSigAlgorithmHelper.GetHashAlgorithm(this.TSigOptions.Algorithm);
 				//byte[] mac;
-				if ((hashAlgorithm != null) && (TSigOptions.KeyData != null) && (TSigOptions.KeyData.Length > 0))
+				if ((hashAlgorithm != null) && (this.TSigOptions.KeyData != null) && (this.TSigOptions.KeyData.Length > 0))
 				{
-					hashAlgorithm.Key = TSigOptions.KeyData;
+					hashAlgorithm.Key = this.TSigOptions.KeyData;
 					newTSigMac = hashAlgorithm.ComputeHash(messageData, messageOffset, tsigVariablesPosition);
 				}
 				else
@@ -703,10 +845,10 @@ namespace ARSoft.Tools.Net.Dns
 					newTSigMac = new byte[] { };
 				}
 
-				EncodeUShort(messageData, offset, TransactionID);
-				EncodeUShort(messageData, offset + 10, (ushort) (_additionalRecords.Count + 1));
+				DnsMessageBase.EncodeUShort(messageData, offset, TransactionID);
+				DnsMessageBase.EncodeUShort(messageData, offset + 10, (ushort)(this.additionalRecords.Count + 1));
 
-				TSigOptions.Encode(messageData, offset, ref currentPosition, domainNames, newTSigMac);
+				this.TSigOptions.Encode(messageData, offset, ref currentPosition, domainNames, newTSigMac);
 
 				if (!IsQuery)
 				{
@@ -718,18 +860,30 @@ namespace ARSoft.Tools.Net.Dns
 			if (addLengthPrefix)
 			{
 				Buffer.BlockCopy(messageData, 0, messageData, 2, currentPosition);
-				EncodeUShort(messageData, 0, (ushort) (currentPosition));
+				DnsMessageBase.EncodeUShort(messageData, 0, (ushort)(currentPosition));
 				currentPosition += 2;
 			}
 
 			return currentPosition;
 		}
 
+		/// <summary>
+		/// Encodes an unsigned short value.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="value">The value.</param>
 		internal static void EncodeUShort(byte[] buffer, int currentPosition, ushort value)
 		{
 			EncodeUShort(buffer, ref currentPosition, value);
 		}
 
+		/// <summary>
+		/// Encodes an unsigned short value.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="value">The value.</param>
 		internal static void EncodeUShort(byte[] buffer, ref int currentPosition, ushort value)
 		{
 			if (BitConverter.IsLittleEndian)
@@ -744,6 +898,12 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
+		/// <summary>
+		/// Encodes an integer value.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="value">The value.</param>
 		internal static void EncodeInt(byte[] buffer, ref int currentPosition, int value)
 		{
 			if (BitConverter.IsLittleEndian)
@@ -762,6 +922,12 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
+		/// <summary>
+		/// Encodes an unsigned integer value.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="value">The value.</param>
 		internal static void EncodeUInt(byte[] buffer, ref int currentPosition, uint value)
 		{
 			if (BitConverter.IsLittleEndian)
@@ -780,20 +946,35 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
+		/// <summary>
+		/// Encodes an unsigned long value.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="value">The value.</param>
 		internal static void EncodeULong(byte[] buffer, ref int currentPosition, ulong value)
 		{
 			if (BitConverter.IsLittleEndian)
 			{
-				EncodeUInt(buffer, ref currentPosition, (uint) ((value >> 32) & 0xffffffff));
-				EncodeUInt(buffer, ref currentPosition, (uint) (value & 0xffffffff));
+				DnsMessageBase.EncodeUInt(buffer, ref currentPosition, (uint) ((value >> 32) & 0xffffffff));
+				DnsMessageBase.EncodeUInt(buffer, ref currentPosition, (uint)(value & 0xffffffff));
 			}
 			else
 			{
-				EncodeUInt(buffer, ref currentPosition, (uint) (value & 0xffffffff));
-				EncodeUInt(buffer, ref currentPosition, (uint) ((value >> 32) & 0xffffffff));
+				DnsMessageBase.EncodeUInt(buffer, ref currentPosition, (uint)(value & 0xffffffff));
+				DnsMessageBase.EncodeUInt(buffer, ref currentPosition, (uint)((value >> 32) & 0xffffffff));
 			}
 		}
 
+		/// <summary>
+		/// Encodes a domain name value.
+		/// </summary>
+		/// <param name="messageData">The buffer.</param>
+		/// <param name="offset">The offset.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="name">The name.</param>
+		/// <param name="isCompressionAllowed">If <b>true</b> compression is allowed.</param>
+		/// <param name="domainNames">The list of domain names.</param>
 		internal static void EncodeDomainName(byte[] messageData, int offset, ref int currentPosition, string name, bool isCompressionAllowed, Dictionary<string, ushort> domainNames)
 		{
 			if (String.IsNullOrEmpty(name) || (name == "."))
@@ -805,7 +986,7 @@ namespace ARSoft.Tools.Net.Dns
 			ushort pointer;
 			if (isCompressionAllowed && domainNames.TryGetValue(name, out pointer))
 			{
-				EncodeUShort(messageData, ref currentPosition, pointer);
+				DnsMessageBase.EncodeUShort(messageData, ref currentPosition, pointer);
 				return;
 			}
 
@@ -817,11 +998,17 @@ namespace ARSoft.Tools.Net.Dns
 				domainNames[name] = (ushort) ((currentPosition | 0xc000) - offset);
 
 			messageData[currentPosition++] = (byte) labelLength;
-			EncodeByteArray(messageData, ref currentPosition, Encoding.ASCII.GetBytes(name.ToCharArray(0, labelLength)));
+			DnsMessageBase.EncodeByteArray(messageData, ref currentPosition, Encoding.ASCII.GetBytes(name.ToCharArray(0, labelLength)));
 
-			EncodeDomainName(messageData, offset, ref currentPosition, labelLength == name.Length ? "." : name.Substring(labelLength + 1), isCompressionAllowed, domainNames);
+			DnsMessageBase.EncodeDomainName(messageData, offset, ref currentPosition, labelLength == name.Length ? "." : name.Substring(labelLength + 1), isCompressionAllowed, domainNames);
 		}
 
+		/// <summary>
+		/// Encodes a text value.
+		/// </summary>
+		/// <param name="messageData">The buffer.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="text">The value.</param>
 		internal static void EncodeText(byte[] messageData, ref int currentPosition, string text)
 		{
 			byte[] textData = Encoding.ASCII.GetBytes(text.ToCharArray());
@@ -836,14 +1023,27 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
+		/// <summary>
+		/// Encodes a byte array value.
+		/// </summary>
+		/// <param name="messageData">The buffer.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="data">The value.</param>
 		internal static void EncodeByteArray(byte[] messageData, ref int currentPosition, byte[] data)
 		{
 			if (data != null)
 			{
-				EncodeByteArray(messageData, ref currentPosition, data, data.Length);
+				DnsMessageBase.EncodeByteArray(messageData, ref currentPosition, data, data.Length);
 			}
 		}
 
+		/// <summary>
+		/// Encodes a byte array value of specified length.
+		/// </summary>
+		/// <param name="messageData">The message data.</param>
+		/// <param name="currentPosition">The current position.</param>
+		/// <param name="data">The value.</param>
+		/// <param name="length">The length.</param>
 		internal static void EncodeByteArray(byte[] messageData, ref int currentPosition, byte[] data, int length)
 		{
 			if ((data != null) && (length > 0))
@@ -852,6 +1052,7 @@ namespace ARSoft.Tools.Net.Dns
 				currentPosition += length;
 			}
 		}
+
 		#endregion
 	}
 }
