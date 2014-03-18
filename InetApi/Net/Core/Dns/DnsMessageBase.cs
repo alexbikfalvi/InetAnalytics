@@ -28,17 +28,19 @@ namespace ARSoft.Tools.Net.Dns
 	/// </summary>
 	public abstract class DnsMessageBase
 	{
-		// Private fields.
-
 		private List<DnsRecordBase> additionalRecords = new List<DnsRecordBase>();
 
-		// Protected fields.
+		#region Protected fields
 
 		protected ushort Flags;
 
 		protected internal List<DnsQuestion> Questions = new List<DnsQuestion>();
 		protected internal List<DnsRecordBase> AnswerRecords = new List<DnsRecordBase>();
 		protected internal List<DnsRecordBase> AuthorityRecords = new List<DnsRecordBase>();
+
+		#endregion
+
+		#region Public properties
 
 		/// <summary>
 		///   Gets or sets the entries in the additional records section
@@ -49,7 +51,9 @@ namespace ARSoft.Tools.Net.Dns
 			set { this.additionalRecords = (value ?? new List<DnsRecordBase>()); }
 		}
 
-		// Internal properties.
+		#endregion
+
+		#region Internal properties
 
 		/// <summary>
 		/// Gets whether TCP using is requested.
@@ -63,6 +67,8 @@ namespace ARSoft.Tools.Net.Dns
 		/// Gets whether TCP next message is waiting.
 		/// </summary>
 		internal abstract bool IsTcpNextMessageWaiting { get; }
+
+		#endregion
 
 		#region Header
 

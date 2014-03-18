@@ -30,6 +30,8 @@ namespace ARSoft.Tools.Net.Dns
 	/// <typeparam name="TMessage">The message type.</typeparam>
 	internal class DnsClientAsyncState<TMessage> : IAsyncResult where TMessage : DnsMessageBase
 	{
+		// Internal fields.
+
 		internal List<DnsClientEndpointInfo> EndpointInfos;
 		internal int EndpointInfoIndex;
 
@@ -46,18 +48,6 @@ namespace ARSoft.Tools.Net.Dns
 		internal Timer Timer;
 		internal bool TimedOut;
 
-		private long _timeOutUtcTicks;
-
-		internal long TimeRemaining
-		{
-			get
-			{
-				long res = (_timeOutUtcTicks - DateTime.UtcNow.Ticks) / TimeSpan.TicksPerMillisecond;
-				return res > 0 ? res : 0;
-			}
-			set { _timeOutUtcTicks = DateTime.UtcNow.Ticks + value * TimeSpan.TicksPerMillisecond; }
-		}
-
 		internal System.Net.Sockets.Socket UdpClient;
 		internal EndPoint UdpEndpoint;
 
@@ -68,54 +58,94 @@ namespace ARSoft.Tools.Net.Dns
 		internal int TcpBytesToReceive;
 
 		internal AsyncCallback UserCallback;
-		public object AsyncState { get; internal set; }
-		public bool IsCompleted { get; private set; }
 
+		// Private fields.
+
+		private long timeOutUtcTicks;
+
+		private ManualResetEvent waitHandle;
+
+		// Internal properties.
+
+		/// <summary>
+		/// Gets or sets the time remaining for the asynchronous operation.
+		/// </summary>
+		internal long TimeRemaining
+		{
+			get
+			{
+				long res = (this.timeOutUtcTicks - DateTime.UtcNow.Ticks) / TimeSpan.TicksPerMillisecond;
+				return res > 0 ? res : 0;
+			}
+			set { this.timeOutUtcTicks = DateTime.UtcNow.Ticks + value * TimeSpan.TicksPerMillisecond; }
+		}
+		/// <summary>
+		/// Gets the asynchronous user state.
+		/// </summary>
+		public object AsyncState { get; internal set; }
+		/// <summary>
+		/// Gets whether the asynchronous operation is completed.
+		/// </summary>
+		public bool IsCompleted { get; private set; }
+		/// <summary>
+		/// Gets whether the asynchronous operation completed synchronously.
+		/// </summary>
 		public bool CompletedSynchronously
 		{
 			get { return false; }
 		}
-
-		private ManualResetEvent _waitHandle;
-
+		/// <summary>
+		/// Gets the wait handle of the asynchronous operation.
+		/// </summary>
 		public WaitHandle AsyncWaitHandle
 		{
-			get { return _waitHandle ?? (_waitHandle = new ManualResetEvent(IsCompleted)); }
+			get { return this.waitHandle ?? (this.waitHandle = new ManualResetEvent(this.IsCompleted)); }
 		}
 
-		internal void SetCompleted()
-		{
-			QueryData = null;
+		// Public methods.
 
-			if (Timer != null)
-			{
-				Timer.Dispose();
-				Timer = null;
-			}
-
-			IsCompleted = true;
-			if (_waitHandle != null)
-				_waitHandle.Set();
-
-			if (UserCallback != null)
-				UserCallback(this);
-		}
-
+		/// <summary>
+		/// Creates a clone of the asynchronous state without the callback.
+		/// </summary>
+		/// <returns>The clone object.</returns>
 		public DnsClientAsyncState<TMessage> CreateTcpCloneWithoutCallback()
 		{
-			return
-				new DnsClientAsyncState<TMessage>
+			return new DnsClientAsyncState<TMessage>
 				{
-					EndpointInfos = EndpointInfos,
-					EndpointInfoIndex = EndpointInfoIndex,
-					Query = Query,
-					QueryData = QueryData,
-					QueryLength = QueryLength,
-					TSigKeySelector = TSigKeySelector,
-					TSigOriginalMac = TSigOriginalMac,
-					Responses = Responses,
-					_timeOutUtcTicks = _timeOutUtcTicks
+					EndpointInfos = this.EndpointInfos,
+					EndpointInfoIndex = this.EndpointInfoIndex,
+					Query = this.Query,
+					QueryData = this.QueryData,
+					QueryLength = this.QueryLength,
+					TSigKeySelector = this.TSigKeySelector,
+					TSigOriginalMac = this.TSigOriginalMac,
+					Responses = this.Responses,
+					timeOutUtcTicks = this.timeOutUtcTicks
 				};
+		}
+
+		// Internal methods.
+
+		/// <summary>
+		/// Completes the asynchronous operation.
+		/// </summary>
+		internal void SetCompleted()
+		{
+			this.QueryData = null;
+
+			if (this.Timer != null)
+			{
+				this.Timer.Dispose();
+				this.Timer = null;
+			}
+
+			this.IsCompleted = true;
+			
+			if (this.waitHandle != null)
+				this.waitHandle.Set();
+
+			if (this.UserCallback != null)
+				this.UserCallback(this);
 		}
 	}
 }

@@ -26,12 +26,12 @@ using ARSoft.Tools.Net.Dns.DynamicUpdate;
 namespace ARSoft.Tools.Net.Dns
 {
 	/// <summary>
-	/// Provides a client for querying DNS records
+	/// Provides a client for querying DNS records.
 	/// </summary>
 	public class DnsClient : DnsClientBase
 	{
 		/// <summary>
-		/// Returns a default instance of the DnsClient, which uses the configured DNS servers of the executing computer and a query timeout of 10 seconds.
+		/// Returns a default instance of the DNS client, which uses the configured DNS servers of the executing computer and a query timeout of 10 seconds.
 		/// </summary>
 		public static DnsClient Default { get; private set; }
 
@@ -129,7 +129,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <returns> An <see cref="System.IAsyncResult" /> IAsyncResult object that references the asynchronous receive. </returns>
 		public IAsyncResult BeginResolve(string name, AsyncCallback requestCallback, object state)
 		{
-			return BeginResolve(name, RecordType.A, RecordClass.INet, requestCallback, state);
+			return this.BeginResolve(name, RecordType.A, RecordClass.INet, requestCallback, state);
 		}
 
 		/// <summary>
@@ -143,7 +143,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <returns> An <see cref="System.IAsyncResult" /> IAsyncResult object that references the asynchronous receive. </returns>
 		public IAsyncResult BeginResolve(string name, RecordType recordType, AsyncCallback requestCallback, object state)
 		{
-			return BeginResolve(name, recordType, RecordClass.INet, requestCallback, state);
+			return this.BeginResolve(name, recordType, RecordClass.INet, requestCallback, state);
 		}
 
 		/// <summary>
@@ -166,18 +166,17 @@ namespace ARSoft.Tools.Net.Dns
 			DnsMessage message = new DnsMessage() { IsQuery = true, OperationCode = OperationCode.Query, IsRecursionDesired = true };
 			message.Questions.Add(new DnsQuestion(name, recordType, recordClass));
 
-			return BeginSendMessage(message, requestCallback, state);
+			return this.BeginSendMessage(message, requestCallback, state);
 		}
 
 		/// <summary>
 		/// Ends a pending asynchronous operation.
 		/// </summary>
-		/// <param name="ar"> An <see cref="System.IAsyncResult" /> object returned by a call to <see
-		///  cref="ARSoft.Tools.Net.Dns.DnsClient.BeginResolve" /> . </param>
+		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="ARSoft.Tools.Net.Dns.DnsClient.BeginResolve" />.</param>
 		/// <returns> The complete response of the DNS server </returns>
-		public DnsMessage EndResolve(IAsyncResult ar)
+		public DnsMessage EndResolve(IAsyncResult asyncResult)
 		{
-			return EndSendMessage<DnsMessage>(ar).FirstOrDefault();
+			return this.EndSendMessage<DnsMessage>(asyncResult).FirstOrDefault();
 		}
 
 		/// <summary>
@@ -193,7 +192,7 @@ namespace ARSoft.Tools.Net.Dns
 			if ((message.Questions == null) || (message.Questions.Count == 0))
 				throw new ArgumentException("At least one question must be provided", "message");
 
-			return SendMessage<DnsMessage>(message);
+			return this.SendMessage<DnsMessage>(message);
 		}
 
 		/// <summary>
@@ -209,7 +208,7 @@ namespace ARSoft.Tools.Net.Dns
 			if (String.IsNullOrEmpty(message.ZoneName))
 				throw new ArgumentException("Zone name must be provided", "message");
 
-			return SendMessage(message);
+			return this.SendMessage(message);
 		}
 
 		/// <summary>
@@ -228,7 +227,7 @@ namespace ARSoft.Tools.Net.Dns
 			if ((message.Questions == null) || (message.Questions.Count == 0))
 				throw new ArgumentException("At least one question must be provided", "message");
 
-			return BeginSendMessage<DnsMessage>(message, requestCallback, state);
+			return this.BeginSendMessage<DnsMessage>(message, requestCallback, state);
 		}
 
 		/// <summary>
@@ -247,29 +246,27 @@ namespace ARSoft.Tools.Net.Dns
 			if (String.IsNullOrEmpty(message.ZoneName))
 				throw new ArgumentException("Zone name must be provided", "message");
 
-			return BeginSendMessage(message, requestCallback, state);
+			return this.BeginSendMessage(message, requestCallback, state);
 		}
 
 		/// <summary>
 		/// Ends a pending asynchronous operation.
 		/// </summary>
-		/// <param name="ar"> An <see cref="System.IAsyncResult" /> object returned by a call to <see
-		///  cref="ARSoft.Tools.Net.Dns.DnsClient.BeginSendMessage" /> . </param>
+		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="ARSoft.Tools.Net.Dns.DnsClient.BeginSendMessage" />.</param>
 		/// <returns> The complete response of the DNS server </returns>
-		public DnsMessage EndSendMessage(IAsyncResult ar)
+		public DnsMessage EndSendMessage(IAsyncResult asyncResult)
 		{
-			return EndSendMessage<DnsMessage>(ar).FirstOrDefault();
+			return this.EndSendMessage<DnsMessage>(asyncResult).FirstOrDefault();
 		}
 
 		/// <summary>
 		/// Ends a pending asynchronous operation.
 		/// </summary>
-		/// <param name="ar"> An <see cref="System.IAsyncResult" /> object returned by a call to <see
-		///  cref="ARSoft.Tools.Net.Dns.DnsClient.BeginSendUpdate" /> . </param>
+		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="ARSoft.Tools.Net.Dns.DnsClient.BeginSendUpdate" />.</param>
 		/// <returns> The complete response of the DNS server </returns>
-		public DnsUpdateMessage EndSendUpdate(IAsyncResult ar)
+		public DnsUpdateMessage EndSendUpdate(IAsyncResult asyncResult)
 		{
-			return EndSendMessage<DnsUpdateMessage>(ar).FirstOrDefault();
+			return this.EndSendMessage<DnsUpdateMessage>(asyncResult).FirstOrDefault();
 		}
 
 		// Private methods.

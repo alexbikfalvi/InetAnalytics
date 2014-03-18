@@ -26,34 +26,53 @@ namespace ARSoft.Tools.Net.Dns
 	/// <typeparam name="TMessage">The message type.</typeparam>
 	internal class DnsClientParallelAsyncState<TMessage> : IAsyncResult where TMessage : DnsMessageBase
 	{
+		private ManualResetEvent waitHandle;
+
+		// Internal fields.
+
 		internal int ResponsesToReceive;
 		internal List<TMessage> Responses;
-
 		internal AsyncCallback UserCallback;
-		public object AsyncState { get; internal set; }
-		public bool IsCompleted { get; private set; }
 
+		// Public properties.
+
+		/// <summary>
+		/// Gets the asynchronous user state.
+		/// </summary>
+		public object AsyncState { get; internal set; }
+		/// <summary>
+		/// Gets whether the asynchronous operation is completed.
+		/// </summary>
+		public bool IsCompleted { get; private set; }
+		/// <summary>
+		/// Gets whether the asynchronous operation completed successfully.
+		/// </summary>
 		public bool CompletedSynchronously
 		{
 			get { return false; }
 		}
-
-		private ManualResetEvent _waitHandle;
-
+		/// <summary>
+		/// Gets the wait handle of the asynchronous operation.
+		/// </summary>
 		public WaitHandle AsyncWaitHandle
 		{
-			get { return _waitHandle ?? (_waitHandle = new ManualResetEvent(IsCompleted)); }
+			get { return this.waitHandle ?? (this.waitHandle = new ManualResetEvent(this.IsCompleted)); }
 		}
 
+		// Public methods.
+
+		/// <summary>
+		/// Completes the asynchronous operation.
+		/// </summary>
 		internal void SetCompleted()
 		{
-			IsCompleted = true;
+			this.IsCompleted = true;
 
-			if (_waitHandle != null)
-				_waitHandle.Set();
+			if (this.waitHandle != null)
+				this.waitHandle.Set();
 
-			if (UserCallback != null)
-				UserCallback(this);
+			if (this.UserCallback != null)
+				this.UserCallback(this);
 		}
 	}
 }

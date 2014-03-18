@@ -23,6 +23,8 @@ namespace ARSoft.Tools.Net.Dns
 	/// </summary>
 	internal class DnsClientEndpointInfo
 	{
+		// Public fields.
+
 		public bool IsMulticast;
 		public IPAddress LocalAddress;
 		public IPAddress ServerAddress;

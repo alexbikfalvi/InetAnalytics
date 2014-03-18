@@ -135,6 +135,7 @@
     <Compile Include="Net\Information\IPAddressInformation.cs" />
     <Compile Include="Net\Information\IPUnicastAddressInformation.cs" />
     <Compile Include="Net\NetworkInterfaceEx.cs" />
+    <Compile Include="Net\Socket\UdpListener.cs" />
     <Compile Include="YouTube\Ajax\AjaxException.cs" />
     <Compile Include="YouTube\Ajax\AjaxHistory.cs" />
     <Compile Include="YouTube\Ajax\AjaxParsingException.cs" />

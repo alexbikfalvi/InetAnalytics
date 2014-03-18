@@ -1,38 +1,41 @@
-﻿#region Copyright and License
-// Copyright 2010..2012 Alexander Reinert
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//   http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-#endregion
+﻿/* 
+ * Copyright (C) 2010-2012 Alexander Reinert
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using ARSoft.Tools.Net.Socket;
 
 namespace ARSoft.Tools.Net.Dns
 {
 	/// <summary>
-	///   Provides a base dns server interface
+	/// Provides a base DNS server interface.
 	/// </summary>
 	public class DnsServer : IDisposable
 	{
-		private class MyState
+		/// <summary>
+		/// The server state.
+		/// </summary>
+		private class ServerState
 		{
+			#region Public fields
+
 			public IAsyncResult AsyncResult;
 			public TcpClient Client;
 			public NetworkStream Stream;
@@ -42,173 +45,222 @@ namespace ARSoft.Tools.Net.Dns
 			public int BytesToReceive;
 			public Timer Timer;
 
-			private long _timeOutUtcTicks;
+			#endregion
 
+			private long timeOutUtcTicks;
+
+			#region Public properties
+
+			/// <summary>
+			/// Gets or sets the remaining time.
+			/// </summary>
 			public long TimeRemaining
 			{
 				get
 				{
-					long res = (_timeOutUtcTicks - DateTime.UtcNow.Ticks) / TimeSpan.TicksPerMillisecond;
+					long res = (this.timeOutUtcTicks - DateTime.UtcNow.Ticks) / TimeSpan.TicksPerMillisecond;
 					return res > 0 ? res : 0;
 				}
-				set { _timeOutUtcTicks = DateTime.UtcNow.Ticks + value * TimeSpan.TicksPerMillisecond; }
+				set { this.timeOutUtcTicks = DateTime.UtcNow.Ticks + value * TimeSpan.TicksPerMillisecond; }
 			}
+
+			#endregion
 		}
 
 		/// <summary>
-		///   Represents the method, that will be called to get the response for a specific dns query
+		/// Represents the method, that will be called to get the response for a specific DNS query.
 		/// </summary>
-		/// <param name="query"> The query, for that a response should be returned </param>
-		/// <param name="clientAddress"> The ip address from which the queries comes </param>
-		/// <param name="protocolType"> The protocol which was used for the query </param>
-		/// <returns> A DnsMessage with the response to the query </returns>
+		/// <param name="query">The query, for that a response should be returned.</param>
+		/// <param name="clientAddress">The IP address from which the queries comes.</param>
+		/// <param name="protocolType">The protocol which was used for the query.</param>
+		/// <returns> A DNS message with the response to the query.</returns>
 		public delegate DnsMessageBase ProcessQuery(DnsMessageBase query, IPAddress clientAddress, ProtocolType protocolType);
 
 		/// <summary>
-		///   Represents the method, that will be called to get the keydata for processing a tsig signed message
+		/// Represents the method, that will be called to get the keydata for processing a TSIG signed message
 		/// </summary>
-		/// <param name="algorithm"> The algorithm which is used in the message </param>
-		/// <param name="keyName"> The keyname which is used in the message </param>
-		/// <returns> Binary representation of the key </returns>
+		/// <param name="algorithm"> The algorithm which is used in the message.</param>
+		/// <param name="keyName"> The keyname which is used in the message.</param>
+		/// <returns> Binary representation of the key.</returns>
 		public delegate byte[] SelectTsigKey(TSigAlgorithm algorithm, string keyName);
 
-		private const int _DNS_PORT = 53;
+		private const int dnsPort = 53;
 
-		private TcpListener _tcpListener;
-		private UdpListener _udpListener;
-		private readonly IPEndPoint _bindEndPoint;
+		private TcpListener tcpListener;
+		private UdpListener udpListener;
+		private readonly IPEndPoint bindEndPoint;
 
-		private readonly int _udpListenerCount;
-		private readonly int _tcpListenerCount;
+		private readonly int udpListenerCount;
+		private readonly int tcpListenerCount;
 
-		private int _availableUdpListener;
-		private bool _hasActiveUdpListener;
+		private int availableUdpListener;
+		private bool hasActiveUdpListener;
 
-		private int _availableTcpListener;
-		private bool _hasActiveTcpListener;
+		private int availableTcpListener;
+		private bool hasActiveTcpListener;
 
-		private readonly ProcessQuery _processQueryDelegate;
-
-		/// <summary>
-		///   Method that will be called to get the keydata for processing a tsig signed message
-		/// </summary>
-		public SelectTsigKey TsigKeySelector;
+		private readonly ProcessQuery processQueryDelegate;
 
 		/// <summary>
-		///   Gets or sets the timeout for sending and receiving data
+		/// Creates a new DNS server instance which will listen on all available interfaces.
 		/// </summary>
-		public int Timeout { get; set; }
-
-		/// <summary>
-		///   Creates a new dns server instance which will listen on all available interfaces
-		/// </summary>
-		/// <param name="udpListenerCount"> The count of threads listings on udp, 0 to deactivate udp </param>
-		/// <param name="tcpListenerCount"> The count of threads listings on tcp, 0 to deactivate tcp </param>
-		/// <param name="processQuery"> Method, which process the queries and returns the response </param>
+		/// <param name="udpListenerCount">The count of threads listings on udp, 0 to deactivate udp.</param>
+		/// <param name="tcpListenerCount">The count of threads listings on tcp, 0 to deactivate tcp.</param>
+		/// <param name="processQuery">Method, which process the queries and returns the response.</param>
 		public DnsServer(int udpListenerCount, int tcpListenerCount, ProcessQuery processQuery)
 			: this(IPAddress.Any, udpListenerCount, tcpListenerCount, processQuery) {}
 
 		/// <summary>
-		///   Creates a new dns server instance
+		/// Creates a new DNS server instance.
 		/// </summary>
-		/// <param name="bindAddress"> The address, on which should be listend </param>
-		/// <param name="udpListenerCount"> The count of threads listings on udp, 0 to deactivate udp </param>
-		/// <param name="tcpListenerCount"> The count of threads listings on tcp, 0 to deactivate tcp </param>
-		/// <param name="processQuery"> Method, which process the queries and returns the response </param>
+		/// <param name="bindAddress">The address, on which should be listend.</param>
+		/// <param name="udpListenerCount">The count of threads listings on udp, 0 to deactivate udp.</param>
+		/// <param name="tcpListenerCount">The count of threads listings on tcp, 0 to deactivate tcp.</param>
+		/// <param name="processQuery"> Method, which process the queries and returns the response.</param>
 		public DnsServer(IPAddress bindAddress, int udpListenerCount, int tcpListenerCount, ProcessQuery processQuery)
-			: this(new IPEndPoint(bindAddress, _DNS_PORT), udpListenerCount, tcpListenerCount, processQuery) {}
+			: this(new IPEndPoint(bindAddress, DnsServer.dnsPort), udpListenerCount, tcpListenerCount, processQuery) {}
 
 		/// <summary>
-		///   Creates a new dns server instance
+		/// Creates a new DNS server instance.
 		/// </summary>
-		/// <param name="bindEndPoint"> The endpoint, on which should be listend </param>
-		/// <param name="udpListenerCount"> The count of threads listings on udp, 0 to deactivate udp </param>
-		/// <param name="tcpListenerCount"> The count of threads listings on tcp, 0 to deactivate tcp </param>
-		/// <param name="processQuery"> Method, which process the queries and returns the response </param>
+		/// <param name="bindEndPoint">The endpoint, on which should be listend.</param>
+		/// <param name="udpListenerCount">The count of threads listings on udp, 0 to deactivate udp.</param>
+		/// <param name="tcpListenerCount">The count of threads listings on tcp, 0 to deactivate tcp.</param>
+		/// <param name="processQuery">Method, which process the queries and returns the response.</param>
 		public DnsServer(IPEndPoint bindEndPoint, int udpListenerCount, int tcpListenerCount, ProcessQuery processQuery)
 		{
-			_bindEndPoint = bindEndPoint;
-			_processQueryDelegate = processQuery;
+			this.bindEndPoint = bindEndPoint;
+			this.processQueryDelegate = processQuery;
 
-			_udpListenerCount = udpListenerCount;
-			_tcpListenerCount = tcpListenerCount;
+			this.udpListenerCount = udpListenerCount;
+			this.tcpListenerCount = tcpListenerCount;
 
-			Timeout = 120000;
+			this.Timeout = 120000;
+		}
+
+		#region Public properties
+
+		/// <summary>
+		/// Method that will be called to get the keydata for processing a TSIG signed message.
+		/// </summary>
+		public SelectTsigKey TsigKeySelector;
+		/// <summary>
+		/// Gets or sets the timeout for sending and receiving data.
+		/// </summary>
+		public int Timeout { get; set; }
+
+		#endregion
+
+		#region Public events
+
+		/// <summary>
+		/// This event is fired on exceptions of the listeners. You can use it for custom logging.
+		/// </summary>
+		public event EventHandler<ExceptionEventArgs> ExceptionThrown;
+		/// <summary>
+		/// This event is fired whenever a message is received, that is not correct signed
+		/// </summary>
+		public event EventHandler<InvalidSignedMessageEventArgs> InvalidSignedMessageReceived;
+
+		#endregion
+
+		#region Public methods
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			// Stop the server.
+			this.Stop();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
-		///   Starts the server
+		/// Starts the server.
 		/// </summary>
 		public void Start()
 		{
-			if (_udpListenerCount > 0)
+			if (this.udpListenerCount > 0)
 			{
-				_availableUdpListener = _udpListenerCount;
-				_udpListener = new UdpListener(_bindEndPoint);
-				StartUdpListen();
+				this.availableUdpListener = this.udpListenerCount;
+				this.udpListener = new UdpListener(this.bindEndPoint);
+				this.StartUdpListen();
 			}
 
-			if (_tcpListenerCount > 0)
+			if (this.tcpListenerCount > 0)
 			{
-				_availableTcpListener = _tcpListenerCount;
-				_tcpListener = new TcpListener(_bindEndPoint);
-				_tcpListener.Start();
-				StartTcpAcceptConnection();
+				this.availableTcpListener = this.tcpListenerCount;
+				this.tcpListener = new TcpListener(this.bindEndPoint);
+				this.tcpListener.Start();
+				this.StartTcpAcceptConnection();
 			}
 		}
 
 		/// <summary>
-		///   Stops the server
+		/// Stops the server.
 		/// </summary>
 		public void Stop()
 		{
-			if (_udpListenerCount > 0)
+			if (this.udpListenerCount > 0)
 			{
-				_udpListener.Dispose();
+				this.udpListener.Dispose();
 			}
-			if (_tcpListenerCount > 0)
+			if (this.tcpListenerCount > 0)
 			{
-				_tcpListener.Stop();
+				this.tcpListener.Stop();
 			}
 		}
 
+		#endregion
+
+		#region Private methods
+
+		/// <summary>
+		/// Starts the UDP listener.
+		/// </summary>
 		private void StartUdpListen()
 		{
 			try
 			{
-				lock (_udpListener)
+				lock (this.udpListener)
 				{
-					if ((_availableUdpListener > 0) && !_hasActiveUdpListener)
+					if ((this.availableUdpListener > 0) && !this.hasActiveUdpListener)
 					{
-						_availableUdpListener--;
-						_hasActiveUdpListener = true;
-						_udpListener.BeginReceive(EndUdpReceive, null);
+						this.availableUdpListener--;
+						this.hasActiveUdpListener = true;
+						this.udpListener.BeginReceive(EndUdpReceive, null);
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				lock (_udpListener)
+				lock (this.udpListener)
 				{
-					_hasActiveUdpListener = false;
+					this.hasActiveUdpListener = false;
 				}
-				HandleUdpException(e);
+				this.HandleUdpException(e);
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ar"></param>
 		private void EndUdpReceive(IAsyncResult ar)
 		{
 			try
 			{
-				lock (_udpListener)
+				lock (this.udpListener)
 				{
-					_hasActiveUdpListener = false;
+					this.hasActiveUdpListener = false;
 				}
-				StartUdpListen();
+				this.StartUdpListen();
 
 				IPEndPoint endpoint;
 
-				byte[] buffer = _udpListener.EndReceive(ar, out endpoint);
+				byte[] buffer = this.udpListener.EndReceive(ar, out endpoint);
 
 				DnsMessageBase query;
 				byte[] originalMac;
@@ -219,7 +271,7 @@ namespace ARSoft.Tools.Net.Dns
 				}
 				catch (Exception e)
 				{
-					throw new Exception("Error parsing dns query", e);
+					throw new Exception("Error parsing DNS query", e);
 				}
 
 				DnsMessageBase response;
@@ -330,14 +382,21 @@ namespace ARSoft.Tools.Net.Dns
 				}
 				#endregion
 
-				_udpListener.BeginSend(buffer, 0, length, endpoint, EndUdpSend, null);
+				this.udpListener.BeginSend(buffer, 0, length, endpoint, EndUdpSend, null);
 			}
 			catch (Exception e)
 			{
-				HandleUdpException(e);
+				this.HandleUdpException(e);
 			}
 		}
 
+		/// <summary>
+		/// Processes a DNS message.
+		/// </summary>
+		/// <param name="query"></param>
+		/// <param name="ipAddress"></param>
+		/// <param name="protocolType"></param>
+		/// <returns></returns>
 		private DnsMessageBase ProcessMessage(DnsMessageBase query, IPAddress ipAddress, ProtocolType protocolType)
 		{
 			if (query.TSigOptions != null)
@@ -371,69 +430,80 @@ namespace ARSoft.Tools.Net.Dns
 				}
 			}
 
-			return _processQueryDelegate(query, ipAddress, protocolType);
+			return this.processQueryDelegate(query, ipAddress, protocolType);
 		}
 
-		private void EndUdpSend(IAsyncResult ar)
+		/// <summary>
+		/// Ends sending a DNS responese.
+		/// </summary>
+		/// <param name="asyncResult"></param>
+		private void EndUdpSend(IAsyncResult asyncResult)
 		{
 			try
 			{
-				_udpListener.EndSend(ar);
+				this.udpListener.EndSend(asyncResult);
 			}
 			catch (Exception e)
 			{
-				HandleUdpException(e);
+				this.HandleUdpException(e);
 			}
 
 			lock (_udpListener)
 			{
-				_availableUdpListener++;
+				this.availableUdpListener++;
 			}
-			StartUdpListen();
+			this.StartUdpListen();
 		}
 
+		/// <summary>
+		/// Starts accepting a TCP connection.
+		/// </summary>
 		private void StartTcpAcceptConnection()
 		{
 			try
 			{
-				lock (_tcpListener)
+				lock (this.tcpListener)
 				{
-					if ((_availableTcpListener > 0) && !_hasActiveTcpListener)
+					if ((this.availableTcpListener > 0) && !this.hasActiveTcpListener)
 					{
-						_availableTcpListener--;
-						_hasActiveTcpListener = true;
-						_tcpListener.BeginAcceptTcpClient(EndTcpAcceptConnection, null);
+						this.availableTcpListener--;
+						this.hasActiveTcpListener = true;
+						this.tcpListener.BeginAcceptTcpClient(EndTcpAcceptConnection, null);
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				lock (_tcpListener)
+				lock (this.tcpListener)
 				{
-					_hasActiveTcpListener = false;
+					this.hasActiveTcpListener = false;
 				}
-				HandleTcpException(e, null, null);
+				this.HandleTcpException(e, null, null);
 			}
 		}
 
-		private void EndTcpAcceptConnection(IAsyncResult ar)
+		/// <summary>
+		/// Ends accepting a TCP connection.
+		/// </summary>
+		/// <param name="ar"></param>
+		private void EndTcpAcceptConnection(IAsyncResult asyncResult)
 		{
 			TcpClient client = null;
 			NetworkStream stream = null;
 
 			try
 			{
-				client = _tcpListener.EndAcceptTcpClient(ar);
-				lock (_tcpListener)
+				client = this.tcpListener.EndAcceptTcpClient(ar);
+				lock (this.tcpListener)
 				{
-					_hasActiveTcpListener = false;
-					StartTcpAcceptConnection();
+					this.hasActiveTcpListener = false;
+					this.StartTcpAcceptConnection();
 				}
 
 				stream = client.GetStream();
 
-				MyState state =
-					new MyState
+				ServerState state =
+					new ServerState
 					{
 						Client = client,
 						Stream = stream,
@@ -447,13 +517,13 @@ namespace ARSoft.Tools.Net.Dns
 			}
 			catch (Exception e)
 			{
-				HandleTcpException(e, stream, client);
+				this.HandleTcpException(e, stream, client);
 			}
 		}
 
 		private void TcpTimedOut(object timeoutState)
 		{
-			MyState state = timeoutState as MyState;
+			ServerState state = timeoutState as ServerState;
 
 			if ((state != null) && (state.AsyncResult != null) && !state.AsyncResult.IsCompleted)
 			{
@@ -485,7 +555,7 @@ namespace ARSoft.Tools.Net.Dns
 
 			try
 			{
-				MyState state = (MyState) ar.AsyncState;
+				ServerState state = (ServerState) ar.AsyncState;
 				client = state.Client;
 				stream = state.Stream;
 
@@ -562,7 +632,7 @@ namespace ARSoft.Tools.Net.Dns
 
 			try
 			{
-				MyState state = (MyState) ar.AsyncState;
+				ServerState state = (ServerState) ar.AsyncState;
 				client = state.Client;
 				stream = state.Stream;
 
@@ -613,7 +683,7 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
-		private void ProcessAndSendTcpResponse(MyState state, bool isSubSequentResponse)
+		private void ProcessAndSendTcpResponse(ServerState state, bool isSubSequentResponse)
 		{
 			if (state.Response == null)
 			{
@@ -676,7 +746,7 @@ namespace ARSoft.Tools.Net.Dns
 
 			try
 			{
-				MyState state = (MyState) ar.AsyncState;
+				ServerState state = (ServerState) ar.AsyncState;
 				client = state.Client;
 				stream = state.Stream;
 
@@ -769,19 +839,6 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
-		/// <summary>
-		///   This event is fired on exceptions of the listeners. You can use it for custom logging.
-		/// </summary>
-		public event EventHandler<ExceptionEventArgs> ExceptionThrown;
-
-		/// <summary>
-		///   This event is fired whenever a message is received, that is not correct signed
-		/// </summary>
-		public event EventHandler<InvalidSignedMessageEventArgs> InvalidSignedMessageReceived;
-
-		void IDisposable.Dispose()
-		{
-			Stop();
-		}
+		#endregion
 	}
 }

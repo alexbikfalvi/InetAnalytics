@@ -24,7 +24,7 @@ namespace ARSoft.Tools.Net.Dns
 	/// </summary>
 	public abstract class DnsMessageEntryBase
 	{
-		// Public properties.
+		#region Public properties.
 
 		/// <summary>
 		/// Domain name.
@@ -39,14 +39,18 @@ namespace ARSoft.Tools.Net.Dns
 		/// </summary>
 		public RecordClass RecordClass { get; internal set; }
 
-		// Internal properties.
+		#endregion
+
+		#region Internal properties.
 
 		/// <summary>
 		/// The maximum length.
 		/// </summary>
 		internal abstract int MaximumLength { get; }
 
-		// Public methods.
+		#endregion
+
+		#region Public methods.
 
 		/// <summary>
 		/// Returns the textual representation.
@@ -56,5 +60,7 @@ namespace ARSoft.Tools.Net.Dns
 		{
 			return this.Name + " " + this.RecordType + " " + this.RecordClass;
 		}
+
+		#endregion
 	}
 }

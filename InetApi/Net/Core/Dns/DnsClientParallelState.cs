@@ -24,8 +24,12 @@ namespace ARSoft.Tools.Net.Dns
 	/// <typeparam name="TMessage">The message type.</typeparam>
 	internal class DnsClientParallelState<TMessage> where TMessage : DnsMessageBase
 	{
+		#region Internal fields
+
 		internal object Lock = new object();
 		internal IAsyncResult SingleMessageAsyncResult;
 		internal DnsClientParallelAsyncState<TMessage> ParallelMessageAsyncState;
+
+		#endregion
 	}
 }
