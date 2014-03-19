@@ -42,14 +42,16 @@ namespace ARSoft.Tools.Net.Dns
 			this.RecordData = recordData ?? new byte[] { };
 		}
 
-		// Public properties.
+		#region Public properties
 
 		/// <summary>
 		/// Binary encoded NSAP data.
 		/// </summary>
 		public byte[] RecordData { get; private set; }
 
-		// Protected properties.
+		#endregion
+
+		#region Protected properties.
 
 		/// <summary>
 		/// Gets the maximum record data length.
@@ -58,8 +60,10 @@ namespace ARSoft.Tools.Net.Dns
 		{
 			get { return RecordData.Length; }
 		}
+		
+		#endregion
 
-		// Internal methods.
+		#region Internal methods.
 
 		/// <summary>
 		/// Parses the record data.
@@ -81,7 +85,9 @@ namespace ARSoft.Tools.Net.Dns
 			return "0x" + this.RecordData.ToBase16String();
 		}
 
-		// Protected methods.
+		#endregion
+
+		#region Protected methods.
 
 		/// <summary>
 		/// Encodes the data for this record.
@@ -94,5 +100,7 @@ namespace ARSoft.Tools.Net.Dns
 		{
 			DnsMessageBase.EncodeByteArray(messageData, ref currentPosition, this.RecordData);
 		}
+
+		#endregion
 	}
 }

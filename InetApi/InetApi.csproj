@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEncoding.cs" />
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="Net\Core\Dns\DnsClient.cs" />
     <Compile Include="Net\Core\Dns\DnsClientAsyncState.cs" />
     <Compile Include="Net\Core\Dns\DnsClientBase.cs" />
@@ -116,6 +118,8 @@
     <Compile Include="Net\Core\Dns\EDns\OwnerOption.cs" />
     <Compile Include="Net\Core\Dns\EDns\UnknownOption.cs" />
     <Compile Include="Net\Core\Dns\EDns\UpdateLeaseOption.cs" />
+    <Compile Include="Net\Core\Dns\ExceptionEventArgs.cs" />
+    <Compile Include="Net\Core\Dns\InvalidSignedMessageEventArgs.cs" />
     <Compile Include="Net\Core\Dns\OperationCode.cs" />
     <Compile Include="Net\Core\Dns\RecordClass.cs" />
     <Compile Include="Net\Core\Dns\RecordType.cs" />

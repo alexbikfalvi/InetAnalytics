@@ -28,7 +28,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// </summary>
 		Invalid = 0,
 		/// <summary>
-		/// <para>Record class Internet (IN)</para> <para>Defined in <see cref="!:http://tools.ietf.org/html/rfc1035">RFC 1035</see></para>
+		/// <para>Record class Internet (IN)</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc1035">RFC 1035</see></para>
 		/// </summary>
 		INet = 1,
 		/// <summary>
@@ -40,11 +40,11 @@ namespace ARSoft.Tools.Net.Dns
 		/// </summary>
 		Hesiod = 4,
 		/// <summary>
-		/// <para>Record class NONE</para> <para>Defined in <see cref="!:http://tools.ietf.org/html/rfc2136">RFC 2136</see></para>
+		/// <para>Record class NONE</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc2136">RFC 2136</see></para>
 		/// </summary>
 		None = 254,
 		/// <summary>
-		/// <para>Record class * (ANY)</para> <para>Defined in <see cref="!:http://tools.ietf.org/html/rfc1035">RFC 1035</see></para>
+		/// <para>Record class * (ANY)</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc1035">RFC 1035</see></para>
 		/// </summary>
 		Any = 255
 	}

@@ -245,10 +245,10 @@ namespace ARSoft.Tools.Net.Dns
 		}
 
 		/// <summary>
-		/// 
+		/// Ends a UDP receive operation.
 		/// </summary>
-		/// <param name="ar"></param>
-		private void EndUdpReceive(IAsyncResult ar)
+		/// <param name="asyncResult">The asynchronous result.</param>
+		private void EndUdpReceive(IAsyncResult asyncResult)
 		{
 			try
 			{
@@ -260,7 +260,7 @@ namespace ARSoft.Tools.Net.Dns
 
 				IPEndPoint endpoint;
 
-				byte[] buffer = this.udpListener.EndReceive(ar, out endpoint);
+				byte[] buffer = this.udpListener.EndReceive(asyncResult, out endpoint);
 
 				DnsMessageBase query;
 				byte[] originalMac;
@@ -393,10 +393,10 @@ namespace ARSoft.Tools.Net.Dns
 		/// <summary>
 		/// Processes a DNS message.
 		/// </summary>
-		/// <param name="query"></param>
-		/// <param name="ipAddress"></param>
-		/// <param name="protocolType"></param>
-		/// <returns></returns>
+		/// <param name="query">The query message.</param>
+		/// <param name="ipAddress">The IP address.</param>
+		/// <param name="protocolType">The protocol type.</param>
+		/// <returns>The processed message.</returns>
 		private DnsMessageBase ProcessMessage(DnsMessageBase query, IPAddress ipAddress, ProtocolType protocolType)
 		{
 			if (query.TSigOptions != null)
@@ -436,7 +436,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <summary>
 		/// Ends sending a DNS responese.
 		/// </summary>
-		/// <param name="asyncResult"></param>
+		/// <param name="asyncResult">The asynchronous result.</param>
 		private void EndUdpSend(IAsyncResult asyncResult)
 		{
 			try
@@ -448,7 +448,7 @@ namespace ARSoft.Tools.Net.Dns
 				this.HandleUdpException(e);
 			}
 
-			lock (_udpListener)
+			lock (this.udpListener)
 			{
 				this.availableUdpListener++;
 			}
@@ -485,7 +485,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <summary>
 		/// Ends accepting a TCP connection.
 		/// </summary>
-		/// <param name="ar"></param>
+		/// <param name="asyncResult">The asynchronous result.</param>
 		private void EndTcpAcceptConnection(IAsyncResult asyncResult)
 		{
 			TcpClient client = null;
@@ -493,7 +493,7 @@ namespace ARSoft.Tools.Net.Dns
 
 			try
 			{
-				client = this.tcpListener.EndAcceptTcpClient(ar);
+				client = this.tcpListener.EndAcceptTcpClient(asyncResult);
 				lock (this.tcpListener)
 				{
 					this.hasActiveTcpListener = false;
@@ -521,6 +521,10 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
+		/// <summary>
+		/// A method called when a TCP operation timed out.
+		/// </summary>
+		/// <param name="timeoutState">The timeout state.</param>
 		private void TcpTimedOut(object timeoutState)
 		{
 			ServerState state = timeoutState as ServerState;
@@ -547,27 +551,30 @@ namespace ARSoft.Tools.Net.Dns
 			}
 		}
 
-
-		private void EndTcpReadLength(IAsyncResult ar)
+		/// <summary>
+		/// Ends reading the length for a TCP connection.
+		/// </summary>
+		/// <param name="asyncResult">The asynchronous result.</param>
+		private void EndTcpReadLength(IAsyncResult asyncResult)
 		{
 			TcpClient client = null;
 			NetworkStream stream = null;
 
 			try
 			{
-				ServerState state = (ServerState) ar.AsyncState;
+				ServerState state = (ServerState) asyncResult.AsyncState;
 				client = state.Client;
 				stream = state.Stream;
 
 				state.Timer.Dispose();
 
-				state.BytesToReceive -= stream.EndRead(ar);
+				state.BytesToReceive -= stream.EndRead(asyncResult);
 
 				if (state.BytesToReceive > 0)
 				{
 					if (!IsTcpClientConnected(client))
 					{
-						HandleTcpException(null, stream, client);
+						this.HandleTcpException(null, stream, client);
 						return;
 					}
 
@@ -588,16 +595,21 @@ namespace ARSoft.Tools.Net.Dns
 					}
 					else
 					{
-						HandleTcpException(null, stream, client);
+						this.HandleTcpException(null, stream, client);
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				HandleTcpException(e, stream, client);
+				this.HandleTcpException(e, stream, client);
 			}
 		}
 
+		/// <summary>
+		/// Determines whether a TCP client is connected.
+		/// </summary>
+		/// <param name="client">The TCP client.</param>
+		/// <returns><b>True</b> if the client is connected, <b>false</b> otherwise.</returns>
 		private static bool IsTcpClientConnected(TcpClient client)
 		{
 			if (!client.Connected)
@@ -625,26 +637,30 @@ namespace ARSoft.Tools.Net.Dns
 			return true;
 		}
 
-		private void EndTcpReadData(IAsyncResult ar)
+		/// <summary>
+		/// Ends reading the data for a TCP connection.
+		/// </summary>
+		/// <param name="asyncResult">The asynchronous result.</param>
+		private void EndTcpReadData(IAsyncResult asyncResult)
 		{
 			TcpClient client = null;
 			NetworkStream stream = null;
 
 			try
 			{
-				ServerState state = (ServerState) ar.AsyncState;
+				ServerState state = (ServerState) asyncResult.AsyncState;
 				client = state.Client;
 				stream = state.Stream;
 
 				state.Timer.Dispose();
 
-				state.BytesToReceive -= stream.EndRead(ar);
+				state.BytesToReceive -= stream.EndRead(asyncResult);
 
 				if (state.BytesToReceive > 0)
 				{
 					if (!IsTcpClientConnected(client))
 					{
-						HandleTcpException(null, stream, client);
+						this.HandleTcpException(null, stream, client);
 						return;
 					}
 
@@ -666,23 +682,28 @@ namespace ARSoft.Tools.Net.Dns
 
 					try
 					{
-						state.Response = ProcessMessage(query, ((IPEndPoint) client.Client.RemoteEndPoint).Address, ProtocolType.Tcp);
+						state.Response = this.ProcessMessage(query, ((IPEndPoint) client.Client.RemoteEndPoint).Address, ProtocolType.Tcp);
 					}
-					catch (Exception ex)
+					catch (Exception e)
 					{
-						OnExceptionThrown(ex);
+						this.OnExceptionThrown(e);
 						state.Response = null;
 					}
 
-					ProcessAndSendTcpResponse(state, false);
+					this.ProcessAndSendTcpResponse(state, false);
 				}
 			}
 			catch (Exception e)
 			{
-				HandleTcpException(e, stream, client);
+				this.HandleTcpException(e, stream, client);
 			}
 		}
 
+		/// <summary>
+		/// Processes and sends a response for a TCP connection.
+		/// </summary>
+		/// <param name="state">The server state.</param>
+		/// <param name="isSubSequentResponse">If <b>true</b> it indicates that there exists a subsequent response.</param>
 		private void ProcessAndSendTcpResponse(ServerState state, bool isSubSequentResponse)
 		{
 			if (state.Response == null)
@@ -702,7 +723,7 @@ namespace ARSoft.Tools.Net.Dns
 			{
 				if ((state.Response.Questions.Count == 0) || (state.Response.Questions[0].RecordType != RecordType.Axfr))
 				{
-					OnExceptionThrown(new ArgumentException("The length of the serialized response is greater than 65,535 bytes"));
+					this.OnExceptionThrown(new ArgumentException("The length of the serialized response is greater than 65,535 bytes"));
 					state.Response = DnsMessageBase.Create(state.Buffer, true, TsigKeySelector, null);
 					state.Response.IsQuery = false;
 					state.Response.ReturnCode = ReturnCode.ServerFailure;
@@ -739,20 +760,24 @@ namespace ARSoft.Tools.Net.Dns
 			state.AsyncResult = state.Stream.BeginWrite(state.Buffer, 0, length, EndTcpSendData, state);
 		}
 
-		private void EndTcpSendData(IAsyncResult ar)
+		/// <summary>
+		/// Ends sending the data for a TCP connection.
+		/// </summary>
+		/// <param name="asyncResult">The asynchronous result.</param>
+		private void EndTcpSendData(IAsyncResult asyncResult)
 		{
 			TcpClient client = null;
 			NetworkStream stream = null;
 
 			try
 			{
-				ServerState state = (ServerState) ar.AsyncState;
+				ServerState state = (ServerState) asyncResult.AsyncState;
 				client = state.Client;
 				stream = state.Stream;
 
 				state.Timer.Dispose();
 
-				stream.EndWrite(ar);
+				stream.EndWrite(asyncResult);
 
 				if (state.Response == null)
 				{
@@ -774,26 +799,36 @@ namespace ARSoft.Tools.Net.Dns
 				}
 				else
 				{
-					ProcessAndSendTcpResponse(state, true);
+					this.ProcessAndSendTcpResponse(state, true);
 				}
 			}
 			catch (Exception e)
 			{
-				HandleTcpException(e, stream, client);
+				this.HandleTcpException(e, stream, client);
 			}
 		}
 
+		/// <summary>
+		/// Handles an exception for a UDP request.
+		/// </summary>
+		/// <param name="e">The exception.</param>
 		private void HandleUdpException(Exception e)
 		{
-			lock (_udpListener)
+			lock (this.udpListener)
 			{
-				_availableUdpListener++;
+				this.availableUdpListener++;
 			}
-			StartUdpListen();
+			this.StartUdpListen();
 
-			OnExceptionThrown(e);
+			this.OnExceptionThrown(e);
 		}
 
+		/// <summary>
+		/// Handles an exception for a TCP request.
+		/// </summary>
+		/// <param name="e">The exception.</param>
+		/// <param name="stream">The stream.</param>
+		/// <param name="client">The TCP client.</param>
 		private void HandleTcpException(Exception e, NetworkStream stream, TcpClient client)
 		{
 			try
@@ -814,16 +849,20 @@ namespace ARSoft.Tools.Net.Dns
 			}
 			catch {}
 
-			lock (_tcpListener)
+			lock (this.tcpListener)
 			{
-				_availableTcpListener++;
+				this.availableTcpListener++;
 			}
-			StartTcpAcceptConnection();
+			this.StartTcpAcceptConnection();
 
 			if (e != null)
-				OnExceptionThrown(e);
+				this.OnExceptionThrown(e);
 		}
 
+		/// <summary>
+		/// An event handler called when an exception is thrown.
+		/// </summary>
+		/// <param name="e">The exception.</param>
 		private void OnExceptionThrown(Exception e)
 		{
 			if (e is ObjectDisposedException)
@@ -831,7 +870,7 @@ namespace ARSoft.Tools.Net.Dns
 
 			if (ExceptionThrown != null)
 			{
-				ExceptionThrown(this, new ExceptionEventArgs(e));
+				this.ExceptionThrown(this, new ExceptionEventArgs(e));
 			}
 			else
 			{

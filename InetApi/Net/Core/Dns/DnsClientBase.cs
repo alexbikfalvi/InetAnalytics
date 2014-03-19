@@ -427,7 +427,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <returns>The response data.</returns>
 		private byte[] QueryByUdp(DnsClientEndpointInfo endpointInfo, byte[] messageData, int messageLength, out IPAddress responderAddress)
 		{
-			using (Socket socket = new Socket(endpointInfo.LocalAddress.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
+			using (System.Net.Sockets.Socket socket = new System.Net.Sockets.Socket(endpointInfo.LocalAddress.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
 			{
 				try
 				{
@@ -465,7 +465,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// </summary>
 		/// <param name="endpointInfo">The end-point information.</param>
 		/// <param name="socket">The socket.</param>
-		private void PrepareAndBindUdpSocket(DnsClientEndpointInfo endpointInfo, Socket socket)
+		private void PrepareAndBindUdpSocket(DnsClientEndpointInfo endpointInfo, System.Net.Sockets.Socket socket)
 		{
 			if (endpointInfo.IsMulticast)
 			{
