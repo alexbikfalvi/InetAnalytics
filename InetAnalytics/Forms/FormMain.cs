@@ -156,7 +156,6 @@ namespace InetAnalytics.Forms
 		private readonly EventHandler actionNetworkStatusChecked;
 
 		// Status.
-
 		private ApplicationStatus.StatusType status = ApplicationStatus.StatusType.Unknown;
 
 		/// <summary>
