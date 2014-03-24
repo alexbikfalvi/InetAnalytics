@@ -17,7 +17,9 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 using DotNetApi.Windows.Themes;
@@ -50,9 +52,41 @@ namespace InetTraceroute.Forms
 			// Set the event handlers.
 			this.status.MessageChanged += this.OnStatusMessageChanged;
 
+			// Call the tab changed event handler to initialize the application status.
+			this.OnTabChanged(this, EventArgs.Empty);
+
 			// Set the font.
 			Window.SetFont(this);
 		}
+
+		#region Protected methods
+
+		/// <summary>
+		/// An event handler called when the form is being closed.
+		/// </summary>
+		/// <param name="e">The event arguments.</param>
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			// Check the status is locked.
+			if (this.status.IsLocked)
+			{
+				// Show a message.
+				MessageBox.Show(
+					this,
+					"The Internet Tracerooute is running one or more background operations. You must stop them before closing the program.",
+					"Internet Analytics Background",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Warning);
+				// Cancel the closing request.
+				e.Cancel = true;
+				// Return.
+				return;
+			}
+			// Call the base class event handler.
+			base.OnClosing(e);
+		}
+
+		#endregion
 
 		#region Private methods
 
@@ -78,21 +112,18 @@ namespace InetTraceroute.Forms
 								this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
 								this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 								this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-								this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 								this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 								break;
 							case ApplicationStatus.StatusType.Normal:
 								this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripNormalBackground;
 								this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 								this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
-								this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 								this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripNormalText;
 								break;
 							case ApplicationStatus.StatusType.Busy:
 								this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripBusyBackground;
 								this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
 								this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
-								this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
 								this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripBusyText;
 								break;
 						}
@@ -109,7 +140,6 @@ namespace InetTraceroute.Forms
 					this.statusStrip.BackColor = this.themeSettings.ColorTable.StatusStripReadyBackground;
 					this.statusLabelLeft.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 					this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-					this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 					this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 					this.statusLabelLeft.Image = Resources.Information_16;
 					this.statusLabelLeft.Text = "Ready.";
@@ -120,6 +150,47 @@ namespace InetTraceroute.Forms
 			});
 		}
 
+		/// <summary>
+		/// An event handler called when the status lock has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnStatusLockChanged(object sender, EventArgs e)
+		{
+			this.Invoke(() =>
+			{
+				// Get the number of locks.
+				int count = this.status.LockCount;
+				// Update the lock information.
+				if (count > 0)
+				{
+					this.statusLabelRun.Text = "{0} background task{1}".FormatWith(count, count.PluralSuffix());
+					this.statusLabelRun.Image = Resources.RunConcurrentStart_16;
+				}
+				else
+				{
+					this.statusLabelRun.Text = "No background tasks";
+					this.statusLabelRun.Image = Resources.RunConcurrentStop_16;
+				}
+			});
+		}
+
+		/// <summary>
+		/// An event handler called when the user selects the exit menu item.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnExit(object sender, EventArgs e)
+		{
+			// Close the main window.
+			this.Close();
+		}
+
+		/// <summary>
+		/// An event handler called when the selected tab has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
 		private void OnTabChanged(object sender, EventArgs e)
 		{
 			this.status.Activate(this.tabControl.TabPages[this.tabControl.SelectedIndex]);

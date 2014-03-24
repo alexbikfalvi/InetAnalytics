@@ -38,6 +38,15 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="InetApi">
+      <HintPath>..\InetApi\bin\Debug\InetApi.dll</HintPath>
+    </Reference>
+    <Reference Include="InetCrawler">
+      <HintPath>..\InetCrawler\bin\Debug\InetCrawler.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\..\Renci.SshNet\bin\Debug\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -89,6 +98,10 @@
     <ProjectReference Include="..\InetCommon\InetCommon.csproj">
       <Project>{4e3c3a80-85d6-4932-b1d2-e0467b1abf46}</Project>
       <Name>InetCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetControls\InetControls.csproj">
+      <Project>{FE702303-5ACC-498F-BAB4-7479957193CD}</Project>
+      <Name>InetControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

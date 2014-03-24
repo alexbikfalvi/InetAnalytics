@@ -18,6 +18,7 @@
 
 using System;
 using System.Windows.Forms;
+using DotNetApi.Windows.Themes;
 using InetTraceroute.Forms;
 
 namespace InetTraceroute
@@ -32,6 +33,9 @@ namespace InetTraceroute
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+
+			ToolStripManager.Renderer = new ThemeRenderer(ThemeSettings.Blue);
+
 			Application.Run(new FormMain());
 		}
 	}
