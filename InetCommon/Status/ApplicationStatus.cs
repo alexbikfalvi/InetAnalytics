@@ -52,9 +52,10 @@ namespace InetCommon.Status
 		/// </summary>
 		public ApplicationStatus()
 		{
+			this.Status = StatusType.Unknown;
 		}
 
-		// Public properties.
+		#region Public properties
 
 		/// <summary>
 		/// Gets whether there exist a status lock.
@@ -64,8 +65,14 @@ namespace InetCommon.Status
 		/// Gets the number of locks.
 		/// </summary>
 		public int LockCount { get { lock (this.sync) { return this.locks.Count; } } }
+		/// <summary>
+		/// Gets or sets the current application status.
+		/// </summary>
+		public StatusType Status { get; set; }
 
-		// Public events.
+		#endregion
+
+		#region Public events
 
 		/// <summary>
 		/// An event raised when a handler sends a status message.
@@ -76,7 +83,9 @@ namespace InetCommon.Status
 		/// </summary>
 		public event EventHandler LockChanged;
 
-		// Public methods.
+		#endregion
+
+		#region Public methods
 
 		/// <summary>
 		/// A methods called when the object is being disposed.
@@ -152,7 +161,9 @@ namespace InetCommon.Status
 			}
 		}
 
-		// Private methods.
+		#endregion
+
+		#region Private methods
 
 		/// <summary>
 		/// An event handler called when receiving a status message from a handler.
@@ -223,5 +234,7 @@ namespace InetCommon.Status
 			// Raise the event.
 			if (null != this.LockChanged) this.LockChanged(this, EventArgs.Empty);
 		}
+
+		#endregion
 	}
 }

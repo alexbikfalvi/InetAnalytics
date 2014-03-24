@@ -34,7 +34,7 @@ namespace InetTraceroute.Forms
 		private readonly ThemeSettings themeSettings;
 
 		// Status.
-		private ApplicationStatus.StatusType status = ApplicationStatus.StatusType.Unknown;
+		private readonly ApplicationStatus status = new ApplicationStatus();
 
 		/// <summary>
 		/// Creates a new form instance.
@@ -46,6 +46,9 @@ namespace InetTraceroute.Forms
 
 			// Get the theme settings.
 			this.themeSettings = ToolStripManager.Renderer is ThemeRenderer ? (ToolStripManager.Renderer as ThemeRenderer).Settings : ThemeSettings.Default;
+
+			// Set the event handlers.
+			this.status.MessageChanged += this.OnStatusMessageChanged;
 
 			// Set the font.
 			Window.SetFont(this);
@@ -66,7 +69,7 @@ namespace InetTraceroute.Forms
 				if (e.Message.HasValue)
 				{
 					// If the status type has changed.
-					if (e.Message.Value.Type != this.status)
+					if (e.Message.Value.Type != this.status.Status)
 					{
 						// Update the status.
 						switch (e.Message.Value.Type)
@@ -94,7 +97,7 @@ namespace InetTraceroute.Forms
 								break;
 						}
 						// Set the new status.
-						this.status = e.Message.Value.Type;
+						this.status.Status = e.Message.Value.Type;
 					}
 					this.statusLabelLeft.Image = e.Message.Value.LeftImage;
 					this.statusLabelLeft.Text = e.Message.Value.LeftText;
@@ -108,13 +111,18 @@ namespace InetTraceroute.Forms
 					this.statusLabelRight.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 					this.statusLabelConnection.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
 					this.statusLabelRun.ForeColor = this.themeSettings.ColorTable.StatusStripReadyText;
-					//this.statusLabelLeft.Image = Resources.Information_16;
+					this.statusLabelLeft.Image = Resources.Information_16;
 					this.statusLabelLeft.Text = "Ready.";
 					this.statusLabelRight.Image = null;
 					this.statusLabelRight.Text = null;
-					this.status = ApplicationStatus.StatusType.Ready;
+					this.status.Status = ApplicationStatus.StatusType.Ready;
 				}
 			});
+		}
+
+		private void OnTabChanged(object sender, EventArgs e)
+		{
+			this.status.Activate(this.tabControl.TabPages[this.tabControl.SelectedIndex]);
 		}
 
 		#endregion
