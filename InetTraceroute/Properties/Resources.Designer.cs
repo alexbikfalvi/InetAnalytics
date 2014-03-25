@@ -73,6 +73,16 @@ namespace InetTraceroute {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Refresh_16 {
+            get {
+                object obj = ResourceManager.GetObject("Refresh_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RunConcurrentStart_16 {
             get {
                 object obj = ResourceManager.GetObject("RunConcurrentStart_16", resourceCulture);
