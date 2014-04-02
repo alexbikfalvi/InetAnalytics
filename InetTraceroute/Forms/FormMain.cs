@@ -23,6 +23,7 @@ using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 using DotNetApi.Windows.Themes;
+using InetCommon.Net;
 using InetCommon.Status;
 
 namespace InetTraceroute.Forms
@@ -55,8 +56,15 @@ namespace InetTraceroute.Forms
 			// Call the tab changed event handler to initialize the application status.
 			this.OnTabChanged(this, EventArgs.Empty);
 
+			NetworkLocal.Changed += NetworkLocal_Changed;
+
 			// Set the font.
 			Window.SetFont(this);
+		}
+
+		void NetworkLocal_Changed(object sender, NetworkLocalChangedEventArgs e)
+		{
+			//throw new NotImplementedException();
 		}
 
 		#region Protected methods
