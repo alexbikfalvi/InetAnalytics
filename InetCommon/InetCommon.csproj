@@ -39,12 +39,11 @@
   <ItemGroup>
     <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\PageSelectionEventArgs.cs" />
-    <Compile Include="Net\NetworkLocal.cs" />
-    <Compile Include="Net\NetworkLocalAddress.cs" />
-    <Compile Include="Net\NetworkLocalChangedEventArgs.cs" />
-    <Compile Include="Net\NetworkLocalIPAddress.cs" />
-    <Compile Include="Net\NetworkLocalUnicastIPAddress.cs" />
+    <Compile Include="Net\NetworkAddresses.cs" />
+    <Compile Include="Net\NetworkAddressesChangedEventArgs.cs" />
+    <Compile Include="Net\NetworkAddressInformation.cs" />
     <Compile Include="Net\NetworkStatus.cs" />
+    <Compile Include="Net\UnicastNetworkAddressInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Status\ApplicationStatus.cs" />
     <Compile Include="Status\ApplicationStatusHandler.cs" />

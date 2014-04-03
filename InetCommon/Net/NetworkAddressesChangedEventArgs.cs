@@ -17,38 +17,20 @@
  */
 
 using System;
-using System.Net;
-using System.Net.NetworkInformation;
 
 namespace InetCommon.Net
 {
 	/// <summary>
-	/// A class representing a network local address.
+	/// A delegate for event raised when the a change in the local network addresses has occurred.
 	/// </summary>
-	public class NetworkLocalAddress
+	/// <param name="sender">The sender object.</param>
+	/// <param name="e">The event arguments.</param>
+	public delegate void NetworkLocalChangedEventHandler(object sender, NetworkAddressesChangedEventArgs e);
+
+	/// <summary>
+	/// A class representing the event arguments for a change in the local network addesses.
+	/// </summary>
+	public class NetworkAddressesChangedEventArgs : EventArgs
 	{
-		/// <summary>
-		/// Protected constructor.
-		/// </summary>
-		/// <param name="address">The IP address.</param>
-		/// <param name="iface">The interface.</param>
-		protected NetworkLocalAddress(IPAddress address, NetworkInterface iface)
-		{
-			this.Address = address;
-			this.Interface = iface;
-		}
-
-		#region Public properties
-
-		/// <summary>
-		/// Gets the IP address.
-		/// </summary>
-		public IPAddress Address { get; private set; }
-		/// <summary>
-		/// Gets the network interface corresponding to this address.
-		/// </summary>
-		public NetworkInterface Interface { get; private set; }
-
-		#endregion
 	}
 }

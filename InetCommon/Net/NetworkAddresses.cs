@@ -24,17 +24,19 @@ using System.Net.NetworkInformation;
 namespace InetCommon.Net
 {
 	/// <summary>
-	/// A class with information about the local network.
+	/// A class with information about the local network addresses.
 	/// </summary>
-	public static class NetworkLocal
+	public class NetworkAddresses
 	{
+		private static readonly List<UnicastNetworkAddressInformation> unicastAddresses = new List<UnicastNetworkAddressInformation>();
+
 		/// <summary>
 		/// Static constructor.
 		/// </summary>
-		static NetworkLocal()
+		static NetworkAddresses()
 		{
 			// Set the event handlers.
-			NetworkChange.NetworkAddressChanged += NetworkLocal.OnNetworkAddressChanged;
+			NetworkChange.NetworkAddressChanged += NetworkAddresses.OnNetworkAddressChanged;
 		}
 
 		#region Public events
@@ -42,7 +44,13 @@ namespace InetCommon.Net
 		/// <summary>
 		/// An event raised when the local network has changed.
 		/// </summary>
-		public static event NetworkLocalChangedEventHandler Changed;
+		public static event NetworkLocalChangedEventHandler UnicastAddressesChanged;
+
+		#endregion
+
+		#region Public properties
+
+		public static IPAddressCollection UnicastAddresses { get { return NetworkAddresses.} }
 
 		#endregion
 
@@ -56,7 +64,7 @@ namespace InetCommon.Net
 		private static void OnNetworkAddressChanged(object sender, EventArgs e)
 		{
 			// Raise a network changed event.
-			if (null != NetworkLocal.Changed) NetworkLocal.Changed(null, null);
+			if (null != NetworkAddresses.Changed) NetworkAddresses.Changed(null, null);
 		}
 
 		/// <summary>
@@ -64,6 +72,7 @@ namespace InetCommon.Net
 		/// </summary>
 		private static void OnUpdateAdresses()
 		{
+			// Clear the network i
 			// For all network interfaces.
 			foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
 			{

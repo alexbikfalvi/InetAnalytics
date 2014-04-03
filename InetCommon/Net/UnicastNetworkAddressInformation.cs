@@ -17,34 +17,36 @@
  */
 
 using System;
-using System.Net;
 using System.Net.NetworkInformation;
 
 namespace InetCommon.Net
 {
 	/// <summary>
-	/// A class representing a network unicast local address.
+	/// A class representing the information for a unicast network address.
 	/// </summary>
-	public class NetworkLocalIPAddress : NetworkLocalAddress
+	public sealed class UnicastNetworkAddressInformation : NetworkAddressInformation
 	{
 		/// <summary>
-		/// Protected constructor.
+		/// Creates a new unicast network address information instance.
 		/// </summary>
-		/// <param name="address">The IP address.</param>
-		/// <param name="iface">The local interface.</param>
-		/// <param name="ipProperties">The IP properties.</param>
-		protected NetworkLocalIPAddress(IPAddress address, NetworkInterface iface, IPInterfaceProperties ipProperties)
-			: base(address, iface)
+		/// <param name="iface">The network interface.</param>
+		/// <param name="information">The address information.</param>
+		public UnicastNetworkAddressInformation(NetworkInterface iface, UnicastIPAddressInformation information)
+			: base(iface)
 		{
-			this.IPProperties = ipProperties;
+			this.UnicastInformation = information;
 		}
 
-		#region
+		#region Public properties
 
 		/// <summary>
-		/// Gets the IP properties for this interface.
+		/// Gets the address information.
 		/// </summary>
-		public IPInterfaceProperties IPProperties { get; private set; }
+		public override IPAddressInformation Information { get { return this.UnicastInformation; } }
+		/// <summary>
+		/// Gets the information for the unicast IP address.
+		/// </summary>
+		public UnicastIPAddressInformation UnicastInformation { get; private set; }
 
 		#endregion
 	}
