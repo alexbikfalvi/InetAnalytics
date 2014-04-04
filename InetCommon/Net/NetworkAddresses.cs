@@ -28,7 +28,10 @@ namespace InetCommon.Net
 	/// </summary>
 	public class NetworkAddresses
 	{
-		private static readonly List<UnicastNetworkAddressInformation> unicastAddresses = new List<UnicastNetworkAddressInformation>();
+		private static readonly List<UnicastNetworkAddressInformation> unicastInformation = new List<UnicastNetworkAddressInformation>();
+		private static readonly IPAddressCollection unicastAddresses = new IPAddressCollection();
+
+		private static object sync = new object();
 
 		/// <summary>
 		/// Static constructor.
@@ -50,7 +53,14 @@ namespace InetCommon.Net
 
 		#region Public properties
 
-		public static IPAddressCollection UnicastAddresses { get { return NetworkAddresses.} }
+		/// <summary>
+		/// Gets the synchronization object.
+		/// </summary>
+		public static object Sync { get { return NetworkAddresses.sync; } }
+		/// <summary>
+		/// Gets the list of unicast addresses.
+		/// </summary>
+		public static IPAddressCollection UnicastAddresses { get { return NetworkAddresses.unicastAddresses; } }
 
 		#endregion
 
@@ -64,28 +74,36 @@ namespace InetCommon.Net
 		private static void OnNetworkAddressChanged(object sender, EventArgs e)
 		{
 			// Raise a network changed event.
-			if (null != NetworkAddresses.Changed) NetworkAddresses.Changed(null, null);
+			//if (null != NetworkAddresses.Changed) NetworkAddresses.Changed(null, null);
 		}
 
 		/// <summary>
-		/// Updates the current list of local addresses.
+		/// Updates the network information.
 		/// </summary>
-		private static void OnUpdateAdresses()
+		private static void OnUpdate()
 		{
-			// Clear the network i
-			// For all network interfaces.
-			foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
-			{
-				if (iface.OperationalStatus == OperationalStatus.Up)
-				{
-					IPInterfaceProperties ipProperties = iface.GetIPProperties();
+			//lock (NetworkAddresses.sync)
+			//{
+			//	// Set the information for all addresses to stale.
+			//	NetworkAddresses.unicastInformation.
 
-					foreach (UnicastIPAddressInformation info in ipProperties.UnicastAddresses)
-					{
-						info.
-					}
-				}
-			}
+			//	// Clear the local addresses.
+			//	NetworkAddresses.unicastInformation.Clear();
+			//	NetworkAddresses.unicastAddresses.Clear();
+
+			//	// For all network interfaces.
+			//	foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
+			//	{
+			//		// Get the IP properties.
+			//		IPInterfaceProperties ipProperties = iface.GetIPProperties();
+
+			//		// For all unicast IP addresses.
+			//		foreach (UnicastIPAddressInformation info in ipProperties.UnicastAddresses)
+			//		{
+
+			//		}
+			//	}
+			//}
 		}
 
 		#endregion

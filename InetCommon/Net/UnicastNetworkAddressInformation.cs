@@ -35,6 +35,7 @@ namespace InetCommon.Net
 			: base(iface)
 		{
 			this.UnicastInformation = information;
+			this.Stale = false;
 		}
 
 		#region Public properties
@@ -47,6 +48,63 @@ namespace InetCommon.Net
 		/// Gets the information for the unicast IP address.
 		/// </summary>
 		public UnicastIPAddressInformation UnicastInformation { get; private set; }
+
+		#endregion
+
+		#region Internal properties
+
+		/// <summary>
+		/// Gets or sets whether the information for this record is stale.
+		/// </summary>
+		internal bool Stale { get; set; }
+
+		#endregion
+
+		#region Public methods
+
+		/// <summary>
+		/// Compares two unicast network address information objects for equality.
+		/// </summary>
+		/// <param name="left">The left unicast network address information.</param>
+		/// <param name="right">The right unicast network address information.</param>
+		/// <returns><b>True</b> if the two unicast network address information are equal, <b>false</b> otherwise.</returns>
+		public static bool operator ==(UnicastNetworkAddressInformation left, UnicastNetworkAddressInformation right)
+		{
+			return left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares two unicast network address information objects for inequality.
+		/// </summary>
+		/// <param name="left">The left unicast network address information.</param>
+		/// <param name="right">The right unicast network address information.</param>
+		/// <returns><b>True</b> if the two unicast network address information are different, <b>false</b> otherwise.</returns>
+		public static bool operator !=(UnicastNetworkAddressInformation left, UnicastNetworkAddressInformation right)
+		{
+			return !(left.Equals(right));
+		}
+
+		/// <summary>
+		/// Compares two objects for equality.
+		/// </summary>
+		/// <param name="obj">The object to compare.</param>
+		/// <returns><b>True</b> if the two objects are equal, <b>false</b> otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (null == obj) return false;
+			if (!(obj is UnicastNetworkAddressInformation)) return false;
+			UnicastNetworkAddressInformation info = obj as UnicastNetworkAddressInformation;
+			return (this.Interface == info.Interface) && (this.UnicastInformation == info.UnicastInformation);
+		}
+
+		/// <summary>
+		/// Gets the hash code for the current object.
+		/// </summary>
+		/// <returns>The hash code.</returns>
+		public override int GetHashCode()
+		{
+			return this.Interface.GetHashCode() ^ this.Information.Address.GetHashCode();
+		}
 
 		#endregion
 	}

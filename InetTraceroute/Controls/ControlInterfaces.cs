@@ -31,6 +31,7 @@ namespace InetTraceroute.Controls
 		/// </summary>
 		public ControlInterfaces()
 		{
+			// Initialize the component.
 			this.InitializeComponent();
 		}
 	}
