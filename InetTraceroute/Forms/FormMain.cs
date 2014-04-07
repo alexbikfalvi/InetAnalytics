@@ -56,15 +56,8 @@ namespace InetTraceroute.Forms
 			// Call the tab changed event handler to initialize the application status.
 			this.OnTabChanged(this, EventArgs.Empty);
 
-			NetworkAddresses.Changed += NetworkLocal_Changed;
-
 			// Set the font.
 			Window.SetFont(this);
-		}
-
-		void NetworkLocal_Changed(object sender, NetworkAddressesChangedEventArgs e)
-		{
-			//throw new NotImplementedException();
 		}
 
 		#region Protected methods

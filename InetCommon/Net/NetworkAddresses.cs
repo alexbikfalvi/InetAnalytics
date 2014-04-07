@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -29,7 +30,6 @@ namespace InetCommon.Net
 	public class NetworkAddresses
 	{
 		private static readonly List<UnicastNetworkAddressInformation> unicastInformation = new List<UnicastNetworkAddressInformation>();
-		private static readonly IPAddressCollection unicastAddresses = new IPAddressCollection();
 
 		private static object sync = new object();
 
@@ -40,6 +40,9 @@ namespace InetCommon.Net
 		{
 			// Set the event handlers.
 			NetworkChange.NetworkAddressChanged += NetworkAddresses.OnNetworkAddressChanged;
+
+			// Update the list of local addresses.
+			NetworkAddresses.OnUpdate();
 		}
 
 		#region Public events
@@ -47,7 +50,7 @@ namespace InetCommon.Net
 		/// <summary>
 		/// An event raised when the local network has changed.
 		/// </summary>
-		public static event NetworkLocalChangedEventHandler UnicastAddressesChanged;
+		public static event EventHandler NetworkAddressesChanged;
 
 		#endregion
 
@@ -58,9 +61,9 @@ namespace InetCommon.Net
 		/// </summary>
 		public static object Sync { get { return NetworkAddresses.sync; } }
 		/// <summary>
-		/// Gets the list of unicast addresses.
+		/// Gets the collection of unicast information.
 		/// </summary>
-		public static IPAddressCollection UnicastAddresses { get { return NetworkAddresses.unicastAddresses; } }
+		public static IEnumerable<UnicastNetworkAddressInformation> Unicast { get { return NetworkAddresses.unicastInformation; } }
 
 		#endregion
 
@@ -73,8 +76,10 @@ namespace InetCommon.Net
 		/// <param name="e">The event arguments.</param>
 		private static void OnNetworkAddressChanged(object sender, EventArgs e)
 		{
-			// Raise a network changed event.
-			//if (null != NetworkAddresses.Changed) NetworkAddresses.Changed(null, null);
+			// Update the list of local addresses.
+			NetworkAddresses.OnUpdate();
+			// Raise an event.
+			if (NetworkAddresses.NetworkAddressesChanged != null) NetworkAddresses.NetworkAddressesChanged(null, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -82,28 +87,54 @@ namespace InetCommon.Net
 		/// </summary>
 		private static void OnUpdate()
 		{
-			//lock (NetworkAddresses.sync)
-			//{
-			//	// Set the information for all addresses to stale.
-			//	NetworkAddresses.unicastInformation.
+			lock (NetworkAddresses.sync)
+			{
+				// Set the information for all addresses to stale.
+				NetworkAddresses.unicastInformation.ForEach(info => info.Stale = true);
 
-			//	// Clear the local addresses.
-			//	NetworkAddresses.unicastInformation.Clear();
-			//	NetworkAddresses.unicastAddresses.Clear();
+				// For all network interfaces.
+				foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
+				{
+					// Get the IP properties.
+					IPInterfaceProperties ipProperties = iface.GetIPProperties();
 
-			//	// For all network interfaces.
-			//	foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces())
-			//	{
-			//		// Get the IP properties.
-			//		IPInterfaceProperties ipProperties = iface.GetIPProperties();
+					// For all unicast IP addresses.
+					foreach (UnicastIPAddressInformation info in ipProperties.UnicastAddresses)
+					{
+						// Find the corresponding address information.
+						UnicastNetworkAddressInformation information = NetworkAddresses.unicastInformation.FirstOrDefault(inf => inf.Information.Address == info.Address);
 
-			//		// For all unicast IP addresses.
-			//		foreach (UnicastIPAddressInformation info in ipProperties.UnicastAddresses)
-			//		{
+						// If there exists an address information.
+						if (null != information)
+						{
+							// If the information has changed.
+							if (information.Interface != iface || information.UnicastInformation != info)
+							{
+								// Update the information.
+								information.Interface = iface;
+								information.UnicastInformation = info;
+							}
 
-			//		}
-			//	}
-			//}
+							// Set the information as not stale.
+							information.Stale = false;
+						}
+						else
+						{
+							// Create a new address information.
+							information = new UnicastNetworkAddressInformation(iface, info);
+
+							// Add the address information to the list.
+							NetworkAddresses.unicastInformation.Add(information);
+						}
+					}
+				}
+
+				// Remove the stale address information records.
+				NetworkAddresses.unicastInformation.RemoveAll(info => info.Stale);
+
+				// Order the address information records.
+				NetworkAddresses.unicastInformation.OrderBy(info => info.Information.Address);
+			}
 		}
 
 		#endregion

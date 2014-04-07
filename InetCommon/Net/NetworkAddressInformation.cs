@@ -40,7 +40,7 @@ namespace InetCommon.Net
 		/// <summary>
 		/// Gets the network interface.
 		/// </summary>
-		public NetworkInterface Interface { get; private set; }
+		public NetworkInterface Interface { get; internal set; }
 		/// <summary>
 		/// Gets the address information.
 		/// </summary>

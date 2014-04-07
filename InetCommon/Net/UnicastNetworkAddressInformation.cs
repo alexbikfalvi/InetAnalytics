@@ -36,6 +36,7 @@ namespace InetCommon.Net
 		{
 			this.UnicastInformation = information;
 			this.Stale = false;
+			this.Selected = true;
 		}
 
 		#region Public properties
@@ -47,7 +48,11 @@ namespace InetCommon.Net
 		/// <summary>
 		/// Gets the information for the unicast IP address.
 		/// </summary>
-		public UnicastIPAddressInformation UnicastInformation { get; private set; }
+		public UnicastIPAddressInformation UnicastInformation { get; internal set; }
+		/// <summary>
+		/// Gets or sets whether the current address information is selected.
+		/// </summary>
+		public bool Selected { get; set; }
 
 		#endregion
 
@@ -70,7 +75,10 @@ namespace InetCommon.Net
 		/// <returns><b>True</b> if the two unicast network address information are equal, <b>false</b> otherwise.</returns>
 		public static bool operator ==(UnicastNetworkAddressInformation left, UnicastNetworkAddressInformation right)
 		{
-			return left.Equals(right);
+			if (object.ReferenceEquals(null, left) && object.ReferenceEquals(null, right)) return true;
+			else if (object.ReferenceEquals(null, left)) return false;
+			else if (object.ReferenceEquals(null, right)) return false;
+			else return (left.Interface == right.Interface) && (left.UnicastInformation == right.UnicastInformation);
 		}
 
 		/// <summary>
@@ -81,7 +89,10 @@ namespace InetCommon.Net
 		/// <returns><b>True</b> if the two unicast network address information are different, <b>false</b> otherwise.</returns>
 		public static bool operator !=(UnicastNetworkAddressInformation left, UnicastNetworkAddressInformation right)
 		{
-			return !(left.Equals(right));
+			if (object.ReferenceEquals(null, left) && object.ReferenceEquals(null, right)) return false;
+			else if (object.ReferenceEquals(null, left)) return true;
+			else if (object.ReferenceEquals(null, right)) return true;
+			else return (left.Interface != right.Interface) || (left.UnicastInformation != right.UnicastInformation);
 		}
 
 		/// <summary>
