@@ -40,9 +40,10 @@
     <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\PageSelectionEventArgs.cs" />
     <Compile Include="Net\NetworkAddresses.cs" />
-    <Compile Include="Net\NetworkAddressesChangedEventArgs.cs" />
+    <Compile Include="Net\NetworkAddressEventArgs.cs" />
     <Compile Include="Net\NetworkAddressInformation.cs" />
     <Compile Include="Net\NetworkStatus.cs" />
+    <Compile Include="Net\UnicastNetworkAddressEventArgs.cs" />
     <Compile Include="Net\UnicastNetworkAddressInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Status\ApplicationStatus.cs" />

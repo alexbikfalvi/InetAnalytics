@@ -21,16 +21,16 @@ using System;
 namespace InetCommon.Net
 {
 	/// <summary>
-	/// A delegate for event raised when the a change in the local network addresses has occurred.
+	/// A delegate for event raised when a local network address has changed.
 	/// </summary>
 	/// <param name="sender">The sender object.</param>
 	/// <param name="e">The event arguments.</param>
-	public delegate void NetworkLocalChangedEventHandler(object sender, NetworkAddressesChangedEventArgs e);
+	public delegate void NetworkAddressEventHandler(object sender, NetworkAddressEventArgs e);
 
 	/// <summary>
-	/// A class representing the event arguments for a change in the local network addesses.
+	/// A class representing the event arguments for the change of a local network address.
 	/// </summary>
-	public class NetworkAddressesChangedEventArgs : EventArgs
+	public class NetworkAddressEventArgs : EventArgs
 	{
 	}
 }

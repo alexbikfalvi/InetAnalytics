@@ -247,10 +247,6 @@
       <Project>{4e3c3a80-85d6-4932-b1d2-e0467b1abf46}</Project>
       <Name>InetCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\InetCrawler\InetCrawler.csproj">
-      <Project>{a9792d30-2043-4cf9-9578-991288b0fb9e}</Project>
-      <Name>InetCrawler</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\InetIcons\Resources\ArrowBlueDown_16.png">

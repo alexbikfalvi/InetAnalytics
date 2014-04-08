@@ -39,6 +39,15 @@ namespace InetCommon.Net
 			this.Selected = true;
 		}
 
+		#region Public events
+
+		/// <summary>
+		/// An event raised when the enabled state of this address information has changed.
+		/// </summary>
+		public event EventHandler EnabledChanged;
+
+		#endregion
+
 		#region Public properties
 
 		/// <summary>
