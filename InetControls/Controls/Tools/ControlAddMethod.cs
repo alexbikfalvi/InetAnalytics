@@ -20,9 +20,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
-namespace InetAnalytics.Controls.Tools
+namespace InetCommon.Controls.Tools
 {
 	/// <summary>
 	/// A control that adds a tool method.

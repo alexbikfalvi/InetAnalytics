@@ -23,7 +23,7 @@ using System.Windows.Forms;
 using DotNetApi.Web.Http;
 using DotNetApi.Windows.Controls;
 
-namespace InetAnalytics.Controls.Net
+namespace InetCommon.Controls.Net
 {
 	/// <summary>
 	/// A control that receives user input to add an HTTP request header.

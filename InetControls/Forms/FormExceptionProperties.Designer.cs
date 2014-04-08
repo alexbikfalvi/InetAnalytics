@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Forms
+﻿namespace InetCommon.Forms
 {
 	partial class FormExceptionProperties
 	{
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.exception = new InetAnalytics.Controls.ControlExceptionProperties();
+			this.exception = new InetCommon.Controls.ControlExceptionProperties();
 			this.SuspendLayout();
 			// 
 			// buttonClose

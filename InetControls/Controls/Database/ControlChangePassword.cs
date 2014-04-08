@@ -20,9 +20,9 @@ using System;
 using System.Security;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCrawler.Database;
+using InetCommon.Database;
 
-namespace InetAnalytics.Controls.Database
+namespace InetCommon.Controls.Database
 {
 	/// <summary>
 	/// A control that receives user input to change the password.

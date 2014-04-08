@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Forms.Database
+﻿namespace InetCommon.Forms.Database
 {
 	partial class FormChangePassword
 	{
@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonChange = new System.Windows.Forms.Button();
-			this.control = new InetAnalytics.Controls.Database.ControlChangePassword();
+			this.control = new InetCommon.Controls.Database.ControlChangePassword();
 			this.SuspendLayout();
 			// 
 			// buttonCancel

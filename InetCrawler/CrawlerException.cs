@@ -18,6 +18,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using InetCommon;
 
 namespace InetCrawler
 {
@@ -25,7 +26,7 @@ namespace InetCrawler
 	/// A class representing a crawler exception.
 	/// </summary>
 	[Serializable]
-	public class CrawlerException : Exception
+	public class CrawlerException : ConfigException
 	{
 		/// <summary>
 		/// Creates a crawler exception with the specified message.
@@ -47,7 +48,7 @@ namespace InetCrawler
 		}
 
 		/// <summary>
-		/// Creates a new tool excpetion instance from the serialization information.
+		/// Creates a new crawler exception instance from the serialization information.
 		/// </summary>
 		/// <param name="info">The serialization information.</param>
 		/// <param name="context">The streaming context.</param>

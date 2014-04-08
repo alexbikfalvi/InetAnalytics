@@ -18,12 +18,12 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Log;
+using InetCommon.Log;
 using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetAnalytics.Forms.Log
+namespace InetCommon.Forms.Log
 {
 	/// <summary>
 	/// A form dialog displaying a log event.

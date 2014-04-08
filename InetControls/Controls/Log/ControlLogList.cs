@@ -19,10 +19,10 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetAnalytics.Forms.Log;
-using InetCrawler.Log;
+using InetCommon.Forms.Log;
+using InetCommon.Log;
 
-namespace InetAnalytics.Controls.Log
+namespace InetCommon.Controls.Log
 {
 	/// <summary>
 	/// A control representing an event log list.

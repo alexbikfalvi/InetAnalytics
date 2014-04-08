@@ -140,9 +140,7 @@
     <Compile Include="Net\Information\IPUnicastAddressInformation.cs" />
     <Compile Include="Net\NetworkInterfaceEx.cs" />
     <Compile Include="Net\Socket\UdpListener.cs" />
-    <Compile Include="YouTube\Ajax\AjaxException.cs" />
     <Compile Include="YouTube\Ajax\AjaxHistory.cs" />
-    <Compile Include="YouTube\Ajax\AjaxParsingException.cs" />
     <Compile Include="YouTube\Ajax\AjaxRequestException.cs" />
     <Compile Include="YouTube\Ajax\AjaxRequestStatistics.cs" />
     <Compile Include="YouTube\Ajax\AjaxVideoStatistics.cs" />
@@ -162,7 +160,6 @@
     <Compile Include="YouTube\Api\V2\Atom\AtomEntryPlaylist.cs" />
     <Compile Include="YouTube\Api\V2\Atom\AtomEntryProfile.cs" />
     <Compile Include="YouTube\Api\V2\Atom\AtomEntryVideo.cs" />
-    <Compile Include="YouTube\Api\V2\Atom\AtomException.cs" />
     <Compile Include="YouTube\Api\V2\Atom\AtomExceptionList.cs" />
     <Compile Include="YouTube\Api\V2\Atom\AtomFeed.cs" />
     <Compile Include="YouTube\Api\V2\Atom\AtomFeedPlaylist.cs" />
@@ -297,6 +294,10 @@
     <ProjectReference Include="..\..\HtmlAgilityPack\HtmlAgilityPack\HtmlAgilityPack.csproj">
       <Project>{193bb801-054f-4729-9d5d-fce1e32594bf}</Project>
       <Name>HtmlAgilityPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InetCommon\InetCommon.csproj">
+      <Project>{4e3c3a80-85d6-4932-b1d2-e0467b1abf46}</Project>
+      <Name>InetCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

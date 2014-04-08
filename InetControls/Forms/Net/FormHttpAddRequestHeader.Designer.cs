@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Forms.Net
+﻿namespace InetCommon.Forms.Net
 {
 	partial class FormHttpAddRequestHeader
 	{
@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonAdd = new System.Windows.Forms.Button();
-			this.control = new InetAnalytics.Controls.Net.ControlHttpAddRequestHeader();
+			this.control = new InetCommon.Controls.Net.ControlHttpAddRequestHeader();
 			this.SuspendLayout();
 			// 
 			// buttonCancel

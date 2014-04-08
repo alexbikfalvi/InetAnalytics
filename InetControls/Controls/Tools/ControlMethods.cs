@@ -21,10 +21,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DotNetApi;
-using InetCrawler.Tools;
-using InetAnalytics.Forms.Tools;
+using InetCommon.Tools;
+using InetCommon.Forms.Tools;
 
-namespace InetAnalytics.Controls.Tools
+namespace InetCommon.Controls.Tools
 {
 	/// <summary>
 	/// A control that adds a tool method.

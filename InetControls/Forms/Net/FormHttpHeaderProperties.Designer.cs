@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Forms.Net
+﻿namespace InetCommon.Forms.Net
 {
 	partial class FormHttpHeaderProperties
 	{
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.control = new InetAnalytics.Controls.Net.ControlHttpHeader();
+			this.control = new InetCommon.Controls.Net.ControlHttpHeader();
 			this.SuspendLayout();
 			// 
 			// buttonClose
@@ -73,6 +73,6 @@
 		#endregion
 
 		private System.Windows.Forms.Button buttonClose;
-		private InetAnalytics.Controls.Net.ControlHttpHeader control;
+		private InetCommon.Controls.Net.ControlHttpHeader control;
 	}
 }

@@ -18,12 +18,11 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Comments;
 using DotNetApi.Web.Http;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetAnalytics.Forms.Net
+namespace InetCommon.Forms.Net
 {
 	/// <summary>
 	/// A form dialog displaying an HTTP header.

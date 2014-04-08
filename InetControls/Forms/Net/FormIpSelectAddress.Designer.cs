@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Forms.Net
+﻿namespace InetCommon.Forms.Net
 {
 	partial class FormIpSelectAddress
 	{
@@ -80,7 +80,7 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::InetAnalytics.Resources.Select_48;
+			this.pictureBox.Image = global::InetCommon.Resources.Select_48;
 			this.pictureBox.Location = new System.Drawing.Point(20, 20);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(48, 48);

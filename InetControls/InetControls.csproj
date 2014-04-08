@@ -225,7 +225,7 @@
       <DependentUpon>FormAddMethod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <CustomToolNamespace>InetAnalytics</CustomToolNamespace>
+      <CustomToolNamespace>InetCommon</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -238,10 +238,6 @@
     <ProjectReference Include="..\..\Renci.SshNet\Renci.SshNet.csproj">
       <Project>{2f5f8c90-0bd1-424f-997c-7bc6280919d1}</Project>
       <Name>Renci.SshNet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\InetApi\InetApi.csproj">
-      <Project>{6e2d7303-ffab-4732-86f5-8bb0f7cd8276}</Project>
-      <Name>InetApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\InetCommon\InetCommon.csproj">
       <Project>{4e3c3a80-85d6-4932-b1d2-e0467b1abf46}</Project>

@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Controls.Log
+﻿namespace InetCommon.Controls.Log
 {
 	partial class ControlLogEventProperties
 	{
@@ -317,7 +317,7 @@
 			// buttonException
 			// 
 			this.buttonException.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonException.Image = global::InetAnalytics.Resources.Exception_16;
+			this.buttonException.Image = global::InetCommon.Resources.Exception_16;
 			this.buttonException.Location = new System.Drawing.Point(283, 234);
 			this.buttonException.Name = "buttonException";
 			this.buttonException.Size = new System.Drawing.Size(75, 23);
@@ -414,7 +414,7 @@
 			// 
 			// pictureBoxError
 			// 
-			this.pictureBoxError.Image = global::InetAnalytics.Resources.Error_32;
+			this.pictureBoxError.Image = global::InetCommon.Resources.Error_32;
 			this.pictureBoxError.Location = new System.Drawing.Point(6, 6);
 			this.pictureBoxError.Name = "pictureBoxError";
 			this.pictureBoxError.Size = new System.Drawing.Size(32, 32);
@@ -489,7 +489,7 @@
 			// 
 			// pictureBoxXml
 			// 
-			this.pictureBoxXml.Image = global::InetAnalytics.Resources.XmlNamespace_32;
+			this.pictureBoxXml.Image = global::InetCommon.Resources.XmlNamespace_32;
 			this.pictureBoxXml.Location = new System.Drawing.Point(6, 6);
 			this.pictureBoxXml.Name = "pictureBoxXml";
 			this.pictureBoxXml.Size = new System.Drawing.Size(32, 32);
@@ -568,7 +568,7 @@
 			// 
 			// copyValueToClipboardToolStripMenuItem
 			// 
-			this.copyValueToClipboardToolStripMenuItem.Image = global::InetAnalytics.Resources.Copy_16;
+			this.copyValueToClipboardToolStripMenuItem.Image = global::InetCommon.Resources.Copy_16;
 			this.copyValueToClipboardToolStripMenuItem.Name = "copyValueToClipboardToolStripMenuItem";
 			this.copyValueToClipboardToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
 			this.copyValueToClipboardToolStripMenuItem.Text = "Copy to clipboard";
@@ -576,7 +576,7 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::InetAnalytics.Resources.EventMagenta_32;
+			this.pictureBox.Image = global::InetCommon.Resources.EventMagenta_32;
 			this.pictureBox.Location = new System.Drawing.Point(20, 20);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(32, 32);

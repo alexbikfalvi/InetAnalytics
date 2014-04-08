@@ -21,9 +21,9 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
-namespace InetAnalytics.Forms.Tools
+namespace InetCommon.Forms.Tools
 {
 	/// <summary>
 	/// A form dialog to add a tool metohod.

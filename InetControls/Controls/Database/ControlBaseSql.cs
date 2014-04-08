@@ -21,14 +21,14 @@ using System.Drawing;
 using System.Security;
 using System.Threading;
 using System.Windows.Forms;
-using InetCrawler;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
-using InetCrawler.Log;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
+using InetCommon;
+using InetCommon.Database;
+using InetCommon.Database.Data;
+using InetCommon.Log;
 
-namespace InetAnalytics.Controls.Database
+namespace InetCommon.Controls.Database
 {
 	/// <summary>
 	/// A generic control that allows a background SQL database operation.

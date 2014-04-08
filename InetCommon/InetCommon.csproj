@@ -33,12 +33,74 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\Data\DbObject.cs" />
+    <Compile Include="Database\Data\DbObjectColumn.cs" />
+    <Compile Include="Database\Data\DbObjectDatabase.cs" />
+    <Compile Include="Database\Data\DbObjectSchema.cs" />
+    <Compile Include="Database\Data\DbObjectSqlColumn.cs" />
+    <Compile Include="Database\Data\DbObjectSqlDatabase.cs" />
+    <Compile Include="Database\Data\DbObjectSqlSchema.cs" />
+    <Compile Include="Database\Data\DbObjectSqlTable.cs" />
+    <Compile Include="Database\Data\DbObjectSqlType.cs" />
+    <Compile Include="Database\Data\DbObjectStandardFeed.cs" />
+    <Compile Include="Database\Data\DbObjectTable.cs" />
+    <Compile Include="Database\Data\DbObjectType.cs" />
+    <Compile Include="Database\DbAsyncResult.cs" />
+    <Compile Include="Database\DbAttribute.cs" />
+    <Compile Include="Database\DbCommand.cs" />
+    <Compile Include="Database\DbCommandSql.cs" />
+    <Compile Include="Database\DbConfig.cs" />
+    <Compile Include="Database\DbConfigSql.cs" />
+    <Compile Include="Database\DbData.cs" />
+    <Compile Include="Database\DbDataObject.cs" />
+    <Compile Include="Database\DbDataRaw.cs" />
+    <Compile Include="Database\DbException.cs" />
+    <Compile Include="Database\DbField.cs" />
+    <Compile Include="Database\DbFieldException.cs" />
+    <Compile Include="Database\DbIdEventArgs.cs" />
+    <Compile Include="Database\DbPrimaryServerChangedEventArgs.cs" />
+    <Compile Include="Database\DbQuery.cs" />
+    <Compile Include="Database\DbQuerySql.cs" />
+    <Compile Include="Database\DbReader.cs" />
+    <Compile Include="Database\DbReaderSql.cs" />
+    <Compile Include="Database\DbRelationship.cs" />
+    <Compile Include="Database\DbRelationshipEventArgs.cs" />
+    <Compile Include="Database\DbRelationships.cs" />
+    <Compile Include="Database\DbRelationshipTemplate.cs" />
+    <Compile Include="Database\DbRelationshipTemplateEventArgs.cs" />
+    <Compile Include="Database\DbRelationshipTemplates.cs" />
+    <Compile Include="Database\DbServer.cs" />
+    <Compile Include="Database\DbServerAsyncState.cs" />
+    <Compile Include="Database\DbServerDatabaseChangedEventArgs.cs" />
+    <Compile Include="Database\DbServerEventArgs.cs" />
+    <Compile Include="Database\DbServerMsSql.cs" />
+    <Compile Include="Database\DbServerRelationshipEventArgs.cs" />
+    <Compile Include="Database\DbServerSql.cs" />
+    <Compile Include="Database\DbServerStateEventArgs.cs" />
+    <Compile Include="Database\DbServerTableEventArgs.cs" />
+    <Compile Include="Database\DbTable.cs" />
+    <Compile Include="Database\DbTableEventArgs.cs" />
+    <Compile Include="Database\DbTables.cs" />
+    <Compile Include="Database\DbTableTemplate.cs" />
+    <Compile Include="Database\DbTableTemplateEventArgs.cs" />
+    <Compile Include="Database\DbTableTemplates.cs" />
+    <Compile Include="Database\DbTransaction.cs" />
+    <Compile Include="Database\DbTransactionSql.cs" />
+    <Compile Include="Database\IDbConfig.cs" />
     <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\PageSelectionEventArgs.cs" />
+    <Compile Include="IConfig.cs" />
+    <Compile Include="Log\LogEvent.cs" />
+    <Compile Include="Log\LogEventArgs.cs" />
+    <Compile Include="Log\LogException.cs" />
+    <Compile Include="Log\Logger.cs" />
     <Compile Include="Net\NetworkAddresses.cs" />
     <Compile Include="Net\NetworkAddressEventArgs.cs" />
     <Compile Include="Net\NetworkAddressInformation.cs" />
@@ -50,6 +112,37 @@
     <Compile Include="Status\ApplicationStatusHandler.cs" />
     <Compile Include="Status\ApplicationStatusMessage.cs" />
     <Compile Include="Status\ApplicationStatusMessageEventArgs.cs" />
+    <Compile Include="Tools\IToolApi.cs" />
+    <Compile Include="Tools\IToolConfig.cs" />
+    <Compile Include="Tools\Tool.cs" />
+    <Compile Include="Tools\ToolApi.cs" />
+    <Compile Include="Tools\Toolbox.cs" />
+    <Compile Include="Tools\ToolboxEnumerable.cs" />
+    <Compile Include="Tools\ToolboxEnumerator.cs" />
+    <Compile Include="Tools\ToolConfig.cs" />
+    <Compile Include="Tools\ToolDependencyAttribute.cs" />
+    <Compile Include="Tools\ToolEventArgs.cs" />
+    <Compile Include="Tools\ToolException.cs" />
+    <Compile Include="Tools\ToolId.cs" />
+    <Compile Include="Tools\ToolInfoAttribute.cs" />
+    <Compile Include="Tools\ToolItem.cs" />
+    <Compile Include="Tools\ToolMethod.cs" />
+    <Compile Include="Tools\ToolMethodId.cs" />
+    <Compile Include="Tools\ToolMethodInfo.cs" />
+    <Compile Include="Tools\ToolMethodState.cs" />
+    <Compile Include="Tools\ToolMethodTrigger.cs" />
+    <Compile Include="Tools\Toolset.cs" />
+    <Compile Include="Tools\ToolsetConfig.cs" />
+    <Compile Include="Tools\ToolsetInfoAttribute.cs" />
+    <Compile Include="Web\AjaxException.cs" />
+    <Compile Include="Web\AjaxParsingException.cs" />
+    <Compile Include="Web\AtomException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DotNetApi\DotNetApi\DotNetApi.csproj">
+      <Project>{475f767e-2288-4e56-9b90-179a10dcab49}</Project>
+      <Name>DotNetApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

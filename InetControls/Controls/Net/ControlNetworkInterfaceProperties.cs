@@ -22,10 +22,8 @@ using System.Net.NetworkInformation;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
-using InetAnalytics.Forms;
-using InetCrawler.Comments;
 
-namespace InetAnalytics.Controls.Net
+namespace InetCommon.Controls.Net
 {
 	/// <summary>
 	/// Displays the information of a network interface.

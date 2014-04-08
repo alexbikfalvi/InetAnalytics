@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Controls.Net
+﻿namespace InetCommon.Controls.Net
 {
 	partial class ControlHttpHeader
 	{
@@ -115,14 +115,14 @@
 			// 
 			// copyValueToClipboardToolStripMenuItem
 			// 
-			this.copyValueToClipboardToolStripMenuItem.Image = global::InetAnalytics.Resources.Copy_16;
+			this.copyValueToClipboardToolStripMenuItem.Image = global::InetCommon.Resources.Copy_16;
 			this.copyValueToClipboardToolStripMenuItem.Name = "copyValueToClipboardToolStripMenuItem";
 			this.copyValueToClipboardToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
 			this.copyValueToClipboardToolStripMenuItem.Text = "Copy to clipboard";
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::InetAnalytics.Resources.Header_32;
+			this.pictureBox.Image = global::InetCommon.Resources.Header_32;
 			this.pictureBox.Location = new System.Drawing.Point(20, 20);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(32, 32);

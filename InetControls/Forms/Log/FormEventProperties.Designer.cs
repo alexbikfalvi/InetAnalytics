@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Forms.Log
+﻿namespace InetCommon.Forms.Log
 {
 	partial class FormEventProperties
 	{
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.logEvent = new InetAnalytics.Controls.Log.ControlLogEventProperties();
+			this.logEvent = new InetCommon.Controls.Log.ControlLogEventProperties();
 			this.SuspendLayout();
 			// 
 			// buttonClose

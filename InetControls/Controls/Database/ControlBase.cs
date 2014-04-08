@@ -20,11 +20,11 @@ using System;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
-using InetAnalytics.Events;
-using InetAnalytics.Forms.Database;
-using InetCrawler.Database;
+using InetCommon.Database;
+using InetCommon.Events;
+using InetCommon.Forms.Database;
 
-namespace InetAnalytics.Controls.Database
+namespace InetCommon.Controls.Database
 {
 	/// <summary>
 	/// A generic control that allows a background database operation.

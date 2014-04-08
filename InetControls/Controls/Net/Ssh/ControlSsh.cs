@@ -23,11 +23,11 @@ using System.Threading;
 using DotNetApi;
 using DotNetApi.Concurrent.Generic;
 using DotNetApi.Windows.Controls;
-using InetCrawler;
+using InetCommon;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 
-namespace InetAnalytics.Controls.Net.Ssh
+namespace InetCommon.Controls.Net.Ssh
 {
 	/// <summary>
 	/// A control for connecting to a remote server using Secure Shell (SSH).

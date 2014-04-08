@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetAnalytics.Forms
+namespace InetCommon.Forms
 {
 	/// <summary>
 	/// A form dialog displaying an exception.

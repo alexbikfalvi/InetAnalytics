@@ -22,7 +22,7 @@ using System.Windows.Forms;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetAnalytics.Forms.Net
+namespace InetCommon.Forms.Net
 {
 	/// <summary>
 	/// A form dialog to add an HTTP header.

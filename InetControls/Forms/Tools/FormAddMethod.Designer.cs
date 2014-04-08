@@ -1,4 +1,4 @@
-﻿namespace InetAnalytics.Forms.Tools
+﻿namespace InetCommon.Forms.Tools
 {
 	partial class FormAddMethod
 	{
@@ -30,7 +30,7 @@
 		{
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonAdd = new System.Windows.Forms.Button();
-			this.control = new InetAnalytics.Controls.Tools.ControlAddMethod();
+			this.control = new InetCommon.Controls.Tools.ControlAddMethod();
 			this.SuspendLayout();
 			// 
 			// buttonCancel

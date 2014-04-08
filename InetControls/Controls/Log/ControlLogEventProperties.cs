@@ -22,13 +22,12 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Xml;
 using DotNetApi.Windows.Controls;
-using InetAnalytics.Forms;
-using InetAnalytics.Forms.Log;
-using InetApi.YouTube.Api.V2.Atom;
-using InetApi.YouTube.Ajax;
-using InetCrawler.Log;
+using InetCommon.Forms;
+using InetCommon.Forms.Log;
+using InetCommon.Log;
+using InetCommon.Web;
 
-namespace InetAnalytics.Controls.Log
+namespace InetCommon.Controls.Log
 {
 	/// <summary>
 	/// Displays the information of a log event.

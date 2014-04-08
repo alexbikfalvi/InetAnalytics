@@ -19,14 +19,14 @@
 using System;
 using System.Security;
 using System.Windows.Forms;
-using InetAnalytics.Controls;
-using InetAnalytics.Events;
-using InetCrawler.Database;
+using InetCommon.Controls;
+using InetCommon.Database;
+using InetCommon.Events;
 using DotNetApi.Security;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetAnalytics.Forms.Database
+namespace InetCommon.Forms.Database
 {
 	/// <summary>
 	/// A form dialog displaying a dialog allowing the user to change the database password.
