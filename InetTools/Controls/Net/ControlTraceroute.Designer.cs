@@ -69,7 +69,7 @@
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -500,7 +500,7 @@
 		private DotNetApi.Windows.Controls.ThemeControl panelTool;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ImageList imageList;
-		private InetAnalytics.Controls.Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageRoute;
 		private System.Windows.Forms.TabPage tabPageSettings;

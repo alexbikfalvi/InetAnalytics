@@ -17,44 +17,28 @@
  */
 
 using System;
-using InetCommon.Database;
-using InetCommon.Log;
-using InetCommon.Status;
 
 namespace InetCommon
 {
 	/// <summary>
-	/// An interface representing the base application configuration.
+	/// A class with the static application configuration.
 	/// </summary>
-	public interface IConfig
+	public static class ApplicationConfig
 	{
 		#region Configuration properties
 
 		/// <summary>
 		/// The delay in closing a notification message.
 		/// </summary>
-		TimeSpan MessageCloseDelay { get; }
+		public static TimeSpan MessageCloseDelay { get; set; }
 		/// <summary>
 		/// The cryptographic key for securing application data.
 		/// </summary>
-		byte[] CryptoKey { get; }
+		public static byte[] CryptoKey { get; set; }
 		/// <summary>
 		/// The cryptographic initialization vector for securing application data.
 		/// </summary>
-		byte[] CryptoIV { get; }
-
-		#endregion
-
-		#region State properties
-
-		/// <summary>
-		/// The application log.
-		/// </summary>
-		Logger Log { get; }
-		/// <summary>
-		/// The application status.
-		/// </summary>
-		ApplicationStatus Status { get; }
+		public static byte[] CryptoIV { get; set; }
 
 		#endregion
 	}

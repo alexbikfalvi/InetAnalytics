@@ -20,14 +20,14 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using ARSoft.Tools.Net.Socket;
+using InetApi.Net.Socket;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// Provides a base DNS server interface.
 	/// </summary>
-	public class DnsServer : IDisposable
+	public sealed class DnsServer : IDisposable
 	{
 		/// <summary>
 		/// The server state.

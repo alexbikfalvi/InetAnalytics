@@ -63,7 +63,7 @@
 			this.itemSelectNodesState = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemSelectNodesSlice = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttonRemoveFromNodes = new System.Windows.Forms.ToolStripButton();
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
 			this.menuItemAddToNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -421,7 +421,7 @@
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripSeparator separator1;
 		private System.Windows.Forms.ToolStripButton buttonProperties;
-		private Log.ControlLogList controlLog;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private System.Windows.Forms.ListView listViewSlices;
 		private System.Windows.Forms.ColumnHeader columnHeaderName;
 		private System.Windows.Forms.ColumnHeader columnHeaderId;

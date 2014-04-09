@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Controls
+﻿namespace InetControls.Controls
 {
 	partial class ControlExceptionProperties
 	{
@@ -161,7 +161,7 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::InetCommon.Resources.Exception_32;
+			this.pictureBox.Image = global::InetControls.Resources.Exception_32;
 			this.pictureBox.Location = new System.Drawing.Point(20, 20);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(32, 32);
@@ -215,7 +215,7 @@
 			// linkLabelInner
 			// 
 			this.linkLabelInner.Enabled = false;
-			this.linkLabelInner.Image = global::InetCommon.Resources.Exception_16;
+			this.linkLabelInner.Image = global::InetControls.Resources.Exception_16;
 			this.linkLabelInner.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.linkLabelInner.Location = new System.Drawing.Point(79, 111);
 			this.linkLabelInner.Name = "linkLabelInner";

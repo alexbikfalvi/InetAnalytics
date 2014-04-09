@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
 namespace InetAnalytics.Controls.Tools
 {

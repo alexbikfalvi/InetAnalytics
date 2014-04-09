@@ -21,8 +21,8 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using InetAnalytics.Forms.Tools;
+using InetCommon.Tools;
 using InetCrawler;
-using InetCrawler.Tools;
 
 namespace InetAnalytics.Controls.Tools
 {

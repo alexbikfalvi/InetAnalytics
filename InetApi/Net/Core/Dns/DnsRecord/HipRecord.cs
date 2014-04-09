@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Host identity protocol</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc5205">RFC 5205</see>.</para>

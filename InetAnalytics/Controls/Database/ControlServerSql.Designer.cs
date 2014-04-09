@@ -79,7 +79,7 @@
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.labelName = new System.Windows.Forms.Label();
 			this.labelPrimary = new System.Windows.Forms.Label();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -665,7 +665,7 @@
 
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton buttonPrimary;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

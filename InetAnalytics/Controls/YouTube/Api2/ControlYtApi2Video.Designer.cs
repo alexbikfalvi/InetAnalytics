@@ -48,7 +48,7 @@
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panelVideo = new DotNetApi.Windows.Controls.ThemeControl();
 			this.controlVideo = new InetAnalytics.Controls.YouTube.ControlVideoProperties();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -286,7 +286,7 @@
 		private System.Windows.Forms.ToolStripButton buttonStart;
 		private System.Windows.Forms.ToolStripButton buttonStop;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private ControlVideoProperties controlVideo;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripDropDownButton buttonView;

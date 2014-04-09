@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// Interface for text providing <see cref="DnsRecordBase">records</see>.

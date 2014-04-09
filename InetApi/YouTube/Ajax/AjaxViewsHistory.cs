@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using DotNetApi;
+using InetCommon.Web;
 
 namespace InetApi.YouTube.Ajax
 {

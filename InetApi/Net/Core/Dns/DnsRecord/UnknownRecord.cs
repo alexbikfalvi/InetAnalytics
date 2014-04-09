@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// Represent a DNS record, which is not directly supported by this library.

@@ -225,7 +225,7 @@
       <DependentUpon>FormAddMethod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <CustomToolNamespace>InetCommon</CustomToolNamespace>
+      <CustomToolNamespace>InetControls</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

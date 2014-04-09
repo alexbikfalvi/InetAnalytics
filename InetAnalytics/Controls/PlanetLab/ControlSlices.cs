@@ -28,9 +28,9 @@ using PlanetLab.Database;
 using PlanetLab.Requests;
 using InetAnalytics.Events;
 using InetAnalytics.Forms.PlanetLab;
+using InetCommon.Log;
 using InetCommon.Status;
 using InetCrawler;
-using InetCrawler.Log;
 
 namespace InetAnalytics.Controls.PlanetLab
 {

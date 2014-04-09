@@ -34,7 +34,8 @@ using InetApi.YouTube;
 using InetApi.YouTube.Api.V2;
 using InetApi.YouTube.Api.V2.Atom;
 using InetApi.YouTube.Api.V2.Data;
-using InetCrawler.Log;
+using InetCommon.Log;
+using InetCommon.Web;
 
 namespace InetAnalytics.Controls.YouTube.Api2
 {

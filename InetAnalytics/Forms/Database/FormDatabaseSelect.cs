@@ -19,8 +19,8 @@
 using System;
 using System.Windows.Forms;
 using InetAnalytics.Events;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
+using InetCommon.Database;
+using InetCommon.Database.Data;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 

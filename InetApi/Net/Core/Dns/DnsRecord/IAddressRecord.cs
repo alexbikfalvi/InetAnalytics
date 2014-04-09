@@ -17,7 +17,7 @@
 using System;
 using System.Net;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// Interface for host address providing <see cref="DnsRecordBase">records</see>.

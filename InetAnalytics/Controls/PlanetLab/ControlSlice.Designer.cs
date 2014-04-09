@@ -89,7 +89,7 @@
 			this.buttonProperties = new System.Windows.Forms.ToolStripDropDownButton();
 			this.buttonNodeProperties = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttonSiteProperties = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlLogList = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLogList = new InetControls.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -685,7 +685,7 @@
 		private System.Windows.Forms.ToolStripButton buttonCancel;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.ToolStripSeparator separator1;
-		private Log.ControlLogList controlLogList;
+		private InetControls.Controls.Log.ControlLogList controlLogList;
 		private System.Windows.Forms.ToolStripButton buttonRemoveFromNodes;
 		private System.Windows.Forms.ToolStripDropDownButton buttonAddToNodes;
 		private System.Windows.Forms.ContextMenuStrip contextMenuAddToNodes;

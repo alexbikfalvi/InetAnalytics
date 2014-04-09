@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>IPv6 address</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc3596">RFC 3596</see></para>

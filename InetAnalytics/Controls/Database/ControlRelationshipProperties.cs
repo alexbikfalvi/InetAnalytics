@@ -18,9 +18,9 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Database;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
+using InetCommon.Database;
 
 namespace InetAnalytics.Controls.Database
 {

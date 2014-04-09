@@ -39,7 +39,7 @@
 			this.buttonFeeds = new System.Windows.Forms.ToolStripDropDownButton();
 			this.checkedListFeeds = new DotNetApi.Windows.Controls.ToolStripDropDownCheckedList();
 			this.linkLabel = new System.Windows.Forms.LinkLabel();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.progressLegend = new DotNetApi.Windows.Controls.ProgressLegend();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -265,7 +265,7 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.LinkLabel linkLabel;
 		private DotNetApi.Windows.Controls.ProgressListBox progressListBox;

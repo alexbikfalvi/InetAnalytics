@@ -18,7 +18,7 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Controls.Net.Web;
 using InetTools.Tools.Net.Web;
 

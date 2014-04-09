@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Tools;
 
 namespace InetTools

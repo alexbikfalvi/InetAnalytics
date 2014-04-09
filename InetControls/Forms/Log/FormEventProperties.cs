@@ -23,7 +23,7 @@ using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetCommon.Forms.Log
+namespace InetControls.Forms.Log
 {
 	/// <summary>
 	/// A form dialog displaying a log event.

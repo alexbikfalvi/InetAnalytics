@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>SSH key fingerprint record.</para> <para>Defined in<see cref="http://tools.ietf.org/html/rfc4255">RFC 4255</see></para>

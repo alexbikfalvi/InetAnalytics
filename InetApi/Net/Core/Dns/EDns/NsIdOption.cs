@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Name server ID option.</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc5001">RFC 5001</see>.</para>

@@ -21,10 +21,10 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
-using InetAnalytics.Controls.Database;
 using InetApi.YouTube.Api.V2;
+using InetCommon.Database.Data;
+using InetControls.Controls.Database;
 using InetCrawler;
-using InetCrawler.Database.Data;
 using InetCrawler.Spider;
 
 namespace InetAnalytics.Controls.Spiders

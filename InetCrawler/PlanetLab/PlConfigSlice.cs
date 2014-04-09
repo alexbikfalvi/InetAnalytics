@@ -22,7 +22,8 @@ using System.IO;
 using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Windows;
-using InetCrawler.Log;
+using InetCommon;
+using InetCommon.Log;
 using PlanetLab;
 using PlanetLab.Api;
 
@@ -125,12 +126,12 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return this.key.GetSecureByteArray("Key", null, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				return this.key.GetSecureByteArray("Key", null, ApplicationConfig.CryptoKey, ApplicationConfig.CryptoIV);
 			}
 			set
 			{
 				// Set the key.
-				this.key.SetSecureByteArray("Key", value, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				this.key.SetSecureByteArray("Key", value, ApplicationConfig.CryptoKey, ApplicationConfig.CryptoIV);
 				// Call the changed event handler.
 				this.OnChanged();
 			}

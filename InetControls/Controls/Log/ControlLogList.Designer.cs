@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Controls.Log
+﻿namespace InetControls.Controls.Log
 {
 	partial class ControlLogList
 	{
@@ -113,7 +113,7 @@
 			// 
 			// log
 			// 
-			this.log.Image = global::InetCommon.Resources.Log_16;
+			this.log.Image = global::InetControls.Resources.Log_16;
 			this.log.Name = "log";
 			this.log.Size = new System.Drawing.Size(16, 22);
 			// 
@@ -164,7 +164,7 @@
 			// buttonProperties
 			// 
 			this.buttonProperties.Enabled = false;
-			this.buttonProperties.Image = global::InetCommon.Resources.Properties_16;
+			this.buttonProperties.Image = global::InetControls.Resources.Properties_16;
 			this.buttonProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonProperties.Name = "buttonProperties";
 			this.buttonProperties.Size = new System.Drawing.Size(80, 22);
@@ -179,7 +179,7 @@
 			// 
 			// menuItemProperties
 			// 
-			this.menuItemProperties.Image = global::InetCommon.Resources.Properties_16;
+			this.menuItemProperties.Image = global::InetControls.Resources.Properties_16;
 			this.menuItemProperties.Name = "menuItemProperties";
 			this.menuItemProperties.Size = new System.Drawing.Size(127, 22);
 			this.menuItemProperties.Text = "&Properties";

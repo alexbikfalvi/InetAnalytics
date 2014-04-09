@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Controls.Tools
+﻿namespace InetControls.Controls.Tools
 {
 	partial class ControlMethods
 	{
@@ -116,7 +116,7 @@
 			// 
 			// buttonAdd
 			// 
-			this.buttonAdd.Image = global::InetCommon.Resources.CubeAdd_16;
+			this.buttonAdd.Image = global::InetControls.Resources.CubeAdd_16;
 			this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonAdd.Name = "buttonAdd";
 			this.buttonAdd.Size = new System.Drawing.Size(94, 22);
@@ -126,7 +126,7 @@
 			// buttonRemove
 			// 
 			this.buttonRemove.Enabled = false;
-			this.buttonRemove.Image = global::InetCommon.Resources.CubeRemove_16;
+			this.buttonRemove.Image = global::InetControls.Resources.CubeRemove_16;
 			this.buttonRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.buttonRemove.Name = "buttonRemove";
 			this.buttonRemove.Size = new System.Drawing.Size(115, 22);

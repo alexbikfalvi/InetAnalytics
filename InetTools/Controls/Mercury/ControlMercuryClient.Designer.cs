@@ -62,7 +62,7 @@
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonUpload = new System.Windows.Forms.ToolStripButton();
 			this.buttonCancel = new System.Windows.Forms.ToolStripButton();
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -312,7 +312,7 @@
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private InetAnalytics.Controls.Log.ControlLogList controlLog;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageTraceroute;
 		private System.Windows.Forms.ToolStripSeparator separator1;

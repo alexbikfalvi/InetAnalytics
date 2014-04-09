@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ARSoft.Tools.Net.Dns.DynamicUpdate
+namespace InetApi.Net.Core.Dns.DynamicUpdate
 {
 	/// <summary>
 	/// Delete all records action.

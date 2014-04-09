@@ -44,13 +44,13 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlSession));
 			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.panelConsole = new DotNetApi.Windows.Controls.ThemeControl();
-			this.console = new InetAnalytics.Controls.ControlConsole();
+			this.console = new InetControls.Controls.ControlConsole();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelHostname = new System.Windows.Forms.ToolStripLabel();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
 			this.buttonDisconnect = new System.Windows.Forms.ToolStripButton();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -231,11 +231,11 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private ControlConsole console;
+		private InetControls.Controls.ControlConsole console;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ToolStripButton buttonConnect;
 		private System.Windows.Forms.ToolStripButton buttonDisconnect;

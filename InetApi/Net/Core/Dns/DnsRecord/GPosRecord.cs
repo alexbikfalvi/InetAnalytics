@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Geographical position</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc1712">RFC 1712</see>.</para>

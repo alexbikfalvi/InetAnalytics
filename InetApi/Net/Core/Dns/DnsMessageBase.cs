@@ -19,9 +19,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using ARSoft.Tools.Net.Dns.DynamicUpdate;
+using InetApi.Net.Core.Dns.DynamicUpdate;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	///   Base class for a dns answer

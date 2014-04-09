@@ -17,7 +17,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// A helper class for transaction signature algorithms.

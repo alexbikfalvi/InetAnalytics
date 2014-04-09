@@ -22,9 +22,9 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
+using InetCommon.Log;
 using InetCommon.Status;
-using InetCrawler.Log;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Tools.Alexa;
 
 namespace InetTools.Controls.Alexa

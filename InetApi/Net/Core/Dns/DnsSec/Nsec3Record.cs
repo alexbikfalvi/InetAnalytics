@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Hashed next owner.</para><para>Defined in <see cref="http://tools.ietf.org/html/rfc5155">RFC 5155</see>.</para>

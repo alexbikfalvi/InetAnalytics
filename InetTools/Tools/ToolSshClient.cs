@@ -18,7 +18,7 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Controls.Net.Ssh;
 using InetTools.Tools.Net.Ssh;
 

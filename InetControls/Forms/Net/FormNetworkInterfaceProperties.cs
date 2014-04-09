@@ -23,7 +23,7 @@ using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetCommon.Forms.Net
+namespace InetControls.Forms.Net
 {
 	/// <summary>
 	/// A form dialog displaying the properties of a network interface.

@@ -23,9 +23,9 @@ using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
+using InetCommon.Log;
 using InetCommon.Status;
-using InetCrawler.Log;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Forms.Mercury;
 using InetTools.Tools.Mercury;
 

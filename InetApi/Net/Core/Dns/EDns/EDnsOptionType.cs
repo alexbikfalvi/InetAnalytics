@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// ENDS Option types.

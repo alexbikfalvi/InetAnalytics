@@ -18,15 +18,16 @@
 
 using System;
 using Microsoft.Win32;
+using InetCommon;
+using InetCommon.Database;
 using InetCommon.Net;
+using InetCommon.Log;
 using InetCommon.Status;
+using InetCommon.Tools;
 using InetCrawler.Comments;
-using InetCrawler.Database;
 using InetCrawler.Events;
-using InetCrawler.Log;
 using InetCrawler.PlanetLab;
 using InetCrawler.Spider;
-using InetCrawler.Tools;
 using InetCrawler.YouTube;
 
 namespace InetCrawler
@@ -34,7 +35,7 @@ namespace InetCrawler
 	/// <summary>
 	/// A class representing the YouTube crawler.
 	/// </summary>
-	public sealed class Crawler : IDisposable
+	public sealed class Crawler : IDbApplication, IDisposable
 	{
 		private readonly CrawlerConfig config;
 		private readonly CrawlerEvents events;
@@ -48,8 +49,6 @@ namespace InetCrawler
 		private readonly ApplicationStatus status;
 		private readonly CrawlerComments comments;
 		
-		private readonly static NetworkStatus network = new NetworkStatus();
-
 		/// <summary>
 		/// Creates a new crawer global object, based on a configuration from the specified root registry key.
 		/// </summary>
@@ -57,7 +56,7 @@ namespace InetCrawler
 		/// <param name="rootPath">The root registry path.</param>
 		public Crawler(RegistryKey rootKey, string rootPath)
 		{
-			// Create the crawler configuration.
+			// Create the configuration.
 			this.config = new CrawlerConfig(rootKey, rootPath);
 
 			// Create the crawler events.
@@ -67,7 +66,7 @@ namespace InetCrawler
 			this.log = new Logger(this.config.LogFileName);
 
 			// Create the database servers.
-			this.dbConfig = new DbConfig(this.config, rootKey, rootPath + @"\Database");
+			this.dbConfig = new DbConfig(this, rootKey, rootPath + @"\Database");
 
 			// Create the PlanetLab configuration.
 			this.plConfig = new PlConfig(rootKey, rootPath + @"\PlanetLab");
@@ -88,11 +87,19 @@ namespace InetCrawler
 			this.api = new CrawlerApi(this.config, this.dbConfig, this.log, this.status);
 
 			// Create the toolbox.
-			this.toolbox = new Toolbox(this.api, rootKey, rootPath + @"\Toolbox");
+			this.toolbox = new Toolbox(this, rootKey, rootPath + @"\Toolbox");
 		}
 
-		// Public properties.
+		#region Public properties
 
+		/// <summary>
+		/// Gets the crawler configuration.
+		/// </summary>
+		IApplicationConfig IApplication.Config { get { return this.config; } }
+		/// <summary>
+		/// Gets the crawler configuration.
+		/// </summary>
+		IDbApplicationConfig IDbApplication.Config { get { return this.config; } }
 		/// <summary>
 		/// Gets the crawler configuration.
 		/// </summary>
@@ -133,54 +140,36 @@ namespace InetCrawler
 		/// Returns the crawler comments.
 		/// </summary>
 		public CrawlerComments Comments { get { return this.comments; } }
-		/// <summary>
-		/// Gets the network information.
-		/// </summary>
-		public static NetworkStatus Network { get { return Crawler.network; } }
 
-		// Public methods.
+		#endregion
 
-		/// <summary>
-		/// A method called when the object is disposed.
-		/// </summary>
-		public void Dispose()
-		{
-			// Call the dispose event handler.
-			this.Dispose(true);
-			// Suppress the finalizer.
-			GC.SuppressFinalize(this);
-		}
-
-		// Private methods.
+		#region Public methods
 
 		/// <summary>
 		/// Disposes the current object.
 		/// </summary>
-		/// <param name="disposing">If <b>true</b>, clean both managed and native resources. If <b>false</b>, clean only native resources.</param>
-		private void Dispose(bool disposing)
+		public void Dispose()
 		{
-			// Dispose the current objects.
-			if (disposing)
-			{
-				// Close the toolbox.
-				this.toolbox.Dispose();
-				// Close the database configuration.
-				this.dbConfig.Dispose();
-				// Close the PlanetLab configuration.
-				this.plConfig.Dispose();
-				// Close the YouTube configuration.
-				this.ytConfig.Dispose();
-				// Close the status.
-				this.status.Dispose();
-				// Close the comments.
-				this.comments.Dispose();
-				// Close the spiders.
-				this.spiders.Dispose();
-				// Close the log.
-				this.log.Dispose();
-				// Close the configuration.
-				this.config.Dispose();
-			}
+			// Close the toolbox.
+			this.toolbox.Dispose();
+			// Close the database configuration.
+			this.dbConfig.Dispose();
+			// Close the PlanetLab configuration.
+			this.plConfig.Dispose();
+			// Close the YouTube configuration.
+			this.ytConfig.Dispose();
+			// Close the status.
+			this.status.Dispose();
+			// Close the comments.
+			this.comments.Dispose();
+			// Close the spiders.
+			this.spiders.Dispose();
+			// Close the log.
+			this.log.Dispose();
+			// Close the configuration.
+			this.config.Dispose();
 		}
+
+		#endregion
 	}
 }

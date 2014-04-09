@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// The asynchronous state for the DNS client parallel request.

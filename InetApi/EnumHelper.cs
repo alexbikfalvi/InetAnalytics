@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net
+namespace InetApi
 {
 	/// <summary>
 	/// A helper class for an enumeration type.

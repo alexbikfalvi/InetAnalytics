@@ -103,7 +103,7 @@
 			this.comboBoxNodes = new System.Windows.Forms.ComboBox();
 			this.labelResults = new System.Windows.Forms.Label();
 			this.tabPageTools = new System.Windows.Forms.TabPage();
-			this.controlMethods = new InetAnalytics.Controls.Tools.ControlMethods();
+			this.controlMethods = new InetControls.Controls.Tools.ControlMethods();
 			this.tabPageHistory = new System.Windows.Forms.TabPage();
 			this.splitContainerHistory = new DotNetApi.Windows.Controls.ToolSplitContainer();
 			this.listViewHistoryCommands = new System.Windows.Forms.ListView();
@@ -120,7 +120,7 @@
 			this.buttonStart = new System.Windows.Forms.ToolStripButton();
 			this.buttonPause = new System.Windows.Forms.ToolStripButton();
 			this.buttonStop = new System.Windows.Forms.ToolStripButton();
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
 			this.legendItemSuccess = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemFail = new DotNetApi.Windows.Controls.ProgressLegendItem();
 			this.legendItemWarning = new DotNetApi.Windows.Controls.ProgressLegendItem();
@@ -1143,7 +1143,7 @@
 		private DotNetApi.Windows.Controls.ProgressLegendItem legendItemWarning;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ImageList imageList;
-		private Log.ControlLogList controlLog;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private DotNetApi.Windows.Controls.ThemeControl panelRun;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageNodes;
@@ -1205,7 +1205,7 @@
 		private System.Windows.Forms.NumericUpDown numericUpDownNodesRetries;
 		private System.Windows.Forms.Label labelNodesRetries;
 		private System.Windows.Forms.TabPage tabPageTools;
-		private Tools.ControlMethods controlMethods;
+		private InetControls.Controls.Tools.ControlMethods controlMethods;
 		private System.Windows.Forms.TabPage tabPageHistory;
 		private System.Windows.Forms.TableLayoutPanel tableHistory;
 		private System.Windows.Forms.ComboBox comboBoxHistoryRun;

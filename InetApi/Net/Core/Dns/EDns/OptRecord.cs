@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>OPT record.</para> <para>Defined in<see cref="http://tools.ietf.org/html/rfc2671">RFC 2671</see>.</para>

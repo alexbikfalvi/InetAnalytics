@@ -23,7 +23,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// The base class for a DNS client.

@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>AFS data base location</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc1183">RFC 1183</see> and <see cref="http://tools.ietf.org/html/rfc5864">RFC 5864</see></para>

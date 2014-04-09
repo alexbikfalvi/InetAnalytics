@@ -22,9 +22,9 @@ using System.Linq;
 using System.Windows.Forms;
 using DotNetApi;
 using InetCommon.Tools;
-using InetCommon.Forms.Tools;
+using InetControls.Forms.Tools;
 
-namespace InetCommon.Controls.Tools
+namespace InetControls.Controls.Tools
 {
 	/// <summary>
 	/// A control that adds a tool method.

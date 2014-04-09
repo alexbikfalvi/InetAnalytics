@@ -16,7 +16,7 @@
 
 using System.Net;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// A class representing a DNS client enpoint information.

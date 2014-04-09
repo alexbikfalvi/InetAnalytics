@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Long lived query option.</para> <para>Defined in <see cref="http://files.dns-sd.org/draft-sekar-dns-llq.txt">draft-sekar-dns-llq</see>.</para>

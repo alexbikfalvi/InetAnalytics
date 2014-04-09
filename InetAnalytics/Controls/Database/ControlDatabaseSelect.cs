@@ -20,9 +20,10 @@ using System;
 using System.Windows.Forms;
 using InetAnalytics.Events;
 using InetAnalytics.Forms.Database;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
-using InetCrawler.Log;
+using InetCommon.Database;
+using InetCommon.Database.Data;
+using InetCommon.Log;
+using InetControls.Controls.Database;
 using DotNetApi;
 
 namespace InetAnalytics.Controls.Database

@@ -35,7 +35,7 @@ namespace InetCommon.Database
 	/// </summary>
 	public sealed class DbConfigSql : IDisposable, IEnumerable<DbServerSql>
 	{
-		private readonly IDbConfig config;
+		private readonly IDbApplication application;
 		private readonly RegistryKey key;
 
 		private readonly Dictionary<Guid, DbServerSql> servers = new Dictionary<Guid, DbServerSql>();
@@ -50,13 +50,13 @@ namespace InetCommon.Database
 		/// <summary>
 		/// Creates a new database servers list, using the specified configuration.
 		/// </summary>
-		/// <param name="config">The database configuration.</param>
+		/// <param name="application">The database application.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="path">The registry path.</param>
-		public DbConfigSql(IDbConfig config, RegistryKey rootKey, string path)
+		public DbConfigSql(IDbApplication application, RegistryKey rootKey, string path)
 		{
-			// Save the configuration.
-			this.config = config;
+			// Save the application.
+			this.application = application;
 
 			// Open the database configuration key.
 			if (null == (this.key = rootKey.OpenSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree)))
@@ -77,7 +77,7 @@ namespace InetCommon.Database
 			foreach (string id in this.key.GetSubKeyNames())
 			{
 				// Compute the database server log file.
-				string logFile = this.config.DatabaseLogFileName.FormatWith(id, "{0}", "{1}", "{2}");
+				string logFile = this.application.Config.DatabaseLogFileName.FormatWith(id, "{0}", "{1}", "{2}");
 				// Try to create the database server.
 				try
 				{
@@ -92,7 +92,7 @@ namespace InetCommon.Database
 					switch (type)
 					{
 						case DbServerSql.DbType.MsSql:
-							server = new DbServerMsSql(this.config, serverKey, new Guid(id), logFile);
+							server = new DbServerMsSql(this.application, serverKey, new Guid(id), logFile);
 							break;
 						default: throw new DbException("Cannot add a new database server. Unknown database server type \'{0}\'.".FormatWith(type));
 					}
@@ -255,7 +255,7 @@ namespace InetCommon.Database
 			// Create the registry key for this server.
 			RegistryKey key = this.key.CreateSubKey(id.ToString());
 			// Compute the database server log file.
-			string logFile = string.Format(this.config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
+			string logFile = string.Format(this.application.Config.DatabaseLogFileName, id, "{0}", "{1}", "{2}");
 			DbServerSql server;
 			try
 			{

@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>X.400 mail mapping information record</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc2163">RFC 2163</see>.</para>

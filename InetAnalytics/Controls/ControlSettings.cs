@@ -60,7 +60,7 @@ namespace InetAnalytics.Controls
 		/// </summary>
 		private void LoadSettings()
 		{
-			this.numericMessageCloseDelay.Value = (decimal)this.crawler.Config.ConsoleMessageCloseDelay.TotalMilliseconds;
+			this.numericMessageCloseDelay.Value = (decimal)this.crawler.Config.MessageCloseDelay.TotalMilliseconds;
 			this.textBoxYtUserName.Text = this.crawler.Config.YouTubeUsername;
 			this.textBoxYtPassword.SecureText = this.crawler.Config.YouTubePassword;
 			this.textBoxYt2Key.SecureText = this.crawler.Config.YouTubeV2ApiKey;
@@ -80,7 +80,7 @@ namespace InetAnalytics.Controls
 		/// </summary>
 		private void SaveSettings()
 		{
-			this.crawler.Config.ConsoleMessageCloseDelay = TimeSpan.FromMilliseconds((double)this.numericMessageCloseDelay.Value);
+			this.crawler.Config.MessageCloseDelay = TimeSpan.FromMilliseconds((double)this.numericMessageCloseDelay.Value);
 			this.crawler.Config.YouTubeUsername = this.textBoxYtUserName.Text;
 			this.crawler.Config.YouTubePassword = this.textBoxYtPassword.SecureText;
 			this.crawler.Config.YouTubeV2ApiKey = this.textBoxYt2Key.SecureText;

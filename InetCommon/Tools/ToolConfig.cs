@@ -31,7 +31,7 @@ namespace InetCommon.Tools
 	{
 		private static readonly string logSourceTool = @"Toolbox\{0}\{1}";
 
-		private readonly IDbConfig config;
+		private readonly IDbApplication config;
 		private readonly Toolset toolset;
 
 		private readonly RegistryKey key;
@@ -45,7 +45,7 @@ namespace InetCommon.Tools
 		/// <param name="toolset">The toolset.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="id">The tool identifier.</param>
-		public ToolConfig(IDbConfig config, Toolset toolset, RegistryKey rootKey, ToolId id)
+		public ToolConfig(IDbApplication config, Toolset toolset, RegistryKey rootKey, ToolId id)
 		{
 			// Validate the arguments.
 			if (null == config) throw new ArgumentNullException("config");

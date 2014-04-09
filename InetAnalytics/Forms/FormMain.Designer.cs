@@ -1,4 +1,5 @@
 ﻿using InetCrawler;
+using InetCommon.Net;
 
 namespace InetAnalytics.Forms
 {
@@ -19,7 +20,8 @@ namespace InetAnalytics.Forms
 			if (disposing)
 			{
 				// Remove the network availability event handler.
-				Crawler.Network.NetworkChanged -= this.OnNetworkStatusChanged;
+				NetworkStatus.NetworkChanged -= this.actionNetworkStatusChanged;
+				NetworkStatus.NetworkChecked -= this.actionNetworkStatusChecked;
 
 				// Dispose the components.
 				if (components != null)
@@ -82,7 +84,7 @@ namespace InetAnalytics.Forms
 			this.menuItemWeb = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuItemYouTube = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolTipNetworkStatus = new InetAnalytics.Controls.Net.NetworkStatusToolTip(this.components);
+			this.toolTipNetworkStatus = new InetControls.Controls.Net.NetworkStatusToolTip(this.components);
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -721,7 +723,7 @@ namespace InetAnalytics.Forms
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelMiddle;
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelRight;
 		private System.Windows.Forms.ToolStripStatusLabel statusLabelConnection;
-		private InetAnalytics.Controls.Net.NetworkStatusToolTip toolTipNetworkStatus;
+		private InetControls.Controls.Net.NetworkStatusToolTip toolTipNetworkStatus;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemTasks;
 		private DotNetApi.Windows.Controls.SideTreeView controlSideTasks;
 		private DotNetApi.Windows.Controls.SideMenuItem sideMenuItemToolbox;

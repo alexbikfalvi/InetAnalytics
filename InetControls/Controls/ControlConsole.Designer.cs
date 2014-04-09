@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Controls
+﻿namespace InetControls.Controls
 {
 	partial class ControlConsole
 	{
@@ -104,7 +104,7 @@
 			// 
 			this.button.Enabled = false;
 			this.button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button.Image = global::InetCommon.Resources.PlayStart_16;
+			this.button.Image = global::InetControls.Resources.PlayStart_16;
 			this.button.Location = new System.Drawing.Point(581, 380);
 			this.button.Margin = new System.Windows.Forms.Padding(0, 1, 0, 0);
 			this.button.Name = "button";

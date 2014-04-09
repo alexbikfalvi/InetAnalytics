@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Transaction signature record.</para> <para>Defined in <see cref="!:http://tools.ietf.org/html/rfc2845">RFC 2845</see>.</para>

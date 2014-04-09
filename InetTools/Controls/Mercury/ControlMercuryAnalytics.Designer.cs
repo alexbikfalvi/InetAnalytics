@@ -42,7 +42,7 @@
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonConnect = new System.Windows.Forms.ToolStripButton();
 			this.buttonSettings = new System.Windows.Forms.ToolStripButton();
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -219,7 +219,7 @@
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private InetAnalytics.Controls.Log.ControlLogList controlLog;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageData;
 		private System.Windows.Forms.ToolStripButton buttonSettings;

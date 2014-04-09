@@ -48,7 +48,7 @@
 			this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeadeVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuItemPrimary = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -351,7 +351,7 @@
 
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderName;
 		private System.Windows.Forms.ColumnHeader columnHeaderType;

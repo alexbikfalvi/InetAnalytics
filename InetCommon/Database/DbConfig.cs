@@ -34,7 +34,7 @@ namespace InetCommon.Database
 		/// <param name="config">The configuration.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="rootPath">The registry path.</param>
-		public DbConfig(IDbConfig config, RegistryKey rootKey, string rootPath)
+		public DbConfig(IDbApplication config, RegistryKey rootKey, string rootPath)
 		{
 			// Create the SQL database configuration.
 			this.dbSql = new DbConfigSql(config, rootKey, rootPath + @"\Sql");

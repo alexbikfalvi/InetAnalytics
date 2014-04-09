@@ -40,6 +40,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationConfig.cs" />
     <Compile Include="Database\Data\DbObject.cs" />
     <Compile Include="Database\Data\DbObjectColumn.cs" />
     <Compile Include="Database\Data\DbObjectDatabase.cs" />
@@ -93,10 +94,12 @@
     <Compile Include="Database\DbTableTemplates.cs" />
     <Compile Include="Database\DbTransaction.cs" />
     <Compile Include="Database\DbTransactionSql.cs" />
-    <Compile Include="Database\IDbConfig.cs" />
+    <Compile Include="Database\IDbApplication.cs" />
+    <Compile Include="Database\IDbApplicationConfig.cs" />
     <Compile Include="Events\ArrayEventArgs.cs" />
     <Compile Include="Events\PageSelectionEventArgs.cs" />
-    <Compile Include="IConfig.cs" />
+    <Compile Include="IApplication.cs" />
+    <Compile Include="IApplicationConfig.cs" />
     <Compile Include="Log\LogEvent.cs" />
     <Compile Include="Log\LogEventArgs.cs" />
     <Compile Include="Log\LogException.cs" />

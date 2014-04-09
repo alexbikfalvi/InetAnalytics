@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (C) 2013 Alex Bikfalvi
+ * Copyright (C) 2014 Alex Bikfalvi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,25 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using InetCommon.Tools;
 
-namespace InetTools.Tools
+namespace InetCommon.Database
 {
 	/// <summary>
-	/// Creates a new web crawler tool, which collects information about the content of a web site.
+	/// An interface representing a database application.
 	/// </summary>
-	[ToolInfo(
-		"BD140334-43D9-4853-A124-ACA4FD799034",
-		1, 0, 0, 0,
-		"Web Content Crawler",
-		"A tool that organizes the content of a web site according to the content source."
-		)]
-	public sealed class ToolWebCrawler : Tool
+	public interface IDbApplication : IApplication
 	{
-		/// <summary>
-		/// Creates a new tool instance.
-		/// </summary>
-		/// <param name="api">The tool API.</param>
-		/// <param name="toolset">The toolset information.</param>
-		public ToolWebCrawler(IToolApi api, ToolsetInfoAttribute toolset)
-			: base(api, toolset)
-		{
-
-		}
+		#region Properties
 
 		/// <summary>
-		/// Gets the user interface control for this tool.
+		/// The application configuration.
 		/// </summary>
-		public override Control Control { get { return null; } }
+		new IDbApplicationConfig Config { get; }
+		/// <summary>
+		/// The application database.
+		/// </summary>
+		DbConfig Database { get; }
+
+		#endregion
 	}
 }

@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ARSoft.Tools.Net
+namespace InetApi
 {
 	/// <summary>
 	/// <para>Extension class for encoding and decoding Base16, Base32 and Base64.</para>

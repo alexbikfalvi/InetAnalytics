@@ -23,7 +23,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 
-namespace InetCommon.Controls.Net
+namespace InetControls.Controls.Net
 {
 	/// <summary>
 	/// Displays the information of a network interface.

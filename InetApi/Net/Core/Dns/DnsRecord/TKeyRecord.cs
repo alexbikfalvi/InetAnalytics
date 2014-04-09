@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Transaction key.</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc2930">RFC 2930</see>.</para>

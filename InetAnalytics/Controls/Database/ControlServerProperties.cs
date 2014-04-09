@@ -21,7 +21,7 @@ using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCrawler.Database;
+using InetCommon.Database;
 
 namespace InetAnalytics.Controls.Database
 {

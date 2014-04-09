@@ -20,9 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using InetAnalytics.Forms.Log;
+using InetCommon;
+using InetCommon.Log;
+using InetControls.Forms.Log;
 using InetCrawler;
-using InetCrawler.Log;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 
@@ -197,7 +198,7 @@ namespace InetAnalytics.Controls.Log
 			}
 			finally
 			{
-				Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+				Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 			}
 
 			// If the state is not canceled.

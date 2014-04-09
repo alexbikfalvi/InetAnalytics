@@ -22,7 +22,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 
-namespace ARSoft.Tools.Net
+namespace InetApi.Net
 {
 	/// <summary>
 	/// Extension class for the <see cref="IPAddress" /> class

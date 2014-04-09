@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns.DynamicUpdate
+namespace InetApi.Net.Core.Dns.DynamicUpdate
 {
 	/// <summary>
 	/// Delete record action.

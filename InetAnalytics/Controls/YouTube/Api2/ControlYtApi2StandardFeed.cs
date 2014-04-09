@@ -30,9 +30,10 @@ using InetApi.YouTube;
 using InetApi.YouTube.Api.V2;
 using InetApi.YouTube.Api.V2.Atom;
 using InetApi.YouTube.Api.V2.Data;
+using InetCommon.Log;
+using InetCommon.Web;
 using InetCrawler;
 using InetCrawler.Events;
-using InetCrawler.Log;
 
 namespace InetAnalytics.Controls.YouTube.Api2
 {
@@ -206,7 +207,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 			finally
 			{
 				// Delay the closing of the message.
-				Thread.Sleep(this.crawler.Config.ConsoleMessageCloseDelay);
+				Thread.Sleep(this.crawler.Config.MessageCloseDelay);
 				// Hide the message.
 				this.HideMessage();
 			}

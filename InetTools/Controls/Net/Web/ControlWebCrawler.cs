@@ -26,7 +26,7 @@ using DotNetApi;
 using DotNetApi.Windows.Controls;
 using DotNetApi.Web;
 using InetAnalytics;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
 namespace InetTools.Controls.Net.Web
 {

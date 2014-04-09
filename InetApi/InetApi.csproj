@@ -136,8 +136,6 @@
     <Compile Include="Net\Core\TracerouteResult.cs" />
     <Compile Include="Net\Core\TracerouteSettings.cs" />
     <Compile Include="Net\Core\TracerouteState.cs" />
-    <Compile Include="Net\Information\IPAddressInformation.cs" />
-    <Compile Include="Net\Information\IPUnicastAddressInformation.cs" />
     <Compile Include="Net\NetworkInterfaceEx.cs" />
     <Compile Include="Net\Socket\UdpListener.cs" />
     <Compile Include="YouTube\Ajax\AjaxHistory.cs" />

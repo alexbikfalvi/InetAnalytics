@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Address prefixes record</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc3123">RFC 3123</see></para>

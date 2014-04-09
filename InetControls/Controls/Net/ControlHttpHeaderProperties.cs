@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using DotNetApi.Web.Http;
 using DotNetApi.Windows.Controls;
 
-namespace InetCommon.Controls.Net
+namespace InetControls.Controls.Net
 {
 	/// <summary>
 	/// Displays the information of an HTTP header.

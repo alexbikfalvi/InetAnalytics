@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Forms.Net
+﻿namespace InetControls.Forms.Net
 {
 	partial class FormNetworkInterfaceProperties
 	{
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.buttonClose = new System.Windows.Forms.Button();
-			this.control = new InetCommon.Controls.Net.ControlNetworkInterfaceProperties();
+			this.control = new InetControls.Controls.Net.ControlNetworkInterfaceProperties();
 			this.SuspendLayout();
 			// 
 			// buttonClose

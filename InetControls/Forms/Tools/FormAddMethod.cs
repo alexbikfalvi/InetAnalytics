@@ -23,7 +23,7 @@ using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 using InetCommon.Tools;
 
-namespace InetCommon.Forms.Tools
+namespace InetControls.Forms.Tools
 {
 	/// <summary>
 	/// A form dialog to add a tool metohod.

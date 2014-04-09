@@ -21,7 +21,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using DotNetApi;
 
-namespace InetCommon.Controls
+namespace InetControls.Controls
 {
 	/// <summary>
 	/// A user control representing a command line interface console.

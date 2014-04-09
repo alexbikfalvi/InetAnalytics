@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
 namespace InetAnalytics.Controls.Tools
 {
@@ -78,7 +78,7 @@ namespace InetAnalytics.Controls.Tools
 			if (oldTool == newTool) return;
 
 			// The tool information.
-			ToolInfoAttribute info = (null != newTool) ? InetCrawler.Tools.Tool.GetToolInfo(newTool) : null;
+			ToolInfoAttribute info = (null != newTool) ? InetCommon.Tools.Tool.GetToolInfo(newTool) : null;
 
 			if (null == info)
 			{

@@ -23,7 +23,7 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Security;
 using DotNetApi.Windows.Controls;
-using InetCrawler.Database;
+using InetCommon.Database;
 
 namespace InetAnalytics.Controls.Database
 {

@@ -57,7 +57,6 @@ namespace InetCommon.Database
 		};
 
 		// Config.
-		private readonly IConfig config;
 		private readonly RegistryKey key;
 
 		// Settings.
@@ -80,16 +79,12 @@ namespace InetCommon.Database
 		/// <summary>
 		/// Creates a database server with the specified name and configuration.
 		/// </summary>
-		/// <param name="config">The application configuration.</param>
 		/// <param name="cls">The database server class.</param>
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServer(IConfig config, DbServerClass cls, RegistryKey key, Guid id, string logFile)
+		public DbServer(DbServerClass cls, RegistryKey key, Guid id, string logFile)
 		{
-			// Set the configuration.
-			this.config = config;
-
 			// Set the server class.
 			this.cls = cls;
 
@@ -451,7 +446,7 @@ namespace InetCommon.Database
 			RegistryExtensions.SetString(this.key.Name, "Name", this.name);
 			RegistryExtensions.SetString(this.key.Name, "DataSource", this.dataSource);
 			RegistryExtensions.SetString(this.key.Name, "Username", this.username);
-			RegistryExtensions.SetSecureString(this.key.Name, "Password", this.password, this.config.CryptoKey, this.config.CryptoIV);
+			RegistryExtensions.SetSecureString(this.key.Name, "Password", this.password, ApplicationConfig.CryptoKey, ApplicationConfig.CryptoIV);
 			RegistryExtensions.SetDateTime(this.key.Name, "DateCreated", this.dateCreated);
 			RegistryExtensions.SetDateTime(this.key.Name, "DateModified", this.dateModified);
 
@@ -474,7 +469,7 @@ namespace InetCommon.Database
 			this.name = RegistryExtensions.GetString(this.key.Name, "Name", null);
 			this.dataSource = RegistryExtensions.GetString(this.key.Name, "DataSource", null);
 			this.username = RegistryExtensions.GetString(this.key.Name, "Username", null);
-			this.password = RegistryExtensions.GetSecureString(this.key.Name, "Password", null, this.config.CryptoKey, this.config.CryptoIV);
+			this.password = RegistryExtensions.GetSecureString(this.key.Name, "Password", null, ApplicationConfig.CryptoKey, ApplicationConfig.CryptoIV);
 			this.dateCreated = RegistryExtensions.GetDateTime(this.key.Name, "DateCreated", DateTime.Now);
 			this.dateModified = RegistryExtensions.GetDateTime(this.key.Name, "DateModified", DateTime.Now);
 

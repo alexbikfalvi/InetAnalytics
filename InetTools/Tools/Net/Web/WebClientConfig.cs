@@ -26,7 +26,7 @@ using System.Xml.Linq;
 using DotNetApi;
 using DotNetApi.IO;
 using DotNetApi.Windows;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
 namespace InetTools.Tools.Net.Web
 {

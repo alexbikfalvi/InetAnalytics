@@ -19,6 +19,7 @@
 using System;
 using System.Xml.Linq;
 using DotNetApi.Xml;
+using InetCommon.Web;
 
 namespace InetApi.YouTube.Api.V2.Atom
 {

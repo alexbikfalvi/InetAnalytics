@@ -26,8 +26,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
+using InetCommon.Database;
+using InetCommon.Database.Data;
 
 namespace InetAnalytics.Controls.Database
 {

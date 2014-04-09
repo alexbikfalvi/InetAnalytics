@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Key exchanger record</para> <para>Defined in<see cref="http://tools.ietf.org/html/rfc2230">RFC 2230</see>.</para>

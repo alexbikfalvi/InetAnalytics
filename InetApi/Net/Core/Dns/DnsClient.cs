@@ -21,9 +21,9 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
-using ARSoft.Tools.Net.Dns.DynamicUpdate;
+using InetApi.Net.Core.Dns.DynamicUpdate;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// Provides a client for querying DNS records.
@@ -172,7 +172,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <summary>
 		/// Ends a pending asynchronous operation.
 		/// </summary>
-		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="ARSoft.Tools.Net.Dns.DnsClient.BeginResolve" />.</param>
+		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="InetApi.Net.Core.Dns.DnsClient.BeginResolve" />.</param>
 		/// <returns> The complete response of the DNS server </returns>
 		public DnsMessage EndResolve(IAsyncResult asyncResult)
 		{
@@ -252,7 +252,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <summary>
 		/// Ends a pending asynchronous operation.
 		/// </summary>
-		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="ARSoft.Tools.Net.Dns.DnsClient.BeginSendMessage" />.</param>
+		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="InetApi.Net.Core.Dns.DnsClient.BeginSendMessage" />.</param>
 		/// <returns> The complete response of the DNS server </returns>
 		public DnsMessage EndSendMessage(IAsyncResult asyncResult)
 		{
@@ -262,7 +262,7 @@ namespace ARSoft.Tools.Net.Dns
 		/// <summary>
 		/// Ends a pending asynchronous operation.
 		/// </summary>
-		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="ARSoft.Tools.Net.Dns.DnsClient.BeginSendUpdate" />.</param>
+		/// <param name="asyncResult"> An <see cref="System.IAsyncResult" /> object returned by a call to <see cref="InetApi.Net.Core.Dns.DnsClient.BeginSendUpdate" />.</param>
 		/// <returns> The complete response of the DNS server </returns>
 		public DnsUpdateMessage EndSendUpdate(IAsyncResult asyncResult)
 		{

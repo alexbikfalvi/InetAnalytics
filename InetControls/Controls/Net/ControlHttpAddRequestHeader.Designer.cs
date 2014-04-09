@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Controls.Net
+﻿namespace InetControls.Controls.Net
 {
 	partial class ControlHttpAddRequestHeader
 	{
@@ -39,7 +39,7 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::InetCommon.Resources.HeaderAdd_48;
+			this.pictureBox.Image = global::InetControls.Resources.HeaderAdd_48;
 			this.pictureBox.Location = new System.Drawing.Point(20, 20);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(48, 48);

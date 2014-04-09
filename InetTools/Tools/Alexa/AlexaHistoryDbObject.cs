@@ -20,8 +20,8 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using DotNetApi;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
+using InetCommon.Database;
+using InetCommon.Database.Data;
 
 namespace InetTools.Tools.Alexa
 {

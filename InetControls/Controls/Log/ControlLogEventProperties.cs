@@ -22,12 +22,12 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Xml;
 using DotNetApi.Windows.Controls;
-using InetCommon.Forms;
-using InetCommon.Forms.Log;
 using InetCommon.Log;
 using InetCommon.Web;
+using InetControls.Forms;
+using InetControls.Forms.Log;
 
-namespace InetCommon.Controls.Log
+namespace InetControls.Controls.Log
 {
 	/// <summary>
 	/// Displays the information of a log event.

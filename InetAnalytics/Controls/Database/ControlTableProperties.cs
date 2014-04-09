@@ -19,8 +19,9 @@
 using System;
 using System.Windows.Forms;
 using InetAnalytics.Forms.Database;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
+using InetCommon.Database;
+using InetCommon.Database.Data;
+using InetControls.Controls.Database;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 

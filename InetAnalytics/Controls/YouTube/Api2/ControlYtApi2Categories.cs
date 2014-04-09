@@ -22,11 +22,12 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InetAnalytics.Controls;
 using InetApi.YouTube.Api.V2;
 using InetApi.YouTube.Api.V2.Data;
+using InetCommon;
+using InetCommon.Log;
 using InetCrawler;
-using InetCrawler.Log;
-using InetAnalytics.Controls;
 using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
@@ -102,7 +103,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 								"Video Categories",
 								"Refreshing the list of YouTube categories completed successfully.",
 								false,
-								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+								(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 								this.OnUpdateList
 								);
 							// Log
@@ -135,7 +136,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 							// Set the asynchronous result to null.
 							this.asyncResult = null;
 							// Delay the closing of the user message.
-							Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+							Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 							// Hide the progress message.
 							this.HideMessage((object[] parameters) =>
 							{
@@ -158,7 +159,7 @@ namespace InetAnalytics.Controls.YouTube.Api2
 				ThreadPool.QueueUserWorkItem((object state) =>
 					{
 						// Delay the closing of the user message.
-						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+						Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 						// Hide the progress message.
 						this.HideMessage((object[] parameters) =>
 						{

@@ -25,8 +25,8 @@ using InetAnalytics.Events;
 using InetAnalytics.Controls.Comments;
 using InetApi.YouTube.Api.V2;
 using InetApi.YouTube.Api.V2.Data;
+using InetCommon.Log;
 using InetCrawler;
-using InetCrawler.Log;
 
 namespace InetAnalytics.Controls.YouTube.Api2
 {

@@ -22,7 +22,7 @@ using System.Linq;
 using System.Windows.Forms;
 using InetCommon.Tools;
 
-namespace InetCommon.Controls.Tools
+namespace InetControls.Controls.Tools
 {
 	/// <summary>
 	/// A control that adds a tool method.

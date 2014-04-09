@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ARSoft.Tools.Net.Dns.DynamicUpdate
+namespace InetApi.Net.Core.Dns.DynamicUpdate
 {
 	/// <summary>
 	/// <para>Dynamic DNS update message.</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc2136">RFC 2136</see>.</para>

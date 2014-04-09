@@ -44,7 +44,7 @@
 			this.columnHeaderDeprecated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.controlCategory = new InetAnalytics.Controls.YouTube.ControlCategoryProperties();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -250,7 +250,7 @@
 
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private System.Windows.Forms.ToolStripButton buttonRefresh;
 		private System.Windows.Forms.ToolStripButton buttonCancel;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerUp;

@@ -22,6 +22,7 @@ using System.Security;
 using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Security;
+using InetCommon;
 using PlanetLab;
 using PlanetLab.Api;
 using PlanetLab.Database;
@@ -139,7 +140,7 @@ namespace InetCrawler.PlanetLab
 		{
 			get
 			{
-				return DotNetApi.Windows.RegistryExtensions.GetSecureString(this.root, "Password", SecureStringExtensions.Empty, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+				return DotNetApi.Windows.RegistryExtensions.GetSecureString(this.root, "Password", SecureStringExtensions.Empty, ApplicationConfig.CryptoKey, ApplicationConfig.CryptoIV);
 			}
 		}
 		/// <summary>
@@ -395,7 +396,7 @@ namespace InetCrawler.PlanetLab
 			DotNetApi.Windows.RegistryExtensions.SetString(this.root, "UserName", username);
 			CrawlerConfig.Static.PlanetLabUsername = username;
 			// Save the password.
-			DotNetApi.Windows.RegistryExtensions.SetSecureString(this.root, "Password", password, CrawlerConfig.cryptoKey, CrawlerConfig.cryptoIV);
+			DotNetApi.Windows.RegistryExtensions.SetSecureString(this.root, "Password", password, ApplicationConfig.CryptoKey, ApplicationConfig.CryptoIV);
 			CrawlerConfig.Static.PlanetLabPassword = password;
 			// Save the persons.
 			persons.Lock();

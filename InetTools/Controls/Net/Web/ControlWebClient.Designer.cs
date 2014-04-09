@@ -78,7 +78,7 @@
 			this.separator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonImport = new System.Windows.Forms.ToolStripButton();
 			this.buttonExport = new System.Windows.Forms.ToolStripButton();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -694,7 +694,7 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private InetAnalytics.Controls.Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private DotNetApi.Windows.Controls.ThemeControl panelTesting;
 		private System.Windows.Forms.ComboBox comboBoxMethod;
 		private System.Windows.Forms.Label labelMethod;

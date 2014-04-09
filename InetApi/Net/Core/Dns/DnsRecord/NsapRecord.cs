@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>NSAP address, NSAP style A record</para> <para>Defined in <see cref="!:http://tools.ietf.org/html/rfc1706">RFC 1706</see>

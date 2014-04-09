@@ -19,9 +19,9 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCommon.Forms;
+using InetControls.Forms;
 
-namespace InetCommon.Controls
+namespace InetControls.Controls
 {
 	/// <summary>
 	/// A control that displays an exception.

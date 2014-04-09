@@ -36,7 +36,7 @@ namespace InetCommon.Tools
 	{
 		private static readonly string logSource = "Toolbox";
 
-		private readonly IDbConfig config;
+		private readonly IDbApplication config;
 
 		private readonly object sync = new object();
 
@@ -52,7 +52,7 @@ namespace InetCommon.Tools
 		/// <param name="config">The configuration.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="path">The registry path.</param>
-		public Toolbox(IDbConfig config, RegistryKey rootKey, string path)
+		public Toolbox(IDbApplication config, RegistryKey rootKey, string path)
 		{
 			// Check the arguments.
 			if (null == config) throw new ArgumentNullException("api");

@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Controls.Tools
+﻿namespace InetControls.Controls.Tools
 {
 	partial class ControlAddMethod
 	{
@@ -141,7 +141,7 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::InetCommon.Resources.CubeAdd_48;
+			this.pictureBox.Image = global::InetControls.Resources.CubeAdd_48;
 			this.pictureBox.Location = new System.Drawing.Point(20, 20);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(48, 48);

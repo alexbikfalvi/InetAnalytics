@@ -18,10 +18,10 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Database;
 using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
+using InetCommon.Database;
 
 namespace InetAnalytics.Forms.Database
 {

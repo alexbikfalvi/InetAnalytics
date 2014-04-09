@@ -22,7 +22,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// The asynchronous state for a DNS client.

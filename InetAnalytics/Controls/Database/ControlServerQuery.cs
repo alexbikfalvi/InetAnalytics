@@ -23,11 +23,12 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using InetCrawler;
-using InetCrawler.Database;
-using InetCrawler.Log;
 using InetAnalytics.Controls;
-using InetAnalytics.Forms.Database;
+using InetCommon;
+using InetCommon.Database;
+using InetCommon.Log;
+using InetControls.Forms.Database;
+using InetCrawler;
 using DotNetApi;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Controls;
@@ -491,7 +492,7 @@ namespace InetAnalytics.Controls.Database
 										// Show a success message.
 										this.ShowMessage(Resources.DatabaseSuccess_48, "Database", "Executing query on the database server \'{0}\' completed successfully.".FormatWith(this.server.Name), false);
 										// Wait.
-										Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+										Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 										// Hide the message.
 										this.HideMessage();
 										// Call the completion method.
@@ -512,7 +513,7 @@ namespace InetAnalytics.Controls.Database
 											new object[] { this.server.Name, exception.Message },
 											exception);
 										// Wait.
-										Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+										Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 										// Hide the message.
 										this.HideMessage();
 										// Call the completion method.
@@ -535,7 +536,7 @@ namespace InetAnalytics.Controls.Database
 									new object[] { this.server.Name, exception.Message },
 									exception);
 								// Wait.
-								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+								Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 								// Hide the message.
 								this.HideMessage();
 								// Call the completion method.
@@ -558,7 +559,7 @@ namespace InetAnalytics.Controls.Database
 							new object[] { this.server.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+						Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.

@@ -20,7 +20,7 @@ using System;
 using System.Security;
 using System.Windows.Forms;
 using InetAnalytics.Controls;
-using InetCrawler.Database;
+using InetCommon.Database;
 using DotNetApi.Security;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;

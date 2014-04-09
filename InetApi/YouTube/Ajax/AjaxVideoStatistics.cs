@@ -27,6 +27,7 @@ using System.Xml.Linq;
 using HtmlAgilityPack;
 using DotNetApi;
 using DotNetApi.Xml;
+using InetCommon.Web;
 
 namespace InetApi.YouTube.Ajax
 {

@@ -17,7 +17,7 @@
 using System;
 using System.Net.NetworkInformation;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>EDNS0 Owner Option.</para> <para>Defined in <see cref="http://files.dns-sd.org/draft-sekar-dns-llq.txt">draft-cheshire-edns0-owner-option</see>.</para>

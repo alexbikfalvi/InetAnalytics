@@ -24,12 +24,13 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
-using InetAnalytics.Forms.Net;
 using InetApi.Net.Core;
+using InetCommon;
+using InetCommon.Log;
 using InetCommon.Status;
+using InetCommon.Tools;
+using InetControls.Forms.Net;
 using InetCrawler;
-using InetCrawler.Log;
-using InetCrawler.Tools;
 using InetTools.Tools.Net;
 
 namespace InetTools.Controls.Net
@@ -248,7 +249,7 @@ namespace InetTools.Controls.Net
 											"Internet Traceroute",
 											"Internet traceroute to \'{0}\' was canceled.".FormatWith(destination),
 											false,
-											(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+											(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 										// Log the result.
 										this.log.Add(this.config.Api.Log(
 											LogEventLevel.Verbose,
@@ -273,7 +274,7 @@ namespace InetTools.Controls.Net
 								"Internet Traceroute",
 								"Running Internet traceroute to \'{0}\' failed. {1}".FormatWith(destination, exception.Message),
 								false,
-								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds, (object[] parameters) =>
+								(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds, (object[] parameters) =>
 								{
 									// Change the controls state.
 									this.OnEnableControls();
@@ -301,7 +302,7 @@ namespace InetTools.Controls.Net
 					"Internet Traceroute",
 					"Running Internet traceroute to \'{0}\' failed. {1}".FormatWith(destination, exception.Message),
 					false,
-					(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+					(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 				// Log the result.
 				this.log.Add(this.config.Api.Log(
 					LogEventLevel.Important,
@@ -456,7 +457,7 @@ namespace InetTools.Controls.Net
 											"Internet Traceroute",
 											"Internet traceroute to \'{0}\' was canceled.".FormatWith(destination),
 											false,
-											(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+											(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 											(object[] parameters) =>
 											{
 												// Change the controls state.
@@ -482,7 +483,7 @@ namespace InetTools.Controls.Net
 											"Internet Traceroute",
 											"Internet traceroute to \'{0}\' completed successfully.".FormatWith(destination),
 											false,
-											(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+											(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 											(object[] parameters) =>
 											{
 												// Change the controls state.
@@ -513,7 +514,7 @@ namespace InetTools.Controls.Net
 					"Internet Traceroute",
 					"Running Internet traceroute to \'{0}\' failed. {1}".FormatWith(destination, exception.Message),
 					false,
-					(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+					(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 				// Log the result.
 				this.log.Add(this.config.Api.Log(
 					LogEventLevel.Important,

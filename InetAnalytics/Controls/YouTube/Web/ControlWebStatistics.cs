@@ -28,9 +28,10 @@ using InetAnalytics.Controls.Comments;
 using InetAnalytics.Events;
 using InetAnalytics.Forms.YouTube;
 using InetApi.YouTube.Ajax;
+using InetCommon.Log;
+using InetCommon.Web;
 using InetCrawler;
 using InetCrawler.Comments;
-using InetCrawler.Log;
 
 namespace InetAnalytics.Controls.YouTube.Web
 {

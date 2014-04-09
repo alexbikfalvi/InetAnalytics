@@ -59,7 +59,7 @@
 			this.columnHeaderExtra = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.panelChart = new DotNetApi.Windows.Controls.ThemeControl();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -383,7 +383,7 @@
 		#endregion
 
 		private System.Windows.Forms.DataVisualization.Charting.Chart chart;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ToolStripLabel label;

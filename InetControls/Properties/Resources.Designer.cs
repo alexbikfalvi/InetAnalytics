@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InetCommon {
+namespace InetControls {
     using System;
     
     

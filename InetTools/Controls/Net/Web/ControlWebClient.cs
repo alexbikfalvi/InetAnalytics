@@ -25,10 +25,11 @@ using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
-using InetAnalytics.Forms.Net;
+using InetCommon;
+using InetCommon.Log;
 using InetCommon.Status;
+using InetControls.Forms.Net;
 using InetCrawler;
-using InetCrawler.Log;
 using InetTools.Tools.Net.Web;
 
 namespace InetTools.Controls.Net.Web
@@ -175,7 +176,7 @@ namespace InetTools.Controls.Net.Web
 					"Web Request",
 					"The HTTP request for web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message),
 					false,
-					(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+					(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 				// Log the result.
 				this.log.Add(this.config.Api.Log(
 					LogEventLevel.Important,
@@ -244,7 +245,7 @@ namespace InetTools.Controls.Net.Web
 							"Web Request",
 							"The HTTP request for the web URL \'{0}\' completed successfully.".FormatWith(this.textBoxUrl.Text),
 							false,
-							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+							(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 						// Log the result.
 						this.log.Add(this.config.Api.Log(
 							LogEventLevel.Verbose,
@@ -262,7 +263,7 @@ namespace InetTools.Controls.Net.Web
 								"Web Request",
 								"The HTTP request for the web URL \'{0}\' has been canceled.".FormatWith(this.textBoxUrl.Text),
 								false,
-								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+								(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 							// Update the status label.
 							this.status.Send(ApplicationStatus.StatusType.Normal, "The HTTP request for the web URL has been canceled.", Resources.Canceled_16);
 							// Log the result.
@@ -280,7 +281,7 @@ namespace InetTools.Controls.Net.Web
 								"Web Request",
 								"The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message),
 								false,
-								(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+								(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 							// Update the status label.
 							this.status.Send(ApplicationStatus.StatusType.Normal, "The HTTP request for the web URL failed. {0}".FormatWith(exception.Message), Resources.Error_16);
 							// Log the result.
@@ -300,7 +301,7 @@ namespace InetTools.Controls.Net.Web
 							"Web Request",
 							"The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message),
 							false,
-							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+							(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 						// Update the status label.
 						this.status.Send(ApplicationStatus.StatusType.Normal, "The HTTP request for the web URL \'{0}\' failed. {1}".FormatWith(this.textBoxUrl.Text, exception.Message), Resources.Error_16);
 						// Log the result.

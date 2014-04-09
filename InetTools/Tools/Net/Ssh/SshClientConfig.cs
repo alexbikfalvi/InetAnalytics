@@ -20,7 +20,7 @@ using System;
 using System.Security;
 using DotNetApi.Security;
 using DotNetApi.Windows;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
 namespace InetTools.Tools.Net.Ssh
 {

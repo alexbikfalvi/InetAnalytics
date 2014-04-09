@@ -18,8 +18,8 @@
 
 using System;
 using System.Windows.Forms;
-using InetCrawler.Database;
-using InetCrawler.Tools;
+using InetCommon.Database;
+using InetCommon.Tools;
 using InetTools.Controls.Alexa;
 using InetTools.Tools.Alexa;
 

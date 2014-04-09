@@ -28,7 +28,7 @@ using InetCommon.Database;
 using InetCommon.Database.Data;
 using InetCommon.Log;
 
-namespace InetCommon.Controls.Database
+namespace InetControls.Controls.Database
 {
 	/// <summary>
 	/// A generic control that allows a background SQL database operation.
@@ -142,7 +142,7 @@ namespace InetCommon.Controls.Database
 								// Show a success message.
 								this.ShowMessage(Resources.DatabaseSuccess_48, "Database", querySql.MessageFinishSuccess, false);
 								// Wait.
-								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+								Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 								// Hide the message.
 								this.HideMessage();
 								// Call the completion method, depending on the type of data.
@@ -165,7 +165,7 @@ namespace InetCommon.Controls.Database
 									new object[] { serverSql.Name, exception.Message },
 									exception);
 								// Wait.
-								Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+								Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 								// Hide the message.
 								this.HideMessage();
 								// Call the completion method.
@@ -187,7 +187,7 @@ namespace InetCommon.Controls.Database
 							new object[] { serverSql.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+						Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.
@@ -207,7 +207,7 @@ namespace InetCommon.Controls.Database
 							new object[] { serverSql.Name, exception.Message },
 							exception);
 						// Wait.
-						Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+						Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 						// Hide the message.
 						this.HideMessage();
 						// Call the completion method.
@@ -229,7 +229,7 @@ namespace InetCommon.Controls.Database
 					new object[] { serverSql.Name, exception.Message },
 					exception);
 				// Wait.
-				Thread.Sleep(CrawlerConfig.Static.ConsoleMessageCloseDelay);
+				Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 				// Hide the message.
 				this.HideMessage();
 				// Call the completion method.

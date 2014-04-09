@@ -79,7 +79,7 @@
 			this.buttonSave = new System.Windows.Forms.ToolStripDropDownButton();
 			this.menuItemSaveSites = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemSaveResources = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -409,7 +409,7 @@
 		private System.Windows.Forms.ToolStripSeparator separator2;
 		private System.Windows.Forms.ToolStripSeparator separator3;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private InetAnalytics.Controls.Log.ControlLogList controlLog;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private System.Windows.Forms.ToolStripButton buttonSettings;
 		private System.Windows.Forms.ToolStripButton buttonOpen;
 		private System.Windows.Forms.ColumnHeader columnHeaderResources;

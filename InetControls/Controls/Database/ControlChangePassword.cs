@@ -22,7 +22,7 @@ using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using InetCommon.Database;
 
-namespace InetCommon.Controls.Database
+namespace InetControls.Controls.Database
 {
 	/// <summary>
 	/// A control that receives user input to change the password.

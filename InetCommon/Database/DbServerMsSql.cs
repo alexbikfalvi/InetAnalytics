@@ -52,12 +52,11 @@ namespace InetCommon.Database
 		/// <summary>
 		/// Creates a new server instance.
 		/// </summary>
-		/// <param name="config">The configuration.</param>
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServerMsSql(IConfig config, RegistryKey key, Guid id, string logFile)
-			: base(config, DbType.MsSql, key, id, logFile)
+		public DbServerMsSql(IApplication config, RegistryKey key, Guid id, string logFile)
+			: base(DbType.MsSql, key, id, logFile)
 		{
 			// Initialize the server with the current configuration.
 			this.OnInitialized();

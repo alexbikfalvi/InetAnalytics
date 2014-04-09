@@ -42,6 +42,8 @@ namespace InetCommon.Net
 
 		private static readonly object sync = new object();
 
+		private static readonly NetworkStatus status;
+
 		private bool timerEnabled = true;
 		private TimeSpan timerInterval = new TimeSpan(0, 1, 0);
 
@@ -60,9 +62,17 @@ namespace InetCommon.Net
 		private DateTime internetAvailableLastUpdated = DateTime.MinValue;
 
 		/// <summary>
+		/// Static constructor.
+		/// </summary>
+		static NetworkStatus()
+		{
+			NetworkStatus.status = new NetworkStatus();
+		}
+
+		/// <summary>
 		/// Creates a new crawler network instance.
 		/// </summary>
-		public NetworkStatus()
+		private NetworkStatus()
 		{
 			// Set the network change event handlers.
 			NetworkChange.NetworkAddressChanged += this.OnNetworkAddressChanged;
@@ -81,81 +91,85 @@ namespace InetCommon.Net
 				null, 0, (long)this.timerInterval.TotalMilliseconds);
 		}
 
-		// Public properties.
+		#region Public properties.
 
 		/// <summary>
 		/// Gets or sets whether the timer is enabled.
 		/// </summary>
-		public bool TimerEnabled
+		public static bool TimerEnabled
 		{
-			get { return this.timerEnabled; }
-			set { this.OnSetTimerEnabled(value); }
+			get { return NetworkStatus.status.timerEnabled; }
+			set { NetworkStatus.status.OnSetTimerEnabled(value); }
 		}
 		/// <summary>
 		/// Gets or sets the timer interval.
 		/// </summary>
-		public TimeSpan TimerInterval
+		public static TimeSpan TimerInterval
 		{
-			get { return this.timerInterval; }
-			set { this.OnSetTimerInterval(value); }
+			get { return NetworkStatus.status.timerInterval; }
+			set { NetworkStatus.status.OnSetTimerInterval(value); }
 		}
 		/// <summary>
 		/// Gets or sets the Internet ICMP host.
 		/// </summary>
-		public string InternetIcmpHost
+		public static string InternetIcmpHost
 		{
-			get { return this.internetIcmpHost; }
-			set { this.internetIcmpHost = value; }
+			get { return NetworkStatus.status.internetIcmpHost; }
+			set { NetworkStatus.status.internetIcmpHost = value; }
 		}
 		/// <summary>
 		/// Gets or sets the Internet HTTP host.
 		/// </summary>
-		public string InternetHttpHost
+		public static string InternetHttpHost
 		{
-			get { return this.internetHttpHost; }
-			set { this.internetHttpHost = value; }
+			get { return NetworkStatus.status.internetHttpHost; }
+			set { NetworkStatus.status.internetHttpHost = value; }
 		}
 		/// <summary>
 		/// Gets or sets the Internet HTTPS host.
 		/// </summary>
-		public string InternetHttpsHost
+		public static string InternetHttpsHost
 		{
-			get { return this.internetHttpsHost; }
-			set { this.internetHttpsHost = value; }
+			get { return NetworkStatus.status.internetHttpsHost; }
+			set { NetworkStatus.status.internetHttpsHost = value; }
 		}
 		/// <summary>
 		/// Returns whether the Internet is available.
 		/// </summary>
-		public AvailabilityStatus IsInternetAvailable { get { return this.internetAvailable; } }
+		public static AvailabilityStatus IsInternetAvailable { get { return NetworkStatus.status.internetAvailable; } }
 		/// <summary>
 		/// Returns whether the Internet ICMP is available.
 		/// </summary>
-		public bool IsInternetIcmpAvailable { get { return this.internetAvailableIcmp; } }
+		public static bool IsInternetIcmpAvailable { get { return NetworkStatus.status.internetAvailableIcmp; } }
 		/// <summary>
 		/// Returns whether the Internet HTTP is available.
 		/// </summary>
-		public bool IsInternetHttpAvailable { get { return this.internetAvailableHttp; } }
+		public static bool IsInternetHttpAvailable { get { return NetworkStatus.status.internetAvailableHttp; } }
 		/// <summary>
 		/// Returns whether the Internet HTTPS is available.
 		/// </summary>
-		public bool IsInternetHttpsAvailable { get { return this.internetAvailableHttps; } }
+		public static bool IsInternetHttpsAvailable { get { return NetworkStatus.status.internetAvailableHttps; } }
 		/// <summary>
 		/// Returns the date-time when the Internet availability was last updated.
 		/// </summary>
-		public DateTime InternetAvailableLastUpdated { get { return this.internetAvailableLastUpdated; } }
+		public static DateTime InternetAvailableLastUpdated { get { return NetworkStatus.status.internetAvailableLastUpdated; } }
 
-		// Public events.
+		#endregion
+
+		#region Public events.
 
 		/// <summary>
 		/// An event raised when the network status has changed.
 		/// </summary>
-		public event EventHandler NetworkChanged;
+		public static event EventHandler NetworkChanged;
 		/// <summary>
 		/// An event raised when the network status was checked.
 		/// </summary>
-		public event EventHandler NetworkChecked;
+		public static event EventHandler NetworkChecked;
 
-		// Public methods.
+		#endregion
+
+		#region Public methods.
 
 		/// <summary>
 		/// Disposes the current object.
@@ -170,7 +184,9 @@ namespace InetCommon.Net
 			GC.SuppressFinalize(this);
 		}
 
-		// Private methods.
+		#endregion
+
+		#region Private methods.
 
 		/// <summary>
 		/// A method called to set whether the timer is enabled.
@@ -220,7 +236,7 @@ namespace InetCommon.Net
 			// Update the Internet availability.
 
 			// Raise the network changed event.
-			if (null != this.NetworkChanged) this.NetworkChanged(sender, e);
+			if (null != NetworkStatus.NetworkChanged) NetworkStatus.NetworkChanged(sender, e);
 		}
 
 		/// <summary>
@@ -231,7 +247,7 @@ namespace InetCommon.Net
 		private void OnNetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
 		{
 			// Raise the network changed event.
-			if (null != this.NetworkChanged) this.NetworkChanged(sender, e);
+			if (null != NetworkStatus.NetworkChanged) NetworkStatus.NetworkChanged(sender, e);
 		}
 
 		/// <summary>
@@ -272,11 +288,11 @@ namespace InetCommon.Net
 				// Change the Internet availability.
 				this.internetAvailable = internetAvailable;
 				// Raise the event.
-				if (null != this.NetworkChanged) this.NetworkChanged(this, EventArgs.Empty);
+				if (null != NetworkStatus.NetworkChanged) NetworkStatus.NetworkChanged(this, EventArgs.Empty);
 			}
 
 			// Raise the network checked event.
-			if (null != this.NetworkChecked) this.NetworkChecked(this, EventArgs.Empty);
+			if (null != NetworkStatus.NetworkChecked) NetworkStatus.NetworkChecked(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -330,5 +346,7 @@ namespace InetCommon.Net
 			catch { }
 			return false;
 		}
+
+		#endregion
 	}
 }

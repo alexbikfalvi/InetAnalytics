@@ -20,7 +20,7 @@ using System;
 using System.Windows.Forms;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
 namespace InetAnalytics.Forms.Tools
 {

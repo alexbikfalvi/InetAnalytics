@@ -21,10 +21,10 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 using InetCommon.Database;
-using InetCommon.Events;
-using InetCommon.Forms.Database;
+using InetControls.Events;
+using InetControls.Forms.Database;
 
-namespace InetCommon.Controls.Database
+namespace InetControls.Controls.Database
 {
 	/// <summary>
 	/// A generic control that allows a background database operation.

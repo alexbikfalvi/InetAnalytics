@@ -17,36 +17,32 @@
  */
 
 using System;
-using System.Net;
-using System.Net.NetworkInformation;
+using InetCommon.Database;
+using InetCommon.Log;
+using InetCommon.Status;
 
-namespace Mercury.Net.Information
+namespace InetCommon
 {
 	/// <summary>
-	/// A class representing the information for an IP address.
+	/// An interface representing the base application.
 	/// </summary>
-	public class IPAddressInformation
+	public interface IApplication
 	{
-		/// <summary>
-		/// Creates a new IP address information instance.
-		/// </summary>
-		/// <param name="address">The IP address.</param>
-		/// <param name="iface">The network interface.</param>
-		public IPAddressInformation(IPAddress address, NetworkInterface iface)
-		{
-			this.Address = address;
-			this.Interface = iface;
-		}
-
-		// Public properties.
+		#region Properties
 
 		/// <summary>
-		/// Gets the IP address.
+		/// The application configuration.
 		/// </summary>
-		public IPAddress Address { get; private set; }
+		IApplicationConfig Config { get; }
 		/// <summary>
-		/// Gets the network interface.
+		/// The application log.
 		/// </summary>
-		public NetworkInterface Interface { get; private set; }
+		Logger Log { get; }
+		/// <summary>
+		/// The application status.
+		/// </summary>
+		ApplicationStatus Status { get; }
+
+		#endregion
 	}
 }

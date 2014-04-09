@@ -26,10 +26,11 @@ using System.Windows.Forms;
 using DotNetApi;
 using DotNetApi.IO;
 using DotNetApi.Security;
-using InetAnalytics.Controls.Net.Ssh;
+using InetCommon;
+using InetCommon.Log;
 using InetCommon.Status;
+using InetControls.Controls.Net.Ssh;
 using InetCrawler;
-using InetCrawler.Log;
 using InetCrawler.PlanetLab;
 using PlanetLab;
 using PlanetLab.Api;
@@ -531,7 +532,7 @@ namespace InetAnalytics.Controls.PlanetLab
 				catch (Exception exception)
 				{
 					// Show the error message.
-					this.ShowMessage(Resources.ServerError_32, "Cancel Command", "Canceling the last PlanetLab command failed. {0}".FormatWith(exception.Message), false, (int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds);
+					this.ShowMessage(Resources.ServerError_32, "Cancel Command", "Canceling the last PlanetLab command failed. {0}".FormatWith(exception.Message), false, (int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds);
 				}
 				finally
 				{

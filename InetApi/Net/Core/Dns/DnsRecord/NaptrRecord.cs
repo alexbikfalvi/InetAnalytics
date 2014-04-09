@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Naming authority pointer record</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc2915">RFC 2915</see>,

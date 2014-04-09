@@ -36,7 +36,7 @@ namespace InetCommon.Tools
 	{
 		private static readonly string logSource = @"Toolbox\{0}";
 
-		private readonly IDbConfig config;
+		private readonly IDbApplication config;
 		private readonly RegistryKey key;
 
 		private readonly string fileName;
@@ -52,7 +52,7 @@ namespace InetCommon.Tools
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="fileName">The library file name.</param>
 		/// <param name="toolset">The toolset.</param>
-		public ToolsetConfig(IDbConfig config, RegistryKey rootKey, string fileName, Toolset toolset)
+		public ToolsetConfig(IDbApplication config, RegistryKey rootKey, string fileName, Toolset toolset)
 		{
 			// Check the arguments.
 			if (null == config) throw new ArgumentNullException("config");
@@ -84,7 +84,7 @@ namespace InetCommon.Tools
 		/// <param name="config">The configuration.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="toolset">The toolset.</param>
-		public ToolsetConfig(IDbConfig config, RegistryKey rootKey, Toolset toolset)
+		public ToolsetConfig(IDbApplication config, RegistryKey rootKey, Toolset toolset)
 		{
 			// Check the arguments.
 			if (null == config) throw new ArgumentNullException("config");
@@ -113,7 +113,7 @@ namespace InetCommon.Tools
 		/// <param name="config">The configuration.</param>
 		/// <param name="rootKey">The root registry key.</param>
 		/// <param name="id">The toolset identifier.</param>
-		public ToolsetConfig(IDbConfig config, RegistryKey rootKey, ToolId id)
+		public ToolsetConfig(IDbApplication config, RegistryKey rootKey, ToolId id)
 		{
 			// Check the arguments.
 			if (null == config) throw new ArgumentNullException("api");

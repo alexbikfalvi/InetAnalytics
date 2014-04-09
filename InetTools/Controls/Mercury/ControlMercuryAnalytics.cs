@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
 using InetAnalytics;
 using InetCommon.Status;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Tools.Mercury;
 using Renci.SshNet;
 

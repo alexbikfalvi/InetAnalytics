@@ -55,13 +55,12 @@ namespace InetCommon.Database
 		/// <summary>
 		/// Creates a database server with the specified name and configuration.
 		/// </summary>
-		/// <param name="config">The configuration.</param>
 		/// <param name="type">The SQL server type.</param>
 		/// <param name="key">The registry configuration key.</param>
 		/// <param name="id">The server ID.</param>
 		/// <param name="logFile">The log file for this database server.</param>
-		public DbServerSql(IConfig config, DbType type, RegistryKey key, Guid id, string logFile)
-			: base(config, DbServerClass.Sql, key, id, logFile)
+		public DbServerSql(DbType type, RegistryKey key, Guid id, string logFile)
+			: base(DbServerClass.Sql, key, id, logFile)
 		{
 			// Set the server type.
 			this.type = type;

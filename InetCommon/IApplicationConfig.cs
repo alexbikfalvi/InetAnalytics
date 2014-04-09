@@ -18,25 +18,19 @@
 
 using System;
 
-namespace InetCommon.Database
+namespace InetCommon
 {
-	public interface IDbConfig : IConfig
+	/// <summary>
+	/// An interface representing the base application configuration.
+	/// </summary>
+	public interface IApplicationConfig
 	{
-		#region Configuration properties
+		#region Properties
 
 		/// <summary>
-		/// Gets the database log file name.
+		/// The delay in closing a notification message.
 		/// </summary>
-		string DatabaseLogFileName { get; }
-
-		#endregion
-
-		#region State properties
-
-		/// <summary>
-		/// The application database.
-		/// </summary>
-		DbConfig Database { get; }
+		TimeSpan MessageCloseDelay { get; }
 
 		#endregion
 	}

@@ -66,7 +66,7 @@
 			this.comboBoxPages = new System.Windows.Forms.ToolStripComboBox();
 			this.separator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -320,7 +320,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderSite;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
-		private InetAnalytics.Controls.Log.ControlLogList controlLog;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
 		private System.Windows.Forms.TabPage tabPageAlexa;
 		private System.Windows.Forms.ToolStrip toolStrip;

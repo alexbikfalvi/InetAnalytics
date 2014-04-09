@@ -1,4 +1,4 @@
-﻿namespace InetCommon.Controls.Database
+﻿namespace InetControls.Controls.Database
 {
 	partial class ControlChangePassword
 	{
@@ -72,7 +72,7 @@
 			// 
 			// pictureBox
 			// 
-			this.pictureBox.Image = global::InetCommon.Resources.PasswordChange_48;
+			this.pictureBox.Image = global::InetControls.Resources.PasswordChange_48;
 			this.pictureBox.Location = new System.Drawing.Point(20, 20);
 			this.pictureBox.Name = "pictureBox";
 			this.pictureBox.Size = new System.Drawing.Size(48, 48);

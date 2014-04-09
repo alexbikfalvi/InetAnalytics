@@ -22,7 +22,7 @@ using System.Threading;
 using System.Windows.Forms;
 using DotNetApi.Web;
 using InetAnalytics;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Controls.Mercury;
 using InetTools.Tools.Mercury;
 

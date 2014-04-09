@@ -53,7 +53,7 @@
 			this.linkLabel = new System.Windows.Forms.LinkLabel();
 			this.labelUrl = new System.Windows.Forms.Label();
 			this.labelSearch = new System.Windows.Forms.Label();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -353,7 +353,7 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.Panel panelQuery;
 		private System.Windows.Forms.Label labelSearch;

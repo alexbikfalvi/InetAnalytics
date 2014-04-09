@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using DotNetApi;
+using InetCommon.Web;
 
 namespace InetApi.YouTube.Ajax
 {

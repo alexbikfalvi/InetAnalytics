@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>IPsec key storage</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc4025">RFC 4025</see>.</para>

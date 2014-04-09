@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCrawler.Database.Data;
+using InetCommon.Database.Data;
 
 namespace InetAnalytics.Controls.Database
 {

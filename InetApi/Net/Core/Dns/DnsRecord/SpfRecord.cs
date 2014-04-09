@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Sender Policy Framework</para> <para>Defined in <see cref="http://tools.ietf.org/html/rfc4408">RFC 4408</see>.</para>

@@ -21,7 +21,8 @@ using System.Security;
 using Microsoft.Win32;
 using DotNetApi;
 using DotNetApi.Security;
-using InetCrawler.Database;
+using InetCommon;
+using InetCommon.Database;
 using InetCrawler.PlanetLab;
 using InetCrawler.YouTube;
 
@@ -30,7 +31,7 @@ namespace InetCrawler
 	/// <summary>
 	/// Global configuration for the YouTube crawler.
 	/// </summary>
-	public sealed class CrawlerConfig : IDisposable
+	public sealed class CrawlerConfig : IDbApplicationConfig, IDisposable
 	{
 		/// <summary>
 		/// A class representing the static configuration.
@@ -47,7 +48,6 @@ namespace InetCrawler
 			public string CommentsVideosFileName { get; internal set; }
 			public string CommentsUsersFileName { get; internal set; }
 			public string CommentsPlaylistsFileName { get; internal set; }
-			public TimeSpan ConsoleMessageCloseDelay { get; internal set; }
 			public int ConsoleSideMenuVisibleItems { get; internal set; }
 			public int ConsoleSideMenuSelectedItem { get; internal set; }
 			public int[] ConsoleSideMenuSelectedNode { get; internal set; }
@@ -66,8 +66,8 @@ namespace InetCrawler
 			public string PlanetLabHistoryRunFileName { get; internal set; }
 		}
 
-		internal static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
-		internal static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
+		private static readonly byte[] cryptoKey = { 155, 181, 197, 167, 41, 252, 217, 150, 25, 158, 203, 88, 187, 162, 110, 28, 215, 36, 26, 6, 146, 170, 29, 221, 182, 144, 72, 69, 2, 91, 132, 31 };
+		private static readonly byte[] cryptoIV = { 61, 135, 168, 42, 118, 126, 73, 70, 125, 92, 153, 57, 60, 201, 77, 131 };
 
 		private RegistryKey rootKey;
 		private string rootPath;
@@ -93,8 +93,11 @@ namespace InetCrawler
 			this.rootPath = rootPath;
 			this.root = @"{0}\{1}".FormatWith(this.rootKey.Name, this.rootPath);
 
-
 			// Initialize the static configuration.
+			ApplicationConfig.MessageCloseDelay = this.MessageCloseDelay;
+			ApplicationConfig.CryptoKey = CrawlerConfig.cryptoKey;
+			ApplicationConfig.CryptoIV = CrawlerConfig.cryptoIV;
+
 			CrawlerConfig.Static.YouTubeUsername = this.YouTubeUsername;
 			CrawlerConfig.Static.YouTubePassword = this.YouTubePassword;
 			CrawlerConfig.Static.YouTubeCategoriesFileName = this.YouTubeCategoriesFileName;
@@ -104,11 +107,12 @@ namespace InetCrawler
 			CrawlerConfig.Static.CommentsVideosFileName = this.CommentsVideosFileName;
 			CrawlerConfig.Static.CommentsUsersFileName = this.CommentsUsersFileName;
 			CrawlerConfig.Static.CommentsPlaylistsFileName = this.CommentsVideosFileName;
-			CrawlerConfig.Static.ConsoleMessageCloseDelay = this.ConsoleMessageCloseDelay;
 			CrawlerConfig.Static.ConsoleSideMenuVisibleItems = this.ConsoleSideMenuVisibleItems;
 			CrawlerConfig.Static.ConsoleSideMenuSelectedItem = this.ConsoleSideMenuSelectedItem;
 			CrawlerConfig.Static.ConsoleSideMenuSelectedNode = this.ConsoleSideMenuSelectedNode;
 		}
+
+		#region Public properties
 
 		/// <summary>
 		/// Gets the static configuration.
@@ -264,7 +268,7 @@ namespace InetCrawler
 		/// <summary>
 		/// Gets or sets the delay to display a user message, after the operation generating the message has completed.
 		/// </summary>
-		public TimeSpan ConsoleMessageCloseDelay
+		public TimeSpan MessageCloseDelay
 		{
 			get
 			{
@@ -273,7 +277,7 @@ namespace InetCrawler
 			set
 			{
 				DotNetApi.Windows.RegistryExtensions.SetTimeSpan(this.root + @"\Console", "MessageCloseDelay", value);
-				CrawlerConfig.Static.ConsoleMessageCloseDelay = value;
+				ApplicationConfig.MessageCloseDelay = value;
 			}
 		}
 
@@ -331,7 +335,9 @@ namespace InetCrawler
 		/// </summary>
 		public string SpidersConfigPath { get { return this.root + @"\Spiders"; } }
 
-		// Public methods.
+		#endregion
+
+		#region Public methods
 
 		/// <summary>
 		/// Disposes the current object.
@@ -341,5 +347,7 @@ namespace InetCrawler
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}
+
+		#endregion
 	}
 }

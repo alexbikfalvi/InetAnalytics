@@ -26,7 +26,7 @@ namespace InetCrawler
 	/// A class representing a crawler exception.
 	/// </summary>
 	[Serializable]
-	public class CrawlerException : ConfigException
+	public class CrawlerException : ApplicationException
 	{
 		/// <summary>
 		/// Creates a crawler exception with the specified message.

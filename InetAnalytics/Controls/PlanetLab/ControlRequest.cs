@@ -23,8 +23,9 @@ using DotNetApi;
 using DotNetApi.Web;
 using DotNetApi.Web.XmlRpc;
 using DotNetApi.Windows.Controls;
-using PlanetLab.Requests;
+using InetCommon;
 using InetCrawler;
+using PlanetLab.Requests;
 
 namespace InetAnalytics.Controls.PlanetLab
 {
@@ -242,7 +243,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						"PlanetLab Update",
 						"Refreshing the PlanetLab information failed. {0}".FormatWith(exception.Message),
 						false,
-						(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 						(object[] param) =>
 							{
 								// Call the request exception event handler.
@@ -395,7 +396,7 @@ namespace InetAnalytics.Controls.PlanetLab
 							"PlanetLab Update",
 							"Refreshing the PlanetLab information completed successfully.",
 							false,
-							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+							(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 							(object[] parameters) =>
 								{
 									// Call the complete request event handler.
@@ -412,7 +413,7 @@ namespace InetAnalytics.Controls.PlanetLab
 							"PlanetLab Error",
 							"Refreshing the PlanetLab information has failed (RPC code {0} {1})".FormatWith(response.Fault.FaultCode, response.Fault.FaultString),
 							false,
-							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+							(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 							(object[] paremeters) =>
 								{
 									// Call the complete request event handler.
@@ -452,7 +453,7 @@ namespace InetAnalytics.Controls.PlanetLab
 							"PlanetLab Update",
 							"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 							false,
-							(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+							(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 							(object[] parameters) =>
 								{
 									// Call the exception handler.
@@ -474,7 +475,7 @@ namespace InetAnalytics.Controls.PlanetLab
 						"PlanetLab Update",
 						"Refreshing the PlanetLab information has failed. {0}".FormatWith(exception.Message),
 						false,
-						(int)CrawlerConfig.Static.ConsoleMessageCloseDelay.TotalMilliseconds,
+						(int)ApplicationConfig.MessageCloseDelay.TotalMilliseconds,
 						(object[] parameters) =>
 							{
 								// Call the exception handler.

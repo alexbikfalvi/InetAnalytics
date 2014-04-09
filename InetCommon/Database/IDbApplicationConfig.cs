@@ -17,32 +17,21 @@
  */
 
 using System;
-using System.Net;
-using System.Net.NetworkInformation;
 
-namespace Mercury.Net.Information
+namespace InetCommon.Database
 {
 	/// <summary>
-	/// A class representing the information for a unicast IP address.
+	/// An interface representing the configuration for a database application.
 	/// </summary>
-	public class IPUnicastAddressInformation : IPAddressInformation
+	public interface IDbApplicationConfig : IApplicationConfig
 	{
-		/// <summary>
-		/// Creats a new IP unicast address information instance.
-		/// </summary>
-		/// <param name="iface">The interface.</param>
-		/// <param name="information">The information.</param>
-		public IPUnicastAddressInformation(NetworkInterface iface, UnicastIPAddressInformation information)
-			: base(information.Address, iface)
-		{
-			this.AddressInformation = information;
-		}
-
-		// Public properties.
+		#region Properties
 
 		/// <summary>
-		/// Gets the unicast address information.
+		/// Gets the database log file name.
 		/// </summary>
-		public UnicastIPAddressInformation AddressInformation { get; private set; }
+		string DatabaseLogFileName { get; }
+
+		#endregion
 	}
 }

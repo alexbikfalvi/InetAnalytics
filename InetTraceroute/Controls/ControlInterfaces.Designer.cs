@@ -35,7 +35,7 @@
 			this.columnHeaderProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.toolStripNetwork = new System.Windows.Forms.ToolStrip();
 			this.buttonRefreshInterfaces = new System.Windows.Forms.ToolStripButton();
-			this.controlLogNetwork = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLogNetwork = new InetControls.Controls.Log.ControlLogList();
 			this.columnHeaderInterface = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerNetwork)).BeginInit();
 			this.splitContainerNetwork.Panel1.SuspendLayout();
@@ -173,7 +173,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderProtocol;
 		private System.Windows.Forms.ToolStrip toolStripNetwork;
 		private System.Windows.Forms.ToolStripButton buttonRefreshInterfaces;
-		private InetAnalytics.Controls.Log.ControlLogList controlLogNetwork;
+		private InetControls.Controls.Log.ControlLogList controlLogNetwork;
 		private System.Windows.Forms.ColumnHeader columnHeaderInterface;
 	}
 }

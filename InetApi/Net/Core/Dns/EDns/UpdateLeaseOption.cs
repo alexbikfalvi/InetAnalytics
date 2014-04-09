@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ARSoft.Tools.Net.Dns
+namespace InetApi.Net.Core.Dns
 {
 	/// <summary>
 	/// <para>Update lease option.</para> <para>Defined in <see cref="http://files.dns-sd.org/draft-sekar-dns-ul.txt">draft-sekar-dns-ul</see>.</para>

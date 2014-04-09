@@ -17,8 +17,8 @@
  */
 
 using System;
-using InetCrawler.Database;
-using InetCrawler.Database.Data;
+using InetCommon.Database;
+using InetCommon.Database.Data;
 
 namespace InetAnalytics.Events
 {

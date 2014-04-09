@@ -46,7 +46,7 @@
 			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
 			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
 			this.panelEvent = new DotNetApi.Windows.Controls.ThemeControl();
-			this.controlLogEvent = new InetAnalytics.Controls.Log.ControlLogEventProperties();
+			this.controlLogEvent = new InetControls.Controls.Log.ControlLogEventProperties();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -264,7 +264,7 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private ControlLogEventProperties controlLogEvent;
+		private InetControls.Controls.Log.ControlLogEventProperties controlLogEvent;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderTimestamp;
 		private System.Windows.Forms.ColumnHeader columnHeaderDescription;

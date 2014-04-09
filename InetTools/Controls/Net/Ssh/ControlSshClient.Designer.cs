@@ -50,7 +50,7 @@
 			this.labelUsername = new System.Windows.Forms.Label();
 			this.radioPasswordAuthentication = new System.Windows.Forms.RadioButton();
 			this.tabPageConsole = new System.Windows.Forms.TabPage();
-			this.console = new InetAnalytics.Controls.ControlConsole();
+			this.console = new InetControls.Controls.ControlConsole();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.labelServer = new System.Windows.Forms.ToolStripLabel();
 			this.textBoxServer = new System.Windows.Forms.ToolStripTextBox();
@@ -59,7 +59,7 @@
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonSave = new System.Windows.Forms.ToolStripButton();
 			this.buttonUndo = new System.Windows.Forms.ToolStripButton();
-			this.log = new InetAnalytics.Controls.Log.ControlLogList();
+			this.log = new InetControls.Controls.Log.ControlLogList();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -387,7 +387,7 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private InetAnalytics.Controls.Log.ControlLogList log;
+		private InetControls.Controls.Log.ControlLogList log;
 		private DotNetApi.Windows.Controls.ThemeControl panelTesting;
 		private System.Windows.Forms.ImageList imageList;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
@@ -404,7 +404,7 @@
 		private DotNetApi.Windows.Controls.SecureTextBox secureTextBoxPassword;
 		private System.Windows.Forms.Button buttonLoadKey;
 		private System.Windows.Forms.TabPage tabPageConsole;
-		private InetAnalytics.Controls.ControlConsole console;
+		private InetControls.Controls.ControlConsole console;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ToolStripLabel labelServer;
 		private System.Windows.Forms.ToolStripTextBox textBoxServer;

@@ -19,7 +19,7 @@
 using System;
 using System.Security;
 
-namespace InetCommon.Events
+namespace InetControls.Events
 {
 	/// <summary>
 	/// A delegate representing a password changed event handler.

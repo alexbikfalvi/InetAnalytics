@@ -17,8 +17,8 @@
  */
 
 using System;
-using InetCrawler.Database;
-using InetCrawler.Log;
+using InetCommon.Database;
+using InetCommon.Log;
 using InetCommon.Status;
 
 namespace InetCrawler

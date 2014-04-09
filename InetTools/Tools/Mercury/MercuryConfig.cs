@@ -18,7 +18,7 @@
 
 using System;
 using DotNetApi.Windows;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 
 namespace InetTools.Tools.Mercury
 {

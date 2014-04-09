@@ -30,7 +30,7 @@ namespace InetCommon.Tools
 	/// </summary>
 	public sealed class ToolApi : IToolApi, IToolConfig
 	{
-		private readonly IDbConfig config;
+		private readonly IDbApplication application;
 		private readonly ToolsetInfoAttribute toolset;
 		private readonly ToolInfoAttribute tool;
 		private readonly RegistryKey key;
@@ -38,20 +38,20 @@ namespace InetCommon.Tools
 		/// <summary>
 		/// Creates a new tool API instance.
 		/// </summary>
-		/// <param name="config">The configuration.</param>
+		/// <param name="application">The application.</param>
 		/// <param name="toolset">The toolset information.</param>
 		/// <param name="tool">The tool information.</param>
 		/// <param name="key">The registry key for this tool.</param>
-		public ToolApi(IDbConfig config, ToolsetInfoAttribute toolset, ToolInfoAttribute tool, RegistryKey key)
+		public ToolApi(IDbApplication application, ToolsetInfoAttribute toolset, ToolInfoAttribute tool, RegistryKey key)
 		{
 			// Check the arguments.
-			if (null == config) throw new ArgumentNullException("config");
+			if (null == application) throw new ArgumentNullException("application");
 			if (null == toolset) throw new ArgumentNullException("toolset");
 			if (null == tool) throw new ArgumentNullException("tool");
 			if (null == key) throw new ArgumentNullException("key");
 
 			// Set the parameters.
-			this.config = config;
+			this.application = application;
 			this.toolset = toolset;
 			this.tool = tool;
 			this.key = key;
@@ -70,11 +70,11 @@ namespace InetCommon.Tools
 		/// <summary>
 		/// Gets the crawler status.
 		/// </summary>
-		public ApplicationStatus Status { get { return this.config.Status; } }
+		public ApplicationStatus Status { get { return this.application.Status; } }
 		/// <summary>
 		/// Gets the notification message close delay.
 		/// </summary>
-		public TimeSpan MessageCloseDelay { get { return this.config.MessageCloseDelay; } }
+		public TimeSpan MessageCloseDelay { get { return this.application.Config.MessageCloseDelay; } }
 
 		// Log.
 
@@ -88,7 +88,7 @@ namespace InetCommon.Tools
 		/// <param name="exception">The event exception.</param>
 		public LogEvent Log(LogEventLevel level, LogEventType type, string message, object[] parameters = null, Exception exception = null)
 		{
-			return this.config.Log.Add(
+			return this.application.Log.Add(
 				level,
 				type,
 				@"Toolbox\{0}\{1}".FormatWith(this.toolset.Name, this.tool.Name),
@@ -106,7 +106,7 @@ namespace InetCommon.Tools
 		/// <param name="table">The database table template.</param>
 		public void DatabaseAddTable(DbTableTemplate table)
 		{
-			this.config.Database.Sql.Tables.Add(table);
+			this.application.Database.Sql.Tables.Add(table);
 		}
 
 		/// <summary>
@@ -115,7 +115,7 @@ namespace InetCommon.Tools
 		/// <param name="table">The database table template.</param>
 		public void DatabaseRemoveTable(DbTableTemplate table)
 		{
-			this.config.Database.Sql.Tables.Remove(table);
+			this.application.Database.Sql.Tables.Remove(table);
 		}
 
 		/// <summary>
@@ -128,7 +128,7 @@ namespace InetCommon.Tools
 		/// <param name="readOnly">Indicates if the relationship is read-only.</param>
 		public void DatabaseAddRelationship(DbTableTemplate leftTable, DbTableTemplate rightTable, string leftField, string rightField, bool readOnly)
 		{
-			this.config.Database.Sql.Relationships.Add(new DbRelationshipTemplate(leftTable, rightTable, leftField, rightField, readOnly));
+			this.application.Database.Sql.Relationships.Add(new DbRelationshipTemplate(leftTable, rightTable, leftField, rightField, readOnly));
 		}
 	}
 }

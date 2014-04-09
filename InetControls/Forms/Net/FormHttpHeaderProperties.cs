@@ -22,7 +22,7 @@ using DotNetApi.Web.Http;
 using DotNetApi.Windows;
 using DotNetApi.Windows.Forms;
 
-namespace InetCommon.Forms.Net
+namespace InetControls.Forms.Net
 {
 	/// <summary>
 	/// A form dialog displaying an HTTP header.

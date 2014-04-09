@@ -19,7 +19,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using InetCrawler.Tools;
+using InetCommon.Tools;
 using InetTools.Controls.Mercury;
 using InetTools.Tools.Mercury;
 
