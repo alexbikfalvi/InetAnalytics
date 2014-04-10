@@ -28,152 +28,165 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.splitContainerNetwork = new DotNetApi.Windows.Controls.ToolSplitContainer();
-			this.themeControlNetwork = new DotNetApi.Windows.Controls.ThemeControl();
-			this.listView1 = new System.Windows.Forms.ListView();
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlInterfaces));
+			this.splitContainer = new DotNetApi.Windows.Controls.ToolSplitContainer();
+			this.themeControl = new DotNetApi.Windows.Controls.ThemeControl();
+			this.listView = new System.Windows.Forms.ListView();
 			this.columnHeaderAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.toolStripNetwork = new System.Windows.Forms.ToolStrip();
-			this.buttonRefreshInterfaces = new System.Windows.Forms.ToolStripButton();
-			this.controlLogNetwork = new InetControls.Controls.Log.ControlLogList();
 			this.columnHeaderInterface = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			((System.ComponentModel.ISupportInitialize)(this.splitContainerNetwork)).BeginInit();
-			this.splitContainerNetwork.Panel1.SuspendLayout();
-			this.splitContainerNetwork.Panel2.SuspendLayout();
-			this.splitContainerNetwork.SuspendLayout();
-			this.themeControlNetwork.SuspendLayout();
-			this.toolStripNetwork.SuspendLayout();
+			this.toolStrip = new System.Windows.Forms.ToolStrip();
+			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+			this.splitContainer.Panel1.SuspendLayout();
+			this.splitContainer.Panel2.SuspendLayout();
+			this.splitContainer.SuspendLayout();
+			this.themeControl.SuspendLayout();
+			this.toolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// splitContainerNetwork
+			// splitContainer
 			// 
-			this.splitContainerNetwork.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerNetwork.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainerNetwork.Location = new System.Drawing.Point(0, 0);
-			this.splitContainerNetwork.Name = "splitContainerNetwork";
-			this.splitContainerNetwork.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+			this.splitContainer.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer.Name = "splitContainer";
+			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
-			// splitContainerNetwork.Panel1
+			// splitContainer.Panel1
 			// 
-			this.splitContainerNetwork.Panel1.Controls.Add(this.themeControlNetwork);
-			this.splitContainerNetwork.Panel1Border = false;
+			this.splitContainer.Panel1.Controls.Add(this.themeControl);
+			this.splitContainer.Panel1Border = false;
 			// 
-			// splitContainerNetwork.Panel2
+			// splitContainer.Panel2
 			// 
-			this.splitContainerNetwork.Panel2.Controls.Add(this.controlLogNetwork);
-			this.splitContainerNetwork.Panel2Border = false;
-			this.splitContainerNetwork.Size = new System.Drawing.Size(600, 500);
-			this.splitContainerNetwork.SplitterDistance = 329;
-			this.splitContainerNetwork.SplitterWidth = 5;
-			this.splitContainerNetwork.TabIndex = 1;
-			this.splitContainerNetwork.UseTheme = false;
+			this.splitContainer.Panel2.Controls.Add(this.controlLog);
+			this.splitContainer.Panel2Border = false;
+			this.splitContainer.Size = new System.Drawing.Size(600, 500);
+			this.splitContainer.SplitterDistance = 329;
+			this.splitContainer.SplitterWidth = 5;
+			this.splitContainer.TabIndex = 1;
+			this.splitContainer.UseTheme = false;
 			// 
-			// themeControlNetwork
+			// themeControl
 			// 
-			this.themeControlNetwork.Controls.Add(this.listView1);
-			this.themeControlNetwork.Controls.Add(this.toolStripNetwork);
-			this.themeControlNetwork.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.themeControlNetwork.Location = new System.Drawing.Point(0, 0);
-			this.themeControlNetwork.Name = "themeControlNetwork";
-			this.themeControlNetwork.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
-			this.themeControlNetwork.ShowBorder = true;
-			this.themeControlNetwork.ShowTitle = true;
-			this.themeControlNetwork.Size = new System.Drawing.Size(600, 329);
-			this.themeControlNetwork.TabIndex = 0;
-			this.themeControlNetwork.Title = "Local Interfaces";
+			this.themeControl.Controls.Add(this.listView);
+			this.themeControl.Controls.Add(this.toolStrip);
+			this.themeControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.themeControl.Location = new System.Drawing.Point(0, 0);
+			this.themeControl.Name = "themeControl";
+			this.themeControl.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
+			this.themeControl.ShowBorder = true;
+			this.themeControl.ShowTitle = true;
+			this.themeControl.Size = new System.Drawing.Size(600, 329);
+			this.themeControl.TabIndex = 0;
+			this.themeControl.Title = "Local Interfaces";
 			// 
-			// listView1
+			// listView
 			// 
-			this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.listView.CheckBoxes = true;
+			this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderAddress,
             this.columnHeaderProtocol,
             this.columnHeaderInterface});
-			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView1.FullRowSelect = true;
-			this.listView1.GridLines = true;
-			this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.listView1.HideSelection = false;
-			this.listView1.Location = new System.Drawing.Point(1, 48);
-			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(598, 280);
-			this.listView1.TabIndex = 1;
-			this.listView1.UseCompatibleStateImageBehavior = false;
-			this.listView1.View = System.Windows.Forms.View.Details;
+			this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listView.FullRowSelect = true;
+			this.listView.GridLines = true;
+			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.listView.HideSelection = false;
+			this.listView.Location = new System.Drawing.Point(1, 48);
+			this.listView.Name = "listView";
+			this.listView.Size = new System.Drawing.Size(598, 280);
+			this.listView.SmallImageList = this.imageList;
+			this.listView.TabIndex = 1;
+			this.listView.UseCompatibleStateImageBehavior = false;
+			this.listView.View = System.Windows.Forms.View.Details;
 			// 
 			// columnHeaderAddress
 			// 
 			this.columnHeaderAddress.Text = "Address";
-			this.columnHeaderAddress.Width = 160;
+			this.columnHeaderAddress.Width = 200;
 			// 
 			// columnHeaderProtocol
 			// 
 			this.columnHeaderProtocol.Text = "Protocol";
 			// 
-			// toolStripNetwork
-			// 
-			this.toolStripNetwork.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonRefreshInterfaces});
-			this.toolStripNetwork.Location = new System.Drawing.Point(1, 23);
-			this.toolStripNetwork.Name = "toolStripNetwork";
-			this.toolStripNetwork.Size = new System.Drawing.Size(598, 25);
-			this.toolStripNetwork.TabIndex = 0;
-			this.toolStripNetwork.Text = "toolStrip1";
-			// 
-			// buttonRefreshInterfaces
-			// 
-			this.buttonRefreshInterfaces.Image = global::InetTraceroute.Resources.Refresh_16;
-			this.buttonRefreshInterfaces.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonRefreshInterfaces.Name = "buttonRefreshInterfaces";
-			this.buttonRefreshInterfaces.Size = new System.Drawing.Size(66, 22);
-			this.buttonRefreshInterfaces.Text = "&Refresh";
-			// 
-			// controlLogNetwork
-			// 
-			this.controlLogNetwork.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlLogNetwork.Location = new System.Drawing.Point(0, 0);
-			this.controlLogNetwork.Name = "controlLogNetwork";
-			this.controlLogNetwork.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
-			this.controlLogNetwork.ShowBorder = true;
-			this.controlLogNetwork.ShowTitle = true;
-			this.controlLogNetwork.Size = new System.Drawing.Size(600, 166);
-			this.controlLogNetwork.TabIndex = 0;
-			this.controlLogNetwork.Title = "Event Log";
-			// 
 			// columnHeaderInterface
 			// 
 			this.columnHeaderInterface.Text = "Interface";
-			this.columnHeaderInterface.Width = 160;
+			this.columnHeaderInterface.Width = 200;
+			// 
+			// toolStrip
+			// 
+			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonRefresh});
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
+			this.toolStrip.Name = "toolStrip";
+			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.TabIndex = 0;
+			this.toolStrip.Text = "toolStrip1";
+			// 
+			// buttonRefresh
+			// 
+			this.buttonRefresh.Image = global::InetTraceroute.Resources.Refresh_16;
+			this.buttonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRefresh.Name = "buttonRefresh";
+			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
+			this.buttonRefresh.Text = "&Refresh";
+			this.buttonRefresh.Click += new System.EventHandler(this.OnRefresh);
+			// 
+			// controlLog
+			// 
+			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLog.Location = new System.Drawing.Point(0, 0);
+			this.controlLog.Name = "controlLog";
+			this.controlLog.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
+			this.controlLog.ShowBorder = true;
+			this.controlLog.ShowTitle = true;
+			this.controlLog.Size = new System.Drawing.Size(600, 166);
+			this.controlLog.TabIndex = 0;
+			this.controlLog.Title = "Event Log";
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "NetworkInterface");
 			// 
 			// ControlInterfaces
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.splitContainerNetwork);
+			this.Controls.Add(this.splitContainer);
 			this.Name = "ControlInterfaces";
 			this.Size = new System.Drawing.Size(600, 500);
-			this.splitContainerNetwork.Panel1.ResumeLayout(false);
-			this.splitContainerNetwork.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainerNetwork)).EndInit();
-			this.splitContainerNetwork.ResumeLayout(false);
-			this.themeControlNetwork.ResumeLayout(false);
-			this.themeControlNetwork.PerformLayout();
-			this.toolStripNetwork.ResumeLayout(false);
-			this.toolStripNetwork.PerformLayout();
+			this.splitContainer.Panel1.ResumeLayout(false);
+			this.splitContainer.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+			this.splitContainer.ResumeLayout(false);
+			this.themeControl.ResumeLayout(false);
+			this.themeControl.PerformLayout();
+			this.toolStrip.ResumeLayout(false);
+			this.toolStrip.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainerNetwork;
-		private DotNetApi.Windows.Controls.ThemeControl themeControlNetwork;
-		private System.Windows.Forms.ListView listView1;
+		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
+		private DotNetApi.Windows.Controls.ThemeControl themeControl;
+		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderAddress;
 		private System.Windows.Forms.ColumnHeader columnHeaderProtocol;
-		private System.Windows.Forms.ToolStrip toolStripNetwork;
-		private System.Windows.Forms.ToolStripButton buttonRefreshInterfaces;
-		private InetControls.Controls.Log.ControlLogList controlLogNetwork;
+		private System.Windows.Forms.ToolStrip toolStrip;
+		private System.Windows.Forms.ToolStripButton buttonRefresh;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private System.Windows.Forms.ColumnHeader columnHeaderInterface;
+		private System.Windows.Forms.ImageList imageList;
 	}
 }

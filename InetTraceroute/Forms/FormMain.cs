@@ -39,6 +39,9 @@ namespace InetTraceroute.Forms
 		// Status.
 		private readonly ApplicationStatus status = new ApplicationStatus();
 
+		// Forms.
+		private readonly FormAbout formAbout = new FormAbout();
+
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>

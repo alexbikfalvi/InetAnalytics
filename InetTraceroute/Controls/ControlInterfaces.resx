@@ -117,7 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStripNetwork.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>115, 17</value>
+  </metadata>
+  <data name="imageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACe
+        BAAAAk1TRnQBSQFMAwEBAAEIAQABCAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARD/AP8A/wAZAAHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/xAAAfEB7wHwAf8B8QHv
+        AfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf/IAAHxAe8B8AH/A0EB/wHx
+        Ae8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wNBAf8DQQH/A0EB/wNB
+        Af8DQQH/AfEB7wHwAf8B8QHvAfAB/8QAAfEB7wHwAf8DQQH/A0EB/wNBAf8DQQH/A0EB/wNBAf8DQQH/
+        A0EB/wHxAe8B8AH/A0EB/wHxAe8B8AH/A0EB/wNBAf8B8QHvAfAB/8QAAfEB7wHwAf8DQQH/AfEB7wHw
+        Af8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHx
+        Ae8B8AH/AfEB7wHwAf8B8QHvAfAB/wNBAf8B8QHvAfAB/8QAAfEB7wHwAf8DQQH/AfEB7wHwAf8DQQH/
+        AfEB7wHwAf8DQQH/AfEB7wHwAf8DQQH/AfEB7wHwAf8DQQH/AfEB7wHwAf8DQQH/AfEB7wHwAf8DQQH/
+        AfEB7wHwAf/EAAHxAe8B8AH/A0EB/wHxAe8B8AH/A0EB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wNB
+        Af8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8DQQH/AfEB7wHwAf8DQQH/AfEB7wHwAf/EAAHxAe8B8AH/
+        A0EB/wHxAe8B8AH/A0EB/wHxAe8B8AH/A0EB/wHxAe8B8AH/A0EB/wHxAe8B8AH/A0EB/wHxAe8B8AH/
+        A0EB/wHxAe8B8AH/A0EB/wHxAe8B8AH/xAAB8QHvAfAB/wNBAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHw
+        Af8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHx
+        Ae8B8AH/A0EB/wHxAe8B8AH/xAAB8QHvAfAB/wNBAf8DQQH/A0EB/wNBAf8DQQH/A0EB/wNBAf8DQQH/
+        A0EB/wNBAf8DQQH/A0EB/wNBAf8B8QHvAfAB/8QAAfEB7wHwAf8DQQH/AfEB7wHwAf8B8QHvAfAB/wHx
+        Ae8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB/wHxAe8B8AH/AfEB7wHw
+        Af8B8QHvAfAB/wHxAe8B8AH/AfEB7wHwAf/EAAHxAe8B8AH/AfEB7wHwAf8B8QHvAfAB//8A/wDyAAFC
+        AU0BPgcAAT4DAAEoAwABQAMAARADAAEBAQABAQUAAYAXAAP/AQAC/wYAAv8GAAL/BgABjwEBBgABgAcA
+        AYAHAAGABwABgAcAAYAHAAGABwABgAcAAYAHAAGABwABjwH/BgAC/wYAAv8GAAs=
+</value>
+  </data>
+  <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
 </root>

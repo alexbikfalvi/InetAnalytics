@@ -17,7 +17,9 @@
  */
 
 using System;
+using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
+using InetCommon.Net;
 
 namespace InetTraceroute.Controls
 {
@@ -33,6 +35,49 @@ namespace InetTraceroute.Controls
 		{
 			// Initialize the component.
 			this.InitializeComponent();
+
+			// Set the network addresses changed event handler.
+			NetworkAddresses.NetworkAddressesChanged += this.OnRefresh;
+
+			// Update the list of interface addresses.
+			this.OnRefresh(this, EventArgs.Empty);
 		}
+
+		#region Private methods
+
+		/// <summary>
+		/// Refreshes the list of interface addresses.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRefresh(object sender, EventArgs e)
+		{
+			// Clear the list of addresses.
+			this.listView.Items.Clear();
+
+			// Synchronize access.
+			lock (NetworkAddresses.Sync)
+			{
+				// Update the list of addresses.
+				foreach (UnicastNetworkAddressInformation info in NetworkAddresses.Unicast)
+				{
+					if (!info.Information.IsTransient && info.Information.IsDnsEligible)
+					{
+						// Create a new list view item.
+						ListViewItem item = new ListViewItem(new string[] {
+							info.Information.Address.ToString(),
+							info.Information.Address.AddressFamily.ToString(),
+							info.Interface.Name
+						});
+						item.ImageIndex = 0;
+						item.Checked = info.Selected;
+						item.Tag = info;
+						this.listView.Items.Add(item);
+					}
+				}
+			}
+		}
+
+		#endregion
 	}
 }
