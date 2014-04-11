@@ -63,6 +63,16 @@ namespace InetTraceroute {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Calendar_16 {
+            get {
+                object obj = ResourceManager.GetObject("Calendar_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Error_48 {
             get {
                 object obj = ResourceManager.GetObject("Error_48", resourceCulture);
@@ -73,9 +83,39 @@ namespace InetTraceroute {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Filter_16 {
+            get {
+                object obj = ResourceManager.GetObject("Filter_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Information_16 {
             get {
                 object obj = ResourceManager.GetObject("Information_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogClock_48 {
+            get {
+                object obj = ResourceManager.GetObject("LogClock_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogSuccess_48 {
+            get {
+                object obj = ResourceManager.GetObject("LogSuccess_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

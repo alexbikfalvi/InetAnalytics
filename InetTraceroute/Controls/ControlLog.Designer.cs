@@ -46,7 +46,7 @@
 			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
 			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
 			this.panelEvent = new DotNetApi.Windows.Controls.ThemeControl();
-			this.controlLogEvent = new InetAnalytics.Controls.Log.ControlLogEventProperties();
+			this.controlLogEvent = new InetControls.Controls.Log.ControlLogEventProperties();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -76,6 +76,7 @@
 			this.splitContainer.SplitterDistance = 200;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
+			this.splitContainer.UseTheme = false;
 			// 
 			// panelEvents
 			// 
@@ -84,7 +85,7 @@
 			this.panelEvents.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelEvents.Location = new System.Drawing.Point(0, 0);
 			this.panelEvents.Name = "panelEvents";
-			this.panelEvents.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelEvents.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelEvents.ShowBorder = true;
 			this.panelEvents.ShowTitle = true;
 			this.panelEvents.Size = new System.Drawing.Size(600, 200);
@@ -103,10 +104,10 @@
 			this.listView.GridLines = true;
 			this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listView.HideSelection = false;
-			this.listView.Location = new System.Drawing.Point(1, 47);
+			this.listView.Location = new System.Drawing.Point(1, 48);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(598, 152);
+			this.listView.Size = new System.Drawing.Size(598, 151);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 0;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -149,7 +150,7 @@
             this.buttonLevel,
             this.toolStripSeparator,
             this.buttonCalendar});
-			this.toolStrip.Location = new System.Drawing.Point(1, 22);
+			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Size = new System.Drawing.Size(598, 25);
 			this.toolStrip.TabIndex = 2;
@@ -223,7 +224,7 @@
 			this.panelEvent.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelEvent.Location = new System.Drawing.Point(0, 0);
 			this.panelEvent.Name = "panelEvent";
-			this.panelEvent.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+			this.panelEvent.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelEvent.ShowBorder = true;
 			this.panelEvent.ShowTitle = true;
 			this.panelEvent.Size = new System.Drawing.Size(600, 195);
@@ -234,10 +235,10 @@
 			// 
 			this.controlLogEvent.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.controlLogEvent.Event = null;
-			this.controlLogEvent.Location = new System.Drawing.Point(1, 22);
+			this.controlLogEvent.Location = new System.Drawing.Point(1, 23);
 			this.controlLogEvent.Name = "controlLogEvent";
 			this.controlLogEvent.Padding = new System.Windows.Forms.Padding(1);
-			this.controlLogEvent.Size = new System.Drawing.Size(598, 172);
+			this.controlLogEvent.Size = new System.Drawing.Size(598, 171);
 			this.controlLogEvent.TabIndex = 0;
 			// 
 			// ControlLog
@@ -264,7 +265,7 @@
 		#endregion
 
 		private DotNetApi.Windows.Controls.ToolSplitContainer splitContainer;
-		private ControlLogEventProperties controlLogEvent;
+		private InetControls.Controls.Log.ControlLogEventProperties controlLogEvent;
 		private System.Windows.Forms.ListView listView;
 		private System.Windows.Forms.ColumnHeader columnHeaderTimestamp;
 		private System.Windows.Forms.ColumnHeader columnHeaderDescription;

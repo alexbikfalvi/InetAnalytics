@@ -43,22 +43,25 @@
 			this.statusLabelRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusLabelRun = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tabControl = new DotNetApi.Windows.Controls.ThemeTabControl();
-			this.tabPageNetwork = new System.Windows.Forms.TabPage();
+			this.tabPageAddresses = new System.Windows.Forms.TabPage();
+			this.controlInterfaces = new InetTraceroute.Controls.ControlAddresses();
 			this.tabPageDns = new System.Windows.Forms.TabPage();
 			this.tabPageTraceroute = new System.Windows.Forms.TabPage();
+			this.tabPageLog = new System.Windows.Forms.TabPage();
+			this.controlLog1 = new InetTraceroute.Controls.Log.ControlLog();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
-			this.controlInterfaces = new InetTraceroute.Controls.ControlInterfaces();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
-			this.tabPageNetwork.SuspendLayout();
+			this.tabPageAddresses.SuspendLayout();
+			this.tabPageLog.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -135,11 +138,11 @@
 			// 
 			// tabControl
 			// 
-			this.tabControl.Controls.Add(this.tabPageNetwork);
+			this.tabControl.Controls.Add(this.tabPageAddresses);
 			this.tabControl.Controls.Add(this.tabPageDns);
 			this.tabControl.Controls.Add(this.tabPageTraceroute);
+			this.tabControl.Controls.Add(this.tabPageLog);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabControl.Location = new System.Drawing.Point(0, 0);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.Padding = new System.Drawing.Point(0, 0);
@@ -147,17 +150,25 @@
 			this.tabControl.Size = new System.Drawing.Size(784, 516);
 			this.tabControl.TabIndex = 1;
 			// 
-			// tabPageNetwork
+			// tabPageAddresses
 			// 
-			this.tabPageNetwork.Controls.Add(this.controlInterfaces);
-			this.tabPageNetwork.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tabPageNetwork.Location = new System.Drawing.Point(2, 23);
-			this.tabPageNetwork.Name = "tabPageNetwork";
-			this.tabPageNetwork.Padding = new System.Windows.Forms.Padding(5);
-			this.tabPageNetwork.Size = new System.Drawing.Size(780, 491);
-			this.tabPageNetwork.TabIndex = 0;
-			this.tabPageNetwork.Text = "Network";
-			this.tabPageNetwork.UseVisualStyleBackColor = true;
+			this.tabPageAddresses.Controls.Add(this.controlInterfaces);
+			this.tabPageAddresses.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tabPageAddresses.Location = new System.Drawing.Point(2, 23);
+			this.tabPageAddresses.Name = "tabPageAddresses";
+			this.tabPageAddresses.Padding = new System.Windows.Forms.Padding(5);
+			this.tabPageAddresses.Size = new System.Drawing.Size(780, 491);
+			this.tabPageAddresses.TabIndex = 0;
+			this.tabPageAddresses.Text = "Addresses";
+			this.tabPageAddresses.UseVisualStyleBackColor = true;
+			// 
+			// controlInterfaces
+			// 
+			this.controlInterfaces.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlInterfaces.Location = new System.Drawing.Point(5, 5);
+			this.controlInterfaces.Name = "controlInterfaces";
+			this.controlInterfaces.Size = new System.Drawing.Size(770, 481);
+			this.controlInterfaces.TabIndex = 0;
 			// 
 			// tabPageDns
 			// 
@@ -178,6 +189,27 @@
 			this.tabPageTraceroute.TabIndex = 1;
 			this.tabPageTraceroute.Text = "Traceroute";
 			this.tabPageTraceroute.UseVisualStyleBackColor = true;
+			// 
+			// tabPageLog
+			// 
+			this.tabPageLog.Controls.Add(this.controlLog1);
+			this.tabPageLog.Location = new System.Drawing.Point(2, 23);
+			this.tabPageLog.Name = "tabPageLog";
+			this.tabPageLog.Padding = new System.Windows.Forms.Padding(5);
+			this.tabPageLog.Size = new System.Drawing.Size(780, 491);
+			this.tabPageLog.TabIndex = 3;
+			this.tabPageLog.Text = "Log";
+			this.tabPageLog.UseVisualStyleBackColor = true;
+			// 
+			// controlLog1
+			// 
+			this.controlLog1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLog1.Enabled = false;
+			this.controlLog1.Location = new System.Drawing.Point(5, 5);
+			this.controlLog1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			this.controlLog1.Name = "controlLog1";
+			this.controlLog1.Size = new System.Drawing.Size(770, 481);
+			this.controlLog1.TabIndex = 0;
 			// 
 			// menuStrip
 			// 
@@ -220,14 +252,7 @@
 			this.menuItemAbout.Name = "menuItemAbout";
 			this.menuItemAbout.Size = new System.Drawing.Size(116, 22);
 			this.menuItemAbout.Text = "&About...";
-			// 
-			// controlInterfaces
-			// 
-			this.controlInterfaces.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlInterfaces.Location = new System.Drawing.Point(5, 5);
-			this.controlInterfaces.Name = "controlInterfaces";
-			this.controlInterfaces.Size = new System.Drawing.Size(770, 481);
-			this.controlInterfaces.TabIndex = 0;
+			this.menuItemAbout.Click += new System.EventHandler(this.OnAbout);
 			// 
 			// FormMain
 			// 
@@ -249,7 +274,8 @@
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
 			this.tabControl.ResumeLayout(false);
-			this.tabPageNetwork.ResumeLayout(false);
+			this.tabPageAddresses.ResumeLayout(false);
+			this.tabPageLog.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
 			this.ResumeLayout(false);
@@ -271,10 +297,12 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
 		private System.Windows.Forms.ToolStripProgressBar statusProgress;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
-		private System.Windows.Forms.TabPage tabPageNetwork;
+		private System.Windows.Forms.TabPage tabPageAddresses;
 		private System.Windows.Forms.TabPage tabPageTraceroute;
 		private System.Windows.Forms.TabPage tabPageDns;
-		private Controls.ControlInterfaces controlInterfaces;
+		private Controls.ControlAddresses controlInterfaces;
+		private System.Windows.Forms.TabPage tabPageLog;
+		private Controls.Log.ControlLog controlLog1;
 	}
 }
 

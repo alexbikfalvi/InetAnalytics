@@ -20,8 +20,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using InetAnalytics.Forms.Log;
+using InetCommon;
 using InetCommon.Log;
+using InetControls.Forms.Log;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
 
@@ -32,7 +33,7 @@ namespace InetTraceroute.Controls.Log
 	/// </summary>
 	public partial class ControlLog : NotificationControl
 	{
-		private Config config;
+		private Logger log;
 		private ControlLogUpdateState state = null;
 		private List<LogEvent> events = null;
 
@@ -47,8 +48,8 @@ namespace InetTraceroute.Controls.Log
 			InitializeComponent();
 
 			// Set the default control properties.
-			this.Visible = false;
 			this.Dock = DockStyle.Fill;
+			this.Enabled = false;
 
 			// Initialize the calendar
 			this.calendar.Calendar.MaxSelectionCount = 3600;
@@ -62,16 +63,14 @@ namespace InetTraceroute.Controls.Log
 				this.listLevels.AddItem(level, LogEvent.GetDescription(level), CheckState.Checked);
 		}
 
-		#region Public methods
-
 		/// <summary>
 		/// Initializes the control with a crawler object.
 		/// </summary>
-		/// <param name="config">The configuration.</param>
-		public void Initialize(Config config)
+		/// <param name="log">The log.</param>
+		public void Initialize(Logger log)
 		{
-			// Set the configuration.
-			this.config = config;
+			// Set the log.
+			this.log = log;
 			// Enable the control.
 			this.Enabled = true;
 			// Refresh the log.
@@ -86,7 +85,7 @@ namespace InetTraceroute.Controls.Log
 		public void DateChanged(object sender, DateRangeEventArgs e)
 		{
 			// If the function is called before the initialization of the crawler, do nothing.
-			if (null == this.config) return;
+			if (null == this.log) return;
 
 			// Update the calendar.
 			this.calendar.Calendar.SelectionStart = e.Start;
@@ -101,7 +100,7 @@ namespace InetTraceroute.Controls.Log
 		public void DateRefresh(object sender, DateRangeEventArgs e)
 		{
 			// If the function is called before the initialization of the crawler, do nothing.
-			if (null == this.config) return;
+			if (null == this.log) return;
 
 			// Update the calendar.
 			this.calendar.Calendar.SelectionStart = e.Start;
@@ -111,9 +110,7 @@ namespace InetTraceroute.Controls.Log
 			this.OnCalendarDateChanged(sender, e);
 		}
 
-		#endregion
-
-		#region Private methods.
+		// Private methods.
 
 		/// <summary>
 		/// An event handler called when the calendar range has changed.
@@ -164,13 +161,13 @@ namespace InetTraceroute.Controls.Log
 				if (!state.IsCanceled)
 				{
 					// Read the log for all the dates in the specified range.
-					this.config.Log.Read(state.Range.Start, state.Range.End);
+					this.log.Read(state.Range.Start, state.Range.End);
 				}
 				// If the state is not canceled.
 				if (!state.IsCanceled)
 				{
 					// Get the list of events.
-					state.Events = this.config.Log.Get(state.Range.Start, state.Range.End);
+					state.Events = this.log.Get(state.Range.Start, state.Range.End);
 				}
 				// If the state is not canceled.
 				if (!state.IsCanceled)
@@ -198,7 +195,7 @@ namespace InetTraceroute.Controls.Log
 			}
 			finally
 			{
-				Thread.Sleep(this.config.ConsoleMessageCloseDelay);
+				Thread.Sleep(ApplicationConfig.MessageCloseDelay);
 			}
 
 			// If the state is not canceled.
@@ -406,8 +403,6 @@ namespace InetTraceroute.Controls.Log
 				this.formLogEvent.ShowDialog(this, this.listView.SelectedItems[0].Tag as LogEvent);
 			}		
 		}
-
-		#endregion
 	}
 
 	internal delegate bool TestLogEvent(LogEvent evt);
@@ -506,7 +501,5 @@ namespace InetTraceroute.Controls.Log
 				this.completed = true;
 			}
 		}
-
-		#endregion
 	}
 }

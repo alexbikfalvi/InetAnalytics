@@ -36,10 +36,10 @@
 			this.columnHeaderAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderInterface = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.controlLog = new InetAnalytics.Controls.Log.ControlLogList();
+			this.controlLog = new InetControls.Controls.Log.ControlLogList();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -83,7 +83,7 @@
 			this.themeControl.ShowTitle = true;
 			this.themeControl.Size = new System.Drawing.Size(600, 329);
 			this.themeControl.TabIndex = 0;
-			this.themeControl.Title = "Local Addresses";
+			this.themeControl.Title = "Local Interfaces";
 			// 
 			// listView
 			// 
@@ -105,6 +105,7 @@
 			this.listView.TabIndex = 1;
 			this.listView.UseCompatibleStateImageBehavior = false;
 			this.listView.View = System.Windows.Forms.View.Details;
+			this.listView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.OnItemChecked);
 			// 
 			// columnHeaderAddress
 			// 
@@ -114,11 +115,18 @@
 			// columnHeaderProtocol
 			// 
 			this.columnHeaderProtocol.Text = "Protocol";
+			this.columnHeaderProtocol.Width = 100;
 			// 
 			// columnHeaderInterface
 			// 
 			this.columnHeaderInterface.Text = "Interface";
 			this.columnHeaderInterface.Width = 200;
+			// 
+			// imageList
+			// 
+			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList.Images.SetKeyName(0, "NetworkInterface");
 			// 
 			// toolStrip
 			// 
@@ -137,12 +145,7 @@
 			this.buttonRefresh.Name = "buttonRefresh";
 			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
 			this.buttonRefresh.Text = "&Refresh";
-			// 
-			// imageList
-			// 
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList.Images.SetKeyName(0, "NetworkInterface");
+			this.buttonRefresh.Click += new System.EventHandler(this.OnRefresh);
 			// 
 			// controlLog
 			// 
@@ -156,13 +159,12 @@
 			this.controlLog.TabIndex = 0;
 			this.controlLog.Title = "Event Log";
 			// 
-			// ControlAddresses
+			// ControlInterfaces
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
-			this.Enabled = false;
-			this.Name = "ControlAddresses";
+			this.Name = "ControlInterfaces";
 			this.Size = new System.Drawing.Size(600, 500);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);
@@ -185,7 +187,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderProtocol;
 		private System.Windows.Forms.ToolStrip toolStrip;
 		private System.Windows.Forms.ToolStripButton buttonRefresh;
-		private InetAnalytics.Controls.Log.ControlLogList controlLog;
+		private InetControls.Controls.Log.ControlLogList controlLog;
 		private System.Windows.Forms.ColumnHeader columnHeaderInterface;
 		private System.Windows.Forms.ImageList imageList;
 	}

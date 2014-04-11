@@ -41,9 +41,6 @@
     <Reference Include="InetApi">
       <HintPath>..\InetApi\bin\Debug\InetApi.dll</HintPath>
     </Reference>
-    <Reference Include="InetCrawler">
-      <HintPath>..\InetCrawler\bin\Debug\InetCrawler.dll</HintPath>
-    </Reference>
     <Reference Include="Renci.SshNet">
       <HintPath>..\..\Renci.SshNet\bin\Debug\Renci.SshNet.dll</HintPath>
     </Reference>
@@ -57,11 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ControlInterfaces.cs">
+    <Compile Include="Controls\ControlAddresses.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ControlInterfaces.Designer.cs">
-      <DependentUpon>ControlInterfaces.cs</DependentUpon>
+    <Compile Include="Controls\ControlAddresses.Designer.cs">
+      <DependentUpon>ControlAddresses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlLog.Designer.cs">
+      <DependentUpon>ControlLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormAbout.cs">
       <SubType>Form</SubType>
@@ -83,8 +86,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\ControlInterfaces.resx">
-      <DependentUpon>ControlInterfaces.cs</DependentUpon>
+    <Compile Include="TracerouteApplication.cs" />
+    <EmbeddedResource Include="Controls\ControlAddresses.resx">
+      <DependentUpon>ControlAddresses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ControlLog.resx">
+      <DependentUpon>ControlLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>

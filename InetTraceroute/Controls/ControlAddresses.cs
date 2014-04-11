@@ -17,12 +17,9 @@
  */
 
 using System;
-using System.Linq;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Windows.Forms;
 using DotNetApi.Windows.Controls;
-using InetCommon.Log;
 using InetCommon.Net;
 
 namespace InetTraceroute.Controls
@@ -32,9 +29,37 @@ namespace InetTraceroute.Controls
 	/// </summary>
 	public partial class ControlAddresses : ThreadSafeControl
 	{
-		private static readonly string logSource = "Network";
-
-		private Config config;
+		private static string[] addressFamilyName = {
+														"Unspecified",
+														"Unix",
+														"IP version 4",
+														"ARPANET IMP",
+														"PUP",
+														"MIT CHAOS",
+														"IPX / SPX",
+														"Xerox NS",
+														"OSI",
+														"European Computer Manufacturers Association (ECMA)",
+														"DataKit",
+														"CCITT",
+														"IBM SNA",
+														"DECnet",
+														"Direct data-link",
+														"LAT",
+														"NSC Hyperchannel",
+														"AppleTalk",
+														"NetBios",
+														"VoiceView",
+														"FireFox",
+														"Banyan",
+														"ATM",
+														"IP version 6",
+														"Microsoft cluster",
+														"IEEE 1284.4",
+														"IrDA",
+														"Network Designers OSI",
+														"Max"
+													};
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -44,81 +69,68 @@ namespace InetTraceroute.Controls
 			// Initialize the component.
 			this.InitializeComponent();
 
-			//Set the network addresses event handler.
-			NetworkAddresses.UnicastAddressesChanged += this.OnNetworkAddressesChanged;
+			// Set the network addresses changed event handler.
+			NetworkAddresses.NetworkAddressesChanged += this.OnRefresh;
 
-			// Update the list of addresses.
-			this.OnUpdate();
+			// Update the list of interface addresses.
+			this.OnRefresh(this, EventArgs.Empty);
 		}
-
-		#region Public methods
-		
-		/// <summary>
-		/// Initializes the control.
-		/// </summary>
-		/// <param name="config">The configuration.</param>
-		public void Initialize(Config config)
-		{
-			// Set the configuration.
-			this.config = config;
-
-			// Enable the control.
-			this.Enabled = true;
-		}
-
-		#endregion
 
 		#region Private methods
 
 		/// <summary>
-		/// An event handler called when the network addresses have changed.
+		/// Refreshes the list of interface addresses.
 		/// </summary>
 		/// <param name="sender">The sender object.</param>
 		/// <param name="e">The event arguments.</param>
-		private void OnNetworkAddressesChanged(object sender, EventArgs e)
+		private void OnRefresh(object sender, EventArgs e)
 		{
-			// Update the current addresses.
-			this.OnUpdate();
-
-			// Add an event.
-			/*this.controlLog.Add(new LogEvent(
-				LogEventLevel.Verbose,
-				LogEventType.Information,
-				DateTime.Now,
-				ControlAddresses.logSource,
-				"The local network configuration has changed."));*/
-		}
-
-		private void OnUpdate()
-		{
-			// Clear the current addresses.
+			// Clear the list of addresses.
 			this.listView.Items.Clear();
 
+			// Synchronize access.
 			lock (NetworkAddresses.Sync)
 			{
-				// Update the current addresses.
+				// Update the list of addresses.
 				foreach (UnicastNetworkAddressInformation info in NetworkAddresses.Unicast)
 				{
-					if ((info.Interface.OperationalStatus == OperationalStatus.Up) && 
-						(info.UnicastInformation.Address.AddressFamily == AddressFamily.InterNetwork || info.UnicastInformation.Address.AddressFamily == AddressFamily.InterNetworkV6) &&
-						!info.UnicastInformation.IsTransient &&
-						info.UnicastInformation.IsDnsEligible)
+					// Select only the not transient and DNS eligible addresses.
+					if (!info.Information.IsTransient &&
+						info.Information.IsDnsEligible &&
+						((info.Information.Address.AddressFamily == AddressFamily.InterNetwork) || (info.Information.Address.AddressFamily == AddressFamily.InterNetworkV6)))
 					{
+						// Create a new list view item.
 						ListViewItem item = new ListViewItem(new string[] {
 							info.Information.Address.ToString(),
-							info.Information.Address.AddressFamily.ToString(),
+							ControlAddresses.addressFamilyName[(int)info.Information.Address.AddressFamily],
 							info.Interface.Name
 						});
 						item.ImageIndex = 0;
 						item.Checked = info.Selected;
+						item.Tag = info;
 						this.listView.Items.Add(item);
 					}
 					else
 					{
+						// Otherwise, disable the interface.
 						info.Selected = false;
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// An event handler called when the checked state of an item has changed.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			// Get the address information.
+			UnicastNetworkAddressInformation info = e.Item.Tag as UnicastNetworkAddressInformation;
+
+			// Set the selection state.
+			info.Selected = e.Item.Checked;
 		}
 
 		#endregion

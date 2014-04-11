@@ -200,6 +200,16 @@ namespace InetTraceroute.Forms
 			this.status.Activate(this.tabControl.TabPages[this.tabControl.SelectedIndex]);
 		}
 
+		/// <summary>
+		/// An event handler called when the user selects the About menu.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnAbout(object sender, EventArgs e)
+		{
+			this.formAbout.ShowDialog(this);
+		}
+
 		#endregion
 	}
 }
