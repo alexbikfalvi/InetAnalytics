@@ -121,20 +121,47 @@
   <data name="Calendar_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ineticons\resources\calendar_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ConfigRootPath" xml:space="preserve">
+    <value>Software\Alex Bikfalvi\Internet Traceroute</value>
+  </data>
   <data name="Error_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ineticons\resources\error_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Filter_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ineticons\resources\filter_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GlobeClock_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\globeclock_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Information_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ineticons\resources\information_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LogClock_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\logclock_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LogClock_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ineticons\resources\logclock_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LogError_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\logerror_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LogSuccess_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\logsuccess_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="LogSuccess_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ineticons\resources\logsuccess_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NetworkInterface_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\networkinterface_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayStart_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\playstart_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayStop_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\playstop_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecordLarge_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ineticons\resources\recordlarge_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Refresh_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ineticons\resources\refresh_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

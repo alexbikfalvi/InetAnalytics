@@ -51,9 +51,9 @@ namespace InetApi.Net.Core.Dns
 		// Public properties.
 
 		/// <summary>
-		/// Milliseconds after which a query times out.
+		/// Gets or sets the number of milliseconds after which a query times out.
 		/// </summary>
-		public int QueryTimeout { get; private set; }
+		public int QueryTimeout { get; set; }
 		/// <summary>
 		/// Gets or set a value indicating whether the response is validated as described in <see
 		/// cref="http://tools.ietf.org/id/draft-vixie-dnsext-dns0x20-00.txt">draft-vixie-dnsext-dns0x20-00</see>
@@ -222,6 +222,149 @@ namespace InetApi.Net.Core.Dns
 		}
 
 		/// <summary>
+		/// Sends a DNS message.
+		/// </summary>
+		/// <typeparam name="TMessage">The message type.</typeparam>
+		/// <param name="message">The message.</param>
+		/// <param name="localAddress">The local IP address.</param>
+		/// <param name="serverAddress">The server IP address.</param>
+		/// <returns>The response message.</returns>
+		protected TMessage SendMessage<TMessage>(TMessage message, IPAddress localAddress, IPAddress serverAddress) where TMessage : DnsMessageBase, new()
+		{
+			int messageLength;
+			byte[] messageData;
+			DnsServer.SelectTsigKey tsigKeySelector;
+			byte[] tsigOriginalMac;
+
+			this.PrepareMessage(message, out messageLength, out messageData, out tsigKeySelector, out tsigOriginalMac);
+
+			bool sendByTcp = ((messageLength > MaximumQueryMessageSize) || message.IsTcpUsingRequested);
+
+			// Create the endpoint information.
+			DnsClientEndpointInfo endpointInfo = new DnsClientEndpointInfo()
+			{
+				IsMulticast = serverAddress.IsMulticast(),
+				LocalAddress = localAddress,
+				ServerAddress = serverAddress
+			};
+
+			TcpClient tcpClient = null;
+			NetworkStream tcpStream = null;
+
+			try
+			{
+				IPAddress responderAddress;
+				byte[] resultData = sendByTcp ? this.QueryByTcp(endpointInfo.ServerAddress, messageData, messageLength, ref tcpClient, ref tcpStream, out responderAddress) : QueryByUdp(endpointInfo, messageData, messageLength, out responderAddress);
+
+				if (resultData != null)
+				{
+					TMessage result = new TMessage();
+
+					try
+					{
+						result.Parse(resultData, false, tsigKeySelector, tsigOriginalMac);
+					}
+					catch (Exception e)
+					{
+						Trace.TraceError("Error on DNS query: " + e);
+						return null;
+					}
+
+					if (!ValidateResponse(message, result))
+						return null;
+
+					if (result.ReturnCode == ReturnCode.ServerFailure)
+					{
+						return null;
+					}
+
+					if (result.IsTcpResendingRequested)
+					{
+						resultData = QueryByTcp(responderAddress, messageData, messageLength, ref tcpClient, ref tcpStream, out responderAddress);
+						if (resultData != null)
+						{
+							TMessage tcpResult = new TMessage();
+
+							try
+							{
+								tcpResult.Parse(resultData, false, tsigKeySelector, tsigOriginalMac);
+							}
+							catch (Exception e)
+							{
+								Trace.TraceError("Error on DNS query: " + e);
+								return null;
+							}
+
+							if (tcpResult.ReturnCode == ReturnCode.ServerFailure)
+							{
+								return null;
+							}
+							else
+							{
+								result = tcpResult;
+							}
+						}
+					}
+
+					bool isTcpNextMessageWaiting = result.IsTcpNextMessageWaiting;
+					bool isSucessfullFinished = true;
+
+					while (isTcpNextMessageWaiting)
+					{
+						resultData = this.QueryByTcp(responderAddress, null, 0, ref tcpClient, ref tcpStream, out responderAddress);
+						if (resultData != null)
+						{
+							TMessage tcpResult = new TMessage();
+
+							try
+							{
+								tcpResult.Parse(resultData, false, tsigKeySelector, tsigOriginalMac);
+							}
+							catch (Exception e)
+							{
+								Trace.TraceError("Error on DNS query: " + e);
+								isSucessfullFinished = false;
+								break;
+							}
+
+							if (tcpResult.ReturnCode == ReturnCode.ServerFailure)
+							{
+								isSucessfullFinished = false;
+								break;
+							}
+							else
+							{
+								result.AnswerRecords.AddRange(tcpResult.AnswerRecords);
+								isTcpNextMessageWaiting = tcpResult.IsTcpNextMessageWaiting;
+							}
+						}
+						else
+						{
+							isSucessfullFinished = false;
+							break;
+						}
+					}
+
+					if (isSucessfullFinished)
+						return result;
+				}
+			}
+			finally
+			{
+				try
+				{
+					if (tcpStream != null)
+						tcpStream.Dispose();
+					if (tcpClient != null)
+						tcpClient.Close();
+				}
+				catch { }
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// Sens a DNS message in parallel.
 		/// </summary>
 		/// <typeparam name="TMessage">The message type.</typeparam>
@@ -285,6 +428,29 @@ namespace InetApi.Net.Core.Dns
 			where TMessage : DnsMessageBase, new()
 		{
 			return BeginSendMessage(message, GetEndpointInfos<TMessage>(), requestCallback, state);
+		}
+
+		/// <summary>
+		/// Begins sending a request message.
+		/// </summary>
+		/// <typeparam name="TMessage">The message type.</typeparam>
+		/// <param name="message">The message.</param>
+		/// <param name="localAddress">The local address.</param>
+		/// <param name="serverAddress">The server address.</param>
+		/// <param name="requestCallback">The request callback.</param>
+		/// <param name="state">The user state.</param>
+		/// <returns>The result of the asynchronous operation.</returns>
+		protected IAsyncResult BeginSendMessage<TMessage>(TMessage message, IPAddress localAddress, IPAddress serverAddress, AsyncCallback requestCallback, object state)
+			where TMessage : DnsMessageBase, new()
+		{
+			// Create the endpoint information.
+			DnsClientEndpointInfo endpointInfo = new DnsClientEndpointInfo() {
+				IsMulticast = serverAddress.IsMulticast(),
+				LocalAddress = localAddress,
+				ServerAddress = serverAddress
+			};
+			// Send the message.
+			return BeginSendMessage(message, new List<DnsClientEndpointInfo>() { endpointInfo }, requestCallback, state);
 		}
 
 		/// <summary>

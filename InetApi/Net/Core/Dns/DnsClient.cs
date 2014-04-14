@@ -46,16 +46,23 @@ namespace InetApi.Net.Core.Dns
 		/// <summary>
 		/// Provides a new instance with custom DNS server and query timeout
 		/// </summary>
-		/// <param name="dnsServer"> The IPAddress of the DNS server to use </param>
-		/// <param name="queryTimeout"> Query timeout in milliseconds </param>
+		/// <param name="queryTimeout">Query timeout in milliseconds.</param>
+		public DnsClient(int queryTimeout)
+			: this(new List<IPAddress>(), queryTimeout) { }
+
+		/// <summary>
+		/// Provides a new instance with custom DNS server and query timeout
+		/// </summary>
+		/// <param name="dnsServer">The IPAddress of the DNS server to use.</param>
+		/// <param name="queryTimeout">Query timeout in milliseconds.</param>
 		public DnsClient(IPAddress dnsServer, int queryTimeout)
 			: this(new List<IPAddress> { dnsServer }, queryTimeout) {}
 
 		/// <summary>
 		/// Provides a new instance with custom DNS servers and query timeout
 		/// </summary>
-		/// <param name="dnsServers"> The IPAddresses of the DNS servers to use </param>
-		/// <param name="queryTimeout"> Query timeout in milliseconds </param>
+		/// <param name="dnsServers">The IPAddresses of the DNS servers to use.</param>
+		/// <param name="queryTimeout">Query timeout in milliseconds.</param>
 		public DnsClient(List<IPAddress> dnsServers, int queryTimeout)
 			: base(dnsServers, queryTimeout, 53) {}
 
@@ -120,6 +127,28 @@ namespace InetApi.Net.Core.Dns
 		}
 
 		/// <summary>
+		/// Queries a DNS server for specified records.
+		/// </summary>
+		/// <param name="name"> Domain, that should be queried </param>
+		/// <param name="localAddress">The local IP address.</param>
+		/// <param name="serverAddress">The server IP address.</param>
+		/// <param name="recordType"> Type the should be queried </param>
+		/// <param name="recordClass"> Class the should be queried </param>
+		/// <returns> The complete response of the DNS server </returns>
+		public DnsMessage Resolve(string name, IPAddress localAddress, IPAddress serverAddress, RecordType recordType, RecordClass recordClass)
+		{
+			if (String.IsNullOrEmpty(name))
+			{
+				throw new ArgumentException("The name is missing.", "name");
+			}
+
+			DnsMessage message = new DnsMessage() { IsQuery = true, OperationCode = OperationCode.Query, IsRecursionDesired = true };
+			message.Questions.Add(new DnsQuestion(name, recordType, recordClass));
+
+			return SendMessage(message, localAddress, serverAddress);
+		}
+
+		/// <summary>
 		/// Queries a DNS server for specified records asynchronously.
 		/// </summary>
 		/// <param name="name"> Domain, that should be queried </param>
@@ -167,6 +196,31 @@ namespace InetApi.Net.Core.Dns
 			message.Questions.Add(new DnsQuestion(name, recordType, recordClass));
 
 			return this.BeginSendMessage(message, requestCallback, state);
+		}
+
+		/// <summary>
+		/// Queries a DNS server for specified records asynchronously.
+		/// </summary>
+		/// <param name="name"> Domain, that should be queried </param>
+		/// <param name="localAddress">The local IP address.</param>
+		/// <param name="serverAddress">The server IP address.</param>
+		/// <param name="recordType"> Type the should be queried </param>
+		/// <param name="recordClass"> Class the should be queried </param>
+		/// <param name="requestCallback"> An <see cref="System.AsyncCallback" /> delegate that references the method to invoked then the operation is complete. </param>
+		/// <param name="state"> A user-defined object that contains information about the receive operation. This object is passed to the <paramref
+		///  name="requestCallback" /> delegate when the operation is complete. </param>
+		/// <returns> An <see cref="System.IAsyncResult" /> IAsyncResult object that references the asynchronous receive. </returns>
+		public IAsyncResult BeginResolve(string name, IPAddress localAddress, IPAddress serverAddress, RecordType recordType, RecordClass recordClass, AsyncCallback requestCallback, object state)
+		{
+			if (String.IsNullOrEmpty(name))
+			{
+				throw new ArgumentException("Name must be provided", "name");
+			}
+
+			DnsMessage message = new DnsMessage() { IsQuery = true, OperationCode = OperationCode.Query, IsRecursionDesired = true };
+			message.Questions.Add(new DnsQuestion(name, recordType, recordClass));
+
+			return this.BeginSendMessage(message, localAddress, serverAddress, requestCallback, state);
 		}
 
 		/// <summary>

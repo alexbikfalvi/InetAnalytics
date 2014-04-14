@@ -17,14 +17,21 @@
  */
 
 using System;
+using System.Threading;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using DotNetApi.Windows.Themes;
 using InetTraceroute.Forms;
 
 namespace InetTraceroute
 {
+	/// <summary>
+	/// The main program class.
+	/// </summary>
 	static class Program
 	{
+		private static FormCrash formCrash;
+
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -33,10 +40,40 @@ namespace InetTraceroute
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			Program.formCrash = new FormCrash();
+			Application.ThreadException += Program.OnThreadException;
 
 			ToolStripManager.Renderer = new ThemeRenderer(ThemeSettings.Blue);
 
-			Application.Run(new FormMain());
+			try
+			{
+				using (TracerouteApplication application = new TracerouteApplication(Registry.CurrentUser, Resources.ConfigRootPath))
+				{
+					using (FormMain formMain = new FormMain(application))
+					{
+						Application.Run(formMain);
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+				Program.formCrash.ShowDialog(exception);
+			}
+			finally
+			{
+				Program.formCrash.Dispose();
+			}
+		}
+
+		/// <summary>
+		/// An event handler called when an exception occurs during the execution of the application.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private static void OnThreadException(object sender, ThreadExceptionEventArgs e)
+		{
+			// Show the crash form.
+			Program.formCrash.ShowDialog(e.Exception);
 		}
 	}
 }

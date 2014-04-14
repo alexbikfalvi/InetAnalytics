@@ -20,6 +20,7 @@ using System;
 using Microsoft.Win32;
 using InetCommon;
 using InetCommon.Log;
+using InetCommon.Status;
 
 namespace InetTraceroute
 {
@@ -30,6 +31,7 @@ namespace InetTraceroute
 	{
 		private readonly TracerouteConfig config;
 		private readonly Logger log;
+		private readonly ApplicationStatus status;
 
 		/// <summary>
 		/// Creates a traceroute application instance.
@@ -42,6 +44,8 @@ namespace InetTraceroute
 			this.config = new TracerouteConfig(rootKey, rootPath);
 			// Create the log.
 			this.log = new Logger(this.config.LogFileName);
+			// Create the status.
+			this.status = new ApplicationStatus();
 		}
 
 		#region Public properties
@@ -51,9 +55,17 @@ namespace InetTraceroute
 		/// </summary>
 		public TracerouteConfig Config { get { return this.config; } }
 		/// <summary>
+		/// Gets the traceroute configuration.
+		/// </summary>
+		IApplicationConfig IApplication.Config { get { return this.config; } }
+		/// <summary>
 		/// Gets the log.
 		/// </summary>
 		public Logger Log { get { return this.log; } }
+		/// <summary>
+		/// Gets the application status.
+		/// </summary>
+		public ApplicationStatus Status { get { return this.status; } }
 
 		#endregion
 
@@ -64,6 +76,10 @@ namespace InetTraceroute
 		/// </summary>
 		public void Dispose()
 		{
+			// Dispose the member objects.
+			this.status.Dispose();
+			this.log.Dispose();
+			this.config.Dispose();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}

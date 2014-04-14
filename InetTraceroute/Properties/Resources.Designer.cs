@@ -71,6 +71,15 @@ namespace InetTraceroute {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Software\Alex Bikfalvi\Internet Traceroute.
+        /// </summary>
+        internal static string ConfigRootPath {
+            get {
+                return ResourceManager.GetString("ConfigRootPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Error_48 {
@@ -93,9 +102,29 @@ namespace InetTraceroute {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GlobeClock_48 {
+            get {
+                object obj = ResourceManager.GetObject("GlobeClock_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Information_16 {
             get {
                 object obj = ResourceManager.GetObject("Information_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogClock_16 {
+            get {
+                object obj = ResourceManager.GetObject("LogClock_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +142,69 @@ namespace InetTraceroute {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LogError_16 {
+            get {
+                object obj = ResourceManager.GetObject("LogError_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogSuccess_16 {
+            get {
+                object obj = ResourceManager.GetObject("LogSuccess_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LogSuccess_48 {
             get {
                 object obj = ResourceManager.GetObject("LogSuccess_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NetworkInterface_16 {
+            get {
+                object obj = ResourceManager.GetObject("NetworkInterface_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlayStart_16 {
+            get {
+                object obj = ResourceManager.GetObject("PlayStart_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlayStop_16 {
+            get {
+                object obj = ResourceManager.GetObject("PlayStop_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecordLarge_16 {
+            get {
+                object obj = ResourceManager.GetObject("RecordLarge_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

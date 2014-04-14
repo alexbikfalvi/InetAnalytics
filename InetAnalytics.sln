@@ -48,6 +48,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InetCommon", "InetCommon\InetCommon.csproj", "{4E3C3A80-85D6-4932-B1D2-E0467B1ABF46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InetTraceroute", "InetTraceroute\InetTraceroute.csproj", "{B8214CD3-F026-4DB4-B3DA-0DC33C85406D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6E2D7303-FFAB-4732-86F5-8BB0F7CD8276} = {6E2D7303-FFAB-4732-86F5-8BB0F7CD8276}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

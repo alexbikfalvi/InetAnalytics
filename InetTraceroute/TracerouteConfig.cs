@@ -26,7 +26,7 @@ namespace InetTraceroute
 	/// <summary>
 	/// A class representing the application configuration.
 	/// </summary>
-	public sealed class TracerouteConfig : IDisposable
+	public sealed class TracerouteConfig : IApplicationConfig, IDisposable
 	{
 		private static string applicationFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\Internet Traceroute";
 
@@ -44,10 +44,42 @@ namespace InetTraceroute
 			this.rootKey = rootKey;
 			this.rootPath = rootPath;
 			this.root = @"{0}\{1}".FormatWith(this.rootKey.Name, this.rootPath);
+
+			// Set the static properties.
+			ApplicationConfig.MessageCloseDelay = this.MessageCloseDelay;
 		}
 
 		#region Public properties
 
+		/// <summary>
+		/// Gets or sets the delay to display a user message, after the operation generating the message has completed.
+		/// </summary>
+		public TimeSpan MessageCloseDelay
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetTimeSpan(this.root + @"\Console", "MessageCloseDelay", TimeSpan.FromMilliseconds(1000));
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetTimeSpan(this.root + @"\Console", "MessageCloseDelay", value);
+				ApplicationConfig.MessageCloseDelay = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the DNS query timeout.
+		/// </summary>
+		public TimeSpan DnsQueryTimeout
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetTimeSpan(this.root + @"\Network", "DnsQueryTimeout", TimeSpan.FromMilliseconds(1000));
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetTimeSpan(this.root + @"\Network", "DnsQueryTimeout", value);
+			}
+		}
 		/// <summary>
 		/// Gets or sets the log file name.
 		/// </summary>

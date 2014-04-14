@@ -38,13 +38,14 @@
 			this.columnHeaderDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
+			this.buttonRefresh = new System.Windows.Forms.ToolStripButton();
+			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
+			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
+			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
 			this.buttonFilterType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.listTypes = new DotNetApi.Windows.Controls.ToolStripDropDownCheckedList();
 			this.buttonLevel = new System.Windows.Forms.ToolStripDropDownButton();
 			this.listLevels = new DotNetApi.Windows.Controls.ToolStripDropDownCheckedList();
-			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-			this.buttonCalendar = new System.Windows.Forms.ToolStripDropDownButton();
-			this.calendar = new DotNetApi.Windows.Controls.ToolStripDropDownCalendar();
 			this.panelEvent = new DotNetApi.Windows.Controls.ThemeControl();
 			this.controlLogEvent = new InetControls.Controls.Log.ControlLogEventProperties();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -61,7 +62,6 @@
 			this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer.Name = "splitContainer";
-			this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitContainer.Panel1
 			// 
@@ -73,7 +73,7 @@
 			this.splitContainer.Panel2.Controls.Add(this.panelEvent);
 			this.splitContainer.Panel2Border = false;
 			this.splitContainer.Size = new System.Drawing.Size(600, 400);
-			this.splitContainer.SplitterDistance = 200;
+			this.splitContainer.SplitterDistance = 350;
 			this.splitContainer.SplitterWidth = 5;
 			this.splitContainer.TabIndex = 1;
 			this.splitContainer.UseTheme = false;
@@ -88,7 +88,7 @@
 			this.panelEvents.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelEvents.ShowBorder = true;
 			this.panelEvents.ShowTitle = true;
-			this.panelEvents.Size = new System.Drawing.Size(600, 200);
+			this.panelEvents.Size = new System.Drawing.Size(350, 400);
 			this.panelEvents.TabIndex = 3;
 			this.panelEvents.Title = "Events";
 			// 
@@ -107,7 +107,7 @@
 			this.listView.Location = new System.Drawing.Point(1, 48);
 			this.listView.MultiSelect = false;
 			this.listView.Name = "listView";
-			this.listView.Size = new System.Drawing.Size(598, 151);
+			this.listView.Size = new System.Drawing.Size(348, 351);
 			this.listView.SmallImageList = this.imageList;
 			this.listView.TabIndex = 0;
 			this.listView.UseCompatibleStateImageBehavior = false;
@@ -146,60 +146,25 @@
 			// toolStrip
 			// 
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonFilterType,
-            this.buttonLevel,
+            this.buttonRefresh,
+            this.buttonCalendar,
             this.toolStripSeparator,
-            this.buttonCalendar});
+            this.buttonFilterType,
+            this.buttonLevel});
 			this.toolStrip.Location = new System.Drawing.Point(1, 23);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(598, 25);
+			this.toolStrip.Size = new System.Drawing.Size(348, 25);
 			this.toolStrip.TabIndex = 2;
 			this.toolStrip.Text = "toolStrip1";
 			// 
-			// buttonFilterType
+			// buttonRefresh
 			// 
-			this.buttonFilterType.DropDown = this.listTypes;
-			this.buttonFilterType.Image = global::InetTraceroute.Resources.Filter_16;
-			this.buttonFilterType.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonFilterType.Name = "buttonFilterType";
-			this.buttonFilterType.Size = new System.Drawing.Size(104, 22);
-			this.buttonFilterType.Text = "Filter by &type";
-			// 
-			// listTypes
-			// 
-			this.listTypes.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-			this.listTypes.ListMinimumSize = new System.Drawing.Size(200, 200);
-			this.listTypes.ListSize = new System.Drawing.Size(200, 200);
-			this.listTypes.Name = "listTypes";
-			this.listTypes.OwnerItem = this.buttonFilterType;
-			this.listTypes.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
-			this.listTypes.Size = new System.Drawing.Size(208, 205);
-			this.listTypes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.EventTypeCheck);
-			// 
-			// buttonLevel
-			// 
-			this.buttonLevel.DropDown = this.listLevels;
-			this.buttonLevel.Image = global::InetTraceroute.Resources.Filter_16;
-			this.buttonLevel.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.buttonLevel.Name = "buttonLevel";
-			this.buttonLevel.Size = new System.Drawing.Size(105, 22);
-			this.buttonLevel.Text = "Filter by &level";
-			// 
-			// listLevels
-			// 
-			this.listLevels.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-			this.listLevels.ListMinimumSize = new System.Drawing.Size(200, 200);
-			this.listLevels.ListSize = new System.Drawing.Size(200, 200);
-			this.listLevels.Name = "listTypes";
-			this.listLevels.OwnerItem = this.buttonLevel;
-			this.listLevels.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
-			this.listLevels.Size = new System.Drawing.Size(208, 205);
-			this.listLevels.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.EventLevelCheck);
-			// 
-			// toolStripSeparator
-			// 
-			this.toolStripSeparator.Name = "toolStripSeparator";
-			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+			this.buttonRefresh.Image = global::InetTraceroute.Resources.Refresh_16;
+			this.buttonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonRefresh.Name = "buttonRefresh";
+			this.buttonRefresh.Size = new System.Drawing.Size(66, 22);
+			this.buttonRefresh.Text = "Refresh";
+			this.buttonRefresh.Click += new System.EventHandler(this.OnRefresh);
 			// 
 			// buttonCalendar
 			// 
@@ -218,6 +183,50 @@
 			this.calendar.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
 			this.calendar.Size = new System.Drawing.Size(186, 160);
 			// 
+			// toolStripSeparator
+			// 
+			this.toolStripSeparator.Name = "toolStripSeparator";
+			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+			// 
+			// buttonFilterType
+			// 
+			this.buttonFilterType.DropDown = this.listTypes;
+			this.buttonFilterType.Image = global::InetTraceroute.Resources.Filter_16;
+			this.buttonFilterType.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonFilterType.Name = "buttonFilterType";
+			this.buttonFilterType.Size = new System.Drawing.Size(104, 22);
+			this.buttonFilterType.Text = "Filter by &type";
+			// 
+			// listTypes
+			// 
+			this.listTypes.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+			this.listTypes.ListMinimumSize = new System.Drawing.Size(300, 200);
+			this.listTypes.ListSize = new System.Drawing.Size(300, 200);
+			this.listTypes.Name = "listTypes";
+			this.listTypes.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
+			this.listTypes.Size = new System.Drawing.Size(308, 227);
+			this.listTypes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.EventTypeCheck);
+			// 
+			// buttonLevel
+			// 
+			this.buttonLevel.DropDown = this.listLevels;
+			this.buttonLevel.Image = global::InetTraceroute.Resources.Filter_16;
+			this.buttonLevel.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.buttonLevel.Name = "buttonLevel";
+			this.buttonLevel.Size = new System.Drawing.Size(105, 20);
+			this.buttonLevel.Text = "Filter by &level";
+			// 
+			// listLevels
+			// 
+			this.listLevels.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+			this.listLevels.ListMinimumSize = new System.Drawing.Size(200, 200);
+			this.listLevels.ListSize = new System.Drawing.Size(200, 200);
+			this.listLevels.Name = "listTypes";
+			this.listLevels.OwnerItem = this.buttonLevel;
+			this.listLevels.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
+			this.listLevels.Size = new System.Drawing.Size(208, 205);
+			this.listLevels.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.EventLevelCheck);
+			// 
 			// panelEvent
 			// 
 			this.panelEvent.Controls.Add(this.controlLogEvent);
@@ -227,7 +236,7 @@
 			this.panelEvent.Padding = new System.Windows.Forms.Padding(1, 23, 1, 1);
 			this.panelEvent.ShowBorder = true;
 			this.panelEvent.ShowTitle = true;
-			this.panelEvent.Size = new System.Drawing.Size(600, 195);
+			this.panelEvent.Size = new System.Drawing.Size(245, 400);
 			this.panelEvent.TabIndex = 1;
 			this.panelEvent.Title = "Event Information";
 			// 
@@ -238,7 +247,7 @@
 			this.controlLogEvent.Location = new System.Drawing.Point(1, 23);
 			this.controlLogEvent.Name = "controlLogEvent";
 			this.controlLogEvent.Padding = new System.Windows.Forms.Padding(1);
-			this.controlLogEvent.Size = new System.Drawing.Size(598, 171);
+			this.controlLogEvent.Size = new System.Drawing.Size(243, 376);
 			this.controlLogEvent.TabIndex = 0;
 			// 
 			// ControlLog
@@ -281,5 +290,6 @@
 		private DotNetApi.Windows.Controls.ToolStripDropDownCalendar calendar;
 		private DotNetApi.Windows.Controls.ThemeControl panelEvents;
 		private DotNetApi.Windows.Controls.ThemeControl panelEvent;
+		private System.Windows.Forms.ToolStripButton buttonRefresh;
 	}
 }

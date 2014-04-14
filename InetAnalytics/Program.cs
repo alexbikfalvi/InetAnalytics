@@ -59,6 +59,9 @@ namespace InetAnalytics
 			catch (Exception exception)
 			{
 				Program.formCrash.ShowDialog(exception);
+			}
+			finally
+			{
 				Program.formCrash.Dispose();
 			}
 		}
@@ -72,7 +75,6 @@ namespace InetAnalytics
 		{
 			// Show the crash form.
 			Program.formCrash.ShowDialog(e.Exception);
-			Program.formCrash.Dispose();
 		}
 	}
 }

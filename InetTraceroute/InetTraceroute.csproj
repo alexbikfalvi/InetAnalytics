@@ -54,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlNameResolution.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlNameResolution.Designer.cs">
+      <DependentUpon>ControlNameResolution.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlAddresses.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TracerouteApplication.cs" />
     <Compile Include="TracerouteConfig.cs" />
+    <EmbeddedResource Include="Controls\ControlNameResolution.resx">
+      <DependentUpon>ControlNameResolution.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlAddresses.resx">
       <DependentUpon>ControlAddresses.cs</DependentUpon>
     </EmbeddedResource>
@@ -3475,6 +3484,18 @@
     </None>
     <None Include="..\InetIcons\Resources\XmlNamespace_48.png">
       <Link>Resources\XmlNamespace_48.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RecordLarge_16.png">
+      <Link>Resources\RecordLarge_16.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RecordLarge_24.png">
+      <Link>Resources\RecordLarge_24.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RecordLarge_32.png">
+      <Link>Resources\RecordLarge_32.png</Link>
+    </None>
+    <None Include="..\InetIcons\Resources\RecordLarge_48.png">
+      <Link>Resources\RecordLarge_48.png</Link>
     </None>
     <Content Include="Icon.ico" />
   </ItemGroup>

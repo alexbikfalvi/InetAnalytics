@@ -83,7 +83,7 @@
 			this.themeControl.ShowTitle = true;
 			this.themeControl.Size = new System.Drawing.Size(600, 329);
 			this.themeControl.TabIndex = 0;
-			this.themeControl.Title = "Local Interfaces";
+			this.themeControl.Title = "Local Addresses";
 			// 
 			// listView
 			// 
@@ -159,12 +159,12 @@
 			this.controlLog.TabIndex = 0;
 			this.controlLog.Title = "Event Log";
 			// 
-			// ControlInterfaces
+			// ControlAddresses
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer);
-			this.Name = "ControlInterfaces";
+			this.Name = "ControlAddresses";
 			this.Size = new System.Drawing.Size(600, 500);
 			this.splitContainer.Panel1.ResumeLayout(false);
 			this.splitContainer.Panel2.ResumeLayout(false);

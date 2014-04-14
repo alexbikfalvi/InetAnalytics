@@ -44,16 +44,17 @@
 			this.statusLabelRun = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tabControl = new DotNetApi.Windows.Controls.ThemeTabControl();
 			this.tabPageAddresses = new System.Windows.Forms.TabPage();
-			this.controlInterfaces = new InetTraceroute.Controls.ControlAddresses();
 			this.tabPageDns = new System.Windows.Forms.TabPage();
 			this.tabPageTraceroute = new System.Windows.Forms.TabPage();
 			this.tabPageLog = new System.Windows.Forms.TabPage();
-			this.controlLog1 = new InetTraceroute.Controls.Log.ControlLog();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+			this.controlAddresses = new InetTraceroute.Controls.ControlAddresses();
+			this.controlDns = new InetTraceroute.Controls.ControlNameResolution();
+			this.controlLog = new InetTraceroute.Controls.Log.ControlLog();
 			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer.ContentPanel.SuspendLayout();
 			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -61,6 +62,7 @@
 			this.statusStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageAddresses.SuspendLayout();
+			this.tabPageDns.SuspendLayout();
 			this.tabPageLog.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -149,10 +151,11 @@
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(784, 516);
 			this.tabControl.TabIndex = 1;
+			this.tabControl.SelectedIndexChanged += new System.EventHandler(this.OnTabChanged);
 			// 
 			// tabPageAddresses
 			// 
-			this.tabPageAddresses.Controls.Add(this.controlInterfaces);
+			this.tabPageAddresses.Controls.Add(this.controlAddresses);
 			this.tabPageAddresses.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabPageAddresses.Location = new System.Drawing.Point(2, 23);
 			this.tabPageAddresses.Name = "tabPageAddresses";
@@ -162,19 +165,12 @@
 			this.tabPageAddresses.Text = "Addresses";
 			this.tabPageAddresses.UseVisualStyleBackColor = true;
 			// 
-			// controlInterfaces
-			// 
-			this.controlInterfaces.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlInterfaces.Location = new System.Drawing.Point(5, 5);
-			this.controlInterfaces.Name = "controlInterfaces";
-			this.controlInterfaces.Size = new System.Drawing.Size(770, 481);
-			this.controlInterfaces.TabIndex = 0;
-			// 
 			// tabPageDns
 			// 
+			this.tabPageDns.Controls.Add(this.controlDns);
 			this.tabPageDns.Location = new System.Drawing.Point(2, 23);
 			this.tabPageDns.Name = "tabPageDns";
-			this.tabPageDns.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageDns.Padding = new System.Windows.Forms.Padding(5);
 			this.tabPageDns.Size = new System.Drawing.Size(780, 491);
 			this.tabPageDns.TabIndex = 2;
 			this.tabPageDns.Text = "Name Resolution";
@@ -192,7 +188,7 @@
 			// 
 			// tabPageLog
 			// 
-			this.tabPageLog.Controls.Add(this.controlLog1);
+			this.tabPageLog.Controls.Add(this.controlLog);
 			this.tabPageLog.Location = new System.Drawing.Point(2, 23);
 			this.tabPageLog.Name = "tabPageLog";
 			this.tabPageLog.Padding = new System.Windows.Forms.Padding(5);
@@ -200,16 +196,6 @@
 			this.tabPageLog.TabIndex = 3;
 			this.tabPageLog.Text = "Log";
 			this.tabPageLog.UseVisualStyleBackColor = true;
-			// 
-			// controlLog1
-			// 
-			this.controlLog1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.controlLog1.Enabled = false;
-			this.controlLog1.Location = new System.Drawing.Point(5, 5);
-			this.controlLog1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.controlLog1.Name = "controlLog1";
-			this.controlLog1.Size = new System.Drawing.Size(770, 481);
-			this.controlLog1.TabIndex = 0;
 			// 
 			// menuStrip
 			// 
@@ -254,6 +240,34 @@
 			this.menuItemAbout.Text = "&About...";
 			this.menuItemAbout.Click += new System.EventHandler(this.OnAbout);
 			// 
+			// controlAddresses
+			// 
+			this.controlAddresses.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlAddresses.Enabled = false;
+			this.controlAddresses.Location = new System.Drawing.Point(5, 5);
+			this.controlAddresses.Name = "controlAddresses";
+			this.controlAddresses.Size = new System.Drawing.Size(770, 481);
+			this.controlAddresses.TabIndex = 0;
+			// 
+			// controlDns
+			// 
+			this.controlDns.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlDns.Enabled = false;
+			this.controlDns.Location = new System.Drawing.Point(5, 5);
+			this.controlDns.Name = "controlDns";
+			this.controlDns.Size = new System.Drawing.Size(770, 481);
+			this.controlDns.TabIndex = 0;
+			// 
+			// controlLog
+			// 
+			this.controlLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.controlLog.Enabled = false;
+			this.controlLog.Location = new System.Drawing.Point(5, 5);
+			this.controlLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			this.controlLog.Name = "controlLog";
+			this.controlLog.Size = new System.Drawing.Size(770, 481);
+			this.controlLog.TabIndex = 0;
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,6 +289,7 @@
 			this.statusStrip.PerformLayout();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageAddresses.ResumeLayout(false);
+			this.tabPageDns.ResumeLayout(false);
 			this.tabPageLog.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
@@ -297,12 +312,13 @@
 		private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
 		private System.Windows.Forms.ToolStripProgressBar statusProgress;
 		private DotNetApi.Windows.Controls.ThemeTabControl tabControl;
-		private System.Windows.Forms.TabPage tabPageAddresses;
 		private System.Windows.Forms.TabPage tabPageTraceroute;
-		private System.Windows.Forms.TabPage tabPageDns;
-		private Controls.ControlAddresses controlInterfaces;
 		private System.Windows.Forms.TabPage tabPageLog;
-		private Controls.Log.ControlLog controlLog1;
+		private Controls.Log.ControlLog controlLog;
+		private System.Windows.Forms.TabPage tabPageAddresses;
+		private Controls.ControlAddresses controlAddresses;
+		private System.Windows.Forms.TabPage tabPageDns;
+		private Controls.ControlNameResolution controlDns;
 	}
 }
 

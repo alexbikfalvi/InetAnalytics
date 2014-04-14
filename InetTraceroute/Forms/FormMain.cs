@@ -36,8 +36,8 @@ namespace InetTraceroute.Forms
 		// Theme.
 		private readonly ThemeSettings themeSettings;
 
-		// Status.
-		private readonly ApplicationStatus status = new ApplicationStatus();
+		// Application.
+		private readonly TracerouteApplication application;
 
 		// Forms.
 		private readonly FormAbout formAbout = new FormAbout();
@@ -45,16 +45,25 @@ namespace InetTraceroute.Forms
 		/// <summary>
 		/// Creates a new form instance.
 		/// </summary>
-		public FormMain()
+		/// <param name="application">The traceroute application.</param>
+		public FormMain(TracerouteApplication application)
 		{
+			// Set the application.
+			this.application = application;
+
 			// Initialize the component.
 			this.InitializeComponent();
 
 			// Get the theme settings.
 			this.themeSettings = ToolStripManager.Renderer is ThemeRenderer ? (ToolStripManager.Renderer as ThemeRenderer).Settings : ThemeSettings.Default;
 
+			// Intialize the controls.
+			this.controlAddresses.Initialize(this.application);
+			this.controlDns.Initialize(this.application);
+			this.controlLog.Initialize(this.application);
+
 			// Set the event handlers.
-			this.status.MessageChanged += this.OnStatusMessageChanged;
+			this.application.Status.MessageChanged += this.OnStatusMessageChanged;
 
 			// Call the tab changed event handler to initialize the application status.
 			this.OnTabChanged(this, EventArgs.Empty);
@@ -72,7 +81,7 @@ namespace InetTraceroute.Forms
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			// Check the status is locked.
-			if (this.status.IsLocked)
+			if (this.application.Status.IsLocked)
 			{
 				// Show a message.
 				MessageBox.Show(
@@ -107,7 +116,7 @@ namespace InetTraceroute.Forms
 				if (e.Message.HasValue)
 				{
 					// If the status type has changed.
-					if (e.Message.Value.Type != this.status.Status)
+					if (e.Message.Value.Type != this.application.Status.Status)
 					{
 						// Update the status.
 						switch (e.Message.Value.Type)
@@ -132,7 +141,7 @@ namespace InetTraceroute.Forms
 								break;
 						}
 						// Set the new status.
-						this.status.Status = e.Message.Value.Type;
+						this.application.Status.Status = e.Message.Value.Type;
 					}
 					this.statusLabelLeft.Image = e.Message.Value.LeftImage;
 					this.statusLabelLeft.Text = e.Message.Value.LeftText;
@@ -149,7 +158,7 @@ namespace InetTraceroute.Forms
 					this.statusLabelLeft.Text = "Ready.";
 					this.statusLabelRight.Image = null;
 					this.statusLabelRight.Text = null;
-					this.status.Status = ApplicationStatus.StatusType.Ready;
+					this.application.Status.Status = ApplicationStatus.StatusType.Ready;
 				}
 			});
 		}
@@ -164,7 +173,7 @@ namespace InetTraceroute.Forms
 			this.Invoke(() =>
 			{
 				// Get the number of locks.
-				int count = this.status.LockCount;
+				int count = this.application.Status.LockCount;
 				// Update the lock information.
 				if (count > 0)
 				{
@@ -197,7 +206,7 @@ namespace InetTraceroute.Forms
 		/// <param name="e">The event arguments.</param>
 		private void OnTabChanged(object sender, EventArgs e)
 		{
-			this.status.Activate(this.tabControl.TabPages[this.tabControl.SelectedIndex]);
+			this.application.Status.Activate(this.tabControl.TabPages[this.tabControl.SelectedIndex].Controls.Count > 0 ? this.tabControl.TabPages[this.tabControl.SelectedIndex].Controls[0] : this);
 		}
 
 		/// <summary>

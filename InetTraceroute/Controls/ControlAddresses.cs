@@ -19,8 +19,11 @@
 using System;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using DotNetApi;
 using DotNetApi.Windows.Controls;
+using InetCommon.Log;
 using InetCommon.Net;
+using InetCommon.Status;
 
 namespace InetTraceroute.Controls
 {
@@ -29,39 +32,41 @@ namespace InetTraceroute.Controls
 	/// </summary>
 	public partial class ControlAddresses : ThreadSafeControl
 	{
-		private static string[] addressFamilyName = {
-														"Unspecified",
-														"Unix",
-														"IP version 4",
-														"ARPANET IMP",
-														"PUP",
-														"MIT CHAOS",
-														"IPX / SPX",
-														"Xerox NS",
-														"OSI",
-														"European Computer Manufacturers Association (ECMA)",
-														"DataKit",
-														"CCITT",
-														"IBM SNA",
-														"DECnet",
-														"Direct data-link",
-														"LAT",
-														"NSC Hyperchannel",
-														"AppleTalk",
-														"NetBios",
-														"VoiceView",
-														"FireFox",
-														"Banyan",
-														"ATM",
-														"IP version 6",
-														"Microsoft cluster",
-														"IEEE 1284.4",
-														"IrDA",
-														"Network Designers OSI",
-														"Max"
-													};
+		private static readonly string logSource = "Network Addresses";
+		private static readonly string[] addressFamilyName = {
+																 "Unspecified",
+																 "Unix",
+																 "IP version 4",
+																 "ARPANET IMP",
+																 "PUP",
+																 "MIT CHAOS",
+																 "IPX / SPX",
+																 "Xerox NS",
+																 "OSI",
+																 "European Computer Manufacturers Association (ECMA)",
+																 "DataKit",
+																 "CCITT",
+																 "IBM SNA",
+																 "DECnet",
+																 "Direct data-link",
+																 "LAT",
+																 "NSC Hyperchannel",
+																 "AppleTalk",
+																 "NetBios",
+																 "VoiceView",
+																 "FireFox",
+																 "Banyan",
+																 "ATM",
+																 "IP version 6",
+																 "Microsoft cluster",
+																 "IEEE 1284.4",
+																 "IrDA",
+																 "Network Designers OSI",
+																 "Max"
+															 };
 
 		private TracerouteApplication application = null;
+		private ApplicationStatusHandler status = null;
 
 		/// <summary>
 		/// Creates a new control instance.
@@ -73,9 +78,6 @@ namespace InetTraceroute.Controls
 
 			// Set the control properties.
 			this.Enabled = false;
-
-			// Update the list of interface addresses.
-			this.OnRefresh(this, EventArgs.Empty);
 		}
 
 		#region Public methods
@@ -88,12 +90,17 @@ namespace InetTraceroute.Controls
 		{
 			// Set the application.
 			this.application = application;
+			// Set the control status.
+			this.status = this.application.Status.GetHandler(this);
 
 			// Set the network addresses changed event handler.
 			NetworkAddresses.NetworkAddressesChanged += this.OnRefresh;
 
 			// Enable the control.
 			this.Enabled = true;
+
+			// Update the list of interface addresses.
+			this.OnRefresh(true);
 		}
 
 		#endregion
@@ -107,38 +114,64 @@ namespace InetTraceroute.Controls
 		/// <param name="e">The event arguments.</param>
 		private void OnRefresh(object sender, EventArgs e)
 		{
-			// Clear the list of addresses.
-			this.listView.Items.Clear();
+			this.OnRefresh(false);
+		}
 
-			// Synchronize access.
-			lock (NetworkAddresses.Sync)
+		/// <summary>
+		/// Refreshes the list of interface addresses.
+		/// </summary>
+		/// <param name="initialize">If <b>true</b> indicates this is an initial refresh.</param>
+		private void OnRefresh(bool initialize)
+		{
+			// Execute this method on the UI thread.
+			this.Invoke(() =>
 			{
-				// Update the list of addresses.
-				foreach (UnicastNetworkAddressInformation info in NetworkAddresses.Unicast)
+				// Clear the list of addresses.
+				this.listView.Items.Clear();
+
+				// Synchronize access.
+				lock (NetworkAddresses.Sync)
 				{
-					// Select only the not transient and DNS eligible addresses.
-					if (!info.Information.IsTransient &&
-						info.Information.IsDnsEligible &&
-						((info.Information.Address.AddressFamily == AddressFamily.InterNetwork) || (info.Information.Address.AddressFamily == AddressFamily.InterNetworkV6)))
+					int count = 0;
+
+					// Update the list of addresses.
+					foreach (UnicastNetworkAddressInformation info in NetworkAddresses.Unicast)
 					{
-						// Create a new list view item.
-						ListViewItem item = new ListViewItem(new string[] {
-							info.Information.Address.ToString(),
-							ControlAddresses.addressFamilyName[(int)info.Information.Address.AddressFamily],
-							info.Interface.Name
-						});
-						item.ImageIndex = 0;
-						item.Checked = info.Selected;
-						item.Tag = info;
-						this.listView.Items.Add(item);
+						// Select only the not transient and DNS eligible addresses.
+						if (!info.Information.IsTransient &&
+							info.Information.IsDnsEligible &&
+							((info.Information.Address.AddressFamily == AddressFamily.InterNetwork) || (info.Information.Address.AddressFamily == AddressFamily.InterNetworkV6)))
+						{
+							// Create a new list view item.
+							ListViewItem item = new ListViewItem(new string[] {
+									info.Information.Address.ToString(),
+									ControlAddresses.addressFamilyName[(int)info.Information.Address.AddressFamily],
+									info.Interface.Name
+								});
+							item.ImageIndex = 0;
+							item.Checked = info.Selected;
+							item.Tag = info;
+							this.listView.Items.Add(item);
+							count++;
+						}
+						else
+						{
+							// Otherwise, disable the interface.
+							info.Selected = false;
+						}
 					}
-					else
-					{
-						// Otherwise, disable the interface.
-						info.Selected = false;
-					}
+
+					// Log.
+					this.controlLog.Add(this.application.Log.Add(
+						LogEventLevel.Normal,
+						LogEventType.Information,
+						ControlAddresses.logSource,
+						initialize ? "Local network addresses initialized. {{0}} unicast address{0} available.".FormatWith(count.PluralSuffix("es")) : "Local network addresses have changed. {{0}} unicast address{0} available.".FormatWith(count.PluralSuffix("es")),
+						new object[] { count }));
+					// Update the status.
+					this.status.Send(ApplicationStatus.StatusType.Normal, "{0} unicast address{1}".FormatWith(count, count.PluralSuffix("es")), Resources.NetworkInterface_16);
 				}
-			}
+			});
 		}
 
 		/// <summary>

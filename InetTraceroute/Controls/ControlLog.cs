@@ -22,6 +22,7 @@ using System.Threading;
 using System.Windows.Forms;
 using InetCommon;
 using InetCommon.Log;
+using InetCommon.Status;
 using InetControls.Forms.Log;
 using DotNetApi;
 using DotNetApi.Windows.Controls;
@@ -33,9 +34,11 @@ namespace InetTraceroute.Controls.Log
 	/// </summary>
 	public partial class ControlLog : NotificationControl
 	{
-		private Logger log;
+		private TracerouteApplication application = null;
 		private ControlLogUpdateState state = null;
 		private List<LogEvent> events = null;
+
+		private ApplicationStatusHandler status = null;
 
 		private readonly FormEventProperties formLogEvent = new FormEventProperties();
 
@@ -64,13 +67,15 @@ namespace InetTraceroute.Controls.Log
 		}
 
 		/// <summary>
-		/// Initializes the control with a crawler object.
+		/// Initializes the control with the current application.
 		/// </summary>
-		/// <param name="log">The log.</param>
-		public void Initialize(Logger log)
+		/// <param name="application">The application.</param>
+		public void Initialize(TracerouteApplication application)
 		{
-			// Set the log.
-			this.log = log;
+			// Set the application.
+			this.application = application;
+			// Set the application status handler.
+			this.status = this.application.Status.GetHandler(this);
 			// Enable the control.
 			this.Enabled = true;
 			// Refresh the log.
@@ -84,8 +89,8 @@ namespace InetTraceroute.Controls.Log
 		/// <param name="e">The date range event arguments.</param>
 		public void DateChanged(object sender, DateRangeEventArgs e)
 		{
-			// If the function is called before the initialization of the crawler, do nothing.
-			if (null == this.log) return;
+			// If the function is called before the initialization, do nothing.
+			if (null == this.application) return;
 
 			// Update the calendar.
 			this.calendar.Calendar.SelectionStart = e.Start;
@@ -99,8 +104,8 @@ namespace InetTraceroute.Controls.Log
 		/// <param name="e">The date range event arguments.</param>
 		public void DateRefresh(object sender, DateRangeEventArgs e)
 		{
-			// If the function is called before the initialization of the crawler, do nothing.
-			if (null == this.log) return;
+			// If the function is called before the initialization, do nothing.
+			if (null == this.application) return;
 
 			// Update the calendar.
 			this.calendar.Calendar.SelectionStart = e.Start;
@@ -111,6 +116,16 @@ namespace InetTraceroute.Controls.Log
 		}
 
 		// Private methods.
+
+		/// <summary>
+		/// Refreshes the log for the current date selection.
+		/// </summary>
+		/// <param name="sender">The sender object.</param>
+		/// <param name="e">The event arguments.</param>
+		private void OnRefresh(object sender, EventArgs e)
+		{
+			this.OnCalendarDateChanged(sender, new DateRangeEventArgs(this.calendar.Calendar.SelectionStart, this.calendar.Calendar.SelectionEnd));
+		}
 
 		/// <summary>
 		/// An event handler called when the calendar range has changed.
@@ -161,13 +176,13 @@ namespace InetTraceroute.Controls.Log
 				if (!state.IsCanceled)
 				{
 					// Read the log for all the dates in the specified range.
-					this.log.Read(state.Range.Start, state.Range.End);
+					this.application.Log.Read(state.Range.Start, state.Range.End);
 				}
 				// If the state is not canceled.
 				if (!state.IsCanceled)
 				{
 					// Get the list of events.
-					state.Events = this.log.Get(state.Range.Start, state.Range.End);
+					state.Events = this.application.Log.Get(state.Range.Start, state.Range.End);
 				}
 				// If the state is not canceled.
 				if (!state.IsCanceled)
@@ -178,6 +193,8 @@ namespace InetTraceroute.Controls.Log
 						"Log",
 						"Refreshing the log for dates {0} to {1} completed successfully.".FormatWith(state.Range.Start.ToShortDateString(), state.Range.End.ToShortDateString()),
 						false);
+					// Update the status.
+					this.status.Send(ApplicationStatus.StatusType.Busy, "Refreshing log from {0} through {1}...".FormatWith(state.Range.Start.ToShortDateString(), state.Range.End.ToShortDateString()), Resources.LogClock_16);
 				}
 			}
 			catch (Exception exception)
@@ -191,6 +208,8 @@ namespace InetTraceroute.Controls.Log
 						"Log",
 						"Refreshing the log failed. {0}".FormatWith(exception.Message),
 						false);
+					// Update the status.
+					this.status.Send(ApplicationStatus.StatusType.Normal, "Refreshing log failed".FormatWith(state.Range.Start.ToShortDateString(), state.Range.End.ToShortDateString()), Resources.LogError_16);
 				}
 			}
 			finally
@@ -256,6 +275,18 @@ namespace InetTraceroute.Controls.Log
 								// Add the event item to the list.
 								this.listView.Items.Add(item);
 							}
+
+							// Update the status.
+							this.status.Send(ApplicationStatus.StatusType.Normal, "{0} event{1} from {2} through {3}".FormatWith(
+								this.events.Count,
+								this.events.Count.PluralSuffix(),
+								state.Range.Start.ToShortDateString(),
+								state.Range.End.ToShortDateString()), Resources.LogSuccess_16);
+						}
+						else
+						{
+							// Update the status.
+							this.status.Send(ApplicationStatus.StatusType.Normal, "0 events from {0} through {1}".FormatWith(state.Range.Start.ToShortDateString(), state.Range.End.ToShortDateString()), Resources.LogSuccess_16);
 						}
 					}
 				});
