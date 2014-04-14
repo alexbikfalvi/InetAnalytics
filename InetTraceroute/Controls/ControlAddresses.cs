@@ -61,6 +61,8 @@ namespace InetTraceroute.Controls
 														"Max"
 													};
 
+		private TracerouteApplication application = null;
+
 		/// <summary>
 		/// Creates a new control instance.
 		/// </summary>
@@ -69,12 +71,32 @@ namespace InetTraceroute.Controls
 			// Initialize the component.
 			this.InitializeComponent();
 
-			// Set the network addresses changed event handler.
-			NetworkAddresses.NetworkAddressesChanged += this.OnRefresh;
+			// Set the control properties.
+			this.Enabled = false;
 
 			// Update the list of interface addresses.
 			this.OnRefresh(this, EventArgs.Empty);
 		}
+
+		#region Public methods
+
+		/// <summary>
+		/// Initializes the control.
+		/// </summary>
+		/// <param name="application">The application.</param>
+		public void Initialize(TracerouteApplication application)
+		{
+			// Set the application.
+			this.application = application;
+
+			// Set the network addresses changed event handler.
+			NetworkAddresses.NetworkAddressesChanged += this.OnRefresh;
+
+			// Enable the control.
+			this.Enabled = true;
+		}
+
+		#endregion
 
 		#region Private methods
 

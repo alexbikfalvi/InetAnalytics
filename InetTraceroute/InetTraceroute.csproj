@@ -87,6 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TracerouteApplication.cs" />
+    <Compile Include="TracerouteConfig.cs" />
     <EmbeddedResource Include="Controls\ControlAddresses.resx">
       <DependentUpon>ControlAddresses.cs</DependentUpon>
     </EmbeddedResource>

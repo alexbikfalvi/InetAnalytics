@@ -18,42 +18,50 @@
 
 using System;
 using Microsoft.Win32;
+using DotNetApi;
 using InetCommon;
-using InetCommon.Log;
 
 namespace InetTraceroute
 {
 	/// <summary>
-	/// A class representing the Internet traceroute application.
+	/// A class representing the application configuration.
 	/// </summary>
-	public sealed class TracerouteApplication : IApplication, IDisposable
+	public sealed class TracerouteConfig : IDisposable
 	{
-		private readonly TracerouteConfig config;
-		private readonly Logger log;
+		private static string applicationFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Alex Bikfalvi\Internet Traceroute";
+
+		private RegistryKey rootKey;
+		private string rootPath;
+		private string root;
 
 		/// <summary>
-		/// Creates a traceroute application instance.
+		/// Creates a new traceroute configuration based on the specified root registry key.
 		/// </summary>
-		/// <param name="rootKey">The registry root key.</param>
-		/// <param name="rootPath">The registry root path.</param>
-		public TracerouteApplication(RegistryKey rootKey, string rootPath)
+		/// <param name="rootKey">The root registry key.</param>
+		/// <param name="rootPath">The root registry path.</param>
+		public TracerouteConfig(RegistryKey rootKey, string rootPath)
 		{
-			// Create the configuration.
-			this.config = new TracerouteConfig(rootKey, rootPath);
-			// Create the log.
-			this.log = new Logger(this.config.LogFileName);
+			this.rootKey = rootKey;
+			this.rootPath = rootPath;
+			this.root = @"{0}\{1}".FormatWith(this.rootKey.Name, this.rootPath);
 		}
 
 		#region Public properties
 
 		/// <summary>
-		/// Gets the traceroute configuration.
+		/// Gets or sets the log file name.
 		/// </summary>
-		public TracerouteConfig Config { get { return this.config; } }
-		/// <summary>
-		/// Gets the log.
-		/// </summary>
-		public Logger Log { get { return this.log; } }
+		public string LogFileName
+		{
+			get
+			{
+				return DotNetApi.Windows.RegistryExtensions.GetString(this.root + @"\Log", "FileName", TracerouteConfig.applicationFolder + @"\Log\Log-{0}-{1}-{2}.xml");
+			}
+			set
+			{
+				DotNetApi.Windows.RegistryExtensions.SetString(this.root + @"\Log", "FileName", value);
+			}
+		}
 
 		#endregion
 
