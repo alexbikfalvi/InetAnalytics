@@ -17,8 +17,10 @@
  */
 
 using System;
+using System.Net;
+using System.Threading;
 
-namespace Mercury.Net.Core
+namespace InetApi.Net.Core
 {
 	/// <summary>
 	/// A class representing a multipath traceroute.
@@ -36,6 +38,19 @@ namespace Mercury.Net.Core
 			this.settings = settings;
 		}
 
-		// Public methods.
+		#region Public methods
+
+		/// <summary>
+		/// Runs a multipath traceroute to the specified destination.
+		/// </summary>
+		/// <param name="destination">The destination.</param>
+		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <returns>The result of the traceroute operation.</returns>
+		public MultipathTracerouteResult Run(IPAddress destination, CancellationToken cancel)
+		{
+			return null;
+		}
+
+		#endregion
 	}
 }

@@ -17,10 +17,9 @@
  */
 
 using System;
-using System.Net;
-using System.Threading;
+using System.Net.Sockets;
 
-namespace Mercury.Net.Core
+namespace InetApi.Net.Core
 {
 	/// <summary>
 	/// A class representing the multipath traceroute settings.
@@ -34,17 +33,17 @@ namespace Mercury.Net.Core
 		{
 		}
 
-		// Public methods.
+		#region Public properties
 
 		/// <summary>
-		/// Runs a multipath traceroute to the specified destination.
+		/// Gets or sets the number of attempts per flow.
 		/// </summary>
-		/// <param name="destination">The destination.</param>
-		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns>The result of the traceroute operation.</returns>
-		public MultipathTracerouteResult Run(IPAddress destination, CancellationToken cancel)
-		{
-			return null;
-		}
+		public int AttemptsPerFlow { get; set; }
+		/// <summary>
+		/// Gets or sets the number of flows.
+		/// </summary>
+		public int FlowCount { get; set; }
+
+		#endregion
 	}
 }

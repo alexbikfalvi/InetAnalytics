@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Mercury.Net.Core
+namespace InetApi.Net.Core
 {
 	/// <summary>
 	/// A class representing a multipath traceroute result.
