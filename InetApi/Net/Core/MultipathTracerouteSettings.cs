@@ -31,6 +31,12 @@ namespace InetApi.Net.Core
 		/// </summary>
 		public MultipathTracerouteSettings()
 		{
+			this.AttemptsPerFlow = 3;
+			this.FlowCount = 3;
+			this.MaximumHops = 30;
+			this.MaximumUnknownHops = 10;
+			this.HopTimeout = 3000;
+			this.DataLength = 32;
 		}
 
 		#region Public properties
@@ -43,6 +49,22 @@ namespace InetApi.Net.Core
 		/// Gets or sets the number of flows.
 		/// </summary>
 		public int FlowCount { get; set; }
+		/// <summary>
+		/// Gets or sets the maximum hops.
+		/// </summary>
+		public int MaximumHops { get; set; }
+		/// <summary>
+		/// Gets or sets the number of unknown hops after which the traceroute will end.
+		/// </summary>
+		public int MaximumUnknownHops { get; set; }
+		/// <summary>
+		/// Gets or sets the hop timeout in milliseconds.
+		/// </summary>
+		public int HopTimeout { get; set; }
+		/// <summary>
+		/// Gets or sets the ICMP packet data length.
+		/// </summary>
+		public int DataLength { get; set; }
 
 		#endregion
 	}

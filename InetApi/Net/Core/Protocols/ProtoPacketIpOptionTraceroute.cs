@@ -19,25 +19,33 @@
 using System;
 using System.Net;
 
-namespace InetApi.Net.Core
+namespace InetApi.Net.Core.Protocols
 {
 	/// <summary>
-	/// A class representing a multipath traceroute result.
+	/// A class representing an IP version 4 traceroute option.
 	/// </summary>
-	public class MultipathTracerouteResult
+	public sealed class ProtoPacketIpOptionTraceroute : ProtoPacketIpOption
 	{
-		private readonly IPAddress localAddress;
-		private readonly IPAddress remoteAddress;
+		/// <summary>
+		/// Creates a new IP version 4 traceroute option instance.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		/// <param name="outboundHopCount">The outboud hop count.</param>
+		/// <param name="returnHopCount">The return hop count.</param>
+		/// <param name="originatorAddress">The originator address.</param>
+		public ProtoPacketIpOptionTraceroute(short identifier, byte outboundHopCount, byte returnHopCount, IPAddress originatorAddress)
+			: base(OptionType.Traceroute)
+		{
+
+		}
+
+		#region Public properties
 
 		/// <summary>
-		/// Creates a new multipath traceroute result instance.
+		/// The identifier.
 		/// </summary>
-		/// <param name="localAddress">The local address.</param>
-		/// <param name="remoteAddress">The remote address.</param>
-		internal MultipathTracerouteResult(IPAddress localAddress, IPAddress remoteAddress)
-		{
-			this.localAddress = localAddress;
-			this.remoteAddress = remoteAddress;
-		}
+		public short Identifier { get; private set; }
+
+		#endregion
 	}
 }

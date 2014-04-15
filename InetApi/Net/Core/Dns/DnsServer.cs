@@ -20,7 +20,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using InetApi.Net.Socket;
+using InetApi.Net.Sockets;
 
 namespace InetApi.Net.Core.Dns
 {

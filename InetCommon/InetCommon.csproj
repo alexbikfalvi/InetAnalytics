@@ -104,7 +104,7 @@
     <Compile Include="Log\LogEventArgs.cs" />
     <Compile Include="Log\LogException.cs" />
     <Compile Include="Log\Logger.cs" />
-    <Compile Include="Net\NetworkAddresses.cs" />
+    <Compile Include="Net\NetworkConfiguration.cs" />
     <Compile Include="Net\NetworkAddressEventArgs.cs" />
     <Compile Include="Net\NetworkAddressInformation.cs" />
     <Compile Include="Net\NetworkStatus.cs" />

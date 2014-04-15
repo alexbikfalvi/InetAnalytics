@@ -17,27 +17,33 @@
  */
 
 using System;
-using System.Net;
 
-namespace InetApi.Net.Core
+namespace InetApi.Net.Core.Protocols
 {
 	/// <summary>
-	/// A class representing a multipath traceroute result.
+	/// The base class for a protocol packet.
 	/// </summary>
-	public class MultipathTracerouteResult
+	public abstract class ProtoPacket
 	{
-		private readonly IPAddress localAddress;
-		private readonly IPAddress remoteAddress;
+		#region Public properties
 
 		/// <summary>
-		/// Creates a new multipath traceroute result instance.
+		/// Gets the packet length in bytes.
 		/// </summary>
-		/// <param name="localAddress">The local address.</param>
-		/// <param name="remoteAddress">The remote address.</param>
-		internal MultipathTracerouteResult(IPAddress localAddress, IPAddress remoteAddress)
-		{
-			this.localAddress = localAddress;
-			this.remoteAddress = remoteAddress;
-		}
+		public abstract short Length { get; }
+
+		#endregion
+
+		#region Public methods
+
+		/// <summary>
+		/// Writes the current packet to the buffer at the specified index.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="index">The index.</param>
+		/// <returns>The new index, after the packet has been written.</returns>
+		public abstract int Write(byte[] buffer, int index);
+
+		#endregion
 	}
 }

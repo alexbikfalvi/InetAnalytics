@@ -19,7 +19,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace InetApi.Net.Socket
+namespace InetApi.Net.Sockets
 {
 	/// <summary>
 	/// A UDP listener.

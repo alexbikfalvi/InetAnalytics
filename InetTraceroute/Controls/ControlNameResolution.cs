@@ -135,9 +135,9 @@ namespace InetTraceroute.Controls
 
 					// Get the list of local IP addresses.
 					List<UnicastNetworkAddressInformation> localInfo;
-					lock (NetworkAddresses.Sync)
+					lock (NetworkConfiguration.Sync)
 					{
-						localInfo = NetworkAddresses.Unicast.ToList();
+						localInfo = NetworkConfiguration.Unicast.ToList();
 					}
 
 					// For all local addresses.
@@ -219,7 +219,7 @@ namespace InetTraceroute.Controls
 								}
 								catch (Exception exception)
 								{
-
+									this.textBoxResult.AppendLine(Color.Red, "ERROR  {0}".FormatWith(exception.Message));
 								}
 							}
 						}
@@ -234,7 +234,7 @@ namespace InetTraceroute.Controls
 							// Enable the controls.
 							this.buttonStart.Enabled = true;
 							this.buttonStop.Enabled = false;
-							this.buttonRecords.Enabled = false;
+							this.buttonRecords.Enabled = true;
 							this.textBoxName.Enabled = true;
 						});
 				});

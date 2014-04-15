@@ -211,7 +211,7 @@ namespace InetApi.Net
 			throw new ArgumentOutOfRangeException("ipAddress", "The given ip address is not configured on the local system");
 		}
 
-		// Private methods.
+		#region Private methods
 
 		/// <summary>
 		/// Reverses the bit order for the specified byte value.
@@ -229,5 +229,7 @@ namespace InetApi.Net
 
 			return result;
 		}
+
+		#endregion
 	}
 }

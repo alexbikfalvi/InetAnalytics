@@ -17,27 +17,13 @@
  */
 
 using System;
-using System.Net;
 
-namespace InetApi.Net.Core
+namespace InetApi.Net.Core.Protocols
 {
 	/// <summary>
-	/// A class representing a multipath traceroute result.
+	/// A class representing an ICMP version 4 packet of echo request type.
 	/// </summary>
-	public class MultipathTracerouteResult
-	{
-		private readonly IPAddress localAddress;
-		private readonly IPAddress remoteAddress;
-
-		/// <summary>
-		/// Creates a new multipath traceroute result instance.
-		/// </summary>
-		/// <param name="localAddress">The local address.</param>
-		/// <param name="remoteAddress">The remote address.</param>
-		internal MultipathTracerouteResult(IPAddress localAddress, IPAddress remoteAddress)
-		{
-			this.localAddress = localAddress;
-			this.remoteAddress = remoteAddress;
-		}
-	}
+	//public abstract class ProtoPacketIcmpEchoRequest : ProtoPacketIcmp
+	//{
+	//}
 }

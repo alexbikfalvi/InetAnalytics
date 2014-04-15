@@ -94,7 +94,7 @@ namespace InetTraceroute.Controls
 			this.status = this.application.Status.GetHandler(this);
 
 			// Set the network addresses changed event handler.
-			NetworkAddresses.NetworkAddressesChanged += this.OnRefresh;
+			NetworkConfiguration.NetworkAddressesChanged += this.OnRefresh;
 
 			// Enable the control.
 			this.Enabled = true;
@@ -130,12 +130,12 @@ namespace InetTraceroute.Controls
 				this.listView.Items.Clear();
 
 				// Synchronize access.
-				lock (NetworkAddresses.Sync)
+				lock (NetworkConfiguration.Sync)
 				{
 					int count = 0;
 
 					// Update the list of addresses.
-					foreach (UnicastNetworkAddressInformation info in NetworkAddresses.Unicast)
+					foreach (UnicastNetworkAddressInformation info in NetworkConfiguration.Unicast)
 					{
 						// Select only the not transient and DNS eligible addresses.
 						if (!info.Information.IsTransient &&
