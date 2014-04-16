@@ -34,7 +34,8 @@ namespace InetApi.Net.Core
 		/// </summary>
 		/// <param name="localAddress">The local address.</param>
 		/// <param name="remoteAddress">The remote address.</param>
-		internal MultipathTracerouteResult(IPAddress localAddress, IPAddress remoteAddress)
+		/// <param name="settings">The multipath traceroute settings.</param>
+		internal MultipathTracerouteResult(IPAddress localAddress, IPAddress remoteAddress, MultipathTracerouteSettings settings)
 		{
 			this.localAddress = localAddress;
 			this.remoteAddress = remoteAddress;

@@ -42,27 +42,27 @@ namespace InetApi.Net.Core.Protocols
 			/// Security (RFC 791, RFC 1108)
 			/// </summary>
 			[Description("Security")]
-			Security = 2,
+			Security = 130,
 			/// <summary>
 			/// Loose Source Route (RFC 791)
 			/// </summary>
 			[Description("Loose Source Route")]
-			LooseSourceRoute = 3,
+			LooseSourceRoute = 131,
 			/// <summary>
 			/// Timestamp (RFC 781, RFC 791)
 			/// </summary>
 			[Description("Timestamp")]
-			Timestamp = 4,
+			Timestamp = 68,
 			/// <summary>
 			/// Extended Security (RFC 1108)
 			/// </summary>
 			[Description("Extended Security")]
-			ExtendedSecurity = 5,
+			ExtendedSecurity = 133,
 			/// <summary>
 			/// Commercial Security
 			/// </summary>
 			[Description("Commercial Security")]
-			CommercialSecurity = 6,
+			CommercialSecurity = 134,
 			/// <summary>
 			/// Record Route (RFC 791)
 			/// </summary>
@@ -72,12 +72,12 @@ namespace InetApi.Net.Core.Protocols
 			/// Stream Identifier (RFC 791, RFC 1122)
 			/// </summary>
 			[Description("Stream Identifier")]
-			StreamIdentifier = 8,
+			StreamIdentifier = 136,
 			/// <summary>
 			/// Strict Source Route (RFC 791)
 			/// </summary>
 			[Description("Strict Source Route")]
-			StrictSourceRoute = 9,
+			StrictSourceRoute = 137,
 			/// <summary>
 			/// Experimental Measurement
 			/// </summary>
@@ -99,12 +99,12 @@ namespace InetApi.Net.Core.Protocols
 			/// Experimental Flow Control
 			/// </summary>
 			[Description("Experimental Flow Control")]
-			ExperimentalFlowControl = 13,
+			ExperimentalFlowControl = 205,
 			/// <summary>
 			/// Experimental Access Control
 			/// </summary>
 			[Description("Experimental Access Control")]
-			ExperimentalAccessControl = 14,
+			ExperimentalAccessControl = 142,
 			/// <summary>
 			/// ENCODE
 			/// </summary>
@@ -114,42 +114,42 @@ namespace InetApi.Net.Core.Protocols
 			/// IMI Traffic Descriptor
 			/// </summary>
 			[Description("IMI Traffic Descriptor")]
-			ImiTrafficDescriptor = 16,
+			ImiTrafficDescriptor = 144,
 			/// <summary>
 			/// Extended Internet Protocol (RFC 1385)
 			/// </summary>
 			[Description("Extended Internet Protocol")]
-			ExtendedInternetProtocol = 17,
+			ExtendedInternetProtocol = 145,
 			/// <summary>
 			/// Traceroute (RFC 1393)
 			/// </summary>
 			[Description("Traceroute")]
-			Traceroute = 18,
+			Traceroute = 82,
 			/// <summary>
 			/// Address Extension (RFC 1475)
 			/// </summary>
 			[Description("Address Extension")]
-			AddressExtension = 19,
+			AddressExtension = 147,
 			/// <summary>
 			/// Router Alert (RFC 2113)
 			/// </summary>
 			[Description("Router Alert")]
-			RouterAlert = 20,
+			RouterAlert = 148,
 			/// <summary>
 			/// Selective Directed Broadcast Mode (RFC 1770)
 			/// </summary>
 			[Description("Selective Directed Broadcast Mode")]
-			SelectiveDirectedBroadcastMode = 21,
+			SelectiveDirectedBroadcastMode = 149,
 			/// <summary>
 			/// Dynamic Packet State
 			/// </summary>
 			[Description("Dynamic Packet State")]
-			DynamicPacketState = 23,
+			DynamicPacketState = 150,
 			/// <summary>
 			/// Upstream Multicast Packet
 			/// </summary>
 			[Description("Upstream Multicast Packet")]
-			UpstreamMulticastPacket = 24,
+			UpstreamMulticastPacket = 151,
 			/// <summary>
 			/// Quick-Start (RFC 4782)
 			/// </summary>

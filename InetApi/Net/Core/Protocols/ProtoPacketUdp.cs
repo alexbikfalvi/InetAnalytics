@@ -21,29 +21,10 @@ using System;
 namespace InetApi.Net.Core.Protocols
 {
 	/// <summary>
-	/// The base class for a protocol packet.
+	/// A class representing a UDP packet.
 	/// </summary>
-	public abstract class ProtoPacket
+	public sealed class ProtoPacketUdp : ProtoPacketIpPayload
 	{
-		#region Public properties
-
-		/// <summary>
-		/// Gets the packet length in bytes.
-		/// </summary>
-		public abstract ushort Length { get; }
-
-		#endregion
-
-		#region Public methods
-
-		/// <summary>
-		/// Writes the current packet to the buffer at the specified index.
-		/// </summary>
-		/// <param name="buffer">The buffer.</param>
-		/// <param name="index">The index.</param>
-		/// <returns>The new index, after the packet has been written.</returns>
-		public abstract int Write(byte[] buffer, int index);
-
-		#endregion
+		public ProtoPacketUdp(ushort sourcePort, ushort destinationPort, )
 	}
 }

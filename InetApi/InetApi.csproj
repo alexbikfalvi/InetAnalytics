@@ -133,7 +133,10 @@
     <Compile Include="Net\Core\Protocols\ProtoPacketIcmpTraceroute.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIp.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIpOption.cs" />
+    <Compile Include="Net\Core\Protocols\ProtoPacketIpOptionRecordRoute.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIpOptionTraceroute.cs" />
+    <Compile Include="Net\Core\Protocols\ProtoPacketIpPayload.cs" />
+    <Compile Include="Net\Core\Protocols\ProtoPacketUdp.cs" />
     <Compile Include="Net\IPAddressExtension.cs" />
     <Compile Include="Net\Core\MultipathTraceroute.cs" />
     <Compile Include="Net\Core\MultipathTracerouteResult.cs" />

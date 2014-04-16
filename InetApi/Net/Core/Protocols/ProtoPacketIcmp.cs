@@ -23,50 +23,137 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an ICMP version 4 packet.
 	/// </summary>
-	public abstract class ProtoPacketIcmp : ProtoPacket
+	public abstract class ProtoPacketIcmp : ProtoPacketIpPayload
 	{
 		/// <summary>
 		/// An enumeration representing the ICMP packet type.
 		/// </summary>
-		public enum Type
+		public enum IcmpType
 		{
+			/// <summary>
+			/// Echo reply. RFC 792
+			/// </summary>
 			EchoReply = 0,
+			/// <summary>
+			/// Destination unreachable. RFC 792
+			/// </summary>
 			DestinationUnreachable = 3,
+			/// <summary>
+			/// Source quench. RFC 792
+			/// </summary>
 			SourceQuench = 4,
+			/// <summary>
+			/// Redirect. RFC 792
+			/// </summary>
 			Redirect = 5,
+			/// <summary>
+			/// Echo request. RFC 792
+			/// </summary>
 			EchoRequest = 8,
+			/// <summary>
+			/// Router advertisement. RFC 1256
+			/// </summary>
 			RouterAdvertisement = 9,
+			/// <summary>
+			/// Router solicitation. RFC 1256
+			/// </summary>
 			RouterSolicitation = 10,
+			/// <summary>
+			/// Time exceeded. RFC 792
+			/// </summary>
 			TimeExceeded = 11,
+			/// <summary>
+			/// Parameter problem. RFC 792
+			/// </summary>
 			ParameterProblem = 12,
+			/// <summary>
+			/// Timestamp request. RFC 792
+			/// </summary>
 			TimestampRequest = 13,
+			/// <summary>
+			/// Timestamp reply. RFC 792
+			/// </summary>
 			TimestampReply = 14,
+			/// <summary>
+			/// Information request. Obsolete. RFC 792
+			/// </summary>
 			[Obsolete]
 			InformationRequest = 15,
+			/// <summary>
+			/// Information reply. Obsolete. RFC 792
+			/// </summary>
 			[Obsolete]
 			InformationReply = 16,
+			/// <summary>
+			/// Address mask request. RFC 950
+			/// </summary>
 			AddressMaskRequest = 17,
+			/// <summary>
+			/// Address mask reply. RFC 950
+			/// </summary>
 			AddressMaskReply = 18,
-			Traceroute = 30
+			/// <summary>
+			/// Traceroute. RFC 1393
+			/// </summary>
+			Traceroute = 30,
+			/// <summary>
+			/// Conversion error. RFC 1475
+			/// </summary>
+			ConversionError = 31,
+			/// <summary>
+			/// Mobile Host Redirect.
+			/// </summary>
+			MobileHostRedirect = 32,
+			/// <summary>
+			/// IPv6 Where-Are-You.
+			/// </summary>
+			Ipv6WhereAreYou = 33,
+			/// <summary>
+			/// IPv6 I-Am-Here.
+			/// </summary>
+			Ipv6IAmHere = 34,
+			/// <summary>
+			/// Mobile Registration Request.
+			/// </summary>
+			MobileRegistrationRequest = 35,
+			/// <summary>
+			/// Mobile Registration Reply.
+			/// </summary>
+			MobileRegistrationReply = 36,
+			/// <summary>
+			/// Domain Name request. RFC 1788
+			/// </summary>
+			DomainNameRequest = 37,
+			/// <summary>
+			/// Domain Name reply. RFC 1788
+			/// </summary>
+			DomainNameReply = 38,
+			/// <summary>
+			/// SKIP Algorithm Discovery Protocol.
+			/// </summary>
+			SkipAlgorithmDiscoveryProtocol = 39
 		}
-
-		private readonly Type type;
 
 		/// <summary>
 		/// Creates an ICMP packet of the specified type.
 		/// </summary>
 		/// <param name="type">The packet type.</param>
-		protected ProtoPacketIcmp(Type type)
+		protected ProtoPacketIcmp(IcmpType type)
+			: base(ProtoPacketIp.Protocols.Icmp)
 		{
-			this.type = type;
+			this.Type = (byte)type;
 		}
 
 		#region Public properties
 
 		/// <summary>
-		/// Gets the ICMP packet type.
+		/// Specifies the format of the ICMP message.
 		/// </summary>
-		//public Type Type { get { return this.type; } }
+		public byte Type { get; private set; }
+		/// <summary>
+		/// Further qualifies the ICMP message. 
+		/// </summary>
+		public abstract byte Code { get; }
 
 		#endregion
 	}
