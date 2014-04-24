@@ -53,15 +53,50 @@ namespace InetApi.Net.Core.Protocols
 		/// Computes the one's complement 16 bit checksum.
 		/// </summary>
 		/// <param name="buffer">The buffer.</param>
+		/// <returns>The checksum.</returns>
+		public static ushort ChecksumOneComplement16Bit(byte[] buffer)
+		{
+			int checksum = 0;
+			for (int index = 0; index < buffer.Length - 1; index += 2)
+			{
+				checksum += (buffer[index] << 8) | buffer[index + 1];
+			}
+			return (ushort)~(((checksum >> 16) + (checksum & 0xFFFF)) & 0xFFFF);
+		}
+
+		/// <summary>
+		/// Computes the one's complement 16 bit checksum.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
 		/// <param name="start">The start index.</param>
 		/// <param name="length">The length.</param>
 		/// <returns>The checksum.</returns>
 		public static ushort ChecksumOneComplement16Bit(byte[] buffer, int start, int length)
 		{
 			int checksum = 0;
-			for (int index = start, len = start + length - 1; index < start + length; index += 2)
+			for (int index = start; index < start + length - 1; index += 2)
 			{
-				checksum += (buffer[index] << 8) | (index < len ? buffer[index + 1] : 0);
+				checksum += (buffer[index] << 8) | buffer[index + 1];
+			}
+			return (ushort)~(((checksum >> 16) + (checksum & 0xFFFF)) & 0xFFFF);
+		}
+
+		/// <summary>
+		/// Computes the one's complement 16 bit checksum.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="data">Data to include in the checksum.</param>
+		/// <returns>The checksum.</returns>
+		public static ushort ChecksumOneComplement16Bit(byte[] buffer, params ushort[] data)
+		{
+			int checksum = 0;
+			for (int index = 0; index < buffer.Length - 1; index += 2)
+			{
+				checksum += (buffer[index] << 8) | buffer[index + 1];
+			}
+			foreach (ushort word in data)
+			{
+				checksum += word;
 			}
 			return (ushort)~(((checksum >> 16) + (checksum & 0xFFFF)) & 0xFFFF);
 		}
@@ -77,9 +112,9 @@ namespace InetApi.Net.Core.Protocols
 		public static ushort ChecksumOneComplement16Bit(byte[] buffer, int start, int length, params ushort[] data)
 		{
 			int checksum = 0;
-			for (int index = start, len = start + length - 1; index < start + length; index += 2)
+			for (int index = start; index < start + length - 1; index += 2)
 			{
-				checksum += (buffer[index] << 8) | (index < len ? buffer[index + 1] : 0);
+				checksum += (buffer[index] << 8) | buffer[index + 1];
 			}
 			foreach (ushort word in data)
 			{

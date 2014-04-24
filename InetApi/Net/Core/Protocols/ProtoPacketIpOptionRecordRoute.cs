@@ -155,7 +155,7 @@ namespace InetApi.Net.Core.Protocols
 		/// <param name="index">The index.</param>
 		/// <param name="length">The length.</param>
 		/// <returns>The packet.</returns>
-		public static ProtoPacketIpOptionRecordRoute Parse(byte[] buffer, ref int index, int length)
+		public new static ProtoPacketIpOptionRecordRoute Parse(byte[] buffer, ref int index, int length)
 		{
 			return new ProtoPacketIpOptionRecordRoute(buffer, ref index, length);
 		}

@@ -26,28 +26,40 @@ namespace InetApi.Net.Core
 	/// </summary>
 	public struct MultipathTracerouteData
 	{
+		/// <summary>
+		/// An enumeration representing the data state.
+		/// </summary>
+		public enum DataState
+		{
+			NotSet = 0,
+			RequestSent = 1,
+			ResponseReceived = 2
+		}
+
+		/// <summary>
+		/// The response type.
+		/// </summary>
+		public enum ResponseType
+		{
+			Unknown = 0,
+			EchoReply = 1,
+			TimeExceeded = 2
+		}
+
 		#region Public properties
 
 		/// <summary>
+		/// Indicates whether a response was received for this data.
+		/// </summary>
+		public DataState State { get; internal set; }
+		/// <summary>
 		/// The host address.
 		/// </summary>
-		public IPAddress HostAddress { get; internal set; }
-		/// <summary>
-		/// The local address.
-		/// </summary>
-		public IPAddress LocalAddress { get; internal set; }
-		/// <summary>
-		/// The remote address.
-		/// </summary>
-		public IPAddress RemoteAddress { get; internal set; }
+		public IPAddress Address { get; internal set; }
 		/// <summary>
 		/// The time-to-live.
 		/// </summary>
 		public byte TimeToLive { get; internal set; }
-		/// <summary>
-		/// The flow attempt.
-		/// </summary>
-		public byte Attempt { get; internal set; }
 		/// <summary>
 		/// The request timestamp.
 		/// </summary>
@@ -56,6 +68,10 @@ namespace InetApi.Net.Core
 		/// The response timestamp.
 		/// </summary>
 		public DateTime ResponseTimestamp { get; internal set; }
+		/// <summary>
+		/// The response type.
+		/// </summary>
+		public ResponseType Type { get; internal set; }
 
 		#endregion
 	}

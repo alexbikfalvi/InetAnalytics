@@ -33,17 +33,20 @@ namespace InetApi.Net.Core
 		/// <summary>
 		/// An enumeration representing the request type.
 		/// </summary>
-		internal enum RequestType
+		public enum RequestType
 		{
-			Icmp = 0,
-			Udp = 0
+			None = 0,
+			Icmp = 1,
+			Udp = 2
 		}
 
 		/// <summary>
 		/// A structure representing the state for a request.
 		/// </summary>
-		private struct RequestState
+		public struct RequestState
 		{
+			#region Public fields
+
 			/// <summary>
 			/// The request type.
 			/// </summary>
@@ -69,13 +72,37 @@ namespace InetApi.Net.Core
 			/// </summary>
 			public byte TimeToLive;
 
+			#endregion
+		}
 
-			public override int GetHashCode()
+		/// <summary>
+		/// An equality comparer class for a request state.
+		/// </summary>
+		private class RequestStateComparer : IEqualityComparer<RequestState>
+		{
+			/// <summary>
+			/// Compares two request state objects for equality.
+			/// </summary>
+			/// <param name="left">The left state.</param>
+			/// <param name="right">The right state.</param>
+			/// <returns><b>True</b> if the states are equal, <b>false</b> otherwise.</returns>
+			public bool Equals(RequestState left, RequestState right)
 			{
- 				 return base.GetHashCode();
+				return (left.Type == right.Type) && (left.Flow == right.Flow) && (left.TimeToLive == right.TimeToLive) && (left.Attempt == right.Attempt);
+			}
+
+			/// <summary>
+			/// Gets the hash code for the specified request state.
+			/// </summary>
+			/// <param name="state">The state.</param>
+			/// <returns>The hash code.</returns>
+			public int GetHashCode(RequestState state)
+			{
+				return ((int)state.Type << 24) | (state.Flow << 16) | (state.TimeToLive << 8) | state.Attempt;
 			}
 		}
 
+		private readonly MultipathTracerouteSettings settings;
 		private readonly MultipathTracerouteCallback callback;
 
 		private readonly object sync = new object();
@@ -87,8 +114,11 @@ namespace InetApi.Net.Core
 		private readonly IPAddress remoteAddress;
 
 		private readonly MultipathTracerouteFlow[] flows;
+		private readonly Dictionary<ushort, byte> flowsIcmpId = new Dictionary<ushort, byte>();
 
-		private readonly HashSet<RequestState> requests = new HashSet<RequestState>();
+		private readonly HashSet<RequestState> requests = new HashSet<RequestState>(new RequestStateComparer());
+
+		private readonly MultipathTracerouteData[, ,] dataIcmp;
 
 		/// <summary>
 		/// Creates a new multipath traceroute result instance.
@@ -102,6 +132,8 @@ namespace InetApi.Net.Core
 			this.localAddress = localAddress;
 			this.remoteAddress = remoteAddress;
 
+			this.settings = settings;
+
 			this.callback = callback;
 
 			// Set the packet filters.
@@ -113,10 +145,14 @@ namespace InetApi.Net.Core
 
 			// Create the flows.
 			this.flows = new MultipathTracerouteFlow[settings.FlowCount];
-			for (int index = 0; index < settings.FlowCount; index++)
+			for (byte index = 0; index < settings.FlowCount; index++)
 			{
 				this.flows[index] = new MultipathTracerouteFlow(settings);
+				this.flowsIcmpId.Add(this.flows[index].IcmpId, index);
 			}
+
+			// Create the ICMP data.
+			this.dataIcmp = new MultipathTracerouteData[settings.FlowCount, settings.MaximumHops - settings.MinimumHops + 1, settings.AttemptsPerFlow];
 		}
 
 		#region Public properties
@@ -129,6 +165,10 @@ namespace InetApi.Net.Core
 		/// Gets the list of flows.
 		/// </summary>
 		public MultipathTracerouteFlow[] Flows { get { return this.flows; } }
+		/// <summary>
+		/// Gets the ICMP data.
+		/// </summary>
+		public MultipathTracerouteData[, ,] IcmpData { get { return this.dataIcmp; } }
 
 		#endregion
 
@@ -183,13 +223,20 @@ namespace InetApi.Net.Core
 				// Remove all requests that have expired.
 				this.requests.RemoveWhere((RequestState requestState) =>
 					{
-						if (requestState.Timestamp + requestState.Timeout > DateTime.Now)
+						if (requestState.Timestamp + requestState.Timeout < DateTime.Now)
 						{
 							this.Callback(MultipathTracerouteState.StateType.RequestExpired, requestState);
 							return true;
 						}
 						else return false;
 					});
+
+				// If the requests table is empty.
+				if (this.requests.Count == 0)
+				{
+					// Set the wait handle.
+					this.wait.Set();
+				}
 			}
 		}
 
@@ -198,15 +245,118 @@ namespace InetApi.Net.Core
 		/// </summary>
 		/// <param name="type">The request type.</param>
 		/// <param name="flow">The flow.</param>
+		/// <param name="ttl">The time-to-live.</param>
 		/// <param name="attempt">The attempt.</param>
-		/// <param name="ttl">The TTL.</param>
 		/// <param name="timeout">The request timeout.</param>
-		internal void AddRequest(RequestType type, byte flow, byte attempt, byte ttl, TimeSpan timeout)
+		/// <returns>The request state.</returns>
+		internal RequestState AddRequest(RequestType type, byte flow, byte ttl, byte attempt, TimeSpan timeout)
 		{
+			lock (this.sync)
+			{
+				// Create a state for this request.
+				RequestState state = new RequestState()
+				{
+					Type = type,
+					Flow = flow,
+					TimeToLive = ttl,
+					Attempt = attempt,
+					Timestamp = DateTime.Now,
+					Timeout = timeout
+				};
 
+				// If the request table is empty.
+				if (this.requests.Count == 0)
+				{
+					// Reset the wait handle.
+					this.wait.Reset();
+				}
+
+				// Add the state to the request table.
+				this.requests.Add(state);
+
+				return state;
+			}
 		}
 
-		internal void RemoveRequest(RequestType type, byte flow, byte attempt, byte ttl)
+		/// <summary>
+		/// Removes a request from the request list.
+		/// </summary>
+		/// <param name="type">The request type.</param>
+		/// <param name="flow">The flow.</param>
+		/// <param name="ttl">The TTL.</param>
+		/// <param name="attempt">The attempt.</param>
+		internal void RemoveRequest(RequestType type, byte flow, byte ttl, byte attempt)
+		{
+			lock (this.sync)
+			{
+				// Create a state for this request.
+				RequestState state = new RequestState()
+				{
+					Type = type,
+					Flow = flow,
+					TimeToLive = ttl,
+					Attempt = attempt,
+					Timestamp = DateTime.MinValue,
+					Timeout = TimeSpan.Zero
+				};
+
+				// Remove the request.
+				this.requests.Remove(state);
+
+				// If the requests table is empty.
+				if (this.requests.Count == 0)
+				{
+					// Set the wait handle.
+					this.wait.Set();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Tries to get the flow with the specified ICMP identifier.
+		/// </summary>
+		/// <param name="id">The flow identifier.</param>
+		/// <param name="flow">The flow index.</param>
+		/// <returns><b>True</b> if the value was found, <b>false</b> otherwise.</returns>
+		internal bool TryGetIcmpFlow(ushort id, out byte flow)
+		{
+			return this.flowsIcmpId.TryGetValue(id, out flow);
+		}
+
+		/// <summary>
+		/// Sets the ICMP data when a request was sent.
+		/// </summary>
+		/// <param name="flow">The flow.</param>
+		/// <param name="ttl">The TTL.</param>
+		/// <param name="attempt">The attempt.</param>
+		/// <param name="timestamp">The request timestamp.</param>
+		internal void IcmpDataRequestSent(byte flow, byte ttl, byte attempt, DateTime timestamp)
+		{
+			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
+
+			this.dataIcmp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.RequestSent;
+			this.dataIcmp[flow, ttlIndex, attempt].RequestTimestamp = timestamp;
+			this.dataIcmp[flow, ttlIndex, attempt].TimeToLive = ttl;
+		}
+
+		/// <summary>
+		/// Sets the ICMP data when a response was received.
+		/// </summary>
+		/// <param name="flow">The flow.</param>
+		/// <param name="ttl">The TTL.</param>
+		/// <param name="attempt">The attempt.</param>
+		/// <param name="type">The response type.</param>
+		/// <param name="address">The remote address.</param>
+		/// <param name="timestamp">The timestamp.</param>
+		internal void IcmpDataResponseReceived(byte flow, byte ttl, byte attempt, MultipathTracerouteData.ResponseType type, IPAddress address, DateTime timestamp)
+		{
+			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
+
+			this.dataIcmp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.ResponseReceived;
+			this.dataIcmp[flow, ttlIndex, attempt].Address = address;
+			this.dataIcmp[flow, ttlIndex, attempt].ResponseTimestamp = timestamp;
+			this.dataIcmp[flow, ttlIndex, attempt].Type = type;
+		}
 
 		#endregion
 	}

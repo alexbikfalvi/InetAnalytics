@@ -190,6 +190,7 @@ namespace InetApi.Net.Core.Protocols
 			{
 				case IcmpType.EchoRequest: return ProtoPacketIcmpEchoRequest.Parse(buffer, ref index, length);
 				case IcmpType.EchoReply: return ProtoPacketIcmpEchoReply.Parse(buffer, ref index, length);
+				case IcmpType.TimeExceeded: return ProtoPacketIcmpTimeExceeded.Parse(buffer, ref index, length);
 				default: throw new ProtoException("Unknown ICMP type.");
 			}
 		}

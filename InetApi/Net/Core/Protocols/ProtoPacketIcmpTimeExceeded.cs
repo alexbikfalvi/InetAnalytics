@@ -25,6 +25,8 @@ namespace InetApi.Net.Core.Protocols
 	/// </summary>
 	public sealed class ProtoPacketIcmpTimeExceeded : ProtoPacketIcmp
 	{
+		private readonly byte code;
+
 		/// <summary>
 		/// Private constructor.
 		/// </summary>
@@ -39,9 +41,9 @@ namespace InetApi.Net.Core.Protocols
 
 			// Validate the type.
 			if (buffer[idx++] != this.Type) throw new ProtoException("Invalid ICMP time-exceeded type.");
-			// Validate the code.
-			if (buffer[idx++] != this.Code) throw new ProtoException("Invalid ICMP time-exceeded code.");
 
+			// Set the code.
+			this.code = buffer[idx++];
 			// Set the checksum.
 			this.Checksum = (ushort)((buffer[idx++] << 8) | buffer[idx++]);
 			// Set whether the checksum is valid.
@@ -54,34 +56,15 @@ namespace InetApi.Net.Core.Protocols
 			// Skip the unused bytes.
 			idx += 4;
 
-			// Write the data.
-			if (idx < length)
-			{
-				this.Data = new byte[length - idx];
-				Array.Copy(buffer, idx, this.Data, 0, this.Data.Length);
-				idx += this.Data.Length;
-			}
+			// Parse the IP header.
+			this.IpHeader = ProtoPacketIpHeader.Parse(buffer, ref idx, length - idx);
+
+			// Set the IP payload.
+			this.IpPayload = new byte[8];
+			Array.Copy(buffer, idx, this.IpPayload, 0, 8);
 
 			// Set the index.
 			index = idx;
-		}
-
-		/// <summary>
-		/// Creates a new ICMP time-exceeded packet.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="sequence">The sequence number.</param>
-		/// <param name="data">The data.</param>
-		public ProtoPacketIcmpTimeExceeded(ushort identifier, ushort sequence, byte[] data)
-			: base(IcmpType.TimeExceeded)
-		{
-			// Validate the data.
-			if (null == data) throw new ArgumentNullException("data");
-			if (data.Length > 65492) throw new ArgumentException("The maximum data size of an ICMP packet is 65492 bytes.");
-
-			this.Identifier = identifier;
-			this.Sequence = sequence;
-			this.Data = data;
 		}
 
 		#region Public properties
@@ -89,15 +72,19 @@ namespace InetApi.Net.Core.Protocols
 		/// <summary>
 		/// Gets the packet length in bytes.
 		/// </summary>
-		public override ushort Length { get { return (ushort)(8 + (null != this.Data ? this.Data.Length : 0)); } }
+		public override ushort Length { get { return (ushort)(16 + this.IpHeader.HeaderLength); } }
 		/// <summary>
 		/// Cleared to 0.
 		/// </summary>
-		public override byte Code { get; set; }
+		public override byte Code { get { return this.code; } }
 		/// <summary>
-		/// Implementation specific data.
+		/// The internet header.
 		/// </summary>
-		public byte[] Data { get; set; }
+		public ProtoPacketIpHeader IpHeader { get; private set; }
+		/// <summary>
+		/// The first 64 bits of the original datagram's data.
+		/// </summary>
+		public byte[] IpPayload { get; private set; }
 
 		#endregion
 
@@ -109,15 +96,12 @@ namespace InetApi.Net.Core.Protocols
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("ICMP TIME-EXCEEDED Length: {0} Type: {1} Code: {2} Checksum: {3:X4} ({4}) Identifier: 0x{5:X4} Sequence: 0x{6:X4} Data: {7}",
+			return string.Format("ICMP TIME-EXCEEDED Length: {0} Type: {1} Code: {2} Checksum: {3:X4} ({4})",
 				this.Length,
 				this.Type,
 				this.Code,
 				this.Checksum,
-				this.IsChecksumValid ? "ok" : "fail",
-				this.Identifier,
-				this.Sequence,
-				this.Data.Length);
+				this.IsChecksumValid ? "ok" : "fail");
 		}
 
 		/// <summary>
@@ -141,19 +125,14 @@ namespace InetApi.Net.Core.Protocols
 			// Set the checksum to zero.
 			buffer[idx++] = 0;
 			buffer[idx++] = 0;
-			// Write the identifier.
-			buffer[idx++] = (byte)(this.Identifier >> 8);
-			buffer[idx++] = (byte)(this.Identifier & 0xFF);
-			// Write the sequence.
-			buffer[idx++] = (byte)(this.Sequence >> 8);
-			buffer[idx++] = (byte)(this.Sequence & 0xFF);
+			// Skip the next four bytes.
+			idx += 4;
 
-			// Write the data.
-			if (null != this.Data)
-			{
-				Array.Copy(this.Data, 0, buffer, idx, this.Data.Length);
-				idx += this.Data.Length;
-			}
+			// Write the IP header.
+			idx = this.IpHeader.Write(buffer, idx);
+
+			// Write the IP payload.
+			Array.Copy(this.IpPayload, 0, buffer, idx, 8);
 
 			// Compute the checksum.
 			ushort checksum = ProtoPacket.ChecksumOneComplement16Bit(buffer, index, this.Length);
@@ -169,15 +148,15 @@ namespace InetApi.Net.Core.Protocols
 		#region Static methods
 
 		/// <summary>
-		/// Parses an ICMP echo reply packet from the specified buffer at the given index.
+		/// Parses an ICMP time exceeded packet from the specified buffer at the given index.
 		/// </summary>
 		/// <param name="buffer">The buffer.</param>
 		/// <param name="index">The index.</param>
 		/// <param name="length">The length.</param>
 		/// <returns>The packet.</returns>
-		public new static ProtoPacketIcmpEchoReply Parse(byte[] buffer, ref int index, int length)
+		public new static ProtoPacketIcmpTimeExceeded Parse(byte[] buffer, ref int index, int length)
 		{
-			return new ProtoPacketIcmpEchoReply(buffer, ref index, length);
+			return new ProtoPacketIcmpTimeExceeded(buffer, ref index, length);
 		}
 
 		#endregion

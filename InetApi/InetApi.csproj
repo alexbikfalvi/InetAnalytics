@@ -139,6 +139,7 @@
     <Compile Include="Net\Core\Protocols\ProtoPacketIcmpTimeExceeded.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIcmpTraceroute.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIp.cs" />
+    <Compile Include="Net\Core\Protocols\ProtoPacketIpHeader.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIpOption.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIpOptionRecordRoute.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIpOptionTraceroute.cs" />
