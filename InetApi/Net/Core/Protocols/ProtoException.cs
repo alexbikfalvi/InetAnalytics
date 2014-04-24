@@ -5,6 +5,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing a protocol exception.
 	/// </summary>
+	[Serializable]
 	public class ProtoException : FormatException
 	{
 		/// <summary>

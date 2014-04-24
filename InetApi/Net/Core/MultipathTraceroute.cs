@@ -35,7 +35,7 @@ namespace InetApi.Net.Core
 	/// <summary>
 	/// A class representing a multipath traceroute.
 	/// </summary>
-	public sealed class MultipathTraceroute
+	public sealed class MultipathTraceroute : IDisposable
 	{
 		private readonly MultipathTracerouteSettings settings;
 
@@ -105,6 +105,18 @@ namespace InetApi.Net.Core
 		}
 
 		#region Public methods
+
+		/// <summary>
+		/// Disposes the current object.
+		/// </summary>
+		public void Dispose()
+		{
+			// Dispose the member objects.
+			this.bufferWait.Dispose();
+			this.timer.Dispose();
+			// Suppress the finalizer.
+			GC.SuppressFinalize(this);
+		}
 
 		/// <summary>
 		/// Runs a multipath traceroute to the specified destination.
@@ -267,7 +279,8 @@ namespace InetApi.Net.Core
 						result.Callback(MultipathTracerouteState.StateType.EndTtl, ttl);
 					}
 
-					//Thread.Sleep(5000);
+					// Wait before beginning the next attempt.
+					Thread.Sleep(this.settings.AttemptDelay);
 
 					// Call the end flow handler.
 					result.Callback(MultipathTracerouteState.StateType.EndFlow, flow);
