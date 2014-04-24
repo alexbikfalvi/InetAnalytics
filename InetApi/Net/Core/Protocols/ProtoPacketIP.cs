@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using InetApi.Net.Core.Protocols.Filters;
 
 namespace InetApi.Net.Core.Protocols
 {
@@ -258,8 +259,16 @@ namespace InetApi.Net.Core.Protocols
 			Ip6DestinationOptions = 60,
 			AnyHostInternalProtocol = 61,
 			Cftp = 62,
-			AnyLocalNetwork = 63
+			AnyLocalNetwork = 63,
+			/// <summary>
+			/// Reserved.
+			/// </summary>
+			Reserved = 255
 		}
+
+		private const ushort maximumLength = 65520;
+		private const byte minimumHeaderLength = 20;
+		private const byte maximumOptionsLength = 40;
 
 		private static ushort defaultIdentification;
 		private const byte version = 4;
@@ -267,7 +276,6 @@ namespace InetApi.Net.Core.Protocols
 
 		private byte headerLength = 5;
 		private ushort optionsLength = 0;
-		private ushort length;
 
 		private readonly byte[] srcAddress;
 		private readonly byte[] dstAddress;
@@ -279,6 +287,87 @@ namespace InetApi.Net.Core.Protocols
 		{
 			Random random = new Random();
 			ProtoPacketIp.defaultIdentification = (ushort)(random.Next() & 0xFFFF);
+		}
+
+		/// <summary>
+		/// Private constructor.
+		/// </summary>
+		/// <param name="buffer">The buffer from which to read the packet.</param>
+		/// <param name="index">The buffer index.</param>
+		/// <param name="length">The data length.</param>
+		/// <param name="filters">The list of filters.</param>
+		private ProtoPacketIp(byte[] buffer, ref int index, int length)
+		{
+			// Validate the packet.
+			if (buffer[index] >> 4 != ProtoPacketIp.version) throw new ProtoException("Invalid IP version 4 version.");
+
+			int idx = index;
+
+			// Set the header length (3..0).
+			this.headerLength = (byte)(buffer[idx++] & 0xF);
+			// Set the differentiated services.
+			this.DifferentiatedServices = buffer[idx++];
+
+			// Validate the length.
+			if ((ushort)((buffer[idx++] << 8) | buffer[idx++]) != length - index)
+				throw new ProtoException("Invalid IP version 4 length.");
+
+			// Set the packet identification.
+			this.Identification = (ushort)((buffer[idx++] << 8) | buffer[idx++]);
+			// Set the flags.
+			this.DontFragment = ((buffer[idx] >> 6) & 0x1) != 0;
+			this.MoreFragments = ((buffer[idx] >> 5) & 0x1) != 0;
+			// Set the fragment offset.
+			this.FragmentOffset = (ushort)(((buffer[idx++] & 0x1F) << 8) | buffer[idx++]);
+			// Set the time-to-live.
+			this.TimeToLive = buffer[idx++];
+			// Set the protocol.
+			this.Protocol = buffer[idx++];
+			// Set the header checksum.
+			this.HeaderChecksum = (ushort)((buffer[idx++] << 8) | buffer[idx++]);
+			// Set whether the checksum is valid.
+			this.IsHeaderChecksumValid = ProtoPacket.ChecksumOneComplement16Bit(buffer, index, this.HeaderLength) == 0;
+
+			// Validate the checksum.
+			if (!ProtoPacketIp.IgnoreChecksum && !this.IsHeaderChecksumValid)
+				throw new ProtoException("Invalid IP version 4 checksum.");
+
+			// Set the source address.
+			this.srcAddress = new byte[] { buffer[idx++], buffer[idx++], buffer[idx++], buffer[idx++] };
+			this.SourceAddress = new IPAddress(this.srcAddress);
+			// Write the destination address.
+			this.dstAddress = new byte[] { buffer[idx++], buffer[idx++], buffer[idx++], buffer[idx++] };
+			this.DestinationAddress = new IPAddress(this.dstAddress);
+
+			// Parse the options.
+			List<ProtoPacketIpOption> options = new List<ProtoPacketIpOption>();
+			while(idx < index + this.HeaderLength)
+			{
+				// Parse the option.
+				ProtoPacketIpOption option = ProtoPacketIpOption.Parse(buffer, ref idx, this.HeaderLength - ProtoPacketIp.minimumHeaderLength);
+				// Add the option.
+				if (null != option) options.Add(option);
+			}
+
+			// Set the options.
+			this.Options = options.ToArray();
+
+			// Set the index to the index plus the header length.
+			idx = index + this.HeaderLength;
+
+			// Parse the payload.
+			if (idx < length)
+			{
+				switch ((ProtoPacketIp.Protocols)this.Protocol)
+				{
+					case Protocols.Icmp: this.Payload = ProtoPacketIcmp.Parse(buffer, ref idx, length); break;
+					case Protocols.Udp: this.Payload = ProtoPacketUdp.Parse(buffer, ref idx, length, this); break;
+					default: this.Payload = ProtoPacketRaw.Parse(buffer, ref idx, length); break;
+				}
+			}
+
+			// Set the index.
+			index = length;
 		}
 
 		/// <summary>
@@ -300,6 +389,8 @@ namespace InetApi.Net.Core.Protocols
 			this.FragmentOffset = 0;
 			this.TimeToLive = ProtoPacketIp.timeToLive;
 			this.Protocol = 0;
+			this.HeaderChecksum = 0;
+			this.IsHeaderChecksumValid = false;
 			this.SourceAddress = sourceAddress;
 			this.DestinationAddress = destinationAddress;
 			this.Options = null;
@@ -307,8 +398,6 @@ namespace InetApi.Net.Core.Protocols
 
 			this.srcAddress = sourceAddress.GetAddressBytes();
 			this.dstAddress = destinationAddress.GetAddressBytes();
-
-			this.length = this.HeaderLength;
 		}
 
 		/// <summary>
@@ -332,6 +421,8 @@ namespace InetApi.Net.Core.Protocols
 			this.FragmentOffset = 0;
 			this.TimeToLive = ProtoPacketIp.timeToLive;
 			this.Protocol = (byte)payload.Protocol;
+			this.HeaderChecksum = 0;
+			this.IsHeaderChecksumValid = false;
 			this.SourceAddress = sourceAddress;
 			this.DestinationAddress = destinationAddress;
 			this.Options = null;
@@ -341,10 +432,7 @@ namespace InetApi.Net.Core.Protocols
 			this.dstAddress = destinationAddress.GetAddressBytes();
 
 			// Validate the length.
-			if (this.HeaderLength + payload.Length > 65520) throw new ArgumentException("The packet length exceeds 65520 bytes.");
-
-			// Compute the length.
-			this.length = (ushort)(this.HeaderLength + payload.Length);
+			if (this.Length > ProtoPacketIp.maximumLength) throw new ArgumentException("The packet length exceeds " + ProtoPacketIp.maximumLength + " bytes.");
 		}
 
 		/// <summary>
@@ -369,6 +457,8 @@ namespace InetApi.Net.Core.Protocols
 			this.FragmentOffset = 0;
 			this.TimeToLive = ProtoPacketIp.timeToLive;
 			this.Protocol = (byte)payload.Protocol;
+			this.HeaderChecksum = 0;
+			this.IsHeaderChecksumValid = false;
 			this.SourceAddress = sourceAddress;
 			this.DestinationAddress = destinationAddress;
 			this.Options = options;
@@ -384,16 +474,13 @@ namespace InetApi.Net.Core.Protocols
 			}
 
 			// Validate the options length.
-			if (this.optionsLength > 40) throw new ArgumentException("The options length cannot exceed 40 bytes.");
+			if (this.optionsLength > ProtoPacketIp.maximumOptionsLength) throw new ArgumentException("The options length cannot exceed " + ProtoPacketIp.maximumOptionsLength + " bytes.");
 
 			// Compute the header length.
 			this.headerLength += (byte)((this.optionsLength & 0x3) != 0 ? (this.optionsLength >> 2) + 1 : this.optionsLength >> 2);
 
 			// Validate the length.
-			if (this.headerLength + payload.Length > 65520) throw new ArgumentException("The packet length exceeds 65520 bytes.");
-
-			// Compute the length.
-			this.length = (ushort)(this.HeaderLength + payload.Length);
+			if (this.Length > ProtoPacketIp.maximumLength) throw new ArgumentException("The packet length exceeds " + ProtoPacketIp.maximumLength + " bytes.");
 		}
 
 		#region Public properties
@@ -401,7 +488,7 @@ namespace InetApi.Net.Core.Protocols
 		/// <summary>
 		/// Gets the packet length in bytes.
 		/// </summary>
-		public override ushort Length { get { return this.length; } }
+		public override ushort Length { get { return (ushort)(this.HeaderLength + (null != this.Payload ? this.Payload.Length : 0)); } }
 		/// <summary>
 		/// Specifies the format of the IP packet header.
 		/// </summary>
@@ -417,19 +504,19 @@ namespace InetApi.Net.Core.Protocols
 		/// <summary>
 		/// Used to identify the fragments of one datagram from those of another. The originating protocol module of an internet datagram sets the identification field to a value that must be unique for that source-destination pair and protocol for the time the datagram will be active in the internet system. The originating protocol module of a complete datagram clears the MF bit to zero and the Fragment Offset field to zero.
 		/// </summary>
-		public ushort Identification { get; private set; }
+		public ushort Identification { get; set; }
 		/// <summary>
 		/// Controls the fragmentation of the datagram.
 		/// </summary>
-		public bool DontFragment { get; private set; }
+		public bool DontFragment { get; set; }
 		/// <summary>
 		/// Indicates if the datagram contains additional fragments.
 		/// </summary>
-		public bool MoreFragments { get; private set; }
+		public bool MoreFragments { get; set; }
 		/// <summary>
 		/// Used to direct the reassembly of a fragmented datagram.
 		/// </summary>
-		public ushort FragmentOffset { get; private set; }
+		public ushort FragmentOffset { get; set; }
 		/// <summary>
 		/// A timer field used to track the lifetime of the datagram. When the TTL field is decremented down to zero, the datagram is discarded.
 		/// </summary>
@@ -439,6 +526,14 @@ namespace InetApi.Net.Core.Protocols
 		/// </summary>
 		public byte Protocol { get; private set; }
 		/// <summary>
+		/// The header checksum.
+		/// </summary>
+		public ushort HeaderChecksum { get; private set; }
+		/// <summary>
+		/// Indicates whether the header checksum is correct.
+		/// </summary>
+		public bool IsHeaderChecksumValid { get; private set; }
+		/// <summary>
 		/// IP address of the sender.
 		/// </summary>
 		public IPAddress SourceAddress { get; private set; }
@@ -447,28 +542,63 @@ namespace InetApi.Net.Core.Protocols
 		/// </summary>
 		public IPAddress DestinationAddress { get; private set; }
 		/// <summary>
+		/// IP address of the sender.
+		/// </summary>
+		public byte[] SourceAddressBytes { get { return this.srcAddress; } }
+		/// <summary>
+		/// IP address of the intended receiver.
+		/// </summary>
+		public byte[] DestinationAddressBytes { get { return this.dstAddress; } }
+		/// <summary>
 		/// The IP options.
 		/// </summary>
 		public ProtoPacketIpOption[] Options { get; private set; }
 		/// <summary>
 		/// The IP payload.
 		/// </summary>
-		public ProtoPacketIpPayload Payload { get; private set; }
+		public ProtoPacketIpPayload Payload { get; set; }
+
+		#endregion
+
+		#region Static properties
+
+		/// <summary>
+		/// Indicates whether the protocol ignores the checksum calculation.
+		/// </summary>
+		public static bool IgnoreChecksum { get; set; }
 
 		#endregion
 
 		#region Public methods
 
 		/// <summary>
+		/// Gets the packet information as a string.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return string.Format("IPv4 Src: {0} Dst: {1} Length: {2} Identifier: 0x{3:X4} TTL: {4} Protocol: {5} Checksum: 0x{6:X4} ({7})",
+				this.SourceAddress,
+				this.DestinationAddress,
+				this.Length,
+				this.Identification,
+				this.TimeToLive,
+				this.Protocol,
+				this.HeaderChecksum,
+				this.IsHeaderChecksumValid ? "ok" : "fail");
+		}
+
+		/// <summary>
 		/// Writes the current packet to the buffer at the specified index.
 		/// </summary>
 		/// <param name="buffer">The buffer.</param>
 		/// <param name="index">The index.</param>
+		/// <param name="args">Protocol specific arguments.</param>
 		/// <returns>The new index, after the packet has been written.</returns>
-		public override int Write(byte[] buffer, int index)
+		public override int Write(byte[] buffer, int index, params object[] args)
 		{
 			// Validate the buffer.
-			if (index + this.length > buffer.Length) throw new IndexOutOfRangeException("The buffer is too small.");
+			if (index + this.Length > buffer.Length) throw new IndexOutOfRangeException("The buffer is too small.");
 
 			int idx = index;
 
@@ -477,8 +607,8 @@ namespace InetApi.Net.Core.Protocols
 			// Write the DSCP (7..2) and ECN (1..0)
 			buffer[idx++] = this.DifferentiatedServices;
 			// Write the packet length.
-			buffer[idx++] = (byte)(this.length >> 8);
-			buffer[idx++] = (byte)(this.length & 0xFF);
+			buffer[idx++] = (byte)(this.Length >> 8);
+			buffer[idx++] = (byte)(this.Length & 0xFF);
 			// Write the packet identification.
 			buffer[idx++] = (byte)(this.Identification >> 8);
 			buffer[idx++] = (byte)(this.Identification & 0xFF);
@@ -516,19 +646,76 @@ namespace InetApi.Net.Core.Protocols
 			}
 
 			// Compute the header checksum.
-			int checksum = 0;
-			for (int idxSum = index, len = index + this.HeaderLength - 1; idxSum < index + this.HeaderLength; idxSum += 2)
-			{
-				checksum += (buffer[idxSum] << 8) | (idxSum < len ? buffer[idxSum + 1] : 0);
-			}
-			checksum = ~(((checksum >> 16) + (checksum & 0xFFFF)) & 0xFFFF);
+			ushort checksum = ProtoPacket.ChecksumOneComplement16Bit(buffer, index, this.HeaderLength);
 			buffer[index + 10] = (byte)((checksum >> 8) & 0xFF);
 			buffer[index + 11] = (byte)(checksum & 0xFF);
 
 			// Write the payload.
-			if (null != this.Payload) this.Payload.Write(buffer, idx);
+			if (null != this.Payload) this.Payload.Write(buffer, idx, this);
 
-			return index + this.length;
+			return index + this.Length;
+		}
+
+		#endregion
+
+		#region Static methods
+
+		/// <summary>
+		/// Parses an IP packet from the specified buffer at the given index.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="index">The index.</param>
+		/// <param name="length">The length.</param>
+		/// <returns>The packet.</returns>
+		public static ProtoPacketIp Parse(byte[] buffer, ref int index, int length)
+		{
+			// Create the packet.
+			return new ProtoPacketIp(buffer, ref index, length);
+		}
+
+		/// <summary>
+		/// Parses an IP packet from the specified buffer at the given index, filtering according to the specified filters.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="index">The index.</param>
+		/// <param name="length">The length.</param>
+		/// <param name="filters">The list of filters.</param>
+		/// <param name="packet">The IP packet or <b>null</b>.</param>
+		/// <returns><b>True</b> if th packet was parsed, <b>false</b> otherwise.</returns>
+		public static bool ParseFilter(byte[] buffer, ref int index, int length, FilterIp[] filters, out ProtoPacketIp packet)
+		{
+			// Set the packet to null.
+			packet = null;
+
+			// Validate the packet.
+			if (buffer[index] >> 4 != ProtoPacketIp.version) return false;
+
+			// Validate the length.
+			if ((ushort)((buffer[index + 2] << 8) | buffer[index + 3]) != length - index) return false;
+
+			// Set the protocol.
+			byte protocol = buffer[index + 9];
+
+			// Parse the source address.
+			IPAddress sourceAddress = new IPAddress(new byte[] { buffer[index + 12], buffer[index + 13], buffer[index + 14], buffer[index + 15] });
+			// Parse the destination address.
+			IPAddress destinationAddress = new IPAddress(new byte[] { buffer[index + 16], buffer[index + 17], buffer[index + 18], buffer[index + 19] });
+
+			// Try and match the filters.
+			bool match = false;
+			for (int idx = 0; (idx < filters.Length) && (!match); idx++)
+			{
+				match = match || filters[idx].Matches(sourceAddress, destinationAddress, protocol); 
+			}
+
+			if (!match)
+				return false;
+
+			// Parse the packet.
+			packet = ProtoPacketIp.Parse(buffer, ref index, length);
+
+			// Return true.
+			return true;
 		}
 
 		#endregion

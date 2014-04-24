@@ -41,8 +41,52 @@ namespace InetApi.Net.Core.Protocols
 		/// </summary>
 		/// <param name="buffer">The buffer.</param>
 		/// <param name="index">The index.</param>
+		/// <param name="args">Protocol specific arguments.</param>
 		/// <returns>The new index, after the packet has been written.</returns>
-		public abstract int Write(byte[] buffer, int index);
+		public abstract int Write(byte[] buffer, int index, params object[] args);
+
+		#endregion
+
+		#region Static methods
+
+		/// <summary>
+		/// Computes the one's complement 16 bit checksum.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="start">The start index.</param>
+		/// <param name="length">The length.</param>
+		/// <returns>The checksum.</returns>
+		public static ushort ChecksumOneComplement16Bit(byte[] buffer, int start, int length)
+		{
+			int checksum = 0;
+			for (int index = start, len = start + length - 1; index < start + length; index += 2)
+			{
+				checksum += (buffer[index] << 8) | (index < len ? buffer[index + 1] : 0);
+			}
+			return (ushort)~(((checksum >> 16) + (checksum & 0xFFFF)) & 0xFFFF);
+		}
+
+		/// <summary>
+		/// Computes the one's complement 16 bit checksum.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="start">The start index.</param>
+		/// <param name="length">The length.</param>
+		/// <param name="data">Data to include in the checksum.</param>
+		/// <returns>The checksum.</returns>
+		public static ushort ChecksumOneComplement16Bit(byte[] buffer, int start, int length, params ushort[] data)
+		{
+			int checksum = 0;
+			for (int index = start, len = start + length - 1; index < start + length; index += 2)
+			{
+				checksum += (buffer[index] << 8) | (index < len ? buffer[index + 1] : 0);
+			}
+			foreach (ushort word in data)
+			{
+				checksum += word;
+			}
+			return (ushort)~(((checksum >> 16) + (checksum & 0xFFFF)) & 0xFFFF);
+		}
 
 		#endregion
 	}

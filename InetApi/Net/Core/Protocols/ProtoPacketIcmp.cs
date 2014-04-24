@@ -154,6 +154,45 @@ namespace InetApi.Net.Core.Protocols
 		/// Further qualifies the ICMP message. 
 		/// </summary>
 		public abstract byte Code { get; }
+		/// <summary>
+		/// Checksum that covers the ICMP message.
+		/// </summary>
+		public ushort Checksum { get; protected set; }
+		/// <summary>
+		/// Indicates whether the checksum is valid.
+		/// </summary>
+		public bool IsChecksumValid { get; protected set; }
+
+		#endregion
+
+		#region Static properties
+
+		/// <summary>
+		/// Indicates whether the protocol ignores the checksum calculation.
+		/// </summary>
+		public static bool IgnoreChecksum { get; set; }
+
+		#endregion
+
+		#region Static methods
+
+		/// <summary>
+		/// Parses an ICMP packet from the specified buffer at the given index.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="index">The index.</param>
+		/// <param name="length">The data length.</param>
+		/// <returns>The packet.</returns>
+		public static ProtoPacketIcmp Parse(byte[] buffer, ref int index, int length)
+		{
+			// Get the protocol type.
+			switch ((IcmpType)buffer[index])
+			{
+				case IcmpType.EchoRequest: return ProtoPacketIcmpEchoRequest.Parse(buffer, ref index, length);
+				case IcmpType.EchoReply: return ProtoPacketIcmpEchoReply.Parse(buffer, ref index, length);
+				default: throw new ProtoException("Unknown ICMP type.");
+			}
+		}
 
 		#endregion
 	}

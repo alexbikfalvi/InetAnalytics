@@ -162,7 +162,7 @@ namespace InetCommon.Net
 			// For all network interfaces.
 			foreach (NetworkInterface iface in NetworkInterface.GetAllNetworkInterfaces().Where(i => i.GetIPProperties().DnsAddresses.Count > 0))
 			{
-				return iface.GetIPProperties().DnsAddresses[0];
+				return NetworkConfiguration.GetDnsServer(iface);
 			}
 			return null;
 		}
@@ -175,6 +175,21 @@ namespace InetCommon.Net
 		public static IPAddress GetDnsServer(NetworkInterface iface)
 		{
 			return iface.GetIPProperties().DnsAddresses.FirstOrDefault();
+		}
+
+		/// <summary>
+		/// Returns a DNS server from the local configuration of the specified network interfaces.
+		/// </summary>
+		/// <param name="interfaces">The interfaces.</param>
+		/// <returns>The DNS server IP address.</returns>
+		public static IPAddress GetDnsServer(IEnumerable<NetworkInterface> interfaces)
+		{
+			// For all network interfaces.
+			foreach (NetworkInterface iface in interfaces.Where(i => i.GetIPProperties().DnsAddresses.Count > 0))
+			{
+				return NetworkConfiguration.GetDnsServer(iface);
+			}
+			return null;
 		}
 
 		/// <summary>

@@ -21,9 +21,9 @@ using System;
 namespace InetApi.Net.Core.Protocols
 {
 	/// <summary>
-	/// A class representing an ICMP version 4 packet of echo request type.
+	/// A class representing an ICMP version 4 packet of echo reply type.
 	/// </summary>
-	public sealed class ProtoPacketIcmpEchoRequest : ProtoPacketIcmp
+	public sealed class ProtoPacketIcmpEchoReply : ProtoPacketIcmp
 	{
 		/// <summary>
 		/// Private constructor.
@@ -31,15 +31,16 @@ namespace InetApi.Net.Core.Protocols
 		/// <param name="buffer">The buffer from which to read the packet.</param>
 		/// <param name="index">The buffer index.</param>
 		/// <param name="length">The data length.</param>
-		private ProtoPacketIcmpEchoRequest(byte[] buffer, ref int index, int length)
-			: base(IcmpType.EchoRequest)
+		/// <param name="args">Protocol specific arguments.</param>
+		private ProtoPacketIcmpEchoReply(byte[] buffer, ref int index, int length)
+			: base(IcmpType.EchoReply)
 		{
 			int idx = index;
 
 			// Validate the type.
-			if (buffer[idx++] != this.Type) throw new ProtoException("Invalid ICMP echo request type.");
+			if (buffer[idx++] != this.Type) throw new ProtoException("Invalid ICMP echo reply type.");
 			// Validate the code.
-			if (buffer[idx++] != this.Code) throw new ProtoException("Invalid ICMP echo request code.");
+			if (buffer[idx++] != this.Code) throw new ProtoException("Invalid ICMP echo reply code.");
 
 			// Set the checksum.
 			this.Checksum = (ushort)((buffer[idx++] << 8) | buffer[idx++]);
@@ -68,13 +69,13 @@ namespace InetApi.Net.Core.Protocols
 		}
 
 		/// <summary>
-		/// Creates a new ICMP echo request packet.
+		/// Creates a new ICMP echo reply packet.
 		/// </summary>
 		/// <param name="identifier">The identifier.</param>
 		/// <param name="sequence">The sequence number.</param>
 		/// <param name="data">The data.</param>
-		public ProtoPacketIcmpEchoRequest(ushort identifier, ushort sequence, byte[] data)
-			: base(IcmpType.EchoRequest)
+		public ProtoPacketIcmpEchoReply(ushort identifier, ushort sequence, byte[] data)
+			: base(IcmpType.EchoReply)
 		{
 			// Validate the data.
 			if (null == data) throw new ArgumentNullException("data");
@@ -118,7 +119,7 @@ namespace InetApi.Net.Core.Protocols
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("ICMP ECHO-REQUEST Length: {0} Type: {1} Code: {2} Checksum: {3:X4} ({4}) Identifier: 0x{5:X4} Sequence: 0x{6:X4} Data: {7}",
+			return string.Format("ICMP ECHO-REPLY Length: {0} Type: {1} Code: {2} Checksum: {3:X4} ({4}) Identifier: 0x{5:X4} Sequence: 0x{6:X4} Data: {7}",
 				this.Length,
 				this.Type,
 				this.Code,
@@ -173,37 +174,20 @@ namespace InetApi.Net.Core.Protocols
 			return idx;
 		}
 
-		/// <summary>
-		/// Gets the checksum for the current packet.
-		/// </summary>
-		/// <returns>The checksum.</returns>
-		public ushort GetChecksum()
-		{
-			int checksum = 0;
-			checksum += (this.Type << 8) | this.Code;
-			checksum += this.Identifier;
-			checksum += this.Sequence;
-			for (int index = 0; index < this.Data.Length - 1; index += 2)
-			{
-				checksum += (this.Data[index] << 8) | this.Data[index + 1];
-			}
-			return (ushort)~(((checksum >> 16) + (checksum & 0xFFFF)) & 0xFFFF);
-		}
-
 		#endregion
 
 		#region Static methods
 
 		/// <summary>
-		/// Parses an ICMP echo request packet from the specified buffer at the given index.
+		/// Parses an ICMP echo reply packet from the specified buffer at the given index.
 		/// </summary>
 		/// <param name="buffer">The buffer.</param>
 		/// <param name="index">The index.</param>
 		/// <param name="length">The length.</param>
 		/// <returns>The packet.</returns>
-		public new static ProtoPacketIcmpEchoRequest Parse(byte[] buffer, ref int index, int length)
+		public new static ProtoPacketIcmpEchoReply Parse(byte[] buffer, ref int index, int length)
 		{
-			return new ProtoPacketIcmpEchoRequest(buffer, ref index, length);
+			return new ProtoPacketIcmpEchoReply(buffer, ref index, length);
 		}
 
 		#endregion

@@ -174,5 +174,27 @@ namespace InetApi.Net.Core.Protocols
 		public OptionType Type { get; private set; }
 
 		#endregion
+
+		#region Static methods
+
+		/// <summary>
+		/// Parses an IP option from the specified buffer at the given index.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="index">The index.</param>
+		/// <param name="length">The length.</param>
+		/// <returns>The packet.</returns>
+		public static ProtoPacketIpOption Parse(byte[] buffer, ref int index, int length)
+		{
+			// Get the option type.
+			switch ((OptionType)buffer[index])
+			{
+				case OptionType.EndOfOptions: index++; return null;
+				case OptionType.RecordRoute: return ProtoPacketIpOptionRecordRoute.Parse(buffer, ref index, length);
+				default: throw new ProtoException("Unknown IP option type.");
+			}
+		}
+
+		#endregion
 	}
 }

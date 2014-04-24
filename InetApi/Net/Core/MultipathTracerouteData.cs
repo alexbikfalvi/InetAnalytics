@@ -17,59 +17,45 @@
  */
 
 using System;
-using System.Net.Sockets;
+using System.Net;
 
 namespace InetApi.Net.Core
 {
 	/// <summary>
-	/// A class representing the multipath traceroute settings.
+	/// A structure representing the multipath traceroute data.
 	/// </summary>
-	public sealed class MultipathTracerouteSettings
+	public struct MultipathTracerouteData
 	{
-		/// <summary>
-		/// Creates a new instance of the multipath traceroute settings.
-		/// </summary>
-		public MultipathTracerouteSettings()
-		{
-			this.AttemptsPerFlow = 5;
-			this.FlowCount = 5;
-			this.MinimumHops = 1;
-			this.MaximumHops = 32;
-			this.MaximumUnknownHops = 10;
-			this.HopTimeout = 3000;
-			this.DataLength = 32;
-		}
-
 		#region Public properties
 
 		/// <summary>
-		/// Gets or sets the number of attempts per flow.
+		/// The host address.
 		/// </summary>
-		public byte AttemptsPerFlow { get; set; }
+		public IPAddress HostAddress { get; internal set; }
 		/// <summary>
-		/// Gets or sets the number of flows.
+		/// The local address.
 		/// </summary>
-		public byte FlowCount { get; set; }
+		public IPAddress LocalAddress { get; internal set; }
 		/// <summary>
-		/// Gets or sets the minimum hops.
+		/// The remote address.
 		/// </summary>
-		public byte MinimumHops { get; set; }
+		public IPAddress RemoteAddress { get; internal set; }
 		/// <summary>
-		/// Gets or sets the maximum hops.
+		/// The time-to-live.
 		/// </summary>
-		public byte MaximumHops { get; set; }
+		public byte TimeToLive { get; internal set; }
 		/// <summary>
-		/// Gets or sets the number of unknown hops after which the traceroute will end.
+		/// The flow attempt.
 		/// </summary>
-		public byte MaximumUnknownHops { get; set; }
+		public byte Attempt { get; internal set; }
 		/// <summary>
-		/// Gets or sets the hop timeout in milliseconds.
+		/// The request timestamp.
 		/// </summary>
-		public int HopTimeout { get; set; }
+		public DateTime RequestTimestamp { get; internal set; }
 		/// <summary>
-		/// Gets or sets the ICMP packet data length.
+		/// The response timestamp.
 		/// </summary>
-		public int DataLength { get; set; }
+		public DateTime ResponseTimestamp { get; internal set; }
 
 		#endregion
 	}

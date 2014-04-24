@@ -84,8 +84,9 @@ namespace InetApi.Net.Core.Protocols
 		/// </summary>
 		/// <param name="buffer">The buffer.</param>
 		/// <param name="index">The index.</param>
+		/// <param name="args">Protocol specific arguments.</param>
 		/// <returns>The new index, after the packet has been written.</returns>
-		public override int Write(byte[] buffer, int index)
+		public override int Write(byte[] buffer, int index, params object[] args)
 		{
 			// Validate the buffer.
 			if (index + ProtoPacketIpOptionTraceroute.length > buffer.Length) throw new IndexOutOfRangeException("The buffer is too small.");
