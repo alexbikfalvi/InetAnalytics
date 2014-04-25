@@ -38,6 +38,8 @@ namespace InetApi.Net.Core
 			this.MaximumUnknownHops = 10;
 			this.AttemptDelay = 1000;
 			this.HopTimeout = 3000;
+			this.MinimumPort = 8192;
+			this.MaximumPort = 65520;
 			this.DataLength = 32;
 		}
 
@@ -71,6 +73,14 @@ namespace InetApi.Net.Core
 		/// Gets or sets the hop timeout in milliseconds.
 		/// </summary>
 		public int HopTimeout { get; set; }
+		/// <summary>
+		/// Gets or sets the minimum UDP port.
+		/// </summary>
+		public ushort MinimumPort { get; set; }
+		/// <summary>
+		/// Gets or sets the maximum UDP port.
+		/// </summary>
+		public ushort MaximumPort { get; set; }
 		/// <summary>
 		/// Gets or sets the ICMP packet data length.
 		/// </summary>

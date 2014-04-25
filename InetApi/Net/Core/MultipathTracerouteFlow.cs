@@ -51,6 +51,12 @@ namespace InetApi.Net.Core
 			this.IcmpData = new MultipathTracerouteData[this.TtlCount, settings.AttemptsPerFlow];
 			// Create the UDP data.
 			this.UdpData = new MultipathTracerouteData[this.TtlCount, settings.AttemptsPerFlow];
+			
+			// Compute the UDP source port.
+			this.UdpSourcePort = (ushort)((settings.MinimumPort + (settings.MaximumPort - settings.MinimumPort) * (ushort)((this.id[4] << 8) | this.id[5]) / 0x10000) & 0xFFF0);
+
+			// Compute the UDP destination port.
+			this.UdpDestinationPort = (ushort)((settings.MinimumPort + (settings.MaximumPort - settings.MinimumPort) * (ushort)((this.id[6] << 8) | this.id[7]) / 0x10000) & 0xFFF0);
 		}
 
 		#region Public properties
@@ -71,6 +77,14 @@ namespace InetApi.Net.Core
 		/// The ICMP checksum.
 		/// </summary>
 		public ushort IcmpChecksum { get { return (ushort)((this.id[2] << 8) | this.id[3]); } }
+		/// <summary>
+		/// The UDP source port.
+		/// </summary>
+		public ushort UdpSourcePort { get; private set; }
+		/// <summary>
+		/// The UDP destination port.
+		/// </summary>
+		public ushort UdpDestinationPort { get; private set; }
 		/// <summary>
 		/// The TTL count.
 		/// </summary>

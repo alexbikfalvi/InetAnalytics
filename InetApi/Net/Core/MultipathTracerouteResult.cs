@@ -119,6 +119,7 @@ namespace InetApi.Net.Core
 		private readonly HashSet<RequestState> requests = new HashSet<RequestState>(new RequestStateComparer());
 
 		private readonly MultipathTracerouteData[, ,] dataIcmp;
+		private readonly MultipathTracerouteStatistics[,] statIcmp;
 
 		/// <summary>
 		/// Creates a new multipath traceroute result instance.
@@ -153,6 +154,9 @@ namespace InetApi.Net.Core
 
 			// Create the ICMP data.
 			this.dataIcmp = new MultipathTracerouteData[settings.FlowCount, settings.MaximumHops - settings.MinimumHops + 1, settings.AttemptsPerFlow];
+
+			// Create the ICMP statistics.
+			this.statIcmp = new MultipathTracerouteStatistics[settings.FlowCount, settings.AttemptsPerFlow];
 		}
 
 		#region Public properties
@@ -169,6 +173,10 @@ namespace InetApi.Net.Core
 		/// Gets the ICMP data.
 		/// </summary>
 		public MultipathTracerouteData[, ,] IcmpData { get { return this.dataIcmp; } }
+		/// <summary>
+		/// Gets the ICMP statistics.
+		/// </summary>
+		public MultipathTracerouteStatistics[,] IcmpStatistics { get { return this.statIcmp; } }
 
 		#endregion
 
@@ -356,6 +364,38 @@ namespace InetApi.Net.Core
 			this.dataIcmp[flow, ttlIndex, attempt].Address = address;
 			this.dataIcmp[flow, ttlIndex, attempt].ResponseTimestamp = timestamp;
 			this.dataIcmp[flow, ttlIndex, attempt].Type = type;
+		}
+
+		/// <summary>
+		/// Computes the statistics for the ICMP data.
+		/// </summary>
+		internal void ProcessIcmpStatistics()
+		{
+			// For each flow.
+			for (byte flow = 0; flow < this.settings.FlowCount; flow++)
+			{
+				// For each attempt.
+				for (byte attempt = 0; attempt < this.settings.AttemptsPerFlow; attempt++)
+				{
+					// The completed flag.
+					bool completed = false;
+
+					// For each time-to-live.
+					for (byte ttl = 0; (ttl < this.settings.MaximumHops - this.settings.MinimumHops + 1) && (!completed); ttl++)
+					{
+						if (this.dataIcmp[flow, ttl, attempt].State == MultipathTracerouteData.DataState.ResponseReceived)
+						{
+							// Set the maximum time-to-live.
+							this.statIcmp[flow, attempt].MaximumTimeToLive = this.dataIcmp[flow, ttl, attempt].TimeToLive;
+							// Set the completed.
+							completed = this.dataIcmp[flow, ttl, attempt].Type == MultipathTracerouteData.ResponseType.EchoReply;
+						}
+					}
+
+					// Set the state.
+					this.statIcmp[flow, attempt].State = completed ? MultipathTracerouteStatistics.StatisticsState.Completed : MultipathTracerouteStatistics.StatisticsState.Unreachable;
+				}
+			}
 		}
 
 		#endregion

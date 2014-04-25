@@ -118,6 +118,25 @@ namespace InetApi.Net.Core.Protocols
 		#region Public methods
 
 		/// <summary>
+		/// Gets the packet information as a string.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return string.Format("UDP Src: {0} Dst: {1} Length: {2} Checksum: {3:X4} ({4}) Data: {4}",
+				this.SourcePort,
+				this.DestinationPort,
+				this.Length,
+				this.Type,
+				this.Code,
+				this.Checksum,
+				this.IsChecksumValid ? "ok" : "fail",
+				this.Identifier,
+				this.Sequence,
+				this.Data.Length);
+		}
+
+		/// <summary>
 		/// Writes the current packet to the buffer at the specified index.
 		/// </summary>
 		/// <param name="buffer">The buffer.</param>
