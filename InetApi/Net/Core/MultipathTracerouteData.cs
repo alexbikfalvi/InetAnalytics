@@ -18,6 +18,7 @@
 
 using System;
 using System.Net;
+using InetApi.Net.Core.Protocols;
 
 namespace InetApi.Net.Core
 {
@@ -55,7 +56,7 @@ namespace InetApi.Net.Core
 		/// <summary>
 		/// The host address.
 		/// </summary>
-		public IPAddress Address { get; internal set; }
+		public IPAddress Address { get { return this.Response != null ? this.Response.SourceAddress : null; } }
 		/// <summary>
 		/// The time-to-live.
 		/// </summary>
@@ -72,6 +73,14 @@ namespace InetApi.Net.Core
 		/// The response type.
 		/// </summary>
 		public ResponseType Type { get; internal set; }
+		/// <summary>
+		/// The request packet.
+		/// </summary>
+		public ProtoPacketIp Request { get; internal set; }
+		/// <summary>
+		/// The response packet.
+		/// </summary>
+		public ProtoPacketIp Response { get; internal set; }
 
 		#endregion
 	}

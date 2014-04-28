@@ -31,6 +31,7 @@ namespace InetApi.Net.Core
 		/// </summary>
 		public MultipathTracerouteSettings()
 		{
+			this.Algorithm = MultipathTraceroute.MultipathAlgorithm.Icmp | MultipathTraceroute.MultipathAlgorithm.UdpIdentification;
 			this.AttemptsPerFlow = 5;
 			this.FlowCount = 5;
 			this.MinimumHops = 1;
@@ -45,6 +46,10 @@ namespace InetApi.Net.Core
 
 		#region Public properties
 
+		/// <summary>
+		/// Gets or sets the algorithm.
+		/// </summary>
+		public MultipathTraceroute.MultipathAlgorithm Algorithm { get; set; }
 		/// <summary>
 		/// Gets or sets the number of attempts per flow.
 		/// </summary>

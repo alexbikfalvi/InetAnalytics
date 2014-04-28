@@ -37,6 +37,27 @@ namespace InetApi.Net.Core
 	/// </summary>
 	public sealed class MultipathTraceroute : IDisposable
 	{
+		/// <summary>
+		/// An enumeration representing the multipath algorithm.
+		/// </summary>
+		public enum MultipathAlgorithm
+		{
+			Icmp = 0x1,
+			Udp = 0x8,
+			UdpType = 0x6,
+			UdpIdentification = 0xA,
+			UdpChecksum = 0xC,
+			UdpTest = 0x10
+		}
+
+		/// <summary>
+		/// An event handler for the packet processing method.
+		/// </summary>
+		/// <param name="ip">The IP packet.</param>
+		/// <param name="length">The data length.</param>
+		/// <param name="result">The result.</param>
+		private delegate void ProcessPacketHandler(ProtoPacketIp ip, int length, MultipathTracerouteResult result);
+
 		private readonly MultipathTracerouteSettings settings;
 
 		private const byte bufferCount = 16;
@@ -55,6 +76,9 @@ namespace InetApi.Net.Core
 
 		private readonly object syncBuffer = new object();
 		private readonly object syncResults = new object();
+		private readonly object syncProcess = new object();
+
+		private ProcessPacketHandler processPacket = null;
 
 		/// <summary>
 		/// Creates a new multipath traceroute with the specified settings.
@@ -181,11 +205,23 @@ namespace InetApi.Net.Core
 						// Indicate the IP header included by the application.
 						socketSend.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
 
-						// Run the traceroute using ICMP.
-						//this.RunIcmpv4(localEndPoint, remoteEndPoint, socketSend, cancel, result);
+						if ((this.settings.Algorithm & MultipathAlgorithm.Icmp) != 0)
+						{
+							// Run the traceroute using ICMP.
+							this.RunIcmpv4(localEndPoint, remoteEndPoint, socketSend, cancel, result);
+						}
 
-						// Run the traceroute using UDP.
-						this.RunUdpv4(localEndPoint, remoteEndPoint, socketSend, cancel, result);
+						if ((this.settings.Algorithm & MultipathAlgorithm.Udp) != 0)
+						{
+							// Run the traceroute using UDP.
+							this.RunUdpv4(localEndPoint, remoteEndPoint, socketSend, cancel, result, MultipathAlgorithm.Udp);
+						}
+
+						if ((this.settings.Algorithm & MultipathAlgorithm.UdpTest) != 0)
+						{
+							// Run the traceroute for the UDP test.
+							this.RunUdpv4(localEndPoint, remoteEndPoint, socketSend, cancel, result, MultipathAlgorithm.UdpTest);
+						}
 					}
 				}
 
@@ -213,6 +249,12 @@ namespace InetApi.Net.Core
 		/// <param name="result">The result.</param>
 		private void RunIcmpv4(IPEndPoint localEndPoint, IPEndPoint remoteEndPoint, Socket socket, CancellationToken cancel, MultipathTracerouteResult result)
 		{
+			// Set the packet processing delegate.
+			lock (this.syncProcess)
+			{
+				this.processPacket = this.ProcessPacketIcmp;
+			}
+
 			// The data payload.
 			byte[] data = new byte[this.settings.DataLength];
 			for (int index = 2; index < data.Length; index++)
@@ -230,7 +272,7 @@ namespace InetApi.Net.Core
 			ProtoPacketIp packetIp = new ProtoPacketIp(localEndPoint.Address, remoteEndPoint.Address, packetIcmpEchoRequest);
 
 			// Begin the ICMP measurements.
-			result.Callback(MultipathTracerouteState.StateType.BeginIcmp);
+			result.Callback(MultipathTracerouteState.StateType.BeginAlgorithm, MultipathAlgorithm.Icmp);
 
 			// For each attempt.
 			for (byte attempt = 0; attempt < settings.AttemptsPerFlow; attempt++)
@@ -279,7 +321,7 @@ namespace InetApi.Net.Core
 							MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
 
 							// Set the data.
-							result.IcmpDataRequestSent(flow, ttl, attempt, state.Timestamp);
+							result.IcmpDataRequestSent(flow, ttl, attempt, state.Timestamp, packetIp);
 						}
 						catch { }
 
@@ -302,7 +344,13 @@ namespace InetApi.Net.Core
 			result.ProcessIcmpStatistics();
 
 			// End the ICMP measurements.
-			result.Callback(MultipathTracerouteState.StateType.EndIcmp);
+			result.Callback(MultipathTracerouteState.StateType.EndAlgorithm, MultipathAlgorithm.Icmp);
+
+			// Clear the packet processing delegate.
+			lock (this.syncProcess)
+			{
+				this.processPacket = null;
+			}
 		}
 
 		/// <summary>
@@ -313,9 +361,36 @@ namespace InetApi.Net.Core
 		/// <param name="socket">The sending socket.</param>
 		/// <param name="cancel">The cancellation token.</param>
 		/// <param name="result">The result.</param>
-		private void RunUdpv4(IPEndPoint localEndPoint, IPEndPoint remoteEndPoint, Socket socket, CancellationToken cancel, MultipathTracerouteResult result)
+		/// <param name="algorithm">The multipath algorithm.</param>
+		private void RunUdpv4(IPEndPoint localEndPoint, IPEndPoint remoteEndPoint, Socket socket, CancellationToken cancel, MultipathTracerouteResult result, MultipathAlgorithm algorithm)
 		{
-			this.settings.DataLength = 2;
+			// The request type.
+			MultipathTracerouteResult.RequestType requestType = MultipathTracerouteResult.RequestType.None;
+
+			if ((this.settings.Algorithm & MultipathAlgorithm.UdpType & MultipathAlgorithm.UdpIdentification) != 0)
+			{
+				// Set the request type.
+				requestType = requestType | MultipathTracerouteResult.RequestType.UdpIdentification;
+			}
+			if ((this.settings.Algorithm & MultipathAlgorithm.UdpType & MultipathAlgorithm.UdpChecksum) != 0)
+			{
+				// Set the request type.
+				requestType = requestType | MultipathTracerouteResult.RequestType.UdpChecksum;
+			}
+			if ((this.settings.Algorithm & MultipathAlgorithm.UdpTest) != 0)
+			{
+				// Set the request type.
+				requestType = MultipathTracerouteResult.RequestType.UdpBoth;
+			}
+
+			// Set the packet processing delegate
+			lock (this.syncProcess)
+			{
+				if ((requestType & MultipathTracerouteResult.RequestType.UdpIdentification) != 0)
+					this.processPacket = this.ProcessPacketUdpIdentification;
+				else
+					this.processPacket = this.ProcessPacketUdpChecksum;
+			}
 
 			// The data payload.
 			byte[] data = new byte[this.settings.DataLength];
@@ -329,22 +404,22 @@ namespace InetApi.Net.Core
 			// Create an IP version 4 packet.
 			ProtoPacketIp packetIp = new ProtoPacketIp(localEndPoint.Address, remoteEndPoint.Address, packetUdp);
 
-			// Begin the ICMP measurements.
-			result.Callback(MultipathTracerouteState.StateType.BeginUdp);
+			// Begin the UDP measurements.
+			result.Callback(MultipathTracerouteState.StateType.BeginAlgorithm, algorithm);
 
 			// For each attempt.
-			for (byte attempt = 0; attempt < 1/*settings.AttemptsPerFlow*/; attempt++)
+			for (byte attempt = 0; attempt < settings.AttemptsPerFlow; attempt++)
 			{
 				// For each flow.
-				for (byte flow = 0; flow < 1/*result.Flows.Length*/; flow++)
+				for (byte flow = 0; flow < result.Flows.Length; flow++)
 				{
 					// Call the start flow handler.
 					result.Callback(MultipathTracerouteState.StateType.BeginFlow, flow);
 
 					// Set the UDP packet source port.
-					packetUdp.SourcePort = (ushort)(result.Flows[flow].UdpSourcePort | (flow >> 4));
+					packetUdp.SourcePort = result.Flows[flow].UdpSourcePort;
 					// Set the UDP packet destination port.
-					packetUdp.DestinationPort = (ushort)(result.Flows[flow].UdpDestinationPort | (flow & 0x3));
+					packetUdp.DestinationPort = result.Flows[flow].UdpDestinationPort;
 
 					// For each time-to-live.
 					for (byte ttl = this.settings.MinimumHops; ttl <= this.settings.MaximumHops; ttl++)
@@ -355,23 +430,32 @@ namespace InetApi.Net.Core
 						// Set the packet TTL.
 						packetIp.TimeToLive = ttl;
 
-						// Compute the UDP data to set the checksum.
-						ushort checksum = (ushort)((ttl << 8) | attempt);
-						int checksumDiff = (ushort)(~checksum & 0xFFFF) + ProtoPacket.ChecksumOneComplement16Bit(data, 2, data.Length - 2,
-							packetUdp.SourcePort,
-							packetUdp.DestinationPort,
-							packetUdp.Length,
-							(ushort)((packetIp.SourceAddressBytes[0] << 8) | packetIp.SourceAddressBytes[1]),
-							(ushort)((packetIp.SourceAddressBytes[2] << 8) | packetIp.SourceAddressBytes[3]),
-							(ushort)((packetIp.DestinationAddressBytes[0] << 8) | packetIp.DestinationAddressBytes[1]),
-							(ushort)((packetIp.DestinationAddressBytes[2] << 8) | packetIp.DestinationAddressBytes[3]),
-							packetIp.Protocol,
-							packetUdp.Length);
-						checksumDiff = ((checksumDiff >> 16) + (checksumDiff & 0xFFFF)) & 0xFFFF;
+						if ((requestType & MultipathTracerouteResult.RequestType.UdpIdentification) != 0)
+						{
+							// Set the packet identification.
+							packetIp.Identification = (ushort)((ttl << 8) | attempt);
+						}
 
-						// Set the data checksum difference.
-						data[0] = (byte)(checksumDiff >> 8);
-						data[1] = (byte)(checksumDiff & 0xFF);
+						if ((requestType & MultipathTracerouteResult.RequestType.UdpChecksum) != 0)
+						{
+							// Compute the UDP data to set the checksum.
+							ushort checksum = (ushort)((ttl << 8) | attempt);
+							int checksumDiff = (ushort)(~checksum & 0xFFFF) + ProtoPacket.ChecksumOneComplement16Bit(data, 2, data.Length - 2,
+								packetUdp.SourcePort,
+								packetUdp.DestinationPort,
+								packetUdp.Length,
+								(ushort)((packetIp.SourceAddressBytes[0] << 8) | packetIp.SourceAddressBytes[1]),
+								(ushort)((packetIp.SourceAddressBytes[2] << 8) | packetIp.SourceAddressBytes[3]),
+								(ushort)((packetIp.DestinationAddressBytes[0] << 8) | packetIp.DestinationAddressBytes[1]),
+								(ushort)((packetIp.DestinationAddressBytes[2] << 8) | packetIp.DestinationAddressBytes[3]),
+								packetIp.Protocol,
+								packetUdp.Length);
+							checksumDiff = ((checksumDiff >> 16) + (checksumDiff & 0xFFFF)) & 0xFFFF;
+
+							// Set the data checksum difference.
+							data[0] = (byte)(checksumDiff >> 8);
+							data[1] = (byte)(checksumDiff & 0xFF);
+						}
 
 						// Write the packet to the buffer.
 						packetIp.Write(bufferSend, 0);
@@ -382,10 +466,10 @@ namespace InetApi.Net.Core
 							socket.SendTo(bufferSend, (int)packetIp.Length, SocketFlags.None, remoteEndPoint);
 
 							// Add the request.
-							//MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
+							MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Udp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
 
 							// Set the data.
-							//result.IcmpDataRequestSent(flow, ttl, attempt, state.Timestamp);
+							result.UdpDataRequestSent(flow, ttl, attempt, state.Timestamp, packetIp);
 						}
 						catch { }
 						
@@ -405,10 +489,16 @@ namespace InetApi.Net.Core
 			result.Wait.WaitOne();
 
 			// Process the result statistics.
-			//result.ProcessIcmpStatistics();
+			result.ProcessUdpStatistics();
 
-			// End the ICMP measurements.
-			result.Callback(MultipathTracerouteState.StateType.EndUdp);
+			// End the UDP measurements.
+			result.Callback(MultipathTracerouteState.StateType.EndAlgorithm, algorithm);
+
+			// Clear the packet processing delegate.
+			lock (this.syncProcess)
+			{
+				this.processPacket = null;
+			}
 		}
 
 		/// <summary>
@@ -500,7 +590,11 @@ namespace InetApi.Net.Core
 								// Process the packet.
 								this.ProcessPacket(this.bufferRecv[bufferIndex], length, result);
 							}
-							catch (Exception) { }
+							catch (Exception exception)
+							{
+								// Ignore all errors for received packets.
+								result.Callback(MultipathTracerouteState.StateType.PacketError, exception);
+							}
 							finally
 							{
 								// If the buffer flag is set.
@@ -544,73 +638,156 @@ namespace InetApi.Net.Core
 		/// <param name="result">The result.</param>
 		private void ProcessPacket(byte[] buffer, int length, MultipathTracerouteResult result)
 		{
-			try
+			// Set the buffer index.
+			int index = 0;
+			// The packets.
+			ProtoPacketIp ip;
+
+			// Try and parse the packet using the specified filter.
+			if (ProtoPacketIp.ParseFilter(buffer, ref index, length, result.PacketFilters, out ip))
 			{
-				// Set the buffer index.
-				int index = 0;
-				// The packets.
-				ProtoPacketIp ip;
-				ProtoPacketIcmp icmp;
+				// Call the callback methods.
+				result.Callback(MultipathTracerouteState.StateType.PacketCapture, ip);
 
-				// Try and parse the packet using the specified filter.
-				if (ProtoPacketIp.ParseFilter(buffer, ref index, length, result.PacketFilters, out ip))
+				// Process the packet for the current protocol.
+				lock (this.syncProcess)
 				{
-					// Call the callback methods.
-					result.Callback(MultipathTracerouteState.StateType.PacketCapture, ip);
+					if (null != this.processPacket) this.processPacket(ip, length, result);
+				}
+			}
+		}
 
-					// If the packet payload is ICMP.
-					if ((icmp = ip.Payload as ProtoPacketIcmp) != null)
+		/// <summary>
+		/// Processes a received packet for an ICMP request.
+		/// </summary>
+		/// <param name="ip">The IP packet.</param>
+		/// <param name="length">The data length.</param>
+		/// <param name="result">The result.</param>
+		private void ProcessPacketIcmp(ProtoPacketIp ip, int length, MultipathTracerouteResult result)
+		{
+			ProtoPacketIcmp icmp;
+
+			// If the packet payload is ICMP.
+			if ((icmp = ip.Payload as ProtoPacketIcmp) != null)
+			{
+				if (icmp.Type == (byte)ProtoPacketIcmp.IcmpType.EchoReply)
+				{
+					// If the packet type is ICMP echo reply.
+					ProtoPacketIcmpEchoReply icmpEchoReply = icmp as ProtoPacketIcmpEchoReply;
+
+					// Use the reply identifier to find the flow.
+					byte flow;
+					if (result.TryGetIcmpFlow(icmpEchoReply.Identifier, out flow))
 					{
-						// If the packet type is ICMP echo reply.
-						if (icmp.Type == (byte)ProtoPacketIcmp.IcmpType.EchoReply)
+						// Get the time-to-live.
+						byte ttl = (byte)(icmpEchoReply.Sequence >> 8);
+						// Get the attempt.
+						byte attempt = (byte)(icmpEchoReply.Sequence & 0xFF);
+
+						// Add the result.
+						result.IcmpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.EchoReply, DateTime.Now, ip);
+
+						// Remove the corresponding request.
+						result.RemoveRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt);
+					}
+				}
+				else if (icmp.Type == (byte)ProtoPacketIcmp.IcmpType.TimeExceeded)
+				{
+					// If the packet type is ICMP time exceeded.
+					ProtoPacketIcmpTimeExceeded icmpTimeExceeded = icmp as ProtoPacketIcmpTimeExceeded;
+
+					// Use the ICMP request identifier to find the flow.
+					ushort flowId = (ushort)((icmpTimeExceeded.IpPayload[4] << 8) | icmpTimeExceeded.IpPayload[5]);
+					byte flow;
+					if (result.TryGetIcmpFlow(flowId, out flow))
+					{
+						// Get the time-to-live.
+						byte ttl = icmpTimeExceeded.IpPayload[6];
+						// Get the attempt.
+						byte attempt = icmpTimeExceeded.IpPayload[7];
+
+						// Add the result.
+						result.IcmpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.TimeExceeded, DateTime.Now, ip);
+
+						// Remove the corresponding request.
+						result.RemoveRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Processes a received packet for a UDP request using the identification field.
+		/// </summary>
+		/// <param name="ip">The IP packet.</param>
+		/// <param name="length">The data length.</param>
+		/// <param name="result">The result.</param>
+		private void ProcessPacketUdpIdentification(ProtoPacketIp ip, int length, MultipathTracerouteResult result)
+		{
+			ProtoPacketIcmp icmp;
+
+			// If the packet payload is ICMP.
+			if ((icmp = ip.Payload as ProtoPacketIcmp) != null)
+			{
+				if (icmp.Type == (byte)ProtoPacketIcmp.IcmpType.TimeExceeded)
+				{
+					// If the packet type is ICMP time exceeded.
+					ProtoPacketIcmpTimeExceeded icmpTimeExceeded = icmp as ProtoPacketIcmpTimeExceeded;
+
+					// Use the last bytes of the UDP ports to find the flow.
+					ushort flowId = (ushort)((icmpTimeExceeded.IpPayload[1] << 8) | icmpTimeExceeded.IpPayload[3]);
+					byte flow;
+					if (result.TryGetUdpFlow(flowId, out flow))
+					{
+						// Get the time-to-live.
+						byte ttl = (byte)(icmpTimeExceeded.IpHeader.Identification >> 8);
+						// Get the attempt.
+						byte attempt = (byte)(icmpTimeExceeded.IpHeader.Identification & 0xF);
+
+						// Add the result.
+						result.UdpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.TimeExceeded, DateTime.Now, ip);
+
+						// Remove the corresponding request.
+						result.RemoveRequest(MultipathTracerouteResult.RequestType.Udp, flow, ttl, attempt);
+					}
+				}
+				else if (icmp.Type == (byte)ProtoPacketIcmp.IcmpType.DestinationUnreachable)
+				{
+					// If the packet type is ICMP destination unreachable.
+					ProtoPacketIcmpDestinationUnreachable icmpDestinationUnreachable = icmp as ProtoPacketIcmpDestinationUnreachable;
+
+					// Check the message is a port unreachable.
+					if (icmpDestinationUnreachable.Code == (byte)ProtoPacketIcmpDestinationUnreachable.DestinationUnreachableCode.PortUnreachable)
+					{
+						// Use the last bytes of the UDP ports to find the flow.
+						ushort flowId = (ushort)((icmpDestinationUnreachable.IpPayload[1] << 8) | icmpDestinationUnreachable.IpPayload[3]);
+						byte flow;
+						if (result.TryGetUdpFlow(flowId, out flow))
 						{
-							ProtoPacketIcmpEchoReply icmpEchoReply = icmp as ProtoPacketIcmpEchoReply;
+							// Get the time-to-live.
+							byte ttl = (byte)(icmpDestinationUnreachable.IpHeader.Identification >> 8);
+							// Get the attempt.
+							byte attempt = (byte)(icmpDestinationUnreachable.IpHeader.Identification & 0xF);
 
-							// Use the reply identifier to find the flow.
-							byte flow;
-							if (result.TryGetIcmpFlow(icmpEchoReply.Identifier, out flow))
-							{
-								// Get the time-to-live.
-								byte ttl = (byte)(icmpEchoReply.Sequence >> 8);
-								// Get the attempt.
-								byte attempt = (byte)(icmpEchoReply.Sequence & 0xFF);
+							// Add the result.
+							result.UdpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.TimeExceeded, DateTime.Now, ip);
 
-								// Add the result.
-								result.IcmpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.EchoReply, ip.SourceAddress, DateTime.Now);
-
-								// Remove the corresponding request.
-								result.RemoveRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt);
-							}
-						}
-						else if (icmp.Type == (byte)ProtoPacketIcmp.IcmpType.TimeExceeded)
-						{
-							ProtoPacketIcmpTimeExceeded icmpTimeExceeded = icmp as ProtoPacketIcmpTimeExceeded;
-
-							// Use the IP payload to find the flow.
-							ushort flowId = (ushort)((icmpTimeExceeded.IpPayload[4] << 8) | icmpTimeExceeded.IpPayload[5]);
-							byte flow;
-							if (result.TryGetIcmpFlow(flowId, out flow))
-							{
-								// Get the time-to-live.
-								byte ttl = icmpTimeExceeded.IpPayload[6];
-								// Get the attempt.
-								byte attempt = icmpTimeExceeded.IpPayload[7];
-
-								// Add the result.
-								result.IcmpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.TimeExceeded, ip.SourceAddress, DateTime.Now);
-
-								// Remove the corresponding request.
-								result.RemoveRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt);
-							}
+							// Remove the corresponding request.
+							result.RemoveRequest(MultipathTracerouteResult.RequestType.Udp, flow, ttl, attempt);
 						}
 					}
 				}
 			}
-			catch (Exception exception)
-			{
-				// Ignore all errors for received packets.
-				result.Callback(MultipathTracerouteState.StateType.PacketError, exception);
-			}
+		}
+
+		/// <summary>
+		/// Processes a received packet for a UDP request using the checksum field.
+		/// </summary>
+		/// <param name="ip">The IP packet.</param>
+		/// <param name="length">The data length.</param>
+		/// <param name="result">The result.</param>
+		private void ProcessPacketUdpChecksum(ProtoPacketIp ip, int length, MultipathTracerouteResult result)
+		{
 		}
 
 		#endregion

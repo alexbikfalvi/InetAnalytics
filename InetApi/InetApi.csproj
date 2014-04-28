@@ -135,6 +135,7 @@
     <Compile Include="Net\Core\Protocols\ProtoException.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacket.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIcmp.cs" />
+    <Compile Include="Net\Core\Protocols\ProtoPacketIcmpDestinationUnreachable.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIcmpEchoReply.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIcmpEchoRequest.cs" />
     <Compile Include="Net\Core\Protocols\ProtoPacketIcmpTimeExceeded.cs" />

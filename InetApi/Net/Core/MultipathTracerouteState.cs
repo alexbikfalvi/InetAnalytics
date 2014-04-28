@@ -33,15 +33,13 @@ namespace InetApi.Net.Core
 			Unknown = -1,
 			PacketCapture = 0,
 			PacketError = 1,
-			BeginIcmp = 2,
-			EndIcmp = 3,
-			BeginUdp = 4,
-			EndUdp = 5,
-			BeginFlow = 6,
-			EndFlow = 7,
-			BeginTtl = 8,
-			EndTtl = 9,
-			RequestExpired = 10
+			BeginAlgorithm = 2,
+			EndAlgorithm = 3,
+			BeginFlow = 4,
+			EndFlow = 5,
+			BeginTtl = 6,
+			EndTtl = 7,
+			RequestExpired = 8
 		}
 
 		/// <summary>
