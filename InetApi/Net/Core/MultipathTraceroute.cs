@@ -83,6 +83,8 @@ namespace InetApi.Net.Core
 				throw new ArgumentException("The maximum port is invalid (1024..65520).");
 			if (settings.MinimumPort >= settings.MaximumPort)
 				throw new ArgumentException("The minimum port must be smaller than the maximum port.");
+			if (settings.DataLength < 2)
+				throw new ArgumentException("The minimum data length is 2.");
 
 			// Set the settings.
 			this.settings = settings;
@@ -313,6 +315,8 @@ namespace InetApi.Net.Core
 		/// <param name="result">The result.</param>
 		private void RunUdpv4(IPEndPoint localEndPoint, IPEndPoint remoteEndPoint, Socket socket, CancellationToken cancel, MultipathTracerouteResult result)
 		{
+			this.settings.DataLength = 2;
+
 			// The data payload.
 			byte[] data = new byte[this.settings.DataLength];
 			for (int index = 2; index < data.Length; index++)
@@ -329,7 +333,7 @@ namespace InetApi.Net.Core
 			result.Callback(MultipathTracerouteState.StateType.BeginUdp);
 
 			// For each attempt.
-			for (byte attempt = 0; attempt < settings.AttemptsPerFlow; attempt++)
+			for (byte attempt = 0; attempt < 1/*settings.AttemptsPerFlow*/; attempt++)
 			{
 				// For each flow.
 				for (byte flow = 0; flow < 1/*result.Flows.Length*/; flow++)

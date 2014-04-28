@@ -47,26 +47,26 @@ namespace InetApi.Net.Core.Protocols
 			if (udpLength != length - index)
 				throw new ProtoException("Invalid UDP length.");
 			// Validate the checksum.
-			ushort checksum = (ushort)((buffer[idx++] << 8) | buffer[idx++]);
+			this.Checksum = (ushort)((buffer[idx++] << 8) | buffer[idx++]);
 			// If checksumming is not disabled.
-			if (checksum != 0)
+			if (this.Checksum != 0)
 			{
 				if (args[0] is ProtoPacketIp)
 				{
 					// If the higher lower layer protocol is IPv4.
 					ProtoPacketIp ip = args[0] as ProtoPacketIp;
 					// Compute the checksum using the IPv4 pseudo-header.
-					checksum = ProtoPacket.ChecksumOneComplement16Bit(buffer, index, udpLength,
+					this.IsChecksumValid = ProtoPacket.ChecksumOneComplement16Bit(buffer, index, udpLength,
 						(ushort)((ip.SourceAddressBytes[0] << 8) | ip.SourceAddressBytes[1]),
 						(ushort)((ip.SourceAddressBytes[2] << 8) | ip.SourceAddressBytes[3]),
 						(ushort)((ip.DestinationAddressBytes[0] << 8) | ip.DestinationAddressBytes[1]),
 						(ushort)((ip.DestinationAddressBytes[2] << 8) | ip.DestinationAddressBytes[3]),
 						ip.Protocol,
-						udpLength);
+						udpLength) == 0;
 				}
+				if (!this.IsChecksumValid)
+					throw new ProtoException("Invalid UDP checksum.");
 			}
-			if (0 != checksum)
-				throw new ProtoException("Invalid UDP checksum.");
 
 			// Write the data.
 			if (idx < length)
@@ -109,6 +109,14 @@ namespace InetApi.Net.Core.Protocols
 		/// </summary>
 		public ushort DestinationPort { get; set; }
 		/// <summary>
+		/// The checksum.
+		/// </summary>
+		public ushort Checksum { get; private set; }
+		/// <summary>
+		/// Indicates whether the checksum is correct.
+		/// </summary>
+		public bool IsChecksumValid { get; private set; }
+		/// <summary>
 		/// The data.
 		/// </summary>
 		public byte[] Data { get; set; }
@@ -123,16 +131,12 @@ namespace InetApi.Net.Core.Protocols
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("UDP Src: {0} Dst: {1} Length: {2} Checksum: {3:X4} ({4}) Data: {4}",
+			return string.Format("UDP Src: {0} Dst: {1} Length: {2} Checksum: {3:X4} ({4}) Data: {5}",
 				this.SourcePort,
 				this.DestinationPort,
 				this.Length,
-				this.Type,
-				this.Code,
 				this.Checksum,
 				this.IsChecksumValid ? "ok" : "fail",
-				this.Identifier,
-				this.Sequence,
 				this.Data.Length);
 		}
 
