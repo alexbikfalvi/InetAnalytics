@@ -39,8 +39,8 @@ namespace InetApi.Net.Core
 			this.MaximumUnknownHops = 10;
 			this.AttemptDelay = 1000;
 			this.HopTimeout = 3000;
-			this.MinimumPort = 8192;
-			this.MaximumPort = 65520;
+			this.MinimumPort = 33434;
+			this.MaximumPort = 33523;
 			this.DataLength = 32;
 		}
 
