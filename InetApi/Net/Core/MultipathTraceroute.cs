@@ -321,7 +321,7 @@ namespace InetApi.Net.Core
 							MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
 
 							// Set the data.
-							result.IcmpDataRequestSent(flow, ttl, attempt, state.Timestamp, packetIp);
+							result.IcmpDataRequestSent(flow, ttl, attempt, state.Timestamp);
 						}
 						catch { }
 
@@ -404,6 +404,8 @@ namespace InetApi.Net.Core
 			// Create an IP version 4 packet.
 			ProtoPacketIp packetIp = new ProtoPacketIp(localEndPoint.Address, remoteEndPoint.Address, packetUdp);
 
+			packetIp.DifferentiatedServices = 0x80;
+
 			// Begin the UDP measurements.
 			result.Callback(MultipathTracerouteState.StateType.BeginAlgorithm, algorithm);
 
@@ -469,7 +471,7 @@ namespace InetApi.Net.Core
 							MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Udp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
 
 							// Set the data.
-							result.UdpDataRequestSent(flow, ttl, attempt, state.Timestamp, packetIp);
+							result.UdpDataRequestSent(flow, ttl, attempt, state.Timestamp);
 						}
 						catch { }
 						
@@ -590,6 +592,7 @@ namespace InetApi.Net.Core
 								// Process the packet.
 								this.ProcessPacket(this.bufferRecv[bufferIndex], length, result);
 							}
+							catch (ObjectDisposedException) { }
 							catch (Exception exception)
 							{
 								// Ignore all errors for received packets.
@@ -770,7 +773,7 @@ namespace InetApi.Net.Core
 							byte attempt = (byte)(icmpDestinationUnreachable.IpHeader.Identification & 0xF);
 
 							// Add the result.
-							result.UdpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.TimeExceeded, DateTime.Now, ip);
+							result.UdpDataResponseReceived(flow, ttl, attempt, MultipathTracerouteData.ResponseType.DestinationUnreachable, DateTime.Now, ip);
 
 							// Remove the corresponding request.
 							result.RemoveRequest(MultipathTracerouteResult.RequestType.Udp, flow, ttl, attempt);

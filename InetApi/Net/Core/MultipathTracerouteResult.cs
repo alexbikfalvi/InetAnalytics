@@ -371,15 +371,13 @@ namespace InetApi.Net.Core
 		/// <param name="ttl">The TTL.</param>
 		/// <param name="attempt">The attempt.</param>
 		/// <param name="timestamp">The request timestamp.</param>
-		/// <param name="packet">The request packet.</param>
-		internal void IcmpDataRequestSent(byte flow, byte ttl, byte attempt, DateTime timestamp, ProtoPacketIp packet)
+		internal void IcmpDataRequestSent(byte flow, byte ttl, byte attempt, DateTime timestamp)
 		{
 			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
 
 			this.dataIcmp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.RequestSent;
 			this.dataIcmp[flow, ttlIndex, attempt].RequestTimestamp = timestamp;
 			this.dataIcmp[flow, ttlIndex, attempt].TimeToLive = ttl;
-			this.dataIcmp[flow, ttlIndex, attempt].Request = packet;
 		}
 
 		/// <summary>
@@ -408,15 +406,13 @@ namespace InetApi.Net.Core
 		/// <param name="ttl">The TTL.</param>
 		/// <param name="attempt">The attempt.</param>
 		/// <param name="timestamp">The request timestamp.</param>
-		/// <param name="packet">The request packet.</param>
-		internal void UdpDataRequestSent(byte flow, byte ttl, byte attempt, DateTime timestamp, ProtoPacketIp packet)
+		internal void UdpDataRequestSent(byte flow, byte ttl, byte attempt, DateTime timestamp)
 		{
 			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
 
 			this.dataUdp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.RequestSent;
 			this.dataUdp[flow, ttlIndex, attempt].RequestTimestamp = timestamp;
 			this.dataUdp[flow, ttlIndex, attempt].TimeToLive = ttl;
-			this.dataUdp[flow, ttlIndex, attempt].Request = packet;
 		}
 
 		/// <summary>
@@ -478,7 +474,8 @@ namespace InetApi.Net.Core
 							// Set the maximum time-to-live.
 							stat[flow, attempt].MaximumTimeToLive = data[flow, ttl, attempt].TimeToLive;
 							// Set the completed.
-							completed = data[flow, ttl, attempt].Type == MultipathTracerouteData.ResponseType.EchoReply;
+							completed = (data[flow, ttl, attempt].Type == MultipathTracerouteData.ResponseType.EchoReply) ||
+								(data[flow, ttl, attempt].Type == MultipathTracerouteData.ResponseType.DestinationUnreachable);
 						}
 					}
 

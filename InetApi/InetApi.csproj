@@ -159,6 +159,8 @@
     <Compile Include="Net\Core\TracerouteState.cs" />
     <Compile Include="Net\NetworkInterfaceEx.cs" />
     <Compile Include="Net\Sockets\UdpListener.cs" />
+    <Compile Include="Net\Topology\AsTraceroute.cs" />
+    <Compile Include="Net\Topology\AsTracerouteSettings.cs" />
     <Compile Include="YouTube\Ajax\AjaxHistory.cs" />
     <Compile Include="YouTube\Ajax\AjaxRequestException.cs" />
     <Compile Include="YouTube\Ajax\AjaxRequestStatistics.cs" />

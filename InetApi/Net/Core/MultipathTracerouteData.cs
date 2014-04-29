@@ -44,7 +44,8 @@ namespace InetApi.Net.Core
 		{
 			Unknown = 0,
 			EchoReply = 1,
-			TimeExceeded = 2
+			TimeExceeded = 2,
+			DestinationUnreachable = 3
 		}
 
 		#region Public properties
@@ -73,10 +74,6 @@ namespace InetApi.Net.Core
 		/// The response type.
 		/// </summary>
 		public ResponseType Type { get; internal set; }
-		/// <summary>
-		/// The request packet.
-		/// </summary>
-		public ProtoPacketIp Request { get; internal set; }
 		/// <summary>
 		/// The response packet.
 		/// </summary>
