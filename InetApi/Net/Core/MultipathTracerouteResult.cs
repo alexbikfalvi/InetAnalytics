@@ -176,6 +176,14 @@ namespace InetApi.Net.Core
 		#region Public properties
 
 		/// <summary>
+		/// Gets the local address.
+		/// </summary>
+		public IPAddress LocalAddress { get { return this.localAddress; } }
+		/// <summary>
+		/// Gets the remote address.
+		/// </summary>
+		public IPAddress RemoteAddress { get { return this.remoteAddress; } }
+		/// <summary>
 		/// Gets the wait handle for the traceroute result.
 		/// </summary>
 		public WaitHandle Wait { get { return this.wait; } }
