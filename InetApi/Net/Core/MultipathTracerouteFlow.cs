@@ -23,7 +23,8 @@ namespace InetApi.Net.Core
 	/// <summary>
 	/// A class representing a multipath traceroute flow.
 	/// </summary>
-	public class MultipathTracerouteFlow
+	[Serializable]
+    public class MultipathTracerouteFlow
 	{
 		private readonly byte[] id;
 

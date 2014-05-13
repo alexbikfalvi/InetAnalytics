@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Threading;
 using InetApi.Net.Core.Protocols;
 using InetApi.Net.Core.Protocols.Filters;
@@ -28,7 +29,8 @@ namespace InetApi.Net.Core
 	/// <summary>
 	/// A class representing a multipath traceroute result.
 	/// </summary>
-	public sealed class MultipathTracerouteResult : IDisposable
+	[Serializable]
+    public sealed class MultipathTracerouteResult : IDisposable, ISerializable
 	{
 		/// <summary>
 		/// An enumeration representing the request type.
@@ -173,6 +175,26 @@ namespace InetApi.Net.Core
 			this.statUdp = new MultipathTracerouteStatistics[settings.FlowCount, settings.AttemptsPerFlow];
 		}
 
+        /// <summary>
+        /// A constructor used for deserialization.
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
+        public MultipathTracerouteResult(SerializationInfo info, StreamingContext context)
+        {
+            this.settings = (MultipathTracerouteSettings) info.GetValue("settings", typeof(MultipathTracerouteSettings));
+            this.localAddress = (IPAddress) info.GetValue("localAddress", typeof(IPAddress));
+            this.remoteAddress = (IPAddress) info.GetValue("remoteAddress", typeof(IPAddress));
+
+            this.flows = (MultipathTracerouteFlow[])info.GetValue("flows", typeof(MultipathTracerouteFlow[]));
+
+            this.dataIcmp = info.GetValue("dataIcmp", typeof(MultipathTracerouteData[, ,])) as MultipathTracerouteData[, ,];
+            this.dataUdp = info.GetValue("dataUdp", typeof(MultipathTracerouteData[, ,])) as MultipathTracerouteData[, ,];
+
+            this.statIcmp = info.GetValue("statIcmp", typeof(MultipathTracerouteStatistics[,])) as MultipathTracerouteStatistics[,];
+            this.statUdp = info.GetValue("statUdp", typeof(MultipathTracerouteStatistics[,])) as MultipathTracerouteStatistics[,];
+        }
+
 		#region Public properties
 
 		/// <summary>
@@ -231,6 +253,26 @@ namespace InetApi.Net.Core
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
 		}
+
+        /// <summary>
+        /// Serializes the current object.
+        /// </summary>
+        /// <param name="info">The serialization info.</param>
+        /// <param name="context">The streaming context.</param>
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("settings", this.settings);
+            info.AddValue("localAddress", this.localAddress);
+            info.AddValue("remoteAddress", this.remoteAddress);
+
+            info.AddValue("flows", flows);
+
+            info.AddValue("dataIcmp", dataIcmp);
+            info.AddValue("dataUdp", dataUdp);
+
+            info.AddValue("statIcmp", statIcmp);
+            info.AddValue("statUdp", statUdp);
+        }
 
 		#endregion
 

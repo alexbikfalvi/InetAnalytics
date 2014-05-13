@@ -24,7 +24,8 @@ namespace InetApi.Net.Core
 	/// <summary>
 	/// A class representing the multipath traceroute settings.
 	/// </summary>
-	public sealed class MultipathTracerouteSettings
+	[Serializable]
+    public sealed class MultipathTracerouteSettings
 	{
 		/// <summary>
 		/// Creates a new instance of the multipath traceroute settings.

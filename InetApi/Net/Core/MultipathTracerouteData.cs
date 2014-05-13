@@ -25,7 +25,8 @@ namespace InetApi.Net.Core
 	/// <summary>
 	/// A structure representing the multipath traceroute data.
 	/// </summary>
-	public struct MultipathTracerouteData
+	[Serializable]
+    public struct MultipathTracerouteData
 	{
 		/// <summary>
 		/// An enumeration representing the data state.
