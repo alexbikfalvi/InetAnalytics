@@ -212,13 +212,40 @@ namespace InetApi.Net
 		}
 
         /// <summary>
-        /// Verifies the IP address is eligible for the DNS.
+        /// Verifies the IP address is a global unicast address.
         /// </summary>
-        /// <param name="address"></param>
-        /// <returns></returns>
-        public static bool IsDnsEligible(this IPAddress address)
+        /// <param name="address">The IP address.</param>
+        /// <returns><b>True</b> if the IP is DNS eligible, <b>false</b> otherwise.</returns>
+        public static bool IsGlobalUnicastAddress(this IPAddress address)
         {
-            return true;
+            if (address.AddressFamily == AddressFamily.InterNetwork)
+            {
+                byte[] bytes = address.GetAddressBytes();
+                uint addr = (uint)((bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]);
+                if ((addr & 0xF0000000) == 0) return false; // Current network (only valid as source address) 0.0.0.0/8 RFC6890
+                else if ((addr & 0xFF000000) == 0x0A000000) return false; // Private network 10.0.0.0/8 RFC1918
+                else if ((addr & 0xFFC00000) == 0x64400000) return false; // Shared Address Space 100.64.0.0/12 RFC6598
+                else if ((addr & 0xFF000000) == 0x7F000000) return false; // Loopback 127.0.0.0/8 RFC6890
+                else if ((addr & 0xFFFF0000) == 0xA9FE0000) return false; // Link-local 169.254.0.0/16 RFC3927
+                else if ((addr & 0xFFF00000) == 0xAC100000) return false; // Private network 172.16.0.0/12 RFC1918
+                else if ((addr & 0xFFFFFF00) == 0xC0000000) return false; // IETF Protocol Assignments 192.0.0.0/24 RFC6890
+                else if ((addr & 0xFFFFFF00) == 0xC0000200) return false; // TEST-NET-1, documentation and examples 192.0.2.0/24 RFC5737
+                else if ((addr & 0xFFFFFF00) == 0xC0586300) return false; // IPv6 to IPv4 relay 192.88.99.0/24 RFC3068
+                else if ((addr & 0xFFFF0000) == 0xC0A80000) return false; // Private network 192.168.0.0/16 RFC1918
+                else if ((addr & 0xFFFE0000) == 0xC6120000) return false; // Network benchmark tests 198.18.0.0/15 RFC2544
+                else if ((addr & 0xFFFFFF00) == 0xC6336400) return false; // TEST-NET-2, documentation and examples 198.51.100.0/24 RFC5737
+                else if ((addr & 0xFFFFFF00) == 0xCB007100) return false; // TEST-NET-3, documentation and examples 203.0.113.0/24 RFC5737
+                else if ((addr & 0xF0000000) == 0xE0000000) return false; // IP multicast (former Class D network) 224.0.0.0/4 RFC5771
+                else if ((addr & 0xF0000000) == 0xF0000000) return false; // Reserved (former Class E network) 240.0.0.0/4 RFC1700
+                else if (addr == 0xFFFFFFFF) return false; // Broadcast 255.255.255.255
+                else return true;
+            }
+            else if (address.AddressFamily == AddressFamily.InterNetworkV6)
+            {
+                return (!address.IsIPv6LinkLocal) && (!address.IsIPv6Multicast) &&
+                    (!address.IsIPv6SiteLocal) && (!address.IsIPv6Teredo);
+            }
+            else return false;
         }
 
 		#region Private methods
