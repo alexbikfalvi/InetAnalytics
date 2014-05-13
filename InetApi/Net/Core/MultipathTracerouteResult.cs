@@ -197,6 +197,10 @@ namespace InetApi.Net.Core
 
 		#region Public properties
 
+        /// <summary>
+        /// Gets the traceroute settings.
+        /// </summary>
+        public MultipathTracerouteSettings Settings { get { return this.settings; } }
 		/// <summary>
 		/// Gets the local address.
 		/// </summary>

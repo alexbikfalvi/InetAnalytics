@@ -211,6 +211,16 @@ namespace InetApi.Net
 			throw new ArgumentOutOfRangeException("ipAddress", "The given ip address is not configured on the local system");
 		}
 
+        /// <summary>
+        /// Verifies the IP address is eligible for the DNS.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public static bool IsDnsEligible(this IPAddress address)
+        {
+            return true;
+        }
+
 		#region Private methods
 
 		/// <summary>
