@@ -23,6 +23,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an IP payload packet.
 	/// </summary>
+	[Serializable]
 	public abstract class ProtoPacketIpPayload : ProtoPacket
 	{
 		/// <summary>

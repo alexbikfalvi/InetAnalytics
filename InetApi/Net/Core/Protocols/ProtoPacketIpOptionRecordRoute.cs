@@ -25,6 +25,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an IP version 4 record-route option.
 	/// </summary>
+	[Serializable]
 	public sealed class ProtoPacketIpOptionRecordRoute : ProtoPacketIpOption
 	{
 		public const byte maxSize = 9;

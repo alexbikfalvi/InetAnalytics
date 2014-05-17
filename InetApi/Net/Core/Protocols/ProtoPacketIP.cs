@@ -27,6 +27,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an IP version 4 packet.
 	/// </summary>
+	[Serializable]
 	public sealed class ProtoPacketIp : ProtoPacketIpHeader
 	{
 		/// <summary>

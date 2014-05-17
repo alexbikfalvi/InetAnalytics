@@ -23,6 +23,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an ICMP version 4 packet of time-exceeded type.
 	/// </summary>
+	[Serializable]
 	public sealed class ProtoPacketIcmpTimeExceeded : ProtoPacketIcmp
 	{
 		private readonly byte code;

@@ -24,6 +24,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// The base class for an IP version 4 option.
 	/// </summary>
+	[Serializable]
 	public abstract class ProtoPacketIpOption : ProtoPacket
 	{
 		public enum OptionType

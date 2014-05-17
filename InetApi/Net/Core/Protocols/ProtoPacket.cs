@@ -23,6 +23,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// The base class for a protocol packet.
 	/// </summary>
+	[Serializable]
 	public abstract class ProtoPacket
 	{
 		#region Public properties

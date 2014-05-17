@@ -27,6 +27,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an IP version 4 packet header.
 	/// </summary>
+	[Serializable]
 	public class ProtoPacketIpHeader : ProtoPacket
 	{
 		protected const ushort maximumLength = 65520;

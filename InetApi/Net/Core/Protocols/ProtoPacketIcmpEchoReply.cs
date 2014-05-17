@@ -23,6 +23,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an ICMP version 4 packet of echo reply type.
 	/// </summary>
+	[Serializable]
 	public sealed class ProtoPacketIcmpEchoReply : ProtoPacketIcmp
 	{
 		/// <summary>

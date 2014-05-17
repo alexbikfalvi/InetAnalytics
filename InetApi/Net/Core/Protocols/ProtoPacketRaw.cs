@@ -23,6 +23,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing a raw protocol.
 	/// </summary>
+	[Serializable]
 	public sealed class ProtoPacketRaw : ProtoPacketIpPayload
 	{
 		/// <summary>

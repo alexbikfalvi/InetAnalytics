@@ -23,6 +23,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an ICMP version 4 packet.
 	/// </summary>
+	[Serializable]
 	public abstract class ProtoPacketIcmp : ProtoPacketIpPayload
 	{
 		/// <summary>

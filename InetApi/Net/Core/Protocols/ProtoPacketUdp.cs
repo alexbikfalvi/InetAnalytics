@@ -23,6 +23,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing a UDP packet.
 	/// </summary>
+	[Serializable]
 	public sealed class ProtoPacketUdp : ProtoPacketIpPayload
 	{
 		/// <summary>

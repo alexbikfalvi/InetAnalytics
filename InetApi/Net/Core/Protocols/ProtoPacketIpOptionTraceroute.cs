@@ -25,6 +25,7 @@ namespace InetApi.Net.Core.Protocols
 	/// <summary>
 	/// A class representing an IP version 4 traceroute option.
 	/// </summary>
+	[Serializable]
 	public sealed class ProtoPacketIpOptionTraceroute : ProtoPacketIpOption
 	{
 		private const byte length = 12;
