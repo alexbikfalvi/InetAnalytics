@@ -49,6 +49,9 @@ namespace InetApi.Net.Core
 			DestinationUnreachable = 3
 		}
 
+		[NonSerialized]
+		private ProtoPacketIp response;
+
 		#region Public properties
 
 		/// <summary>
@@ -78,7 +81,11 @@ namespace InetApi.Net.Core
 		/// <summary>
 		/// The response packet.
 		/// </summary>
-		public ProtoPacketIp Response { get; internal set; }
+		public ProtoPacketIp Response
+		{
+			get { return this.response; }
+			internal set { this.response = value; }
+		}
 
 		#endregion
 	}

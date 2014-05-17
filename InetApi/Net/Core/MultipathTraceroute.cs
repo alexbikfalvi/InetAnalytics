@@ -230,9 +230,9 @@ namespace InetApi.Net.Core
 				{
 					this.results.Remove(result);
 				}
-			}
 
-			return null;
+				return result;
+			}
 		}
 
 		#endregion

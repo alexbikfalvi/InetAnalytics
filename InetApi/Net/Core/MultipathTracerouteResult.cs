@@ -30,7 +30,7 @@ namespace InetApi.Net.Core
 	/// A class representing a multipath traceroute result.
 	/// </summary>
 	[Serializable]
-    public sealed class MultipathTracerouteResult : IDisposable, ISerializable
+    public sealed class MultipathTracerouteResult : IDisposable//, ISerializable
 	{
 		/// <summary>
 		/// An enumeration representing the request type.
@@ -108,11 +108,15 @@ namespace InetApi.Net.Core
 		}
 
 		private readonly MultipathTracerouteSettings settings;
+		[NonSerialized]
 		private readonly MultipathTracerouteCallback callback;
 
+		[NonSerialized]
 		private readonly object sync = new object();
+		[NonSerialized]
 		private readonly ManualResetEvent wait = new ManualResetEvent(false);
 
+		[NonSerialized]
 		private readonly MultipathTracerouteState state = new MultipathTracerouteState();
 
 		private readonly IPAddress localAddress;
@@ -122,6 +126,9 @@ namespace InetApi.Net.Core
 		private readonly Dictionary<ushort, byte> flowsIcmpId = new Dictionary<ushort, byte>();
 		private readonly Dictionary<ushort, byte> flowsUdpId = new Dictionary<ushort, byte>();
 
+		[NonSerialized]
+		private FilterIp[] packetFilters;
+		[NonSerialized]
 		private readonly HashSet<RequestState> requests = new HashSet<RequestState>(new RequestStateComparer());
 
 		private readonly MultipathTracerouteData[, ,] dataIcmp;
@@ -147,7 +154,7 @@ namespace InetApi.Net.Core
 			this.callback = callback;
 
 			// Set the packet filters.
-			this.PacketFilters = new FilterIp[] {
+			this.packetFilters = new FilterIp[] {
 				new FilterIp { Protocol = ProtoPacketIp.Protocols.Icmp, SourceAddress = localAddress, DestinationAddress = remoteAddress },
 				new FilterIp { Protocol = ProtoPacketIp.Protocols.Icmp, SourceAddress = null, DestinationAddress = localAddress },
 				new FilterIp { Protocol = ProtoPacketIp.Protocols.Udp, SourceAddress = localAddress, DestinationAddress = remoteAddress }
@@ -178,9 +185,9 @@ namespace InetApi.Net.Core
         /// <summary>
         /// A constructor used for deserialization.
         /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        public MultipathTracerouteResult(SerializationInfo info, StreamingContext context)
+		/// <param name="info">The serialization info.</param>
+		/// <param name="context">The streaming context.</param>
+		public MultipathTracerouteResult(SerializationInfo info, StreamingContext context)
         {
             this.settings = (MultipathTracerouteSettings) info.GetValue("settings", typeof(MultipathTracerouteSettings));
             this.localAddress = (IPAddress) info.GetValue("localAddress", typeof(IPAddress));
@@ -241,7 +248,10 @@ namespace InetApi.Net.Core
 		/// <summary>
 		/// Gets the list of filters.
 		/// </summary>
-		internal FilterIp[] PacketFilters { get; private set; }
+		internal FilterIp[] PacketFilters
+		{
+			get { return this.packetFilters; }
+		}
 
 		#endregion
 
@@ -269,13 +279,13 @@ namespace InetApi.Net.Core
             info.AddValue("localAddress", this.localAddress);
             info.AddValue("remoteAddress", this.remoteAddress);
 
-            info.AddValue("flows", flows);
+            info.AddValue("flows", this.flows);
 
-            info.AddValue("dataIcmp", dataIcmp);
-            info.AddValue("dataUdp", dataUdp);
+            info.AddValue("dataIcmp", this.dataIcmp);
+            info.AddValue("dataUdp", this.dataUdp);
 
-            info.AddValue("statIcmp", statIcmp);
-            info.AddValue("statUdp", statUdp);
+            info.AddValue("statIcmp", this.statIcmp);
+            info.AddValue("statUdp", this.statUdp);
         }
 
 		#endregion
