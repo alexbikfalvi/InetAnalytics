@@ -129,6 +129,7 @@
     <Compile Include="Net\Core\Dns\TSig\TSigRecord.cs" />
     <Compile Include="Net\Core\MultipathTracerouteData.cs" />
     <Compile Include="Net\Core\MultipathTracerouteFlow.cs" />
+    <Compile Include="Net\Core\MultipathTracerouteResultSet.cs" />
     <Compile Include="Net\Core\MultipathTracerouteState.cs" />
     <Compile Include="Net\Core\MultipathTracerouteStatistics.cs" />
     <Compile Include="Net\Core\Protocols\Filters\FilterIp.cs" />
