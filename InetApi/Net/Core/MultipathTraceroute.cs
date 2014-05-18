@@ -341,7 +341,7 @@ namespace InetApi.Net.Core
 			result.Wait.WaitOne();
 
 			// Process the result statistics.
-			result.ProcessIcmpStatistics();
+			result.ProcessStatistics(MultipathTracerouteResult.ResultAlgorithm.Icmp);
 
 			// End the ICMP measurements.
 			result.Callback(MultipathTracerouteState.StateType.EndAlgorithm, MultipathAlgorithm.Icmp);
@@ -491,7 +491,7 @@ namespace InetApi.Net.Core
 			result.Wait.WaitOne();
 
 			// Process the result statistics.
-			result.ProcessUdpStatistics();
+			result.ProcessStatistics(MultipathTracerouteResult.ResultAlgorithm.Udp);
 
 			// End the UDP measurements.
 			result.Callback(MultipathTracerouteState.StateType.EndAlgorithm, algorithm);

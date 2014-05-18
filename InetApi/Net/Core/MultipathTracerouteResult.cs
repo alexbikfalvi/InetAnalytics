@@ -45,6 +45,15 @@ namespace InetApi.Net.Core
 			UdpBoth = 0xC
 		}
 
+        /// <summary>
+        /// An enumeration representing the result algorithms.
+        /// </summary>
+        public enum ResultAlgorithm
+        {
+            Icmp = 0,
+            Udp = 1
+        }
+
 		/// <summary>
 		/// A structure representing the state for a request.
 		/// </summary>
@@ -107,6 +116,8 @@ namespace InetApi.Net.Core
 			}
 		}
 
+        public const byte AlgorithmsCount = 2;
+
 		private readonly MultipathTracerouteSettings settings;
 		[NonSerialized]
 		private readonly MultipathTracerouteCallback callback;
@@ -131,11 +142,10 @@ namespace InetApi.Net.Core
 		[NonSerialized]
 		private readonly HashSet<RequestState> requests = new HashSet<RequestState>(new RequestStateComparer());
 
-		private readonly MultipathTracerouteData[, ,] dataIcmp;
-		private readonly MultipathTracerouteData[, ,] dataUdp;
-		
-		private readonly MultipathTracerouteStatistics[,] statIcmp;
-		private readonly MultipathTracerouteStatistics[,] statUdp;
+		private readonly MultipathTracerouteData[, , ,] data;
+		private readonly MultipathTracerouteStatistics[, ,] statistics;
+
+        private readonly HashSet<ResultAlgorithm> algorithms = new HashSet<ResultAlgorithm>();
 
 		/// <summary>
 		/// Creates a new multipath traceroute result instance.
@@ -169,17 +179,18 @@ namespace InetApi.Net.Core
 				this.flowsUdpId.Add(this.flows[index].UdpId, index);
 			}
 
-			// Create the ICMP data.
-			this.dataIcmp = new MultipathTracerouteData[settings.FlowCount, settings.MaximumHops - settings.MinimumHops + 1, settings.AttemptsPerFlow];
+			// Create the result data.
+			this.data = new MultipathTracerouteData[
+                MultipathTracerouteResult.AlgorithmsCount,
+                settings.FlowCount,
+                settings.AttemptsPerFlow,
+                settings.MaximumHops - settings.MinimumHops + 1];
 
-			// Create the UDP data.
-			this.dataUdp = new MultipathTracerouteData[settings.FlowCount, settings.MaximumHops - settings.MinimumHops + 1, settings.AttemptsPerFlow];
-
-			// Create the ICMP statistics.
-			this.statIcmp = new MultipathTracerouteStatistics[settings.FlowCount, settings.AttemptsPerFlow];
-
-			// Create the UDP statistics.
-			this.statUdp = new MultipathTracerouteStatistics[settings.FlowCount, settings.AttemptsPerFlow];
+			// Create the result statistics.
+			this.statistics = new MultipathTracerouteStatistics[
+                MultipathTracerouteResult.AlgorithmsCount,
+                settings.FlowCount,
+                settings.AttemptsPerFlow];
 		}
 
 		#region Public properties
@@ -205,21 +216,17 @@ namespace InetApi.Net.Core
 		/// </summary>
 		public MultipathTracerouteFlow[] Flows { get { return this.flows; } }
 		/// <summary>
-		/// Gets the ICMP data.
+		/// Gets the traceroute data.
 		/// </summary>
-		public MultipathTracerouteData[, ,] IcmpData { get { return this.dataIcmp; } }
+		public MultipathTracerouteData[, , ,] Data { get { return this.data; } }
 		/// <summary>
-		/// Gets the ICMP statistics.
+		/// Gets the traceroute statistics.
 		/// </summary>
-		public MultipathTracerouteStatistics[,] IcmpStatistics { get { return this.statIcmp; } }
-		/// <summary>
-		/// Gets the UDP data.
-		/// </summary>
-		public MultipathTracerouteData[, ,] UdpData { get { return this.dataUdp; } }
-		/// <summary>
-		/// Gets the UDP statistics.
-		/// </summary>
-		public MultipathTracerouteStatistics[,] UdpStatistics { get { return this.statUdp; } }
+		public MultipathTracerouteStatistics[, ,] Statistics { get { return this.statistics; } }
+        /// <summary>
+        /// Gets the list of algorithms for the data in the current result.
+        /// </summary>
+        public IEnumerable<ResultAlgorithm> Algorithms { get { return this.algorithms; } }
 
 		#endregion
 
@@ -399,9 +406,9 @@ namespace InetApi.Net.Core
 		{
 			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
 
-			this.dataIcmp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.RequestSent;
-			this.dataIcmp[flow, ttlIndex, attempt].RequestTimestamp = timestamp;
-			this.dataIcmp[flow, ttlIndex, attempt].TimeToLive = ttl;
+            this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].State = MultipathTracerouteData.DataState.RequestSent;
+            this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].RequestTimestamp = timestamp;
+            this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].TimeToLive = ttl;
 		}
 
 		/// <summary>
@@ -417,10 +424,10 @@ namespace InetApi.Net.Core
 		{
 			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
 
-			this.dataIcmp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.ResponseReceived;
-			this.dataIcmp[flow, ttlIndex, attempt].ResponseTimestamp = timestamp;
-			this.dataIcmp[flow, ttlIndex, attempt].Type = type;
-			this.dataIcmp[flow, ttlIndex, attempt].Response = packet;
+            this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].State = MultipathTracerouteData.DataState.ResponseReceived;
+            this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].ResponseTimestamp = timestamp;
+            this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].Type = type;
+            this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].Response = packet;
 		}
 
 		/// <summary>
@@ -434,9 +441,9 @@ namespace InetApi.Net.Core
 		{
 			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
 
-			this.dataUdp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.RequestSent;
-			this.dataUdp[flow, ttlIndex, attempt].RequestTimestamp = timestamp;
-			this.dataUdp[flow, ttlIndex, attempt].TimeToLive = ttl;
+			this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].State = MultipathTracerouteData.DataState.RequestSent;
+			this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].RequestTimestamp = timestamp;
+			this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].TimeToLive = ttl;
 		}
 
 		/// <summary>
@@ -452,35 +459,21 @@ namespace InetApi.Net.Core
 		{
 			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
 
-			this.dataUdp[flow, ttlIndex, attempt].State = MultipathTracerouteData.DataState.ResponseReceived;
-			this.dataUdp[flow, ttlIndex, attempt].ResponseTimestamp = timestamp;
-			this.dataUdp[flow, ttlIndex, attempt].Type = type;
-			this.dataUdp[flow, ttlIndex, attempt].Response = packet;
+			this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].State = MultipathTracerouteData.DataState.ResponseReceived;
+			this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].ResponseTimestamp = timestamp;
+			this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].Type = type;
+			this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].Response = packet;
 		}
 
 		/// <summary>
-		/// Computes the statistics for the ICMP data.
+		/// Computes the statistics for the specified algorithm.
 		/// </summary>
-		internal void ProcessIcmpStatistics()
+        /// <param name="algorithm">The algorithm.</param>
+		internal void ProcessStatistics(ResultAlgorithm algorithm)
 		{
-			this.ProcessStatistics(this.dataIcmp, this.statIcmp);
-		}
+            // Add the algorithm to the algorithms list.
+            this.algorithms.Add(algorithm);
 
-		/// <summary>
-		/// Computes the statistics for the UDP data.
-		/// </summary>
-		internal void ProcessUdpStatistics()
-		{
-			this.ProcessStatistics(this.dataUdp, this.statUdp);
-		}
-
-		/// <summary>
-		/// Computes the statistics for the specified data.
-		/// </summary>
-		/// <param name="data">The data array.</param>
-		/// <param name="stat">The statistics array.</param>
-		internal void ProcessStatistics(MultipathTracerouteData[, ,] data, MultipathTracerouteStatistics[,] stat)
-		{
 			// For each flow.
 			for (byte flow = 0; flow < this.settings.FlowCount; flow++)
 			{
@@ -493,18 +486,19 @@ namespace InetApi.Net.Core
 					// For each time-to-live.
 					for (byte ttl = 0; (ttl < this.settings.MaximumHops - this.settings.MinimumHops + 1) && (!completed); ttl++)
 					{
-						if (data[flow, ttl, attempt].State == MultipathTracerouteData.DataState.ResponseReceived)
+						if (this.data[(byte)algorithm, flow, attempt, ttl].State == MultipathTracerouteData.DataState.ResponseReceived)
 						{
 							// Set the maximum time-to-live.
-							stat[flow, attempt].MaximumTimeToLive = data[flow, ttl, attempt].TimeToLive;
+							this.statistics[(byte)algorithm, flow, attempt].MaximumTimeToLive =
+                                this.data[(byte)algorithm, flow, attempt, ttl].TimeToLive;
 							// Set the completed.
-							completed = (data[flow, ttl, attempt].Type == MultipathTracerouteData.ResponseType.EchoReply) ||
-								(data[flow, ttl, attempt].Type == MultipathTracerouteData.ResponseType.DestinationUnreachable);
+							completed = (this.data[(byte)algorithm, flow, attempt, ttl].Type == MultipathTracerouteData.ResponseType.EchoReply) ||
+								(this.data[(byte)algorithm, flow, attempt, ttl].Type == MultipathTracerouteData.ResponseType.DestinationUnreachable);
 						}
 					}
 
 					// Set the state.
-					stat[flow, attempt].State = completed ? MultipathTracerouteStatistics.StatisticsState.Completed : MultipathTracerouteStatistics.StatisticsState.Unreachable;
+					this.statistics[(byte)algorithm, flow, attempt].State = completed ? MultipathTracerouteStatistics.StatisticsState.Completed : MultipathTracerouteStatistics.StatisticsState.Unreachable;
 				}
 			}
 		}
