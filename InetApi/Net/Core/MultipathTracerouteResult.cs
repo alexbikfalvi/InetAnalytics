@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -50,7 +51,9 @@ namespace InetApi.Net.Core
         /// </summary>
         public enum ResultAlgorithm
         {
+            [Description("ICMP")]
             Icmp = 0,
+            [Description("UDP")]
             Udp = 1
         }
 
