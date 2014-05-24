@@ -398,6 +398,62 @@ namespace InetApi.Net.Core
 			return this.flowsUdpId.TryGetValue(id, out flow);
 		}
 
+        /// <summary>
+        /// Checks whether the response was received for the ICMP data.
+        /// </summary>
+        /// <param name="flow">The flow.</param>
+        /// <param name="ttl">The TTL</param>
+        /// <param name="attempt">The attempt.</param>
+        /// <returns><b>True</b> if the response was received, <b>false</b> otherwise.</returns>
+        internal bool IsIcmpDataResponseReceived(byte flow, byte ttl, byte attempt)
+        {
+			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
+
+            return this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].State == MultipathTracerouteData.DataState.ResponseReceived;
+        }
+
+        /// <summary>
+        /// Checks whether the response was received for the UDP data.
+        /// </summary>
+        /// <param name="flow">The flow.</param>
+        /// <param name="ttl">The TTL</param>
+        /// <param name="attempt">The attempt.</param>
+        /// <returns><b>True</b> if the response was received, <b>false</b> otherwise.</returns>
+        internal bool IsUdpDataResponseReceived(byte flow, byte ttl, byte attempt)
+        {
+			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
+
+            return this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].State == MultipathTracerouteData.DataState.ResponseReceived;
+        }
+
+        /// <summary>
+        /// Checks whether the ICMP data is completed.
+        /// </summary>
+        /// <param name="flow">The flow.</param>
+        /// <param name="attempt">The attempt.</param>
+        /// <returns><b>True</b> if the ICMP data is completed, <b>false</b> otherwise.</returns>
+        internal bool IsIcmpDataComplete(byte flow, byte attempt)
+        {
+            for (byte ttl = 0; ttl < this.settings.MaximumHops - this.settings.MinimumHops + 1; ttl++)
+                if (this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttl].State != MultipathTracerouteData.DataState.ResponseReceived)
+                    return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Checks whether the UDP data is completed.
+        /// </summary>
+        /// <param name="flow">The flow.</param>
+        /// <param name="attempt">The attempt.</param>
+        /// <returns><b>True</b> if the UDP data is completed, <b>false</b> otherwise.</returns>
+        internal bool IsUdpDataComplete(byte flow, byte attempt)
+        {
+            for (byte ttl = 0; ttl < this.settings.MaximumHops - this.settings.MinimumHops + 1; ttl++)
+                if (this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttl].State != MultipathTracerouteData.DataState.ResponseReceived)
+                    return false;
+            return true;
+        }
+
 		/// <summary>
 		/// Sets the ICMP data when a request was sent.
 		/// </summary>

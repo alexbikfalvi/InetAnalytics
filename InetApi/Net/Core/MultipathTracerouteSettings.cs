@@ -38,7 +38,9 @@ namespace InetApi.Net.Core
 			this.MinimumHops = 1;
 			this.MaximumHops = 32;
 			this.MaximumUnknownHops = 10;
+            this.MaximumRetries = 3;
 			this.AttemptDelay = 1000;
+            this.RetryDelay = 1000;
 			this.HopTimeout = 3000;
 			this.MinimumPort = 33434;
 			this.MaximumPort = 33523;
@@ -71,11 +73,19 @@ namespace InetApi.Net.Core
 		/// Gets or sets the number of unknown hops after which the traceroute will end.
 		/// </summary>
 		public byte MaximumUnknownHops { get; set; }
-		/// <summary>
-		/// Gets or sets the delay between attempts in milliseconds.
-		/// </summary>
-		public int AttemptDelay { get; set; }
-		/// <summary>
+        /// <summary>
+        /// Gets or sets the number of maximum retries.
+        /// </summary>
+        public byte MaximumRetries { get; set; }
+        /// <summary>
+        /// Gets or sets the delay between attempts in milliseconds.
+        /// </summary>
+        public int AttemptDelay { get; set; }
+        /// <summary>
+        /// Gets or sets the delay between retries in milliseconds.
+        /// </summary>
+        public int RetryDelay { get; set; }
+        /// <summary>
 		/// Gets or sets the hop timeout in milliseconds.
 		/// </summary>
 		public int HopTimeout { get; set; }

@@ -222,7 +222,7 @@ namespace InetApi.Net
             {
                 byte[] bytes = address.GetAddressBytes();
                 uint addr = (uint)((bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]);
-                if ((addr & 0xF0000000) == 0) return false; // Current network (only valid as source address) 0.0.0.0/8 RFC6890
+                if ((addr & 0xFF000000) == 0) return false; // Current network (only valid as source address) 0.0.0.0/8 RFC6890
                 else if ((addr & 0xFF000000) == 0x0A000000) return false; // Private network 10.0.0.0/8 RFC1918
                 else if ((addr & 0xFFC00000) == 0x64400000) return false; // Shared Address Space 100.64.0.0/12 RFC6598
                 else if ((addr & 0xFF000000) == 0x7F000000) return false; // Loopback 127.0.0.0/8 RFC6890
