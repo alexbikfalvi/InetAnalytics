@@ -398,6 +398,20 @@ namespace InetApi.Net.Core
 			return this.flowsUdpId.TryGetValue(id, out flow);
 		}
 
+        internal bool IsIcmpDataRequestSent(byte flow, byte ttl, byte attempt)
+        {
+			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
+
+            return this.data[(byte)ResultAlgorithm.Icmp, flow, attempt, ttlIndex].State == MultipathTracerouteData.DataState.RequestSent;
+        }
+
+        internal bool IsUdpDataRequestSent(byte flow, byte ttl, byte attempt)
+        {
+			byte ttlIndex = (byte)(ttl - this.settings.MinimumHops);
+
+            return this.data[(byte)ResultAlgorithm.Udp, flow, attempt, ttlIndex].State == MultipathTracerouteData.DataState.RequestSent;
+        }
+
 		/// <summary>
 		/// Sets the ICMP data when a request was sent.
 		/// </summary>

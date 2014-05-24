@@ -286,51 +286,61 @@ namespace InetApi.Net.Core
 					// Set the ICMP packet identifier.
 					packetIcmpEchoRequest.Identifier = result.Flows[flow].IcmpId;
 
-					// For each time-to-live.
-					for (byte ttl = this.settings.MinimumHops; ttl <= this.settings.MaximumHops; ttl++)
-					{
-						// Call the begin time-to-live.
-						result.Callback(MultipathTracerouteState.StateType.BeginTtl, ttl);
+                    bool isTimeout = true;
+                    for (byte seq = 0; (seq < 3) && isTimeout; seq++)
+                    {
+                        isTimeout = true;
 
-						// Set the packet TTL.
-						packetIp.TimeToLive = ttl;
+                        // For each time-to-live.
+                        for (byte ttl = this.settings.MinimumHops; ttl <= this.settings.MaximumHops; ttl++)
+                        {
+                            if (result.IsIcmpDataRequestSent(flow, ttl, attempt))
+                                continue;
 
-						// Set the ICMP packet sequence number.
-						packetIcmpEchoRequest.Sequence = (ushort)((ttl << 8) | attempt);
+                            isTimeout = false;
 
-						// Compute the ICMP data to set the checksum.
-						int checksumDiff = (ushort)(~result.Flows[flow].IcmpChecksum & 0xFFFF) + ProtoPacket.ChecksumOneComplement16Bit(data, 2, data.Length - 2,
-							(ushort)((packetIcmpEchoRequest.Type << 8) | packetIcmpEchoRequest.Code),
-							packetIcmpEchoRequest.Identifier,
-							packetIcmpEchoRequest.Sequence);
-						checksumDiff = ((checksumDiff >> 16) + (checksumDiff & 0xFFFF)) & 0xFFFF;
+                            // Call the begin time-to-live.
+                            result.Callback(MultipathTracerouteState.StateType.BeginTtl, ttl);
 
-						// Set the data checksum difference.
-						data[0] = (byte)(checksumDiff >> 8);
-						data[1] = (byte)(checksumDiff & 0xFF);
+                            // Set the packet TTL.
+                            packetIp.TimeToLive = ttl;
 
-						// Write the packet to the buffer.
-						packetIp.Write(bufferSend, 0);
+                            // Set the ICMP packet sequence number.
+                            packetIcmpEchoRequest.Sequence = (ushort)((ttl << 8) | attempt);
 
-						try
-						{
-							// Send a packet.
-							socket.SendTo(bufferSend, (int)packetIp.Length, SocketFlags.None, remoteEndPoint);
+                            // Compute the ICMP data to set the checksum.
+                            int checksumDiff = (ushort)(~result.Flows[flow].IcmpChecksum & 0xFFFF) + ProtoPacket.ChecksumOneComplement16Bit(data, 2, data.Length - 2,
+                                (ushort)((packetIcmpEchoRequest.Type << 8) | packetIcmpEchoRequest.Code),
+                                packetIcmpEchoRequest.Identifier,
+                                packetIcmpEchoRequest.Sequence);
+                            checksumDiff = ((checksumDiff >> 16) + (checksumDiff & 0xFFFF)) & 0xFFFF;
 
-							// Add the request.
-							MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
+                            // Set the data checksum difference.
+                            data[0] = (byte)(checksumDiff >> 8);
+                            data[1] = (byte)(checksumDiff & 0xFF);
 
-							// Set the data.
-							result.IcmpDataRequestSent(flow, ttl, attempt, state.Timestamp);
-						}
-						catch { }
+                            // Write the packet to the buffer.
+                            packetIp.Write(bufferSend, 0);
 
-						// Call the end time-to-live.
-						result.Callback(MultipathTracerouteState.StateType.EndTtl, ttl);
-					}
+                            try
+                            {
+                                // Send a packet.
+                                socket.SendTo(bufferSend, (int)packetIp.Length, SocketFlags.None, remoteEndPoint);
 
-					// Wait before beginning the next attempt.
-					Thread.Sleep(this.settings.AttemptDelay);
+                                // Add the request.
+                                MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Icmp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
+
+                                // Set the data.
+                                result.IcmpDataRequestSent(flow, ttl, attempt, state.Timestamp);
+                            }
+                            catch { }
+                            // Call the end time-to-live.
+                            result.Callback(MultipathTracerouteState.StateType.EndTtl, ttl);
+                        }
+                        
+                        // Wait before beginning the next attempt.
+                        Thread.Sleep(this.settings.AttemptDelay);
+                    }
 
 					// Call the end flow handler.
 					result.Callback(MultipathTracerouteState.StateType.EndFlow, flow);
@@ -423,67 +433,78 @@ namespace InetApi.Net.Core
 					// Set the UDP packet destination port.
 					packetUdp.DestinationPort = result.Flows[flow].UdpDestinationPort;
 
-					// For each time-to-live.
-					for (byte ttl = this.settings.MinimumHops; ttl <= this.settings.MaximumHops; ttl++)
-					{
-						// Call the begin time-to-live.
-						result.Callback(MultipathTracerouteState.StateType.BeginTtl, ttl);
+                    bool isTimeout = true;
+                    for (byte seq = 0; (seq < 3) && isTimeout; seq++)
+                    {
+                        isTimeout = true;
 
-						// Set the packet TTL.
-						packetIp.TimeToLive = ttl;
+                        // For each time-to-live.
+                        for (byte ttl = this.settings.MinimumHops; ttl <= this.settings.MaximumHops; ttl++)
+                        {
+                            if (result.IsUdpDataRequestSent(flow, ttl, attempt))
+                                continue;
 
-						if ((requestType & MultipathTracerouteResult.RequestType.UdpIdentification) != 0)
-						{
-							// Set the packet identification.
-							packetIp.Identification = (ushort)((ttl << 8) | attempt);
-						}
+                            isTimeout = false;
 
-						if ((requestType & MultipathTracerouteResult.RequestType.UdpChecksum) != 0)
-						{
-							// Compute the UDP data to set the checksum.
-							ushort checksum = (ushort)((ttl << 8) | attempt);
-							int checksumDiff = (ushort)(~checksum & 0xFFFF) + ProtoPacket.ChecksumOneComplement16Bit(data, 2, data.Length - 2,
-								packetUdp.SourcePort,
-								packetUdp.DestinationPort,
-								packetUdp.Length,
-								(ushort)((packetIp.SourceAddressBytes[0] << 8) | packetIp.SourceAddressBytes[1]),
-								(ushort)((packetIp.SourceAddressBytes[2] << 8) | packetIp.SourceAddressBytes[3]),
-								(ushort)((packetIp.DestinationAddressBytes[0] << 8) | packetIp.DestinationAddressBytes[1]),
-								(ushort)((packetIp.DestinationAddressBytes[2] << 8) | packetIp.DestinationAddressBytes[3]),
-								packetIp.Protocol,
-								packetUdp.Length);
-							checksumDiff = ((checksumDiff >> 16) + (checksumDiff & 0xFFFF)) & 0xFFFF;
+                            // Call the begin time-to-live.
+                            result.Callback(MultipathTracerouteState.StateType.BeginTtl, ttl);
 
-							// Set the data checksum difference.
-							data[0] = (byte)(checksumDiff >> 8);
-							data[1] = (byte)(checksumDiff & 0xFF);
-						}
+                            // Set the packet TTL.
+                            packetIp.TimeToLive = ttl;
 
-						// Write the packet to the buffer.
-						packetIp.Write(bufferSend, 0);
+                            if ((requestType & MultipathTracerouteResult.RequestType.UdpIdentification) != 0)
+                            {
+                                // Set the packet identification.
+                                packetIp.Identification = (ushort)((ttl << 8) | attempt);
+                            }
 
-						try
-						{
-							// Send a packet.
-							socket.SendTo(bufferSend, (int)packetIp.Length, SocketFlags.None, remoteEndPoint);
+                            if ((requestType & MultipathTracerouteResult.RequestType.UdpChecksum) != 0)
+                            {
+                                // Compute the UDP data to set the checksum.
+                                ushort checksum = (ushort)((ttl << 8) | attempt);
+                                int checksumDiff = (ushort)(~checksum & 0xFFFF) + ProtoPacket.ChecksumOneComplement16Bit(data, 2, data.Length - 2,
+                                    packetUdp.SourcePort,
+                                    packetUdp.DestinationPort,
+                                    packetUdp.Length,
+                                    (ushort)((packetIp.SourceAddressBytes[0] << 8) | packetIp.SourceAddressBytes[1]),
+                                    (ushort)((packetIp.SourceAddressBytes[2] << 8) | packetIp.SourceAddressBytes[3]),
+                                    (ushort)((packetIp.DestinationAddressBytes[0] << 8) | packetIp.DestinationAddressBytes[1]),
+                                    (ushort)((packetIp.DestinationAddressBytes[2] << 8) | packetIp.DestinationAddressBytes[3]),
+                                    packetIp.Protocol,
+                                    packetUdp.Length);
+                                checksumDiff = ((checksumDiff >> 16) + (checksumDiff & 0xFFFF)) & 0xFFFF;
 
-							// Add the request.
-							MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Udp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
+                                // Set the data checksum difference.
+                                data[0] = (byte)(checksumDiff >> 8);
+                                data[1] = (byte)(checksumDiff & 0xFF);
+                            }
 
-							// Set the data.
-							result.UdpDataRequestSent(flow, ttl, attempt, state.Timestamp);
-						}
-						catch { }
-						
-						// Call the end time-to-live.
-						result.Callback(MultipathTracerouteState.StateType.EndTtl, ttl);
-					}
+                            // Write the packet to the buffer.
+                            packetIp.Write(bufferSend, 0);
 
-					// Wait before beginning the next attempt.
-					Thread.Sleep(this.settings.AttemptDelay);
+                            try
+                            {
+                                // Send a packet.
+                                socket.SendTo(bufferSend, (int)packetIp.Length, SocketFlags.None, remoteEndPoint);
 
-					// Call the end flow handler.
-					result.Callback(MultipathTracerouteState.StateType.EndFlow, flow);
+                                // Add the request.
+                                MultipathTracerouteResult.RequestState state = result.AddRequest(MultipathTracerouteResult.RequestType.Udp, flow, ttl, attempt, TimeSpan.FromMilliseconds(this.settings.HopTimeout));
+
+                                // Set the data.
+                                result.UdpDataRequestSent(flow, ttl, attempt, state.Timestamp);
+                            }
+                            catch { }
+
+                            // Call the end time-to-live.
+                            result.Callback(MultipathTracerouteState.StateType.EndTtl, ttl);
+                        }
+
+                        // Wait before beginning the next attempt.
+                        Thread.Sleep(this.settings.AttemptDelay);
+
+                        // Call the end flow handler.
+                        result.Callback(MultipathTracerouteState.StateType.EndFlow, flow);
+                    }
 				}
 			}
 
