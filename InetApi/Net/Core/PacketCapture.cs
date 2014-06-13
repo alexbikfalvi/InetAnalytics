@@ -21,7 +21,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+<<<<<<< HEAD
 using DotNetApi.Concurrent.Generic;
+=======
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
 using InetApi.Net.Core.Protocols;
 
 namespace InetApi.Net.Core
@@ -40,8 +43,11 @@ namespace InetApi.Net.Core
         private readonly ManualResetEvent bufferWait = new ManualResetEvent(true);
         private readonly Queue<int> bufferQueue = new Queue<int>(PacketCapture.bufferCount);
 
+<<<<<<< HEAD
         private readonly ConcurrentList<PacketCaptureHandler> handlers = new ConcurrentList<PacketCaptureHandler>();
 
+=======
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
         private readonly object sync = new object();
 
         private readonly CancellationToken cancel;
@@ -87,6 +93,7 @@ namespace InetApi.Net.Core
 
         #endregion
 
+<<<<<<< HEAD
         #region Internal methods
 
         /// <summary>
@@ -109,6 +116,8 @@ namespace InetApi.Net.Core
 
         #endregion
 
+=======
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
         #region Private methods
 
         /// <summary>
@@ -188,22 +197,33 @@ namespace InetApi.Net.Core
                 {
                     lock (localSync)
                     {
+<<<<<<< HEAD
                         // Begin receiving the next packet.
                         this.ReceivePacket();
 
+=======
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
                         try
                         {
                             // End receiving a packet.
                             int length = socket.EndReceiveFrom(asyncResult, ref endPoint);
 
                             // Process the packet.
+<<<<<<< HEAD
                             this.PacketSuccess(this.buffer[bufferIndex], length);
+=======
+                            this.ProcessPacket(this.buffer[bufferIndex], length, result);
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
                         }
                         catch (ObjectDisposedException) { }
                         catch (Exception exception)
                         {
                             // Ignore all errors for received packets.
+<<<<<<< HEAD
                             this.PacketError(this.buffer[bufferIndex], exception);
+=======
+                            result.Callback(MultipathTracerouteState.StateType.PacketError, exception);
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
                         }
                         finally
                         {
@@ -212,6 +232,11 @@ namespace InetApi.Net.Core
                             {
                                 // Release the buffer.
                                 this.ReleaseBuffer(bufferIndex);
+<<<<<<< HEAD
+=======
+                                // Begin receiving the next packet.
+                                this.ReceivePacket();
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
                                 // Set the flag to false.
                                 bufferFlag = false;
                             }
@@ -243,11 +268,17 @@ namespace InetApi.Net.Core
         /// </summary>
         /// <param name="buffer">The data buffer.</param>
         /// <param name="length">The data length.</param>
+<<<<<<< HEAD
         private void PacketSuccess(byte[] buffer, int length)
+=======
+        /// <param name="result">The result.</param>
+        private void ProcessPacket(byte[] buffer, int length, MultipathTracerouteResult result)
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
         {
             // Set the buffer index.
             int index = 0;
             // The packets.
+<<<<<<< HEAD
             ProtoPacketIp ip = null;
 
             this.handlers.Lock();
@@ -285,6 +316,22 @@ namespace InetApi.Net.Core
             {
                 this.handlers.Unlock();
             }
+=======
+            ProtoPacketIp ip;
+
+            // Try and parse the packet using the specified filter.
+            if (ProtoPacketIp.ParseFilter(buffer, ref index, length, result.PacketFilters, out ip))
+            {
+                // Call the callback methods.
+                result.Callback(MultipathTracerouteState.StateType.PacketCapture, ip);
+
+                // Process the packet for the current protocol.
+                lock (this.syncProcess)
+                {
+                    if (null != this.processPacket) this.processPacket(ip, length, result);
+                }
+            }
+>>>>>>> cfb2f054814208eca557f2f36eddc2250c2d35e1
         }
         #endregion
     }
