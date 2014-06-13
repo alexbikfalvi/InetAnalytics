@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using DotNetApi.Concurrent.Generic;
 using InetApi.Net.Core.Protocols;
 
 namespace InetApi.Net.Core
@@ -38,6 +39,8 @@ namespace InetApi.Net.Core
         private readonly byte[][] buffer = new byte[PacketCapture.bufferCount][];
         private readonly ManualResetEvent bufferWait = new ManualResetEvent(true);
         private readonly Queue<int> bufferQueue = new Queue<int>(PacketCapture.bufferCount);
+
+        private readonly ConcurrentList<PacketCaptureHandler> handlers = new ConcurrentList<PacketCaptureHandler>();
 
         private readonly object sync = new object();
 
@@ -80,6 +83,28 @@ namespace InetApi.Net.Core
             this.socket.Close();
             // Suppress the finalizer.
             GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Internal methods
+
+        /// <summary>
+        /// Adds a packet capture handler.
+        /// </summary>
+        /// <param name="handler">The handler.</param>
+        internal void AddHandler(PacketCaptureHandler handler)
+        {
+            this.handlers.Add(handler);
+        }
+
+        /// <summary>
+        /// Removes a packet capture handler.
+        /// </summary>
+        /// <param name="handler">The handler.</param>
+        internal void RemoveHandler(PacketCaptureHandler handler)
+        {
+            this.handlers.Remove(handler);
         }
 
         #endregion
@@ -163,19 +188,22 @@ namespace InetApi.Net.Core
                 {
                     lock (localSync)
                     {
+                        // Begin receiving the next packet.
+                        this.ReceivePacket();
+
                         try
                         {
                             // End receiving a packet.
                             int length = socket.EndReceiveFrom(asyncResult, ref endPoint);
 
                             // Process the packet.
-                            this.ProcessPacket(this.buffer[bufferIndex], length, result);
+                            this.PacketSuccess(this.buffer[bufferIndex], length);
                         }
                         catch (ObjectDisposedException) { }
                         catch (Exception exception)
                         {
                             // Ignore all errors for received packets.
-                            result.Callback(MultipathTracerouteState.StateType.PacketError, exception);
+                            this.PacketError(this.buffer[bufferIndex], exception);
                         }
                         finally
                         {
@@ -184,8 +212,6 @@ namespace InetApi.Net.Core
                             {
                                 // Release the buffer.
                                 this.ReleaseBuffer(bufferIndex);
-                                // Begin receiving the next packet.
-                                this.ReceivePacket();
                                 // Set the flag to false.
                                 bufferFlag = false;
                             }
@@ -217,25 +243,47 @@ namespace InetApi.Net.Core
         /// </summary>
         /// <param name="buffer">The data buffer.</param>
         /// <param name="length">The data length.</param>
-        /// <param name="result">The result.</param>
-        private void ProcessPacket(byte[] buffer, int length, MultipathTracerouteResult result)
+        private void PacketSuccess(byte[] buffer, int length)
         {
             // Set the buffer index.
             int index = 0;
             // The packets.
-            ProtoPacketIp ip;
+            ProtoPacketIp ip = null;
 
-            // Try and parse the packet using the specified filter.
-            if (ProtoPacketIp.ParseFilter(buffer, ref index, length, result.PacketFilters, out ip))
+            this.handlers.Lock();
+            try
             {
-                // Call the callback methods.
-                result.Callback(MultipathTracerouteState.StateType.PacketCapture, ip);
-
-                // Process the packet for the current protocol.
-                lock (this.syncProcess)
+                foreach (PacketCaptureHandler handler in this.handlers)
                 {
-                    if (null != this.processPacket) this.processPacket(ip, length, result);
+                    if ((null != ip) && (handler.Matches(ip)))
+                    {
+                        handler.Success(buffer, length, ip);
+                    }
+                    else if (handler.Parse(buffer, ref index, length, out ip))
+                    {
+                        handler.Success(buffer, length, ip);
+                    }
                 }
+            }
+            finally
+            {
+                this.handlers.Unlock();
+            }
+        }
+
+        private void PacketError(byte[] buffer, Exception exception)
+        {
+            this.handlers.Lock();
+            try
+            {
+                foreach (PacketCaptureHandler handler in this.handlers)
+                {
+                    handler.Error(buffer, exception);
+                }
+            }
+            finally
+            {
+                this.handlers.Unlock();
             }
         }
         #endregion

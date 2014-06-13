@@ -60,15 +60,17 @@ namespace InetApi.Net.Core
 
 		private readonly MultipathTracerouteSettings settings;
 
-		private const byte bufferCount = 16;
-		private const ushort bufferSize = 1024;
+        private readonly PacketCapture capture;
+
+		//private const byte bufferCount = 16;
+		private const ushort bufferSize = 1500;
 
 		private const int requestsTimeout = 5000;
 
 		private readonly byte[] bufferSend = new byte[MultipathTraceroute.bufferSize];
-		private readonly byte[][] bufferRecv = new byte[MultipathTraceroute.bufferCount][];
-		private readonly ManualResetEvent bufferWait = new ManualResetEvent(true);
-		private readonly Queue<int> bufferQueue = new Queue<int>(MultipathTraceroute.bufferCount);
+		//private readonly byte[][] bufferRecv = new byte[MultipathTraceroute.bufferCount][];
+		//private readonly ManualResetEvent bufferWait = new ManualResetEvent(true);
+		//private readonly Queue<int> bufferQueue = new Queue<int>(MultipathTraceroute.bufferCount);
 
 		private readonly HashSet<MultipathTracerouteResult> results = new HashSet<MultipathTracerouteResult>();
 
@@ -84,7 +86,7 @@ namespace InetApi.Net.Core
 		/// Creates a new multipath traceroute with the specified settings.
 		/// </summary>
 		/// <param name="settings">The settings.</param>
-		public MultipathTraceroute(MultipathTracerouteSettings settings)
+		public MultipathTraceroute(MultipathTracerouteSettings settings, PacketCapture capture)
 		{
 			// Validate the settings.
 			if ((settings.AttemptsPerFlow == 0) || (settings.AttemptsPerFlow > 255))
@@ -110,6 +112,9 @@ namespace InetApi.Net.Core
 			if (settings.DataLength < 2)
 				throw new ArgumentException("The minimum data length is 2.");
 
+            // Set the packet capture.
+            this.capture = capture;
+
 			// Set the settings.
 			this.settings = settings;
 
@@ -117,11 +122,11 @@ namespace InetApi.Net.Core
 			ProtoPacketIcmp.IgnoreChecksum = true;
 
 			// Initialize the receiving buffers.
-			for (int index = 0; index < MultipathTraceroute.bufferCount; index++)
-			{
-				this.bufferRecv[index] = new byte[MultipathTraceroute.bufferSize];
-				this.bufferQueue.Enqueue(index);
-			}
+			//for (int index = 0; index < MultipathTraceroute.bufferCount; index++)
+			//{
+			//	this.bufferRecv[index] = new byte[MultipathTraceroute.bufferSize];
+			//	this.bufferQueue.Enqueue(index);
+			//}
 
 			// Create the timer.
 			this.timer = new Timer((object state) =>
@@ -146,7 +151,7 @@ namespace InetApi.Net.Core
 		public void Dispose()
 		{
 			// Dispose the member objects.
-			this.bufferWait.Dispose();
+			//this.bufferWait.Dispose();
 			this.timer.Dispose();
 			// Suppress the finalizer.
 			GC.SuppressFinalize(this);
@@ -181,20 +186,24 @@ namespace InetApi.Net.Core
 				IPEndPoint localEndPoint = new IPEndPoint(localAddress, 0);
 				IPEndPoint remoteEndPoint = new IPEndPoint(remoteAddress, 0);
 
+                // Register the packet capture handler.
+                using (MultipathTracerouteCaptureHandler handler = new MultipathTracerouteCaptureHandler(this.capture, result, this.PacketReceiveSuccess, this.PacketReceiveError))
+                {
+
 				// Create a receiving socket.
-				using (Socket socketRecv = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP))
-				{
+				//using (Socket socketRecv = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP))
+				//{
 					// Bind the socket to the local address.
-					socketRecv.Bind(localEndPoint);
+					//socketRecv.Bind(localEndPoint);
 
 					// Indicate the IP header included by the application.
-					socketRecv.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
+					//socketRecv.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
 
 					// Set the control code for receiving all packets.
-					socketRecv.IOControl(IOControlCode.ReceiveAll, new byte[4] { 1, 0, 0, 0 }, new byte[4] { 1, 0, 0, 0 });
+					//socketRecv.IOControl(IOControlCode.ReceiveAll, new byte[4] { 1, 0, 0, 0 }, new byte[4] { 1, 0, 0, 0 });
 
 					// Wait for packets.
-					this.ReceivePacket(socketRecv, cancel, result);
+					//this.ReceivePacket(socketRecv, cancel, result);
 
 					// Create a sending socket.
 					using (Socket socketSend = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IPv4))
@@ -528,162 +537,184 @@ namespace InetApi.Net.Core
 			}
 		}
 
-		/// <summary>
-		/// Requests a receiving buffer. The method blocks until a buffer is available or until the cancellation is requested.
-		/// </summary>
-		/// <param name="cancel">The cancellation token.</param>
-		/// <returns>The buffer index.</returns>
-		private int RequestBuffer(CancellationToken cancel)
-		{
-			// The buffer index.
-			int bufferIndex = -1;
+        ///// <summary>
+        ///// Requests a receiving buffer. The method blocks until a buffer is available or until the cancellation is requested.
+        ///// </summary>
+        ///// <param name="cancel">The cancellation token.</param>
+        ///// <returns>The buffer index.</returns>
+        //private int RequestBuffer(CancellationToken cancel)
+        //{
+        //    // The buffer index.
+        //    int bufferIndex = -1;
 
-			do
-			{
-				// Wait for a buffer to become available.
-				this.bufferWait.WaitOne();
+        //    do
+        //    {
+        //        // Wait for a buffer to become available.
+        //        this.bufferWait.WaitOne();
 
-				lock (this.syncBuffer)
-				{
-					// If the buffer queue is not empty.
-					if (this.bufferQueue.Count > 0)
-					{
-						// Get the first buffer index.
-						bufferIndex = this.bufferQueue.Dequeue();
+        //        lock (this.syncBuffer)
+        //        {
+        //            // If the buffer queue is not empty.
+        //            if (this.bufferQueue.Count > 0)
+        //            {
+        //                // Get the first buffer index.
+        //                bufferIndex = this.bufferQueue.Dequeue();
 
-						// If the queue is empty, reset the buffer wait handle.
-						if (this.bufferQueue.Count == 0) this.bufferWait.Reset();
-					}
-				}
-			}
-			while ((bufferIndex == -1) && (!cancel.IsCancellationRequested));
+        //                // If the queue is empty, reset the buffer wait handle.
+        //                if (this.bufferQueue.Count == 0) this.bufferWait.Reset();
+        //            }
+        //        }
+        //    }
+        //    while ((bufferIndex == -1) && (!cancel.IsCancellationRequested));
 
-			// Return the buffer index.
-			return bufferIndex;
-		}
+        //    // Return the buffer index.
+        //    return bufferIndex;
+        //}
 
-		/// <summary>
-		/// Releases the specified buffer.
-		/// </summary>
-		/// <param name="bufferIndex">The buffer index.</param>
-		private void ReleaseBuffer(int bufferIndex)
-		{
-			// Release the buffer.
-			lock (this.syncBuffer)
-			{
-				// If the buffer queue is empty, set the buffer wait handle.
-				if (this.bufferQueue.Count == 0) this.bufferWait.Set();
+        ///// <summary>
+        ///// Releases the specified buffer.
+        ///// </summary>
+        ///// <param name="bufferIndex">The buffer index.</param>
+        //private void ReleaseBuffer(int bufferIndex)
+        //{
+        //    // Release the buffer.
+        //    lock (this.syncBuffer)
+        //    {
+        //        // If the buffer queue is empty, set the buffer wait handle.
+        //        if (this.bufferQueue.Count == 0) this.bufferWait.Set();
 
-				// Add the buffer index to the queue.
-				this.bufferQueue.Enqueue(bufferIndex);
-			}
-		}
+        //        // Add the buffer index to the queue.
+        //        this.bufferQueue.Enqueue(bufferIndex);
+        //    }
+        //}
 
-		/// <summary>
-		/// Receives a packet from the specified socket.
-		/// </summary>
-		/// <param name="socket">The socket.</param>
-		/// <param name="cancel">The cancellation token.</param>
-		/// <param name="result">The result.</param>
-		private void ReceivePacket(Socket socket, CancellationToken cancel, MultipathTracerouteResult result)
-		{
-			// The remote end-point.
-			EndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
+        ///// <summary>
+        ///// Receives a packet from the specified socket.
+        ///// </summary>
+        ///// <param name="socket">The socket.</param>
+        ///// <param name="cancel">The cancellation token.</param>
+        ///// <param name="result">The result.</param>
+        //private void ReceivePacket(Socket socket, CancellationToken cancel, MultipathTracerouteResult result)
+        //{
+        //    // The remote end-point.
+        //    EndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
 
-			// Request a buffer.
-			int bufferIndex = this.RequestBuffer(cancel);
+        //    // Request a buffer.
+        //    int bufferIndex = this.RequestBuffer(cancel);
 
-			// If the operation was canceled, return.
-			if (cancel.IsCancellationRequested) return;
+        //    // If the operation was canceled, return.
+        //    if (cancel.IsCancellationRequested) return;
 
-			// Synchronization object.
-			object localSync = new object();
+        //    // Synchronization object.
+        //    object localSync = new object();
 
-			// Buffer flag.
-			bool bufferFlag = true;
+        //    // Buffer flag.
+        //    bool bufferFlag = true;
 
-			try
-			{
-				// Begin receiving a packet.
-				socket.BeginReceiveFrom(this.bufferRecv[bufferIndex], 0, this.bufferRecv[bufferIndex].Length, SocketFlags.None, ref endPoint, (IAsyncResult asyncResult) =>
-					{
-						lock (localSync)
-						{
-							try
-							{
-								// End receiving a packet.
-								int length = socket.EndReceiveFrom(asyncResult, ref endPoint);
+        //    try
+        //    {
+        //        // Begin receiving a packet.
+        //        socket.BeginReceiveFrom(this.bufferRecv[bufferIndex], 0, this.bufferRecv[bufferIndex].Length, SocketFlags.None, ref endPoint, (IAsyncResult asyncResult) =>
+        //            {
+        //                lock (localSync)
+        //                {
+        //                    try
+        //                    {
+        //                        // End receiving a packet.
+        //                        int length = socket.EndReceiveFrom(asyncResult, ref endPoint);
 
-								// Process the packet.
-								this.ProcessPacket(this.bufferRecv[bufferIndex], length, result);
-							}
-							catch (ObjectDisposedException) { }
-							catch (Exception exception)
-							{
-								// Ignore all errors for received packets.
-								result.Callback(MultipathTracerouteState.StateType.PacketError, exception);
-							}
-							finally
-							{
-								// If the buffer flag is set.
-								if (bufferFlag)
-								{
-									// Release the buffer.
-									this.ReleaseBuffer(bufferIndex);
-									// Begin receiving the next packet.
-									this.ReceivePacket(socket, cancel, result);
-									// Set the flag to false.
-									bufferFlag = false;
-								}
-							}
-						}
-					}, null);
-			}
-			catch (ObjectDisposedException) { }
-			catch (Exception)
-			{
-				lock (localSync)
-				{
-					// If the buffer flag is set.
-					if (bufferFlag)
-					{
-						// Release the buffer.
-						this.ReleaseBuffer(bufferIndex);
-						// Begin receiving the next packet.
-						this.ReceivePacket(socket, cancel, result);
-						// Set the flag to false.
-						bufferFlag = false;
-					}
-				}
-			}
-		}
+        //                        // Process the packet.
+        //                        this.ProcessPacket(this.bufferRecv[bufferIndex], length, result);
+        //                    }
+        //                    catch (ObjectDisposedException) { }
+        //                    catch (Exception exception)
+        //                    {
+        //                        // Ignore all errors for received packets.
+        //                        result.Callback(MultipathTracerouteState.StateType.PacketError, exception);
+        //                    }
+        //                    finally
+        //                    {
+        //                        // If the buffer flag is set.
+        //                        if (bufferFlag)
+        //                        {
+        //                            // Release the buffer.
+        //                            this.ReleaseBuffer(bufferIndex);
+        //                            // Begin receiving the next packet.
+        //                            this.ReceivePacket(socket, cancel, result);
+        //                            // Set the flag to false.
+        //                            bufferFlag = false;
+        //                        }
+        //                    }
+        //                }
+        //            }, null);
+        //    }
+        //    catch (ObjectDisposedException) { }
+        //    catch (Exception)
+        //    {
+        //        lock (localSync)
+        //        {
+        //            // If the buffer flag is set.
+        //            if (bufferFlag)
+        //            {
+        //                // Release the buffer.
+        //                this.ReleaseBuffer(bufferIndex);
+        //                // Begin receiving the next packet.
+        //                this.ReceivePacket(socket, cancel, result);
+        //                // Set the flag to false.
+        //                bufferFlag = false;
+        //            }
+        //        }
+        //    }
+        //}
 
-		/// <summary>
-		/// Processes a received packet.
-		/// </summary>
-		/// <param name="buffer">The data buffer.</param>
-		/// <param name="length">The data length.</param>
-		/// <param name="result">The result.</param>
-		private void ProcessPacket(byte[] buffer, int length, MultipathTracerouteResult result)
-		{
-			// Set the buffer index.
-			int index = 0;
-			// The packets.
-			ProtoPacketIp ip;
+        public void PacketReceiveSuccess(PacketCaptureHandler handler, byte[] buffer, int length, ProtoPacketIp ip)
+        {
+            MultipathTracerouteCaptureHandler tracerouteHandler = handler as MultipathTracerouteCaptureHandler;
 
-			// Try and parse the packet using the specified filter.
-			if (ProtoPacketIp.ParseFilter(buffer, ref index, length, result.PacketFilters, out ip))
-			{
-				// Call the callback methods.
-				result.Callback(MultipathTracerouteState.StateType.PacketCapture, ip);
+            // Call the callback methods.
+            tracerouteHandler.Result.Callback(MultipathTracerouteState.StateType.PacketCapture, ip);
 
-				// Process the packet for the current protocol.
-				lock (this.syncProcess)
-				{
-					if (null != this.processPacket) this.processPacket(ip, length, result);
-				}
-			}
-		}
+            // Process the packet for the current protocol.
+            lock (this.syncProcess)
+            {
+                if (null != this.processPacket) this.processPacket(ip, length, tracerouteHandler.Result);
+            }
+        }
+
+        public void PacketReceiveError(PacketCaptureHandler handler, byte[] buffer, Exception exception)
+        {
+            MultipathTracerouteCaptureHandler tracerouteHandler = handler as MultipathTracerouteCaptureHandler;
+
+            // Ignore all errors for received packets.
+            tracerouteHandler.Result.Callback(MultipathTracerouteState.StateType.PacketError, exception);
+        }
+
+        ///// <summary>
+        ///// Processes a received packet.
+        ///// </summary>
+        ///// <param name="buffer">The data buffer.</param>
+        ///// <param name="length">The data length.</param>
+        ///// <param name="result">The result.</param>
+        //private void ProcessPacket(byte[] buffer, int length, MultipathTracerouteResult result)
+        //{
+        //    // Set the buffer index.
+        //    int index = 0;
+        //    // The packets.
+        //    ProtoPacketIp ip;
+
+        //    // Try and parse the packet using the specified filter.
+        //    if (ProtoPacketIp.ParseFilter(buffer, ref index, length, result.PacketFilters, out ip))
+        //    {
+        //        // Call the callback methods.
+        //        result.Callback(MultipathTracerouteState.StateType.PacketCapture, ip);
+
+        //        // Process the packet for the current protocol.
+        //        lock (this.syncProcess)
+        //        {
+        //            if (null != this.processPacket) this.processPacket(ip, length, result);
+        //        }
+        //    }
+        //}
 
 		/// <summary>
 		/// Processes a received packet for an ICMP request.

@@ -24,8 +24,16 @@ namespace InetApi.Net.Core.Protocols.Filters
 	/// <summary>
 	/// A class representing a filter for the IP version 4 protocol.
 	/// </summary>
-	public class FilterIp
+	public sealed class FilterIp : Filter
 	{
+        /// <summary>
+        /// Creates a new IP filter instance.
+        /// </summary>
+        public FilterIp()
+            : base(FilterType.Ip)
+        {
+        }
+
 		#region Public properties
 
 		/// <summary>
@@ -44,6 +52,17 @@ namespace InetApi.Net.Core.Protocols.Filters
 		#endregion
 
 		#region Public methods
+
+        /// <summary>
+        /// Verifies if the filter matches the specified packet.
+        /// </summary>
+        /// <param name="packet">The packet.</param>
+        /// <returns><b>True</b> if the packet matches the filter, <b>false</b> otherwise.</returns>
+        public override bool Matches(ProtoPacket packet)
+        {
+            if (!(packet is ProtoPacketIp)) return false;
+            return this.Matches(packet as ProtoPacketIp);
+        }
 
 		/// <summary>
 		/// Verifies if the filter matches the specified IP packet.
