@@ -52,10 +52,17 @@ namespace InetApi.Net.Core
         /// <summary>
         /// Creates a new packet capture instance for the specified local end-point.
         /// </summary>
-        /// <param name="localEndPoint">The local end-point.</param>
+        /// <param name="localAddress">The local address.</param>
         /// <param name="cancel">The cancellation token.</param>
-        public PacketCapture(IPEndPoint localEndPoint, CancellationToken cancel)
+        public PacketCapture(IPAddress localAddress, CancellationToken cancel)
         {
+            // Initialize the receiving buffers.
+            for (int index = 0; index < PacketCapture.bufferCount; index++)
+            {
+                this.buffer[index] = new byte[PacketCapture.bufferSize];
+            	this.bufferQueue.Enqueue(index);
+            }
+
             // Set the cancellation token.
             this.cancel = cancel;
 
@@ -63,7 +70,7 @@ namespace InetApi.Net.Core
             this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP);
 
             // Bind the socket to the local address.
-            this.socket.Bind(localEndPoint);
+            this.socket.Bind(new IPEndPoint(localAddress, 0));
 
             // Indicate the IP header included by the application.
             this.socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
@@ -222,9 +229,8 @@ namespace InetApi.Net.Core
                             {
                                 // Release the buffer.
                                 this.ReleaseBuffer(bufferIndex);
-
                                 // Begin receiving the next packet.
-                                this.ReceivePacket();
+                                //this.ReceivePacket();
                                 // Set the flag to false.
                                 bufferFlag = false;
                             }
@@ -243,7 +249,7 @@ namespace InetApi.Net.Core
                         // Release the buffer.
                         this.ReleaseBuffer(bufferIndex);
                         // Begin receiving the next packet.
-                        this.ReceivePacket();
+                        //this.ReceivePacket();
                         // Set the flag to false.
                         bufferFlag = false;
                     }
