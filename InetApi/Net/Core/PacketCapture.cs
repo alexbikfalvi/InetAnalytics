@@ -249,7 +249,7 @@ namespace InetApi.Net.Core
                         // Release the buffer.
                         this.ReleaseBuffer(bufferIndex);
                         // Begin receiving the next packet.
-                        //this.ReceivePacket();
+                        this.ReceivePacket();
                         // Set the flag to false.
                         bufferFlag = false;
                     }
@@ -278,10 +278,12 @@ namespace InetApi.Net.Core
                 {
                     if ((null != ip) && (handler.Matches(ip)))
                     {
+                        Console.WriteLine("SUCCESSS");
                         handler.Success(buffer, length, ip);
                     }
                     else if (handler.Parse(buffer, ref index, length, out ip))
                     {
+                        Console.WriteLine("SUCCESSS");
                         handler.Success(buffer, length, ip);
                     }
                 }
@@ -299,6 +301,7 @@ namespace InetApi.Net.Core
             {
                 foreach (PacketCaptureHandler handler in this.handlers)
                 {
+                    Console.WriteLine("ERROR");
                     handler.Error(buffer, exception);
                 }
             }
