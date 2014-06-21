@@ -44,7 +44,6 @@ namespace InetApi.Net.Core
 
         private readonly ConcurrentList<PacketCaptureHandler> handlers = new ConcurrentList<PacketCaptureHandler>();
 
-
         private readonly object sync = new object();
 
         private readonly CancellationToken cancel;
@@ -78,8 +77,11 @@ namespace InetApi.Net.Core
             // Set the control code for receiving all packets.
             this.socket.IOControl(IOControlCode.ReceiveAll, new byte[4] { 1, 0, 0, 0 }, new byte[4] { 1, 0, 0, 0 });
 
-            // Wait for packets.
-            this.ReceivePacket();
+            // Wait for packets on a different thread.
+            ThreadPool.QueueUserWorkItem((object state) =>
+                {
+                    this.ReceivePackets();
+                });
         }
 
         #region Public methods
@@ -96,7 +98,6 @@ namespace InetApi.Net.Core
         }
 
         #endregion
-
 
         #region Internal methods
 
@@ -174,85 +175,51 @@ namespace InetApi.Net.Core
         }
 
         /// <summary>
-        /// Receives a packet.
+        /// Receives all packets in a loop.
         /// </summary>
-        private void ReceivePacket()
+        private void ReceivePackets()
         {
             // The remote end-point.
             EndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
 
-            // Request a buffer.
-            int bufferIndex = this.RequestBuffer();
-
-            // If the operation was canceled, return.
-            if (this.cancel.IsCancellationRequested) return;
-
-            // Synchronization object.
-            object localSync = new object();
-
-            // Buffer flag.
-            bool bufferFlag = true;
-
-            try
+            // While a cancellation is not requested.
+            while (!this.cancel.IsCancellationRequested)
             {
-                // Begin receiving a packet.
-                socket.BeginReceiveFrom(this.buffer[bufferIndex], 0, this.buffer[bufferIndex].Length, SocketFlags.None, ref endPoint, (IAsyncResult asyncResult) =>
+                // Request a buffer.
+                int bufferIndex = this.RequestBuffer();
+
+                // If the operation was canceled, return.
+                if (this.cancel.IsCancellationRequested) return;
+
+                try
                 {
-                    lock (localSync)
-                    {
-                        // Begin receiving the next packet.
-                        this.ReceivePacket();
+                    // Receive a packet.
+                    int length = socket.ReceiveFrom(this.buffer[bufferIndex], 0, this.buffer[bufferIndex].Length, SocketFlags.None, ref endPoint);
 
-
-                        try
+                    // Process the packet on a different thread.
+                    ThreadPool.QueueUserWorkItem((object state) =>
                         {
-                            // End receiving a packet.
-                            int length = socket.EndReceiveFrom(asyncResult, ref endPoint);
+                            // Get the buffer index.
+                            int index = (int)state;
 
-                            // Process the packet.
-
-                            this.PacketSuccess(this.buffer[bufferIndex], length);
-
-                        }
-                        catch (ObjectDisposedException) { }
-                        catch (Exception exception)
-                        {
-                            // Ignore all errors for received packets.
-
-                            this.PacketError(this.buffer[bufferIndex], exception);
-
-                        }
-                        finally
-                        {
-                            // If the buffer flag is set.
-                            if (bufferFlag)
+                            try
                             {
-                                // Release the buffer.
-                                this.ReleaseBuffer(bufferIndex);
-                                // Begin receiving the next packet.
-                                //this.ReceivePacket();
-                                // Set the flag to false.
-                                bufferFlag = false;
+                                this.PacketSuccess(this.buffer[index], length);
                             }
-                        }
-                    }
-                }, null);
-            }
-            catch (ObjectDisposedException) { }
-            catch (Exception)
-            {
-                lock (localSync)
+                            catch (Exception) { }
+
+                            // Release the buffer.
+                            this.ReleaseBuffer(index);
+                        }, bufferIndex);
+                }
+                catch (ObjectDisposedException)
                 {
-                    // If the buffer flag is set.
-                    if (bufferFlag)
-                    {
-                        // Release the buffer.
-                        this.ReleaseBuffer(bufferIndex);
-                        // Begin receiving the next packet.
-                        this.ReceivePacket();
-                        // Set the flag to false.
-                        bufferFlag = false;
-                    }
+                    return;
+                }
+                catch (Exception)
+                {
+                    // Release the buffer
+                    this.ReleaseBuffer(bufferIndex);
                 }
             }
         }
@@ -262,7 +229,6 @@ namespace InetApi.Net.Core
         /// </summary>
         /// <param name="buffer">The data buffer.</param>
         /// <param name="length">The data length.</param>
-
         private void PacketSuccess(byte[] buffer, int length)
         {
             // Set the buffer index.
@@ -278,12 +244,10 @@ namespace InetApi.Net.Core
                 {
                     if ((null != ip) && (handler.Matches(ip)))
                     {
-                        Console.WriteLine("SUCCESSS");
                         handler.Success(buffer, length, ip);
                     }
                     else if (handler.Parse(buffer, ref index, length, out ip))
                     {
-                        Console.WriteLine("SUCCESSS");
                         handler.Success(buffer, length, ip);
                     }
                 }
@@ -294,6 +258,11 @@ namespace InetApi.Net.Core
             }
         }
 
+        /// <summary>
+        /// Processes a failed packet.
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="exception">The exception.</param>
         private void PacketError(byte[] buffer, Exception exception)
         {
             this.handlers.Lock();
@@ -301,7 +270,6 @@ namespace InetApi.Net.Core
             {
                 foreach (PacketCaptureHandler handler in this.handlers)
                 {
-                    Console.WriteLine("ERROR");
                     handler.Error(buffer, exception);
                 }
             }
