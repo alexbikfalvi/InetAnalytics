@@ -34,7 +34,7 @@ namespace InetApi.Net.Core
 		{
 			this.Algorithm = MultipathTraceroute.MultipathAlgorithm.Icmp | MultipathTraceroute.MultipathAlgorithm.UdpIdentification;
 			this.AttemptsPerFlow = 5;
-			this.FlowCount = 5;
+			this.FlowCount = 1;
 			this.MinimumHops = 1;
 			this.MaximumHops = 32;
 			this.MaximumUnknownHops = 10;
