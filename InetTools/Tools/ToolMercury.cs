@@ -55,7 +55,7 @@ namespace InetTools.Tools
 			this.control = new ControlMercury(this.config);
 		}
 
-		// Public properties.
+		#region Public properties.
 
 		/// <summary>
 		/// Gets the user interface control for this tool.
@@ -66,7 +66,9 @@ namespace InetTools.Tools
 		/// </summary>
 		public override Image Icon { get { return InetAnalytics.Resources.ToolboxGraph_16; } }
 
-		// Protected methods.
+		#endregion
+
+		#region Protected methods.
 
 		/// <summary>
 		/// Disposes the current object.
@@ -82,5 +84,7 @@ namespace InetTools.Tools
 			// Call the base clas method.
 			base.Dispose(disposing);
 		}
+
+		#endregion
 	}
 }

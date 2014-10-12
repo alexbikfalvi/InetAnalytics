@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using InetCommon.Tools;
 using InetTools.Controls.Net.Web;
@@ -53,14 +54,20 @@ namespace InetTools.Tools
 			this.control = new ControlWebClient(this.config);
 		}
 
-		// Public properties.
+		#region Public properties.
 
 		/// <summary>
 		/// Gets the user interface control for this tool.
 		/// </summary>
 		public override Control Control { get { return this.control; } }
+		/// <summary>
+		/// Gets the user interface icon for this tool.
+		/// </summary>
+		public override Image Icon { get { return InetAnalytics.Resources.ToolboxGlobe_16; } }
 
-		// Protected methods.
+		#endregion
+
+		#region Protected methods.
 
 		/// <summary>
 		/// Disposes the current object.
@@ -77,5 +84,7 @@ namespace InetTools.Tools
 			// Call the base class method.
 			base.Dispose(disposing);
 		}
+
+		#endregion
 	}
 }
